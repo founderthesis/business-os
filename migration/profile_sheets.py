@@ -176,9 +176,9 @@ def parse_name_cell(raw: str):
         if len(parts) > 2:
             role = parts[1]
         company = parts[-1]
-    elif re.search(r"\s[-–—]\s", s2):
+    elif re.search(r"\s[-\u2013\u2014]\s", s2):
         tags.append("Name - Company")
-        left, company = [p.strip() for p in re.split(r"\s[-–—]\s", s2, maxsplit=1)]
+        left, company = [p.strip() for p in re.split(r"\s[-\u2013\u2014]\s", s2, maxsplit=1)]
     elif " | " in s2:
         tags.append("Name | Company")
         left, company = [p.strip() for p in s2.split(" | ", 1)]
@@ -189,7 +189,7 @@ def parse_name_cell(raw: str):
         company = re.sub(r"^.*\bof\s+", "", parts[-1]) if len(parts) > 1 else ""
     else:
         tags.append("Name only")
-    left = re.sub(r"\s[-–—]\s.*$", "", left)
+    left = re.sub(r"\s[-\u2013\u2014]\s.*$", "", left)
     people = []
     for part in re.split(r"\s+&\s+|\s+and\s+|\s*/\s*|,\s+", left):
         part = part.strip(" ,")

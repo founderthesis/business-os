@@ -19,7 +19,7 @@ Sources audited:
 - **About 3,450 to 3,490 unique people** behind 4,025 person mentions: matching on email removes 258, LinkedIn a further 73, normalised name plus company a further 206. Name-only matching would remove 53 more, but some of those are common-name false positives.
 - **Tabs are used as pipeline stages.** Rows are copied forward (Inbound to P1, N2 to N3, Pipeline v2 to CRM) and the old row is never closed: 471 people sit in 2+ tabs and 99 of them carry contradictory statuses. The four shows barely overlap (only 9 people appear in more than one workbook).
 - **Identity keys are thin.** 56% of mentions carry a LinkedIn URL (almost always hidden as a hyperlink behind the name text, so CSV export loses it), 45% carry an email, 24% carry neither.
-- **74 distinct status strings** across 17 status columns mix five different concepts: pipeline stage, outcome, host decision, commercial deal type and chase step. Plus 9 verification flags and 13 contact-plan values that are not statuses at all.
+- **74 distinct status strings** across 22 status columns. 22 of them are not statuses at all (9 data-verification flags, 13 podcast contact plans); the other 52 mix five concepts: pipeline stage, outcome, host decision, commercial deal type and chase step.
 - **Decisions live in the wrong columns**: host verdicts in follow-up date cells ("Arjun rejected"), eval verdicts as hyperlink display text (in FT P1, 91% of verdict cells show only a document title), payment milestones as 7 checkboxes, PR contacts in "Via".
 - **Follow-ups are 3,086 date cells in 1 to 6 columns per tab**, 449 of them dated in the future (planned, not sent), plus 53 free-text cells ("check later", "Next yr (2027)", "Arjun rejected", dates typed as text).
 - **PR contacts are a real entity**: 546 distinct names in Via / PR Contact, 154 recur 2+ times (covering 460 rows), 20 recur 5+ times, 76 appear in both FT and un# tabs.
@@ -77,7 +77,7 @@ Name formats across all tabs: "Name @ Company" 2,696 cells; name-only with compa
 
 ### 2. HBD_new.xlsx (Human by Design)
 
-- Academic-heavy: 70 of 110 emails are university or research-institute addresses; 11 carry "(verified)" in the cell text.
+- Academic-heavy: 70 of 109 emails are university or research-institute addresses; 11 carry "(verified)" in the cell text.
 - **Sheet1** (34): Company column embeds the domain "(company.ai)". Status: Unresponsive 4, Maybe later 3, Approved 1. Follow-up text: "Reachout in 2027" (2), "Arjun rejected" (1).
 - **V2** (28): affiliation and title sit in an unlabelled 3rd column (96% filled). Status: Approved 4, Declined 2, Chasing 1. "Arjun rejected" appears 3 times in follow-up cells; 6 Follow Up 4 dates are in 2027 (probable year typo).
 - **V3** (48): two unlabelled columns (institution, title). Status: Approved 5. "Arjun rejected / Rejected" 3 times in Follow Up 1.
@@ -98,7 +98,7 @@ Name formats across all tabs: "Name @ Company" 2,696 cells; name-only with compa
 
 ### 4. un# Pipeline (alpha un#)
 
-- **Pipeline v2** (191): name lives in a column headed "Linkedin Link" (display text is the name, 165 cells hyperlink to LinkedIn, 3 to X). Status (17 values): Recorded 31, Unresponsive 30, P2 28, Declined 27, Inbound 23, LT Chase 22, Sponsored 6, Approval Pending 5, others 1 to 3. "Sri Approval" is the host verdict (Yes 68, No 44, Ask 13, Sponsored 1). "AD Review" checkbox ticked 8. "Guest Eval" verdict text in 87 cells (Strong consider 39, Book immediately 34, Decline 10, Evaluate after call 5, Pre-call needed 1), 65 cells show only a title or link; "Guest Eval 2" and "Column 2" hold more. "follow up needed" (91%) is a mixed action and decision log ("Declined by Ravi", "Need update from Sri", "Offered Sponsored", "PR person - [name]"). The follow-up date column is headed "23-Jun". About 875 trailing rows contain only unticked checkboxes.
+- **Pipeline v2** (191): name lives in a column headed "Linkedin Link" (display text is the name; 172 cells are hyperlinked, almost all to LinkedIn profiles, a few to X). Status (17 values): Recorded 31, Unresponsive 30, P2 28, Declined 27, Inbound 23, LT Chase 22, Sponsored 6, Approval Pending 5, others 1 to 3. "Sri Approval" is the host verdict (Yes 68, No 44, Ask 13, Sponsored 1). "AD Review" checkbox ticked 8. "Guest Eval" verdict text in 87 cells (Strong consider 39, Book immediately 34, Decline 10, Evaluate after call 5, Pre-call needed 1), 65 cells show only a title or link; "Guest Eval 2" and "Column 2" hold more. "follow up needed" (91%) is a mixed action and decision log ("Declined by Ravi", "Need update from Sri", "Offered Sponsored", "PR person - [name]"). The follow-up date column is headed "23-Jun". About 875 trailing rows contain only unticked checkboxes.
 - **Sponsored** (18): header on row 2. Status Inbound 10, Declined 5, Unresponsive 3; Via 100%; "Next Action - mamatha" tracks commercial steps.
 - **Post Release** (3): one says "No post done".
 - **Podcast Leads** (56) and **pod Campaign** (20): outreach to *other* podcasts to place the host as a guest. Different entity (podcast + host), 23 role inboxes, "Contact Status" is a contact plan (Send Email+X DM+LinkedIn), rows 56 to 58 are notes ("Subscribers", "Youtube Link required").
@@ -196,7 +196,7 @@ Other decision fields:
 ## Data problems the migration must handle
 
 1. **Header position varies** (row 1, 2 or 3); two tabs have a second sub-table mid-sheet (Old Pipeline row 28, Theprgenius row 17, shifted one column); VC Intros uses the row *below* a VC for verdicts.
-2. **Unlabelled columns with data** (Follow Up 5, HBD affiliation and title, Defillama flags, PAAS - Direct 6th follow-up): 263 cells. Duplicate header names (two "Status" in FT Cold Lead). Headers that are data ("23-Jun", "Column 1", "Linkedin Link" holding names).
+2. **Unlabelled columns with data** (Follow Up 5, HBD affiliation and title, Defillama flags, PAAS - Direct 6th follow-up): 265 cells. Duplicate header names (two "Status" in FT Cold Lead). Headers that are data ("23-Jun", "Column 1", "Linkedin Link" holding names).
 3. **Hyperlinks carry the data**: 3,910 hyperlinks. LinkedIn URLs sit behind name text; eval verdicts sit behind doc titles. Export must use xlsx or the Sheets API, never CSV.
 4. **Name parsing**: 12 formats (see Inventory). "Name@Company" looks like an email. Titles and roles appended to names ("... Co-Founder", "CPO @ Company"). Multi-person cells (50) must split into separate people linked to one conversation.
 5. **Email hygiene**: markers inside the value ("(verified)" 11, dagger 10), placeholders ("(none)" 34, "Bounced", "No", "Not found", "N/A", "Contact form on website"), multiple addresses in one cell (45), role inboxes (58), PR addresses in guest cells (3), emails stored in Outreach channel (28) and Notes (32) columns, trailing spaces, 17 personal freemail and 77 academic addresses. Store as Email (primary) + Other emails + Email status.
