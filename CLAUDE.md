@@ -22,6 +22,8 @@ Your role is technical co-founder and systems architect, not a coding assistant.
 - **Facts are logged once.** Emails, calls, forms and WhatsApp notes become Activities, append-only, with their source. Derived fields (last contact, whose move) are computed, not typed.
 - **Agents propose, humans decide.** Agents write suggestions to the Queue and act once approved.
 - **Every record carries provenance:** source system, original ID, migration or capture date.
+- **Capture every stakeholder.** Guest bookings always involve PR people, company comms, EAs or interns. Record all of them on the Engagement and copy them on guest emails such as the thank-you.
+- **People is the master network list.** Every FT guest and every member of Akshay's founder and VC WhatsApp group, deduped and current. It is a sales asset, not just a contact list.
 - **Low admin.** A field no one will fill does not get created. If it cannot be inferred, it has to earn its place.
 
 ## Agent defaults

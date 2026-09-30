@@ -26,14 +26,22 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 | 18 | Meet transcripts are switched on per call; the prep entry reminds Akshay. | Cannot default on |
 | 19 | Access: core team in the main workspace; hosts and retainer clients get separate synced portals; PR agencies get email only. | Notion has no row-level security |
 | 20 | WhatsApp: pasted into Slack or logged by a button; reminders come through the brief. | No clean capture route |
+| 21 | Threads where Akshay is only cc'd and Mamatha is handling are Heads-up and auto-marked read. | Akshay, 30 Sep |
+| 22 | When an eval says Decline, the decision card pre-selects Sponsored. | Akshay, 30 Sep (70% of past decisions) |
+| 23 | alpha un# evals: Akshay approves first; the agent then sends Akshay a Slack reminder with the blurb and eval link to pass to Sri. | Akshay, 30 Sep |
+| 24 | People is the one master network list: every FT guest plus everyone in Akshay's founder and VC WhatsApp group (500+), most recent data, deduped. It is the asset Akshay shows when pitching clients. Fields: FT guest, Substack article link, In WhatsApp group. | Akshay, 30 Sep |
+| 25 | The existing FT guest list in Notion that feeds the automated Substack articles must keep working through the migration. | Akshay, 30 Sep |
+| 26 | Spotlight is its own show (own YouTube channel and RSS) but its episodes start as FT engagements. Tier 3 FT episodes publish on Spotlight and still get a founderthesis.com feature. | Akshay, 30 Sep |
+| 27 | Phone numbers stay in Notion. | Akshay, 30 Sep |
+| 28 | From Blue, copy field data only. Videos, photos and other heavy files are dropped. | Akshay, 30 Sep |
+| 29 | Every engagement captures all stakeholders (guest, PR agency people, company comms, EAs, interns). All of them are copied on guest emails such as the thank-you. | Akshay, 30 Sep |
 
 ## Open
 
-- Field-level spec for all 10 tables (after the audits).
+- Field-level spec: draft 1 in `docs/schema.md`, waiting for Akshay's review.
 - Which templates exist per show, and approval of each.
 - Backlog clean-up for the existing unread inbox.
-- Whether Spotlight is a show or a tier of Founder Thesis. Tier list today: Tier 1 FT, Tier 2 FT, Tier 3 Spotlight.
-- From the audits (30 Sep): auto-read threads where Akshay is only cc'd and Mamatha is handling; pre-select Sponsored when the eval says Decline; who owns un# evals now that Ravi's mailbox is unused; what the Founder_Thesis_Master_People_List in Drive is; whether phone numbers stay in Notion; whether Blue's 138 videos get copied to Drive; whether the INR 5k/10k Google Ads upsell on the guest form is still offered.
+- Whether the INR 5k/10k Google Ads upsell on the Blue guest form is still offered.
 
 ## Overrides
 
