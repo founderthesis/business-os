@@ -65,7 +65,7 @@ One row per pursuit: a person (or organisation) and a goal, usually on a show. R
 |---|---|---|---|
 | Name | title | Auto | "Person @ Company, Show" |
 | Type | select | Auto | Guest outbound, Guest inbound, BD, Sponsor, Partner, Client |
-| Show | relation → Shows | Migrate / Auto | The show it starts on. Spotlight episodes start as FT |
+| Show | relation → Shows | Migrate / Auto | The show it is for |
 | Guest | relation → People | Migrate / Auto | The person being featured or pitched |
 | Stakeholders | relation → People | Auto | Everyone else on the thread: PR agency people, company comms, EAs, interns. Filled from email participants. All are copied on guest emails |
 | Via | relation → People | Migrate / Auto | The PR contact who brought it in, if any |
@@ -92,12 +92,11 @@ Status mapping from the sheets (74 raw values onto these fields) is in `docs/aud
 
 | Field | Type | Fill | Notes |
 |---|---|---|---|
-| Name | title | Human | Founder Thesis, Spotlight, alpha un#, Built to Share, Human by Design, client shows |
+| Name | title | Human | Founder Thesis, alpha un#, Built to Share, Human by Design, client shows. Spotlight is not a show; it is FT Tier 3 |
 | Host | relation → People | Human | |
 | Owned | select | Human | Owned, Client |
-| Parent show | relation → Shows | Human | Spotlight's parent is Founder Thesis |
 | Active | checkbox | Human | |
-| YouTube channel, RSS | url | Human | |
+| YouTube channel, RSS | url | Human | FT also stores the Spotlight channel and feed |
 | Default sponsored price | text | Human | e.g. INR 50k + GST, or USD 600 outside India |
 | Templates | relation → Templates | Auto | |
 
@@ -108,10 +107,10 @@ One row per episode. The page body is the working doc: each skill writes its own
 | Field | Type | Fill | Notes |
 |---|---|---|---|
 | Title | title | Auto | Working title until Final title is set |
-| Show | relation → Shows | Auto | Where it publishes. Tier 3 FT publishes on Spotlight |
+| Show | relation → Shows | Auto | |
 | Guests | relation → People | Auto | |
 | Engagement | relation → Engagements | Auto | |
-| Tier | select | Human | Tier 1 FT, Tier 2 FT, Tier 3 Spotlight. One tap after recording |
+| Tier | select | Human | Tier 1, Tier 2, Tier 3 (Spotlight). One tap after recording. Tier 3 publishes on the Spotlight channel and feed |
 | Status | select | Auto | Scheduled, Recorded, Transcript in, Pack drafted, Editing, Ready, Published |
 | Recording date | date | Auto | From the calendar |
 | Publish date | date | Auto | |

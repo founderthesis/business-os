@@ -31,17 +31,17 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 | 23 | alpha un# evals: Akshay approves first; the agent then sends Akshay a Slack reminder with the blurb and eval link to pass to Sri. | Akshay, 30 Sep |
 | 24 | People is the one master network list: every FT guest plus everyone in Akshay's founder and VC WhatsApp group (500+), most recent data, deduped. It is the asset Akshay shows when pitching clients. Fields: FT guest, Substack article link, In WhatsApp group. | Akshay, 30 Sep |
 | 25 | The existing FT guest list in Notion that feeds the automated Substack articles must keep working through the migration. | Akshay, 30 Sep |
-| 26 | Spotlight is its own show (own YouTube channel and RSS) but its episodes start as FT engagements. Tier 3 FT episodes publish on Spotlight and still get a founderthesis.com feature. | Akshay, 30 Sep |
+| 26 | Spotlight is a tag within Founder Thesis, not a separate show. Tier 3 FT episodes carry it, publish on the Spotlight YouTube channel and RSS feed, and still get a founderthesis.com feature. | Akshay, 30 Sep (revised same day) |
 | 27 | Phone numbers stay in Notion. | Akshay, 30 Sep |
 | 28 | From Blue, copy field data only. Videos, photos and other heavy files are dropped. | Akshay, 30 Sep |
 | 29 | Every engagement captures all stakeholders (guest, PR agency people, company comms, EAs, interns). All of them are copied on guest emails such as the thank-you. | Akshay, 30 Sep |
+| 30 | The Google Ads upsell on the old guest form is no longer offered; the new form drops it. | Akshay, 30 Sep |
 
 ## Open
 
 - Field-level spec: draft 1 in `docs/schema.md`, waiting for Akshay's review.
 - Which templates exist per show, and approval of each.
 - Backlog clean-up for the existing unread inbox.
-- Whether the INR 5k/10k Google Ads upsell on the Blue guest form is still offered.
 
 ## Overrides
 
