@@ -417,6 +417,12 @@ def profile_tab(source, ws, as_of):
                 for f in found:
                     f["secondary"] = role == "email_secondary"
                     rec["emails"].append(f)
+            elif role == "channel" and EMAIL_RE.search(sv):
+                found, markers = classify_email_cell(sv)
+                p["email_markers"]["email stored in outreach-channel column"] += 1
+                for f in found:
+                    f["secondary"] = False
+                    rec["emails"].append(f)
             elif role == "linkedin":
                 slug = linkedin_slug(sv)
                 if slug:
@@ -443,7 +449,8 @@ def profile_tab(source, ws, as_of):
                     p["followup"]["text_values"]["(bare number)"] += 1
                 else:
                     p["followup"]["text_cells"] += 1
-                    p["followup"]["text_values"][sv[:60]] += 1
+                    label = "(date typed as text) " + sv[:20] if looks_like_date_text(sv) else sv[:60]
+                    p["followup"]["text_values"][label] += 1
         # content-sniffed eval verdicts: verdict columns plus unlabelled / odd columns whose
         # display text starts with a verdict phrase (status and note columns are skipped)
         skip = {k for k, rr in cur_roles.items() if rr not in ("verdict",)}
