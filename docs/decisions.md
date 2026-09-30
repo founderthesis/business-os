@@ -36,10 +36,17 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 | 28 | From Blue, copy field data only. Videos, photos and other heavy files are dropped. | Akshay, 30 Sep |
 | 29 | Every engagement captures all stakeholders (guest, PR agency people, company comms, EAs, interns). All of them are copied on guest emails such as the thank-you. | Akshay, 30 Sep |
 | 30 | The Google Ads upsell on the old guest form is no longer offered; the new form drops it. | Akshay, 30 Sep |
+| 31 | No Commercial field. Decision (Sponsored) and the show's Owned or Client flag already say whether money is involved; Amount and Paid appear only when it is. | Akshay, 30 Sep |
+| 32 | No typed Final fields. The episode working doc lives in the Episode page in Notion; every option is a checkbox and the ticked one is final. Ticks and edits are the learning signal. Ticking a theme starts stage B. | Akshay, 30 Sep |
+| 33 | Two-guest episodes: one Episode, one Engagement per guest. | 30 Sep |
+| 34 | Copy tasks go to Ranjita, video tasks to Sarika, created automatically from episode status, due dates counted back from Planned release. | Akshay, 30 Sep |
+| 35 | Release calendar: Episodes have Planned and Actual release. A planning task runs every other week, proposes dates for the month, Akshay approves. | Akshay, 30 Sep |
+| 36 | Shows carry a guest note, recording guidelines, platform links (YouTube, Spotify, Apple, Amazon, RSS, website), cadence, and a wiki page. | Akshay, 30 Sep |
 
 ## Open
 
-- Field-level spec: draft 1 in `docs/schema.md`, waiting for Akshay's review.
+- Field-level spec: draft 2 in `docs/schema.md`, waiting for Akshay's go.
+- Release cadence per show.
 - Which templates exist per show, and approval of each.
 - Backlog clean-up for the existing unread inbox.
 

@@ -1,6 +1,6 @@
 # Table spec
 
-Draft 1, 30 Sep 2026. For review with Akshay before anything is created in Notion.
+Draft 2, 30 Sep 2026. For review with Akshay before anything is created in Notion.
 
 How to read it. **Fill** says who fills a field:
 - **Auto**: an agent or formula fills it. Nobody types.
@@ -80,15 +80,16 @@ One row per pursuit: a person (or organisation) and a goal, usually on a show. R
 | Eval link | url | Auto | The eval page; also added to the person's Research |
 | Host verdict | select | Auto / Human | Yes, No, Maybe, Not asked. From Sri Approval, "Arjun rejected" cells, host replies |
 | Decision | select | Auto | Akshay's call: Sponsored, Precall, Book, Decline, Present to host |
-| Commercial | select | Auto | Free guest, Sponsored, Paid, Client |
-| Amount | number | Human | Only when money is agreed |
-| Paid | select | Auto | Not due, Invoiced, Part paid, Paid |
-| Episode | relation → Episodes | Auto | Created when Stage reaches Agreed and the recording is booked |
+| Amount | number | Human | Only when money is agreed (Decision is Sponsored, or Type is Client) |
+| Paid | select | Auto | Not due, Invoiced, Part paid, Paid. Hidden unless Amount is set |
+| Episode | relation → Episodes | Auto | Created when Stage reaches Agreed and the recording is booked. Two guests on one episode means two Engagements pointing at the same Episode |
 | Activities | relation → Activities | Auto | |
 
 Status mapping from the sheets (74 raw values onto these fields) is in `docs/audits/sheets.md`.
 
 ## 4. Shows
+
+One row per show. The page body is the show's wiki: ad hoc notes, things to remember, how the host likes to work.
 
 | Field | Type | Fill | Notes |
 |---|---|---|---|
@@ -96,52 +97,96 @@ Status mapping from the sheets (74 raw values onto these fields) is in `docs/aud
 | Host | relation → People | Human | |
 | Owned | select | Human | Owned, Client |
 | Active | checkbox | Human | |
-| YouTube channel, RSS | url | Human | FT also stores the Spotlight channel and feed |
+| Guest note | url | Human | The standard note sent to prospective guests |
+| Recording guidelines | url | Human | Sent with every recording invite |
+| YouTube | url | Human | FT also stores the Spotlight channel |
+| Spotify | url | Human | |
+| Apple Podcasts | url | Human | |
+| Amazon Music | url | Human | |
+| RSS | url | Human | FT also stores the Spotlight feed |
+| Website | url | Human | e.g. founderthesis.com |
+| Release cadence | text | Human | e.g. "weekly, Monday"; used by the release planner |
 | Default sponsored price | text | Human | e.g. INR 50k + GST, or USD 600 outside India |
 | Templates | relation → Templates | Auto | |
+| Wiki | page body | Human | Free notes |
+
+These are set once per show, so Human is fine here.
 
 ## 5. Episodes
 
-One row per episode. The page body is the working doc: each skill writes its own section (themes, cinematic titles, lower thirds, soundbites, cut list, host intro, titles, thumbnail copy, show notes, LinkedIn set, trailer copy, Substack draft). Absorbs Episode Inventory, Article Queue page bodies, and the Blue-only episodes (field data only).
+One row per episode. Created automatically when a recording is booked. Absorbs Episode Inventory, Article Queue page bodies, and the Blue-only episodes (field data only).
 
 | Field | Type | Fill | Notes |
 |---|---|---|---|
-| Title | title | Auto | Working title until Final title is set |
+| Title | title | Auto | Working title, then the ticked final title |
 | Show | relation → Shows | Auto | |
-| Guests | relation → People | Auto | |
-| Engagement | relation → Engagements | Auto | |
-| Tier | select | Human | Tier 1, Tier 2, Tier 3 (Spotlight). One tap after recording. Tier 3 publishes on the Spotlight channel and feed |
-| Status | select | Auto | Scheduled, Recorded, Transcript in, Pack drafted, Editing, Ready, Published |
+| Guests | relation → People | Auto | One or more. Two-guest episodes link both |
+| Engagements | relation → Engagements | Auto | One per guest |
+| Tier | select | Human | Tier 1, Tier 2, Tier 3 (Spotlight). The one tap after recording. Tier 3 publishes on the Spotlight channel and feed |
+| Status | select | Auto | Scheduled, Recorded, Transcript in, Copy in progress, Editing, Ready, Published |
 | Recording date | date | Auto | From the calendar |
-| Publish date | date | Auto | |
+| Planned release | date | Auto | Set by the release planner, approved on the dashboard |
+| Actual release | date | Auto | From YouTube or the RSS feed |
+| Slip (days) | formula | Auto | Actual minus planned |
 | Transcript | file / url | Auto | Downloaded from Zencastr |
-| Theme picked | text | Human | Starts content pack stage B |
-| Final title | text | Human | What went live. Compared with the options for learning |
-| Final cinematic title | text | Human | |
-| Final thumbnail copy | text | Human | |
-| Final intro VO | text | Human | |
-| Final show notes | text | Human | |
-| Final LinkedIn post | text | Human | |
-| Final trailer copy | text | Human | |
-| Open checks | number | Auto | Count of unticked review flags from the skills (verify ASR, confirm a fact). Ready is blocked while above 0 |
+| Copy done | checkbox | Auto | True when every copy section in the working doc has a tick |
+| Open checks | number | Auto | Unticked review flags from the skills (verify ASR, confirm a fact). Ready is blocked while above 0 |
 | YouTube, Spotify, Substack, LinkedIn links | url | Auto | After release |
-| Guest form in | checkbox | Auto | Hi-res photo, logo, designation, links and PR emails received |
+| Guest form in | checkbox | Auto | Photo, logo, designation, links and PR emails received |
 | Tasks | relation → Tasks | Auto | |
 
-The Notion FT guest list that feeds the automated Substack articles keeps working. Either Episodes takes over as its source in one switch, or it stays live until then. Nothing is switched off before that is confirmed.
+No typed Final fields. The final version of every piece of copy is whatever is ticked in the working doc.
+
+### The working doc (Episode page body)
+
+Created with the Episode, empty sections ready. Skills fill it in two passes:
+
+- **Stage A, when the transcript lands:** Themes, Cinematic titles, Host intro, Lower thirds, Soundbite bank, Cut list.
+- **Stage B, when a theme is ticked:** YouTube titles, Thumbnail copy, Show notes, LinkedIn set, Trailer copy, Substack draft.
+
+Every option is a checkbox line. The copywriter ticks the one to use and can edit its text in place. Options pasted from Gemini or ChatGPT go in the same section, tagged [Gemini] or [ChatGPT].
+
+```
+## YouTube titles
+- [ ] How Venkat took Vyome from Delhi to Nasdaq
+- [x] India makes the world's medicine and invents almost none of it
+- [ ] [ChatGPT] The Chik shampoo CEO building a cancer drug
+```
+
+What the skills learn from, with nobody filling a form:
+- which option was ticked and which were not, per skill and per show
+- how much the ticked text was edited (the agent keeps a copy of what it generated)
+- which model's option won
+- later, how the episode performed
+
+Review flags from the skills sit in a "Checks" section as checkboxes too.
 
 ## 6. Tasks
 
-A handful per episode, created automatically when Status changes. Blue's 33-item checklists had 0 of 484 items ticked, so this stays small.
+A handful per episode, created automatically. Owner comes from the task type.
 
 | Field | Type | Fill | Notes |
 |---|---|---|---|
-| Task | title | Auto | Edit, Thumbnail, Shorts, Release emails, Substack, LinkedIn |
+| Task | title | Auto | |
 | Episode | relation → Episodes | Auto | |
 | Engagement | relation → Engagements | Auto | For non-episode work |
-| Owner | select | Auto | Team first names |
-| Due | date | Auto | |
-| Status | select | Human | To do, Doing, Done |
+| Owner | select | Auto | From the task type (below) |
+| Due | date | Auto | Counted back from Planned release |
+| Status | select | Auto / Human | To do, Doing, Done. Copy tasks close themselves when the working doc is ticked |
+
+| When | Task | Owner | Due |
+|---|---|---|---|
+| Transcript in | Pick theme and final copy | Ranjita | Planned release minus 7 days |
+| Transcript in | Edit episode (cut list and lower thirds linked) | Sarika | Planned release minus 5 days |
+| Edit done | Shorts | Sarika | Planned release minus 2 days |
+| Copy done | Thumbnail design | Sarika | Planned release minus 3 days |
+| Ready | Release emails and posts | Ranjita | Release day |
+
+The table of task types lives in `routines/tasks.md` so it can change without touching Notion.
+
+### Release calendar
+
+A calendar view of Episodes by Planned release, coloured by show. A release-planning task runs every other week in Cowork (or on demand): it looks at episodes in progress, each show's cadence and open slots, proposes Planned release dates for the coming month, and puts them on the dashboard for approval. Actual release fills itself, so slips show up on the calendar.
 
 ## 7. Activities
 
@@ -197,5 +242,5 @@ Walled off. No routine reads it. Fields: Service, Login, Notes, Last rotated.
 ## Not carried over
 
 - Blue videos, photos and other heavy files.
-- Whatsapp Group Members (becomes the In WhatsApp group checkbox), FT Newsjack Scout, Substack Posts Audit, both inbox triage snapshots, the starter templates, and the page titled "DELETE" (holds phone data; a human deletes it).
+- Whatsapp Group Members (its members set the In WhatsApp group checkbox; new members are ticked on People after that), FT Newsjack Scout, Substack Posts Audit, both inbox triage snapshots, the starter templates, and the page titled "DELETE" (holds phone data; a human deletes it).
 - Sheet columns that are data-verification flags or contact plans (listed in the sheets audit).
