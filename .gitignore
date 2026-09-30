@@ -1,0 +1,15 @@
+# Real business data never goes into git
+data/
+*.xlsx
+*.csv
+!migration/fixtures/*.csv
+
+# Secrets
+.env
+.env.*
+*.pem
+
+# Python
+__pycache__/
+*.pyc
+.venv/
