@@ -1,6 +1,6 @@
 # Table spec
 
-Draft 2, 30 Sep 2026. For review with Akshay before anything is created in Notion.
+Draft 3, 30 Sep 2026. For review with Akshay before anything is created in Notion.
 
 How to read it. **Fill** says who fills a field:
 - **Auto**: an agent or formula fills it. Nobody types.
@@ -10,6 +10,8 @@ How to read it. **Fill** says who fills a field:
 Every table also carries three provenance fields, not repeated below: `Source` (where the row came from), `Source ID` (its ID there), `Captured` (date). Rows from the migration carry `Migration batch` too.
 
 Ten tables: People, Organisations, Engagements, Shows, Episodes, Tasks, Activities, Queue, Templates, Credentials.
+
+**Tags everywhere.** People, Organisations, Engagements, Episodes and Tasks each have a `Tags` multi-select that anyone can add values to. Tags are how the team organises on the fly without asking for a new field. Agents read and set tags too (for example the tier after a recording). Fixed fields stay only where an automation needs exactly one value, such as Stage or Status.
 
 ---
 
@@ -30,7 +32,7 @@ One row per human, forever. This is the master network list: every FT guest, eve
 | Blurb | text | Auto | Latest blurb (Slack #ft-blurbs, host DMs, or generated). About 150 words |
 | Research | page body | Auto | Every eval, dossier, prep note and call summary, newest first, each with date and link |
 | Latest eval verdict | select | Auto | Book immediately / Strong consider / Pre-call needed / Decline |
-| Tags | multi-select | Auto | Guest, Prospect, Sponsor, PR contact, Host, Client, Team, Investor |
+| Tags | multi-select | Auto / Human | Starts with Guest, Prospect, Sponsor, PR contact, Host, Client, Team, Investor; anyone can add more |
 | FT guest | checkbox | Auto | True if linked to any published FT or Spotlight episode |
 | Substack article | url | Migrate / Auto | Their founderthesis.com feature |
 | In WhatsApp group | checkbox | Migrate / Human | Akshay's 500+ founders and VCs group |
@@ -54,6 +56,7 @@ One row per company, fund or agency.
 | People | relation → People | Auto | |
 | Client | checkbox | Human | True for retainer clients |
 | Engagements | relation → Engagements | Auto | |
+| Tags | multi-select | Auto / Human | Free |
 
 PR agencies are recorded here for the first time. Today the agency is never written down; the migration infers it from the PR contact's email domain.
 
@@ -78,12 +81,14 @@ One row per pursuit: a person (or organisation) and a goal, usually on a show. R
 | Chase step | number | Auto | 0 to 5 on the follow-up ladder. A human "Stop chasing" sets Outcome |
 | Eval verdict | select | Auto | Book immediately / Strong consider / Pre-call needed / Decline |
 | Eval link | url | Auto | The eval page; also added to the person's Research |
+| Dossier link | url | Auto | Host dossier and guest prep note; also added to the person's Research and to the private prep calendar entry |
 | Host verdict | select | Auto / Human | Yes, No, Maybe, Not asked. From Sri Approval, "Arjun rejected" cells, host replies |
 | Decision | select | Auto | Akshay's call: Sponsored, Precall, Book, Decline, Present to host |
 | Amount | number | Human | Only when money is agreed (Decision is Sponsored, or Type is Client) |
 | Paid | select | Auto | Not due, Invoiced, Part paid, Paid. Hidden unless Amount is set |
 | Episode | relation → Episodes | Auto | Created when Stage reaches Agreed and the recording is booked. Two guests on one episode means two Engagements pointing at the same Episode |
 | Activities | relation → Activities | Auto | |
+| Tags | multi-select | Auto / Human | Free, e.g. Warm intro, Big name, Follow up in 2027 |
 
 Status mapping from the sheets (74 raw values onto these fields) is in `docs/audits/sheets.md`.
 
@@ -122,7 +127,7 @@ One row per episode. Created automatically when a recording is booked. Absorbs E
 | Show | relation → Shows | Auto | |
 | Guests | relation → People | Auto | One or more. Two-guest episodes link both |
 | Engagements | relation → Engagements | Auto | One per guest |
-| Tier | select | Human | Tier 1, Tier 2, Tier 3 (Spotlight). The one tap after recording. Tier 3 publishes on the Spotlight channel and feed |
+| Tags | multi-select | Auto / Human | Holds the tier (Tier 1, Tier 2, Tier 3 Spotlight), set by the one tap after recording. Tier 3 Spotlight publishes on the Spotlight channel and feed. Anything else the team wants: Two guests, Re-edit, Sponsored, Evergreen |
 | Status | select | Auto | Scheduled, Recorded, Transcript in, Copy in progress, Editing, Ready, Published |
 | Recording date | date | Auto | From the calendar |
 | Planned release | date | Auto | Set by the release planner, approved on the dashboard |
@@ -132,7 +137,7 @@ One row per episode. Created automatically when a recording is booked. Absorbs E
 | Copy done | checkbox | Auto | True when every copy section in the working doc has a tick |
 | Open checks | number | Auto | Unticked review flags from the skills (verify ASR, confirm a fact). Ready is blocked while above 0 |
 | YouTube, Spotify, Substack, LinkedIn links | url | Auto | After release |
-| Guest form in | checkbox | Auto | Photo, logo, designation, links and PR emails received |
+| Guest form in | checkbox | Auto | FT only. Photo, logo, designation, links and PR emails received. Other shows do not send the form |
 | Tasks | relation → Tasks | Auto | |
 
 No typed Final fields. The final version of every piece of copy is whatever is ticked in the working doc.
@@ -173,6 +178,7 @@ A handful per episode, created automatically. Owner comes from the task type.
 | Owner | select | Auto | From the task type (below) |
 | Due | date | Auto | Counted back from Planned release |
 | Status | select | Auto / Human | To do, Doing, Done. Copy tasks close themselves when the working doc is ticked |
+| Tags | multi-select | Auto / Human | Free, e.g. Blocked, Urgent |
 
 | When | Task | Owner | Due |
 |---|---|---|---|

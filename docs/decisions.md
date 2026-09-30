@@ -42,10 +42,13 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 | 34 | Copy tasks go to Ranjita, video tasks to Sarika, created automatically from episode status, due dates counted back from Planned release. | Akshay, 30 Sep |
 | 35 | Release calendar: Episodes have Planned and Actual release. A planning task runs every other week, proposes dates for the month, Akshay approves. | Akshay, 30 Sep |
 | 36 | Shows carry a guest note, recording guidelines, platform links (YouTube, Spotify, Apple, Amazon, RSS, website), cadence, and a wiki page. | Akshay, 30 Sep |
+| 37 | Tags (free multi-select) on People, Organisations, Engagements, Episodes and Tasks. The episode tier is a tag. | Akshay, 30 Sep |
+| 38 | The guest form is sent for Founder Thesis only. | Akshay, 30 Sep |
+| 39 | Engagements carry a Dossier link. | Akshay, 30 Sep |
 
 ## Open
 
-- Field-level spec: draft 2 in `docs/schema.md`, waiting for Akshay's go.
+- Field-level spec: draft 3 in `docs/schema.md`, waiting for Akshay's go.
 - Release cadence per show.
 - Which templates exist per show, and approval of each.
 - Backlog clean-up for the existing unread inbox.
