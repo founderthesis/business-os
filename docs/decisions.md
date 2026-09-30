@@ -33,6 +33,7 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 - Which templates exist per show, and approval of each.
 - Backlog clean-up for the existing unread inbox.
 - Whether Spotlight is a show or a tier of Founder Thesis. Tier list today: Tier 1 FT, Tier 2 FT, Tier 3 Spotlight.
+- From the audits (30 Sep): auto-read threads where Akshay is only cc'd and Mamatha is handling; pre-select Sponsored when the eval says Decline; who owns un# evals now that Ravi's mailbox is unused; what the Founder_Thesis_Master_People_List in Drive is; whether phone numbers stay in Notion; whether Blue's 138 videos get copied to Drive; whether the INR 5k/10k Google Ads upsell on the guest form is still offered.
 
 ## Overrides
 
