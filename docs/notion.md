@@ -28,4 +28,4 @@ Old tables are untouched until their data is migrated and checked.
 
 | Date | Batch | What | Result |
 |---|---|---|---|
-| 2 Oct 2026 | master-list-2026-10-02 | Founder_Thesis_Master_People_List (8 Sep copy) | 683 People and 654 Organisations created, counts reconciled (687 rows = 683 + 2 merged + 2 unnamed numbers held back). 10 wrong LinkedIn URLs corrected before import. Sridhar Muppid / Sridhar Muppidi flagged as a possible duplicate for Akshay. |
+| 2 Oct 2026 | master-list-2026-10-02 | Founder_Thesis_Master_People_List (8 Sep copy) | 683 People and 654 Organisations created, counts reconciled (687 rows = 683 + 2 merged + 2 unnamed numbers held back). 10 wrong LinkedIn URLs corrected before import. Sridhar Muppid / Sridhar Muppidi confirmed as one person by Akshay: kept row renamed and linked to both companies; the other row is marked "Merged into another row" for deletion in the Notion UI. |

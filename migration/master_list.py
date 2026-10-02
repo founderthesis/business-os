@@ -20,7 +20,7 @@ BATCH = "master-list-2026-10-02"
 ROLE_FIX = {"founder": "Founder", "co founder": "Co-founder", "co-founder": "Co-founder"}
 
 # Rows the audit showed belong together (same person held twice). Keep the first, merge the second.
-MERGE = {579: 205, 589: 583}  # Somdutta Singh, Sri Misra / Srikumar Misra
+MERGE = {579: 205, 589: 583, 585: 584}  # Somdutta Singh, Sri Misra / Srikumar Misra, Sridhar Muppidi (Akshay confirmed 2 Oct)
 
 
 def clean_name(s):
