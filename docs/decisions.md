@@ -48,8 +48,8 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 
 ## Open
 
-- Field-level spec: draft 3 in `docs/schema.md`, waiting for Akshay's go.
-- Release cadence per show.
+- Field-level spec: draft 3 approved 2 Oct; tables created (see `docs/notion.md`).
+- Release cadence: not fixed; the planner proposes dates each time.
 - Which templates exist per show, and approval of each.
 - Backlog clean-up for the existing unread inbox.
 
