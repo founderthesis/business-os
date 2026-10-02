@@ -23,3 +23,9 @@ Views on the home page: Akshay's dashboard (Queue), Release calendar (Episodes),
 Shows seeded: Founder Thesis, alpha un#, Built to Share, Human by Design. Hosts get linked once their People rows exist.
 
 Old tables are untouched until their data is migrated and checked.
+
+## Imports
+
+| Date | Batch | What | Result |
+|---|---|---|---|
+| 2 Oct 2026 | master-list-2026-10-02 | Founder_Thesis_Master_People_List (8 Sep copy) | 683 People and 654 Organisations created, counts reconciled (687 rows = 683 + 2 merged + 2 unnamed numbers held back). 10 wrong LinkedIn URLs corrected before import. Sridhar Muppid / Sridhar Muppidi flagged as a possible duplicate for Akshay. |
