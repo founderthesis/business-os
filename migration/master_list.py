@@ -62,6 +62,15 @@ def main(path):
                           "action": "Add the right LinkedIn in Notion"})
         df.loc[grp.index, "LinkedIn"] = None
 
+    # Human-checked corrections (data/fixes/linkedin.csv: row,linkedin,basis) override the blanking above.
+    fixes_path = root / "data/fixes/linkedin.csv"
+    if fixes_path.exists():
+        fixes = pd.read_csv(fixes_path)
+        for _, f in fixes.iterrows():
+            df.loc[df["#"] == f["row"], "LinkedIn"] = f["linkedin"]
+            flags = [x for x in flags if not (x["#"] == f["row"] and "LinkedIn" in x["issue"])]
+        print(f"applied {len(fixes)} LinkedIn fixes")
+
     people = {}
     for _, r in df.iterrows():
         n = r["#"]
