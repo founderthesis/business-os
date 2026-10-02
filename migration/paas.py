@@ -50,7 +50,7 @@ def name_key(s):
 
 def org_key(s):
     s = fold(re.sub(r"\.(com|in|vc|io|ai|one|co)\b", " ", str(s or ""), flags=re.I))
-    return re.sub(r"\s+", " ", LEGAL.sub(" ", s)).strip() or fold(s)
+    return re.sub(r"\s+", "", LEGAL.sub(" ", s)) or re.sub(r"\s+", "", fold(s))
 
 
 def li_slug(u):
@@ -94,7 +94,8 @@ class Index:
                 self.by_li[li_slug(p["LinkedIn"])] = ref
             for e in emails(p.get("Email")) + emails(p.get("Other emails")):
                 self.by_email.setdefault(e, ref)
-            orgs_of = [page_url(o) for o in json.loads(p["Organisation"])] if p.get("Organisation") else []
+            org_val = p.get("Organisation") or []
+            orgs_of = [page_url(o) for o in (json.loads(org_val) if isinstance(org_val, str) else org_val)]
             self.by_name.setdefault(name_key(p["Name"]), []).append((ref, orgs_of))
         self.org_by_key, self.org_by_domain = {}, {}
         for o in orgs:
@@ -120,6 +121,10 @@ class Index:
         for ref, orgs_of in hits:
             if org_ref and org_ref in orgs_of:
                 return ref, "name and organisation"
+        # a full name that matches one existing row with no organisation (e.g. guests created from Blue)
+        orgless = [ref for ref, orgs_of in hits if not orgs_of]
+        if len(hits) == 1 and orgless and len(name_key(name).split()) >= 2:
+            return orgless[0], "name, existing row had no organisation"
         if hits:
             return None, "same name at a different organisation"
         return None, None
@@ -141,7 +146,8 @@ class Run:
     def __init__(self, idx):
         self.idx = idx
         self.orgs, self.people, self.engs, self.acts, self.review = [], [], [], [], []
-        self.matched = {"linkedin": 0, "email": 0, "name and organisation": 0}
+        self.matched = {"linkedin": 0, "email": 0, "name and organisation": 0, "name, existing row had no organisation": 0}
+        self.link_org = []  # existing people matched here who have no organisation yet
 
     def org(self, name, domain, props, body):
         ref = self.idx.org(name, domain)
@@ -157,6 +163,10 @@ class Run:
         ref, how = self.idx.person(name, li, personal, org_ref)
         if ref:
             self.matched[how] += 1
+            if how.startswith("name, existing") and org_ref:
+                self.link_org.append({"person": ref, "org": org_ref, "name": name})
+                self.review.append({"source": src_label, "name": name, "issue": "matched by full name only",
+                                    "action": "Linked to the existing person; check it is the same human"})
             return ref
         props = {"Name": name, "Source": "Migration", "Source ID": source_id, "Migration batch": batch,
                  "date:Captured:start": TODAY, "Match status": "Possible duplicate" if how else "Clean",
@@ -259,6 +269,8 @@ def eng_body_vc(r):
 
 PAAS_STAGE = {"Send Pitch": "Identified", "In discussion": "In conversation", "Proposal sent": "Proposal sent",
               "Later": "Contacted", "Renew": "Identified", "Identified": "Identified", None: "Contacted"}
+# PaaS founders entered by first name only, resolved by hand against People (2 Oct)
+FOUNDER_FULL_NAME = {"Wissen": "Raghu Pareddy"}
 HEAT = {"hot": "Hot", "warm": "Warm", "lukewarm": "Warm", "cold": "Cold"}
 
 
@@ -271,6 +283,7 @@ def paas(run, rows):
         founder = re.sub(r"\(.*?\)", "", founder).strip()
         name, _, title = founder.partition(",")
         name, title = re.sub(r"^(Dr|Mr|Ms)\.?\s+", "", name.strip()), title.strip() or None
+        name = FOUNDER_FULL_NAME.get(company, name)
         domain = next((domain_of(l.get("href")) for l in r.get("property_links") or []
                        if l.get("property") == "Company" and l.get("href")), None)
         org_ref, _ = run.org(company, domain, {"Type": "Startup", "Source": "Migration", "Source ID": sid,
@@ -338,7 +351,7 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     (ROOT / "data/review").mkdir(parents=True, exist_ok=True)
     for name, data in [("orgs_new", run.orgs), ("people_new", run.people), ("engagements", run.engs),
-                       ("activities", run.acts)]:
+                       ("activities", run.acts), ("link_org", run.link_org)]:
         json.dump(data, open(OUT / f"{name}.json", "w"), indent=1, ensure_ascii=False)
     pd.DataFrame(run.review).to_csv(ROOT / "data/review/paas_review.csv", index=False)
 
