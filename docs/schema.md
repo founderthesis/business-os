@@ -32,7 +32,7 @@ One row per human, forever. This is the master network list: every FT guest, eve
 | Blurb | text | Auto | Latest blurb (Slack #ft-blurbs, host DMs, or generated). About 150 words |
 | Research | page body | Auto | Every eval, dossier, prep note and call summary, newest first, each with date and link |
 | Latest eval verdict | select | Auto | Book immediately / Strong consider / Pre-call needed / Decline |
-| Tags | multi-select | Auto / Human | Starts with Guest, Prospect, Sponsor, PR contact, Host, Client, Team, Investor; anyone can add more |
+| Tags | multi-select | Auto / Human | Starts with Guest, Prospect, Sponsor, PR contact, Host, Client, Team, Investor, US VC, No email, Name guessed, Role inbox; anyone can add more |
 | FT guest | checkbox | Auto | True if linked to any published FT or Spotlight episode |
 | Substack article | url | Migrate / Auto | Their founderthesis.com feature |
 | Instagram | url | Form / Auto | For sending reels on release day |
@@ -55,6 +55,7 @@ One row per company, fund or agency.
 | Domain | text | Auto | Used to match people and infer PR agencies |
 | Type | select | Auto | Startup, Enterprise, Fund, PR agency, Client, Vendor |
 | Website | url | Auto | |
+| General email | email | Migrate / Auto | Role inbox (info@, hello@). Personal addresses go on People |
 | People | relation → People | Auto | |
 | Client | checkbox | Human | True for retainer clients |
 | Engagements | relation → Engagements | Auto | |
@@ -70,13 +71,16 @@ One row per pursuit: a person (or organisation) and a goal, usually on a show. R
 | Field | Type | Fill | Notes |
 |---|---|---|---|
 | Name | title | Auto | "Person @ Company, Show" |
-| Type | select | Auto | Guest outbound, Guest inbound, BD, Sponsor, Partner, Client |
+| Type | select | Auto | Guest outbound, Guest inbound, PaaS (selling our production service), Sponsor, Partner, Client, Vendor |
 | Show | relation → Shows | Migrate / Auto | The show it is for |
 | Guest | relation → People | Migrate / Auto | The person being featured or pitched |
 | Stakeholders | relation → People | Auto | Everyone else on the thread: PR agency people, company comms, EAs, interns. Filled from email participants. All are copied on guest emails |
 | Via | relation → People | Migrate / Auto | The PR contact who brought it in, if any |
 | Organisation | relation → Organisations | Auto | |
-| Stage | select | Auto | Identified, Contacted, In conversation, Agreed |
+| Stage | select | Auto | Identified, Contacted, In conversation, Proposal sent (PaaS and sponsors only), Agreed |
+| Heat | select | Human | Hot, Warm, Cold. PaaS and sponsor deals only |
+| Pitch link | url | Migrate / Auto | PaaS pitch note, priced pitch or short link |
+| Rank | number | Migrate / Auto | Order to work a target list, 1 first |
 | Outcome | select | Auto | Live, Done, Declined, No response, Dropped out |
 | Whose move | select | Auto | Akshay, Mamatha, Chaandini, Sarika, Ranjita, Host, Them |
 | Next action | text | Auto | One line |
@@ -91,7 +95,7 @@ One row per pursuit: a person (or organisation) and a goal, usually on a show. R
 | Paid | select | Auto | Not due, Invoiced, Part paid, Paid. Hidden unless Amount is set |
 | Episode | relation → Episodes | Auto | Created when Stage reaches Agreed and the recording is booked. Two guests on one episode means two Engagements pointing at the same Episode |
 | Activities | relation → Activities | Auto | |
-| Tags | multi-select | Auto / Human | Free, e.g. Warm intro, Big name, Follow up in 2027 |
+| Tags | multi-select | Auto / Human | Free, e.g. Warm intro, Big name, US VC, Priority A/B/C, Has podcast, No email, Follow up in 2027 |
 
 Status mapping from the sheets (74 raw values onto these fields) is in `docs/audits/sheets.md`.
 
@@ -140,6 +144,11 @@ One row per episode. Created automatically when a recording is booked. Absorbs E
 | Copy done | checkbox | Auto | True when every copy section in the working doc has a tick |
 | Open checks | number | Auto | Unticked review flags from the skills (verify ASR, confirm a fact). Ready is blocked while above 0 |
 | YouTube, Spotify, Substack, LinkedIn links | url | Auto | After release |
+| Apple | url | Auto | After release |
+| Sector | multi-select | Migrate / Auto | Fintech, SaaS, D2C, Marketplace, Deeptech, Edtech, Healthtech, Services, Gaming |
+| Article state | select | Auto | None, Short, Drafted, Full: the founderthesis.com feature |
+| Article priority | number | Migrate / Auto | Order the article agent works through |
+| YouTube views | number | Auto | Lifetime, refreshed by a routine |
 | Guest form in | checkbox | Auto | FT only. Photo, logo, designation, links and PR emails received. Other shows do not send the form |
 | Tasks | relation → Tasks | Auto | |
 | Priority | formula | Auto | 1 client, 2 Tier 1, 3 Tier 2, 4 Tier 3 Spotlight, 5 untiered. Sorts the release calendar and task due dates |

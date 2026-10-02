@@ -51,6 +51,11 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 | 43 | Science and PhD guests review a rendered frame before release ("Guest review" tag, default on for HBD). | 1 Oct release call |
 | 44 | The weekly release feedback call notes are parsed per episode and feed the skills' learning. The release-frequency test is reviewed around 1 Nov. | Akshay, 2 Oct |
 | 45 | HK/SG Guest - Un# Sheet1 migrates as alpha un# targets (Identified, recommendation as tag, blurb and research link on the person). Sheet2 and the alpha un# podcast pitch list stay out. | Akshay, 2 Oct |
+| 46 | PaaS (podcasting as a service: selling ThePodium's production service to get client shows) is an Engagement type. It replaces "BD". PaaS deals carry Heat, Pitch link and the Proposal sent stage. | Akshay, 2 Oct |
+| 47 | US VC Podcast Outreach migrates in full as PaaS engagements: one per firm, tagged US VC and Priority A/B/C, ranked by Fit Rank. Every named contact becomes a person (first contact as the main contact, the rest as stakeholders). Firms become Organisations with the role inbox in General email and the fit research in the page body. Reverses the earlier "not migrating" call. | Akshay, 2 Oct |
+| 48 | "No email" tag on any person, firm or engagement with no address to write to, so it can be filtered out. | Akshay, 2 Oct |
+| 49 | PR contacts from Blue guest forms become People tagged PR contact and are linked as stakeholders on the guest's engagement. Names are guessed from the address and tagged "Name guessed"; shared inboxes are tagged "Role inbox". | Akshay, 2 Oct |
+| 50 | Old Notion tables fold in without rebuilding any table: PaaS Leads and US VC into Engagements; B2S and HBD lists into Engagements; Vendor Pitches form routes to Engagements type Vendor; Meetings feeds Activities; Newsjack Log stays as its agent's log; Publishing Plan, Substack Posts Audit, inbox snapshots, Scout log, starter template and the DELETE page retire after checks. Episodes gain Sector, Article state, Article priority, YouTube views and Apple. | Akshay, 2 Oct |
 
 ## Open
 

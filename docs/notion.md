@@ -18,7 +18,7 @@ Data source IDs are what scripts and routines use.
 | Templates | `collection://b2976a03-9983-49e1-96cf-d237a395148d` |
 | Credentials | `collection://e5ccd27a-cb8b-436e-8269-2dcd4210b1a7` (never read by routines) |
 
-Views on the home page: Akshay's dashboard (Queue), Release calendar (Episodes), Team tasks (Tasks by owner), Pipeline (Engagements by stage), Network (People who are FT guests or in the WhatsApp group).
+Views on the home page: Akshay's dashboard (Queue), Release calendar (Episodes), Team tasks (Tasks by owner), Pipeline (Engagements by stage), Network (People who are FT guests or in the WhatsApp group). In Engagements: PaaS pipeline (board by stage) and US VC outreach (table by rank; quick filters on Tags so "No email" can be excluded).
 
 Shows seeded: Founder Thesis, alpha un#, Built to Share, Human by Design. Hosts get linked once their People rows exist.
 

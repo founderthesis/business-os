@@ -15,6 +15,8 @@ Decided 2 Oct 2026 (Akshay delegated the call). Rule: migrate a source only when
 | Notion: Members Master List, Whatsapp Group Members | Notion | People | Audited; overlaps the master list |
 | Notion: Built-2-Share guest list (live + archive), HBD Guest Outreach, PaaS Leads | Notion | People, Engagements | Audited |
 | Notion: Episode Inventory, Article Queue page bodies | Notion | Episodes | Audited; 418 of 439 match by YouTube URL |
+| Notion: Podcast-as-a-Service Leads (14) | Notion | Engagements (PaaS), People, Organisations | Akshay's live agency sales pipeline |
+| Notion: US VC Podcast Outreach (774 firms) | Notion | Organisations, People, Engagements (PaaS, tagged US VC) | Akshay, 2 Oct: these are PaaS leads; bring every name |
 | Blue: field data only | Blue | Episodes (Blue-only and in-flight), Engagements | Audited; no files |
 
 ## Not migrating: for Akshay to review
@@ -39,7 +41,6 @@ Decided 2 Oct 2026 (Akshay delegated the call). Rule: migrate a source only when
 | Fast Code Podcast Pipeline | [Sheet](https://docs.google.com/spreadsheets/d/12MhmKFqftiswVWp9OxEBEkmaLfSloqPoZYQtcNKjZcA/edit) | Client show pipeline; confirm it belongs in our system |
 | Podcast Lead sheet (FastCode) | [Sheet](https://docs.google.com/spreadsheets/d/1nl3JghuqOplj24cfkDzIt3pZY3_OcrNOyoGHmHkhpmQ/edit) | Client-owned sheet |
 | April Scheduling | [Sheet](https://docs.google.com/spreadsheets/d/1sgNpFjCQgbtNXQp-MNKBWfNrueIsLMuY2yY2RH3S_2s/edit) | Old scheduling sheet |
-| Notion: US VC Podcast Outreach (774 firms, all "Not sent") | Notion | Cold list, never worked |
 
 ## Order
 
