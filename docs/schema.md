@@ -42,6 +42,8 @@ One row per human, forever. This is the master network list: every FT guest, eve
 | Engagements | relation → Engagements | Auto | Everything we have pursued with them, any show |
 | Last contact | date | Auto | Rolled up from Activities |
 | Match status | select | Auto | Clean / Possible duplicate / Merged into another row. A human resolves duplicates |
+| Duplicate of | relation → People | Auto | The other row of a possible duplicate pair, so the human sees both |
+| Duplicate check | text | Auto | One line from the dedupe check (web lookup): same, different or unsure, and why |
 
 Views: Network (FT guest or In WhatsApp group; the pitch asset), PR contacts, Needs review (possible duplicates).
 
