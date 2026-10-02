@@ -62,10 +62,11 @@ def guess_name(local):
 
 
 def pr_emails(rec):
-    """Every address in a field whose name says PR or comms. Field names differ a little by workspace."""
+    """Every address in a PR / comms field (FT guest form) or an "Other Email IDs" field (alpha un#, Hissa, FastCode).
+    Field names differ a little by workspace."""
     out = []
     for k, v in (rec.get("fields") or rec.get("custom_fields") or {}).items():
-        if v and re.search(r"\b(pr|comms?|communications?)\b", k, re.I):
+        if v and re.search(r"\b(pr|comms?|communications?)\b|^other email id", k, re.I):
             out += EMAIL.findall(str(v))
     return [e.strip(".").lower() for e in out]
 
@@ -84,7 +85,7 @@ def main():
         seen_records += 1
         for e in dict.fromkeys(emails):
             c = contacts[e]
-            c["records"].append(rec["id"])
+            c["records"].append(rec["original_id"])
             c["guests"].append(rec.get("title"))
 
     rows, review = [], []
