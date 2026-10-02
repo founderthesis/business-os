@@ -270,7 +270,10 @@ def eng_body_vc(r):
 PAAS_STAGE = {"Send Pitch": "Identified", "In discussion": "In conversation", "Proposal sent": "Proposal sent",
               "Later": "Contacted", "Renew": "Identified", "Identified": "Identified", None: "Contacted"}
 # PaaS founders entered by first name only, resolved by hand against People (2 Oct)
-FOUNDER_FULL_NAME = {"Wissen": "Raghu Pareddy"}
+FOUNDER_FULL_NAME = {"Wissen": "Raghu Pareddy", "SilverX": "Ajay Jain", "Trackerwave": "Pradeep Vadakkekhatt"}
+FOUNDER_TITLE = {"Trackerwave": "Founder and CEO"}
+# SilverX is Silverneedle renamed (Akshay, 2 Oct)
+ORG_ALIAS = {"SilverX": "Silverneedle"}
 HEAT = {"hot": "Hot", "warm": "Warm", "lukewarm": "Warm", "cold": "Cold"}
 
 
@@ -284,9 +287,10 @@ def paas(run, rows):
         name, _, title = founder.partition(",")
         name, title = re.sub(r"^(Dr|Mr|Ms)\.?\s+", "", name.strip()), title.strip() or None
         name = FOUNDER_FULL_NAME.get(company, name)
+        title = FOUNDER_TITLE.get(company, title)
         domain = next((domain_of(l.get("href")) for l in r.get("property_links") or []
                        if l.get("property") == "Company" and l.get("href")), None)
-        org_ref, _ = run.org(company, domain, {"Type": "Startup", "Source": "Migration", "Source ID": sid,
+        org_ref, _ = run.org(ORG_ALIAS.get(company, company), domain, {"Type": "Startup", "Source": "Migration", "Source ID": sid,
                                                "Migration batch": BATCH_PAAS, "date:Captured:start": TODAY}, "")
         tags = ["Prospect"] + (["Client"] if r.get("Status") == "Renew" else [])
         pref = run.person(name, title, None, mails, org_ref, sid, BATCH_PAAS, tags, f"PaaS: {company}") if name else None
