@@ -35,6 +35,8 @@ One row per human, forever. This is the master network list: every FT guest, eve
 | Tags | multi-select | Auto / Human | Starts with Guest, Prospect, Sponsor, PR contact, Host, Client, Team, Investor; anyone can add more |
 | FT guest | checkbox | Auto | True if linked to any published FT or Spotlight episode |
 | Substack article | url | Migrate / Auto | Their founderthesis.com feature |
+| Instagram | url | Form / Auto | For sending reels on release day |
+| What they do | text | Migrate | Short descriptor from the master list |
 | In WhatsApp group | checkbox | Migrate / Human | Akshay's 500+ founders and VCs group |
 | Episodes | relation → Episodes | Auto | |
 | Engagements | relation → Engagements | Auto | Everything we have pursued with them, any show |
@@ -56,6 +58,7 @@ One row per company, fund or agency.
 | People | relation → People | Auto | |
 | Client | checkbox | Human | True for retainer clients |
 | Engagements | relation → Engagements | Auto | |
+| Instagram | url | Form / Auto | Company page, for reels on release day |
 | Tags | multi-select | Auto / Human | Free |
 
 PR agencies are recorded here for the first time. Today the agency is never written down; the migration infers it from the PR contact's email domain.
@@ -139,6 +142,11 @@ One row per episode. Created automatically when a recording is booked. Absorbs E
 | YouTube, Spotify, Substack, LinkedIn links | url | Auto | After release |
 | Guest form in | checkbox | Auto | FT only. Photo, logo, designation, links and PR emails received. Other shows do not send the form |
 | Tasks | relation → Tasks | Auto | |
+| Priority | formula | Auto | 1 client, 2 Tier 1, 3 Tier 2, 4 Tier 3 Spotlight, 5 untiered. Sorts the release calendar and task due dates |
+| Views 7d, Avg view duration, New viewers %, Browse %, External % | number / text | Auto | The numbers reviewed on the weekly release feedback call |
+| Team feedback | text | Auto | Verdicts from the weekly call, parsed from the Gemini notes |
+
+Episode tags also include Client (client episodes jump the queue) and Guest review (rendered frame sent to the guest before release; default for HBD).
 
 No typed Final fields. The final version of every piece of copy is whatever is ticked in the working doc.
 

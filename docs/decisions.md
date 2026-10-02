@@ -57,7 +57,6 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 - Release cadence: not fixed; the planner proposes dates each time.
 - Which templates exist per show, and approval of each.
 - Backlog clean-up for the existing unread inbox.
-- Notion fields still to add (declined on 2 Oct, pending Akshay): Episodes Priority formula, Client and Guest review tags, episode metrics (Views 7d, watch duration, new viewer %, browse %, external %), Team feedback; Instagram on Organisations and People.
 
 ## Overrides
 
