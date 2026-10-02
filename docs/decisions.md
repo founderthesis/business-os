@@ -50,6 +50,7 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 | 42 | Reels go to the guest and company on release day for their Instagram. | 1 Oct release call |
 | 43 | Science and PhD guests review a rendered frame before release ("Guest review" tag, default on for HBD). | 1 Oct release call |
 | 44 | The weekly release feedback call notes are parsed per episode and feed the skills' learning. The release-frequency test is reviewed around 1 Nov. | Akshay, 2 Oct |
+| 45 | HK/SG Guest - Un# Sheet1 migrates as alpha un# targets (Identified, recommendation as tag, blurb and research link on the person). Sheet2 and the alpha un# podcast pitch list stay out. | Akshay, 2 Oct |
 
 ## Open
 

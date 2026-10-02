@@ -10,6 +10,7 @@ Decided 2 Oct 2026 (Akshay delegated the call). Rule: migrate a source only when
 | FT Pipeline | [Sheet](https://docs.google.com/spreadsheets/d/1-POWJfFqOeqUC8f_WT2wdkmvW-BsZ6kXKeYJYz_8iFE/edit) | People, Engagements | Audited (`docs/audits/sheets.md`); live |
 | un# Pipeline | [Sheet](https://docs.google.com/spreadsheets/d/1QvWXTrGeLTtuExsFVZzvrbe8vWNdvw8kYT3MJybHm4g/edit) | People, Engagements | Audited; live |
 | B2S_Guest_list.xlsx, HBD_new.xlsx | Uploaded 30 Sep | People, Engagements | Audited |
+| HK/SG Guest - Un#, Sheet1 only | [Sheet](https://docs.google.com/spreadsheets/d/1A-mu0Vk-j_iz89HFS6C2k3nvaV2G790lhgkk5ZqtQq0/edit) | People (blurb and Perplexity link as research), alpha un# Engagements at Identified, recommendation as a tag | Researched shortlist of about 58 HK/SG crypto founders; matched against un# Pipeline first. Akshay agreed 2 Oct |
 | Un# Scheduling | [Sheet](https://docs.google.com/spreadsheets/d/1DCJQksPObxVzKIT5AH__Cy5NA7GPb4PF7pmQLqCI9KY/edit) | Engagements (recordings being scheduled) | Small, edited daily by Mamatha |
 | Notion: Members Master List, Whatsapp Group Members | Notion | People | Audited; overlaps the master list |
 | Notion: Built-2-Share guest list (live + archive), HBD Guest Outreach, PaaS Leads | Notion | People, Engagements | Audited |
@@ -31,8 +32,8 @@ Decided 2 Oct 2026 (Akshay delegated the call). Rule: migrate a source only when
 | BTS_Guest_Shortlist_46 | [Sheet](https://docs.google.com/spreadsheets/d/1VBxZE39A2r33FnqO2mqtrCMXYHr2OC3kKglCzvkXS6A/edit) | Shortlist; likely already in the B2S lists |
 | BuiltToShare_Guest_Shortlist_Aug2026 | [Sheet](https://docs.google.com/spreadsheets/d/1-85C8P5bfoiPSg3QnfB7VCk7SwDwpBhYZdgHUPlFL6s/edit) | Same |
 | Next_Horizon_Guest_Shortlist v2 / v4 | [v2](https://docs.google.com/spreadsheets/d/1_V6rN_r7LYp3V0ma4JU_7TMTd-lMRATbywO8eUteRxI/edit), [v4](https://docs.google.com/spreadsheets/d/1TVnH3nj9No-ETgr9-VBNZVT7p2lJYULqifyJToUBr7k/edit) | Unknown show; tell me if it is a client show |
-| HK/SG Guest - Un# | [Sheet](https://docs.google.com/spreadsheets/d/1A-mu0Vk-j_iz89HFS6C2k3nvaV2G790lhgkk5ZqtQq0/edit) | Last edited July; may overlap un# Pipeline |
-| alhpa Un# Podcast Pitch | [Sheet](https://docs.google.com/spreadsheets/d/1VYEnq25gF3KGXj-cPlhKowMeYsCc5BziusEgVYvTSas/edit) | 2025, tiny |
+| HK/SG Guest - Un#, Sheet2 | [Sheet](https://docs.google.com/spreadsheets/d/1A-mu0Vk-j_iz89HFS6C2k3nvaV2G790lhgkk5ZqtQq0/edit) | 16 rows with blurbs attached to the wrong people and repeated names; importing would put wrong research on real people |
+| alhpa Un# Podcast Pitch | [Sheet](https://docs.google.com/spreadsheets/d/1VYEnq25gF3KGXj-cPlhKowMeYsCc5BziusEgVYvTSas/edit) | Aug 2025 list of 13 other crypto podcasts and their pitch inboxes, for pitching un# or Sri as a guest; no outreach recorded. Start fresh as BD engagements if that effort starts |
 | FT Cold Lead | [Sheet](https://docs.google.com/spreadsheets/d/1U8TsveWUBGGLt3QxpZMByR1NkyXGR2bhJAExyTx6N9Y/edit) | 2025; copied into FT Pipeline's Cold Lead tab |
 | FT_guest_Shark | [Sheet](https://docs.google.com/spreadsheets/d/1h3Op-YLLpzuKoe0wyVcYkvLiOOBAC08hQ7YwGz6Z78M/edit) | Idea list |
 | Fast Code Podcast Pipeline | [Sheet](https://docs.google.com/spreadsheets/d/12MhmKFqftiswVWp9OxEBEkmaLfSloqPoZYQtcNKjZcA/edit) | Client show pipeline; confirm it belongs in our system |
