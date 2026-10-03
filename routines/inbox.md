@@ -54,7 +54,7 @@ Classify by what the newest messages need from Akshay:
 - Reminder: an explicit "remind me" or a deferral with a date.
 - Noise: newsletters, SaaS promos, finance@ group promos, his own Substack issue, calendar reminders, BD sequence copies, mail to the hello@, sp@, nk@ or rc@ aliases unless it is a real person writing.
 
-Standing approval (decision 56): a PR person or agency pitching a guest straight to Akshay (he is in To, Mamatha is not on the thread) gets the reply "Thanks for your mail, adding Mamatha to coordinate." with Mamatha in Cc (her address is on her People row). In LIVE mode with Sending ON, send it, log it, and file the thread as a Heads-up "Routed to Mamatha: <who> pitching <guest>". In TEST mode, do not send; file it as a Heads-up "Would route to Mamatha: ...".
+Standing approval (decision 56): a PR person or agency pitching a guest, or a guest pitching themselves, straight to Akshay or to the hello@ alias (Mamatha is not on the thread) gets the reply "Thanks for your mail, adding Mamatha to coordinate." with Mamatha in Cc (her address is on her People row). In LIVE mode with Sending ON, send it, log it, and file the thread as a Heads-up "Routed to Mamatha: <who> pitching <guest>". In TEST mode, do not send; file it as a Heads-up "Would route to Mamatha: ...".
 
 Match people: sender and recipient addresses against People Email and Other emails; then the email domain against Organisations Domain or Website; then name plus company. Find the open Engagement where they are the Guest or a Stakeholder, and the Episode if one is linked. A real business sender who is not in People: create a Person (Source "Agent", Name from the signature, Organisation if known). Never merge or delete people; if a match is uncertain, say so in the card.
 

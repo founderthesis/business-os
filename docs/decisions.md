@@ -61,7 +61,7 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 | 53 | Duplicate People are checked online first; the pair is linked ("Duplicate of") with a one-line reason, and Akshay decides by comment or by Match status. Rows to remove are marked, never deleted by an agent. | Akshay, 3 Oct |
 | 54 | The inbox agent runs at 07:00 and 18:00 JST; the 07:00 run writes the morning brief at the top of the dashboard. One card per Gmail thread. | Akshay, 3 Oct |
 | 55 | The inbox agent starts in TEST mode (sorts and drafts, sends nothing, marks nothing read, writes a test log). Akshay switches it to LIVE on the dashboard after one or two good test runs. | Akshay, 3 Oct |
-| 56 | Standing approval: a PR pitch sent straight to Akshay gets "Thanks for your mail, adding Mamatha to coordinate" with Mamatha cc'd, without asking. | Akshay, 3 Oct |
+| 56 | Standing approval: a guest pitch sent straight to Akshay or to hello@, by a PR person or by the guest themselves, gets "Thanks for your mail, adding Mamatha to coordinate" with Mamatha cc'd, without asking. | Akshay, 3 Oct |
 
 ## Open
 
