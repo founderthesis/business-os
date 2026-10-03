@@ -20,7 +20,7 @@ TOOLS: Gmail, Google Calendar and Notion connectors (load them with ToolSearch: 
 
 NOTION IDS
 - Dashboard page: 3ee19a301a7f81c58589cc9ce372f86e
-- Queue: collection://af59132c-92cb-4e87-85f0-266bd07309c4  (Item, Type, For, Status, Choice, Comment, Recommendation, Due, People, Engagement, Episode, Gmail thread, Thread ID, Marked read, Sent, Decided at)
+- Queue: collection://af59132c-92cb-4e87-85f0-266bd07309c4  (Item, Type, For, Status, Choice, Comment, Recommendation, Eval, LinkedIn, Website, Other link, Due, People, Engagement, Episode, Gmail thread, Thread ID, Marked read, Sent, Decided at)
 - People: collection://e6c44319-7f81-4da6-8b80-8441a4875d7a  (team rows are tagged Team and hold their email)
 - Organisations: collection://c43c280a-3b37-4821-96ef-dab688a53aea
 - Engagements: collection://5522ee21-d8e5-4ec0-bf3e-90bcf88d24c5
@@ -62,6 +62,12 @@ Match people: sender and recipient addresses against People Email and Other emai
 Write the card (one Queue row per thread; if a row with the same Thread ID exists, update it instead of creating a new one):
 - Item: one plain line, "<who>: <what they want>". Example: "Rhea (Value360): wants a recording slot for Arjun Mehta, Founder Thesis".
 - Type, For (Akshay unless the item is plainly for a team member), Status Waiting, Thread ID, Gmail thread (the thread's viewUrl), People, Engagement, Episode, Due for reminders.
+- Links, so Akshay can decide without opening the mail (every Decision and Action; Heads-up when there is one). Read the message HTML for real URLs and strip redirect wrappers.
+  - Eval: the guest eval link in Mamatha's mail (artifact, Doc or similar). If the thread has none, look for her eval mail about the same guest in the last 30 days.
+  - LinkedIn: the profile of the person the decision is about (the guest, proposed guest or prospect, not the PR person). From the mail, else their People row, else one web search where name and company clearly match. Never guess. Copy it to the People row's LinkedIn if that is empty.
+  - Website: that person's company site, when known.
+  - Other link: the one other link that helps decide: Gemini notes Doc, deck, Drive file, episode, the page a vendor asks about.
+  Leave a link blank rather than fill it with something uncertain.
 - Recommendation: one line. For a guest eval, pre-select the verdict Akshay usually gives: Mamatha says Decline -> "Sponsored"; Strong consider, Pre-call needed or Evaluate after a call -> "Precall"; Book immediately -> "Book". If the guest's company is also a PaaS lead or client in Engagements, say so and do not pre-select Sponsored. Otherwise say what you would do and why in a few words.
 - Page body: "## Summary" (3 short lines: who, what, what is needed) and, for Decisions and Actions that need an email, "## Prepared reply" with To, Cc, Subject and Body. Guest and PR emails cc every Stakeholder on the Engagement and Mamatha. Write like Akshay: short, warm, plain words, contractions, no em dashes, no sign-off flourishes, never "delve", "leverage", "unlock", "robust", "seamless".
 - Noise: create the row with Status Done (it is counted, not shown).
@@ -76,17 +82,16 @@ STEP 3. HOUSEKEEPING
 Heads-up cards older than 48 hours: Status Done. Reminder cards whose Due is today or earlier: make sure they are Waiting and named in the brief.
 
 STEP 4. BRIEF (morning run only; the evening run updates the counts line only)
-Replace the text under the "## Morning brief" heading on the dashboard (keep the heading, keep everything else on the page) with:
-- Date, and one line: "N decisions waiting (oldest X days), N actions, N reminders due, N heads-up, N chases and N routine updates by the team, N noise filed."
+Replace the text under the "## Today" heading on the dashboard, up to the "## Pipeline" heading (keep both headings, keep everything else on the page) with:
+- Date, and one line: "N decisions waiting (oldest X days), N actions, N reminders due, N FYI, N chases and N routine updates by the team, N noise filed."
 - Any security-looking mail (OTPs, password resets, withdrawal or payment confirmations Akshay did not obviously start): one line naming it, every time, even if it was filed.
-- Up to 7 waiting decisions, one line each, oldest first.
 - Today's calendar (Google Calendar, ad@thepodium.in, JST): recordings, precalls and BD calls, each with the person and, if the Engagement has a Dossier link, that link. Do not edit any calendar event.
 - Episodes in production with a Planned release in the next 7 days.
 - PaaS deals marked Hot whose Next date is today or past.
-Keep it under 20 lines. Plain words.
+Keep it under 12 lines. Plain words. Decisions are not listed here; they are in the To decide table above it.
 
 STEP 5. RUN LOG
-Append one line under the "## Morning brief" section's end: "Last run <JST time>: <N> threads filed, <N> sent, <N> marked read, mode <MODE>."
+Append one line under the "## Run log" heading: "Last run <JST time>: <N> threads filed, <N> sent, <N> marked read, mode <MODE>."
 In TEST mode also create a child page of the dashboard titled "Test run <date> <time> JST" with a table: thread (sender, subject), class, card created or updated, what you would have sent or marked read in LIVE mode, and anything you were unsure about. This is how Akshay checks your judgment.
 
 RULES THAT NEVER BEND

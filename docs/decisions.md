@@ -62,6 +62,7 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 | 54 | The inbox agent runs at 07:00 and 18:00 JST; the 07:00 run writes the morning brief at the top of the dashboard. One card per Gmail thread. | Akshay, 3 Oct |
 | 55 | The inbox agent starts in TEST mode (sorts and drafts, sends nothing, marks nothing read, writes a test log). Akshay switches it to LIVE on the dashboard after one or two good test runs. | Akshay, 3 Oct |
 | 56 | Standing approval: a guest pitch sent straight to Akshay or to hello@, by a PR person or by the guest themselves, gets "Thanks for your mail, adding Mamatha to coordinate" with Mamatha cc'd, without asking. | Akshay, 3 Oct |
+| 57 | Dashboard order: the To decide table first (decisions, actions and due reminders, with an FYI tab for heads-up), then Today (calendar, releases, hot PaaS), then pipeline views; settings, help and run log at the bottom. Every decision card carries the links needed to decide (Eval, LinkedIn, Website, Other link) so the mail doesn't need opening. | Akshay, 3 Oct |
 
 ## Open
 

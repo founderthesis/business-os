@@ -235,7 +235,7 @@ Akshay's dashboard and the team's work queue. Every inbox email becomes one item
 | Field | Type | Fill | Notes |
 |---|---|---|---|
 | Item | title | Auto | One line |
-| Type | select | Auto | Decision, Heads-up, Reminder, Action, Noise |
+| Type | select | Auto | Decision, Heads-up, Reminder, Action, Chase, Noise |
 | For | select | Auto | Akshay, Mamatha, Chaandini, Sarika, Ranjita |
 | Recommendation | text | Auto | e.g. "Sponsored" pre-selected when the eval says Decline |
 | Choice | select | Human | Sponsored, Precall, Book, Decline, Present to host, Approve, Edit first, Dismiss |
@@ -243,6 +243,10 @@ Akshay's dashboard and the team's work queue. Every inbox email becomes one item
 | Prepared action | page body | Auto | The exact email (to, cc, subject, body) or calendar change that runs on approval |
 | Related | relation → People, Engagements, Episodes | Auto | |
 | Gmail thread | url | Auto | |
+| Eval | url | Auto | Mamatha's guest eval link |
+| LinkedIn | url | Auto | Of the person the decision is about, not the PR contact |
+| Website | url | Auto | That person's company |
+| Other link | url | Auto | The one other link needed to decide: notes Doc, deck, episode |
 | Due | date | Auto | Reminders resurface on this date |
 | Status | select | Auto | Waiting, Done, Failed |
 | Marked read | checkbox | Auto | |
