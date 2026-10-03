@@ -40,6 +40,21 @@ GUEST_FIX = {"3ed19a301a7f81f6a24cdc836860e2a1": ("Vikrant Singh", "BatX Energie
              "3ed19a301a7f81eea284db08ac4ac18a": ("Aditya Tulsian", "Numberz")}
 
 
+# Akshay's answers on repeat guests (3 Oct): these drops are the same recording as the keep
+SAME_RECORDING = {
+    "3ed19a301a7f812b98afc3f3373d56e4": ["3ed19a301a7f81bb98d9d12d66391842"],  # Ankit Mehrotra, Dineout
+    "3ed19a301a7f813195fdc08fdd614dda": ["3ed19a301a7f8109b514e83626dba424"],  # Nakul Kumar, Cashify
+    "3ed19a301a7f81bba588e11132ee5a29": ["3ed19a301a7f815aa8ccc97b32899308"],  # Preksha Kaparwan, Alphaa AI
+    "3ed19a301a7f816085c9f768c3d4d44b": ["3ed19a301a7f8160b7bcf310ea09caad"],  # Bharat Sethi, Rage Coffee
+    "3ed19a301a7f817283d7fbb99f4b5d0c": ["3ed19a301a7f81c19ef6d310433fe2ee", "3ed19a301a7f8174acfbfc8578c39792"],  # Hitesh
+    "3ed19a301a7f8185adeffb1931befb24": ["3ed19a301a7f813bb72ec6ba095954f3"],  # Bhavik Vasa, GetVantage
+}
+# Not episodes: three Roshan Abbas Spotlight clips (Akshay: "ignore those clips")
+NOT_EPISODES = {"3ed19a301a7f812d98b7d245952d3659", "3ed19a301a7f81089822cb980fd9fb9f", "3ed19a301a7f8183bebfdd00ac4eda7e"}
+# Second recordings confirmed (V1/V2 stays): Amit Gupta (Yulu), Ankit Mehta (ideaForge), Ashish Munjal (Sunstone),
+# Anand Jain (CleverTap). Vijesh Sharma's two Spotlight masterclasses are left as they are.
+
+
 def show_of(url):
     return SHOW_NAME[url[-4:]]
 
@@ -65,7 +80,7 @@ def main():
     rows = []
     for e in eps:
         page = created.get(e["key"])
-        if not page or page in ALREADY_DELETED:
+        if not page or page in ALREADY_DELETED or page in NOT_EPISODES:
             continue
         old = e["props"]["Title"]
         src = ei.get(e["key"]) or aq.get(e["key"])
@@ -136,6 +151,10 @@ def main():
                                "drop_views": [x["views"] for x in drops]})
                 dropped.update(x["page"] for x in drops)
 
+    for keep, drops in SAME_RECORDING.items():
+        merges.append({"keep": keep, "drop": drops, "drop_youtube": [], "drop_titles": [], "drop_views": []})
+        dropped.update(drops)
+
     # Names, with V1/V2 for genuine repeat recordings and Part N for split recordings
     live = [r for r in rows if r["page"] not in dropped]
     base = defaultdict(list)
@@ -164,6 +183,7 @@ def main():
     print(f"episodes {len(rows)}; renamed {len(renames)}; merged groups {len(merges)} dropping {len(dropped)} rows")
     print(f"versioned names {sum(1 for r in renames if ' - V' in r['name'])}; review rows {len(review)}")
     assert len(renames) + len(dropped) == len(rows), "counts do not reconcile"
+    print("still versioned:", sorted({r["name"].rsplit(" - V", 1)[0] for r in renames if " - V" in r["name"]}))
 
 
 if __name__ == "__main__":
