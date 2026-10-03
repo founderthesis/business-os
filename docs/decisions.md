@@ -56,6 +56,9 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 | 48 | "No email" tag on any person, firm or engagement with no address to write to, so it can be filtered out. | Akshay, 2 Oct |
 | 49 | PR contacts from Blue guest forms become People tagged PR contact and are linked as stakeholders on the guest's engagement. Names are guessed from the address and tagged "Name guessed"; shared inboxes are tagged "Role inbox". | Akshay, 2 Oct |
 | 50 | Old Notion tables fold in without rebuilding any table: PaaS Leads and US VC into Engagements; B2S and HBD lists into Engagements; Vendor Pitches form routes to Engagements type Vendor; Meetings feeds Activities; Newsjack Log stays as its agent's log; Publishing Plan, Substack Posts Audit, inbox snapshots, Scout log, starter template and the DELETE page retire after checks. Episodes gain Sector, Article state, Article priority, YouTube views and Apple. | Akshay, 2 Oct |
+| 51 | An episode is named "Guest @ Company - Show", never by its title. A guest recorded more than once gets V1, V2 in recording order; a split recording keeps "Part N". Titles change and differ between YouTube and Spotify, so they live in "YouTube title" and "Spotify title". | Akshay, 3 Oct |
+| 52 | One recording is one episode however many times it was published. Re-uploads and republishes (Beyond Campus, rebranded to Spotlight, carried FT episodes as is) merge into one row; the other upload's link is kept on the page. | Akshay, 3 Oct |
+| 53 | Duplicate People are checked online first; the pair is linked ("Duplicate of") with a one-line reason, and Akshay decides by comment or by Match status. Rows to remove are marked, never deleted by an agent. | Akshay, 3 Oct |
 
 ## Open
 

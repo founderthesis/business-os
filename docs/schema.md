@@ -132,7 +132,8 @@ One row per episode. Created automatically when a recording is booked. Absorbs E
 
 | Field | Type | Fill | Notes |
 |---|---|---|---|
-| Title | title | Auto | Working title, then the ticked final title |
+| Episode | title | Auto | "Guest @ Company - Show", plus " - V2" for a repeat recording or " - Part N". Never the published title |
+| YouTube title, Spotify title | text | Auto | Titles as published; they can change and can differ by platform |
 | Show | relation → Shows | Auto | |
 | Guests | relation → People | Auto | One or more. Two-guest episodes link both |
 | Engagements | relation → Engagements | Auto | One per guest |
