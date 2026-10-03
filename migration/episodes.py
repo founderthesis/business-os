@@ -48,6 +48,8 @@ WORKSPACE_SHOW = {"FT & Spotlight": "FT", "alpha un#": "AU", "Hissa Podcast": "B
 STATUS = {"Recorded": "Recorded", "Hold": "Recorded", "Slotted": "Recorded", "Doc Ready": "Copy in progress",
           "Video QC": "Editing", "Published": "Published", "Shorts In Progress": "Published",
           "Medium in progress": "Published", "Newsletter Published": "Published"}
+# Blue cards with no video whose guest has several episodes, resolved by hand (Akshay, 3 Oct)
+BLUE_EPISODE_FIX = {"cm2sspr5m0r43qzcwht4yy9vg": "ei:3c419a30-1a7f-8189-832c-e3bffd8405c9"}  # CleverTap, recorded 27 Oct 2024
 SECTORS = {"Fintech", "SaaS", "D2C", "Marketplace", "Deeptech", "Edtech", "Healthtech", "Services", "Gaming"}
 
 # Blue field names differ by workspace
@@ -197,6 +199,10 @@ def main():
     aq_new = 0
     for r in aq:
         key = eps.by_yt.get(yt_id(r.get("YouTube URL")))
+        if not key and re.search(r"\|\s*Shorts\s*\d", r.get("Episode") or ""):
+            review.append({"source": "Article Queue", "name": r.get("Guest"), "issue": "a Short, not an episode",
+                           "action": "Not imported"})
+            continue
         if not key:
             spot = r.get("Show") == "Spotlight"
             props = {"Title": r["Episode"], "Status": "Published", "Source": "Migration", "Migration batch": BATCH,
@@ -266,7 +272,12 @@ def main():
                              "props": {}, "guest_names": [guest] if guest else [], "company": company,
                              "body": [], "blue": [rid]}
         else:
-            key = eps.find(show, yt, guest, company, strict=True)
+            key = BLUE_EPISODE_FIX.get(rid) or eps.find(show, yt, guest, company, strict=True)
+            if not key and not yt and guest and len(eps.by_guest.get((show, name_key(guest)), [])) > 1:
+                review.append({"source": f"Blue {r['workspace']}", "name": r["title"],
+                               "issue": "no video and the guest has several episodes",
+                               "action": "Add the card to BLUE_EPISODE_FIX; no new episode created"})
+                continue
             if key:
                 merged_from_blue[r["workspace"]] += 1
             else:
