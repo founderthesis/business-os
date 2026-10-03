@@ -49,8 +49,9 @@ Skip entirely (no card, no label, leave unread): personal or family mail. Count 
 Classify by what the newest messages need from Akshay:
 - Decision: guest eval from Mamatha; Mamatha asking him something; a client, BD prospect or vendor needing an answer (pricing, dates, contracts); a guest or PR writing to him where dates, money or a client is involved; a team member asking him.
 - Action: something to do with a prepared step: reschedule request, Drive share request, Gemini meeting notes to file, reply to a thank-you mail, Zencastr post-production notice.
-- Chase: a team member's follow-up nudge to a PR person or guest with no new information ("just checking", "circling back", "one final time"). File with Status Done at once; the brief counts them in one line. Do not card them one by one.
-- Heads-up: Mamatha or other team members running a thread with Akshay only on cc and no question for him (scheduling, nudges, acks, close-outs, decline and pricing sends), external replies inside team threads, calendar RSVPs, finance notices, bounces.
+- Chase: a team member's follow-up nudge to a PR person or guest with no new information ("just checking", "circling back", "one final time"). File as Type Chase, Status Done at once; the brief counts them in one line.
+- Heads-up: worth a glance, no answer needed: external replies inside team threads, a decline or pricing offer sent by the team, a pitch routed to Mamatha, finance notices, real bounces, anything that may need Akshay later. Status Waiting (auto-Done after 48 hours by the newest message's date).
+- Filed: pure acks ("noted, thanks"), scheduling back-and-forth, calendar RSVPs and close-outs with no question for Akshay. File as Type Heads-up with Status Done at once; counted in the brief, not shown.
 - Reminder: an explicit "remind me" or a deferral with a date.
 - Noise: newsletters, SaaS promos, finance@ group promos, his own Substack issue, calendar reminders, BD sequence copies, mail to the hello@, sp@, nk@ or rc@ aliases unless it is a real person writing.
 
@@ -61,7 +62,7 @@ Match people: sender and recipient addresses against People Email and Other emai
 Write the card (one Queue row per thread; if a row with the same Thread ID exists, update it instead of creating a new one):
 - Item: one plain line, "<who>: <what they want>". Example: "Rhea (Value360): wants a recording slot for Arjun Mehta, Founder Thesis".
 - Type, For (Akshay unless the item is plainly for a team member), Status Waiting, Thread ID, Gmail thread (the thread's viewUrl), People, Engagement, Episode, Due for reminders.
-- Recommendation: one line. For a guest eval, pre-select the verdict Akshay usually gives: Mamatha says Decline -> "Sponsored"; Strong consider -> "Precall"; Book immediately -> "Book". Otherwise say what you would do and why in a few words.
+- Recommendation: one line. For a guest eval, pre-select the verdict Akshay usually gives: Mamatha says Decline -> "Sponsored"; Strong consider, Pre-call needed or Evaluate after a call -> "Precall"; Book immediately -> "Book". If the guest's company is also a PaaS lead or client in Engagements, say so and do not pre-select Sponsored. Otherwise say what you would do and why in a few words.
 - Page body: "## Summary" (3 short lines: who, what, what is needed) and, for Decisions and Actions that need an email, "## Prepared reply" with To, Cc, Subject and Body. Guest and PR emails cc every Stakeholder on the Engagement and Mamatha. Write like Akshay: short, warm, plain words, contractions, no em dashes, no sign-off flourishes, never "delve", "leverage", "unlock", "robust", "seamless".
 - Noise: create the row with Status Done (it is counted, not shown).
 In LIVE mode mark Heads-up and Noise threads read at once (Marked read = yes). Leave Decisions, Actions and Reminders unread until they are acted on.
@@ -69,14 +70,15 @@ Read the full body of every message that could change the card (always for Decis
 Log one Activity (Kind "Email out" when the newest message is from Akshay or the team, otherwise "Email in", Date of the newest message, Summary one line, People, Engagement, Episode, Link) for every thread tied to a person or engagement. Not for Noise.
 Apply the "OS sorted" label to every thread you filed (also in TEST mode).
 
-Gemini notes: open the Doc link from the message HTML, match the meeting to the calendar event and person, file the notes as an Activity (Kind "Meeting") on the person and engagement, and make an Action card with the suggested next step.
+Gemini notes: open the Doc link from the message HTML (read the Doc itself, not just the email), match the meeting to the calendar event and person, file the notes as an Activity (Kind "Meeting") on the person and engagement, and make an Action card with the suggested next step.
 
 STEP 3. HOUSEKEEPING
 Heads-up cards older than 48 hours: Status Done. Reminder cards whose Due is today or earlier: make sure they are Waiting and named in the brief.
 
 STEP 4. BRIEF (morning run only; the evening run updates the counts line only)
 Replace the text under the "## Morning brief" heading on the dashboard (keep the heading, keep everything else on the page) with:
-- Date, and one line: "N decisions waiting (oldest X days), N actions, N reminders due, N heads-up, N chases by the team, N noise filed."
+- Date, and one line: "N decisions waiting (oldest X days), N actions, N reminders due, N heads-up, N chases and N routine updates by the team, N noise filed."
+- Any security-looking mail (OTPs, password resets, withdrawal or payment confirmations Akshay did not obviously start): one line naming it, every time, even if it was filed.
 - Up to 7 waiting decisions, one line each, oldest first.
 - Today's calendar (Google Calendar, ad@thepodium.in, JST): recordings, precalls and BD calls, each with the person and, if the Engagement has a Dossier link, that link. Do not edit any calendar event.
 - Episodes in production with a Planned release in the next 7 days.
