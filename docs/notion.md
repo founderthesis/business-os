@@ -18,6 +18,8 @@ Data source IDs are what scripts and routines use.
 | Templates | `collection://b2976a03-9983-49e1-96cf-d237a395148d` |
 | Credentials | `collection://e5ccd27a-cb8b-436e-8269-2dcd4210b1a7` (never read by routines) |
 
+Akshay's dashboard (page 3ee19a301a7f81c58589cc9ce372f86e): agent switches (Mode, Sending, cap), morning brief, Decide, Reminders, Heads-up, My move, In production. Queue gained Thread ID and Sent.
+
 Views on the home page: Akshay's dashboard (Queue), Release calendar (Episodes), Team tasks (Tasks by owner), Pipeline (Engagements by stage), Network (People who are FT guests or in the WhatsApp group). In Engagements: PaaS pipeline (board by stage) and US VC outreach (table by rank; quick filters on Tags so "No email" can be excluded).
 
 Shows seeded: Founder Thesis, alpha un#, Built to Share, Human by Design. Hosts get linked once their People rows exist.
