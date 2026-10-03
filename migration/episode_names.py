@@ -35,6 +35,11 @@ ALREADY_DELETED = {"3ed19a301a7f81a38cd8c5f48106821c", "3ed19a301a7f81c7b60ffa3b
                    "3ed19a301a7f81c8851ed91407ff33ea"}  # Saurabh Garg B2S practice recording (Akshay)
 
 
+# Inventory rows whose guest field was empty, resolved from the matching Blue inventory card (3 Oct)
+GUEST_FIX = {"3ed19a301a7f81f6a24cdc836860e2a1": ("Vikrant Singh", "BatX Energies"),
+             "3ed19a301a7f81eea284db08ac4ac18a": ("Aditya Tulsian", "Numberz")}
+
+
 def show_of(url):
     return SHOW_NAME[url[-4:]]
 
@@ -71,6 +76,7 @@ def main():
             cf = b["custom_fields"]
             guest = (cf.get("Guest Name") or b["title"].split("@")[0]).strip()
             company = old.split("@", 1)[1].strip() if "@" in old else (cf.get("Co Name") or cf.get("Company Name") or "")
+        guest, company = GUEST_FIX.get(page, (guest, company))
         guest = re.sub(r"\s+and\s+", " & ", re.sub(r"^(Mr|Mrs|Ms|Dr|Prof)\.?\s+", "", guest)).strip()
         if not guest:
             review.append({"page": page, "old": old, "issue": "no guest name; kept the old title"})
@@ -142,7 +148,8 @@ def main():
         for i, r in enumerate(group, 1):
             name = b + (f" - V{i}" if len(group) > 1 else "") + (f" - Part {part}" if part else "")
             renames.append({"page": r["page"], "name": name if r["guest"] else r["old"],
-                            "youtube_title": None if r["key"].startswith("inflight") else r["old"]})
+                            # only inventory and Article Queue titles are real published titles
+                            "youtube_title": r["old"] if r["key"][:3] in ("ei:", "aq:") else None})
         if len(group) > 1:
             review.append({"page": group[0]["page"], "old": " / ".join(x["old"] for x in group),
                            "issue": f"{len(group)} recordings named V1..V{len(group)}; order by episode number then date"})
