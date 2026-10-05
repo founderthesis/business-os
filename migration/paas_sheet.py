@@ -18,7 +18,7 @@ Writes:
   data/out/paas_sheet/{orgs_new,people_new,deals_new,deals_update}.json, created.json, updates.json, batches/*.json
   data/review/paas_sheet_review.csv
 
-Rules (agreed 5 Oct, docs/statuses.md "Deals"):
+Rules (agreed 5 Oct, docs/statuses.md "Deals"; decision 63: PAAS - FT rows are Warm, the rest Cold outreach, no list tags):
   Stage   Cold or blank = New, Emailed / Chase / initial mail sent = Contacted, warm = Interested, a planning call or meeting
           in Last conversation = In conversation, shared pricing or a proposal = Proposal sent, Later = Parked (next date
           180 days after the last touch), Declined / Reject = Declined, Unresponsive with every follow-up sent = Unresponsive.
@@ -602,9 +602,9 @@ def build():
         if stage not in OPEN:
             fields["Next action"] = fields["Next date"] = None
         contacts = list(dict.fromkeys(ref for r in rs for ref in r["people_refs"]))
-        entry = "FT guest first" if p["tab"] == "PAAS - FT" else "Cold outreach"
+        entry = "Warm" if p["tab"] == "PAAS - FT" else "Cold outreach"  # decision 63
         from_eng = None
-        if entry == "FT guest first" and p["people_refs"]:
+        if entry == "Warm" and p["people_refs"]:
             engs = run.eng_by_guest.get(p["people_refs"][0], [])
             if engs:
                 engs = sorted(engs, key=lambda e: (e["Status"] in ("Recorded", "Form filled"), e["url"]))
@@ -642,8 +642,8 @@ def build():
                 props["date:Next date:start"] = str(fields["Next date"])
             if fields["Chase step"] and not d["Chase step"]:
                 props["Chase step"] = fields["Chase step"]
-            if not d["Entry path"]:
-                props["Entry path"] = entry
+            if not d["Entry path"] or entry == "Warm" and d["Entry path"] != "FT guest first":
+                props["Warm or cold"] = entry  # the snapshot predates the rename; a PAAS - FT row makes a deal Warm
             if from_eng and not rel(d["From engagement"]):
                 props["From engagement"] = [from_eng]
             have = [page_url(u) for u in rel(d["Contacts"])]
@@ -656,7 +656,7 @@ def build():
             upd_deals.append({"page": page_url(d["url"]), "company": d["Company"], "old_stage": d["Stage"], "props": props,
                               "body": body_for(rs), "rows": sids})
             continue
-        props = {"Company": run.org_names.get(org_ref) or p["company"], "Stage": stage, "Entry path": entry, "Source": "Migration",
+        props = {"Company": run.org_names.get(org_ref) or p["company"], "Stage": stage, "Warm or cold": entry, "Source": "Migration",
                  "Source ID": "; ".join(sids), "Migration batch": BATCH, "date:Captured:start": str(TODAY)}
         if fields["Heat"]:
             props["Heat"] = fields["Heat"]
@@ -690,7 +690,7 @@ def build():
           f"possible duplicates {sum(1 for x in run.people if x['props']['Match status'] == 'Possible duplicate')})")
     print(f"deals: new {len(new_deals)}, update existing {len(upd_deals)}")
     print("stage of new deals:", dict(collections.Counter(d["props"]["Stage"] for d in new_deals)))
-    print("entry path of new deals:", dict(collections.Counter(d["props"]["Entry path"] for d in new_deals)))
+    print("warm or cold of new deals:", dict(collections.Counter(d["props"]["Warm or cold"] for d in new_deals)))
     print("stage changes on existing deals:", dict(collections.Counter(f"{u['old_stage']} -> {u['props'].get('Stage', 'same')}" for u in upd_deals)))
     after = collections.Counter(d["Stage"] for d in deals)
     for u in upd_deals:
