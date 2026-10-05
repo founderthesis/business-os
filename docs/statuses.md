@@ -91,7 +91,8 @@ One row per company we are selling production to. Every deal is warm or cold (de
 | Stage | New, Contacted, Interested, In conversation, Proposal sent, Agreed, Parked, Declined, Unresponsive | Same shape as the guest ladder, so one mental model |
 | Heat | Hot, Warm, Cold | Akshay's read |
 | Proposal link | url | The short link to the PaaS proposal, standalone as asked |
-| Pitch note | url | The guest-specific pitch note |
+| Pitch note | url | The full proposal page with pricing (artifact or Doc) |
+| Guest note, Chat link | url | Guest-facing note for the client show; the Claude chat where the pitch was built |
 | Fit rank | number | Cold list ranking, 1 first |
 | Budget read | text | From the US VC enrichment |
 | Amount | number | Monthly or total, once quoted |

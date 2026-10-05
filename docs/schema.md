@@ -108,8 +108,10 @@ One row per company we are selling podcast production to (PaaS). Later also show
 | Warm or cold | select | Auto | Warm (via an FT guest, recording or intro), Cold outreach |
 | Stage | select | Human / Auto | New, Contacted, Interested, In conversation, Proposal sent, Agreed, Parked, Declined, Unresponsive |
 | Heat | select | Human | Hot, Warm, Cold |
-| Proposal link | url | Human | Short link to the PaaS proposal |
-| Pitch note | url | Auto | |
+| Proposal link | url | Human | Short link to the proposal (podm.in), the one we send |
+| Pitch note | url | Auto | The full proposal page with pricing (artifact or Doc) |
+| Guest note | url | Auto | Guest-facing note for the client show's prospective guests |
+| Chat link | url | Auto | The Claude chat where the pitch was built |
 | Fit rank | number | Migrate | Cold list ranking, 1 first |
 | Budget read | text | Migrate | |
 | Amount | number | Human | |
