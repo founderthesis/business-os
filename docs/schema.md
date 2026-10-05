@@ -80,7 +80,7 @@ One row per guest pursuit: a person and a show. Replaces every guest pipeline ta
 | Organisation | relation → Organisations | Auto | |
 | Direction | select | Auto | Inbound (pitched to us), Outbound (we reached out) |
 | Status | select | Auto / Human | New, Contacted, Interested, Decision pending, Precall requested, Precall done, Sponsored offered, Booking, Booked, Recorded, Form filled, LT chase, Parked, They declined, We declined, Unresponsive |
-| Tier | select | Human | Tier 1, Tier 1.5, Tier 2, Sponsored. Set by Akshay on the Decision Desk |
+| Tier | select | Human | Tier 1, Tier 1.5, Tier 2, Sponsored. Set by Akshay |
 | Decision | select | Auto | Akshay's call: Precall, Book, Sponsored, Decline, Present to host |
 | Eval verdict | select | Auto | Book immediately, Strong consider, Pre-call needed, Evaluate after call, Decline. Hidden by default |
 | Eval link, Dossier link | url | Auto | |
@@ -105,16 +105,16 @@ One row per company we are selling podcast production to (PaaS). Later also show
 | Company | title | Auto | |
 | Organisation, Contacts | relations | Auto | |
 | From engagement | relation → Engagements | Auto | The FT guest row it grew out of, if any |
-| Entry path | select | Auto | FT guest first, Cold outreach |
+| Warm or cold | select | Auto | Warm (via an FT guest, recording or intro), Cold outreach |
 | Stage | select | Human / Auto | New, Contacted, Interested, In conversation, Proposal sent, Agreed, Parked, Declined, Unresponsive |
 | Heat | select | Human | Hot, Warm, Cold |
 | Proposal link | url | Human | Short link to the PaaS proposal |
 | Pitch note | url | Auto | |
-| Fit rank | number | Migrate | From the US VC and HK/SG lists |
+| Fit rank | number | Migrate | Cold list ranking, 1 first |
 | Budget read | text | Migrate | |
 | Amount | number | Human | |
 | Next action, Next date, Chase step | | | As Engagements |
-| Tags | multi-select | | US VC, HK/SG, Has podcast, Priority A/B/C, No email |
+| Tags | multi-select | | Has podcast, Priority A/B/C, No email |
 | Activities, Queue items | relations | Auto | |
 
 ## 4. Shows

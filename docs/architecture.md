@@ -9,7 +9,7 @@ Version 1, 30 Sep 2026. Plain-language version: https://claude.ai/artifact/L8TPL
 3. **Free up Mamatha.** Intake, research, chasing and status updates run themselves, so she manages relationships instead of routing information.
 4. **Team self-serve.** Everyone sees what they own today.
 5. **Make the content.** Skills write the episode pack into Notion and learn from what gets used.
-6. **Clear the inbox.** Every email lands on the dashboard sorted by what it needs.
+6. **Record the inbox.** Every email is logged on the person and the conversation it belongs to.
 
 Scope: owned shows, BD, client production. Ghostwriting later.
 
@@ -33,7 +33,7 @@ SOURCES      Gmail · Calendar · Gemini notes · Zencastr · Sheets · Blue · 
 4 AGENTS     intake + eval · inbox sorter · chase · prep docs · content pack · skill learning · morning brief
    │         write only to the Queue, then act on approval
    │
-5 SURFACES   Akshay's dashboard · morning brief · private prep calendar
+5 SURFACES   Notion views · private prep calendar (dashboard dropped, decision 61)
              team "my work today" · episode working doc · host portal · client portal
 ```
 
@@ -56,27 +56,15 @@ Engagements carry one Status ladder for the guest journey (New to Form filled, p
 
 Field-by-field spec: `docs/schema.md`.
 
-## The dashboard
+## The inbox
 
-Every inbox email becomes a Queue item of one type:
-
-| Type | Example | Handling |
-|---|---|---|
-| Decision | New pitch with eval | Akshay taps Sponsored / Precall / Book / Decline; reply sends; mail marked read |
-| Heads-up | Mamatha following up with a guest | One line, marked read at once |
-| Reminder | "Let's talk in April" | Resurfaces on the date |
-| Action | Guest asks to reschedule | New invite and reply prepared; Akshay approves; it runs |
-| Noise | Newsletters, promos | Archived, counted |
-
-Start from go-live day. The existing unread backlog is a one-off clean-up.
-
-No pings. Akshay checks the dashboard in Notion; the morning brief (07:00 JST) opens with how many decisions are waiting and the oldest.
+Dropped for now (decisions 61, 62): the sorting dashboard and the Decision Desk. Akshay reads all his own mail. The inbox agent only records: one Activity per email, and the Engagement or Deal moved to match. Decision surfaces get another try later with a different approach.
 
 ## Triggers
 
 | When | What happens | Human part |
 |---|---|---|
-| Any email arrives | Sorted onto the dashboard | Decisions and actions only |
+| Any email arrives | Logged as an Activity; Engagement or Deal updated | None |
 | Pitch arrives | Eval skill runs; research saved on the Person; decision card | Tap an answer |
 | Precall booked | Prep entry on private calendar with eval link and a reminder to switch on the Meet transcript | One click in the call |
 | Precall ends | Gemini notes read, eval re-runs, recommendation card | Record / Don't / Another call |

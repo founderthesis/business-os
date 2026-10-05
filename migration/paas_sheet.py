@@ -79,7 +79,7 @@ COMPANY_FOR = {"Srikanth Bolla": "Bollant Industries", "Hardik Kothiya": "Rayzon
 # ---------------------------------------------------------------- small helpers
 
 def clean(s):
-    return re.sub(r"\s+", " ", str(s or "").replace("\t", " ")).strip()
+    return re.sub(r"\s+", " ", re.sub(r"[\u200b-\u200d\ufeff]", "", str(s or "")).replace("\t", " ")).strip()
 
 
 def as_date(v):

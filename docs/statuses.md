@@ -46,7 +46,7 @@ The sponsored path in order: Sponsored offered, Booking (agreed), Precall done (
 | Column | Options | Who sets | Why |
 |---|---|---|---|
 | Direction | Inbound, Outbound | Agent on creation, Mamatha | Inbound = pitched to us. Outbound = we reached out. Separate tabs |
-| Tier | Tier 1, Tier 1.5, Tier 2, Sponsored | Akshay on the Decision Desk | How hard we chase, which slot they get. Sponsored means the paid route |
+| Tier | Tier 1, Tier 1.5, Tier 2, Sponsored | Akshay | How hard we chase, which slot they get. Sponsored means the paid route |
 | Decision | Precall, Book, Sponsored, Decline, Present to host | Agent from Akshay's card choice | What Akshay said. Drives the Status move |
 | Payment | Not started, GST received, Invoice 1 sent, Payment 1 received, Invoice 2 sent, Payment 2 received, Settled | Mamatha, agent from mail | Sponsored guests only. Hidden otherwise |
 | Amount | number | Mamatha | Sponsored fee |
@@ -75,11 +75,11 @@ Each tab shows Name, Status, Tier, Next action, Next date, Decision, Eval link, 
 
 ## Deals: the sales table (new)
 
-One row per company we are selling production to. Two ways in, which is the strategy Akshay described:
+One row per company we are selling production to. Every deal is warm or cold (decision 63):
 
-| Entry path | How it starts | Today's source |
+| Warm or cold | How it starts | Today's source |
 |---|---|---|
-| FT guest first | Invite them on FT, record, then open the PaaS conversation | PAAS - FT tab (93 rows), the PaaS leads table |
+| Warm | Through an FT guest, a recording or an introduction | PAAS - FT tab (93 rows), the PaaS leads table |
 | Cold outreach | Straight pitch by mail, LinkedIn or X | PAAS - Direct (1,434), PAAS new (104), US VC (774), HK/SG |
 
 | Column | Options | Notes |
@@ -87,16 +87,16 @@ One row per company we are selling production to. Two ways in, which is the stra
 | Company | title | |
 | Organisation, Contacts | relations | The people on the deal |
 | From engagement | relation → Engagements | The FT guest row it grew out of, if any |
-| Entry path | FT guest first, Cold outreach | |
+| Warm or cold | Warm, Cold outreach | Two tabs: Warm, Cold outreach |
 | Stage | New, Contacted, Interested, In conversation, Proposal sent, Agreed, Parked, Declined, Unresponsive | Same shape as the guest ladder, so one mental model |
 | Heat | Hot, Warm, Cold | Akshay's read |
 | Proposal link | url | The short link to the PaaS proposal, standalone as asked |
 | Pitch note | url | The guest-specific pitch note |
-| Fit rank | number | From the US VC and HK/SG lists, 1 first |
+| Fit rank | number | Cold list ranking, 1 first |
 | Budget read | text | From the US VC enrichment |
 | Amount | number | Monthly or total, once quoted |
 | Next action, Next date, Chase step | | Same as Engagements |
-| Tags | US VC, HK/SG, Has podcast, Priority A/B/C, No email | |
+| Tags | Has podcast, Priority A/B/C, No email | |
 | Activities | relation | Every mail and call |
 
 Later, the same table takes show sponsors and partner deals, with a Kind column (PaaS, Sponsor, Partner). Not needed now.
@@ -134,4 +134,4 @@ The eval column maps to Eval verdict where it is a label and to Eval link where 
 3. Remove Stage, Outcome, Whose move, Heat, Pitch link, Rank, Type.
 4. Rebuild Mamatha's tabs.
 5. Migrate the FT Pipeline sheet's open rows (about 350) into Engagements with the mapping above, duplicates to a review list.
-6. Update the inbox agent and the Decision Desk to write Status, Direction, Tier and Decision.
+6. Update the inbox agent to write Status, Direction, Tier and Decision from the mail (done: capture-only agent, decision 62).
