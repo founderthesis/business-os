@@ -44,6 +44,7 @@ BATCH = "ft-pipeline-2026-10-05"
 TODAY = dt.date(2026, 10, 5)
 SNAP = "2026-10-05"
 FT_SHOW = "https://app.notion.com/p/3ed19a301a7f817c9367e0d88afc5776"
+BATCH_SIZE = {"orgs": 100, "people": 80, "engagements": 50}  # keeps each payload under the 30 KB a terminal print carries
 SOURCES = {"people": "collection://e6c44319-7f81-4da6-8b80-8441a4875d7a",
            "orgs": "collection://c43c280a-3b37-4821-96ef-dab688a53aea",
            "engagements": "collection://5522ee21-d8e5-4ec0-bf3e-90bcf88d24c5"}
@@ -59,7 +60,8 @@ VERDICTS = [("book immediately", "Book immediately"), ("strong consider", "Stron
             ("evaluate after call", "Evaluate after call"), ("declined", "Decline"), ("decline", "Decline")]
 TIERS = [("tier 1.5", "Tier 1.5"), ("tier 1", "Tier 1"), ("tier 2", "Tier 2")]
 MONTHS = {m: i + 1 for i, m in enumerate(["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"])}
-HONORIFIC = re.compile(r"^(dr|mr|ms|mrs|prof|shri|smt|ca)\.?\s*", re.I)
+HONORIFIC = re.compile(r"^(dr|mr|ms|mrs|prof|shri|smt|ca)(\.\s*|\s+)", re.I)
+ROLE_WORD = re.compile(r"^(president|founder|co-?founder|ceo|coo|cto|cfo|md|director|chairman|partner|head|vp|svp|owner)$", re.I)
 PHONE = re.compile(r"\+?\d[\d \-]{8,}\d")
 URL = re.compile(r"https?://[^\s|]+")
 COMPANYISH = re.compile(r"\b(ltd|limited|pvt|private|inc|llp|llc|technolog|ventures|capital|partners|fund|labs|films|group|"
@@ -92,7 +94,7 @@ def company_like(s):
 def split_people(person):
     """'Ankit and Anshul Agrawal' -> ['Ankit Agrawal', 'Anshul Agrawal']; 'A & B' -> ['A', 'B']. Up to three guests."""
     person = re.sub(r"\(.*?\)", "", person)
-    parts = [strip_honorific(p) for p in re.split(r"\s*(?:,|\s+and\s+|\s*&\s*)\s*", person) if strip_honorific(p)]
+    parts = [strip_honorific(p) for p in re.split(r"\s*(?:,|/|\s+and\s+|\s*&\s*)\s*", person) if strip_honorific(p)]
     if len(parts) > 3:
         return []
     out = []
@@ -100,7 +102,7 @@ def split_people(person):
         if len(p.split()) == 1 and i + 1 < len(parts) and len(parts[i + 1].split()) >= 2:
             p = p + " " + parts[i + 1].split()[-1]  # shared surname written once
         out.append(p)
-    return [p for p in out if 1 <= len(p.split()) <= 4]
+    return [p for p in out if 1 <= len(p.split()) <= 4 and not ROLE_WORD.match(p)]
 
 
 def parse_name_cell(cell, hyperlink):
@@ -526,7 +528,7 @@ class Run:
         props = {"Name": name, "Source": "Migration", "Source ID": sid, "Migration batch": BATCH, "date:Captured:start": str(TODAY),
                  "Match status": "Possible duplicate" if hits else "Clean", "Tags": json.dumps(tags)}
         if li:
-            props["LinkedIn"] = li_url(li)
+            props["LinkedIn"] = f"https://www.linkedin.com/in/{li}"
         if personal:
             props["Email"] = personal[0]
             if personal[1:]:
@@ -813,14 +815,17 @@ def load_created():
 
 
 def resolve(ref, created):
+    """A Notion page reference as the bare 32-hex id (shorter payloads; create-pages accepts ids or URLs)."""
     if ref is None:
         return None
-    if ref.startswith("http"):
-        return ref
-    for kind in ("orgs", "people", "engagements"):
-        if ref in created[kind]:
-            return created[kind][ref]
-    raise KeyError(f"unresolved reference {ref}: create its table first and record the result with --created")
+    if not ref.startswith("http"):
+        for kind in ("orgs", "people", "engagements"):
+            if ref in created[kind]:
+                ref = created[kind][ref]
+                break
+        else:
+            raise KeyError(f"unresolved reference {ref}: create its table first and record the result with --created")
+    return re.search(r"([0-9a-f]{32})", ref.replace("-", "")).group(1)
 
 
 def write_batches(kind, run):
@@ -853,9 +858,10 @@ def write_batches(kind, run):
             pages.append({"properties": props, "content": e["body"]})
     for old in (OUT / "batches").glob(f"{kind}_*.json"):
         old.unlink()
-    for i in range(0, len(pages), 100):
-        json.dump(pages[i:i + 100], open(OUT / "batches" / f"{kind}_{i // 100 + 1:02d}.json", "w"), ensure_ascii=False)
-    print(f"{kind}: {len(pages)} pages to create in {(len(pages) + 99) // 100} batches (data source {SOURCES[kind]})")
+    size = BATCH_SIZE.get(kind, 100)
+    for i in range(0, len(pages), size):
+        json.dump(pages[i:i + size], open(OUT / "batches" / f"{kind}_{i // size + 1:02d}.json", "w"), ensure_ascii=False, separators=(",", ":"))
+    print(f"{kind}: {len(pages)} pages to create in {(len(pages) + size - 1) // size} batches of {size} (data source {SOURCES[kind]})")
 
 
 def record_created(kind, path):
