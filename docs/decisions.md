@@ -69,6 +69,7 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 | 61 | The dashboard and the Decision Desk are dropped. Akshay reads his own mail. Decision surfaces will be tried again later with a different approach. Supersedes 54 to 57 for now. | Akshay, 5 Oct |
 | 62 | The inbox agent is capture only: one Activity per email (Source ID = Gmail message id, so re-runs skip what is logged), plus Engagement and Deal updates that follow from the mail. It sends nothing, marks nothing read, makes no cards and asks nothing. Run by hand in a separate chat for now. Prompt in routines/inbox.md. | Akshay, 5 Oct |
 | 63 | Deals are either Warm (Akshay already knows them: a guest who has recorded, or a personal intro) or Cold outreach (anyone the team is approaching, including FT-invite targets not yet recorded; refined 5 Oct after Gather AI, Sorcero and Lemma). The FT, US VC and HK/SG buckets are gone; the US VC list is all cold outreach. Priority A/B/C, Has podcast and No email tags stay. | Akshay, 5 Oct |
+| 64 | The Queue holds only what still needs someone, and every card is linked to an Engagement (or a Deal for production sales); the card title leads with the guest or company. One board, grouped by Status (To do, Waiting, Done), shows the linked Engagement and its status so Akshay clicks through and updates the Engagement there. Facts and FYIs are not cards: they go on the Engagement and Activities. Internal work goes to Tasks. Done cards are cleared from the "To delete (done cards)" tab. | Akshay, 5 Oct |
 
 ## Open
 
