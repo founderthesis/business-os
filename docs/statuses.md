@@ -63,12 +63,13 @@ Tier here is pre-recording importance. The Episode keeps its own production tier
 
 ### Mamatha's tabs on Engagements
 
-- **FT: Inbound** (Direction = Inbound, status not ended)
-- **FT: Outbound** (Direction = Outbound, status not ended)
-- **FT: Sponsored** (Tier = Sponsored, status not ended), with Payment and Amount showing
-- **FT: Chasing** (LT chase and Parked), sorted by Next date
-- **FT: Recorded, form pending** (Status = Recorded)
-- **FT: All guests**
+Three tabs, no more:
+
+- **FT: Pipeline**: every open row, inbound and outbound, chasing and parked, recorded and form pending. Sorted by Next date. Status column does the separating.
+- **FT: Outbound**: Direction = Outbound, open. Her cold-outreach list on its own.
+- **FT: Sponsored**: Tier = Sponsored, open, with Payment and Amount showing.
+
+Open means Status is not They declined, We declined, Unresponsive or Form filled. History is a filter away on the Pipeline tab (clear the filter), so there is no separate "all guests" tab.
 
 Each tab shows Name, Status, Tier, Next action, Next date, Decision, Eval link, Guest, Stakeholders, and nothing else unless the tab needs it.
 
