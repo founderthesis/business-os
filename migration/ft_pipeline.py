@@ -54,7 +54,7 @@ LADDER = ["New", "Contacted", "Interested", "Decision pending", "Precall request
           "Booking", "Booked", "Recorded", "Form filled"]
 RANK = {s: i for i, s in enumerate(LADDER)}
 CLOSED = {"Form filled", "They declined", "We declined", "Unresponsive"}
-OUTCOME_TO_STATUS = {"Live": "Recorded", "Done": "Form filled", "Declined": "They declined", "No response": "Unresponsive",
+OUTCOME_TO_STATUS = {"Live": "Form filled", "Done": "Form filled", "Declined": "They declined", "No response": "Unresponsive",
                      "Dropped out": "They declined"}
 VERDICTS = [("book immediately", "Book immediately"), ("strong consider", "Strong consider"),
             ("evaluate after call", "Evaluate after call"), ("declined", "Decline"), ("decline", "Decline")]
