@@ -52,7 +52,7 @@ SOURCES      Gmail · Calendar · Gemini notes · Zencastr · Sheets · Blue · 
 | Templates | an email that can be sent | show, purpose, body, version, approved (a template edit resets approval) |
 | Credentials | a login | walled off; no routine reads it |
 
-Stage list for Engagements: Identified, Contacted, In conversation, Agreed. Outcome is separate: Live, Done, Declined, No response, Dropped out. After Agreed, production state lives on the Episode.
+Engagements carry one Status ladder for the guest journey (New to Form filled, plus LT chase, Parked, They declined, We declined, Unresponsive); see docs/statuses.md. After Booked, production state lives on the Episode. Commercial pursuits (PaaS, sponsors, partners) live in Deals with their own Stage.
 
 Field-by-field spec: `docs/schema.md`.
 
