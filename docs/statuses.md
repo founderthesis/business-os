@@ -29,8 +29,8 @@ So:
 | Booked | Recording date set. Next date = recording | yes | yes | yes |
 | Recorded | Done, form sent to guest, form chasers run | yes | yes | yes |
 | Form filled | FT form in (pics, designation, links). Last active status; Episode carries release | yes | yes | yes |
-| LT chase | Long-term chase: no reply to the precall request or invite, chase monthly | yes | yes | |
-| Parked | Revisit on Next date (not now, next year, P2) | yes | yes | yes |
+| LT chase | Still want them, not now: a timing reason, or no reply to the precall request or invite. Revisit on Next date | yes | yes | |
+| Parked | Akshay has lost interest. Mamatha stops following up. Akshay only. Counts as closed | yes | yes | yes |
 | They declined | Said no to organic or sponsored | yes | yes | yes |
 | We declined | Akshay or host said no | yes | yes | yes |
 | Unresponsive | Chase ladder exhausted, silence | yes | yes | yes |
@@ -46,8 +46,9 @@ The sponsored path in order: Sponsored offered, Booking (agreed), Precall done (
 | Column | Options | Who sets | Why |
 |---|---|---|---|
 | Direction | Inbound, Outbound | Agent on creation, Mamatha | Inbound = pitched to us. Outbound = we reached out. Separate tabs |
-| Tier | Tier 1, Tier 1.5, Tier 2, Sponsored | Akshay | How hard we chase, which slot they get. Sponsored means the paid route |
-| Decision | Precall, Book, Sponsored, Decline, Present to host | Agent from Akshay's card choice | What Akshay said. Drives the Status move |
+| Tier | Tier 1, Tier 1.5, Tier 2 | Akshay | Importance to us: how hard we chase, which slot they get |
+| Route | Sponsored, Organic | Akshay | Sponsored = the guest pays; Payment and Amount apply. Replaces Decision and Tier = Sponsored (decision 66) |
+| Call type, Call link | Precall, Recording, Planning call; URL | Calendar sync | What Next date is when it is a call, and the Zencastr, Riverside or Meet link |
 | Payment | Not started, GST received, Invoice 1 sent, Payment 1 received, Invoice 2 sent, Payment 2 received, Settled | Mamatha, agent from mail | Sponsored guests only. Hidden otherwise |
 | Amount | number | Mamatha | Sponsored fee |
 | Next action | one line | Mamatha, agent | What happens next |
@@ -67,11 +68,11 @@ Three tabs, no more:
 
 - **FT: Pipeline**: every open row, inbound and outbound, chasing and parked, recorded and form pending. Sorted by Next date. Status column does the separating.
 - **FT: Outbound**: Direction = Outbound, open. Her cold-outreach list on its own.
-- **FT: Sponsored**: Tier = Sponsored, open, with Payment and Amount showing.
+- **FT: Sponsored**: Route = Sponsored, open, with Payment and Amount showing.
 
 Open means Status is not They declined, We declined, Unresponsive or Form filled. History is a filter away on the Pipeline tab (clear the filter), so there is no separate "all guests" tab.
 
-Each tab shows Name, Status, Tier, Next action, Next date, Decision, Eval link, Guest, Stakeholders, and nothing else unless the tab needs it.
+Each tab shows Name, Status, Tier, Next action, Next date, Route, Eval link, Guest, Stakeholders, and nothing else unless the tab needs it.
 
 ## Deals: the sales table (new)
 

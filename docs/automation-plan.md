@@ -1,98 +1,72 @@
-# Automation plan
+# Automations
 
-Proposal, 5 Oct 2026. Builds on Akshay's "Inbox parser routine: handover" (5 Oct) and `routines/inbox.md`. Nothing here is switched on until Akshay approves the open questions at the end.
+What runs, when, and what it is allowed to do. Built 5 Oct 2026 on Akshay's go-ahead (decisions 66 to 68). The prompts live in `routines/`; the routines in claude.ai hold a copy, so change both together.
 
-## What exists today
+## The routines
 
-| Routine | Schedule | State |
-|---|---|---|
-| Inbox to Business OS (trig_01Q1P1B58ZQeQaeNfsqDMzUm) | 06:57 and 20:57 JST | Scheduled, but no connectors attached, so every run stops at step 0 |
-| B2S sheet to Notion daily sync | daily | Running, has Gmail, Notion, Calendar, Drive |
-| FT Newsjack daily scan | daily | Running |
-
-Two inbox designs exist and disagree in two places. This plan merges them into one.
-
-| Point | Handover routine | routines/inbox.md (this repo) | Plan |
+| Routine | Runs (JST) | Connectors | Prompt |
 |---|---|---|---|
-| Status rules | Detailed table: chase ladder, LT chase on timing reasons, last-chance chasers go to Akshay | Simpler ladder | Use the handover's rules |
-| Parked | Akshay only: he is no longer interested. LT chase = revisit later | Parked = revisit on Next date | Use the handover's meaning (needs a yes) |
-| Queue | Cards with a Choice picked in the "Akshay: decide" tab; the agent would apply the choice | Board; Akshay clicks the Engagement and changes Status himself; the agent closes the card | Use the board (Akshay asked for it on 5 Oct). The agent closes a card once the Engagement moves or his reply shows in the thread |
-| Cards for | Akshay, Mamatha, Chaandini | Akshay only, for evals and direct questions | Akshay for decisions; Mamatha for "needs human" facts; Chaandini for unclear deals |
+| Inbox to Business OS | 06:55, 14:55, 20:55 daily | Gmail, Notion | `routines/inbox.md` |
+| FT guest evals | 07:20, 15:20, 21:20 daily | Notion, Gmail | `routines/evals.md` |
+| Calendar sync | 07:35, 15:35, 21:35 daily | Google Calendar, Notion, Gmail | `routines/calendar.md` |
+| Queue upkeep | 13:10 Mon to Sat (09:40 IST) | Notion, Gmail | `routines/queue-upkeep.md` |
 
-## The four automations
+Each run starts a fresh cloud session and ends with a short report; a push notification goes to Akshay when a run has something worth knowing.
 
-All run as Claude routines in the cloud with the Gmail, Notion and Google Calendar connectors attached. Polling is the trigger: there is no push from Gmail, so "when a pitch arrives" means "on the next run", at most an hour later.
+**Setup still needed:** the routines were created without connectors, because this organisation does not allow attaching them from a session. Open each routine in the claude.ai routines page and add the connectors in the table. Until then each run stops at the first step and says the connector is missing.
 
-### 1. Inbox to Notion (hourly, 09:00 to 21:00 IST)
+## What each one does
 
-One run, in this order:
-1. Log every real email as an Activity (Gmail message id, so nothing is logged twice).
-2. Create People and Organisations, deduped, Source Agent.
-3. Move Engagements and Deals on clear evidence, with a Claude note line on every change (handover status table).
-4. Queue cards only for real decisions: an eval to decide, a direct question to Akshay, a last-chance chase, a timing reason (LT chase or Park). One card per thread, linked to the Engagement or Deal, title led by the guest.
-5. Close cards whose Engagement has moved or where Akshay has replied.
-6. Pitch trigger, below.
+**Inbox to Business OS.** Logs every real email as an Activity, creates People and Organisations, and moves Engagements and Deals on clear evidence, with a Claude note line on every change. Three actions beyond capture:
+- New FT pitch (not a mass pitch, under 72 hours old, nobody from our side on it yet): replies "Thanks for your mail, adding Mamatha to coordinate" with Mamatha in Cc.
+- Calendar RSVP mail (Accepted, Declined, Maybe) with no human reply: archived and marked read. A guest decline is noted on the Engagement.
+- "Ask Akshay" cards on Mamatha's Queue when a mail needs Akshay's answer. They close once his answer shows in the thread or on the Engagement.
 
-### 2. New pitch trigger (inside run 1, plus an eval routine)
+**FT guest evals.** Picks up new inbound FT Engagements the inbox created (no eval yet, captured in the last 7 days, at most 5 a run). Runs ft-guest-eval, writes Eval link and verdict, sets Decision pending, adds an Ask Akshay card, and mails Mamatha the link so she does not write an eval by hand. If Mamatha already sent one, it copies hers instead. FT only.
 
-When a new inbound guest pitch arrives:
+**Calendar sync.**
+- Calendar to Notion: recordings and precalls on the ad@thepodium.in calendar set Next date, Call type and Call link; a recording moves the Engagement to Booked. A cancelled or declined event, or one that vanished, gives Mamatha a Follow up card. Booked with no invite gives a Fix data card.
+- Notion to calendar: a private entry, no guests, no notifications, 30 minutes before each recording and precall in the next 14 days. Title "Prep: Guest @ Company (FT recording)", the call link as location, and the eval, dossier, LinkedIn and Engagement links in the description. Moved and cancelled calls update or remove it.
+- After a recording that was not cancelled: a thank-you draft in Gmail copied from the last one Akshay sent (same wording and form link, guest and PR in To, every Stakeholder and the usual team in Cc), a WhatsApp blurb from founder-thesis-blurb (not sent to Slack), and an Ask Akshay card for Mamatha to get him to send the draft and post the blurb. FT only for the draft and blurb. Recorded is set by the inbox once the thank-you goes out.
 
-| Step | What happens | Approval |
-|---|---|---|
-| a | Person, PR contact, Organisation and Engagement created (Status New, Direction Inbound, Show detected) | Automatic |
-| b | Reply on the thread: "Thanks for your mail, adding Mamatha to coordinate", Mamatha in Cc, from ad@thepodium.in | Standing approval (decision 56). Only when Mamatha is not already on the thread. First week as Gmail drafts, then live |
-| c | Guest eval runs with the show's skill (ft-guest-eval, un-guest-eval, bts-guest-eval, hbd-guest-eval) | Automatic |
-| d | Eval link and Eval verdict written to the Engagement, Status Decision pending | Automatic |
-| e | Queue card for Akshay: "<Guest @ Company>: eval says <verdict>, your call" with the eval link | Automatic |
+**Queue upkeep.** Closes cards whose reason has cleared, then runs the checks below, adds up to 12 new cards (Follow up plus Fix data capped at 25 open), counts the backlog it held back, and mails Mamatha a short summary with the board link.
 
-The eval runs as its own routine ("Guest evals", hourly at :30) that picks up Engagements with Status New and no Eval link. That keeps the inbox run fast and means a failed eval never blocks logging. Mass pitches (the pitch names another show) get an Activity only, no eval. Mamatha no longer writes evals by hand; she gets the routed thread and sees the verdict on the Engagement.
-
-### 3. Calendar to Notion (inside run 1)
-
-Read the ad@thepodium.in calendar from 2 days back to 30 days ahead and match events to Engagements by attendee email, then guest name.
-
-| Calendar shows | Notion does |
+| Check | Card |
 |---|---|
-| Recording event with the guest | Booked, Next date = recording date |
-| Precall event | Precall requested stays, Next date = precall date |
-| Event cancelled, or guest declined | Next action "Recording cancelled: rebook or close", card for Mamatha (the Vicky Dodani case) |
-| Recording date passed, not cancelled | Recorded, with a Claude note (Mamatha can correct) |
-| Booked in Notion, no event on the calendar | Card for Mamatha: "Booked but no invite" |
+| Decision pending over 2 days | Ask Akshay |
+| Sponsored, precall done, quiet 5 days | Ask Akshay |
+| Open Engagement with Next date over 2 days past, or no date and no activity in 14 days | Follow up |
+| Recorded over 5 days, form not in | Follow up |
+| Sponsored, booked or recorded, payment not started | Follow up |
+| Deal at Interested or later, or a Warm deal, untouched 14 days | Follow up |
+| No status, no guest, Booked with no date, booked guest with no email | Fix data |
+| Possible duplicate People, guessed names on open Engagements | Fix data |
+| Deal past New with no contacts, Won with no amount | Fix data |
 
-### 4. Notion to Calendar (daily, 07:00 JST)
+Cold deals at New or Contacted are the outreach list and never raise cards. On 5 Oct the backlog was 189 open Engagements with a past or missing Next date and 17 deals at Interested, In conversation or Proposal sent, so the cap matters: Mamatha gets a steady few a day, Booked and Tier 1 first.
 
-- For every Booked recording, a private entry on a separate "Podium prep" calendar, 30 minutes before: guest, company, show, and links to the dossier, eval, LinkedIn and Engagement. Allowed without asking (CLAUDE.md: private entries on Akshay's prep calendar).
-- Never creates, moves or edits an event that has guests on it. Recording invites stay with Mamatha. If Notion and the calendar disagree, the calendar wins and the Engagement is corrected.
+## The Queue
 
-## Next wave (after the first four run clean for a week)
+Mamatha's worklist (decision 67). Akshay does not read it.
+- **Ask Akshay**: only he can decide. Mamatha asks him, records his answer on the Engagement or Deal, and moves the card to Done (or a routine closes it when it sees the change).
+- **Follow up**: a guest or deal has gone quiet.
+- **Fix data**: something in Notion is missing or wrong.
 
-| Trigger | Action | Approval |
-|---|---|---|
-| Booked, recording in 3 days | Run ft-host-dossier, put the Dossier link on the Engagement and in the prep entry | Automatic |
-| Recorded | Thank-you mail to the guest, cc every Stakeholder, with the FT form link | Standing approval for the template (CLAUDE.md) |
-| Recorded, form not filled | Reminders at +3 and +7 days until Form filled | Same template approval |
-| Person tagged "Add to WhatsApp" | founder-thesis-blurb skill, blurb saved on the Person and sent to Akshay | Automatic |
+Status: To do, Waiting (she has asked, no answer yet), Done. Board: "Mamatha's queue".
 
-## Guardrails (all routines)
+## Guardrails
 
-- Email goes only from ad@thepodium.in, only the approved templates, with a daily send cap of 20. A switch on the Business OS home page (Sending: ON or OFF) stops all sending at once.
-- Never deletes rows, never changes schemas, never touches Credentials or Templates.
-- Never sets Parked, Tier, Decision, Amount or Payment; never edits a calendar event with guests.
-- If a connector is missing, the run stops and reports; no partial work.
-- Every run ends with a short report and a push notification.
+- Mail goes only from ad@thepodium.in and only these: the pitch reply, eval links to Mamatha, the daily queue mail to Mamatha. Thank-you mails are drafts that Akshay sends.
+- Send cap 100 a day across all routines, counted from Activities whose Summary starts "Agent sent". A runaway guard, not a quota.
+- Never deletes rows, never changes schemas, never touches Credentials.
+- Never sets Parked, Tier, Route, Amount or Payment unless the mail is Akshay saying so.
+- Calendar: only events carrying "bos-key:" in the description are ever created, changed or removed. Events with guests are never touched.
+- Every change to an Engagement or Deal adds a dated line to Claude note.
 
-## Setup work
+## Next wave
 
-1. Rewrite the Inbox to Business OS prompt as the merged version and attach Gmail, Notion and Google Calendar. Connectors can only be attached when a routine is created from here, so the routine is recreated with the same name and schedule; the old one is deleted once the new one has run cleanly.
-2. Create the Guest evals routine and the Notion to Calendar routine.
-3. Create the "Podium prep" calendar.
-4. Fix the data the handover found: the 46 Parked rows re-sorted into LT chase or Parked (a list for Akshay), three rows set to Parked on 5 Oct by the review moved to LT chase (Flourish Ventures, Nikita Kumawat, Ankit Utreja), the Pavan Kavad duplicate.
-5. One supervised test run of each routine, read together, before the schedules go live.
-
-## Open questions for Akshay
-
-1. Parked = "no longer interested, Akshay only" and LT chase = "revisit later": adopt?
-2. Inbox runs hourly 09:00 to 21:00 IST (13 runs a day) or twice a day?
-3. Pitch reply: drafts for the first week, then live?
-4. Auto-eval every new pitch on all four shows, or Founder Thesis only to start?
-5. Set Recorded automatically once the calendar date passes?
+| Trigger | Action |
+|---|---|
+| Booked, recording in 3 days | ft-host-dossier, Dossier link on the Engagement and in the prep entry |
+| Recorded, form not in after 3 and 7 days | Reminder drafts on the thank-you thread |
+| Auto eval for un#, Built to Share, Human by Design | Their own eval skills, once FT runs clean |

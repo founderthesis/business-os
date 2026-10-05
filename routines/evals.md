@@ -2,7 +2,7 @@
 
 Scheduled routine "FT guest evals", three times a day about 20 minutes after each inbox run (07:20, 15:20, 21:20 JST), with the Gmail and Notion connectors.
 
-It picks up new FT pitches the inbox logged, runs the ft-guest-eval skill on each, writes the eval link and verdict to the Engagement, puts a decision card on Akshay's Queue, and mails Mamatha the eval link so she does not write one by hand. Founder Thesis only (Akshay, 5 Oct). Decision 66.
+It picks up new FT pitches the inbox logged, runs the ft-guest-eval skill on each, writes the eval link and verdict to the Engagement, puts an "Ask Akshay" card on Mamatha's Queue, and mails Mamatha the eval link so she does not write one by hand. Mamatha chases Akshay for the call. Founder Thesis only (Akshay, 5 Oct). Decisions 66 and 67.
 
 ## Prompt
 
@@ -27,7 +27,7 @@ a. Read the Engagement, its Guest and Via People rows, and the pitch thread (Gma
 b. Check Gmail for an eval Mamatha already sent Akshay for this guest in the last 7 days (from Mamatha, guest's name). If there is one, do not run a new eval: copy its link and verdict to the Engagement as in step d, and skip e and f.
 c. Run the ft-guest-eval skill (Skill tool, skill "ft-guest-eval") with the guest's name, company, LinkedIn if known, and the full pitch text. Follow the skill. It publishes the eval page and updates the Engagement. If the Artifact tool is not available in this session, write the eval page as a child page under the Engagement in Notion instead and use that page's URL.
 d. Make sure the Engagement has: Eval link = the eval page URL, Eval verdict = the skill's verdict, Status = Decision pending, Next action = the skill's one-line recommendation, a Claude note line "YYYY-MM-DD: eval done, <verdict>", Claude updated today. Do not set Route, Tier or Parked.
-e. Queue card: Item "<Guest @ Company>: eval says <verdict>, your call", Type Decision, For Akshay, Status To do, Engagement, People = the guest, Eval = the eval link, Gmail thread = the pitch thread URL, Thread ID = the pitch thread id, Recommendation = the route the eval suggests in one line. If a card with that Thread ID exists and is not Done, update it instead.
+e. Queue card for Mamatha: Item "<Guest @ Company>: eval says <verdict>, what does Akshay want?", Type Ask Akshay, For Mamatha, Status To do, Due = today + 2 days, Engagement, People = the guest, Eval = the eval link, Gmail thread = the pitch thread URL, Thread ID = the pitch thread id, Recommendation = the route the eval suggests in one line. If a card with that Thread ID exists and is not Done, update it instead.
 f. Mail Mamatha (address from her People row; never type one from memory) from ad@thepodium.in, a new message, nobody else on it:
    Subject: "Eval ready: <Guest> @ <Company> (FT)"
    Body:
@@ -36,7 +36,7 @@ f. Mail Mamatha (address from her People row; never type one from memory) from a
    The eval for <Guest> (<Company>) is done: <verdict>.
    <eval link>
 
-   Akshay will decide from his Queue. No need to write an eval for this one; just keep the PR thread warm until he does.
+   It is on your Queue as Ask Akshay. No need to write an eval for this one; get his call and keep the PR thread warm until then.
 
    Regards,
    Akshay"

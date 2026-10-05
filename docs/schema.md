@@ -80,8 +80,10 @@ One row per guest pursuit: a person and a show. Replaces every guest pipeline ta
 | Organisation | relation → Organisations | Auto | |
 | Direction | select | Auto | Inbound (pitched to us), Outbound (we reached out) |
 | Status | select | Auto / Human | New, Contacted, Interested, Decision pending, Precall requested, Precall done, Sponsored offered, Booking, Booked, Recorded, Form filled, LT chase, Parked, They declined, We declined, Unresponsive |
-| Tier | select | Human | Tier 1, Tier 1.5, Tier 2, Sponsored. Set by Akshay |
-| Decision | select | Auto | Akshay's call: Precall, Book, Sponsored, Decline, Present to host |
+| Tier | select | Human | Tier 1, Tier 1.5, Tier 2. Importance to us, set by Akshay |
+| Route | select | Human | Sponsored, Organic. Sponsored = paid appearance; Payment and Amount apply (decision 66) |
+| Call type | select | Auto | Precall, Recording, Planning call. What Next date is when it is a call |
+| Call link | url | Auto | Zencastr, Riverside or Meet link of the next call, from the calendar |
 | Eval verdict | select | Auto | Book immediately, Strong consider, Pre-call needed, Evaluate after call, Decline. Hidden by default |
 | Eval link, Dossier link | url | Auto | |
 | Host verdict | select | Auto / Human | Yes, No, Maybe, Not asked. un#, B2S and HBD only |
@@ -253,7 +255,7 @@ Akshay's dashboard and the team's work queue. Every inbox email becomes one item
 | Field | Type | Fill | Notes |
 |---|---|---|---|
 | Item | title | Auto | One line |
-| Type | select | Auto | Decision, Heads-up, Reminder, Action, Chase, Noise |
+| Type | select | Auto | Ask Akshay, Follow up, Fix data (decision 67). Decision, Heads-up, Reminder, Action, Chase and Noise are history only |
 | For | select | Auto | Akshay, Mamatha, Chaandini, Sarika, Ranjita |
 | Recommendation | text | Auto | e.g. "Sponsored" pre-selected when the eval says Decline |
 | Choice | select | Human | Sponsored, Precall, Book, Decline, Present to host, Approve, Edit first, Dismiss |
