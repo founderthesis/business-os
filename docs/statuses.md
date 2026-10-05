@@ -1,91 +1,136 @@
-# Statuses
+# Statuses and pipelines
 
-One field, one ladder. Proposed 5 Oct 2026 after reading every status value in the FT Pipeline sheet (counts in `data/out/ft_pipeline_statuses.md`, not committed). Replaces the Stage + Outcome pair and the status columns listed at the end. Not applied in Notion until Akshay agrees.
+Proposal, 5 Oct 2026, second draft after Mamatha's feedback. Built from every status value in the FT Pipeline sheet (counts in `data/out/ft_pipeline_statuses.md`, not committed) and the PaaS lead fields already migrated. Nothing is changed in Notion until Akshay approves.
 
-## What the sheet actually tracks
+## The one idea
 
-The FT Pipeline sheet holds 1,009 guest rows across Inbound (673), P1 (209), Paid (13), FT Cold Lead (154) and VC Intros (34), plus 1,631 PaaS rows. Its "Status" columns mix three different things:
+A row is one conversation. Mamatha's conversation with a guest is one row, whether the guest ends up free or sponsored. Akshay's sale of podcast production to a company is a different conversation, usually with a different person and usually after the episode, so it is a different row in a different table.
 
-| It is really | Raw values (count) |
-|---|---|
-| Where the guest is on the journey | TBD 108, Precall Scheduled 2, To be Scheduled 14, Scheduled 13, Recorded 2, Form Filled 89, Paid-tab milestones (planning call, recording scheduled, released) |
-| What Akshay decided | Sponsored 53, Paid 7, P1 62, P2 47, Add to outbound 13; and in the free-text route column: Sponsored 117, Preliminary call 87, Commercials shared 84, Akshay has to decide 19 |
-| How it ended or stalled | Declined 288, Unresponsive 136, Chase 16, LT Chase 17, Maybe Later 4, Propsed Alt 11 |
+So:
 
-The eval verdict lives in a fourth column (373 readable labels: Decline 160, Evaluate after call 107, Strong consider 80, Book immediately 26; another 96 are links or doc titles). PaaS tabs are 95 to 99 percent blank.
+- **Engagements** stays the guest table. One row per person per show. Mamatha lives here.
+- **Deals** is new: one row per company we are selling production to (PaaS). Akshay and Chaandini live here. The 788 PaaS rows move out of Engagements into it.
+- A sponsored appearance is not a deal. It stays on the guest row with a Payment column, because it is the same person, the same thread and the same owner.
 
-So the guest journey, as the team actually runs it, is: pitch in, eval, Akshay decides, then one of three paths (precall, sponsored offer, book), then recording, then the Episode takes over. Rows stall (chase, park) or end (decline, no response, dropped out) at any point.
+## Engagements: the guest table
 
-## The new field: Status
+### Status (one column, in journey order)
 
-One select on Engagements. Mamatha reads and sets this column and nothing else; the agent sets it where it can.
+| Status | Means | Inbound | Outbound | Sponsored route |
+|---|---|---|---|---|
+| New | Pitch received, or target approved for outreach | yes | yes | |
+| Contacted | Invite sent, chasing a reply | | yes | |
+| Interested | They replied yes, eval next | | yes | |
+| Decision pending | Eval done, Akshay to decide. Also after a precall | yes | yes | |
+| Precall requested | Precall offered, chasing for a slot | yes | yes | |
+| Precall done | Precall happened, back to Decision pending. For sponsored guests this is the planning call | yes | yes | yes |
+| Sponsored offered | Commercials shared, waiting on them | yes | yes | yes |
+| Booking | Yes to record, no date yet. For sponsored, agreed and awaiting first payment | yes | yes | yes |
+| Booked | Recording date set. Next date = recording | yes | yes | yes |
+| Recorded | Done, form sent to guest, form chasers run | yes | yes | yes |
+| Form filled | FT form in (pics, designation, links). Last active status; Episode carries release | yes | yes | yes |
+| LT chase | Long-term chase: no reply to the precall request or invite, chase monthly | yes | yes | |
+| Parked | Revisit on Next date (not now, next year, P2) | yes | yes | yes |
+| They declined | Said no to organic or sponsored | yes | yes | yes |
+| We declined | Akshay or host said no | yes | yes | yes |
+| Unresponsive | Chase ladder exhausted, silence | yes | yes | yes |
 
-### Guest journey (Guest inbound, Guest outbound)
+The sponsored path in order: Sponsored offered, Booking (agreed), Precall done (planning call), Booked, Recorded, Form filled. The money runs alongside in Payment.
 
-| Status | Means | Set by | What happens next |
+"Add to outbound" is a move, not a status: the PR agency dropped out, so Direction flips to Outbound, Status to New, and the history stays in Activities.
+
+"Released" is not a guest status. It lives on the Episode (Status = Published).
+
+### The other columns Mamatha sees
+
+| Column | Options | Who sets | Why |
 |---|---|---|---|
-| New | Pitch received, or target approved for outreach | Agent (inbox), Mamatha | Agent runs the guest eval |
-| Evaluating | Eval requested or running | Agent | Eval lands on the Decision Desk |
-| Decision pending | Eval done, Akshay has not decided | Agent | Card on the Decision Desk; nothing moves until a Choice |
-| Precall | Precall offered, scheduled or done. Next date = the call | Agent on Choice = Precall, Mamatha | After the call, agent sets Decision pending again for the post-call verdict |
-| Sponsored offer | Commercials shared, waiting on them | Agent on Choice = Sponsored, Mamatha | Chase ladder runs; a yes moves to Booking with Amount set |
-| Booking | Yes to record, date not yet fixed | Agent on Choice = Book, Mamatha | Mamatha fixes the slot; for sponsored, invoice goes out (Paid = Invoiced) |
-| Booked | Recording date set. Next date = recording | Mamatha, or agent from the calendar | Episode row created; dossier runs 2 days before |
-| Recorded | Recording done | Agent from the calendar | Thank-you and PR form go out; form chasers run; Episode status carries production. This is the last active status |
-| Parked | Not now, revisit on Next date | Mamatha, Akshay by comment | Reminder on Next date, then back to the right status |
-| Declined | We said no, or they did | Agent on Choice = Decline, Mamatha | Closed |
-| No response | Chase ladder exhausted | Agent | Closed; a reply reopens it |
-| Dropped out | Agreed, then fell through, or a substitute guest was proposed | Mamatha | Closed; the substitute gets a New row |
+| Direction | Inbound, Outbound | Agent on creation, Mamatha | Inbound = pitched to us. Outbound = we reached out. Separate tabs |
+| Tier | Tier 1, Tier 1.5, Tier 2, Sponsored | Akshay on the Decision Desk | How hard we chase, which slot they get. Sponsored means the paid route |
+| Decision | Precall, Book, Sponsored, Decline, Present to host | Agent from Akshay's card choice | What Akshay said. Drives the Status move |
+| Payment | Not started, GST received, Invoice 1 sent, Payment 1 received, Invoice 2 sent, Payment 2 received, Settled | Mamatha, agent from mail | Sponsored guests only. Hidden otherwise |
+| Amount | number | Mamatha | Sponsored fee |
+| Next action | one line | Mamatha, agent | What happens next |
+| Next date | date | Mamatha, agent | When. Drives chasers, reminders and the recording |
+| Chase step | 0 to 5 | Agent | Where on the follow-up ladder |
+| Eval verdict | Book immediately, Strong consider, Evaluate after call, Decline | Agent | Hidden by default; the eval is a link away |
+| Eval link, Dossier link | url | Agent | |
+| Guest, Stakeholders, Via, Organisation, Episode | relations | Agent | Who, the PR people, who brought it, the company, the episode |
 
-"Done" is not a guest status. Released lives on the Episode (Status = Published). The engagement stops at Recorded.
+Removed from Engagements: Stage, Outcome, Whose move, Heat, Pitch link, Rank, Host verdict for FT (kept for un#, B2S, HBD where the host is not Akshay). Type collapses into Direction once PaaS moves to Deals; Sponsor, Partner, Vendor rows go to Deals too.
 
-### BD journey (PaaS, Sponsor, Partner, Client, Vendor)
+Tier here is pre-recording importance. The Episode keeps its own production tier tag (Tier 1, Tier 2, Tier 3 Spotlight), set by the one tap after recording and defaulting from this Tier.
 
-Same field, the BD values stay as they are: New, Contacted, In conversation, Proposal sent, Agreed, then Parked, Declined, No response, Dropped out. Heat (Hot, Warm, Cold) stays for PaaS only.
+### Mamatha's tabs on Engagements
 
-### Reading it
+- **FT: Inbound** (Direction = Inbound, status not ended)
+- **FT: Outbound** (Direction = Outbound, status not ended)
+- **FT: Sponsored** (Tier = Sponsored, status not ended), with Payment and Amount showing
+- **FT: Chasing** (LT chase and Parked), sorted by Next date
+- **FT: Recorded, form pending** (Status = Recorded)
+- **FT: All guests**
 
-- Open pipeline = Status is not Parked, Declined, No response or Dropped out, and not Recorded.
-- Mamatha's work = open rows sorted by Next date. Next action says what.
-- Anything with no Next date and an open status is a gap the agent flags.
+Each tab shows Name, Status, Tier, Next action, Next date, Decision, Eval link, Guest, Stakeholders, and nothing else unless the tab needs it.
 
-## What this replaces
+## Deals: the sales table (new)
 
-| Today | Becomes |
-|---|---|
-| Stage (Identified, Contacted, In conversation, Proposal sent, Agreed) | Status. Guests never used these names; BD keeps them |
-| Outcome (Live, Done, Declined, No response, Dropped out) | Status. Live and Done move to the Episode; the three ended values stay |
-| Whose move | Removed. No person tagging; each person owns a show or a list |
-| Host verdict | Kept for un#, B2S and HBD only. Hidden on FT views |
-| Paid-tab milestones (7 checkboxes) | Status (Precall, Booked, Recorded), Paid (Not due, Invoiced, Part paid, Paid), Amount, Episode Published |
-| P1 / P2 | P1 = whatever active status the row is at. P2 = Parked |
-| Sheet "Next action - AD" and route column | Decision (Sponsored, Precall, Book, Decline, Present to host), set from the Decision Desk |
+One row per company we are selling production to. Two ways in, which is the strategy Akshay described:
 
-Kept as they are: Decision (Akshay's call), Eval verdict (the agent's), Eval link, Dossier link, Next action, Next date, Chase step, Amount, Paid.
+| Entry path | How it starts | Today's source |
+|---|---|---|
+| FT guest first | Invite them on FT, record, then open the PaaS conversation | PAAS - FT tab (93 rows), the PaaS leads table |
+| Cold outreach | Straight pitch by mail, LinkedIn or X | PAAS - Direct (1,434), PAAS new (104), US VC (774), HK/SG |
 
-## Mapping the sheet into Status
+| Column | Options | Notes |
+|---|---|---|
+| Company | title | |
+| Organisation, Contacts | relations | The people on the deal |
+| From engagement | relation → Engagements | The FT guest row it grew out of, if any |
+| Entry path | FT guest first, Cold outreach | |
+| Stage | New, Contacted, Interested, In conversation, Proposal sent, Agreed, Parked, Declined, Unresponsive | Same shape as the guest ladder, so one mental model |
+| Heat | Hot, Warm, Cold | Akshay's read |
+| Proposal link | url | The short link to the PaaS proposal, standalone as asked |
+| Pitch note | url | The guest-specific pitch note |
+| Fit rank | number | From the US VC and HK/SG lists, 1 first |
+| Budget read | text | From the US VC enrichment |
+| Amount | number | Monthly or total, once quoted |
+| Next action, Next date, Chase step | | Same as Engagements |
+| Tags | US VC, HK/SG, Has podcast, Priority A/B/C, No email | |
+| Activities | relation | Every mail and call |
 
-| Raw (count) | Status | Also set |
+Later, the same table takes show sponsors and partner deals, with a Kind column (PaaS, Sponsor, Partner). Not needed now.
+
+## Where today's sheet values land
+
+| Raw (count) | Status | Also |
 |---|---|---|
 | TBD (108), "Akshay has to decide" | Decision pending | |
-| Precall Scheduled (2), route "Preliminary call" or "Asked for pre call" | Precall | Decision = Precall |
-| Sponsored (53), route "Sponsored" or "Commercials shared" | Sponsored offer | Decision = Sponsored |
-| Paid (7), Paid tab rows | Booking, Booked or Recorded by milestone | Decision = Sponsored, Amount, Paid |
+| Precall Scheduled (2), route "Preliminary call", "Asked for pre call" | Precall requested | Decision = Precall |
+| "Precall done", "Planning call done" | Precall done | |
+| Sponsored (53), route "Sponsored", "Commercials shared" | Sponsored offered | Tier = Sponsored, Decision = Sponsored |
+| Paid (7), Paid tab rows | Booking, Booked or Recorded by milestone | Tier = Sponsored, Payment from the checkboxes, Amount |
 | To be Scheduled (14) | Booking | Decision = Book |
-| Scheduled (13) | Booked | Decision = Book, Next date = recording |
-| Recorded (2), Form Filled (89) | Recorded | Episode row; Guest form in = true for Form Filled |
-| P1 (62) on Inbound | Status from the matching P1 row; Decision pending if none | |
-| P2 (47), Maybe Later (4), LT Chase (17), Later (1) | Parked | Next date from the sheet, else 90 days |
-| Chase (16), Interested (4), warm (9), Emailed (5) | Stay at the status they were chasing from; Chase step from the follow-up column | |
-| Add to outbound (13), Approved (154 cold leads), Cold (52) | New | Type = Guest outbound or PaaS |
-| Declined (288), Reject (6) | Declined | |
-| Unresponsive (136), Bounced (8) | No response | Bounced also tags the email invalid |
-| Propsed Alt (11) | Dropped out | Substitute becomes a New row |
+| Scheduled (13) | Booked | Next date = recording |
+| Recorded (2) | Recorded | |
+| Form Filled (89) | Form filled | |
+| P1 (62) on Inbound | Status from the matching P1 row, else Decision pending | |
+| P2 (47), Maybe Later (4), Later (1) | Parked | Next date from the sheet, else 90 days out |
+| LT Chase (17) | LT chase | |
+| Chase (16), Interested (4) | Status they were chasing from; outbound Interested | Chase step from the follow-up columns |
+| Add to outbound (13), Approved (154 cold leads) | New, Direction = Outbound | |
+| Declined (288) | They declined, or We declined where the note says Akshay or "Decline by Akshay" | |
+| Unresponsive (136), Bounced (8) | Unresponsive | Bounced also tags the email invalid |
+| Propsed Alt (11) | They declined | The substitute becomes a New row |
+| Tier 1, Tier 2 in the eval column | Tier | |
+| PAAS tabs, PaaS leads, US VC, HK/SG | Deals, not Engagements | Stage from Cold = New, Emailed = Contacted, warm = Interested, In discussion = In conversation |
 
-The eval column maps to Eval verdict where it is a label, and to Eval link where it is a URL. Doc titles (173 rows) get neither; the enrichment routine looks them up later.
+The eval column maps to Eval verdict where it is a label and to Eval link where it is a URL. Doc titles (173 rows) get neither; the enrichment routine looks them up later.
 
-## Open questions for Akshay
+## What changes in Notion, in order
 
-1. One Status field for guests and BD, or keep BD on its own Stage? One field is simpler to read; two keeps the BD board untouched.
-2. Does "Decision pending" need to be visible to Mamatha, or should those rows sit only on the Decision Desk until decided?
-3. Sponsored guests: does Booking wait for the first payment, as the Paid tab implies, or can the slot be fixed first?
+1. Create Deals. Move the 788 PaaS rows and the 1 Client row across with their fields. Repoint the Queue and Activities relations.
+2. On Engagements: add Status, Direction, Tier, Payment; fill them from Stage, Outcome, Type and Decision for the 227 existing guest rows (all Recorded or Form filled, since they came from Blue).
+3. Remove Stage, Outcome, Whose move, Heat, Pitch link, Rank, Type.
+4. Rebuild Mamatha's tabs.
+5. Migrate the FT Pipeline sheet's open rows (about 350) into Engagements with the mapping above, duplicates to a review list.
+6. Update the inbox agent and the Decision Desk to write Status, Direction, Tier and Decision.
