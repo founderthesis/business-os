@@ -63,6 +63,9 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 | 55 | The inbox agent starts in TEST mode (sorts and drafts, sends nothing, marks nothing read, writes a test log). Akshay switches it to LIVE on the dashboard after one or two good test runs. | Akshay, 3 Oct |
 | 56 | Standing approval: a guest pitch sent straight to Akshay or to hello@, by a PR person or by the guest themselves, gets "Thanks for your mail, adding Mamatha to coordinate" with Mamatha cc'd, without asking. | Akshay, 3 Oct |
 | 57 | Dashboard order: the To decide table first (decisions, actions and due reminders, with an FYI tab for heads-up), then Today (calendar, releases, hot PaaS), then pipeline views; settings, help and run log at the bottom. Every decision card carries the links needed to decide (Eval, LinkedIn, Website, Other link) so the mail doesn't need opening. | Akshay, 3 Oct |
+| 58 | One Status ladder on Engagements for the guest journey (New to Form filled, plus LT chase, Parked, They declined, We declined, Unresponsive). Stage, Outcome, Whose move, Heat, Pitch link, Rank and Type retired. Tier (1, 1.5, 2, Sponsored) and Direction (Inbound, Outbound) added. Sponsored money tracked in a Payment column on the same row. Spec in docs/statuses.md. | Akshay with Mamatha, 5 Oct |
+| 59 | Commercial pursuits (PaaS, clients, sponsors, partners) live in a separate Deals table. A sponsored guest appearance is not a deal; it stays on the guest row. | Akshay, 5 Oct |
+| 60 | No person tagging on rows. Each person owns a show or a list; Mamatha owns all FT guests. Her tabs on Engagements: FT: Pipeline, FT: Outbound, FT: Sponsored. | Akshay, 5 Oct |
 
 ## Open
 

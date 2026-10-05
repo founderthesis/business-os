@@ -23,7 +23,8 @@ NOTION IDS
 - Queue: collection://af59132c-92cb-4e87-85f0-266bd07309c4  (Item, Type, For, Status, Choice, Comment, Recommendation, Eval, LinkedIn, Website, Other link, Due, People, Engagement, Episode, Gmail thread, Thread ID, Marked read, Sent, Decided at)
 - People: collection://e6c44319-7f81-4da6-8b80-8441a4875d7a  (team rows are tagged Team and hold their email)
 - Organisations: collection://c43c280a-3b37-4821-96ef-dab688a53aea
-- Engagements: collection://5522ee21-d8e5-4ec0-bf3e-90bcf88d24c5
+- Engagements: collection://5522ee21-d8e5-4ec0-bf3e-90bcf88d24c5  (guest pursuits: Status, Direction, Tier, Decision, Eval verdict, Eval link, Next action, Next date, Guest, Stakeholders, Via, Show)
+- Deals: collection://1a981c5a-912a-4972-b3fc-8c9f2abb329a  (PaaS sales: Stage, Heat, Proposal link, Next action, Next date, Contacts, Organisation)
 - Episodes: collection://5d250752-6db8-4ab6-8467-c68f5838278a
 - Activities: collection://290f715d-fd45-4203-ade6-3642c2326c6c  (Summary, Date, Kind, People, Engagement, Episode, Link)
 Never read or write the Credentials table.
@@ -38,7 +39,7 @@ In LIVE mode with Sending ON and under the cap (count today's Activities with Ki
 - Approve: send the "Prepared reply" in the card's page body (To, Cc, Subject, Body) as a reply in the thread.
 - Edit first: redraft the Prepared reply following his Comment, clear Choice, leave it Waiting.
 - Dismiss: no email.
-After acting: Sent = yes if an email went out, Status = Done, Decided at = now, mark the Gmail thread read, Marked read = yes. Log an Activity (Kind "Email out", Link = thread, People, Engagement). If the decision moves a pursuit (precall offered, booked, declined, sponsored offered), update that Engagement's Stage, Outcome, Next action and Whose move.
+After acting: Sent = yes if an email went out, Status = Done, Decided at = now, mark the Gmail thread read, Marked read = yes. Log an Activity (Kind "Email out", Link = thread, People, Engagement). Then move the Engagement: Precall -> Status "Precall requested"; Book -> "Booking"; Sponsored -> "Sponsored offered" and Tier "Sponsored"; Decline -> "We declined"; Present to host -> stays "Decision pending" with Next action "With host". Set Decision to the choice, Next action to what Mamatha does next, Next date to when. If the guest or PR declines later, Status "They declined".
 If the Comment defers something ("in a couple of months", "after we release", "set it up in September"), create a Reminder card with that Due date.
 
 STEP 2. SORT NEW MAIL
@@ -57,6 +58,7 @@ Classify by what the newest messages need from Akshay:
 
 Standing approval (decision 56): a PR person or agency pitching a guest, or a guest pitching themselves, straight to Akshay or to the hello@ alias (Mamatha is not on the thread) gets the reply "Thanks for your mail, adding Mamatha to coordinate." with Mamatha in Cc (her address is on her People row). In LIVE mode with Sending ON, send it, log it, and file the thread as a Heads-up "Routed to Mamatha: <who> pitching <guest>". In TEST mode, do not send; file it as a Heads-up "Would route to Mamatha: ...".
 
+Guest evals from Mamatha: make sure an Engagement exists for the guest on that show (find by Guest person + Show; else create one with Direction Inbound, Status "Decision pending", Source Agent, Guest, Via = the PR person, Stakeholders, Organisation, Eval link and Eval verdict from her mail). The card's Engagement relation points at it.
 Match people: sender and recipient addresses against People Email and Other emails; then the email domain against Organisations Domain or Website; then name plus company. Find the open Engagement where they are the Guest or a Stakeholder, and the Episode if one is linked. A real business sender who is not in People: create a Person (Source "Agent", Name from the signature, Organisation if known). Never merge or delete people; if a match is uncertain, say so in the card.
 
 Write the card (one Queue row per thread; if a row with the same Thread ID exists, update it instead of creating a new one):

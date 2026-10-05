@@ -9,7 +9,7 @@ How to read it. **Fill** says who fills a field:
 
 Every table also carries three provenance fields, not repeated below: `Source` (where the row came from), `Source ID` (its ID there), `Captured` (date). Rows from the migration carry `Migration batch` too.
 
-Ten tables: People, Organisations, Engagements, Shows, Episodes, Tasks, Activities, Queue, Templates, Credentials.
+Eleven tables: People, Organisations, Engagements, Deals, Shows, Episodes, Tasks, Activities, Queue, Templates, Credentials.
 
 **Tags everywhere.** People, Organisations, Engagements, Episodes and Tasks each have a `Tags` multi-select that anyone can add values to. Tags are how the team organises on the fly without asking for a new field. Agents read and set tags too (for example the tier after a recording). Fixed fields stay only where an automation needs exactly one value, such as Stage or Status.
 
@@ -68,38 +68,54 @@ PR agencies are recorded here for the first time. Today the agency is never writ
 
 ## 3. Engagements
 
-One row per pursuit: a person (or organisation) and a goal, usually on a show. Replaces every pipeline tab. Rows that were copied forward between sheet tabs (FT Inbound to P1, B2S N2 to N3, un# Pipeline v2 to CRM) collapse into one row; the latest status wins and the history goes into Activities.
+One row per guest pursuit: a person and a show. Replaces every guest pipeline tab. The full status ladder, the sponsored payment track and the mapping from the old sheets are in `docs/statuses.md`.
 
 | Field | Type | Fill | Notes |
 |---|---|---|---|
 | Name | title | Auto | "Person @ Company, Show" |
-| Type | select | Auto | Guest outbound, Guest inbound, PaaS (selling our production service), Sponsor, Partner, Client, Vendor |
-| Show | relation → Shows | Migrate / Auto | The show it is for |
-| Guest | relation → People | Migrate / Auto | The person being featured or pitched |
-| Stakeholders | relation → People | Auto | Everyone else on the thread: PR agency people, company comms, EAs, interns. Filled from email participants. All are copied on guest emails |
-| Via | relation → People | Migrate / Auto | The PR contact who brought it in, if any |
+| Show | relation → Shows | Migrate / Auto | |
+| Guest | relation → People | Migrate / Auto | The person being featured |
+| Stakeholders | relation → People | Auto | PR agency people, comms, EAs. All copied on guest emails |
+| Via | relation → People | Migrate / Auto | The PR contact who brought it in |
 | Organisation | relation → Organisations | Auto | |
-| Stage | select | Auto | Identified, Contacted, In conversation, Proposal sent (PaaS and sponsors only), Agreed |
-| Heat | select | Human | Hot, Warm, Cold. PaaS and sponsor deals only |
-| Pitch link | url | Migrate / Auto | PaaS pitch note, priced pitch or short link |
-| Rank | number | Migrate / Auto | Order to work a target list, 1 first |
-| Outcome | select | Auto | Live, Done, Declined, No response, Dropped out |
-| Whose move | select | Auto | Akshay, Mamatha, Chaandini, Sarika, Ranjita, Host, Them |
-| Next action | text | Auto | One line |
-| Next date | date | Auto | Drives chasing and reminders |
-| Chase step | number | Auto | 0 to 5 on the follow-up ladder. A human "Stop chasing" sets Outcome |
-| Eval verdict | select | Auto | Book immediately / Strong consider / Pre-call needed / Decline |
-| Eval link | url | Auto | The eval page; also added to the person's Research |
-| Dossier link | url | Auto | Host dossier and guest prep note; also added to the person's Research and to the private prep calendar entry |
-| Host verdict | select | Auto / Human | Yes, No, Maybe, Not asked. From Sri Approval, "Arjun rejected" cells, host replies |
-| Decision | select | Auto | Akshay's call: Sponsored, Precall, Book, Decline, Present to host |
-| Amount | number | Human | Only when money is agreed (Decision is Sponsored, or Type is Client) |
-| Paid | select | Auto | Not due, Invoiced, Part paid, Paid. Hidden unless Amount is set |
-| Episode | relation → Episodes | Auto | Created when Stage reaches Agreed and the recording is booked. Two guests on one episode means two Engagements pointing at the same Episode |
-| Activities | relation → Activities | Auto | |
-| Tags | multi-select | Auto / Human | Free, e.g. Warm intro, Big name, US VC, Priority A/B/C, Has podcast, No email, Follow up in 2027 |
+| Direction | select | Auto | Inbound (pitched to us), Outbound (we reached out) |
+| Status | select | Auto / Human | New, Contacted, Interested, Decision pending, Precall requested, Precall done, Sponsored offered, Booking, Booked, Recorded, Form filled, LT chase, Parked, They declined, We declined, Unresponsive |
+| Tier | select | Human | Tier 1, Tier 1.5, Tier 2, Sponsored. Set by Akshay on the Decision Desk |
+| Decision | select | Auto | Akshay's call: Precall, Book, Sponsored, Decline, Present to host |
+| Eval verdict | select | Auto | Book immediately, Strong consider, Pre-call needed, Evaluate after call, Decline. Hidden by default |
+| Eval link, Dossier link | url | Auto | |
+| Host verdict | select | Auto / Human | Yes, No, Maybe, Not asked. un#, B2S and HBD only |
+| Next action | text | Human / Auto | One line |
+| Next date | date | Human / Auto | Drives chasers, reminders and the recording |
+| Chase step | number | Auto | 0 to 5 on the follow-up ladder |
+| Payment | select | Human / Auto | Not started, GST received, Invoice 1 sent, Payment 1 received, Invoice 2 sent, Payment 2 received, Settled. Sponsored only |
+| Amount | number | Human | Sponsored fee |
+| Episode | relation → Episodes | Auto | Created at Booked |
+| Activities, Queue items, Deals | relations | Auto | |
+| Tags | multi-select | Auto / Human | Free |
 
-Status mapping from the sheets (74 raw values onto these fields) is in `docs/audits/sheets.md`.
+Retired on 5 Oct 2026: Type, Stage, Outcome, Whose move, Heat, Pitch link, Rank, Paid. Commercial rows moved to Deals.
+
+## 3b. Deals
+
+One row per company we are selling podcast production to (PaaS). Later also show sponsors and partners.
+
+| Field | Type | Fill | Notes |
+|---|---|---|---|
+| Company | title | Auto | |
+| Organisation, Contacts | relations | Auto | |
+| From engagement | relation → Engagements | Auto | The FT guest row it grew out of, if any |
+| Entry path | select | Auto | FT guest first, Cold outreach |
+| Stage | select | Human / Auto | New, Contacted, Interested, In conversation, Proposal sent, Agreed, Parked, Declined, Unresponsive |
+| Heat | select | Human | Hot, Warm, Cold |
+| Proposal link | url | Human | Short link to the PaaS proposal |
+| Pitch note | url | Auto | |
+| Fit rank | number | Migrate | From the US VC and HK/SG lists |
+| Budget read | text | Migrate | |
+| Amount | number | Human | |
+| Next action, Next date, Chase step | | | As Engagements |
+| Tags | multi-select | | US VC, HK/SG, Has podcast, Priority A/B/C, No email |
+| Activities, Queue items | relations | Auto | |
 
 ## 4. Shows
 
