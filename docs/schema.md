@@ -106,7 +106,7 @@ One row per company we are selling podcast production to (PaaS). Later also show
 | Organisation, Contacts | relations | Auto | |
 | From engagement | relation → Engagements | Auto | The FT guest row it grew out of, if any |
 | Warm or cold | select | Auto | Warm (via an FT guest, recording or intro), Cold outreach |
-| Stage | select | Human / Auto | New, Contacted, Interested, In conversation, Proposal sent, Agreed, Parked, Declined, Unresponsive |
+| Stage | select | Human / Auto | New, Contacted, Interested, In conversation, Proposal sent, Won, Parked, Declined, Unresponsive |
 | Heat | select | Human | Hot, Warm, Cold |
 | Proposal link | url | Human | Short link to the proposal (podm.in), the one we send |
 | Pitch note | url | Auto | The full proposal page with pricing (artifact or Doc) |

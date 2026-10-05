@@ -88,7 +88,7 @@ One row per company we are selling production to. Every deal is warm or cold (de
 | Organisation, Contacts | relations | The people on the deal |
 | From engagement | relation → Engagements | The FT guest row it grew out of, if any |
 | Warm or cold | Warm, Cold outreach | Two tabs: Warm, Cold outreach |
-| Stage | New, Contacted, Interested, In conversation, Proposal sent, Agreed, Parked, Declined, Unresponsive | Same shape as the guest ladder, so one mental model |
+| Stage | New, Contacted, Interested, In conversation, Proposal sent, Won, Parked, Declined, Unresponsive | Same shape as the guest ladder, so one mental model |
 | Heat | Hot, Warm, Cold | Akshay's read |
 | Proposal link | url | The short link to the PaaS proposal, standalone as asked |
 | Pitch note | url | The full proposal page with pricing (artifact or Doc) |
