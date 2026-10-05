@@ -760,13 +760,17 @@ def write_batches(kind):
 
 
 def record_created(kind, path):
-    """FILE: a saved SQL result with rows = url US Source ID, records joined by RS, for Migration batch = BATCH."""
+    """FILE: a saved SQL result with rows = url US Source ID, records joined by RS, or a .tsv of url and Source ID,
+    for Migration batch = BATCH."""
     created = load_created()
-    res = json.load(open(path))["results"][0]
-    recs = res["rows"].split("\x1e") if res.get("rows") else []
+    if path.endswith(".tsv"):  # one "url<TAB>Source ID" per line, as copied from a query result
+        recs = [ln.rstrip("\n").split("\t") for ln in open(path) if ln.strip()]
+    else:
+        res = json.load(open(path))["results"][0]
+        recs = [rec.split("\x1f") for rec in res["rows"].split("\x1e")] if res.get("rows") else []
     n = 0
     for rec in recs:
-        url, sid = rec.split("\x1f")[:2]
+        url, sid = rec[:2]
         if kind == "deals":
             sid = sid.split("; ")[0]
         if sid not in created[kind]:
