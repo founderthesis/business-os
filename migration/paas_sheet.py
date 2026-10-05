@@ -323,9 +323,16 @@ class Run:
         self.people_by_ref = {page_url(p["url"]): p for p in people}
         self.org_names = {page_url(o["url"]): o["Name"] for o in orgs}
         self.org_by_name = collections.defaultdict(set)
+        self.org_alias = collections.defaultdict(set)
         for o in orgs:
             self.org_by_name[org_key(o["Name"])].add(page_url(o["url"]))
+            # "SilverX (formerly Silverneedle)" answers to both names
+            for part in [re.sub(r"\(.*?\)", "", o["Name"])] + re.findall(r"\((?:formerly\s+)?(.*?)\)", o["Name"], re.I):
+                if compact(part) and compact(part) != compact(o["Name"]):
+                    self.org_by_name[org_key(part)].add(page_url(o["url"]))
+                    self.org_alias[page_url(o["url"])].add(compact(part))
         self.org_by_domain = collections.defaultdict(set)
+        self.org_domain = {}
         for o in orgs:
             d = (o.get("Domain") or "").lower().removeprefix("www.")
             if not d and o.get("Website"):
@@ -333,6 +340,7 @@ class Run:
                 d = m.group(1).lower() if m else ""
             if d:
                 self.org_by_domain[d].add(page_url(o["url"]))
+                self.org_domain[page_url(o["url"])] = d
         self.deals = deals
         self.deal_by_org = collections.defaultdict(list)
         self.deal_by_name = collections.defaultdict(list)
@@ -352,11 +360,24 @@ class Run:
         self.review.append({"source": source, "name": name, "issue": issue, "candidate_1": c1, "candidate_2": c2, "action": action})
 
     # organisations
-    def org(self, company, domain, sid, general=None):
+    def org(self, company, domain, sid, general=None, person=None):
         if not company:
             return None
-        by_name = sorted(self.org_by_name.get(org_key(company), set()))
-        by_dom = sorted(self.org_by_domain.get(domain, set())) if domain and domain_fits(domain, company) else []
+        own_domain = domain if domain and domain_fits(domain, company) else None
+        by_dom = sorted(self.org_by_domain.get(own_domain, set())) if own_domain else []
+        by_name = []
+        for ref in sorted(self.org_by_name.get(org_key(company), set())):
+            if compact(company) in {compact(self.org_names.get(ref, ""))} | self.org_alias.get(ref, set()):
+                by_name.append(ref)
+                continue
+            # a loose match (Coefficient vs Coefficient Capital, Hopscotch vs Hopscotch.in) needs a second signal
+            od = self.org_domain.get(ref)
+            person_there = person and any(ref in orgs_of for _, orgs_of in self.idx.by_name.get(name_key(person), []))
+            if person_there or (own_domain and od == own_domain):
+                by_name.append(ref)
+            else:
+                self.flag(sid, company, f"name close to an existing organisation: {self.org_names.get(ref)}",
+                          "Created a separate organisation; merge if the same company", ref)
         cands = list(dict.fromkeys(by_dom + by_name))
         if len(cands) > 1:
             self.flag(sid, company, "two organisation candidates", "Used the email-domain match" if by_dom else "Used the first name match",
@@ -380,12 +401,18 @@ class Run:
         return key
 
     # people
-    def person(self, name, mails, org_ref, sid, tags, label, phone=None, extra=None):
+    def person(self, name, mails, org_ref, sid, tags, label, phone=None, extra=None, ft_guest=False):
         personal = [e for e in mails if not is_role(e)]
         ref, how = self.idx.person(name, None, personal, org_ref)
         if ref:
             self.matched[how] += 1
             return ref
+        hits = self.idx.by_name.get(name_key(name), [])
+        with_eng = [h[0] for h in hits if h[0] in self.eng_by_guest]
+        if ft_guest and len(with_eng) == 1 and len(name_key(name).split()) >= 2:
+            # PAAS - FT lists FT guests: one person with this full name already has an FT engagement
+            self.matched["name, FT guest with an engagement"] += 1
+            return with_eng[0]
         if len(name.split()) == 1 and org_ref:
             # a first name only: take the one person at this organisation with that first name
             hits = [r for k, rows in self.idx.by_name.items() if k.split()[:1] == [name_key(name)]
@@ -421,6 +448,7 @@ class Run:
             return ref
         local, domain = email.split("@", 1)
         name, conf, role = guess_name(local)
+        role = role or local in PR_LOCAL
         if role:
             stem = domain_stem(domain)
             name = f"{stem.capitalize()} {local} inbox"
@@ -467,12 +495,10 @@ def body_for(rs):
         parts.append("## Last conversation\n\n" + "\n\n".join(convs))
     lines = ["## From the FT Pipeline sheet (5 Oct 2026)", ""]
     for r in rs:
-        lines.append(f"- **{r['tab']} row {r['row']}**: {clean(r['cells'][0])}")
-        for k, v in r["lines"]:
-            if v not in (None, ""):
-                lines.append(f"  - {k}: {v}")
+        facts = [f"{k.lower() if k != 'FD' else k} {v}" for k, v in r["lines"] if v not in (None, "")]
         if r.get("inboxes"):
-            lines.append(f"  - Company inboxes: {', '.join(r['inboxes'])}")
+            facts.append("company inboxes " + ", ".join(r["inboxes"]))
+        lines.append(f"- {r['tab']} row {r['row']}: {clean(r['cells'][0])}" + (". " + "; ".join(facts) if facts else ""))
     parts.append("\n".join(lines))
     return "\n\n".join(parts)
 
@@ -523,7 +549,8 @@ def build():
         r["inboxes"] = inboxes
         dom = next((m.split("@", 1)[1] for m in founder_mails + others + inboxes if m.split("@", 1)[1] not in FREE_MAIL
                     and domain_fits(m.split("@", 1)[1], r["company"])), None)
-        r["org"] = run.org(r["company"], dom, r["sid"], general=inboxes[0] if inboxes else None)
+        r["org"] = run.org(r["company"], dom, r["sid"], general=next((m for m in inboxes if domain_fits(m.split("@", 1)[1], r["company"])), None),
+                           person=r["name"])
         if not r["company"]:
             run.flag(label, r["name"], "no company on the row", "Deal not created; add the company by hand")
             r["people_refs"] = []
@@ -531,7 +558,7 @@ def build():
         refs = []
         if r["name"] and r["note"] != "founder name unparseable" or r["name"] and r["note"] and "unparseable" not in r["note"]:
             refs.append(run.person(r["name"], founder_mails, r["org"], r["sid"], ["PaaS prospect"], label,
-                                   phone=r["phones"][0] if r["phones"] else None))
+                                   phone=r["phones"][0] if r["phones"] else None, ft_guest=r["tab"] == "PAAS - FT"))
         for k, e in enumerate(others):
             ref = run.idx.by_email.get(e)
             if not ref:
@@ -555,6 +582,11 @@ def build():
     for r in sorted(rows, key=lambda r: (TAB_RANK[r["tab"]], r["row"])):
         if r["org"]:
             groups.setdefault(r["org"], []).append(r)
+    for org_ref, rs in groups.items():
+        # PAAS - FT wins; within the winning tabs the most advanced stage leads, then the earliest row
+        pool = [r for r in rs if r["tab"] == "PAAS - FT"] or rs
+        lead = max(pool, key=lambda r: (stage_rank(r["stage"]), -TAB_RANK[r["tab"]], -r["row"]))
+        groups[org_ref] = [lead] + [r for r in rs if r is not lead]
     collapsed = sum(len(g) - 1 for g in groups.values())
     print(f"deals after collapsing rows on the same organisation: {len(groups)} ({collapsed} rows folded in)")
 
@@ -588,7 +620,7 @@ def build():
 
         existing = run.deal_by_org.get(org_ref, []) if org_ref.startswith("http") else []
         if not existing:
-            existing = run.deal_by_name.get(org_key(p["company"]), [])
+            existing = [d for d in run.deal_by_name.get(org_key(p["company"]), []) if compact(d["Company"]) == compact(p["company"])]
             if existing:
                 run.flag(p["sid"], p["company"], "existing deal matched by company name, not by organisation",
                          "Updated that deal; check its Organisation", page_url(existing[0]["url"]))
