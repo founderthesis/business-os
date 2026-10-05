@@ -82,7 +82,7 @@ Find the Deal by Organisation or Contacts. Update only where the mail is clear:
 - Stage: our first pitch sent -> Contacted; they reply with interest -> Interested; a call or real back-and-forth -> In conversation; a proposal goes out -> Proposal sent and Proposal link = the short link in the mail; they agree -> Agreed; "later" -> Parked with Next date; no -> Declined.
 - Next action, Next date, Chase step: as for Engagements.
 - Contacts: add new people from their side.
-- A new production-sales conversation with no Deal: create one. Company, Organisation, Contacts, Stage from the mail, Source Agent, Source ID "gmail:<thread id>". Warm or cold = Warm if it came from an FT guest, a recording or an introduction (set From engagement when it grew out of a guest row), else Cold outreach.
+- A new production-sales conversation with no Deal: create one. Company, Organisation, Contacts, Stage from the mail, Source Agent, Source ID "gmail:<thread id>". Warm or cold = Warm only if Akshay already knows them: a guest who has recorded with us, or a personal introduction (set From engagement when it grew out of a guest row). Someone the team is approaching, including through an FT guest invite that has not been recorded yet, is Cold outreach.
 A guest paying to appear on a show is a sponsored guest on the Engagement, not a Deal.
 
 STEP 5. REPORT

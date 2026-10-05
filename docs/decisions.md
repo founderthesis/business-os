@@ -68,7 +68,7 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 | 60 | No person tagging on rows. Each person owns a show or a list; Mamatha owns all FT guests. Her tabs on Engagements: FT: Pipeline, FT: Outbound, FT: Sponsored. | Akshay, 5 Oct |
 | 61 | The dashboard and the Decision Desk are dropped. Akshay reads his own mail. Decision surfaces will be tried again later with a different approach. Supersedes 54 to 57 for now. | Akshay, 5 Oct |
 | 62 | The inbox agent is capture only: one Activity per email (Source ID = Gmail message id, so re-runs skip what is logged), plus Engagement and Deal updates that follow from the mail. It sends nothing, marks nothing read, makes no cards and asks nothing. Run by hand in a separate chat for now. Prompt in routines/inbox.md. | Akshay, 5 Oct |
-| 63 | Deals are either Warm (via an FT guest, a recording or an intro) or Cold outreach. The FT, US VC and HK/SG buckets are gone; the US VC list is all cold outreach. Priority A/B/C, Has podcast and No email tags stay. | Akshay, 5 Oct |
+| 63 | Deals are either Warm (Akshay already knows them: a guest who has recorded, or a personal intro) or Cold outreach (anyone the team is approaching, including FT-invite targets not yet recorded; refined 5 Oct after Gather AI, Sorcero and Lemma). The FT, US VC and HK/SG buckets are gone; the US VC list is all cold outreach. Priority A/B/C, Has podcast and No email tags stay. | Akshay, 5 Oct |
 
 ## Open
 
