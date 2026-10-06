@@ -74,6 +74,8 @@ Open means Status is not They declined, We declined, Unresponsive or Form filled
 
 Each tab shows Name, Status, Tier, Next action, Next date, Route, Eval link, Guest, Stakeholders, and nothing else unless the tab needs it.
 
+alpha un# has the same set (6 Oct): **un#: Pipeline** (open rows, with Host verdict, Eval verdict and Dossier link, quick filters on Status, Direction and Host verdict), **un#: Sponsored** and **un#: Closed**.
+
 ## Deals: the sales table (new)
 
 One row per company we are selling production to. Every deal is warm or cold (decision 63):
@@ -128,6 +130,31 @@ Later, the same table takes show sponsors and partner deals, with a Kind column 
 | PAAS tabs, PaaS leads, US VC, HK/SG | Deals, not Engagements | Stage from Cold = New, Emailed = Contacted, warm = Interested, In discussion = In conversation |
 
 The eval column maps to Eval verdict where it is a label and to Eval link where it is a URL. Doc titles (173 rows) get neither; the enrichment routine looks them up later.
+
+### alpha un# Pipeline sheet (6 Oct)
+
+The un# sheet uses the same words with two differences: P2 and Maybe Later are timing, so they land on LT chase (decision 66), and "Sri Approval" is the host's call, kept in Host verdict.
+
+| Raw | Status | Also |
+|---|---|---|
+| Recorded | Recorded, or the existing Form filled row from Blue | |
+| Inbound, Approval Pending | Decision pending | Inbound |
+| Sponsored, Sponsored tab "Inbound" | Sponsored offered | Route Sponsored |
+| To be Scheduled | Booking | |
+| Scheduled | Booked | |
+| Precall done | Precall done | |
+| Precall Scheduled, Precall Pending, Chasing with a pre call in the note | Precall requested | |
+| Chasing | Contacted | Outbound |
+| Cold Lead | New, or Contacted if the note says mail sent or connected | Outbound |
+| P2, Maybe Later, LT Chase | LT chase | Next date from the sheet |
+| Declined | They declined, or We declined where Sri, Akshay or Ravi said no | |
+| Unresponsive, Uncontactable | Unresponsive | |
+| Proposed Alt | They declined | |
+| Sri Approval Yes, No, Ask | Host verdict Yes, No, Not asked | |
+| YAP and The PR Genius client rosters | New, Inbound, or We declined where the eval says Decline | Agency named on the page |
+| Defillama 49 Lead | New, Outbound | Target list |
+
+Rows already in Notion keep their status: the 48 Form filled rows from Blue and the rows the inbox agent made are never moved back. The sheet only fills their empty fields and adds its notes to the page.
 
 ## What changes in Notion, in order
 
