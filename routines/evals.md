@@ -40,7 +40,7 @@ f. Mail Mamatha (address from her People row; never type one from memory) from a
 
    Regards,
    Akshay"
-   Log an Activity: Kind Email out, Summary "Agent sent: eval link for <Guest> to Mamatha", Source Gmail, Source ID = the sent message id, Engagement, Captured today.
+   Log an Activity: Kind Email out, Summary "Agent sent: eval link for <Guest> to Mamatha", Date = now (datetime), Source Gmail, Source ID = the sent message id, Link = the sent thread's Gmail URL, People = the guest and Mamatha, Engagement, Captured today. Page body, 2 to 3 lines: the verdict, the recommended next step, and the eval page link.
    Daily cap: 100 sends across all routines (today's Activities whose Summary starts "Agent sent"). At the cap, skip the mail and say so.
 g. If the eval fails, set Next action "Eval failed: <reason>", leave Status New, and move on.
 
