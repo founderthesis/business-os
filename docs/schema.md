@@ -9,7 +9,7 @@ How to read it. **Fill** says who fills a field:
 
 Every table also carries three provenance fields, not repeated below: `Source` (where the row came from), `Source ID` (its ID there), `Captured` (date). Rows from the migration carry `Migration batch` too.
 
-Eleven tables: People, Organisations, Engagements, Deals, Shows, Episodes, Tasks, Activities, Queue, Templates, Credentials.
+Twelve tables: People, Organisations, Engagements, Deals, Shows, Episodes, Tasks, Activities, Queue, Templates, Credentials, Guest forms.
 
 **Tags everywhere.** People, Organisations, Engagements, Episodes and Tasks each have a `Tags` multi-select that anyone can add values to. Tags are how the team organises on the fly without asking for a new field. Agents read and set tags too (for example the tier after a recording). Fixed fields stay only where an automation needs exactly one value, such as Stage or Status.
 
@@ -294,3 +294,26 @@ Walled off. No routine reads it. Fields: Service, Login, Notes, Last rotated.
 - Blue videos, photos and other heavy files.
 - Whatsapp Group Members (its members set the In WhatsApp group checkbox; new members are ticked on People after that), FT Newsjack Scout, Substack Posts Audit, both inbox triage snapshots, the starter templates, and the page titled "DELETE" (holds phone data; a human deletes it).
 - Sheet columns that are data-verification flags or contact plans (listed in the sheets audit).
+
+## Guest forms
+
+One row per Founder Thesis guest form submission, made by the Notion form behind podm.in/thank-you (decision 69). Raw and append-only. The inbox routine merges it; photos and logos stay on the row and the Engagement links to it.
+
+| Field | Type | Fill | Notes |
+|---|---|---|---|
+| Guest name | title | Form | As it should appear in the episode |
+| Company | text | Form | |
+| Designation | text | Form | On-screen title. Copied to People Role |
+| Guest email | email | Form | Main match key |
+| Guest LinkedIn, Company LinkedIn | url | Form | |
+| Photo | files | Form | High-res guest photo |
+| Logo | files | Form | |
+| Guest Instagram, Company Instagram | url | Form | Optional. Copied to People and Organisations where empty |
+| PR and comms emails | text | Form | Optional. Each becomes a PR contact Stakeholder |
+| Filled by | text | Form | When a PR person or EA fills it in |
+| Before release | text | Form | Optional. Anything to hold back; copied to the Engagement's Claude note |
+| Submitted | created time | Auto | |
+| Engagement | relation → Engagements | Auto | Two-way; the Engagement shows it as Guest form |
+| Merge status | select | Auto | New, Merged, Needs review |
+| Merge note | text | Auto | What the routine changed, or why it could not match |
+
