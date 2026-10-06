@@ -171,6 +171,14 @@ def body(c, existing=False):
     return "\n".join(out)
 
 
+def own_email(name, emails):
+    """The CRM tab lists the guest, their PR people and colleagues in one cell, in no fixed order. Only an address
+    whose local part carries the guest's first or last name is theirs; the rest go to review, never onto the person."""
+    toks = [t for t in re.split(r"[^a-z]+", ckey(name)) if len(t) >= 3]
+    mine = [e for e in emails if any(t in e.split("@")[0].lower() for t in toks)]
+    return (mine[0] if mine else None), [e for e in emails if e not in mine[:1]]
+
+
 def plan():
     cs = cands()
     hits, engs, orgs = load_matches(), load_engs(), load_orgs()
@@ -219,10 +227,11 @@ def plan():
                      "Tags": json.dumps(["Guest" if c["status"] in ("Recorded", "Form filled") else "un# guest pipeline"])}
             if c.get("li_url"):
                 props["LinkedIn"] = c["li_url"]
-            if crm.get("emails"):
-                props["Email"] = crm["emails"][0]
-                if len(crm["emails"]) > 1:
-                    props["Other emails"] = ", ".join(crm["emails"][1:])
+            mine, others = own_email(name, crm.get("emails", []))
+            if mine:
+                props["Email"] = mine
+            if others:
+                review.append([sid, c["raw_name"], "CRM addresses that are not the guest's (PR or colleagues); add as Stakeholders if they still matter", str(len(others))])
             if crm.get("role"):
                 props["Role"] = crm["role"]
             if crm.get("phone"):
@@ -233,8 +242,9 @@ def plan():
             upd = {}
             if c.get("li_url") and not hit.get("has_li"):
                 upd["LinkedIn"] = c["li_url"]
-            if crm.get("emails") and not hit.get("has_email"):
-                upd["Email"] = crm["emails"][0]
+            mine, _ = own_email(name, crm.get("emails", []))
+            if mine and not hit.get("has_email"):
+                upd["Email"] = mine
             if not hit.get("org") and oid:
                 upd["org"] = oid
             if pid in RENAME:
