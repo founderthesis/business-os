@@ -80,8 +80,7 @@ One row per guest pursuit: a person and a show. Replaces every guest pipeline ta
 | Organisation | relation → Organisations | Auto | |
 | Direction | select | Auto | Inbound (pitched to us), Outbound (we reached out) |
 | Status | select | Auto / Human | New, Contacted, Interested, Decision pending, Precall requested, Precall done, Sponsored offered, Booking, Booked, Recorded, Form filled, LT chase, Parked, They declined, We declined, Unresponsive |
-| Tier | select | Human | Tier 1, Tier 1.5, Tier 2. Importance to us, set by Akshay |
-| Route | select | Human | Sponsored, Organic. Sponsored = paid appearance; Payment and Amount apply (decision 66) |
+| Tier | select | Human | Tier 1, Tier 1.5, Tier 2, Sponsored. Importance to us, or Sponsored when the guest pays (Payment and Amount apply). Set by Akshay (decision 74) |
 | Call type | select | Auto | Precall, Recording, Planning call. What Next date is when it is a call |
 | Call link | url | Auto | Zencastr, Riverside or Meet link of the next call, from the calendar |
 | Eval verdict | select | Auto | Book immediately, Strong consider, Pre-call needed, Evaluate after call, Decline. Hidden by default |

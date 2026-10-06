@@ -270,7 +270,7 @@ def plan():
                                        ("dossier", "Dossier link", c.get("dossier_link")),
                                        ("host", "Host verdict", c.get("host_verdict")),
                                        ("direction", "Direction", c.get("direction")),
-                                       ("route", "Route", c.get("route")),
+                                       ("route", "Tier", c.get("route")),  # Route folded into Tier, decision 74
                                        ("verdict", "Eval verdict", c.get("eval_verdict"))):
                 if value and not e.get(flag):
                     props[field] = value
@@ -281,7 +281,7 @@ def plan():
         title = f"{name} @ {c['company']}, {SHOW_NAME}" if c.get("company") else f"{name}, {SHOW_NAME}"
         props = {"Name": title, "Status": c["status"], "Source": "Migration", "Source ID": sid, "Migration batch": BATCH,
                  "date:Captured:start": TODAY}
-        for field, key in (("Direction", "direction"), ("Route", "route"), ("Host verdict", "host_verdict"),
+        for field, key in (("Direction", "direction"), ("Tier", "route"), ("Host verdict", "host_verdict"),
                            ("Eval verdict", "eval_verdict"), ("Eval link", "eval_link"), ("Dossier link", "dossier_link"),
                            ("Next action", "next_action")):
             if c.get(key):

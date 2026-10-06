@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!--
+  FOUNDER THESIS · GUEST PREP NOTE — visual base
+  Fill every {{SLOT}}. Keep total prose 480-550 words.
+  Voice: first-person Akshay, warm, peer-to-peer. No em-dashes anywhere.
+  HARD RULES: no specific questions; no edit-rights / content-review /
+  approval-of-final-cut language; light-touch flow framing only.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Founder Thesis · Prep Note for {{GUEST_FIRST_NAME}}</title>
+<style>
+  :root{
+    --ink:#1a1a1a; --muted:#5c5c5c; --accent:#0f4c81; --rule:#e4e0d8;
+    --bg:#ffffff; --card:#f7f5f0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);
+    font-family:Georgia,'Times New Roman',serif;line-height:1.65;
+    max-width:680px;margin:0 auto;padding:56px 28px}
+  .kicker{font-family:Arial,Helvetica,sans-serif;font-size:11px;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--accent);
+    border-bottom:1px solid var(--rule);padding-bottom:14px;margin-bottom:28px}
+  h1{font-size:30px;font-weight:normal;line-height:1.25;margin-bottom:6px}
+  .sub{color:var(--muted);font-style:italic;margin-bottom:32px}
+  p{margin-bottom:16px;font-size:16.5px}
+  h2{font-family:Arial,Helvetica,sans-serif;font-size:12px;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--accent);
+    margin:34px 0 12px}
+  ul{margin:0 0 16px 20px}
+  li{margin-bottom:9px;font-size:16px}
+  .card{background:var(--card);border-left:3px solid var(--accent);
+    padding:18px 20px;margin:26px 0;border-radius:0 6px 6px 0}
+  .card p{margin-bottom:6px;font-size:15.5px}
+  .sig{margin-top:36px}
+  .sig .name{font-weight:bold}
+  .sig .role{color:var(--muted);font-size:14.5px}
+  .ps{margin-top:28px;padding-top:18px;border-top:1px solid var(--rule);
+    color:var(--muted);font-size:15px;font-style:italic}
+</style>
+</head>
+<body>
+
+<div class="kicker">Founder Thesis · The Podium</div>
+
+<h1>Looking forward to our conversation, {{GUEST_FIRST_NAME}}</h1>
+<p class="sub">A short note on the podcast and what to expect</p>
+
+<!-- ~90-110 words: intro to Founder Thesis + Akshay. 520+ episodes,
+     audience of founders / operators / investors / ambitious 20-somethings,
+     2-3 recent recognizable guests as social proof, one line on the show's
+     promise: decoding how businesses actually work. -->
+<p>{{INTRO_PARA_1}}</p>
+<p>{{INTRO_PARA_2}}</p>
+
+<h2>How the conversation will run</h2>
+<!-- 5 bullets: format (remote on Zencastr, link: https://zencaster.com/,
+     duration ~2 hours) / style
+     (conversational, curious, zoom-in-zoom-out) / broad theme territory
+     (industry lens first, then the business and the journey; NAME the
+     territories, never the questions) / what Akshay will lean on (their
+     public interviews, the numbers) / what he's most curious about (one
+     genuinely warm, specific line). NO pre-call bullet. -->
+<ul>
+  <li>{{BULLET_FORMAT}}</li>
+  <li>{{BULLET_STYLE}}</li>
+  <li>{{BULLET_TERRITORY}}</li>
+  <li>{{BULLET_LEAN_ON}}</li>
+  <li>{{BULLET_CURIOSITY}}</li>
+</ul>
+
+<!-- Light-touch flow framing card, ~50-70 words. Retakes and off-record
+     moments are fine during the recording; the edit keeps the conversation
+     flowing naturally. DO NOT promise review, approval, or edit rights
+     over the final episode. -->
+<div class="card">
+  <p>{{FLOW_FRAMING}}</p>
+</div>
+
+<h2>Before we record</h2>
+<!-- ~60-80 words: practical asks only. Quiet room, wired headphones or a
+     decent mic if handy, laptop over phone, stable connection, water
+     nearby. Keep it breezy. -->
+<p>{{LOGISTICS_PARA}}</p>
+
+<!-- ~40-60 words: warm close. Excited for the conversation, why THIS
+     story fits the show, "see you on <date>" if known. -->
+<p>{{CLOSE_PARA}}</p>
+
+<div class="sig">
+  <p class="name">Akshay Datt</p>
+  <p class="role">Host, Founder Thesis · The Podium</p>
+</div>
+
+<p class="ps">P.S. {{PS_LINE}}
+<!-- Invite them to flag anything sensitive in advance (a number they'd
+     rather not discuss, a topic to avoid). Frame as "much rather know now
+     than mid-recording". No pre-call promise. --></p>
+
+</body>
+</html>

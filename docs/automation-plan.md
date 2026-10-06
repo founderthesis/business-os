@@ -60,7 +60,7 @@ Status: To do, Waiting (she has asked, no answer yet), Done. Board: "Mamatha's q
 - Mail goes only from ad@thepodium.in and only these: the pitch reply, eval links to Mamatha, the daily queue mail to Mamatha. Thank-you mails are drafts that Akshay sends.
 - Send cap 100 a day across all routines, counted from Activities whose Summary starts "Agent sent". A runaway guard, not a quota.
 - Never deletes rows, never changes schemas, never touches Credentials.
-- Never sets Parked, Tier, Route, Amount or Payment unless the mail is Akshay saying so.
+- Never sets Parked, Tier, Amount or Payment unless the mail is Akshay saying so.
 - Calendar: only events carrying "bos-key:" in the description are ever created, changed or removed. Events with guests are never touched.
 - Every change to an Engagement or Deal adds a dated line to Claude note.
 

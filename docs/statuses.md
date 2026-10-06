@@ -46,8 +46,7 @@ The sponsored path in order: Sponsored offered, Booking (agreed), Precall done (
 | Column | Options | Who sets | Why |
 |---|---|---|---|
 | Direction | Inbound, Outbound | Agent on creation, Mamatha | Inbound = pitched to us. Outbound = we reached out. Separate tabs |
-| Tier | Tier 1, Tier 1.5, Tier 2 | Akshay | Importance to us: how hard we chase, which slot they get |
-| Route | Sponsored, Organic | Akshay | Sponsored = the guest pays; Payment and Amount apply. Replaces Decision and Tier = Sponsored (decision 66) |
+| Tier | Tier 1, Tier 1.5, Tier 2, Sponsored | Akshay | Importance to us (how hard we chase, which slot they get), or Sponsored when the guest pays; Payment and Amount apply. Route was folded in here on 6 Oct (decision 74) |
 | Call type, Call link | Precall, Recording, Planning call; URL | Calendar sync | What Next date is when it is a call, and the Zencastr, Riverside or Meet link |
 | Payment | Not started, GST received, Invoice 1 sent, Payment 1 received, Invoice 2 sent, Payment 2 received, Settled | Mamatha, agent from mail | Sponsored guests only. Hidden otherwise |
 | Amount | number | Mamatha | Sponsored fee |
@@ -68,11 +67,11 @@ Three tabs, no more:
 
 - **FT: Pipeline**: every open row, inbound and outbound, chasing and parked, recorded and form pending. Sorted by Next date. Status column does the separating.
 - **FT: Outbound**: Direction = Outbound, open. Her cold-outreach list on its own.
-- **FT: Sponsored**: Route = Sponsored, open, with Payment and Amount showing.
+- **FT: Sponsored**: retired 6 Oct; use the Tier quick filter on FT: Pipeline (Tier = Sponsored).
 
 Open means Status is not They declined, We declined, Unresponsive or Form filled. History is a filter away on the Pipeline tab (clear the filter), so there is no separate "all guests" tab.
 
-Each tab shows Name, Status, Tier, Next action, Next date, Route, Eval link, Guest, Stakeholders, and nothing else unless the tab needs it.
+Each tab shows Name, Status, Eval verdict, Tier, Next action, Next date, Eval link, Guest, Stakeholders, and nothing else unless the tab needs it.
 
 alpha un# has the same set (6 Oct): **un#: Pipeline** (open rows, with Host verdict, Eval verdict and Dossier link, quick filters on Status, Direction and Host verdict), **un#: Sponsored** and **un#: Closed**.
 
@@ -139,7 +138,7 @@ The un# sheet uses the same words with two differences: P2 and Maybe Later are t
 |---|---|---|
 | Recorded | Recorded, or the existing Form filled row from Blue | |
 | Inbound, Approval Pending | Decision pending | Inbound |
-| Sponsored, Sponsored tab "Inbound" | Sponsored offered | Route Sponsored |
+| Sponsored, Sponsored tab "Inbound" | Sponsored offered | Tier Sponsored |
 | To be Scheduled | Booking | |
 | Scheduled | Booked | |
 | Precall done | Precall done | |

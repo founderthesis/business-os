@@ -31,7 +31,7 @@ Direction: Inbound = they pitched us (usually via PR). Outbound = we reached out
 
 1. Find the Engagement by guest name and show (search Name, or the Guest's People row). If two rows could match, ask which one; never guess.
 2. Next date is the date of the next follow-up, not the date of the last one. When a follow-up is done, set Next date to when you will chase next.
-3. Never move Status backward on the ladder unless the person asks for it in so many words. Never set Parked, Tier, Route, Amount or Payment unless the message is Akshay's decision.
+3. Never move Status backward on the ladder unless the person asks for it in so many words. Never set Parked, Tier, Amount or Payment unless the message is Akshay's decision.
 4. Add one line at the top of Claude note: "YYYY-MM-DD <who>: <what changed and why>", keep older lines below it, and set Claude updated to today.
 5. New person (a PR contact, an EA): search People first by email, then name + company. Create only if not found, with Source Manual, Captured today, and the Organisation. Add them to the Engagement's Stakeholders (PR) or Via (who brought the guest). Never store a person only in a note.
 6. New guest: create the People row, the Organisation if missing, then the Engagement named "<Guest> @ <Company>, <Show>", Status, Direction, Show, Guest, Organisation, Source Manual, Captured today.

@@ -18,7 +18,7 @@ TOOLS: Google Calendar, Notion and Gmail connectors (ToolSearch "+Google_Calenda
 
 CALENDAR: ad@thepodium.in (Asia/Tokyo). Read only that calendar.
 NOTION
-- Engagements: collection://5522ee21-d8e5-4ec0-bf3e-90bcf88d24c5  (Status, Show, Guest, Stakeholders, Via, Organisation, Next date, Next action, Call type [Precall, Recording, Planning call], Call link, Eval link, Dossier link, Route, Claude note, Claude updated)
+- Engagements: collection://5522ee21-d8e5-4ec0-bf3e-90bcf88d24c5  (Status, Show, Guest, Stakeholders, Via, Organisation, Next date, Next action, Call type [Precall, Recording, Planning call], Call link, Eval link, Dossier link, Tier, Claude note, Claude updated)
 - People: collection://e6c44319-7f81-4da6-8b80-8441a4875d7a  (Email, Other emails, LinkedIn, Blurb, Tags; team tagged Team)
 - Shows: collection://ebca6861-4d71-4555-a6ec-6ed76cc0c733  (Founder Thesis page 3ed19a301a7f817c9367e0d88afc5776)
 - Deals: collection://1a981c5a-912a-4972-b3fc-8c9f2abb329a
@@ -29,7 +29,7 @@ Fetch each data source once to confirm property names. Never read or write the C
 HARD RULES
 - Never create, move, edit or delete a calendar event that has attendees, or one you did not create. The only events you may create, update or delete carry "bos-key:" in their description.
 - Never send mail. Gmail use is limited to reading threads and creating drafts.
-- Never set Parked, Tier, Route, Amount or Payment. Never move an Engagement Status backward.
+- Never set Parked, Tier, Amount or Payment. Never move an Engagement Status backward.
 - Every Engagement you change: one line at the top of Claude note ("YYYY-MM-DD: <what and why>"), Claude updated = today.
 
 STEP 1. READ THE CALENDAR
@@ -64,6 +64,7 @@ For each matched, confirmed recording or precall starting in the next 14 days:
   Description, one item per line: "Join: <Call link>", "Engagement: <Notion URL>", "Eval: <Eval link>", "Dossier: <Dossier link>", "LinkedIn: <guest LinkedIn>", "Next action: <Next action>", "Stakeholders: <names>", then the bos-key line last. Leave out lines with no value.
 - One exists for a different start time (the call moved): update it to the new times and description. The call was cancelled: delete it.
 - A precall entry that still starts before the precall (the old 30-minute style): move it to the precall's own start and end and set availability AVAILABILITY_FREE.
+- One exists but the Engagement gained an Eval, Dossier or LinkedIn link since: update the description only.
 - One exists and nothing changed: leave it.
 
 STEP 4. AFTER A RECORDING

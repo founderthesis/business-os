@@ -40,12 +40,12 @@ Run these checks. Each gives a candidate card with a Thread ID "check:<check>:<p
 
 Ask Akshay
 - A1 decision: Engagement Status Decision pending for more than 2 days with no open card. Item "<Guest @ Company>: eval says <verdict>, what does Akshay want?" Recommendation from Next action.
-- A2 sponsored: Route Sponsored, Status Precall done, no change for 5 days. Item "...: precall done, sponsored or editorial?"
+- A2 sponsored: Tier Sponsored, Status Precall done, no change for 5 days. Item "...: precall done, sponsored or editorial?"
 
 Follow up
 - F1 overdue: an open Engagement (New, Contacted, Interested, Precall requested, Precall done, Sponsored offered, Booking, LT chase) whose Next date is more than 2 days past, or empty and no Activity in 14 days. Item "<Guest @ Company>: <Status>, quiet since <date>. Chase, or update the status." Recommendation: the Next action, and "third chase done, ask Akshay to park or keep" when Chase step is 3 or more.
 - F2 form: Status Recorded for more than 5 days. Item "...: recorded <date>, form not in yet. Send the reminder."
-- F3 payment: Route Sponsored and Status Booked or Recorded, Payment empty or Not started. Item "...: sponsored, payment not started. Send GST and invoice details."
+- F3 payment: Tier Sponsored and Status Booked or Recorded, Payment empty or Not started. Item "...: sponsored, payment not started. Send GST and invoice details."
 - F4 stale deal: a Deal at Interested, In conversation or Proposal sent (any warm or cold), or a Warm Deal at New or Contacted, with no Activity and no Claude updated in the last 14 days and Next date past or empty. Item "<Company>: <Stage>, untouched <n> days. Follow up or close."
   Cold Deals at New or Contacted are the outreach list, not stale: never raise cards for them.
 
@@ -60,7 +60,7 @@ Fix data
 
 STEP 3. ADD CARDS, CAPPED
 - Open Follow up plus Fix data cards For Mamatha are capped at 30. Add new ones up to that cap; there is no separate per-run limit. Ask Akshay cards do not count toward the cap.
-- Priority when there are more candidates than room: Booked and Booking problems first, then Tier 1, then Route Sponsored, then Warm deals, then the oldest Next date. Founder Thesis before other shows.
+- Priority when there are more candidates than room: Booked and Booking problems first, then Tier 1, then Tier Sponsored, then Warm deals, then the oldest Next date. Founder Thesis before other shows.
 - New card: For Mamatha, Status To do, Type, Item, Recommendation (one line, what to do), Due (today for Follow up and Ask Akshay; today + 3 for Fix data), Engagement or Deal, People, Thread ID.
 
 STEP 4. COUNT THE BACKLOG
