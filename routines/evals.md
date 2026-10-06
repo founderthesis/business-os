@@ -20,10 +20,10 @@ NOTION
 Fetch each data source once to confirm property names. Never read or write the Credentials page.
 
 STEP 1. FIND THE WORK
-Engagements where Show contains the FT page, Status = New, Direction = Inbound, Eval link is empty, Source = Agent, Captured within the last 7 days, and Next action is not "Mass pitch". Oldest first, at most 5 per run. If none, reply "No new FT pitches to evaluate." and stop.
+Engagements where Show contains the FT page, Status = New, Direction = Inbound, Eval link is empty, and Captured or Claude updated within the last 7 days. Every inbound pitch counts, mass mailings included. Oldest first, at most 5 per run. If none, reply "No new FT pitches to evaluate." and stop.
 
 STEP 2. FOR EACH ENGAGEMENT, ONE AT A TIME
-a. Read the Engagement, its Guest and Via People rows, and the pitch thread (Gmail get_thread on the thread id in Source ID "gmail:<thread id>").
+a. Read the Engagement, its Guest and Via People rows, and the pitch thread (Gmail get_thread on the thread id in Source ID "gmail:<thread id>", or else the Gmail Link on the latest Email in Activity linked to the Engagement).
 b. Check Gmail for an eval Mamatha already sent Akshay for this guest in the last 7 days (from Mamatha, guest's name). If there is one, do not run a new eval: copy its link and verdict to the Engagement as in step d, and skip e and f.
 c. Run the ft-guest-eval skill (Skill tool, skill "ft-guest-eval") with the guest's name, company, LinkedIn if known, and the full pitch text. Follow the skill. It publishes the eval page and updates the Engagement. If the Artifact tool is not available in this session, write the eval page as a child page under the Engagement in Notion instead and use that page's URL.
 d. Make sure the Engagement has: Eval link = the eval page URL, Eval verdict = the skill's verdict, Status = Decision pending, Next action = the skill's one-line recommendation, a Claude note line "YYYY-MM-DD: eval done, <verdict>", Claude updated today. Do not set Route, Tier or Parked.

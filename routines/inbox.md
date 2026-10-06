@@ -65,7 +65,7 @@ Match each address against People Email and Other emails, then the domain agains
 STEP 3. ENGAGEMENTS (guest conversations)
 Find the Engagement where the person is the Guest, a Stakeholder or Via, on the right Show. Then update it only where the mail is clear:
 
-- A PR person or guest pitches a guest and no Engagement exists: create one. Name "<Guest> @ <Company>, <Show>", Direction Inbound, Status New, Source Agent, Source ID "gmail:<thread id>", Captured today, Guest, Via = the PR person, Stakeholders = every PR person, EA or comms person on the thread, Organisation. A mass pitch (the mail names a different show, or is plainly sent to many podcasts) still gets an Engagement, with Next action "Mass pitch".
+- A PR person or guest pitches a guest: every inbound pitch is processed, including mass mailings, pitches that name another podcast and pitches that name no show. Show = the one of ours the mail names (alpha un#, Built to Share, Human by Design); anything else is Founder Thesis. If the guest already has an Engagement on that show (any direction), use it: Direction Inbound, add Via and Stakeholders from the thread, Next action "New pitch from <PR>", and leave Status alone unless it is New. Otherwise create one: Name "<Guest> @ <Company>, <Show>", Direction Inbound, Status New, Source Agent, Source ID "gmail:<thread id>", Captured today, Guest, Via = the PR person, Stakeholders = every PR person, EA or comms person on the thread, Organisation.
 - We invite someone (outbound) and no Engagement exists: create it with Direction Outbound, Status Contacted.
 - They reply yes to an outbound invite: Interested.
 - Mamatha sends Akshay a guest evaluation: set Eval link (strip redirect wrappers), Eval verdict (Book immediately, Strong consider, Pre-call needed, Evaluate after call or Decline) and Status Decision pending.
@@ -106,8 +106,8 @@ Not for FYIs, chasers, scheduling the team is handling, or anything addressed to
 - Closing: on each run, for every open card (To do or Waiting) whose thread shows Akshay has since replied, or whose Engagement or Deal has moved on, record his answer on the Engagement or Deal if it is not there yet and set the card Done with Decided at = today.
 
 STEP 6. NEW FT PITCH: REPLY AND ADD MAMATHA
-For every Engagement you created in STEP 3 this run with Direction Inbound, Show = Founder Thesis, and not a mass pitch:
-- Only if the pitch message is less than 72 hours old, nobody from our side (Akshay or anyone tagged Team) has written on the thread yet, and Mamatha is not already on the thread.
+For every Founder Thesis Engagement with Direction Inbound and Status New whose pitch (the thread in Source ID "gmail:<thread id>", or the latest Email in Activity on it) arrived less than 72 hours ago, whether it was created this run or earlier:
+- Only if nobody from our side (Akshay or anyone tagged Team) has written on that thread yet and Mamatha is not already on it.
 - Get Mamatha's address from her People row (Tags Team). Never type an address from memory.
 - Reply on the thread from ad@thepodium.in to the sender, keeping everyone already on Cc, adding Mamatha in Cc. Body, exactly:
   "Thanks for your mail, adding Mamatha to coordinate.
