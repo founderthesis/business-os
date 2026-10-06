@@ -4,7 +4,7 @@ Scheduled routine "Calendar sync", three times a day about 35 minutes after each
 
 Three jobs, in order:
 1. **Calendar to Notion.** Recording and precall events on the ad@thepodium.in calendar set Next date, Call type and Call link on the Engagement, move it to Booked for a recording, and flag cancellations to Mamatha.
-2. **Notion to calendar.** A private prep entry on Akshay's calendar for every upcoming recording and precall, with the Zencastr, Riverside or Meet link in it plus the eval, dossier, LinkedIn and Engagement links. No guests, no notifications.
+2. **Notion to calendar.** A private prep entry on Akshay's calendar for every upcoming recording and precall, with the Zencastr, Riverside or Meet link in it plus the eval, dossier, LinkedIn and Engagement links. No guests, no notifications. Recordings get a 30-minute block before the call; precalls get an entry at the same time as the call, marked free, so no extra time is blocked.
 3. **After a recording.** Once a recording's end time passes and it was not cancelled: a thank-you draft in Gmail (FT only) copied from the last one Akshay sent, a WhatsApp blurb, and an "Ask Akshay" card on Mamatha's Queue to get him to send the draft and post the blurb.
 
 Never creates, moves or edits an event that has guests on it. Decisions 66 to 68.
@@ -58,10 +58,12 @@ For each matched, confirmed recording or precall starting in the next 14 days:
 - Key: "bos-key: <engagement page id> <event start ISO>". Search the calendar (list_events with fullText = the engagement page id) for an event you created for this Engagement.
 - None: create_event on ad@thepodium.in with visibility "private", no attendees, notificationLevel none:
   Summary: "Prep: <Guest> @ <Company> (<Show short name> <recording|precall>)"
-  Start: 30 minutes before the call. End: the call start.
+  Recording: start 30 minutes before the call, end at the call start (a real prep block, shown as busy).
+  Precall: same start and end as the precall itself, availability AVAILABILITY_FREE (shows as free), so it sits beside the call and blocks no extra time (Akshay, 6 Oct).
   Location: the Call link.
   Description, one item per line: "Join: <Call link>", "Engagement: <Notion URL>", "Eval: <Eval link>", "Dossier: <Dossier link>", "LinkedIn: <guest LinkedIn>", "Next action: <Next action>", "Stakeholders: <names>", then the bos-key line last. Leave out lines with no value.
 - One exists for a different start time (the call moved): update it to the new times and description. The call was cancelled: delete it.
+- A precall entry that still starts before the precall (the old 30-minute style): move it to the precall's own start and end and set availability AVAILABILITY_FREE.
 - One exists and nothing changed: leave it.
 
 STEP 4. AFTER A RECORDING
