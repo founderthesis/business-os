@@ -2,7 +2,7 @@
 
 Scheduled routine "Queue upkeep", Monday to Saturday at 13:10 JST (09:40 IST, before Mamatha's day starts), with the Notion and Gmail connectors.
 
-The Queue is Mamatha's worklist (decision 67). The mail and calendar routines add cards as things happen. This one looks across the whole Business OS once a day for what has gone quiet or is missing, adds a capped number of cards so the list stays workable, closes cards that no longer apply, and mails Mamatha a short summary with the link.
+The Queue is Mamatha's worklist (decision 67). The mail and calendar routines add cards as things happen. This one looks across the whole Business OS once a day for what has gone quiet or is missing, adds cards up to a cap of 30 open follow-ups and data fixes, closes cards that no longer apply, and mails Mamatha a short summary with the link.
 
 Card types:
 - **Ask Akshay**: only he can decide. Mamatha chases him, records his answer on the Engagement or Deal, and the card closes.
@@ -59,7 +59,7 @@ Fix data
 - D7 deal no stage or no contact: a Deal past New with no Contacts, or a Won Deal with no Amount.
 
 STEP 3. ADD CARDS, CAPPED
-- Open Follow up plus Fix data cards For Mamatha are capped at 25. Add new ones only up to that cap, and at most 12 new cards per run across all types. Ask Akshay cards do not count toward the cap.
+- Open Follow up plus Fix data cards For Mamatha are capped at 30. Add new ones up to that cap; there is no separate per-run limit. Ask Akshay cards do not count toward the cap.
 - Priority when there are more candidates than room: Booked and Booking problems first, then Tier 1, then Route Sponsored, then Warm deals, then the oldest Next date. Founder Thesis before other shows.
 - New card: For Mamatha, Status To do, Type, Item, Recommendation (one line, what to do), Due (today for Follow up and Ask Akshay; today + 3 for Fix data), Engagement or Deal, People, Thread ID.
 

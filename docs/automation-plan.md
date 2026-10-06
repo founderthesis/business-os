@@ -30,7 +30,7 @@ Each run starts a fresh cloud session and ends with a short report; a push notif
 - Notion to calendar: a private entry, no guests, no notifications, 30 minutes before each recording and precall in the next 14 days. Title "Prep: Guest @ Company (FT recording)", the call link as location, and the eval, dossier, LinkedIn and Engagement links in the description. Moved and cancelled calls update or remove it.
 - After a recording that was not cancelled: a thank-you draft in Gmail copied from the last one Akshay sent (same wording and form link, guest and PR in To, every Stakeholder and the usual team in Cc), a WhatsApp blurb from founder-thesis-blurb (not sent to Slack), and an Ask Akshay card for Mamatha to get him to send the draft and post the blurb. FT only for the draft and blurb. Recorded is set by the inbox once the thank-you goes out.
 
-**Queue upkeep.** Closes cards whose reason has cleared, then runs the checks below, adds up to 12 new cards (Follow up plus Fix data capped at 25 open), counts the backlog it held back, and mails Mamatha a short summary with the board link.
+**Queue upkeep.** Closes cards whose reason has cleared, then runs the checks below, adds new cards until Follow up plus Fix data reach 30 open, counts the backlog it held back, and mails Mamatha a short summary with the board link.
 
 | Check | Card |
 |---|---|
@@ -44,7 +44,7 @@ Each run starts a fresh cloud session and ends with a short report; a push notif
 | Possible duplicate People, guessed names on open Engagements | Fix data |
 | Deal past New with no contacts, Won with no amount | Fix data |
 
-Cold deals at New or Contacted are the outreach list and never raise cards. On 5 Oct the backlog was 189 open Engagements with a past or missing Next date and 17 deals at Interested, In conversation or Proposal sent, so the cap matters: Mamatha gets a steady few a day, Booked and Tier 1 first.
+Cold deals at New or Contacted are the outreach list and never raise cards. On 5 Oct the backlog was 189 open Engagements with a past or missing Next date and 17 deals at Interested, In conversation or Proposal sent, so the cap matters: Mamatha works a list of up to 30, Booked and Tier 1 first.
 
 ## The Queue
 
