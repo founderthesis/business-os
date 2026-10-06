@@ -239,7 +239,7 @@ Something that happened, logged once. Only mail tied to a person or engagement i
 
 | Field | Type | Fill | Notes |
 |---|---|---|---|
-| Summary | title | Auto | One line |
+| Summary | title | Auto | One line. The page body holds a 2 to 3 line summary of what was said and asked |
 | Date | date | Auto | |
 | Kind | select | Auto | Email in, Email out, Meeting, Call notes, Form, WhatsApp, Note |
 | People | relation → People | Auto | Everyone involved |
