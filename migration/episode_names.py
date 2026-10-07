@@ -27,7 +27,7 @@ from paas import name_key  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data/out/episodes"
-SHOW_NAME = {"5776": "Founder Thesis", "afe1": "alpha un#", "d025": "Built to Share", "ab23": "Human by Design"}
+SHOW_NAME = {"5776": "Founder Thesis", "afe1": "un#", "d025": "Built to Share", "ab23": "Human by Design"}
 
 # Rows already marked for deletion by hand on 3 Oct (CleverTap card, two Shorts, Arvind's second upload)
 ALREADY_DELETED = {"3ed19a301a7f81a38cd8c5f48106821c", "3ed19a301a7f81c7b60ffa3b4807a134",

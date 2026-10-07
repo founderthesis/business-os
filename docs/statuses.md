@@ -73,7 +73,7 @@ Open means Status is not They declined, We declined, Unresponsive or Form filled
 
 Each tab shows Name, Status, Eval verdict, Tier, Next action, Next date, Eval link, Guest, Stakeholders, and nothing else unless the tab needs it.
 
-alpha un# has the same set (6 Oct): **un#: Pipeline** (open rows, with Host verdict, Eval verdict and Dossier link, quick filters on Status, Direction and Host verdict), **un#: Sponsored** and **un#: Closed**.
+un# has the same set (6 Oct): **un#: Pipeline** (open rows, with Host verdict, Eval verdict and Dossier link, quick filters on Status, Direction and Host verdict), **un#: Sponsored** and **un#: Closed**.
 
 ## Deals: the sales table (new)
 
@@ -130,7 +130,7 @@ Later, the same table takes show sponsors and partner deals, with a Kind column 
 
 The eval column maps to Eval verdict where it is a label and to Eval link where it is a URL. Doc titles (173 rows) get neither; the enrichment routine looks them up later.
 
-### alpha un# Pipeline sheet (6 Oct)
+### un# Pipeline sheet (6 Oct)
 
 The un# sheet uses the same words with two differences: P2 and Maybe Later are timing, so they land on LT chase (decision 66), and "Sri Approval" is the host's call, kept in Host verdict.
 

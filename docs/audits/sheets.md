@@ -96,7 +96,7 @@ Name formats across all tabs: "Name @ Company" 2,696 cells; name-only with compa
 - **Post Release** (9): name, LinkedIn post URL, date. The only record of "Live".
 - **Sheet2**: a 15-day chase cadence (Day 1 email, Day 3 WhatsApp, Day 7 email, Day 9 WhatsApp, Day 13 email, Day 15 WhatsApp). Useful as the Chase step definition.
 
-### 4. un# Pipeline (alpha un#)
+### 4. un# Pipeline (un#)
 
 - **Pipeline v2** (191): name lives in a column headed "Linkedin Link" (display text is the name; 172 cells are hyperlinked, almost all to LinkedIn profiles, a few to X). Status (17 values): Recorded 31, Unresponsive 30, P2 28, Declined 27, Inbound 23, LT Chase 22, Sponsored 6, Approval Pending 5, others 1 to 3. "Sri Approval" is the host verdict (Yes 68, No 44, Ask 13, Sponsored 1). "AD Review" checkbox ticked 8. "Guest Eval" verdict text in 87 cells (Strong consider 39, Book immediately 34, Decline 10, Evaluate after call 5, Pre-call needed 1), 65 cells show only a title or link; "Guest Eval 2" and "Column 2" hold more. "follow up needed" (91%) is a mixed action and decision log ("Declined by Ravi", "Need update from Sri", "Offered Sponsored", "PR person - [name]"). The follow-up date column is headed "23-Jun". About 875 trailing rows contain only unticked checkboxes.
 - **Sponsored** (18): header on row 2. Status Inbound 10, Declined 5, Unresponsive 3; Via 100%; "Next Action - mamatha" tracks commercial steps.

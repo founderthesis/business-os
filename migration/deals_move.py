@@ -34,7 +34,7 @@ REVIEW = ROOT / "data/review/deals_move_review.csv"
 BATCH = "deals-move-2026-10-05"
 BATCH_SIZE = 70
 COMMERCIAL = {"PaaS", "Client", "Sponsor", "Partner", "Vendor"}
-SHOW_SUFFIX = re.compile(r",\s*(PaaS|Founder Thesis|alpha un#|Built to Share|Human by Design)\s*$", re.I)
+SHOW_SUFFIX = re.compile(r",\s*(PaaS|Founder Thesis|(?:[a-z]+ )?un#|Built to Share|Human by Design)\s*$", re.I)
 
 STAGE = {
     "Identified": "New",

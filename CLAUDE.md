@@ -4,7 +4,7 @@ Rules for any Claude session working on the ThePodium Business OS. Read this fir
 
 ## What this project is
 
-ThePodium is a podcast production agency run by Akshay Datt (Osaka, JST). It runs four owned shows (Founder Thesis, alpha un#, Built to Share, Human by Design), sells branded podcasts to B2B firms and funds (BD), and produces shows for retainer clients. The team is in India (IST).
+ThePodium is a podcast production agency run by Akshay Datt (Osaka, JST). It runs four owned shows (Founder Thesis, un#, Built to Share, Human by Design), sells branded podcasts to B2B firms and funds (BD), and produces shows for retainer clients. The team is in India (IST).
 
 The Business OS is the operating memory of the business: one relational system in Notion that remembers every person, puts every decision in front of Akshay already researched, and runs the routine work through agents. It replaces about 20 Google Sheets, a set of disconnected Notion tables, Blue, and email used as a routing layer.
 

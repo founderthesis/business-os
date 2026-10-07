@@ -17,7 +17,7 @@ Read `claude/sri-interview-method-2026-09.md` in the project if it is available.
 
 The transcript archive splits in two and the older half will mislead you.
 
-The **Alpha Unhashed** era had the guest read their own bio, ran a founder toast with a real drink in every episode, and opened on a bare definitional question. All of that is gone.
+The **older** episodes, from before the show was un#, had the guest read their own bio, ran a founder toast with a real drink in every episode, and opened on a bare definitional question. All of that is gone.
 
 The current **un#** era opens "[Name], welcome to Unhashed", records the bio separately as a VO, has no toast at all, and opens on the present: breaking news, the guest's own recent statement, or a demystify-this ask. Generate for this era. Never put a toast prompt in a dossier.
 
@@ -514,7 +514,7 @@ Each of these is a real failure, not a hypothetical.
 - **Don't file by source type.** No standalone Signals or recent-posts section. Every post lives in the theme it powers
 - **Don't repeat an idea across themes.** Once, where it lands hardest
 - **Don't write a theme that would work for any guest in the category.** "Tokenomics" is a category, "Why ARB holders see $0 of $26M ARR" is a theme
-- **Don't generate a toast prompt.** That ritual ended with the Alpha Unhashed era
+- **Don't generate a toast prompt.** That ritual ended with the older episodes
 - **Don't ask about valuation, cap table, burn, runway, raise size or headcount.** He asks how a business makes money as a mechanism, never the number
 - **Don't ask about hiring, team or culture.** He never does
 - **Don't add an India angle by default.** Only with a real hook
@@ -535,7 +535,7 @@ Each of these is a real failure, not a hypothetical.
 
 The team works from Notion, so the dossier has to be findable on the guest's Engagement without anyone pasting links by hand. Run this after the dossier and guest note ship.
 
-1. **Find the Engagement.** Engagements data source `collection://5522ee21-d8e5-4ec0-bf3e-90bcf88d24c5`, alpha un# rows only (`Show LIKE '%3ed19a301a7f8111b5e4d46002a7afe1%'`). Find the guest in People (`collection://e6c44319-7f81-4da6-8b80-8441a4875d7a`) by LinkedIn first, then exact name, then match `Guest LIKE '%<people page id>%'`. If there is no match, or more than one open Engagement could be it, do not guess and do not create one: say so in the chat reply.
+1. **Find the Engagement.** Engagements data source `collection://5522ee21-d8e5-4ec0-bf3e-90bcf88d24c5`, un# rows only (`Show LIKE '%3ed19a301a7f8111b5e4d46002a7afe1%'`). Find the guest in People (`collection://e6c44319-7f81-4da6-8b80-8441a4875d7a`) by LinkedIn first, then exact name, then match `Guest LIKE '%<people page id>%'`. If there is no match, or more than one open Engagement could be it, do not guess and do not create one: say so in the chat reply.
 2. **The link.** Use the shareable link to the dossier: the published page URL if it was published, otherwise this chat's URL if you have it. If there is no link you can give, leave Dossier link alone and say "add the dossier link by hand" in the reply.
 3. **Write.** `Dossier link` = the link. Add one line at the top of `Claude note`: `YYYY-MM-DD: Sri's dossier and guest prep note ready (<link>)`, keeping existing lines below it. `Claude updated` = today. Do not change Status, Next action, Tier, Payment or anything else: the team sends the guest note and moves the status.
 4. **Reply.** End the chat reply with one line: `Notion: Dossier link added to <Engagement name>` (or what failed). A failed Notion write never blocks shipping the dossier.

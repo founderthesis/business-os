@@ -9,7 +9,7 @@ Related audits already in Notion (Business OS): Sheets audit, Blue audit, Notion
 ## Summary
 
 - **Blurbs are small and clean.** Slack #ft-blurbs holds 35 community blurbs for 26 distinct FT guests (10 May to 18 Sep 2026). 25 of 26 carry the guest's LinkedIn URL inline, so they match People by LinkedIn slug with no human help.
-- **A second blurb type exists:** about 21 short "prospect blurbs" (Name @ Company, LinkedIn, Blurb) posted to hosts in Slack DMs and show channels for HBD and alpha un#, May to Sep 2026. All but one carry a LinkedIn URL.
+- **A second blurb type exists:** about 21 short "prospect blurbs" (Name @ Company, LinkedIn, Blurb) posted to hosts in Slack DMs and show channels for HBD and un#, May to Sep 2026. All but one carry a LinkedIn URL.
 - **Guest evals are the biggest research asset.** 524 Gmail threads in the last 12 months mention "guest eval". About 325 link to claude.ai, about 177 to Perplexity, 6 to both, and about 16 to neither (Google Docs, ChatGPT shares, or inline LinkedIn plus text). Rough estimate: 350 to 500 distinct people.
 - **The tool shifted over the year:** ChatGPT shares and Google Docs (Oct to Nov 2025), Perplexity (Nov 2025 to Apr 2026), public claude.ai artifacts (Apr to Sep 2026), private claude.ai/artifact links (from mid Sep 2026).
 - **Evals are machine-readable going forward.** The Artifact tool read one private eval link as raw HTML with stable sections: verdict banner, name, a role line of the form "Title, Company (City)", two 1-10 scorecards, and a Links section that includes the guest's LinkedIn URL. Perplexity, ChatGPT and claude.ai/chat links are not readable by our tools.
@@ -39,7 +39,7 @@ Members Master List has LinkedIn on 631 of 682 rows (93%), so almost every blurb
 
 | Item | Finding |
 |---|---|
-| Source | Slack DM with Arjun (HBD), DM with Sri (alpha un#), #unhashed_podcast (private), #founders-inperson-podcast (shared with Fast Code AI) |
+| Source | Slack DM with Arjun (HBD), DM with Sri (un#), #unhashed_podcast (private), #founders-inperson-podcast (shared with Fast Code AI) |
 | Count | About 21 distinct people: 12 in the Arjun DM, 5 in the Sri DM, 4 in #unhashed_podcast, 1 in #founders-inperson-podcast. Found by keyword search, so a few may be missed |
 | Date range | 7 May 2026 to 29 Sep 2026 |
 | Format | "Name @ Company" header, then "LinkedIn:" or "LI:" URL, sometimes Google Scholar or faculty page, then "Blurb:" one to three sentences. un# ones lead with TVL, funding and revenue numbers |
@@ -76,9 +76,9 @@ Method: Gmail search "guest eval" after 30 Sep 2025, all pages saved and parsed;
 | Standard line | "PFB guest eval for <Name> @ <Company>: <link> - Recommendation: <verdict>" |
 | Verdicts seen | Book Immediately, Strong Consider, Evaluate after call, Decline (plus the skill's Pre-call needed inside artifacts) |
 | Link type (threads) | claude.ai about 325, Perplexity about 177, both 6, neither about 16 |
-| Link type by era (first eval per person, parsed sample of 154) | Oct 2025: ChatGPT share and Google Doc. Nov 2025 to Apr 2026: Perplexity. Apr to Sep 2026: public claude.ai artifacts. Sep 2026: 34 private claude.ai/artifact links. Jul to Sep 2026: about 14 alpha un# batches pasted inline as LinkedIn URL plus text |
+| Link type by era (first eval per person, parsed sample of 154) | Oct 2025: ChatGPT share and Google Doc. Nov 2025 to Apr 2026: Perplexity. Apr to Sep 2026: public claude.ai artifacts. Sep 2026: 34 private claude.ai/artifact links. Jul to Sep 2026: about 14 un# batches pasted inline as LinkedIn URL plus text |
 | Distinct people | 154 in the 199 parsed eval lines. Scaled to all threads, roughly 350 to 500 |
-| Other shows | A minority of threads are HBD, alpha un# and B2S evals routed to other team members |
+| Other shows | A minority of threads are HBD, un# and B2S evals routed to other team members |
 
 Where evals are also referenced:
 - FT Pipeline sheet: Inbound "Dossier/ guest eval" (68% of 661) and P1 "Verdict" (81% of 208). Mostly verdict labels and eval doc titles; the Sheets audit counts 202 doc titles and 81 URLs across all verdict columns. Titles follow "Guest Eval: Name - Company".
@@ -95,7 +95,7 @@ Machine-readability test: one private claude.ai/artifact eval link (Sep 2026) wa
 | Gmail | About 82 threads mention "dossier" in 12 months. Many are Gemini notes forwarded to Mamatha with "make dossier". Replies carry Google Doc links (Oct 2025 to Feb 2026), then claude.ai/chat links (Aug to Sep 2026) |
 | Drive | About 50 dossier-titled files, roughly 27 distinct guests. One HBD guest has 9 versions. Naming drifts: "Dossier - Name @ Company", "Guest Dossier: Name @ Company", "Name: Company Dossier", "<Surname>_HBD_Dossier", "un-dossier-<surname>", "un-dossier-<surname>-guest-prep.md", "HOST DOSSIER: NAME". Owners split between Akshay's and Mamatha's Drives. A few are prompt docs, not dossiers |
 | Slack | Dossier links in #unhashed_podcast, #founders-inperson-podcast and the Arjun DM: Google Docs, public and private claude.ai artifacts. #assistant holds lists of "Name @ Company - claude.ai/chat" links used for dossiers and blurbs (not machine-readable) |
-| Blue | Dossier URL field on FT, alpha un#, Hissa and FastCode records. Blue audit notes several point at private claude.ai chats |
+| Blue | Dossier URL field on FT, un#, Hissa and FastCode records. Blue audit notes several point at private claude.ai chats |
 
 ### Prep notes
 

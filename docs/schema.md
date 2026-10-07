@@ -129,7 +129,7 @@ One row per show. The page body is the show's wiki: ad hoc notes, things to reme
 
 | Field | Type | Fill | Notes |
 |---|---|---|---|
-| Name | title | Human | Founder Thesis, alpha un#, Built to Share, Human by Design, client shows. Spotlight is not a show; it is FT Tier 3 |
+| Name | title | Human | Founder Thesis, un#, Built to Share, Human by Design, client shows. Spotlight is not a show; it is FT Tier 3 |
 | Host | relation → People | Human | |
 | Owned | select | Human | Owned, Client |
 | Active | checkbox | Human | |

@@ -10,7 +10,7 @@ Decided 2 Oct 2026 (Akshay delegated the call). Rule: migrate a source only when
 | FT Pipeline | [Sheet](https://docs.google.com/spreadsheets/d/1-POWJfFqOeqUC8f_WT2wdkmvW-BsZ6kXKeYJYz_8iFE/edit) | People, Engagements | Audited (`docs/audits/sheets.md`); live |
 | un# Pipeline | [Sheet](https://docs.google.com/spreadsheets/d/1QvWXTrGeLTtuExsFVZzvrbe8vWNdvw8kYT3MJybHm4g/edit) | People, Engagements | Audited; live |
 | B2S_Guest_list.xlsx, HBD_new.xlsx | Uploaded 30 Sep | People, Engagements | Audited |
-| HK/SG Guest - Un#, Sheet1 only | [Sheet](https://docs.google.com/spreadsheets/d/1A-mu0Vk-j_iz89HFS6C2k3nvaV2G790lhgkk5ZqtQq0/edit) | People (blurb and Perplexity link as research), alpha un# Engagements at Identified, recommendation as a tag | Researched shortlist of about 58 HK/SG crypto founders; matched against un# Pipeline first. Akshay agreed 2 Oct |
+| HK/SG Guest - Un#, Sheet1 only | [Sheet](https://docs.google.com/spreadsheets/d/1A-mu0Vk-j_iz89HFS6C2k3nvaV2G790lhgkk5ZqtQq0/edit) | People (blurb and Perplexity link as research), un# Engagements at Identified, recommendation as a tag | Researched shortlist of about 58 HK/SG crypto founders; matched against un# Pipeline first. Akshay agreed 2 Oct |
 | Un# Scheduling | [Sheet](https://docs.google.com/spreadsheets/d/1DCJQksPObxVzKIT5AH__Cy5NA7GPb4PF7pmQLqCI9KY/edit) | Engagements (recordings being scheduled) | Small, edited daily by Mamatha |
 | Notion: Members Master List, Whatsapp Group Members | Notion | People | Audited; overlaps the master list |
 | Notion: Built-2-Share guest list (live + archive), HBD Guest Outreach, PaaS Leads | Notion | People, Engagements | Audited |

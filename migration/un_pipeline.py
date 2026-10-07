@@ -1,4 +1,4 @@
-"""Turn the alpha un# guest sheet ("un# Pipeline") into one clean candidate list for Notion Engagements.
+"""Turn the un# guest sheet ("un# Pipeline") into one clean candidate list for Notion Engagements.
 
 Usage:
   python migration/un_pipeline.py          parse, dedupe across tabs, map statuses, write candidates + review CSV

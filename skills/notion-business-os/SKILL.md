@@ -15,14 +15,14 @@ The Business OS is ThePodium's single record of every guest, deal and person. Th
 | People | collection://e6c44319-7f81-4da6-8b80-8441a4875d7a | one human, ever: guest, PR person, EA, colleague, prospect |
 | Organisations | collection://c43c280a-3b37-4821-96ef-dab688a53aea | one company or fund |
 | Deals | collection://1a981c5a-912a-4972-b3fc-8c9f2abb329a | one sales conversation for a branded podcast or retainer |
-| Shows | collection://ebca6861-4d71-4555-a6ec-6ed76cc0c733 | Founder Thesis 3ed19a301a7f817c9367e0d88afc5776, alpha un# 3ed19a301a7f8111b5e4d46002a7afe1, Built to Share 3ed19a301a7f819e8f45de04a7c9d025, Human by Design 3ed19a301a7f815585e7e6c8accaab23 |
+| Shows | collection://ebca6861-4d71-4555-a6ec-6ed76cc0c733 | Founder Thesis 3ed19a301a7f817c9367e0d88afc5776, un# 3ed19a301a7f8111b5e4d46002a7afe1, Built to Share 3ed19a301a7f819e8f45de04a7c9d025, Human by Design 3ed19a301a7f815585e7e6c8accaab23 |
 | Activities | collection://290f715d-fd45-4203-ade6-3642c2326c6c | one email, call, form or note, logged once |
 
 Fetch a data source once before writing to it, to get exact property names and select options. Never open the Credentials page.
 
 ## Engagement status, in journey order
 
-New (a name we noted, nothing done) · Contacted · Interested · Decision pending (waiting on Akshay's call; for alpha un#, Akshay takes it to Sri) · Precall requested · Precall done · Sponsored offered · Booking (chasing a recording slot) · Booked (recording on the calendar) · Recorded · Form filled (all done).
+New (a name we noted, nothing done) · Contacted · Interested · Decision pending (waiting on Akshay's call; for un#, Akshay takes it to Sri) · Precall requested · Precall done · Sponsored offered · Booking (chasing a recording slot) · Booked (recording on the calendar) · Recorded · Form filled (all done).
 
 Off the ladder: LT chase (still want them, revisit on Next date) · Parked (lost interest, stop following up, no formal no) · They declined · We declined · Unresponsive.
 

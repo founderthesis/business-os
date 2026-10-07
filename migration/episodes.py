@@ -43,8 +43,9 @@ SHOWS = {"FT": "https://app.notion.com/p/3ed19a301a7f817c9367e0d88afc5776",
          "AU": "https://app.notion.com/p/3ed19a301a7f8111b5e4d46002a7afe1",
          "B2S": "https://app.notion.com/p/3ed19a301a7f819e8f45de04a7c9d025",
          "HBD": "https://app.notion.com/p/3ed19a301a7f815585e7e6c8accaab23"}
-SHOW_NAME = {"FT": "Founder Thesis", "AU": "alpha un#", "B2S": "Built to Share", "HBD": "Human by Design"}
-WORKSPACE_SHOW = {"FT & Spotlight": "FT", "alpha un#": "AU", "Hissa Podcast": "B2S", "FastCode Podcast": "HBD"}
+SHOW_NAME = {"FT": "Founder Thesis", "AU": "un#", "B2S": "Built to Share", "HBD": "Human by Design"}
+WORKSPACE_SHOW = {"FT & Spotlight": "FT", "alpha un#": "AU",  # Blue workspace keys, verbatim from Blue (the un# workspace still has the show's former name)
+                  "Hissa Podcast": "B2S", "FastCode Podcast": "HBD"}
 STATUS = {"Recorded": "Recorded", "Hold": "Recorded", "Slotted": "Recorded", "Doc Ready": "Copy in progress",
           "Video QC": "Editing", "Published": "Published", "Shorts In Progress": "Published",
           "Medium in progress": "Published", "Newsletter Published": "Published"}
@@ -250,7 +251,7 @@ def main():
             ep["props"]["Apple"] = clean_url(get(r, "apple"))
         ep["blue"].append(r["original_id"])
 
-    # 4. Blue guest cards (FT, alpha un#, Hissa, FastCode): episodes plus an Engagement each
+    # 4. Blue guest cards (FT, un#, Hissa, FastCode): episodes plus an Engagement each
     pr_by_record = defaultdict(list)
     for c in pr:
         for rid in c["blue_records"]:

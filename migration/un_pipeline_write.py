@@ -82,7 +82,7 @@ RAWN = ROOT / "data/raw/notion"
 REVIEW = ROOT / "data/review"
 BATCH = "un-pipeline-2026-10-06"
 TODAY = "2026-10-06"
-SHOW_NAME = "alpha un#"
+SHOW_NAME = "un#"
 LADDER = ["New", "Contacted", "Interested", "Decision pending", "Precall requested", "Precall done", "Sponsored offered",
           "Booking", "Booked", "Recorded", "Form filled"]
 # Hand-settled matches after reading the review list: source id -> existing un# Engagement id.

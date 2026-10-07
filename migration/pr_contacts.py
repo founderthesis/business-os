@@ -62,7 +62,7 @@ def guess_name(local):
 
 
 def pr_emails(rec):
-    """Every address in a PR / comms field (FT guest form) or an "Other Email IDs" field (alpha un#, Hissa, FastCode).
+    """Every address in a PR / comms field (FT guest form) or an "Other Email IDs" field (un#, Hissa, FastCode).
     Field names differ a little by workspace."""
     out = []
     for k, v in (rec.get("fields") or rec.get("custom_fields") or {}).items():
