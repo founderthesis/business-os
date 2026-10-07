@@ -3,15 +3,18 @@
 Usage:
   python migration/ft_sheet_delta.py                 diff the two exports, write the review CSV and the Notion lookup list
   python migration/ft_sheet_delta.py --notion FILE   same, then fill the Notion columns from a saved query result (JSON list of rows)
+  python migration/ft_sheet_delta.py --new PATH --out PATH
+                                                     diff the 5 Oct export against a later re-export, writing the review CSV
+                                                     to PATH (defaults: the 6 Oct export, data/review/ft_sheet_delta.csv)
 
 Reads (all git-ignored, never modified):
   data/raw/sheets/ft_pipeline.xlsx                   the 5 Oct ~07:12 UTC export that migration/ft_pipeline.py migrated
-  data/raw/sheets/ft_pipeline_2026-10-06.xlsx        the 6 Oct re-export, after Mamatha's later edits
+  data/raw/sheets/ft_pipeline_2026-10-06.xlsx        the 6 Oct re-export, after Mamatha's later edits (or --new PATH)
   data/out/ft_pipeline/{engagements_new,engagements_update,skipped}.json   what the 5 Oct run wrote, per sheet row
   FILE (optional)                                    Engagements rows: url, Source ID, Status, date:Next date:start,
                                                      Next action, date:Claude updated:start
 Writes:
-  data/review/ft_sheet_delta.csv                     one line per changed field, plus added and removed rows
+  data/review/ft_sheet_delta.csv                     one line per changed field, plus added and removed rows (or --out PATH)
   data/out/ft_pipeline/delta_lookup.json             Source IDs and page URLs to query in Notion
 
 Rows are matched across the exports by tab + normalised guest name cell (n-th occurrence to n-th occurrence), never by row
@@ -179,8 +182,11 @@ def load_notion(path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--notion", metavar="FILE")
+    ap.add_argument("--new", metavar="PATH", type=Path, default=NEW, help="later re-export to diff against the 5 Oct one")
+    ap.add_argument("--out", metavar="PATH", type=Path, default=CSV_OUT, help="review CSV to write")
     args = ap.parse_args()
-    old, new = load(OLD), load(NEW)
+    csv_out = args.out.resolve()
+    old, new = load(OLD), load(args.new)
     written = written_by_row()
     notion = load_notion(args.notion) if args.notion else {}
     lines, keys = [], set()
@@ -232,8 +238,8 @@ def main():
                 src = f"{tab}/{r['row']}"
                 key, kind = written.get(src, (f"FT Pipeline/{tab}/{r['row']}", "fallback"))[:2]
                 lines[-1]["engagement_id"], lines[-1]["engagement_source"] = key, kind
-    CSV_OUT.parent.mkdir(parents=True, exist_ok=True)
-    with open(CSV_OUT, "w", newline="") as f:
+    csv_out.parent.mkdir(parents=True, exist_ok=True)
+    with open(csv_out, "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=COLUMNS)
         w.writeheader()
         w.writerows(lines)
@@ -244,7 +250,8 @@ def main():
     print("changes by tab and field:", {f"{t}/{f}": c for (t, f), c in sorted(counts.items())})
     if args.notion:
         print("touched in Notion since 5 Oct:", collections.Counter(touched.values()))
-    print(f"wrote {len(lines)} lines to {CSV_OUT.relative_to(ROOT)}; lookup keys {len(keys)}")
+    shown = csv_out.relative_to(ROOT) if csv_out.is_relative_to(ROOT) else csv_out
+    print(f"wrote {len(lines)} lines to {shown}; lookup keys {len(keys)}")
 
 
 if __name__ == "__main__":
