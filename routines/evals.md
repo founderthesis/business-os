@@ -2,7 +2,7 @@
 
 Scheduled routine "FT guest evals", three times a day about 20 minutes after each inbox run (07:20, 15:20, 21:20 JST), with the Gmail and Notion connectors.
 
-It picks up new FT pitches the inbox logged, runs the ft-guest-eval skill on each, writes the eval link and verdict to the Engagement, puts an "Ask Akshay" card on Mamatha's Queue, and mails Mamatha the eval link so she does not write one by hand. Mamatha chases Akshay for the call. Founder Thesis only (Akshay, 5 Oct). Decisions 66 and 67.
+It picks up new FT pitches the inbox logged, runs the ft-guest-eval skill on each, writes the eval link and verdict to the Engagement, and mails the eval to Akshay and Mamatha. Book immediately goes straight to Booking with a Follow up card for Mamatha to get dates; any other verdict sits at Decision pending until Akshay replies, and the inbox routine records his answer. No Ask Akshay cards (decision 78). Founder Thesis only (Akshay, 5 Oct). Decisions 66 and 67.
 
 ## Prompt
 
@@ -26,24 +26,20 @@ STEP 2. FOR EACH ENGAGEMENT, ONE AT A TIME
 a. Read the Engagement, its Guest and Via People rows, and the pitch thread (Gmail get_thread on the thread id in Source ID "gmail:<thread id>", or else the Gmail Link on the latest Email in Activity linked to the Engagement).
 b. Check Gmail for an eval Mamatha already sent Akshay for this guest in the last 7 days (from Mamatha, guest's name). If there is one, do not run a new eval: copy its link and verdict to the Engagement as in step d, and skip e and f.
 c. Run the ft-guest-eval skill (Skill tool, skill "ft-guest-eval") with the guest's name, company, LinkedIn if known, and the full pitch text. Follow the skill. It publishes the eval page and updates the Engagement. If the Artifact tool is not available in this session, write the eval page as a child page under the Engagement in Notion instead and use that page's URL.
-d. Make sure the Engagement has: Eval link = the eval page URL, Eval verdict = the skill's verdict, Status = Decision pending, Next action = the skill's one-line recommendation, a Claude note line "YYYY-MM-DD: eval done, <verdict>", Claude updated today. Do not set Tier or Parked.
-e. Queue card for Mamatha: Item "<Guest @ Company>: eval says <verdict>, what does Akshay want?", Type Ask Akshay, For Mamatha, Status To do, Due = today + 2 days, Engagement, People = the guest, Eval = the eval link, Gmail thread = the pitch thread URL, Thread ID = the pitch thread id, Recommendation = the route the eval suggests in one line. If a card with that Thread ID exists and is not Done, update it instead.
-f. Mail Mamatha (address from her People row; never type one from memory) from ad@thepodium.in, a new message, nobody else on it:
-   Subject: "Eval ready: <Guest> @ <Company> (FT)"
+d. Make sure the Engagement has: Eval link = the eval page URL, Eval verdict = the skill's verdict, Status = Booking if the verdict is Book immediately (a book-immediately eval is not a decision for Akshay), otherwise Decision pending, Next action = "Book: get recording dates from the PR or guest" for Book immediately, otherwise the skill's one-line recommendation, a Claude note line "YYYY-MM-DD: eval done, <verdict>", Claude updated today. Do not set Tier or Parked.
+e. Book immediately only: Queue card for Mamatha, Item "<Guest @ Company>: eval says book, get recording dates", Type Follow up, For Mamatha, Status To do, Due = today + 1 day, Engagement, People = the guest, Eval = the eval link, Gmail thread = the pitch thread URL, Thread ID = the pitch thread id, Recommendation "Reply on the PR thread asking for two or three recording slots". If a card with that Thread ID exists and is not Done, update it instead. Any other verdict: no card. Akshay decides those from the mail below, and the inbox routine records his reply.
+f. Mail from ad@thepodium.in, a new message, To: ad@thepodium.in (so it lands in Akshay's inbox) and Mamatha (address from her People row; never type hers from memory). Nobody else.
+   Subject: "Eval ready: <Guest> @ <Company> (FT): <verdict>"
    Body:
-   "Hi Mamatha,
-
-   The eval for <Guest> (<Company>) is done: <verdict>.
+   "<Guest> (<Company>): <verdict>. <the skill's one-line recommendation>
    <eval link>
 
-   It is on your Queue as Ask Akshay. No need to write an eval for this one; get his call and keep the PR thread warm until then.
-
-   Regards,
-   Akshay"
-   Log an Activity: Kind Email out, Summary "Agent sent: eval link for <Guest> to Mamatha", Date = now (datetime), Source Gmail, Source ID = the sent message id, Link = the sent thread's Gmail URL, People = the guest and Mamatha, Engagement, Captured today. Page body, 2 to 3 lines: the verdict, the recommended next step, and the eval page link.
+   <for Book immediately:> Moved to Booking. Mamatha, please ask the PR for recording slots. Akshay, reply if you'd rather not.
+   <otherwise:> Akshay, reply with book, precall, sponsored, decline or park and it goes into Notion. Mamatha, keep the PR thread warm until then."
+   Log an Activity: Kind Email out, Summary "Agent sent: eval for <Guest> to Akshay and Mamatha", Date = now (datetime), Source Gmail, Source ID = the sent message id, Link = the sent thread's Gmail URL, People = the guest and Mamatha, Engagement, Captured today. Page body, 2 to 3 lines: the verdict, the recommended next step, and the eval page link.
    Daily cap: 100 sends across all routines (today's Activities whose Summary starts "Agent sent"). At the cap, skip the mail and say so.
 g. If the eval fails, set Next action "Eval failed: <reason>", leave Status New, and move on.
 
 STEP 3. REPORT
-One line per guest: name, verdict, eval link, card added, Mamatha mailed. Then failures. Plain, short, no em dashes.
+One line per guest: name, verdict, status set, eval link, card added (book only), mail sent. Then failures. Plain, short, no em dashes.
 ```

@@ -69,8 +69,8 @@ Find the Engagement where the person is the Guest, a Stakeholder or Via, on the 
 - A PR person or guest pitches a guest: every inbound pitch is processed, including mass mailings, pitches that name another podcast and pitches that name no show. Show = the one of ours the mail names (alpha un#, Built to Share, Human by Design); anything else is Founder Thesis. If the guest already has an Engagement on that show (any direction), use it: Direction Inbound, add Via and Stakeholders from the thread, Next action "New pitch from <PR>", and leave Status alone unless it is New. Otherwise create one: Name "<Guest> @ <Company>, <Show>", Direction Inbound, Status New, Source Agent, Source ID "gmail:<thread id>", Captured today, Guest, Via = the PR person, Stakeholders = every PR person, EA or comms person on the thread, Organisation.
 - We invite someone (outbound) and no Engagement exists: create it with Direction Outbound, Status Contacted.
 - They reply yes to an outbound invite: Interested.
-- Mamatha sends Akshay a guest evaluation: set Eval link (strip redirect wrappers), Eval verdict (Book immediately, Strong consider, Pre-call needed, Evaluate after call or Decline) and Status Decision pending.
-- Akshay answers an eval or a card: "sponsored" -> Tier Sponsored (Status Sponsored offered once the team sends commercials); "precall" -> Status Precall requested; "go ahead", "record" or "book" -> Status Booking; "decline" -> We declined; "park", "not interested", "stop chasing" -> Parked; a tier named -> Tier.
+- Mamatha sends Akshay a guest evaluation: set Eval link (strip redirect wrappers) and Eval verdict (Book immediately, Strong consider, Pre-call needed, Evaluate after call or Decline). Status: Book immediately -> Booking, Next action "Book: get recording dates from the PR or guest" (a book-immediately eval is not a decision for Akshay); any other verdict -> Decision pending.
+- Akshay decides: his decision can be anywhere in the mailbox (his reply on an eval mail, his reply to the PR or guest, a mail to Mamatha). "sponsored" or "paid" -> Tier Sponsored (Status Sponsored offered once the team sends commercials); "precall" or "speak first" -> Status Precall requested; "go ahead", "record", "book" or "happy to have" -> Status Booking; "decline", "pass" or "not a fit" -> We declined; "park", "not interested", "stop chasing" -> Parked; "later" or "not now" -> LT chase; a tier named -> Tier. What our side already did in a thread counts too: a precall invite sent -> Precall requested, recording slots offered -> Booking, a decline sent -> We declined.
 - A precall happened (notes, a thank-you for the call): Precall done.
 - A recording date is agreed: Booked, Next date = the recording date.
 - The thank-you mail for the recording goes out (subject starts "Thank you for coming on"): Recorded.
@@ -95,16 +95,13 @@ Find the Deal by Organisation or Contacts. Update only where the mail is clear:
 A guest paying to appear on a show is Tier Sponsored on the Engagement, not a Deal.
 
 STEP 5. QUEUE CARDS ("Ask Akshay", for Mamatha)
-The Queue is Mamatha's worklist. Akshay does not read it. An "Ask Akshay" card tells Mamatha there is something only Akshay can decide, so she can chase him and record his answer. Add one only when:
-- someone asks Akshay a direct question or for a decision and he has not answered in the thread yet,
-- a guest eval reaches him and he has not decided (the evals routine adds these for FT; add them here for evals sent by mail), or
-- a last chase went unanswered (STEP 3).
-Not for FYIs, chasers, scheduling the team is handling, or anything addressed to someone else.
+The Queue is Mamatha's worklist. Akshay does not read it, and he decides almost everything from his own inbox, so do not card his decisions: Decision pending rows are his list, and STEP 3 records his answer when it shows up in mail (Akshay, 7 Oct). Add an Ask Akshay card only when a last chase went unanswered (STEP 3), so Mamatha can get a park-or-keep call.
+Never for evals, direct questions to Akshay (he reads his inbox), FYIs, chasers, scheduling the team is handling, or anything addressed to someone else.
 - First check the Queue for a card with the same Thread ID that is not Done; if there is one, update it instead of adding another.
 - Every card links its Engagement (or Deal for production sales and other commercial threads). Create the Engagement first if it does not exist.
 - Item leads with the engagement and is phrased as the question Mamatha puts to Akshay: "<Guest @ Company or Deal company>: <the question, a few words>". Example: "Alouk Kumar @ Inductus Group: eval says evaluate after a call, precall or not?"
 - Type Ask Akshay, For Mamatha, Status To do, Due = today + 2 days, Recommendation (the eval's or your one-line suggestion, so Mamatha can put it to him), Eval (for evals), Gmail thread, Thread ID, People.
-- Closing: on each run, for every open card (To do or Waiting) whose thread shows Akshay has since replied, or whose Engagement or Deal has moved on, record his answer on the Engagement or Deal if it is not there yet and set the card Done with Decided at = today.
+- Closing: on each run, for every open card (To do or Waiting) whose thread shows Akshay has since replied, or whose Engagement or Deal has moved on or is closed (We declined, They declined, Unresponsive, Parked, Form filled; Deal Won, Parked, Declined, Unresponsive), record his answer on the Engagement or Deal if it is not there yet and set the card Done with Decided at = today.
 
 STEP 6. NEW FT PITCH: REPLY AND ADD MAMATHA
 For every Founder Thesis Engagement with Direction Inbound and Status New whose pitch (the thread in Source ID "gmail:<thread id>", or the latest Email in Activity on it) arrived less than 72 hours ago, whether it was created this run or earlier:

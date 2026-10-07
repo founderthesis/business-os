@@ -20,10 +20,10 @@ Each run starts a fresh cloud session and ends with a short report; a push notif
 **Inbox to Business OS.** Logs every real email as an Activity, creates People and Organisations, and moves Engagements and Deals on clear evidence, with a Claude note line on every change. Three actions beyond capture:
 - New FT pitch (not a mass pitch, under 72 hours old, nobody from our side on it yet): replies "Thanks for your mail, adding Mamatha to coordinate" with Mamatha in Cc.
 - Calendar RSVP mail (Accepted, Declined, Maybe) with no human reply: archived and marked read. A guest decline is noted on the Engagement.
-- "Ask Akshay" cards on Mamatha's Queue when a mail needs Akshay's answer.
+- Akshay's decisions read from his mail (his reply on the eval mail, the PR thread, or a mail to Mamatha) and applied to the Engagement. No cards for them (decision 78).
 - Guest form submissions (the Notion guest form, decision 69): matched to the guest's Engagement, People and Organisation gaps filled, PR emails added as Stakeholders, Status Form filled, Guest form in ticked on the Episode, an Activity logged, and a Follow up card for Mamatha to send the likely release date. No match goes to Needs review with a Fix data card. They close once his answer shows in the thread or on the Engagement.
 
-**FT guest evals.** Picks up new inbound FT Engagements the inbox created (no eval yet, captured in the last 7 days, at most 5 a run). Runs ft-guest-eval, writes Eval link and verdict, sets Decision pending, adds an Ask Akshay card, and mails Mamatha the link so she does not write an eval by hand. If Mamatha already sent one, it copies hers instead. FT only.
+**FT guest evals.** Picks up new inbound FT Engagements the inbox created (no eval yet, captured in the last 7 days, at most 5 a run). Runs ft-guest-eval and writes Eval link and verdict. Book immediately goes to Booking with a Follow up card for Mamatha to get dates; anything else sits at Decision pending. Mails the eval to Akshay and Mamatha so Akshay can reply with his call (decision 78). If Mamatha already sent one, it copies hers instead. FT only.
 
 **Calendar sync.**
 - Calendar to Notion: recordings and precalls on the ad@thepodium.in calendar set Next date, Call type and Call link; a recording moves the Engagement to Booked. A cancelled or declined event, or one that vanished, gives Mamatha a Follow up card. Booked with no invite gives a Fix data card.
@@ -34,8 +34,8 @@ Each run starts a fresh cloud session and ends with a short report; a push notif
 
 | Check | Card |
 |---|---|
-| Decision pending over 2 days | Ask Akshay |
-| Sponsored, precall done, quiet 5 days | Ask Akshay |
+| Decision pending over 2 days | No card. Upkeep looks for Akshay's decision in Gmail and applies it; Book immediately evals move to Booking |
+| Sponsored, precall done, quiet 5 days, no decision in Gmail | Ask Akshay |
 | Open Engagement with Next date over 2 days past, or no date and no activity in 14 days | Follow up |
 | Recorded over 5 days, form not in | Follow up |
 | Sponsored, booked or recorded, payment not started | Follow up |
@@ -49,7 +49,7 @@ Cold deals at New or Contacted are the outreach list and never raise cards. On 5
 ## The Queue
 
 Mamatha's worklist (decision 67). Akshay does not read it.
-- **Ask Akshay**: only he can decide. Mamatha asks him, records his answer on the Engagement or Deal, and moves the card to Done (or a routine closes it when it sees the change).
+- **Ask Akshay**: rare. Sponsored-or-editorial after a precall, park-or-keep after a last chase, and the post-recording thank-you nudge. Eval decisions are never carded (decision 78).
 - **Follow up**: a guest or deal has gone quiet.
 - **Fix data**: something in Notion is missing or wrong.
 
