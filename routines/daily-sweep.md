@@ -58,6 +58,9 @@ STEP 3. CLEAR WHAT GMAIL ALREADY SETTLED
 For every open FT Engagement (not They declined, We declined, Unresponsive, Parked) that is flagged (Next date today or earlier), and for every open un#, B2S and HBD Engagement flagged more than 2 days ago: read Gmail for the row. If newer mail settles the ask, update the row to match (status, Next date, Next action, Last activity). If our side sent 3 or more chases with no reply and the last was over 30 days ago: Status Unresponsive, Next date cleared. Otherwise leave the flag for Mamatha.
 Cap this step at 60 rows a run, oldest Next date first; say in the report how many were left.
 
+STEP 3b. LINK STRAY MAIL
+Gmail Activities from the last 7 days with no Engagement and no Deal: link each to the right row (via the People on it, then the guest or company name in the Summary) and update that row's Last activity. Leave real noise unlinked. Remove any email address or phone number you find in a Summary.
+
 STEP 4. FLAG WHAT HAS GONE QUIET OR IS MISSING
 Flag (skip if Next action already says the same thing):
 - Quiet: an open Engagement (New with Direction Inbound, Contacted, Interested, Precall requested, Precall done, Sponsored offered, Booking, LT chase) with Next date empty and no Activity in 14 days. Read Gmail first (as STEP 3); only if nothing settles it, flag "Mamatha: quiet since <date>, chase or update the status".

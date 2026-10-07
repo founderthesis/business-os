@@ -58,11 +58,11 @@ Skip, without logging: newsletters, promotions, SaaS notices, calendar invitatio
 
 STEP 2. ONE ACTIVITY PER EMAIL
 For each remaining message, check Activities for Source ID = the Gmail message id. If it exists, skip the message. Otherwise create one Activity:
-- Summary: one plain line, "<who> to <who>: <what happened>". Example: "Rhea (Value360) to Mamatha: offers 14 or 16 Oct for Arjun Mehta's FT recording".
+- Summary: one plain line, "<who> to <who>: <what happened>". Never an email address, phone number or WhatsApp handle in it. Example: "Rhea (Value360) to Mamatha: offers 14 or 16 Oct for Arjun Mehta's FT recording".
 - Date: the message date. Kind: "Email out" if the sender is Akshay or a person tagged Team, else "Email in".
 - Source: Gmail. Source ID: the message id. Link: the thread's Gmail URL. Captured: today.
 - People: everyone on From, To and Cc who is in People. Leave out Akshay.
-- Engagement, Deal, Episode: the ones this mail is about.
+- Engagement, Deal, Episode: the ones this mail is about. Every mail about a guest links that guest's Engagement (find it via the People row of anyone on the thread, then the guest name); if you truly cannot tell which, say so in the report.
 - Then set Last activity on the linked Engagement or Deal (see LAST ACTIVITY).
 - Page body: a 2 to 3 line summary of the mail itself, so nobody has to open Gmail to know what it says: what they said, what they asked for or offered (dates, numbers, names), and any deadline. Plain sentences, no greeting or sign-off text, no email addresses or phone numbers. Example: "Rhea says Arjun can do 14 Oct 4pm IST or 16 Oct 11am IST. She asks for the Zencastr link and a question list by Friday. He'd like to talk about the Series B and hiring in Pune."
 Batch the creates (up to 50 pages per call).
