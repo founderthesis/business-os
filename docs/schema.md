@@ -87,7 +87,10 @@ One row per guest pursuit: a person and a show. Replaces every guest pipeline ta
 | Eval link, Dossier link | url | Auto | |
 | Host verdict | select | Auto / Human | Yes, No, Maybe, Not asked. un#, B2S and HBD only |
 | Next action | text | Human / Auto | One line |
-| Next date | date | Human / Auto | Drives chasers, reminders and the recording |
+| Next date | date | Human / Auto | When someone next acts. Today or earlier = on the team's list (FT: Today). A booked call's date when nothing else is due (decision 79) |
+| Next action | text | Human / Auto | Who does what, starting with the person: "Mamatha: ...", "Ask Akshay to ...", "Fix: ...", or "Waiting on <who>: ..." |
+| Last activity | text | Auto | "<D Mon>, <summary>" of the newest logged mail or form. Written by the routines (decision 79) |
+| Due | formula | Auto | "Due" when Next date is today or earlier. The FT: Today view filters on it |
 | Chase step | number | Auto | 0 to 5 on the follow-up ladder |
 | Payment | select | Human / Auto | Not started, GST received, Invoice 1 sent, Payment 1 received, Invoice 2 sent, Payment 2 received, Settled. Sponsored only |
 | Amount | number | Human | Sponsored fee |

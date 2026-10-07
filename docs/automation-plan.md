@@ -9,7 +9,7 @@ What runs, when, and what it is allowed to do. Built 5 Oct 2026 on Akshay's go-a
 | Inbox to Business OS | 06:55, 14:55, 20:55 daily | Gmail, Notion | `routines/inbox.md` |
 | FT guest evals | 07:20, 15:20, 21:20 daily | Notion, Gmail | `routines/evals.md` |
 | Calendar sync | 07:35, 15:35, 21:35 daily | Google Calendar, Notion, Gmail | `routines/calendar.md` |
-| Queue upkeep | 13:10 Mon to Sat (09:40 IST) | Notion, Gmail | `routines/queue-upkeep.md` |
+| Daily sweep | 13:10 Mon to Sat (09:40 IST) | Notion, Gmail | `routines/daily-sweep.md` |
 
 Each run starts a fresh cloud session and ends with a short report; a push notification goes to Akshay when a run has something worth knowing.
 
@@ -21,39 +21,37 @@ Each run starts a fresh cloud session and ends with a short report; a push notif
 - New FT pitch (not a mass pitch, under 72 hours old, nobody from our side on it yet): replies "Thanks for your mail, adding Mamatha to coordinate" with Mamatha in Cc.
 - Calendar RSVP mail (Accepted, Declined, Maybe) with no human reply: archived and marked read. A guest decline is noted on the Engagement.
 - Akshay's decisions read from his mail (his reply on the eval mail, the PR thread, or a mail to Mamatha) and applied to the Engagement. No cards for them (decision 78).
-- Guest form submissions (the Notion guest form, decision 69): matched to the guest's Engagement, People and Organisation gaps filled, PR emails added as Stakeholders, Status Form filled, Guest form in ticked on the Episode, an Activity logged, and a Follow up card for Mamatha to send the likely release date. No match goes to Needs review with a Fix data card. They close once his answer shows in the thread or on the Engagement.
+- Guest form submissions (the Notion guest form, decision 69): matched to the guest's Engagement, People and Organisation gaps filled, PR emails added as Stakeholders, Status Form filled, Guest form in ticked on the Episode, an Activity logged, and the row flagged for Mamatha to send the likely release date. No match goes to Needs review and is counted in the daily sweep mail.
 
-**FT guest evals.** Picks up new inbound FT Engagements the inbox created (no eval yet, captured in the last 7 days, at most 5 a run). Runs ft-guest-eval and writes Eval link and verdict. Book immediately goes to Booking with a Follow up card for Mamatha to get dates; anything else sits at Decision pending. Mails the eval to Akshay and Mamatha so Akshay can reply with his call (decision 78). If Mamatha already sent one, it copies hers instead. FT only.
+**FT guest evals.** Picks up new inbound FT Engagements the inbox created (no eval yet, captured in the last 7 days, at most 5 a run). Runs ft-guest-eval and writes Eval link and verdict. Book immediately goes to Booking, flagged "Mamatha: ask for recording slots"; anything else sits at Decision pending, flagged "Ask Akshay to approve". Mails the eval to Akshay and Mamatha so Akshay can reply with his call (decision 78). If Mamatha already sent one, it copies hers instead. FT only.
 
 **Calendar sync.**
-- Calendar to Notion: recordings and precalls on the ad@thepodium.in calendar set Next date, Call type and Call link; a recording moves the Engagement to Booked. A cancelled or declined event, or one that vanished, gives Mamatha a Follow up card. Booked with no invite gives a Fix data card.
+- Calendar to Notion: recordings and precalls on the ad@thepodium.in calendar set Next date, Call type and Call link; a recording moves the Engagement to Booked. A cancelled or declined event, or one that vanished, flags the row for Mamatha to rebook or close. Booked with no invite is flagged as a fix.
 - Notion to calendar: a private entry, no guests, no notifications, for each recording and precall in the next 14 days. Recordings get a 30-minute prep block before the call; precalls get an entry at the same time as the call, marked free, so no time is blocked (decision 73). Title "Prep: Guest @ Company (FT recording)", the call link as location, and the eval, dossier, LinkedIn and Engagement links in the description. Moved and cancelled calls update or remove it.
-- After a recording that was not cancelled: a thank-you draft in Gmail copied from the last one Akshay sent (same wording, with the Notion guest form link in place of the deleted short link, guest and PR in To, every Stakeholder and the usual team in Cc), a WhatsApp blurb from founder-thesis-blurb (not sent to Slack), and an Ask Akshay card for Mamatha to get him to send the draft and post the blurb. FT only for the draft and blurb. Recorded is set by the inbox once the thank-you goes out.
+- After a recording that was not cancelled: a thank-you draft in Gmail copied from the last one Akshay sent (same wording, with the Notion guest form link in place of the deleted short link, guest and PR in To, every Stakeholder and the usual team in Cc), a WhatsApp blurb from founder-thesis-blurb (not sent to Slack), and a flag "Ask Akshay to send the thank-you draft and post the blurb", with the blurb in the Engagement's page body. FT only for the draft and blurb. Recorded is set by the inbox once the thank-you goes out.
 
-**Queue upkeep.** Closes cards whose reason has cleared, then runs the checks below, adds new cards until Follow up plus Fix data reach 30 open, counts the backlog it held back, and mails Mamatha a short summary with the board link.
+**Daily sweep** (was Queue upkeep). Moves any leftover Queue card onto its row, applies what Gmail already settles (Akshay's decisions, replies, three unanswered chases over 30 days -> Unresponsive), flags what has gone quiet or is missing, and mails Mamatha the count with the FT: Today link.
 
-| Check | Card |
+| Check | Flag (Next action) |
 |---|---|
-| Decision pending over 2 days | No card. Upkeep looks for Akshay's decision in Gmail and applies it; Book immediately evals move to Booking |
-| Sponsored, precall done, quiet 5 days, no decision in Gmail | Ask Akshay |
-| Open Engagement with Next date over 2 days past, or no date and no activity in 14 days | Follow up |
-| Recorded over 5 days, form not in | Follow up |
-| Sponsored, booked or recorded, payment not started | Follow up |
-| Deal at Interested or later, or a Warm deal, untouched 14 days | Follow up |
-| No status, no guest, Booked with no date, booked guest with no email | Fix data |
-| Possible duplicate People, guessed names on open Engagements | Fix data |
-| Deal past New with no contacts, Won with no amount | Fix data |
+| Decision pending, no decision in Gmail, no Next date | Ask Akshay to approve: eval says <verdict> |
+| Decision pending, eval Book immediately | Status Booking. Mamatha: ask for recording slots |
+| Open row, no Next date, no activity in 14 days, nothing new in Gmail | Mamatha: quiet since <date>, chase or update the status |
+| Recorded over 5 days, form not in | Mamatha: send the form reminder |
+| Sponsored, booked or recorded, payment not started | Mamatha: send GST and invoice details |
+| Booked with no date, booked guest with no email, guessed name on a booked row, no status, no guest | Fix: ... |
+| Deal at Interested or later, or a Warm deal, untouched 14 days | Akshay: follow up or close |
 
-Cold deals at New or Contacted are the outreach list and never raise cards. On 5 Oct the backlog was 189 open Engagements with a past or missing Next date and 17 deals at Interested, In conversation or Proposal sent, so the cap matters: Mamatha works a list of up to 30, Booked and Tier 1 first.
+Cold deals at New or Contacted are the outreach list and are never flagged.
 
-## The Queue
+## The worklist: FT: Today (decision 79)
 
-Mamatha's worklist (decision 67). Akshay does not read it.
-- **Ask Akshay**: rare. Sponsored-or-editorial after a precall, park-or-keep after a last chase, and the post-recording thank-you nudge. Eval decisions are never carded (decision 78).
-- **Follow up**: a guest or deal has gone quiet.
-- **Fix data**: something in Notion is missing or wrong.
+The Queue is retired. Anything that needs a person is a flag on the row itself: **Next date = today** and **Next action = who does what**, starting with the person ("Mamatha: reply to Rhea with a slot", "Ask Akshay to approve: eval says Strong consider", "Fix: booked guest has no email"). The Engagements view **FT: Today** shows every FT row whose Next date is today or earlier (closed rows aside), oldest first, with **Last activity** (the newest logged mail, written by the routines) next to Next action.
 
-Status: To do, Waiting (she has asked, no answer yet), Done. Board: "Mamatha's queue".
+- Mamatha clears the list by doing the step and moving Next date forward, or by replying by mail: when our side replies and the ball is in their court, the inbox routine moves Next date 4 days out and writes "Waiting on <who>".
+- A Next date of today or earlier is an open flag. Routines never move it later unless the mail settles the ask.
+- "Due" is a formula (Next date on or before today) that the view filters on, because the Notion API cannot save a relative date filter.
+- The Queue database stays for history; nothing writes to it.
 
 ## Guardrails
 

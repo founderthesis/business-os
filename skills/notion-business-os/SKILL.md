@@ -16,7 +16,6 @@ The Business OS is ThePodium's single record of every guest, deal and person. Th
 | Organisations | collection://c43c280a-3b37-4821-96ef-dab688a53aea | one company or fund |
 | Deals | collection://1a981c5a-912a-4972-b3fc-8c9f2abb329a | one sales conversation for a branded podcast or retainer |
 | Shows | collection://ebca6861-4d71-4555-a6ec-6ed76cc0c733 | Founder Thesis 3ed19a301a7f817c9367e0d88afc5776, alpha un# 3ed19a301a7f8111b5e4d46002a7afe1, Built to Share 3ed19a301a7f819e8f45de04a7c9d025, Human by Design 3ed19a301a7f815585e7e6c8accaab23 |
-| Queue | collection://af59132c-92cb-4e87-85f0-266bd07309c4 | a card on the team's worklist |
 | Activities | collection://290f715d-fd45-4203-ade6-3642c2326c6c | one email, call, form or note, logged once |
 
 Fetch a data source once before writing to it, to get exact property names and select options. Never open the Credentials page.
@@ -37,7 +36,7 @@ Deal stage: New, Contacted, Interested, In conversation, Proposal sent, Won, Par
 
 1. Do what the person asks. Anyone on the team can change any field, including Status, Tier, Parked, Payment and Amount.
 2. Find the row by name and show (search Name, or the person's People row). If two rows could match, ask which one; never guess.
-3. Next date is the date of the next follow-up, not the date of the last one. When a follow-up is done, set Next date to when to chase next.
+3. Next date is when someone next acts, not the date of the last contact. Today or earlier puts the row on the team's list (the FT: Today view). When a step is done, move Next date to when to chase next. To flag something for a person, set Next date to today and Next action to who does what, starting with the person ("Mamatha: send the precall invite", "Ask Akshay to approve: eval says Strong consider"). The Queue is retired: never write to it.
 4. If a change moves Status backward on the ladder, or changes a price or commercial term on a Sponsored row or a Deal, make it and say so plainly in the reply so nobody is surprised.
 5. On an Engagement, add one line at the top of Claude note: "YYYY-MM-DD <who asked>: <what changed and why>", keep older lines below it, and set Claude updated to today. Deals have no Claude note: put the same line in Next action when the change closes or parks the deal. Use the asker's first name. If you can't tell who is asking, ask once.
 6. New person (a PR contact, an EA, a colleague): search People first by email, then name + company. Create only if not found, with Source Manual, Captured today, and the Organisation. Add them to the Engagement's Stakeholders (PR, comms, EA) or Via (who brought the guest). Never store a person only in a note.
@@ -48,8 +47,8 @@ Deal stage: New, Contacted, Interested, In conversation, Proposal sent, Won, Par
 
 ## Examples
 
-- "update in notion business OS: Anmol Madan recorded today, thank-you sent, chase the form on Monday" → Status Recorded, Next date next Monday, Next action "Chase the guest form", Claude note line.
-- "Supriya not replying after three follow-ups, try again 25 Oct" → Next date 2026-10-25, Next action "Fourth follow-up", status unchanged.
+- "update in notion business OS: Anmol Madan recorded today, thank-you sent, chase the form on Monday" → Status Recorded, Next date next Monday, Next action "Mamatha: chase the guest form", Claude note line.
+- "Supriya not replying after three follow-ups, try again 25 Oct" → Next date 2026-10-25, Next action "Mamatha: fourth follow-up", status unchanged.
 - "Deepan at Vita: PR no longer represents him, we are talking to Daniel directly for the precall" → add Daniel as a Stakeholder, Next action "Precall via Daniel".
 - "Lupin: park it" → Status Parked, Next action cleared, Claude note line naming who asked.
 - "Rayls paid the first invoice" → Payment "Payment 1 received", Claude note line.
