@@ -54,9 +54,15 @@ Engagements at Decision pending:
 - Eval verdict Book immediately and no contrary word from Akshay: Status Booking, flag "Mamatha: ask <PR or guest> for recording slots (eval: book immediately)".
 - Otherwise, if Next date is empty: flag "Ask Akshay to approve: eval says <verdict>". A future Next date someone set stays.
 
-STEP 3. CLEAR WHAT GMAIL ALREADY SETTLED
+STEP 3. CLEAR WHAT GMAIL ALREADY SETTLED (required: do the Gmail reads, row by row; a run that changes nothing here must say in the report which rows it read and why none changed)
 For every open FT Engagement (not They declined, We declined, Unresponsive, Parked) that is flagged (Next date today or earlier), and for every open un#, B2S and HBD Engagement flagged more than 2 days ago: read Gmail for the row. If newer mail settles the ask, update the row to match (status, Next date, Next action, Last activity). If our side sent 3 or more chases with no reply and the last was over 30 days ago: Status Unresponsive, Next date cleared. Otherwise leave the flag for Mamatha.
 Cap this step at 60 rows a run, oldest Next date first; say in the report how many were left.
+
+STEP 3a. TURN OLD NOTES INTO NEXT STEPS (required)
+For every FT row on FT: Today whose Next action does not start with a person ("Mamatha:", "Ask Akshay", "Team:", "Fix:") or "Waiting on" (old sheet text such as "Preliminary call", "Remind Akshay", "Next outbound campaign", or a note of something done such as "Thank you note sent"):
+- The note says a step is done: write the next step on the ladder and move Status forward if it is behind (thank-you sent -> Status Recorded, Next date 4 days out, Next action "Waiting on <guest>: guest form"; precall done -> "Ask Akshay to approve after the precall"; closing mail sent with no reply -> Status Unresponsive, Next date cleared).
+- Otherwise rewrite it as "<who>: <what>", keeping its meaning, using Status, Last activity and Gmail ("Preliminary call" on Precall requested -> "Mamatha: get the precall booked with <PR or guest>"; "Remind Akshay" -> "Ask Akshay: <what about>"; "Next outbound campaign" on New Outbound -> "Mamatha: add to the next outbound batch or park").
+- Keep the date unless the step is done. Steps 3 and 3a together cover at most 60 rows a run, oldest Next date first; report how many are left.
 
 STEP 3b. LINK STRAY MAIL
 Gmail Activities from the last 7 days with no Engagement and no Deal: link each to the right row (via the People on it, then the guest or company name in the Summary) and update that row's Last activity. Leave real noise unlinked. Remove any email address or phone number you find in a Summary.
@@ -79,7 +85,7 @@ STEP 6. MAIL MAMATHA
 Get Mamatha's address from her People row (Tags Team); never type one from memory. One plain mail from ad@thepodium.in to Mamatha only, subject "Your list for <date>":
 "Hi Mamatha,
 
-<n> guests on FT: Today (<n> new since yesterday). I cleared <n> that the inbox already answered.
+<n> guests on FT: Today (<n> more than yesterday's mail said, or fewer). I cleared <n> from Gmail and turned <n> old notes into next steps.
 <the 5 most urgent rows: Booked and Booking first, then Tier 1, then Sponsored, then the oldest Next date; one per line as "<Guest @ Company>: <Next action>">
 <if any: "<n> guest forms need linking" and "<n> possible duplicate people to check">
 
@@ -90,5 +96,5 @@ Akshay"
 Skip the mail if nothing is on the list. Log an Activity: Kind Email out, Summary "Agent sent: daily list to Mamatha", Source Gmail, Source ID = the sent message id, Captured today. Daily cap: 100 sends across all routines (today's Activities whose Summary starts "Agent sent").
 
 STEP 7. REPORT
-Plain and short, no em dashes: Queue cards moved and closed; rows changed from Gmail (name: old -> new, evidence date); rows flagged per check; FT: Today count; rows left for the next run; anything that failed.
+Plain and short, no em dashes, with a count for every step (0 is a valid count, but say why): Queue cards moved and closed; old notes rewritten (STEP 3a); rows changed from Gmail (name: old -> new, evidence date); rows flagged per check; FT: Today count; rows left for the next run; anything that failed.
 ```
