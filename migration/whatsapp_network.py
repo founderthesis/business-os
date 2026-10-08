@@ -38,7 +38,10 @@ NAME_COMPANY_SPLIT = {                             # "first-name Company" writte
 # first-name rows whose matched People name is not a clean full name
 KEEP_FIRST_NAME = {"306", "398"}
 
+NAME_FIX = {"VIknesh Jain": "Viknesh Jain"}   # typos in the doc
+
 def clean_name(n):
+    n = NAME_FIX.get(n.strip(), n)
     n = re.sub(r"\s+aka\s+.*$", "", n.strip())
     n = re.sub(r"^Dr\.?\s+", "", n)
     return re.sub(r"\s+", " ", n).strip()
