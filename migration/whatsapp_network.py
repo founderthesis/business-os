@@ -264,7 +264,7 @@ def cmd_build():
     json.dump(out, open(os.path.join(OUT, "rows.json"), "w"), indent=1, ensure_ascii=False)
     with open(REVIEW, "w", newline="") as f:
         w = csv.writer(f); w.writerow(["raw_index", "name", "company", "membership", "note"]); w.writerows(review)
-    # Notion page payloads, 50 per batch
+    # Notion page payloads, 100 per batch (create-pages maximum)
     pages = []
     for row in out:
         p = {"Name": row["Name"], "Membership": row["Membership"], "Type": row["Type"],
@@ -279,8 +279,8 @@ def cmd_build():
     pages = [p for p in pages if p["properties"]["Name"] not in loaded]
     for f in os.listdir(OUT):
         if f.startswith("batch_"): os.remove(os.path.join(OUT, f))
-    for i in range(0, len(pages), 50):
-        json.dump(pages[i:i+50], open(os.path.join(OUT, f"batch_{i//50:02d}.json"), "w"), ensure_ascii=False)
+    for i in range(0, len(pages), 100):
+        json.dump(pages[i:i+100], open(os.path.join(OUT, f"batch_{i//100:02d}.json"), "w"), ensure_ascii=False)
     counts = {
         "extract_rows": len(d), "loaded": len(out), "skipped_labels": len(skipped), "merged_duplicates": len(merged),
         "membership": Counter(r["Membership"] for r in out), "type": Counter(r["Type"] for r in out),

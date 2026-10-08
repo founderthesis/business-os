@@ -92,6 +92,8 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 | 84 | Client hosts get their own board database under Business OS > Host boards (first: "un# with Sri"), with only safe fields, kept in step with Engagements by a routine. Never share a view of Engagements with an outsider (no row-level security). | Akshay, 8 Oct |
 | 85 | Transcripts: a one-off Claude Code run on Akshay's Mac attaches the existing Zencastr transcripts to Episodes; a nightly desktop scheduled task attaches new ones (cloud routines can't reach Zencastr or mail attachments). Prompts in routines/transcripts-*.md. | Akshay, 8 Oct |
 | 86 | Every completed precall goes to Akshay: Status Precall done, Waiting on Akshay, Next action "Ask Akshay: verdict after the <date> precall". The calendar routine does it when the precall event ends; the inbox does it when mail shows the precall happened. | Akshay, 8 Oct |
+| 87 | No bulk backfill of Waiting on. The routines fill it as they touch rows; rows nobody is waiting on (cold target lists, Booked with nothing open) stay blank. 8 Oct state: the Engagement rows set by hand before the stop keep their values; Deals are blank. | Akshay, 8 Oct |
+| 88 | FT Network is the WhatsApp group roster (one row per member, linked to People where the match is exact). The public page "Founder Thesis community: members" is a static table of Added members (name, LinkedIn link, company, one-liner), never a linked view of the database, since Notion has no row-level security. | Handoff of 8 Oct; static page per the no-row-level-security rule |
 
 ## Open
 
