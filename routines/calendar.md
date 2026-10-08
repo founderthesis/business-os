@@ -67,6 +67,9 @@ For each matched, confirmed recording or precall starting in the next 14 days:
 - One exists but the Engagement gained an Eval, Dossier or LinkedIn link since: update the description only.
 - One exists and nothing changed: leave it.
 
+STEP 4a. AFTER A PRECALL
+For each Engagement with Call type Precall whose precall event ended between 3 days ago and now and was not cancelled: if Status is Precall requested, set Precall done. Add Akshay to Waiting on (keep existing values) and set Next action "Ask Akshay: verdict after the <date> precall" (keep any other open ask after " | "), unless Next action already asks him. Never change Next date. Skip if Claude note already has a line "precall <that date> done". Claude note line "YYYY-MM-DD: precall <date> done, waiting on Akshay's verdict".
+
 STEP 4. AFTER A RECORDING
 For each Engagement with Call type Recording whose recording event ended between 3 days ago and now, was not cancelled, and whose Status is Booked:
 - Skip if Claude note already has a line "recorded <that date>" (this step ran before for that recording).

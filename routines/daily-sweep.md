@@ -59,7 +59,7 @@ Cap this step at 60 rows a run, oldest Next date first; say in the report how ma
 
 STEP 3a. TURN OLD NOTES INTO NEXT STEPS (required)
 For every FT row on FT: Today whose Next action does not start with a person ("Mamatha:", "Ask Akshay", "Team:", "Fix:") or "Waiting on" (old sheet text such as "Preliminary call", "Remind Akshay", "Next outbound campaign", or a note of something done such as "Thank you note sent"):
-- The note says a step is done: write the next step on the ladder and move Status forward if it is behind (thank-you sent -> Status Recorded, Waiting on Guest or PR, Next action "Waiting on <guest>: guest form"; precall done -> Waiting on Akshay, "Ask Akshay to approve after the precall"; closing mail sent with no reply -> Status Unresponsive).
+- The note says a step is done: write the next step on the ladder and move Status forward if it is behind (thank-you sent -> Status Recorded, Waiting on Guest or PR, Next action "Waiting on <guest>: guest form"; precall done -> Waiting on Akshay, "Ask Akshay: verdict after the precall"; closing mail sent with no reply -> Status Unresponsive).
 - Otherwise rewrite it as "<who>: <what>", keeping its meaning, using Status, Last activity and Gmail ("Preliminary call" on Precall requested -> "Mamatha: get the precall booked with <PR or guest>"; "Remind Akshay" -> "Ask Akshay: <what about>"; "Next outbound campaign" on New Outbound -> "Mamatha: add to the next outbound batch or park").
 - Never change the date. Steps 3 and 3a together cover at most 60 rows a run, oldest Next date first; report how many are left.
 
