@@ -1,8 +1,8 @@
 # Guest evals (Founder Thesis)
 
-Scheduled routine "FT guest evals", three times a day about 20 minutes after each inbox run (07:20, 15:20, 21:20 JST), with the Gmail and Notion connectors.
+Scheduled routine "FT guest evals", once a night at 23:50 JST, Sunday to Friday, after the inbox run, with the Gmail and Notion connectors.
 
-It picks up new FT pitches the inbox logged, runs the ft-guest-eval skill on each, writes the eval link and verdict to the Engagement, and mails the eval to Akshay and Mamatha. Book immediately goes straight to Booking, flagged for Mamatha to get dates; any other verdict sits at Decision pending, flagged "Ask Akshay to approve", until Akshay replies and the inbox routine records his answer. Flags are Next date = today on the Engagement, shown in FT: Today (decisions 78 and 79). Founder Thesis only (Akshay, 5 Oct). Decisions 66 and 67.
+It picks up new FT pitches the inbox logged, runs the ft-guest-eval skill on each, writes the eval link and verdict to the Engagement, and mails the eval to Akshay and Mamatha. Book immediately goes straight to Booking, Waiting on Mamatha to get dates; any other verdict sits at Decision pending, Waiting on Akshay ("Ask Akshay to approve"), until Akshay replies and the inbox routine records his answer. It never changes Next date (decisions 78 and 81). Founder Thesis only (Akshay, 5 Oct). Decisions 66 and 67.
 
 ## Prompt
 
@@ -16,7 +16,7 @@ NOTION
 - People: collection://e6c44319-7f81-4da6-8b80-8441a4875d7a (team members tagged Team)
 - Activities: collection://290f715d-fd45-4203-ade6-3642c2326c6c
 - Founder Thesis show page: 3ed19a301a7f817c9367e0d88afc5776
-Fetch each data source once to confirm property names. Never read or write the Credentials page. The Queue is retired (decision 79): never read or write it. The team's worklist is the Engagements view "FT: Today": a row shows there when its Next date is today or earlier.
+Fetch each data source once to confirm property names. Never read or write the Credentials page. The Queue is retired: never read or write it. Never change Next date (decision 81): who acts next goes in Waiting on (multi-select of first names: Akshay, Mamatha, ...) and Next action.
 
 STEP 1. FIND THE WORK
 Engagements where Show contains the FT page, Status = New, Direction = Inbound, Eval link is empty, and Captured or Claude updated within the last 7 days. Every inbound pitch counts, mass mailings included. Oldest first, at most 5 per run. If none, reply "No new FT pitches to evaluate." and stop.
@@ -25,8 +25,8 @@ STEP 2. FOR EACH ENGAGEMENT, ONE AT A TIME
 a. Read the Engagement, its Guest and Via People rows, and the pitch thread (Gmail get_thread on the thread id in Source ID "gmail:<thread id>", or else the Gmail Link on the latest Email in Activity linked to the Engagement).
 b. Check Gmail for an eval Mamatha already sent Akshay for this guest in the last 7 days (from Mamatha, guest's name). If there is one, do not run a new eval: copy its link and verdict to the Engagement as in step d, and skip e and f.
 c. Run the ft-guest-eval skill (Skill tool, skill "ft-guest-eval") with the guest's name, company, LinkedIn if known, and the full pitch text. Follow the skill. It publishes the eval page and updates the Engagement. If the Artifact tool is not available in this session, write the eval page as a child page under the Engagement in Notion instead and use that page's URL.
-d. Make sure the Engagement has: Eval link = the eval page URL, Eval verdict = the skill's verdict, Status = Booking if the verdict is Book immediately (a book-immediately eval is not a decision for Akshay), otherwise Decision pending, Next date = today (date only) so the row shows on FT: Today, Next action = "Mamatha: ask <PR or guest> for recording slots (eval: book immediately)" for Book immediately, otherwise "Ask Akshay to approve: eval says <verdict>. <the skill's one-line recommendation>", a Claude note line "YYYY-MM-DD: eval done, <verdict>", Claude updated today. Do not set Tier or Parked.
-e. No Queue card. The flag in d is how the row reaches Mamatha.
+d. Make sure the Engagement has: Eval link = the eval page URL, Eval verdict = the skill's verdict, Status = Booking if the verdict is Book immediately (a book-immediately eval is not a decision for Akshay), otherwise Decision pending, Waiting on = Mamatha and Next action = "Mamatha: ask <PR or guest> for recording slots (eval: book immediately)" for Book immediately, otherwise Waiting on = Akshay and Next action = "Ask Akshay to approve: eval says <verdict>. <the skill's one-line recommendation>" (read Waiting on first and write back the full list), a Claude note line "YYYY-MM-DD: eval done, <verdict>", Claude updated today. Do not set Tier or Parked.
+e. No Queue card and no Next date change. Waiting on in d is how the row reaches the right person.
 f. Mail from ad@thepodium.in, a new message, To: ad@thepodium.in (so it lands in Akshay's inbox) and Mamatha (address from her People row; never type hers from memory). Nobody else.
    Subject: "Eval ready: <Guest> @ <Company> (FT): <verdict>"
    Body:
