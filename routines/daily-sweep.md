@@ -66,6 +66,12 @@ For every FT row on FT: Today whose Next action does not start with a person ("M
 STEP 3b. LINK STRAY MAIL
 Gmail Activities from the last 7 days with no Engagement and no Deal: link each to the right row (via the People on it, then the guest or company name in the Summary) and update that row's Last activity. Leave real noise unlinked. Remove any email address or phone number you find in a Summary.
 
+STEP 3c. HOST BOARDS (decision 84)
+Boards: un# guest board collection://75948d39-0e59-4f7b-94da-a968dedb35b4 (host Sri; fields Guest, Stage [Approval pending, To be scheduled, Scheduled, Recorded, Not now], Eval, Short pitch, Eval link, Dossier link, Guest availability, Sri's availability, Sri's call [Yes, No, Maybe, Need more info], Sri's notes, Recording date, LinkedIn, OS key = the Engagement page id without dashes). The host sees this board: never write an email address, phone number, handle or internal note on it.
+a. Pull the host's edits into Engagements (match on OS key). Sri's call Yes on an Approval pending row: Engagement Host verdict Yes, Status Booking if it is Decision pending or Precall done, Waiting on Mamatha, Next action "Mamatha: Sri said yes, get recording slots". No: Host verdict No, Status We declined, Waiting on Mamatha, Next action "Mamatha: send the decline (Sri said no)". Maybe or Need more info: Waiting on Akshay, Next action "Ask Akshay: Sri says <call>: <his note>". New text in Sri's availability or Sri's notes: copy it into Next action (and a Claude note line) and set Waiting on Mamatha to line up dates. Never change Next date.
+b. Push Engagements onto the board: open un# rows at Decision pending, or Precall done waiting on Sri -> Approval pending; Booking or Host verdict Yes and not Booked -> To be scheduled; Booked -> Scheduled with Recording date = the call date; Recorded -> Recorded. Add rows that are missing (Short pitch: one or two sentences from the eval, no contact details). Rows whose Engagement closed: Stage Not now. Don't overwrite what the host typed.
+Report what moved in each direction.
+
 STEP 4. FLAG WHAT HAS GONE QUIET OR IS MISSING
 Flag (skip if Next action already says the same thing):
 - Quiet: an open Engagement (New with Direction Inbound, Contacted, Interested, Precall requested, Precall done, Sponsored offered, Booking, LT chase) with Next date empty and no Activity in 14 days. Read Gmail first (as STEP 3); only if nothing settles it, flag "Mamatha: quiet since <date>, chase or update the status".
