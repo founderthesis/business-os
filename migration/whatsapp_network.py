@@ -2,12 +2,19 @@
 
 Usage:
   python3 -I migration/whatsapp_network.py sql      # print People-matching SQL (name lists)
+  python3 -I migration/whatsapp_network.py matches  # people_by_*.txt -> people_matches.json
   python3 -I migration/whatsapp_network.py build    # build rows, batches, review CSV, counts
 
 Inputs:
   data/raw/whatsapp/blurbs_2026-10-08.json                 parsed doc (never edited)
-  data/fixes/whatsapp_network_oneliners.json               hand-written one-liners and company fills
-  data/out/whatsapp_network/people_matches.json            People candidates pulled from Notion
+  data/fixes/whatsapp_network_oneliners*.json|tsv          hand-written one-liners and company fills
+                                                           (tsv: raw_index, one-liner, company, doc company to override)
+  data/out/whatsapp_network/people_by_name.txt             People rows pulled from Notion by exact name:
+                                                           "<page id> <Y|N FT guest> <name>[|<organisation>]"
+  data/out/whatsapp_network/people_by_org.txt              same format, People linked to the companies of
+                                                           first-name-only rows
+  data/out/whatsapp_network/loaded_names.txt               optional: "|"-separated FT Network names already
+                                                           in Notion (batch whatsapp-doc-2026-10-08); batches skip them
 Outputs (data/out/whatsapp_network/): rows.json, batch_NN.json, counts.json
 Review list: data/review/whatsapp_network_review.csv
 Re-runnable; no Notion writes here.
@@ -17,9 +24,10 @@ from collections import Counter, defaultdict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW = os.path.join(ROOT, "data/raw/whatsapp/blurbs_2026-10-08.json")
-FIX = os.path.join(ROOT, "data/fixes/whatsapp_network_oneliners.json")
+FIXDIR = os.path.join(ROOT, "data/fixes")
 OUT = os.path.join(ROOT, "data/out/whatsapp_network")
 MATCH = os.path.join(OUT, "people_matches.json")
+LOADED = os.path.join(OUT, "loaded_names.txt")
 REVIEW = os.path.join(ROOT, "data/review/whatsapp_network_review.csv")
 BATCH = "whatsapp-doc-2026-10-08"
 CAPTURED = "2026-10-08"
@@ -36,7 +44,7 @@ NAME_COMPANY_SPLIT = {                             # "first-name Company" writte
 }
 
 # first-name rows whose matched People name is not a clean full name
-KEEP_FIRST_NAME = {"306", "398"}
+KEEP_FIRST_NAME = {"306", "398", "396", "454"}
 
 NAME_FIX = {"VIknesh Jain": "Viknesh Jain"}   # typos in the doc
 
@@ -115,6 +123,55 @@ def cmd_sql():
     print("FIRST", len(first))
     print(json.dumps(first))
 
+def load_fixes():
+    """One-liner and company fixes, keyed by raw_index (str). Later files win."""
+    fixes = {}
+    for f in sorted(os.listdir(FIXDIR)):
+        if not f.startswith("whatsapp_network_oneliners"): continue
+        path = os.path.join(FIXDIR, f)
+        if f.endswith(".json"):
+            fixes.update(json.load(open(path)))
+        elif f.endswith(".tsv"):
+            for line in open(path, encoding="utf-8"):
+                if not line.strip(): continue
+                idx, one, company, old = (line.rstrip("\n").split("\t") + ["", "", ""])[:4]
+                fx = {"one_liner": one}
+                if company and old: fx["company_override"] = company
+                elif company: fx["company"] = company
+                fixes[idx] = fx
+    return fixes
+
+def read_people(path):
+    out = []
+    for line in open(path, encoding="utf-8"):
+        if not line.strip(): continue
+        pid, ft, rest = line.rstrip("\n").split(" ", 2)
+        name, _, orgs = rest.partition("|")
+        out.append({"id": pid, "ft": ft == "Y", "name": name, "orgs": orgs, "ms": "Clean"})
+    return out
+
+def cmd_matches():
+    """Turn the People pulls into people_matches.json: exact full-name candidates, and
+    first-name + company candidates (first name equals a word of the People name)."""
+    d = load()
+    rows, _, _ = base_rows(d)
+    fixes = load_fixes()
+    full = defaultdict(list)
+    for p in read_people(os.path.join(OUT, "people_by_name.txt")):
+        full[key(p["name"])].append(p)
+    by_org = read_people(os.path.join(OUT, "people_by_org.txt"))
+    first = {}
+    for x in rows:
+        if len(x["name"].split()) >= 2: continue
+        idx = str(x["raw"]["raw_index"])
+        company = x["company"] or fixes.get(idx, {}).get("company")
+        fn = x["name"].lower()
+        cands = [p for p in by_org if org_match(company, p["orgs"])
+                 and fn in re.sub(r"\(.*?\)", "", p["name"]).lower().replace(".", " ").split()]
+        if cands: first[idx] = cands
+    json.dump({"full": full, "first": first}, open(MATCH, "w"), indent=1)
+    print("full names with candidates", len(full), "first-name rows with candidates", len(first))
+
 def norm_org(s):
     return re.sub(r"[^a-z0-9]", "", (s or "").lower().replace("technologies", "").replace("pvt", "").replace("ltd", ""))
 
@@ -130,7 +187,7 @@ def org_match(company, orgs):
 def cmd_build():
     d = load()
     rows, skipped, merged = base_rows(d)
-    fixes = json.load(open(FIX))
+    fixes = load_fixes()
     matches = json.load(open(MATCH))   # {"full": {key: [cand]}, "first": {"first|company": [cand]}}
     out, review = [], []
     for x in rows:
@@ -218,6 +275,8 @@ def cmd_build():
         if row["LinkedIn"]: p["LinkedIn"] = norm_url(row["LinkedIn"])
         if row["Person"]: p["Person"] = [row["Person"]]
         pages.append({"properties": p})
+    loaded = set(open(LOADED).read().strip().split("|")) if os.path.exists(LOADED) else set()
+    pages = [p for p in pages if p["properties"]["Name"] not in loaded]
     for f in os.listdir(OUT):
         if f.startswith("batch_"): os.remove(os.path.join(OUT, f))
     for i in range(0, len(pages), 50):
@@ -228,10 +287,11 @@ def cmd_build():
         "source": Counter(r["Source"] for r in out),
         "linked": sum(1 for r in out if r["Person"]), "unlinked": sum(1 for r in out if not r["Person"]),
         "needs_review": sum(1 for r in out if r["Needs review"]),
+        "already_in_notion": len(out) - len(pages), "to_load": len(pages),
     }
     assert counts["loaded"] + counts["skipped_labels"] + counts["merged_duplicates"] == len(d)
     json.dump(counts, open(os.path.join(OUT, "counts.json"), "w"), indent=1)
     print(json.dumps(counts, indent=1))
 
 if __name__ == "__main__":
-    {"sql": cmd_sql, "build": cmd_build}[sys.argv[1]]()
+    {"sql": cmd_sql, "matches": cmd_matches, "build": cmd_build}[sys.argv[1]]()
