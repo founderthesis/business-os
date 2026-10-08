@@ -2,8 +2,8 @@
 
 Open work for the next session. Read CLAUDE.md, docs/decisions.md (81 to 86 are the newest) and this file first.
 
-## Urgent, before 23:25 JST tonight
-- Push the rewritten prompts in routines/inbox.md, evals.md, calendar.md and daily-sweep.md (the ```text block of each) to their triggers with update_trigger: inbox trig_0189eZvAD8x4357cfevgZ3No, evals trig_01DbJZuBeC1TTven5wgjZxoA, calendar trig_01Voiz5YsK2SnVf2STF8PoSH, daily sweep trig_01MdfUFg2qrebDWgiHwncgnd. Only after the Engagements column "Waiting on" exists (check the data source schema). Schedules are already set (inbox 23:25, evals 23:50 Sun to Fri; sweep 13:10 Mon to Fri).
+## Done
+- 8 Oct: the rewritten prompts (decisions 81 to 86) are live on all four routines, verified with get_trigger.
 
 ## Check what the background jobs finished in Notion
 - "Waiting on" multi-select on Engagements and Deals, populated; views "Akshay: waiting on me" (Engagements and Deals), "Mamatha: waiting on me", "FT: Sponsored pipeline"; Waiting on added to FT: Today, un#: Today, All shows: Today. Precall done rows -> Waiting on Akshay (decision 86).
