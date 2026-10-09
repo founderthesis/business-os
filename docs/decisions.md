@@ -95,6 +95,7 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 | 87 | No bulk backfill of Waiting on. The routines fill it as they touch rows; rows nobody is waiting on (cold target lists, Booked with nothing open) stay blank. 8 Oct state: the Engagement rows set by hand before the stop keep their values; Deals are blank. | Akshay, 8 Oct |
 | 88 | FT Network is the WhatsApp group roster (one row per member, linked to People where the match is exact). The public page "Founder Thesis community: members" is a static table of Added members (name, LinkedIn link, company, one-liner), never a linked view of the database, since Notion has no row-level security. | Handoff of 8 Oct; static page per the no-row-level-security rule |
 | 89 | Deals holds two things: the cold target list (Warm or cold = Cold outreach, Stage New, about 2,030 rows from the PAAS sheet and the old PaaS Leads list) and the live pipeline. Target rows carry no Waiting on and stay out of every working view; a row joins the pipeline when someone reaches out and moves it to Contacted. Browse targets in the Cold outreach view. Routines never set Waiting on for a Cold Deal still at New. | Akshay, 9 Oct |
+| 90 | Never hand Akshay a data problem to solve by hand, and never ask him to approve a bulk action. Research and fix it (web, Notion, Gmail read-only), then report what changed and the few rows that truly could not be settled. Merges and deletions still go to a human, but as a short list of confirmed pairs, never a review queue. | Akshay, 9 Oct |
 
 ## Open
 

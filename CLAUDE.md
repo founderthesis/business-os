@@ -32,6 +32,8 @@ These are defaults. Akshay can override any of them in chat, for one case or per
 
 Agents do on their own: research, classify, summarise, draft; send an email Akshay approved; send approved templates (thank-you, PR form) on a standing approval; mark handled mail as read; add private entries to Akshay's prep calendar.
 
+Never hand Akshay a data problem to fix by hand or ask him to approve a bulk action (decision 90). Research and fix it, then report the few rows that truly could not be settled.
+
 Agents ask first before: merging or deleting people or data; changing prices or commercial terms; editing any calendar event with guests on it; sending anything unapproved; exceeding the daily send cap.
 
 All email goes from ad@thepodium.in.
