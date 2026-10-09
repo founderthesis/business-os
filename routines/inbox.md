@@ -81,7 +81,7 @@ Find the Engagement where the person is the Guest, a Stakeholder or Via, on the 
 - Akshay decides: his decision can be anywhere in the mailbox (his reply on an eval mail, his reply to the PR or guest, a mail to Mamatha). "sponsored" or "paid" -> Tier Sponsored (Status Sponsored offered once the team sends commercials); "precall" or "speak first" -> Status Precall requested; "go ahead", "record", "book" or "happy to have" -> Status Booking; "decline", "pass" or "not a fit" -> We declined; "park", "not interested", "stop chasing" -> Parked; "later" or "not now" -> LT chase; a tier named -> Tier. What our side already did in a thread counts too: a precall invite sent -> Precall requested, recording slots offered -> Booking, a decline sent -> We declined.
 - A precall happened (notes, a thank-you for the call): Precall done, Waiting on Akshay, Next action "Ask Akshay: verdict after the <date> precall" (Akshay, 8 Oct: every completed precall waits on his verdict).
 - A recording date is agreed: Booked (the calendar routine sets Next date when the invite is on the calendar).
-- The thank-you mail for the recording goes out (subject starts "Thank you for coming on"): Recorded.
+- The thank-you mail for the recording goes out (subject starts "Next Steps |" or "Thank you for coming on"): Recorded.
 - The guest's form is in: Form filled.
 - They say no: They declined. We say no: We declined.
 - They give a timing reason ("not now", "next quarter", "after our launch", "spokesperson unavailable"): LT chase, Next action "LT chase: revisit <the date they give, else 90 days out>", Waiting on Mamatha. Leave Next date alone.
