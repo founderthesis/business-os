@@ -13,7 +13,7 @@ Open work for the next session. Read CLAUDE.md, docs/decisions.md (81 to 89 are 
 - FT Network Needs review: 149 rows (view "Needs review"). Biggest groups: first-name-only members (Vishal, Jag, Tarun, Sanchit, Saurabh, Siddharth, Madhusudhan, Deep, Ram, Ranjeet, Bhanu, Preksha and others), two People rows each for Abhinav Jain, Manish Gupta and Rahul (Zebpay), and People duplicates Rahul Pagadipati / Pagidipati and Ramanathan RV.
 - Members page: 13 Added members have no one-liner (doc-list rows with no intro blurb); fill them or leave the cell blank. Share the page with the group when happy.
 - .claude/settings.json: the "mcp__Claude_Code_Remote" allow rule does not match the server name (claude-code-remote).
-- Patron pitch paragraph for the thank-you mail: drafted in chat on 8 Oct, not live. On his go-ahead, add it to the calendar routine's thank-you draft step.
+- Patron paragraph: live in the calendar routine since 9 Oct (decision 95).
 - Sri board (Business OS > Host boards > un# with Sri): check Luca Prosperi's verdict, the four stale "No" precall rows (Shevchenko, Meggs, Ober, Asher Tan), three thin short pitches, and eval/dossier links Sri can't open, before sharing.
 - Scimplify: one guest or two (Salil Srivastava, Sachin Santhosh)?
 - Transcripts: run routines/transcripts-backfill.md in Claude Code on his Mac (needs his folder paths); set up routines/transcripts-after-recording.md as a desktop scheduled task.
