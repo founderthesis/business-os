@@ -546,8 +546,11 @@ def main():
             action = "Ask Satish" if host == "Not asked" else "First mail"
         # Decision 89's rule: a row at New is a target, not work, so it waits on nobody unless Satish has to act
         waiting = []
-        if s in ("Contacted", "LT chase"):
-            waiting = ["Akshay"] if c["connect"] == "AD" and s == "Contacted" else ["Chaandini"]
+        # Mailed rows wait on the guest (the 9 Oct house rule); follow-ups come off Next date in the outreach view
+        if s == "Contacted":
+            waiting = ["Akshay"] if c["connect"] == "AD" else ["Guest or PR"]
+        elif s == "LT chase":
+            waiting = ["Chaandini"]
         if c["satish_reach"] and s in ("New", "Unresponsive"):
             action, waiting = "Satish to reach out himself", ["Satish"]
         if c["nobody"]:
