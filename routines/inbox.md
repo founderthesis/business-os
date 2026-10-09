@@ -25,7 +25,7 @@ NOTION
 - People: collection://e6c44319-7f81-4da6-8b80-8441a4875d7a  (Email, Other emails, Organisation, LinkedIn, Tags; team members are tagged Team, e.g. Mamatha, Sarika)
 - Organisations: collection://c43c280a-3b37-4821-96ef-dab688a53aea  (Domain, Website)
 - Engagements (guests): collection://5522ee21-d8e5-4ec0-bf3e-90bcf88d24c5
-  Name, Status, Waiting on, Direction (Inbound, Outbound), Tier (Tier 1, Tier 1.5, Tier 2, Sponsored), Eval verdict, Eval link, Next action, Next date, Chase step, Call type, Call link, Payment, Amount, Guest, Stakeholders, Via, Organisation, Show, Episode, Source, Source ID, Claude note, Claude updated
+  Name, Status, Waiting on, Direction (Inbound, Outbound), Tier (Tier 1, Tier 1.5, Tier 2, Sponsored), Eval verdict, Eval link, Next action, Next date, Chase step, Call type, Call link, Scheduling, Payment, Amount, Guest, Stakeholders, Via, Organisation, Show, Episode, Source, Source ID, Claude note, Claude updated
 - Deals (selling our production service): collection://1a981c5a-912a-4972-b3fc-8c9f2abb329a
   Company, Warm or cold (Warm, Cold outreach), Stage (New, Contacted, Interested, In conversation, Proposal sent, Won, Parked, Declined, Unresponsive), Proposal link, Next action, Next date, Chase step, Amount, Contacts, Organisation, From engagement, Source, Source ID
 - Shows: collection://ebca6861-4d71-4555-a6ec-6ed76cc0c733  (Founder Thesis page: 3ed19a301a7f817c9367e0d88afc5776)
@@ -88,6 +88,7 @@ Find the Engagement where the person is the Guest, a Stakeholder or Via, on the 
 - Akshay decides: his decision can be anywhere in the mailbox (his reply on an eval mail, his reply to the PR or guest, a mail to Mamatha). "sponsored" or "paid" -> Tier Sponsored (Status Sponsored offered once the team sends commercials); "precall" or "speak first" -> Status Precall requested; "go ahead", "record", "book" or "happy to have" -> Status Booking; "decline", "pass" or "not a fit" -> We declined; "park", "not interested", "stop chasing" -> Parked; "later" or "not now" -> LT chase; a tier named -> Tier. What our side already did in a thread counts too: a precall invite sent -> Precall requested, recording slots offered -> Booking, a decline sent -> We declined.
 - A precall happened (notes, a thank-you for the call): Precall done, Waiting on Akshay, Next action "Ask Akshay: verdict after the <date> precall" (Akshay, 8 Oct: every completed precall waits on his verdict).
 - A recording date is agreed: Booked (the calendar routine sets Next date when the invite is on the calendar).
+- Slots, availability or logistics in the mail (dates and times offered, time zone, remote or studio, an assistant who handles the calendar): add a dated line at the top of Scheduling, "YYYY-MM-DD <who>: <what>" ("2026-10-09 Rhea: Arjun can do 14 Oct 4pm IST or 16 Oct 11am IST, remote"), keeping the older lines. No email addresses or phone numbers. This never changes Next date.
 - The thank-you mail for the recording goes out (subject starts "Next Steps |" or "Thank you for coming on"): Recorded.
 - The guest's form is in: Form filled.
 - They say no: They declined. We say no: We declined.
