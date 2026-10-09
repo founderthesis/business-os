@@ -1,12 +1,12 @@
 # Handoff (8 Oct 2026, updated end of day)
 
-Open work for the next session. Read CLAUDE.md, docs/decisions.md (81 to 88 are the newest) and this file first.
+Open work for the next session. Read CLAUDE.md, docs/decisions.md (81 to 89 are the newest, plus the 9 Oct override of 87) and this file first.
 
 ## Done
 - 8 Oct: the rewritten prompts (decisions 81 to 86) are live on all four routines, verified with get_trigger.
 
 ## Finished 8 Oct (second session)
-- Waiting on: views "Akshay: waiting on me" and "Mamatha: waiting on me" (Engagements and Deals), "FT: Sponsored pipeline"; Waiting on on FT: Today, un#: Today, All shows: Today. Closures confirmed. No bulk backfill (decision 87): routines fill Waiting on as they touch rows. Deals have none yet.
+- Waiting on: views "Akshay: waiting on me" and "Mamatha: waiting on me" (Engagements and Deals), "FT: Sponsored pipeline"; Waiting on on FT: Today, un#: Today, All shows: Today. Closures confirmed. Waiting on was then filled on 9 Oct by Notion AI (override of decision 87, see docs/notion.md); the Deals cold target list stays blank (decision 89).
 - FT Network: all 469 rows loaded (436 Added), views All / To invite / Needs review, page "Founder Thesis community: members" under the home page. 149 rows need review (first names only, missing or ambiguous People matches). Counts in docs/notion.md.
 
 ## Waiting on Akshay
