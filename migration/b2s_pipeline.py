@@ -544,16 +544,10 @@ def main():
             action = "Re-engage: 2 months since the last mail"
         elif s == "New":
             action = "Ask Satish" if host == "Not asked" else "First mail"
+        # Decision 89's rule: a row at New is a target, not work, so it waits on nobody unless Satish has to act
         waiting = []
-        if s in OPEN and s not in ("Booking", "Booked"):
-            if s == "New" and c["satish_reach"]:
-                waiting = ["Satish"]
-            elif c["connect"] == "AD" and s in ("New", "Contacted"):
-                waiting = ["Akshay"]
-            elif c["connect"] == "Satish" and s == "New":
-                waiting = ["Satish"]
-            else:
-                waiting = ["Chaandini"]
+        if s in ("Contacted", "LT chase"):
+            waiting = ["Akshay"] if c["connect"] == "AD" and s == "Contacted" else ["Chaandini"]
         if c["satish_reach"] and s in ("New", "Unresponsive"):
             action, waiting = "Satish to reach out himself", ["Satish"]
         if c["nobody"]:
