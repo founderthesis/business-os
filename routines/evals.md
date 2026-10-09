@@ -2,7 +2,7 @@
 
 Scheduled routine "FT guest evals", once a night at 23:50 JST, Sunday to Friday, after the inbox run, with the Gmail and Notion connectors.
 
-It picks up new FT pitches the inbox logged, runs the ft-guest-eval skill on each, writes the eval link and verdict to the Engagement, and mails the eval to Akshay and Mamatha. Book immediately goes straight to Booking, Waiting on Mamatha to get dates; any other verdict sits at Decision pending, Waiting on Akshay ("Ask Akshay to approve"), until Akshay replies and the inbox routine records his answer. It never changes Next date (decisions 78 and 81). Founder Thesis only (Akshay, 5 Oct). Decisions 66 and 67.
+It picks up new FT pitches the inbox logged, runs the ft-guest-eval skill on each, writes the eval link and verdict to the Engagement, and mails the eval to Mamatha inside the pitch thread, so Akshay sees it in the same chain (decision 92). Book immediately goes straight to Booking, Waiting on Mamatha to get dates; any other verdict sits at Decision pending, Waiting on Akshay ("Ask Akshay to approve"), until Akshay replies and the inbox routine records his answer. It never changes Next date (decisions 78 and 81). Founder Thesis only (Akshay, 5 Oct). Decisions 66 and 67.
 
 ## Prompt
 
@@ -27,15 +27,15 @@ b. Check Gmail for an eval Mamatha already sent Akshay for this guest in the las
 c. Run the ft-guest-eval skill (Skill tool, skill "ft-guest-eval") with the guest's name, company, LinkedIn if known, and the full pitch text. Follow the skill. It publishes the eval page and updates the Engagement. If the Artifact tool is not available in this session, write the eval page as a child page under the Engagement in Notion instead and use that page's URL.
 d. Make sure the Engagement has: Eval link = the eval page URL, Eval verdict = the skill's verdict, Status = Booking if the verdict is Book immediately (a book-immediately eval is not a decision for Akshay), otherwise Decision pending, Waiting on = Mamatha and Next action = "Mamatha: ask <PR or guest> for recording slots (eval: book immediately)" for Book immediately, otherwise Waiting on = Akshay and Next action = "Ask Akshay to approve: eval says <verdict>. <the skill's one-line recommendation>" (read Waiting on first and write back the full list), a Claude note line "YYYY-MM-DD: eval done, <verdict>", Claude updated today. Do not set Tier or Parked.
 e. No Queue card and no Next date change. Waiting on in d is how the row reaches the right person.
-f. Mail from ad@thepodium.in, a new message, To: ad@thepodium.in (so it lands in Akshay's inbox) and Mamatha (address from her People row; never type hers from memory). Nobody else.
-   Subject: "Eval ready: <Guest> @ <Company> (FT): <verdict>"
-   Body:
-   "<Guest> (<Company>): <verdict>. <the skill's one-line recommendation>
+f. Mail Mamatha inside the pitch thread (decision 92), so Akshay sees the eval in the same chain and Mamatha never has to forward it. Get the thread (thread id in Source ID), take the latest message id, and call Gmail reply with messageId = that id, replyAll = false, to = [Mamatha's address from her People row; never type it from memory], cc = [], bcc = []. The PR, the guest and everyone else on the thread must NOT receive it, so always pass to, cc and bcc explicitly. If the Engagement has no Gmail thread, send a new message To: Mamatha, Cc: ad@thepodium.in.
+   Body (internal, never quote the pitch back):
+   "Mamatha, eval for <Guest> (<Company>): <verdict>. <the skill's one-line recommendation>
    <eval link>
 
-   <for Book immediately:> Moved to Booking. Mamatha, please ask the PR for recording slots. Akshay, reply if you'd rather not.
-   <otherwise:> Akshay, reply with book, precall, sponsored, decline or park and it goes into Notion. Mamatha, keep the PR thread warm until then."
-   Log an Activity: Kind Email out, Summary "Agent sent: eval for <Guest> to Akshay and Mamatha", Date = now (datetime), Source Gmail, Source ID = the sent message id, Link = the sent thread's Gmail URL, People = the guest and Mamatha, Engagement, Captured today, and set the Engagement's Last activity to "<D Mon>, eval sent to Akshay and Mamatha: <verdict>". Page body, 2 to 3 lines: the verdict, the recommended next step, and the eval page link.
+   <for Book immediately:> Moved to Booking. Please ask the PR for recording slots. Akshay, reply here if you'd rather not.
+   <otherwise:> Akshay, reply to this message with book, precall, sponsored, decline or park and it goes into Notion. Mamatha, keep the PR warm until then."
+   The eval link is always the direct URL (claude.ai/... or the Notion page), never a google.com redirect.
+   Log an Activity: Kind Email out, Summary "Agent sent: eval for <Guest> to Mamatha in the pitch thread", Date = now (datetime), Source Gmail, Source ID = the sent message id, Link = the sent thread's Gmail URL, People = the guest and Mamatha, Engagement, Captured today, and set the Engagement's Last activity to "<D Mon>, eval sent to Mamatha in thread: <verdict>". Page body, 2 to 3 lines: the verdict, the recommended next step, and the eval page link.
    Daily cap: 100 sends across all routines (today's Activities whose Summary starts "Agent sent"). At the cap, skip the mail and say so.
 g. If the eval fails, set Next action "Eval failed: <reason>", leave Status New, and move on.
 
