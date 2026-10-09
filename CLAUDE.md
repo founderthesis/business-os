@@ -34,6 +34,8 @@ Agents do on their own: research, classify, summarise, draft; send an email Aksh
 
 Never hand Akshay a data problem to fix by hand or ask him to approve a bulk action (decision 90). Research and fix it, then report the few rows that truly could not be settled.
 
+Keep Akshay's approvals to a minimum (decision 91): research read-only first and write once at the end; more than 10 Notion rows goes to Notion AI as one prompt with the answers in it; 10 or fewer, write directly in as few calls as possible; never run parallel agents that write to Notion; one commit and push per task.
+
 Agents ask first before: merging or deleting people or data; changing prices or commercial terms; editing any calendar event with guests on it; sending anything unapproved; exceeding the daily send cap.
 
 All email goes from ad@thepodium.in.
