@@ -104,4 +104,4 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 
 ## Overrides
 
-None yet.
+- **9 Oct, overrides 87.** Akshay ran a Notion AI bulk fill of Waiting on in Engagements in two passes. Pass 1 applied the routine rules (19 rows newly set). Pass 2 set every open row still blank by Status: New and LT chase to Mamatha; Contacted, Interested, Booking and Sponsored offered to Guest or PR; Decision pending to Akshay (Sri for un#); Precall requested and Precall done to Akshay; Booked and Recorded to Mamatha (286 rows: Mamatha 265, Guest or PR 13, Akshay 8). Every open Engagement now has a value. The "<name>: waiting on me" views should filter on Due so the backlog doesn't swamp today's list. Deals get the same fill next, by Notion AI.
