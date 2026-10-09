@@ -1,4 +1,4 @@
-# Email automation: draft, learn, then send (proposal, 9 Oct 2026)
+# Email automation: draft, learn, then send (decision 102, built 9 Oct 2026)
 
 Akshay's roadmap: now, agents send a few safe replies and pre-draft the rest; next two weeks, learn from his edits and his own mail and improve the templates; after that, he switches templates to agentic sending one at a time.
 
@@ -12,8 +12,9 @@ New fields on Templates (collection://b2976a03-9983-49e1-96cf-d237a395148d):
 | Trigger | Text | When it fires, in plain words ("FT recording ended", "new FT pitch, no reply in 72h", "episode Planned release in 7 days"). The routine that owns it reads this. |
 | Owner routine | Select: inbox, calendar, evals, daily sweep, none | Which routine drafts or sends it. |
 | Uses | Rollup | Count of Activities linked to the template. |
-| Sent as drafted | Rollup | Count of those whose Edit size is None. |
-| Ready to send | Formula | Yes when Uses >= 8 and at least 80% went out with no or minor edits in the last 14 days. A signal for Akshay, never an automatic switch. |
+| Drafts sent | Rollup | Agent drafts that went out with Edit size set (sum of the Activities formula Draft sent). |
+| Clean sends | Rollup | Drafts sent with Edit size None or Minor (sum of Clean send). |
+| Ready to send | Formula | "Ready" when Drafts sent >= 8 and Clean sends >= 80% of them. Hand-written mails count in Uses only, so they never hold a template back. A signal for Akshay, never an automatic switch. |
 | Proposed wording | Page section | The learning job writes a suggested new version under a "Proposed" heading in the page; Akshay accepts by moving it into the body and bumping Version. |
 
 Approved and Version stay as they are.

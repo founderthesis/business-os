@@ -21,7 +21,7 @@ TOOLS: Gmail and Notion connectors. If their tools are deferred, load them with 
 
 NOTION
 - Activities: collection://290f715d-fd45-4203-ade6-3642c2326c6c
-  Summary (title), Date, Kind (Email in, Email out, Meeting, Call notes, Form, WhatsApp, Note), Source (Gmail, Gemini notes, ...), Source ID, Link, Captured, People, Engagement, Deal, Episode
+  Summary (title), Date, Kind (Email in, Email out, Draft, Meeting, Call notes, Form, WhatsApp, Note), Source (Gmail, Gemini notes, ...), Source ID, Link, Captured, People, Engagement, Deal, Episode, Template, Draft ID, Edit size (None, Minor, Major, Rewritten), Edit note
 - People: collection://e6c44319-7f81-4da6-8b80-8441a4875d7a  (Email, Other emails, Organisation, LinkedIn, Tags; team members are tagged Team, e.g. Mamatha, Sarika)
 - Organisations: collection://c43c280a-3b37-4821-96ef-dab688a53aea  (Domain, Website)
 - Engagements (guests): collection://5522ee21-d8e5-4ec0-bf3e-90bcf88d24c5
@@ -31,10 +31,11 @@ NOTION
 - Shows: collection://ebca6861-4d71-4555-a6ec-6ed76cc0c733  (Founder Thesis page: 3ed19a301a7f817c9367e0d88afc5776)
 - Episodes: collection://5d250752-6db8-4ab6-8467-c68f5838278a
 TEMPLATES (decision 98): collection://b2976a03-9983-49e1-96cf-d237a395148d. Mail wording comes from the Templates row named below: read its page body, fill the {placeholders}, keep its line breaks, and drop any line in brackets that is an instruction to you. Use the row only if Approved is ticked; if it is missing or unticked, use the wording written in this prompt and say so in the report.
+TEMPLATE MODES AND LOGGING (decision 102). Each Templates row has Mode (Off, Draft, Send) and Owner routine. Send a template's mail yourself only if its Mode is Send; create a Gmail draft from it only if Mode is Draft or Send; Off or empty: don't use it. Every draft you create: log an Activity with Kind Draft, Summary "Agent drafted: <template name> for <guest or company>", Template = the row, Draft ID = the Gmail draft id, Source Gmail, Link = the thread URL if there is one, Engagement and Episode, Captured today, and the full drafted subject and body in the page body (the inbox compares it with what is finally sent). Every mail you send from a template: also link Template on its "Agent sent" Activity.
 Fetch each data source once at the start to confirm exact property and option names. Never read or write the Credentials page.
 
 HARD RULES
-- Mail actions allowed: the pitch reply in STEP 6, and archiving RSVP threads in STEP 7. Nothing else: no other sends, replies, forwards, drafts, labels, trash or read-marking.
+- Mail actions allowed: the pitch reply in STEP 6, the vendor redirect draft in STEP 6b, and archiving RSVP threads in STEP 7. Nothing else: no other sends, replies, forwards, drafts, labels, trash or read-marking.
 - Never delete or merge Notion rows. Never change a schema. Never write to the Queue (retired).
 - Never overwrite a value a person typed with a guess. Only change a field when the mail says so plainly.
 - Never set Parked (Akshay only), Tier, Amount or Payment unless the mail is Akshay saying so. Never move Status backward, except to LT chase or a closed outcome.
@@ -67,6 +68,12 @@ For each remaining message, check Activities for Source ID = the Gmail message i
 Batch the creates (up to 50 pages per call).
 
 Gemini meeting notes mails: open the Doc from the message HTML and read the notes. Log one Activity with Kind "Meeting", Source "Gemini notes", Source ID = the Doc id, Link = the Doc, Summary = who met and the outcome in one line, and the notes' main points in the page body.
+
+STEP 2b. LEARN FROM SENT MAIL (decision 102)
+For each Email out you logged this run that Akshay sent (or a team member sent with ad@thepodium.in in the thread):
+a. Sent from a draft: if an Activity with Kind Draft and Edit size empty exists on the same thread (Link) or on the same Engagement with the same subject, this mail is that draft going out. Compare the sent body with the drafted text in that Draft Activity's page body and set, on the Draft Activity: Edit size (None: only names, dates or greetings differ; Minor: small wording changes, up to one sentence; Major: a paragraph added, removed or rewritten; Rewritten: mostly new text), and Edit note (one line on what changed, for example "dropped the patron paragraphs, added the PR's name"). Don't link Template on the Email out Activity; the draft already counts.
+b. Written by hand: if the mail does the job of one Templates row (same Purpose and show: thank-you, precall invite, chaser, decline, sponsored offer, release mail, and so on), link that Template on the Email out Activity and leave Edit size empty. If none fits, leave Template empty.
+c. A Draft Activity older than 14 days that was never sent: Edit note "not sent", Edit size empty.
 
 MATCHING PEOPLE
 Match each address against People Email and Other emails, then the domain against Organisations Domain or Website, then name plus company. A real business sender or recipient who is not in People: create a Person (Name from the signature, Email, Organisation if known, Source "Agent", Tags "PR contact" for PR agency people). If two People could match, use neither and list it in the report. Never merge.
@@ -125,6 +132,9 @@ For every Founder Thesis Engagement with Direction Inbound and Status New whose 
 - Caps: at most 20 such replies per run and 100 sends a day across all routines (count today's Activities whose Summary starts "Agent sent"). At the cap, stop sending and say so in the report.
 Other shows: no reply, capture only.
 
+STEP 6b. VENDOR PITCH REDIRECT
+A vendor or service provider pitching ThePodium (an agency, tool or freelancer offering us something; not a guest pitch and not a company we might sell production to), arrived in the last 72 hours, with nobody from our side on the thread: if the Templates row "Vendor or service pitch redirect" has Mode Draft, create a reply draft on the thread (create_draft, To the sender, same subject with "Re: ") from that template; if Mode Send, send it as a reply instead (counts toward the daily cap). Log per TEMPLATE MODES AND LOGGING. At most 10 per run.
+
 STEP 7. ARCHIVE CALENDAR RSVP MAIL
 Search: in:inbox subject:(Accepted OR Declined OR "Tentatively Accepted") invitation
 For each thread where every message is an automatic Google Calendar response ("has accepted this invitation", "has declined this invitation", "has replied Maybe"), with no human reply in it, remove the INBOX and UNREAD labels (unlabel_thread). Leave any thread with a human-written message alone. A decline from a guest on a recording or precall: also add a Claude note line on the Engagement ("<name> declined the <date> invite") and set Waiting on Mamatha, Next action "Mamatha: <name> declined the <date> invite, rebook or close". Do not log RSVPs as Activities.
@@ -148,7 +158,7 @@ STEP 8. REPORT
 End with a short report, nothing else written anywhere:
 - Window read (from and to dates), threads read, messages logged, skipped as noise, skipped as already logged.
 - People created. Engagements created and moved (name: old status -> new status). Deals created and moved. Rows by Waiting on (name: Next action).
-- Pitch replies sent (guest names). RSVP threads archived (count). Guest forms merged (guest names) and sent for review.
+- Pitch replies sent (guest names). Drafts created and sent drafts matched (template: edit size). RSVP threads archived (count). Guest forms merged (guest names) and sent for review.
 - Anything you could not match or were unsure about, one line each, so Akshay can fix it by hand.
 Keep it plain and short. No em dashes.
 
