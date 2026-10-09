@@ -25,6 +25,7 @@ NOTION
 - Guest forms: collection://c8e770a4-c7ae-4b8a-bafe-9abf526853b2  (Merge status)
 - Queue (retired, clean-up only): collection://af59132c-92cb-4e87-85f0-266bd07309c4
 - Shows: collection://ebca6861-4d71-4555-a6ec-6ed76cc0c733  (Founder Thesis page 3ed19a301a7f817c9367e0d88afc5776)
+TEMPLATES (decision 98): collection://b2976a03-9983-49e1-96cf-d237a395148d. Mail wording comes from the Templates row named below: read its page body, fill the {placeholders}, keep its line breaks, and drop any line in brackets that is an instruction to you. Use the row only if Approved is ticked; if it is missing or unticked, use the wording written in this prompt and say so in the report.
 Fetch each data source once to confirm property and option names. Never read or write the Credentials page. Ignore rows whose name starts with "DELETE:". Today is the run date (JST).
 
 FLAGGING (decisions 79 and 81)
@@ -87,7 +88,7 @@ STEP 5. COUNT
 Count FT rows on FT: Today now (open status, Next date today or earlier), how many you flagged today, how many you cleared from Gmail, Guest form rows at Merge status Needs review, and People with Match status "Possible duplicate".
 
 STEP 6. MAIL MAMATHA
-Get Mamatha's address from her People row (Tags Team); never type one from memory. One plain mail from ad@thepodium.in to Mamatha only, subject "Your list for <date>":
+Get Mamatha's address from her People row (Tags Team); never type one from memory. One plain mail from ad@thepodium.in to Mamatha only, subject "Your list for <date>", body from the Templates row "Mamatha's daily list"; fallback:
 "Hi Mamatha,
 
 <n> guests on FT: Today (<n> more than yesterday's mail said, or fewer). I cleared <n> from Gmail and turned <n> old notes into next steps.

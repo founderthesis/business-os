@@ -30,6 +30,7 @@ NOTION
   Company, Warm or cold (Warm, Cold outreach), Stage (New, Contacted, Interested, In conversation, Proposal sent, Won, Parked, Declined, Unresponsive), Proposal link, Next action, Next date, Chase step, Amount, Contacts, Organisation, From engagement, Source, Source ID
 - Shows: collection://ebca6861-4d71-4555-a6ec-6ed76cc0c733  (Founder Thesis page: 3ed19a301a7f817c9367e0d88afc5776)
 - Episodes: collection://5d250752-6db8-4ab6-8467-c68f5838278a
+TEMPLATES (decision 98): collection://b2976a03-9983-49e1-96cf-d237a395148d. Mail wording comes from the Templates row named below: read its page body, fill the {placeholders}, keep its line breaks, and drop any line in brackets that is an instruction to you. Use the row only if Approved is ticked; if it is missing or unticked, use the wording written in this prompt and say so in the report.
 Fetch each data source once at the start to confirm exact property and option names. Never read or write the Credentials page.
 
 HARD RULES
@@ -115,7 +116,7 @@ STEP 6. NEW FT PITCH: REPLY AND ADD MAMATHA
 For every Founder Thesis Engagement with Direction Inbound and Status New whose pitch (the thread in Source ID "gmail:<thread id>", or the latest Email in Activity on it) arrived less than 72 hours ago, whether it was created this run or earlier:
 - Only if nobody from our side (Akshay or anyone tagged Team) has written on that thread yet and Mamatha is not already on it.
 - Get Mamatha's address from her People row (Tags Team). Never type an address from memory.
-- Reply on the thread from ad@thepodium.in to the sender, keeping everyone already on Cc, adding Mamatha in Cc. Body, exactly:
+- Reply on the thread from ad@thepodium.in to the sender, keeping everyone already on Cc, adding Mamatha in Cc. Body: the Templates row "Mamatha added to a new FT pitch"; fallback, exactly:
   "Thanks for your mail, adding Mamatha to coordinate.
 
   Regards,
