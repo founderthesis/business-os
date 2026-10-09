@@ -108,6 +108,7 @@ After STEPS 3 and 4, set Waiting on and Next action on every Engagement or Deal 
 - A pitch for un#, Built to Share or Human by Design: Mamatha, "Mamatha: new <show> pitch via <PR>, reply or decline". Founder Thesis pitches go to the evals routine.
 - Our side replied and the ball is in their court: Guest or PR, "Waiting on <who>: <what>" (with any date they named, in the text).
 - Sponsored money moved: Mamatha, "Mamatha: <next payment step>".
+- A Cold outreach Deal still at Stage New is the target list (decision 89): leave Waiting on blank.
 Never touch Next date here.
 
 STEP 6. NEW FT PITCH: REPLY AND ADD MAMATHA
