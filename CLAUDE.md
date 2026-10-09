@@ -40,6 +40,8 @@ Agents ask first before: merging or deleting people or data; changing prices or 
 
 All email goes from ad@thepodium.in.
 
+Keep the Notion home page (ThePodium Business OS) current: whenever a database is created, retired or changes purpose, update its card on the home page, and move retired ones to section 5, "Dead databases" (decision 100).
+
 ## Data and privacy
 
 - This repo is private, but still: no email addresses, phone numbers, WhatsApp or Telegram handles, or credentials in committed files. Real data lives in `data/`, which is git-ignored.
