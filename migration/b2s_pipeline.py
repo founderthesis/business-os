@@ -16,7 +16,7 @@ Writes:
   data/out/b2s_pipeline/notion_ai_b2s_pipeline.md   the one prompt Akshay uploads to Notion AI (decision 91)
   data/review/b2s_pipeline_review.csv       rows settled by a rule worth a second look, and the few left open
 
-How B2S works and the mapping were agreed with Akshay on 9 Oct (decision 95). Satish's approval is Host verdict;
+How B2S works and the mapping were agreed with Akshay on 9 Oct (decision 97). Satish's approval is Host verdict;
 the bucket he approves by is an Engagement tag; Tier is pre-filled; the 2-month retry is the Next date on
 Unresponsive rows. Existing Engagements are never regressed and only their empty fields are filled.
 Never edits the raw files. Re-run safely.
