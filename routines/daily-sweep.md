@@ -31,7 +31,7 @@ Fetch each data source once to confirm property and option names. Never read or 
 
 FLAGGING (decisions 79 and 81)
 - In this prompt, "flag" means: set Waiting on (multi-select of first names: Akshay, Mamatha, Sarika, Sri, Satish, Arjun, or "Guest or PR"; read it first and write back the full list) to whoever acts next, and write Next action as who does what, starting with the person ("Mamatha: send the form reminder", "Ask Akshay to approve: eval says Strong consider", "Waiting on Rhea: dates").
-- You never change Next date. Next date belongs to the team; only a new lead (the inbox) or a calendar booking (the calendar routine) sets it. When mail names a date, put it in Next action.
+- You never change Next date, with one exception. Next date belongs to the team; only a new lead (the inbox), a calendar booking (the calendar routine) or a hold sets it. The exception (decision 104): when mail shows the guest or PR put it on hold or gave a timing reason and you move the row to LT chase, set Next date to the date they give, else 90 days from today, Waiting on Guest or PR, Next action "Waiting on <who>: <what they said>, revisit <date>". Otherwise, when mail names a date, put it in Next action.
 - Row with a second ask: put the new one first in Next action, keep the old one after " | ".
 
 HARD RULES

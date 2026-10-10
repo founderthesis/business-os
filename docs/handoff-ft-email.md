@@ -28,7 +28,7 @@ All four run unattended in the cloud with their own Gmail and Notion connectors;
 - Send: intro reply adding Mamatha, eval mail to Mamatha in the pitch thread, Mamatha's daily list.
 - Draft: FT thank-you, pre-release asks for all four shows, vendor redirect.
 - Learning: the inbox compares sent mail with drafts (Edit size, Edit note); Fridays the sweep writes "## Proposed" sections and mails a review. Ready to send = 8+ drafts sent, 80% clean. Only Akshay moves a template to Send.
-- Not built yet: FT chasers, precall and recording invites as drafts; the "hold" mail handling (proposal in this chat: Waiting on Guest or PR plus a revisit date in Next action, and the sweep skips its quiet check until then; awaiting Akshay's yes). Mamatha's rule stands: agents change Next date only for a booked precall or recording.
+- Not built yet: FT chasers, precall and recording invites as drafts; Holds are live (decision 104): LT chase, Next date = their date or 90 days out, Waiting on Guest or PR. Otherwise agents change Next date only for a new lead or a booked precall or recording.
 
 ## FT eval refresh (done 10 Oct, waiting on the Notion AI run)
 
