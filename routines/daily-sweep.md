@@ -87,6 +87,7 @@ For each Templates row with at least two Draft Activities in the last 7 days who
 STEP 4. FLAG WHAT HAS GONE QUIET OR IS MISSING
 Flag (skip if Next action already says the same thing):
 - Quiet: an open Engagement (New with Direction Inbound, Contacted, Interested, Precall requested, Precall done, Sponsored offered, Booking, LT chase) with Next date empty and no Activity in 14 days. Read Gmail first (as STEP 3); only if nothing settles it, flag "Mamatha: quiet since <date>, chase or update the status".
+- Promise lapsed: Waiting on contains Guest or PR, and Next action or Last activity names a date by which they promised something (slots, a reply, a form) that has now passed. Read Gmail first (as STEP 3); if nothing newer has come from them, set Waiting on to Mamatha and Next action "Mamatha: chase <who> for <what> (promised by <D Mon>)". Don't change Next date. A guest who cancelled a booked slot sits at Booking, never Booked, until a new invite is on the calendar.
 - Form: Status Recorded for more than 5 days, no guest form linked: "Mamatha: recorded <date>, send the form reminder".
 - Payment: Tier Sponsored, Status Booked or Recorded, Payment empty or Not started: "Mamatha: send GST and invoice details".
 - Booked, no date: Status Booked with Next date empty, or past with no recording since: "Fix: Booked but no recording date".
