@@ -35,7 +35,7 @@ TEMPLATE MODES AND LOGGING (decision 102). Each Templates row has Mode (Off, Dra
 Fetch each data source once at the start to confirm exact property and option names. Never read or write the Credentials page.
 
 HARD RULES
-- Mail actions allowed: the pitch reply in STEP 6, the replies on Saurabh's forwarded pitches in STEP 6a (including the vendor redirect and his thank-you), the vendor redirect draft in STEP 6b, the tier reply in STEP 6c, and archiving RSVP threads in STEP 7. Nothing else: no other sends, replies, forwards, drafts, labels, trash or read-marking.
+- Mail actions allowed: the pitch reply in STEP 6, the replies on Saurabh's forwarded pitches in STEP 6a (including the vendor redirect and his thank-you), the vendor redirect draft in STEP 6b, the tier reply in STEP 6c, the noted-with-thanks draft on edit notes (STEP 3), and archiving RSVP threads in STEP 7. Nothing else: no other sends, replies, forwards, drafts, labels, trash or read-marking.
 - Never delete or merge Notion rows. Never change a schema. Never write to the Queue (retired).
 - Never overwrite a value a person typed with a guess. Only change a field when the mail says so plainly.
 - Never set Parked (Akshay only), Tier, Amount or Payment unless the mail is Akshay saying so. Never move Status backward, except to LT chase or a closed outcome.
@@ -91,6 +91,12 @@ Find the Engagement where the person is the Guest, a Stakeholder or Via, on the 
 - A recording date is agreed: Booked (the calendar routine sets Next date when the invite is on the calendar).
 - Slots, availability or logistics in the mail (dates and times offered, time zone, remote or studio, an assistant who handles the calendar): add a dated line at the top of Scheduling, "YYYY-MM-DD <who>: <what>" ("2026-10-09 Rhea: Arjun can do 14 Oct 4pm IST or 16 Oct 11am IST, remote"), keeping the older lines. No email addresses or phone numbers. This never changes Next date. For un#, B2S and HBD the recording is with the host (Sri, Satish, Arjun), not Akshay: set Waiting on to the host and Next action "<host>: pick a slot for <guest> on your board (<the slots>)" when Host board is ticked on the row (the daily sweep copies the slots to the board), else "<host>: pick a slot for <guest> (<the slots>)". Never ask Akshay for a host show's recording slot (decision 114).
 - The thank-you mail for the recording goes out (subject starts "Next Steps |" or "Thank you for coming on"): Recorded.
+- Edit notes on a recorded episode (decision 125): the guest or their team asks for cuts, trims or corrections (timestamps, "CUT / TRIM / KEEP", notes on the transcript, often as an attachment). Log the Activity with Summary starting "Edit notes: <guest>", linked to the Episode as well as the Engagement, so the production team sees it on the Episode. Page body: every requested change, one per line with its timestamp and instruction, read from the mail and any text attachment; if you cannot read an attachment, name the file and write "open the attachment in Gmail". Then create a reply-all draft on that thread from the Templates row "Edit notes: noted with thanks" (fallback: "Hi <first name>,
+
+Noted with thanks. Your edit notes are with our editor, and the cuts will be made before the episode goes out.
+
+Thanks & Regards,
+Akshay Datt"; greet anyone newly looped in by first name in one short line), keeping everyone on the thread, and set Waiting on Akshay, Next action "Ask Akshay to send the noted-with-thanks draft". Log the draft per TEMPLATE MODES AND LOGGING.
 - The guest's form is in: Form filled.
 - They say no: They declined. We say no: We declined.
 - They put it on hold or give a timing reason ("not now", "calendars packed", "next quarter", "after our launch", "spokesperson unavailable"): LT chase, Next date = the date they give, else 90 days from today (decision 104), Waiting on Guest or PR, Next action "Waiting on <who>: <what they said>, revisit <date>". The row comes back to Mamatha on that date.
