@@ -21,7 +21,9 @@ Rules:
 - A bounce asks Chaandini for a new address. A reply sets the status from its outcome.
 - A lead on a list but not yet mailed keeps its status; Next action says it is queued, so no one mails it by hand.
 - Built to Share rows that were being chased by hand, are not in Salesblink and have had 3 or more mails become
-  Unresponsive with a re-engage date 60 days after the last mail. Rows with 1 or 2 mails are listed for a call.
+  Unresponsive with a re-engage date 60 days after the last mail. Outlier rows with fewer mails wait on Satish's yes
+  for the Outliers campaign; anything else with fewer mails keeps its manual follow-up.
+- Re-mailing someone Salesblink queued after a manual chase is intended (Chaandini, 10 Oct): no flag.
 Re-run safely; never edits the raw files.
 """
 import csv
@@ -135,10 +137,6 @@ def main():
                 u["Next date"] = end.isoformat()
                 u["Next action"] = (f"Salesblink {seq}: {sent} of {n_steps} sent"
                                     + (" (paused)" if paused else "") + ". No reply by this date: Unresponsive")
-            if prior >= 3 and seq.startswith("B2S"):
-                review.append({"seq": seq, "lead": r["Name"], "company": l["company_name"],
-                               "issue": f"already had {prior} manual mails before Salesblink started again at Email 1",
-                               "salesblink_status": l["status"]})
             updates[r["url"]] = (r, u)
         lf = LISTS.get(seq)
         if lf and (RAW / lf).exists():
@@ -163,14 +161,11 @@ def main():
                     updates[r["url"]] = (r, {"Next action": f"Queued in Salesblink {seq}: don't mail by hand"
                                              + ("; swap the personal address for a work one" if personal else "")})
                 else:
-                    if int(r["Chase step"] or 0) >= 1:
-                        updates[r["url"]] = (r, {"Next action": f"Take out of Salesblink {seq} before it resumes: "
-                                                               f"{r['Chase step']} mails already sent by hand",
-                                                 "Waiting on": "Chaandini", "Next date": TODAY.isoformat()})
-                    review.append({"seq": seq, "lead": r["Name"], "company": l["company_name"],
-                                   "issue": f"queued in Salesblink while Notion says {r['Status']}"
-                                            + (f", {r['Chase step']} mails already" if r["Chase step"] else ""),
-                                   "salesblink_status": "queued"})
+                    # Chaandini re-mails some people she chased by hand; that is intended, so no flag (10 Oct)
+                    updates[r["url"]] = (r, {"Next action": f"Queued in Salesblink {seq}"
+                                                           + (f" after {r['Chase step']} mails by hand"
+                                                              if r["Chase step"] else ""),
+                                             "Waiting on": "Guest or PR", "Next date": ""})
 
     # Built to Share manual chase rows not in Salesblink: the manual campaign has stopped
     b2s_c = {}
@@ -193,6 +188,10 @@ def main():
                                      "Next action": "Re-engage: 2 months since the last mail",
                                      "Next date": (last + dt.timedelta(days=60)).isoformat()})
             stopped += 1
+        elif "Outlier" in (r["Tags"] or "") and r["Host verdict"] != "Yes":
+            # the Outliers campaign waits for Satish's yes before it starts (Chaandini, 10 Oct)
+            updates[r["url"]] = (r, {"Next action": "Outliers campaign: needs Satish's yes before it starts",
+                                     "Waiting on": "Satish", "Next date": ""})
         else:
             small.append(r)
             review.append({"seq": "manual", "lead": r["Name"], "company": "",
