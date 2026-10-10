@@ -40,7 +40,7 @@ Agents ask first before: merging or deleting people or data; changing prices or 
 
 All email goes from ad@thepodium.in.
 
-Keep the Notion home page (ThePodium Business OS) current: whenever a database is created, retired or changes purpose, update its card on the home page, and move retired ones to section 5, "Dead databases" (decision 100). Notion pages people read use at most two columns side by side; more is unreadable on a laptop (Akshay, 9 Oct).
+Keep the Notion home page (ThePodium Business OS) current: whenever a database is created, retired or changes purpose, update its card on the home page, and move retired ones to section 5, "Dead databases" (decision 100). Notion pages people read use at most two columns side by side; more is unreadable on a laptop (Akshay, 9 Oct). One table per page: don't group a table view into sub-tables; sort instead (Akshay, 10 Oct).
 
 ## Data and privacy
 
