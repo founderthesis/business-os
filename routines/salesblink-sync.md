@@ -1,6 +1,6 @@
 # Salesblink sync
 
-Scheduled routine "Salesblink sync" (trigger trig_01KpyDSfNqRKAGEABwyMBREA), Monday to Friday at 09:10 and 15:10 IST, with the Salesblink and Notion connectors (decision 113). The trigger was created without connectors (the API would not attach them); add Notion and Salesblink to it in the claude.ai routines page or it stops at its tools check. Chaandini asked for it on 10 Oct: she works from the "B2S 1: today" and "HBD 1: today" views and wants Salesblink's sends, bounces and replies to land there without anyone uploading a file.
+Scheduled routine "Salesblink sync" (trigger trig_01KpyDSfNqRKAGEABwyMBREA), Monday to Friday at 09:10 and 15:10 IST, with the Salesblink and Notion connectors (decision 113). The trigger was created without connectors (the API would not attach them); add Notion and Salesblink to it in the claude.ai routines page or it stops at its tools check. Chaandini asked for it on 10 Oct: she works from the "B2S 1: follow-ups" and "HBD 1: follow-ups" views (renamed from "today" on 10 Oct; due rows sort to the top) and wants Salesblink's sends, bounces and replies to land there without anyone uploading a file.
 
 It reads Salesblink and never changes it. It writes Engagements (and, for leads not yet in Notion, People, Organisations and Engagements) directly: a routine has no one to approve a Notion AI upload. Every write is idempotent, so if the 10 Oct catch-up file (`migration/salesblink_sync.py`) has not been uploaded, the first run applies it too.
 
