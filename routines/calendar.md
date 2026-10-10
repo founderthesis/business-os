@@ -31,7 +31,7 @@ The Queue is retired: never read or write it. NEXT DATE (decision 81): you are t
 
 HARD RULES
 - Never create, move, edit or delete a calendar event that has attendees, or one you did not create. The only events you may create, update or delete carry "bos-key:" in their description.
-- Never send mail. Gmail use is limited to reading threads and creating drafts.
+- Never send mail, except the day-before mail in STEP 3b when its template Mode is Send. Gmail use is otherwise limited to reading threads and creating drafts.
 - Never set Parked, Tier, Amount or Payment. Never move an Engagement Status backward.
 - Every Engagement you change: one line at the top of Claude note ("YYYY-MM-DD: <what and why>"), Claude updated = today.
 
@@ -68,6 +68,12 @@ For each matched, confirmed recording or precall starting in the next 14 days:
 - A precall entry that still starts before the precall (the old 30-minute style): move it to the precall's own start and end and set availability AVAILABILITY_FREE.
 - One exists but the Engagement gained an Eval, Dossier or LinkedIn link since: update the description only.
 - One exists and nothing changed: leave it.
+- Cooling-off block after every recording (decision 126): a second private event on ad@thepodium.in for each recording, no attendees, notificationLevel none, shown as busy, Summary "Cooling off: <Guest> recording", from the recording's end to 30 minutes after it, description "Break and buffer for spill-over" then "bos-key: <engagement page id> <event start ISO> cooloff". Create it with the prep entry, move it when the recording moves, delete it when the recording is cancelled.
+
+STEP 3b. DAY-BEFORE MAIL TO THE GUEST (decision 126)
+For each matched, confirmed recording that starts tomorrow (IST calendar day), on any show, with no Activity yet on the Engagement whose Summary starts "Agent drafted: Recording tomorrow" or "Agent sent: Recording tomorrow" for that recording date:
+- Prep note link on the Engagement empty: send nothing; add Akshay to Waiting on and put "Ask Akshay: add the Prep note link for <guest>, recording <date>" first in Next action (keep any other open ask after " | "), unless it already says so. The next run picks it up once the link is in.
+- Otherwise take the Templates row "Recording tomorrow: looking forward, prep note". Mode Draft: create a draft; Mode Send: send it; Off: skip. New mail from ad@thepodium.in, To the guest, Cc the main PR contact (Via) and every other Stakeholder on the Engagement, never Saurabh Garg and never a team member who has left. Fill {guest first name}, {show name}, {prep note link} (typed short, as given), {call link} (the recording link), {host} (Akshay for Founder Thesis, else the show's host first name), {guest full name}, {company}. Log per TEMPLATE MODES AND LOGGING (Summary "Agent drafted: Recording tomorrow for <guest>" or "Agent sent: Recording tomorrow for <guest>", counting toward the daily cap of 100 sends). For a draft, add Akshay to Waiting on with "Ask Akshay to send the day-before mail (recording <date>)" first in Next action.
 
 STEP 4a. AFTER A PRECALL
 For each Engagement with Call type Precall whose precall event ended between 3 days ago and now and was not cancelled: if Status is Precall requested, set Precall done. Add Akshay to Waiting on (keep existing values) and set Next action "Ask Akshay: verdict after the <date> precall" (keep any other open ask after " | "), unless Next action already asks him. Never change Next date. Skip if Claude note already has a line "precall <that date> done". Claude note line "YYYY-MM-DD: precall <date> done, waiting on Akshay's verdict".
