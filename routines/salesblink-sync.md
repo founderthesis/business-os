@@ -1,6 +1,6 @@
 # Salesblink sync
 
-Scheduled routine "Salesblink sync" (trigger trig_01KpyDSfNqRKAGEABwyMBREA), Monday to Friday at 09:10 and 15:10 IST, with the Salesblink and Notion connectors (decision 113). The trigger was created without connectors (the API would not attach them); add Notion and Salesblink to it in the claude.ai routines page or it stops at its tools check. Chaandini asked for it on 10 Oct: she works from the "B2S 1: follow-ups" and "HBD 1: follow-ups" views (renamed from "today" on 10 Oct; due rows sort to the top) and wants Salesblink's sends, bounces and replies to land there without anyone uploading a file.
+Scheduled routine "Salesblink sync" (trigger trig_01KpyDSfNqRKAGEABwyMBREA), Monday to Friday at 09:10 and 15:10 IST, with the Salesblink and Notion connectors (decision 113). Notion and Salesblink connectors attached (confirmed 10 Oct). Chaandini asked for it on 10 Oct: she works from the "B2S 1: follow-ups" and "HBD 1: follow-ups" views (renamed from "today" on 10 Oct; due rows sort to the top) and wants Salesblink's sends, bounces and replies to land there without anyone uploading a file.
 
 It reads Salesblink and never changes it. It writes Engagements (and, for leads not yet in Notion, People, Organisations and Engagements) directly: a routine has no one to approve a Notion AI upload. Every write is idempotent, so if the 10 Oct catch-up file (`migration/salesblink_sync.py`) has not been uploaded, the first run applies it too.
 
@@ -13,7 +13,7 @@ What Chaandini sees:
 ## Prompt
 
 ```text
-You run the Salesblink sync for ThePodium's Business OS. Chaandini runs guest outreach for Built to Share (host Satish) and Human by Design (host Arjun) through Salesblink, sending from her own mailbox. She works the Engagements views "B2S 1: today" and "HBD 1: today": rows whose Next date is today or earlier and whose Status is one of Contacted, Interested, Decision pending, Precall requested, Precall done, Booking, LT chase, Unresponsive. Your job: make those rows match what Salesblink knows. No human is watching: never stop to ask.
+You run the Salesblink sync for ThePodium's Business OS. Chaandini runs guest outreach for Built to Share (host Satish) and Human by Design (host Arjun) through Salesblink, sending from her own mailbox. She works the Engagements views "B2S 1: all guests" and "HBD 1: all guests", sorted by the Focus formula: due rows (open, Next date today or earlier) first, then live Salesblink campaigns. Your job: make the rows match what Salesblink knows. No human is watching: never stop to ask.
 
 TOOLS: Salesblink and Notion connectors (ToolSearch "+Salesblink", "+Notion" if deferred). If either is missing, stop and say so. Salesblink is READ ONLY: never add, remove, pause, resume or edit anything there, never send or reply. Never send email from anywhere. Never read or write the Credentials page.
 
@@ -51,13 +51,13 @@ f) THE STOPPED MANUAL B2S CHASE (decision 113). Built to Share rows at Contacted
    - tagged Outlier and Host approval not Yes: Waiting on Satish, Next action "Outliers campaign: needs Satish's yes before it starts", clear Next date.
    - anything else: leave it; Chaandini still chases it by hand.
 h) AKSHAY'S CONNECTS STAY OUT OF SALESBLINK (Chaandini, 10 Oct). A lead whose Engagement is tagged Warm intro with Akshay as the connect (Claude note or Source ID mentions "AD connect", or Waiting on includes Akshay), or who also has a Founder Thesis or un# Engagement, must not be cold-mailed. You cannot change Salesblink, so flag it instead: Waiting on Chaandini, Next action "Akshay's connect is in Salesblink <sequence>: take them out", Next date today. Do not apply a) to d) to that row.
-g) Fortune 500 AI leader rows (decision 110): Tier 1, except Stuart Feld and Joel Hellermark, who stay Tier 1.5 with Waiting on Arjun and Next action starting "Ask Arjun: not an AI head or CTO".
+g) Fortune 500 AI leader rows (decision 110): Tier 1, except Stuart Feld and Joel Hellermark, who stay Tier 1.5. They follow a) like everyone else; Arjun decides only if they reply keen (decision 105), so never set Waiting on Arjun for them before a reply.
 
 STEP 4. WRITE
 Update rows one at a time with update-page; never run parallel writers. Every row you change: one line at the top of Claude note "YYYY-MM-DD: <what> per Salesblink (salesblink sync)", Claude updated = today. Skip rows already in the right state. If a write fails, retry once, then list it in the report.
 
 STEP 5. REPORT
-End with a short report (this is the run log, nobody is mailed): per sequence the leads mailed, queued, bounced, replied; rows changed by kind (mailed, bounced, replies by outcome, queued, manual chase closed, created); rows you could not match or write; and the count of rows now in "B2S 1: today" and "HBD 1: today":
+End with a short report (this is the run log, nobody is mailed): per sequence the leads mailed, queued, bounced, replied; rows changed by kind (mailed, bounced, replies by outcome, queued, manual chase closed, created); rows you could not match or write; and how many B2S and HBD rows are now due (open, Next date today or earlier):
   https://app.notion.com/p/5e77c373909a4bf6b9195570de46c63b?v=76c8871c7ca8480f9b905ef9c3dc1773
   https://app.notion.com/p/5e77c373909a4bf6b9195570de46c63b?v=3f519a301a7f817ea420000c7bc10969
 ```
