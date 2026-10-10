@@ -73,7 +73,8 @@ def main(date):
         "People verdict given.",
         "",
         "Do not change Status, Tier, Next date, Next action, Waiting on, Eval link, Chase step or any "
-        "other field. Do not create or delete any row. If a URL does not open, skip it and list it at the end.",
+        "other field, except where the \"Status fixes\" section at the end names a field for a row. "
+        "Do not create or delete any row. If a URL does not open, skip it and list it at the end.",
         "",
     ]
     for i, r in enumerate(rows, 1):
@@ -92,6 +93,10 @@ def main(date):
             "```",
             "",
         ]
+    # Hand-checked extras (status fixes found while researching) ride the same upload
+    extras = src / "_status_fixes.md"
+    if extras.exists():
+        out += [extras.read_text(encoding="utf-8").strip(), ""]
     dest = ROOT / "data" / "review" / f"ft_eval_refresh_{date}_notion_ai.md"
     dest.write_text("\n".join(out), encoding="utf-8")
 
