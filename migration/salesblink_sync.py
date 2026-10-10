@@ -47,7 +47,7 @@ BATCH = "salesblink-sync-2026-10-10"
 
 # name, show, csv, delays between steps in days (from Salesblink), paused?
 SEQS = {
-    "B2S 1": ("Built to Share", "seq_b2s1_2026-10-10.csv", [3, 5, 7, 7, 7], True),
+    "B2S 1": ("Built to Share", "seq_b2s1_2026-10-10.csv", [3, 5, 7, 7, 7], False),
     "HBD 1": ("Human by Design", "seq_hbd1_2026-10-10.csv", [3, 4, 7, 7], False),
     "HBD 2": ("Human by Design", "seq_hbd2_2026-10-10.csv", [3, 4, 7, 7], False),
 }
