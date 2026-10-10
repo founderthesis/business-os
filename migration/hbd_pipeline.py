@@ -18,7 +18,8 @@ Writes:
 How HBD differs from Built to Share (decision 105): Arjun decides after a guest has said yes, not before outreach.
 "Approved" in the sheet means the guest agreed; "Arjun rejected" or "Decline" written in a follow-up cell is Arjun's
 no. The "Rockstar prof" tab is Arjun's own list, so its rows are Host verdict Yes and already mailed (8 Oct meeting).
-Existing HBD Engagements are never touched. Re-run safely; never edits the raw files.
+Arjun later said yes to Fortune 500 AI heads and CTOs (decision 110): those are Tier 1, other corporate titles
+stay Tier 1.5 for him to call. Existing HBD Engagements are never touched. Re-run safely; never edits the raw files.
 """
 import collections
 import csv
@@ -143,6 +144,9 @@ def read_sheet():
         x["raw_status"] = val(r[5]) or None
         out.append(x)
     return out
+
+
+AI_HEAD = re.compile(r"\bAI\b|Artificial Intelligence|Chief Technology Officer|\bCTO\b|Chief Digital and Information|Chief Data and Analytics|\bCIO\b", re.I)
 
 
 def read_notion():
@@ -287,7 +291,8 @@ def main():
 
         s = c["status"]
         host = "No" if c["rejected"] else ("Yes" if c["arjun_list"] else "Not asked")
-        tier = "Tier 1.5" if c["bucket"] == "Fortune 500 AI leader" else "Tier 1"
+        # Arjun said yes to Fortune 500 AI heads and CTOs (decision 110); other titles still go to him first
+        tier = "Tier 1.5" if c["bucket"] == "Fortune 500 AI leader" and not AI_HEAD.search(c["role"] or "") else "Tier 1"
         tags = [c["bucket"]] + ([] if c["email"] else ["No email"])
         last = c["sent"][-1] if c["sent"] else None
         nxt, action, waiting = None, None, []
