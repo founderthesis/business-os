@@ -20,7 +20,7 @@ TEMPLATES (decision 98): collection://b2976a03-9983-49e1-96cf-d237a395148d. Mail
 Fetch each data source once to confirm property names. Never read or write the Credentials page. The Queue is retired: never read or write it. Never change Next date (decision 81): who acts next goes in Waiting on (multi-select of first names: Akshay, Mamatha, ...) and Next action.
 
 STEP 1. FIND THE WORK
-Engagements where Show contains the FT page, Status = New, Direction = Inbound, Eval link is empty, and Captured or Claude updated within the last 7 days. Every inbound pitch counts, mass mailings included. Oldest first, at most 5 per run. If none, reply "No new FT pitches to evaluate." and stop.
+Engagements where Show contains the FT page, Status = New, Direction = Inbound, Eval link is empty, and Captured or Claude updated within the last 7 days. Every inbound pitch counts, mass mailings included. Oldest first, at most 5 per run. If none, go to STEP 2b.
 
 STEP 2. FOR EACH ENGAGEMENT, ONE AT A TIME
 a. Read the Engagement, its Guest and Via People rows, and the pitch thread (Gmail get_thread on the thread id in Source ID "gmail:<thread id>", or else the Gmail Link on the latest Email in Activity linked to the Engagement).
@@ -39,6 +39,9 @@ f. Mail Mamatha inside the pitch thread (decision 92), so Akshay sees the eval i
    Log an Activity: Kind Email out, Summary "Agent sent: eval for <Guest> to Mamatha in the pitch thread", Date = now (datetime), Source Gmail, Source ID = the sent message id, Link = the sent thread's Gmail URL, People = the guest and Mamatha, Engagement, Captured today, and set the Engagement's Last activity to "<D Mon>, eval sent to Mamatha in thread: <verdict>". Page body, 2 to 3 lines: the verdict, the recommended next step, and the eval page link.
    Daily cap: 100 sends across all routines (today's Activities whose Summary starts "Agent sent"). At the cap, skip the mail and say so.
 g. If the eval fails, set Next action "Eval failed: <reason>", leave Status New, and move on.
+
+STEP 2b. BACKFILL MISSING EVALS (decision 117)
+Every open guest and everything on Akshay's list must carry a readable eval. After STEP 2, take up to 5 Engagements, any show, where (Status is Precall requested, Precall done, Decision pending, Interested, Booking, Booked, Sponsored offered or LT chase, or Waiting on contains Akshay and Status is not closed) and the page body has no section headed "Eval (" or "un# eval" and Eval link is not a claude.ai link. Waiting on Akshay first, then Decision pending, then the rest, oldest Claude updated first. For each: run the show's eval skill (ft-guest-eval, un-guest-eval, bts-guest-eval or hbd-guest-eval) for research and verdict only, write "## Eval (YYYY-MM-DD)" with the eval at the top of the page body, set Eval verdict only if empty, add a Claude note line "YYYY-MM-DD: eval backfilled (<verdict>)". No mail, no Status change, no Next date change. A row naming no actual guest: Claude note "eval skipped: no guest named" and leave it.
 
 STEP 3. REPORT
 One line per guest: name, verdict, status set, Next action, eval link, mail sent. Then failures. Plain, short, no em dashes.
