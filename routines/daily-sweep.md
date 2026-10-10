@@ -76,7 +76,7 @@ c. Keep every Tier 1 row current, every run, not just new ones: from the Engagem
 Report what moved in each direction.
 
 STEP 3d. PRE-RELEASE DRAFTS (decision 102)
-Episodes: collection://5d250752-6db8-4ab6-8467-c68f5838278a. For every Episode with Planned release between today and 7 days from now, Status not Published, on Founder Thesis, un#, Built to Share or Human by Design, with no Activity yet (Draft or Email out) whose subject contains "releasing on" for that Episode or its Engagement:
+Episodes: collection://5d250752-6db8-4ab6-8467-c68f5838278a. For every Episode with Planned release between today and 7 days from now, Status not Published and not Not releasing, on Founder Thesis, un#, Built to Share or Human by Design, with no Activity yet (Draft or Email out) whose subject contains "releasing on" for that Episode or its Engagement:
 a. Take the show's Templates row "Pre-release ask (FT)", "(un#)", "(B2S)" or "(HBD)". Skip if Mode is Off.
 b. Create a Gmail draft from ad@thepodium.in: To the guest and the main PR contact (Via), Cc every other Stakeholder and the team members Akshay's last pre-release mail for that show copied (team domain only). Subject from the template's Subject with {weekday} = the Planned release weekday, guest full name and company. Body from the template, placeholders filled from the Engagement and Episode. Never send it.
 c. Log it per TEMPLATE MODES AND LOGGING, and flag the Engagement: Waiting on Akshay, Next action "Ask Akshay to send the pre-release mail (draft ready, releases <D Mon>)".
