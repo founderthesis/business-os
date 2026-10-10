@@ -50,6 +50,7 @@ f) THE STOPPED MANUAL B2S CHASE (decision 113). Built to Share rows at Contacted
    - Chase step 3 or more: Status Unresponsive, clear Waiting on, Next action "Re-engage: 2 months since the last mail", Next date = (current Next date minus 7 days) plus 60 days.
    - tagged Outlier and Host verdict not Yes: Waiting on Satish, Next action "Outliers campaign: needs Satish's yes before it starts", clear Next date.
    - anything else: leave it; Chaandini still chases it by hand.
+h) AKSHAY'S CONNECTS STAY OUT OF SALESBLINK (Chaandini, 10 Oct). A lead whose Engagement is tagged Warm intro with Akshay as the connect (Claude note or Source ID mentions "AD connect", or Waiting on includes Akshay), or who also has a Founder Thesis or un# Engagement, must not be cold-mailed. You cannot change Salesblink, so flag it instead: Waiting on Chaandini, Next action "Akshay's connect is in Salesblink <sequence>: take them out", Next date today. Do not apply a) to d) to that row.
 g) Fortune 500 AI leader rows (decision 110): Tier 1, except Stuart Feld and Joel Hellermark, who stay Tier 1.5 with Waiting on Arjun and Next action starting "Ask Arjun: not an AI head or CTO".
 
 STEP 4. WRITE
