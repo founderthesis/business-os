@@ -99,7 +99,7 @@ Find the Engagement where the person is the Guest, a Stakeholder or Via, on the 
 
 Also on every Engagement you touch:
 - Waiting on and Next action: per decision 81 above. Next date only in the three cases above.
-- Chase step: a team follow-up with no reply since the last one adds 1. Any reply from their side resets it to 0. A third chase with no reply: Waiting on Akshay, Next action "Ask Akshay: park or keep? 3 chases, no reply".
+- Chase step: a team follow-up with no reply since the last one adds 1. Any reply from their side resets it to 0. A third chase with no reply: three unanswered chases never go to Akshay (decision 118). Eval verdict Book immediately or Strong consider: Status LT chase, Next date 90 days from today, Chase step 0, Waiting on Guest or PR, Next action "Waiting on <who>: 3 chases unanswered (<dates>), keep chasing. Revisit <date>". Any lower verdict, or none: Status Unresponsive, Waiting on empty, Next action "Closed: 3 chases unanswered". An LT chase row stays LT chase while its eval is Strong consider or better.
 - Stakeholders: add any new PR person, EA, comms or intern who appears on the thread. Read the current list and write back the full list.
 
 STEP 4. DEALS (selling ThePodium's podcast production to a company)
