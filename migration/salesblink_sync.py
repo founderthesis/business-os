@@ -114,10 +114,9 @@ def main():
             u = {"Status": "Contacted", "Waiting on": "Guest or PR", "Chase step": prior + sent}
             rep = replies.get(l["email"].lower())
             if l["bounced"] == "1":
-                u = {"Next action": "Find a new email: Salesblink bounced", "Waiting on": "Chaandini",
-                     "Next date": TODAY.isoformat()}
-                if r["Status"] == "New":
-                    u["Status"] = "New"
+                # Contacted, so the bounce shows in the today views, which skip New rows
+                u = {"Status": "Contacted", "Next action": f"Bounced: find a new email (Salesblink {seq})",
+                     "Waiting on": "Chaandini", "Next date": TODAY.isoformat()}
             elif rep and rep["outcome"] == "declined":
                 u.update(Status="They declined", **{"Waiting on": "", "Next date": "", "Next action": ""})
                 u["Claude note"] = f"Declined by reply to Salesblink {seq} on {rep['date']}: {rep['text']}"
