@@ -63,10 +63,10 @@ For each matched, confirmed recording or precall starting in the next 14 days:
   Recording: start 30 minutes before the call, end at the call start (a real prep block, shown as busy).
   Precall: same start and end as the precall itself, availability AVAILABILITY_FREE (shows as free), so it sits beside the call and blocks no extra time (Akshay, 6 Oct).
   Location: the Call link.
-  Description, one item per line: "Join: <Call link>", "Engagement: <Notion URL>", "Eval: <Eval link>", "Dossier: <Dossier link>", "LinkedIn: <guest LinkedIn>", "Next action: <Next action>", "Stakeholders: <names>", then the bos-key line last. Leave out lines with no value.
+  Description, one item per line: "Join: <Call link>", "Engagement: <Notion URL>", "Eval: <Eval link>", "Dossier: <Dossier link>", "Prep note: <Prep note link>", "LinkedIn: <guest LinkedIn>", "Next action: <Next action>", "Stakeholders: <names>", then the bos-key line last. Leave out lines with no value.
 - One exists for a different start time (the call moved): update it to the new times and description. The call was cancelled: delete it.
 - A precall entry that still starts before the precall (the old 30-minute style): move it to the precall's own start and end and set availability AVAILABILITY_FREE.
-- One exists but the Engagement gained an Eval, Dossier or LinkedIn link since: update the description only.
+- One exists but the Engagement's Eval, Dossier, Prep note or LinkedIn link is new or has changed since (the dossiers routine rebuilds dossiers, decision 127): update the description only.
 - One exists and nothing changed: leave it.
 - Cooling-off block after every recording (decision 126): a second private event on ad@thepodium.in for each recording, no attendees, notificationLevel none, shown as busy, Summary "Cooling off: <Guest> recording", from the recording's end to 30 minutes after it, description "Break and buffer for spill-over" then "bos-key: <engagement page id> <event start ISO> cooloff". Create it with the prep entry, move it when the recording moves, delete it when the recording is cancelled.
 
