@@ -291,7 +291,10 @@ def main():
         tags = [c["bucket"]] + ([] if c["email"] else ["No email"])
         last = c["sent"][-1] if c["sent"] else None
         nxt, action, waiting = None, None, []
-        if s == "Contacted":
+        if s == "Contacted" and c["sent"] and not [d for d in c["sent"] if d > TODAY] and last < TODAY - dt.timedelta(days=30):
+            s = c["status"] = "LT chase"     # nothing for a month: try again in 90 days (decision 101)
+            nxt, action, waiting = TODAY + dt.timedelta(days=90), "Try again: no reply in over a month", ["Chaandini"]
+        elif s == "Contacted":
             future = [d for d in c["sent"] if d > TODAY]
             nxt = min(future) if future else max(TODAY, (last or c["next_src"] or TODAY) + dt.timedelta(days=7))
             action, waiting = f"Follow-up {len([d for d in c['sent'] if d <= TODAY]) + 1}", ["Guest or PR"]

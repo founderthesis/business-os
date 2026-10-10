@@ -532,10 +532,16 @@ def main():
         s = c["status"]
         last = c["sent"][-1] if c["sent"] else None
         nxt, action = None, None
+        if s == "Contacted" and not [d for d in c["sent"] if d > TODAY] and \
+                max(filter(None, [last, c["next_src"]]), default=TODAY) < TODAY - dt.timedelta(days=30):
+            s = c["status"] = "LT chase"     # nothing for a month: they said no by silence; try again in 90 days
+            c["stale"] = True
         if s == "Contacted":
             future = [d for d in c["sent"] if d > TODAY]
             nxt = min(future) if future else max(c["next_src"] or TODAY, (last or TODAY) + dt.timedelta(days=7))
             action = f"Follow-up {min(len([d for d in c['sent'] if d <= TODAY]) + 1, 6)}"
+        elif s == "LT chase" and c.get("stale"):
+            nxt, action = TODAY + dt.timedelta(days=90), "Try again: no reply in over a month"
         elif s == "LT chase":
             nxt = LT_DATES.get(name_key(c["name"])) or max(TODAY + dt.timedelta(days=30), (last or TODAY) + dt.timedelta(days=60))
             action = "Try again: they said later"
