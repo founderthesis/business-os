@@ -30,6 +30,8 @@ All four run unattended in the cloud with their own Gmail and Notion connectors;
 - Learning: the inbox compares sent mail with drafts (Edit size, Edit note); Fridays the sweep writes "## Proposed" sections and mails a review. Ready to send = 8+ drafts sent, 80% clean. Only Akshay moves a template to Send.
 - Not built yet: FT chasers, precall and recording invites as drafts; the "hold" mail handling (proposal in this chat: Waiting on Guest or PR plus a revisit date in Next action, and the sweep skips its quiet check until then; awaiting Akshay's yes). Mamatha's rule stands: agents change Next date only for a booked precall or recording.
 
-## First task waiting for you: FT eval refresh
+## FT eval refresh (done 10 Oct, waiting on the Notion AI run)
 
-Akshay, 9 Oct: re-run the eval for every open FT guest rated Strong consider or above whose eval is more than a month old, and run one for warm guests with none. 60 rows, list in data/review/ft_eval_refresh_2026-10-09.tsv (3 more had evals this month and are skipped). Use skills/ft-guest-eval, research in the chat (read-only agents, never writing to Notion in parallel), then one Notion AI .md to apply: Eval verdict, a "## Eval (2026-10-09)" section in each Engagement page, a Claude note line "2026-10-09: eval refreshed, <old> -> <new>". Format used for un#: data/review/un_evals/*.md.
+Akshay, 9 Oct: re-run the eval for every open FT guest rated Strong consider or above whose eval is more than a month old, and run one for warm guests with none. Done 10 Oct for 61 rows (log in docs/notion.md, batch ft-eval-refresh-2026-10-10). Eval files are in data/review/ft_evals_2026-10-10/, one per guest; the two Notion AI prompts are data/review/ft_eval_refresh_2026-10-10_notion_ai_part1.md and _part2.md. Once Akshay has run both, check a few rows read-only (Eval verdict, the "## Eval (2026-10-10)" section, the Claude note line) and log it.
+
+Lesson: research agents share one budget of 200 web searches per turn, and WebFetch to news sites fails DNS through the proxy. Give each agent an explicit search cap that sums to under 200, and expect snippets, not fetched pages.

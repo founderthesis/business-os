@@ -43,17 +43,9 @@ def parse(path):
     return row
 
 
-def main(date):
-    src = ROOT / "data" / "review" / f"ft_evals_{date}"
-    rows = [parse(p) for p in sorted(src.glob("[A-Z]-*.md"))]
-    bad = [r for r in rows if r["problems"]]
-    for r in bad:
-        print(f"PROBLEM {r['file']}: {', '.join(r['problems'])}")
-    if bad:
-        sys.exit(1)
-
+def build(date, rows, part, parts, extras):
     out = [
-        f"# FT eval refresh ({date}): apply to Engagements",
+        f"# FT eval refresh ({date}), part {part} of {parts}: apply to Engagements",
         "",
         "You are updating the ThePodium Business OS. Engagements data source: "
         "collection://5522ee21-d8e5-4ec0-bf3e-90bcf88d24c5. People data source: "
@@ -73,7 +65,8 @@ def main(date):
         "People verdict given.",
         "",
         "Do not change Status, Tier, Next date, Next action, Waiting on, Eval link, Chase step or any "
-        "other field, except where the \"Status fixes\" section at the end names a field for a row. "
+        "other field" + (", except where the \"Status fixes\" section at the end names a field for a row"
+                         if extras else "") + ". "
         "Do not create or delete any row. If a URL does not open, skip it and list it at the end.",
         "",
     ]
@@ -93,15 +86,30 @@ def main(date):
             "```",
             "",
         ]
-    # Hand-checked extras (status fixes found while researching) ride the same upload
-    extras = src / "_status_fixes.md"
-    if extras.exists():
-        out += [extras.read_text(encoding="utf-8").strip(), ""]
-    dest = ROOT / "data" / "review" / f"ft_eval_refresh_{date}_notion_ai.md"
+    if extras:
+        out += [extras, ""]
+    dest = ROOT / "data" / "review" / f"ft_eval_refresh_{date}_notion_ai_part{part}.md"
     dest.write_text("\n".join(out), encoding="utf-8")
+    print(f"part {part}: {len(rows)} evals -> {dest.relative_to(ROOT)}")
+
+
+def main(date, size=31):
+    src = ROOT / "data" / "review" / f"ft_evals_{date}"
+    rows = [parse(p) for p in sorted(src.glob("[A-Z]-*.md"))]
+    bad = [r for r in rows if r["problems"]]
+    for r in bad:
+        print(f"PROBLEM {r['file']}: {', '.join(r['problems'])}")
+    if bad:
+        sys.exit(1)
+    # Two uploads keep each Notion AI prompt near 100 KB; hand-checked status fixes ride part 1
+    fixes = src / "_status_fixes.md"
+    extras = fixes.read_text(encoding="utf-8").strip() if fixes.exists() else ""
+    chunks = [rows[i:i + size] for i in range(0, len(rows), size)]
+    for n, chunk in enumerate(chunks, 1):
+        build(date, chunk, n, len(chunks), extras if n == 1 else "")
 
     moves = Counter((r["Old verdict"] or "none", r["New verdict"]) for r in rows)
-    print(f"{len(rows)} evals -> {dest.relative_to(ROOT)}")
+    print(f"{len(rows)} evals in {len(chunks)} parts")
     print("New verdicts:", dict(Counter(r["New verdict"] for r in rows)))
     for (old, new), n in sorted(moves.items()):
         print(f"  {old} -> {new}: {n}")
