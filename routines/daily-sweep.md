@@ -53,7 +53,7 @@ STEP 2. DECISIONS
 Engagements at Decision pending:
 - Read Gmail for Akshay's decision. Found: apply it, and flag Mamatha's next step (book -> "Mamatha: ask <PR or guest> for recording slots"; precall -> "Mamatha: send the precall invite"; decline not yet sent -> "Mamatha: send the decline").
 - Eval verdict Book immediately and no contrary word from Akshay: Status Booking, flag "Mamatha: ask <PR or guest> for recording slots (eval: book immediately)".
-- Tier = Sponsored set on the row (Akshay decided in Notion instead of by mail; same as replying "sponsored"): if no sponsored commercials mail has gone out yet, flag "Mamatha: send the sponsored commercials" (the Templates row for the sponsored offer has the wording and price; never send it yourself). If they already went out: Status Sponsored offered, Waiting on Guest or PR.
+- Tier set on the row by Akshay (Tier 1, 1.5, 2 or Sponsored): that is his decision. The inbox routine drafts the matching reply (its STEP 6c, decision 112). Leave the row to it; if Proposed mail is still empty a day after Tier was set, flag "Fix: Tier set but no draft".
 - Otherwise make sure Waiting on includes Akshay (plus the host for un#, B2S, HBD) with Next action "Ask Akshay to approve: eval says <verdict>".
 
 STEP 3. CLEAR WHAT GMAIL ALREADY SETTLED (required: do the Gmail reads, row by row; a run that changes nothing here must say in the report which rows it read and why none changed)

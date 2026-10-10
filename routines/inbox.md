@@ -35,7 +35,7 @@ TEMPLATE MODES AND LOGGING (decision 102). Each Templates row has Mode (Off, Dra
 Fetch each data source once at the start to confirm exact property and option names. Never read or write the Credentials page.
 
 HARD RULES
-- Mail actions allowed: the pitch reply in STEP 6, the reply to Saurabh's forwarded pitches in STEP 6a, the vendor redirect draft in STEP 6b, and archiving RSVP threads in STEP 7. Nothing else: no other sends, replies, forwards, drafts, labels, trash or read-marking.
+- Mail actions allowed: the pitch reply in STEP 6, the reply to Saurabh's forwarded pitches in STEP 6a, the vendor redirect draft in STEP 6b, the tier reply in STEP 6c, and archiving RSVP threads in STEP 7. Nothing else: no other sends, replies, forwards, drafts, labels, trash or read-marking.
 - Never delete or merge Notion rows. Never change a schema. Never write to the Queue (retired).
 - Never overwrite a value a person typed with a guess. Only change a field when the mail says so plainly.
 - Never set Parked (Akshay only), Tier, Amount or Payment unless the mail is Akshay saying so. Never move Status backward, except to LT chase or a closed outcome.
@@ -147,6 +147,16 @@ If Mamatha is already on the thread, send nothing. Forwards that are not guest p
 
 STEP 6b. VENDOR PITCH REDIRECT
 A vendor or service provider pitching ThePodium (an agency, tool or freelancer offering us something; not a guest pitch and not a company we might sell production to), arrived in the last 72 hours, with nobody from our side on the thread: if the Templates row "Vendor or service pitch redirect" has Mode Draft, create a reply draft on the thread (create_draft, To the sender, same subject with "Re: ") from that template; if Mode Send, send it as a reply instead (counts toward the daily cap). Log per TEMPLATE MODES AND LOGGING. At most 10 per run.
+
+STEP 6c. TIER SET BY AKSHAY: DRAFT THE REPLY (decision 112)
+Akshay decides new FT and un# guests by setting Tier on the Engagement. For every Engagement on Founder Thesis or un# with Status Decision pending (or New, Direction Inbound, with an Eval verdict), Tier set, and no mail yet from our side on the pitch thread since the Tier was set:
+a. Pick the Templates row: Tier 1 -> "Tier 1: keen, ask for a pre-call"; Tier 1.5 -> "Tier 1.5: alignment check call"; Tier 2 -> "Tier 2: alignment check call, organic undecided"; Sponsored -> "Sponsored: founder wrote directly" when the pitch came from the guest's own address with no PR or agency on the thread (Via empty), else "Sponsored: no organic slot (via PR)". Skip if the row's Mode is Off or Approved is unticked.
+b. If the Engagement's Proposed mail already links that same template, skip (already drafted). If it links a different template (Akshay changed the Tier) and nothing has been sent, draft again and replace the link.
+c. Fill the template: {PR first name} = the person who pitched (Via, else the guest), {guest first name}, {company}, {show name} = "Founder Thesis" or "un#", {sponsored link} = podm.in/sponsored (FT) or unhashed.co/sponsored (un#), {original subject} = the pitch thread's subject. When the founder wrote directly, address the founder and use "you". For the founder template's bracketed line, write one specific, true sentence from the eval page (Eval link) or the Engagement's eval section: a number, a customer, a sharp idea; never generic praise. Keep the template's line breaks; no em dashes.
+d. Mode Draft: create a reply draft in the pitch thread from ad@thepodium.in (To the person who pitched, Cc everyone else already on the thread including Mamatha). Mode Send: send it as that reply instead (within the daily cap).
+e. Engagement: Proposed mail = the template row; Waiting on Akshay; Next action "Ask Akshay to send the draft: <template name>" (Mode Draft) or Waiting on Guest or PR, Next action "Waiting on <who>: reply to our <tier> mail" (Mode Send); Claude note line "YYYY-MM-DD: Tier <tier> set by Akshay, <drafted or sent> <template name>". Log per TEMPLATE MODES AND LOGGING.
+f. Once the mail has gone out (Akshay sent the draft, or you sent it): Status Precall requested for Tier 1, 1.5 and 2, Sponsored offered for Sponsored; Waiting on Guest or PR; Next action "Waiting on <who>: <precall booking or sponsorship reply>". Detect the send in STEP 2b (the sent mail matches the draft's thread) and set the Status then, never before.
+At most 15 per run. Founder Thesis and un# only; B2S and HBD have their own process.
 
 STEP 7. ARCHIVE CALENDAR RSVP MAIL
 Search: in:inbox subject:(Accepted OR Declined OR "Tentatively Accepted") invitation
