@@ -17,8 +17,8 @@ Engagements: https://app.notion.com/p/5e77c373909a4bf6b9195570de46c63b
 For each name:
 1. Find the person in People: by email first, then LinkedIn, then exact full name with the same company. If found, use that row and fill only empty fields. If not found, create one with Name, Email, LinkedIn, Role, Organisation, Source = Manual.
 2. Find the company in Organisations by name or website domain. Create it only if it is not there.
-3. Check Engagements for a row with this person as Guest and the same Show. If one exists, do not create another: tell me its Status and Host verdict.
-4. Otherwise create the Engagement: Name "<Person> @ <Company>, <Show>", Guest, Organisation, Show, Direction = Outbound, Status = New, Host verdict = Not asked, Tier = Tier 1.5, Tags = the bucket if given, Source = Manual, Captured = today.
+3. Check Engagements for a row with this person as Guest and the same Show. If one exists, do not create another: tell me its Status and Host approval.
+4. Otherwise create the Engagement: Name "<Person> @ <Company>, <Show>", Guest, Organisation, Show, Direction = Outbound, Status = New, Host approval = Not asked, Tier = Tier 1.5, Tags = the bucket if given, Source = Manual, Captured = today.
 5. If the person is already a guest or in the pipeline on any other show, say so next to their name.
 
 At the end, list what you created, what already existed, and anything you could not match.

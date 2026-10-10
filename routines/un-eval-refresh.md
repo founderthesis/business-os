@@ -29,7 +29,7 @@ e. If the eval fails, add "eval refresh failed: <reason>" to the Claude note and
 
 STEP 3. REBUILD SRI'S BOARD (every run, idempotent)
 For every un# Engagement in the STEP 1 statuses, plus Recorded, make sure the board has one row (match on OS key; create if missing):
-- Stage: Decision pending or Precall done -> Approval pending; Booking or Host verdict Yes and not Booked -> To be scheduled; Booked -> Scheduled (Recording date = Next date); Recorded -> Recorded; Interested, Contacted, Precall requested, Sponsored offered -> Approval pending only if the row has an eval, otherwise leave it off. Rows on the board whose Engagement is now closed, parked or LT chase -> Not now.
+- Stage: Decision pending or Precall done -> Approval pending; Booking or Host approval Yes and not Booked -> To be scheduled; Booked -> Scheduled (Recording date = Next date); Recorded -> Recorded; Interested, Contacted, Precall requested, Sponsored offered -> Approval pending only if the row has an eval, otherwise leave it off. Rows on the board whose Engagement is now closed, parked or LT chase -> Not now.
 - Eval: the current verdict. Short pitch: two plain sentences from the eval on who they are and why they suit un#.
 - Page body of the board row: replace it with "## Eval (<date>)" and the same 3 to 5 lines as STEP 2d, so Sri can read it without opening any link. Eval link = the Engagement's Eval link only if it is a claude.ai/public link, else empty (decision 115). Dossier link only if it opens without a login.
 - LinkedIn from the People row.
