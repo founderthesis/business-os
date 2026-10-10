@@ -22,7 +22,7 @@ Skip rows whose Claude note already has a line starting "2026-10" that says "eva
 
 STEP 2. FOR EACH ROW, ONE AT A TIME
 a. Read the Engagement, the Guest's People row, the pitch thread in Gmail (Source ID "gmail:<thread id>" or the latest Email in Activity), any precall notes, and the old eval if it opens.
-b. Run the un-guest-eval skill with the guest's name, company, LinkedIn and the pitch text. Follow it, including its current research. Always save the eval as a page in the un# guest evals database (data source 43a9b15b-b682-4aed-8034-4771a678fb7f, under "un# with Sri", so Sri can open it): Guest, Verdict, Eval date, Engagement relation, the eval text as the body. Eval link = a public claude.ai/public/artifacts link if the skill published one, else that page (decision 111).
+b. Run the un-guest-eval skill with the guest's name, company, LinkedIn and the pitch text. Follow it, including its current research. Always write the eval into the Engagement's page body, at the top, as "## Eval (YYYY-MM-DD)" with the eval text (decision 115: no separate eval database). Eval link = a public claude.ai/public/artifacts link if the skill published one, else empty.
 c. Update the Engagement: Eval link = new URL, Eval verdict = new verdict, a Claude note line at the top "2026-10-<dd>: eval refreshed, <old verdict or none> -> <new verdict>", Claude updated today. Do not change Status, Tier, Next date or Parked. If the row is Decision pending: Waiting on = Akshay and Sri, Next action "Sri's call on the board: eval says <verdict>".
 d. In the Engagement page body, replace any older "## un# eval" section with a new one: verdict, 3 to 5 lines on who they are and why they fit or don't, scores, and the eval link.
 e. If the eval fails, add "eval refresh failed: <reason>" to the Claude note and move on.
@@ -31,7 +31,7 @@ STEP 3. REBUILD SRI'S BOARD (every run, idempotent)
 For every un# Engagement in the STEP 1 statuses, plus Recorded, make sure the board has one row (match on OS key; create if missing):
 - Stage: Decision pending or Precall done -> Approval pending; Booking or Host verdict Yes and not Booked -> To be scheduled; Booked -> Scheduled (Recording date = Next date); Recorded -> Recorded; Interested, Contacted, Precall requested, Sponsored offered -> Approval pending only if the row has an eval, otherwise leave it off. Rows on the board whose Engagement is now closed, parked or LT chase -> Not now.
 - Eval: the current verdict. Short pitch: two plain sentences from the eval on who they are and why they suit un#.
-- Page body of the board row: replace it with "## Eval (<date>)" and the same 3 to 5 lines as STEP 2d, so Sri can read it without opening any link. Eval link always set (decision 111): the Engagement's Eval link if it is a claude.ai/public link or an un# guest evals page, else create an un# guest evals page from the eval text and link that. Dossier link only if it opens without a login.
+- Page body of the board row: replace it with "## Eval (<date>)" and the same 3 to 5 lines as STEP 2d, so Sri can read it without opening any link. Eval link = the Engagement's Eval link only if it is a claude.ai/public link, else empty (decision 115). Dossier link only if it opens without a login.
 - LinkedIn from the People row.
 - Never overwrite Sri's call, Sri's notes, Sri's availability or Guest availability.
 Remove nothing; the connector can't delete rows.
