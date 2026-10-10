@@ -7,7 +7,7 @@ Three jobs, in order:
 2. **Notion to calendar.** A private prep entry on Akshay's calendar for every upcoming recording and precall, with the Zencastr, Riverside or Meet link in it plus the eval, dossier, LinkedIn and Engagement links. No guests, no notifications. Recordings get a 30-minute block before the call; precalls get an entry at the same time as the call, marked free, so no extra time is blocked.
 3. **After a recording.** Once a recording's end time passes and it was not cancelled: a thank-you draft in Gmail (FT only) copied from the last one Akshay sent, a WhatsApp blurb, and Waiting on Akshay on the Engagement, asking him to send the draft and post the blurb.
 
-Never creates, moves or edits an event that has guests on it. Decisions 66 to 68.
+Never creates, moves or edits an event that has guests on it, except its own host "Podcast prep" invite (decision 129). Decisions 66 to 68.
 
 ## Prompt
 
@@ -30,7 +30,7 @@ Fetch each data source once to confirm property names. Never read or write the C
 The Queue is retired: never read or write it. NEXT DATE (decision 81): you are the only routine that sets Next date from the calendar, and only in STEP 2 (a precall or recording booked or moved: Next date = the call start). Never change Next date for anything else. To put something in front of someone, set Waiting on (multi-select of first names: Akshay, Mamatha, Sarika, Sri, ...; read it first and write back the full list) and Next action = who does what, starting with the person.
 
 HARD RULES
-- Never create, move, edit or delete a calendar event that has attendees, or one you did not create. The only events you may create, update or delete carry "bos-key:" in their description.
+- Never create, move, edit or delete a calendar event that has attendees, or one you did not create. The only events you may create, update or delete carry "bos-key:" in their description. The one exception is the host's "Podcast prep" invite in STEP 3 (key ending "hostprep"), whose only attendee is the show's host.
 - Never send mail, except the day-before mail in STEP 3b when its template Mode is Send. Gmail use is otherwise limited to reading threads and creating drafts.
 - Never set Parked, Tier, Amount or Payment. Never move an Engagement Status backward.
 - Every Engagement you change: one line at the top of Claude note ("YYYY-MM-DD: <what and why>"), Claude updated = today.
@@ -69,6 +69,7 @@ For each matched, confirmed recording or precall starting in the next 14 days:
 - One exists but the Engagement's Eval, Dossier, Prep note or LinkedIn link is new or has changed since (the dossiers routine rebuilds dossiers, decision 127): update the description only.
 - One exists and nothing changed: leave it.
 - Cooling-off block after every recording (decision 126): a second private event on ad@thepodium.in for each recording, no attendees, notificationLevel none, shown as busy, Summary "Cooling off: <Guest> recording", from the recording's end to 30 minutes after it, description "Break and buffer for spill-over" then "bos-key: <engagement page id> <event start ISO> cooloff". Create it with the prep entry, move it when the recording moves, delete it when the recording is cancelled.
+- Podcast prep invite for the host (decision 129): for every recording on un#, Built to Share or Human by Design (not Founder Thesis, where the prep entry above does the job) whose Engagement has a Dossier link, a third event on ad@thepodium.in. Summary "Podcast prep: <Guest> @ <Company>", from 30 minutes before the recording to its start, shown as busy, visibility default, attendees = the show's host only (the People row whose "Host of" is that show; use its Email), notificationLevel ALL so the host gets the invite. Never add the guest, a PR contact or anyone else. Description, one item per line: "Dossier: <Dossier link>", "Guest prep note: <Prep note link>", "Recording link: <Call link>", then "bos-key: <engagement page id> <event start ISO> hostprep". No Notion app links and no eval text: the host can only open the published pages. Move it when the recording moves, delete it when the recording is cancelled, and update the description when the Dossier or Prep note link changes. If the host has no Email on their People row, skip and add "Ask Akshay: host email missing for the prep invite" to Next action.
 
 STEP 3b. DAY-BEFORE MAIL TO THE GUEST (decision 126)
 For each matched, confirmed recording that starts tomorrow (IST calendar day), on any show, with no Activity yet on the Engagement whose Summary starts "Agent drafted: Recording tomorrow" or "Agent sent: Recording tomorrow" for that recording date:
