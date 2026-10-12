@@ -9,6 +9,7 @@ section at the top of each Engagement page.
 Usage: python migration/ft_eval_refresh_notion_ai.py 2026-10-10
 """
 
+import json
 import re
 import sys
 from collections import Counter
@@ -57,12 +58,15 @@ def build(date, rows, part, parts, extras):
         f"2. Add one line at the very top of Claude note, keeping every existing line below it: "
         f"\"{date}: eval refreshed, <Old verdict> -> <New verdict>\". If the row has a Flag, "
         "append \". Flag: <flag text>\" to that line.",
-        f"3. Set Claude updated to {date}.",
+        "3. Set Claude updated to today (the day you run this).",
         f"4. Insert the eval section (the text between the ``` fences, starting with \"## Eval ({date})\") "
         "at the top of the page body, above everything already there. Keep the existing body. "
         "If an \"## Eval\" section with the same date already exists, replace it instead of adding a second.",
         "5. On the People row linked in the Engagement's Guest relation, set Latest eval verdict to the "
         "People verdict given.",
+        "6. If Eval link holds a link, clear it and add \" (old eval: <that link>)\" to the end of the Claude note line "
+        "from step 2. The new eval lives in the page body; a later Claude session publishes it as a claude.ai page "
+        "and sets Eval link again (decision 141).",
         "",
         "Do not change Status, Tier, Next date, Next action, Waiting on, Eval link, Chase step or any "
         "other field" + (", except where the \"Status fixes\" section at the end names a field for a row"
@@ -96,6 +100,15 @@ def build(date, rows, part, parts, extras):
 def main(date, size=31):
     src = ROOT / "data" / "review" / f"ft_evals_{date}"
     rows = [parse(p) for p in sorted(src.glob("[A-Z]-*.md"))]
+    # Live check against Notion just before upload: drop rows closed since, or re-evaluated by another chat
+    lives = sorted(src.glob("_live_*.json"))
+    if lives:
+        skip = json.loads(lives[-1].read_text(encoding="utf-8"))["skip"]
+        for r in rows:
+            pid = re.search(r"([0-9a-f]{32})", r["Engagement"]).group(1)
+            if pid in skip:
+                print(f"SKIP {r['title']}: {skip[pid]}")
+        rows = [r for r in rows if re.search(r"([0-9a-f]{32})", r["Engagement"]).group(1) not in skip]
     bad = [r for r in rows if r["problems"]]
     for r in bad:
         print(f"PROBLEM {r['file']}: {', '.join(r['problems'])}")
