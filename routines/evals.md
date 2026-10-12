@@ -1,6 +1,6 @@
 # Guest evals (Founder Thesis)
 
-Scheduled routine "FT guest evals", once a night at 23:50 JST, Sunday to Friday, after the inbox run, with the Gmail and Notion connectors.
+Scheduled routine "FT guest evals", three times a day at 10:50, 16:50 and 23:50 JST, every day, 25 minutes after each inbox run (decision 138), with the Gmail and Notion connectors.
 
 It picks up new FT pitches the inbox logged, runs the ft-guest-eval skill on each, writes the eval link and verdict to the Engagement, and mails the eval to Mamatha inside the pitch thread, so Akshay sees it in the same chain (decision 92). Book immediately goes straight to Booking, Waiting on Mamatha to get dates; any other verdict sits at Decision pending, Waiting on Akshay ("Ask Akshay to approve"), until Akshay replies and the inbox routine records his answer. It never changes Next date (decisions 78 and 81). Founder Thesis only (Akshay, 5 Oct). Decisions 66 and 67.
 
