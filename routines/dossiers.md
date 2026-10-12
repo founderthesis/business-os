@@ -16,7 +16,7 @@ NOTION
 - Engagements: collection://5522ee21-d8e5-4ec0-bf3e-90bcf88d24c5  (Name, Status, Show, Guest, Via, Organisation, Call type, Call link, Next date, Eval link, Dossier link, Prep note link, Scheduling, Claude note, Claude updated)
 - People: collection://e6c44319-7f81-4da6-8b80-8441a4875d7a
 - Show pages: Founder Thesis 3ed19a301a7f817c9367e0d88afc5776, un# 3ed19a301a7f8111b5e4d46002a7afe1, Built to Share 3ed19a301a7f819e8f45de04a7c9d025, Human by Design 3ed19a301a7f815585e7e6c8accaab23
-- Guest prep notes page: 3f519a301a7f81c59284cfd9e88122ae (published to the web at jet-act-99b.notion.site)
+- Guest prep notes page: 3f519a301a7f81c59284cfd9e88122ae (internal; notes are pasted into the day-before mail, decision 143)
 Fetch each data source once to confirm property names.
 
 STEP 1. FIND THE WORK
@@ -27,7 +27,7 @@ a. Read the Engagement, its Guest People row (LinkedIn), its page body (the eval
 b. Run the show's dossier skill with the Skill tool: Founder Thesis "ft-host-dossier", un# "un-dossier", Built to Share "bts-host-dossier", Human by Design "hbd-host-dossier". Give it the guest's name, company, LinkedIn, the eval text and anything from the pitch thread. Follow the skill in full; it produces the host dossier and the guest prep note.
 c. Dossier link: always the dossier's Claude artifact link (claude.ai/artifact/... or claude.ai/public/artifacts/...). Never a Notion link, a chat link or a session URL. If the skill did not publish the dossier as an artifact, publish it with the Artifact tool and use that link. Write it on the Engagement. The dossier is for the host only; never put it anywhere a guest can see it.
 c2. Do not copy dossiers into Notion pages (Akshay, 11 Oct; this replaces decision 129). The calendar routine sends the host a "Podcast prep" invite with the Claude dossier link.
-d. Guest prep note: take the prep note the skill wrote, as text. Find the child page of the Guest prep notes page made for this Engagement (title "<Guest full name> on <show name>: prep note"); replace its content if it exists, else create it. Write the note as plain Notion text: headings, short paragraphs, bullets. Remove anything internal: eval verdicts, fees or sponsorship, contact details, PR names, team notes, and anything marked unpublished. Never promise edit rights. Prep note link = "jet-act-99b.notion.site/" + the page id without dashes (typed short, no https://).
+d. Guest prep note: take the prep note the skill wrote, as text. Find the child page of the Guest prep notes page made for this Engagement (title "<Guest full name> on <show name>: prep note"); replace its content if it exists, else create it. Write the note as plain Notion text: headings, short paragraphs, bullets. Remove anything internal: eval verdicts, fees or sponsorship, contact details, PR names, team notes, and anything marked unpublished. Never promise edit rights. Prep note link = "https://app.notion.com/p/" + the page id without dashes. It is internal: the calendar routine pastes the note into the day-before mail, so guests never get the link (decision 143).
 e. On the Engagement: Prep note link as in d, a new line at the top of the Claude note "YYYY-MM-DD: dossier built (<skill>), prep note page <link>", Claude updated today. Do not change Status, Next date, Waiting on or Next action.
 f. If the skill fails, add a Claude note line "YYYY-MM-DD: dossier failed: <reason>" and move on.
 
