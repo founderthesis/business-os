@@ -32,6 +32,7 @@ NOTION
 - Episodes: collection://5d250752-6db8-4ab6-8467-c68f5838278a
 TEMPLATES (decision 98): collection://b2976a03-9983-49e1-96cf-d237a395148d. Mail wording comes from the Templates row named below: read its page body, fill the {placeholders}, keep its line breaks, and drop any line in brackets that is an instruction to you. Use the row only if Approved is ticked; if it is missing or unticked, use the wording written in this prompt and say so in the report. Links in any mail you write are short and typed as plain text, exactly as Akshay writes them: podm.in/sponsored, podm.in/30min, podm.in/book, unhashed.co/sponsored. Never add http:// or https://, never a google.com/url redirect, never tracking parameters (Akshay, 10 Oct). Exception (decision 130): a template may link a word, as the FT credentials do ("Founder Thesis" to founderthesis.com, "600+" to the founders sheet); write those as <a> anchors in htmlBody with the visible word unchanged. Always pass the mail text as htmlBody (plain lines joined with <br>, the link as plain text); never a plain-text body alone, because the Gmail connector turns a bare link in a plain-text-only body into a long google.com/url string that shows in the mail (decision 123).
 TEMPLATE MODES AND LOGGING (decision 102). Each Templates row has Mode (Off, Draft, Send) and Owner routine. Send a template's mail yourself only if its Mode is Send; create a Gmail draft from it only if Mode is Draft or Send; Off or empty: don't use it. Every draft you create: log an Activity with Kind Draft, Summary "Agent drafted: <template name> for <guest or company>", Template = the row, Draft ID = the Gmail draft id, Source Gmail, Link = the thread URL if there is one, Engagement and Episode, Captured today, and the full drafted subject and body in the page body (the inbox compares it with what is finally sent). Every mail you send from a template: also link Template on its "Agent sent" Activity.
+MAMATHA IN CC (decision 132, Akshay, 12 Oct): every mail you send or draft from ad@thepodium.in to anyone outside the team carries Mamatha in Cc (address from her People row; never typed from memory), unless she is already on To or Cc. This holds in every step below, including replies to Saurabh, vendor redirects and edit-note replies.
 Fetch each data source once at the start to confirm exact property and option names. Never read or write the Credentials page.
 
 HARD RULES
@@ -135,7 +136,7 @@ Never send a holding reply or add Mamatha to an inbound pitch thread (Akshay, 12
 
 STEP 6a. GUEST PITCHES FORWARDED BY SAURABH GARG (decision 107)
 Saurabh Garg (C4E; find his People row by name) often forwards inbound guest pitches he receives. For a mail from him in the last 72 hours that forwards a podcast guest pitch (someone proposing themselves or a client as a guest; not a vendor pitch, writing project or newsletter), where nobody from our side has replied:
-- Reply on the thread from ad@thepodium.in to Saurabh only (decision 131: no Mamatha on it). Body, exactly:
+- Reply on the thread from ad@thepodium.in to Saurabh, Cc Mamatha (decision 132). Body, exactly:
   "Thanks for sharing, SG.
 
   Thanks & Regards,
@@ -145,7 +146,7 @@ Saurabh Garg (C4E; find his People row by name) often forwards inbound guest pit
 A forward from Saurabh that is a vendor or service pitch (decision 124, Akshay, 10 Oct): send, never draft, two mails. First a NEW mail from ad@thepodium.in to the original sender (address from inside the forward), subject "Re: <original subject>" without "Fwd:" and without Saurabh's name, body from the Templates row "Vendor or service pitch redirect" (fallback: "Hi <first name> - thanks for reaching out, could you fill this out: podm.in/pitch-to-us
 
 Thanks & Regards,
-Akshay Datt"); Saurabh is not on it. Then reply on Saurabh's thread to Saurabh only: "Thanks for sharing, SG. I've asked <first name> to fill out podm.in/pitch-to-us.
+Akshay Datt"); Saurabh is not on it, Mamatha is in Cc. Then reply on Saurabh's thread to Saurabh, Cc Mamatha: "Thanks for sharing, SG. I've asked <first name> to fill out podm.in/pitch-to-us.
 
 Thanks & Regards,
 Akshay Datt". Log both as Activities ("Agent sent: vendor redirect to <name>", "Agent sent: thanks to Saurabh"), within the daily cap. Skip if either mail already went out on that pitch. Other forwards that are not guest pitches: capture only.
