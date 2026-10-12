@@ -1,6 +1,6 @@
 # Inbox agent
 
-Scheduled routine "Inbox to Business OS", once a night at 23:25 JST, Sunday to Friday (Akshay, 8 Oct), with the Gmail and Notion connectors.
+Scheduled routine "Inbox to Business OS", three times a day at 10:25, 16:25 and 23:25 JST, every day, on Sonnet (decision 138, Akshay, 12 Oct; was once a night), with the Gmail, Notion and Google Calendar connectors. When a run creates a new Founder Thesis pitch it fires the evals routine straight away (STEP 7c), so a pitch reaches Akshay's list within the hour.
 
 Capture first. It reads the ad@thepodium.in mailbox and writes down what happened: one Activity per email, and the Engagements and Deals moved to match. It does three things beyond capture, all approved by Akshay on 5 Oct:
 - New FT guest pitch: replies "Thanks for your mail, adding Mamatha to coordinate" with Mamatha in Cc.
@@ -188,11 +188,14 @@ b. On a single match, write:
    - One Activity: Summary "<Guest name> (<Company>) filled the guest form" (add "via <Filled by>" if someone else did), Date = Submitted, Kind Form, Source Form, Source ID "form:<form row id>", Link = the form row URL, Captured today, People = the guest and the filler, Engagement, Episode.
    Never copy Photo or Logo anywhere; they stay on the form row, which the Engagement now links to.
 
+STEP 7c. HAND NEW FT PITCHES TO THE EVALS ROUTINE (decision 138)
+If this run created at least one new Founder Thesis Engagement from an inbound pitch (Direction Inbound, Status New, Eval link empty), fire the evals routine once at the end of the run: Claude Code Remote fire_trigger with trigger_id trig_01DbJZuBeC1TTven5wgjZxoA and text "New FT pitches from the inbox run: <guest names>". Load the tool with ToolSearch ("+Claude_Code_Remote fire_trigger") if it is deferred. Fire it at most once per run, and never when no new FT pitch was created. If the tool is not available, say so in the report; the evals routine's own nightly run picks the pitches up.
+
 STEP 8. REPORT
 End with a short report, nothing else written anywhere:
 - Window read (from and to dates), threads read, messages logged, skipped as noise, skipped as already logged.
 - People created. Engagements created and moved (name: old status -> new status). Deals created and moved. Rows by Waiting on (name: Next action).
-- Pitch replies sent (guest names; Saurabh forwards thanked). Drafts created and sent drafts matched (template: edit size). RSVP threads archived (count). Guest forms merged (guest names) and sent for review.
+- Pitch replies sent (guest names; Saurabh forwards thanked). Evals routine fired (yes or no, and for whom). Drafts created and sent drafts matched (template: edit size). RSVP threads archived (count). Guest forms merged (guest names) and sent for review.
 - Anything you could not match or were unsure about, one line each, so Akshay can fix it by hand.
 Keep it plain and short. No em dashes.
 
