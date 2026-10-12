@@ -42,6 +42,10 @@ All email goes from ad@thepodium.in.
 
 Keep the Notion home page (ThePodium Business OS) current: whenever a database is created, retired or changes purpose, update its card on the home page, and move retired ones to section 5, "Dead databases" (decision 100). Notion pages people read use at most two columns side by side; more is unreadable on a laptop (Akshay, 9 Oct). One table per page: don't group a table view into sub-tables; sort instead (Akshay, 10 Oct).
 
+## At the start of every session with Akshay
+
+Scheduled routines cannot publish Claude artifacts, so routine-written evals sit only in the Engagement page body (decision 141). Early in each session, find Engagements whose page body has a "## Eval (" section but whose Eval link is empty or not a claude.ai link, render each eval with `routines/tools/make_eval.py`, publish it with the Artifact tool, and set Eval link. Report the count in one line.
+
 ## Data and privacy
 
 - This repo is private, but still: no email addresses, phone numbers, WhatsApp or Telegram handles, or credentials in committed files. Real data lives in `data/`, which is git-ignored.
