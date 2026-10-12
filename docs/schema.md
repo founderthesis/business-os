@@ -79,7 +79,7 @@ One row per guest pursuit: a person and a show. Replaces every guest pipeline ta
 | Via | relation → People | Migrate / Auto | The PR contact who brought it in |
 | Organisation | relation → Organisations | Auto | |
 | Direction | select | Auto | Inbound (pitched to us), Outbound (we reached out) |
-| Status | select | Auto / Human | New, Contacted, Interested, Decision pending, Precall requested, Precall done, Sponsored offered, Booking, Booked, Recorded, Form filled, LT chase, Parked, They declined, We declined, Unresponsive |
+| Status | select | Auto / Human | New, Contacted, Interested, Decision pending, Send draft, Precall requested, Precall done, Sponsored offered, Booking, Booked, Recorded, Form filled, LT chase, Parked, They declined, We declined, Unresponsive |
 | Tier | select | Human | Tier 1, Tier 1.5, Tier 2, Sponsored. Importance to us, or Sponsored when the guest pays (Payment and Amount apply). Set by Akshay (decision 74) |
 | Call type | select | Auto | Precall, Recording, Planning call. What Next date is when it is a call |
 | Call link | url | Auto | Zencastr, Riverside or Meet link of the next call, from the calendar |

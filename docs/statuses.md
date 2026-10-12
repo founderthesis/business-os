@@ -22,6 +22,7 @@ So:
 | Contacted | Invite sent, chasing a reply | | yes | |
 | Interested | They replied yes, eval next | | yes | |
 | Decision pending | Eval done, Akshay to decide. Also after a precall | yes | yes | |
+| Send draft | Akshay has decided; the reply is drafted in Gmail and waits for him to send it (decision 134). The inbox moves it on when it goes out | yes | yes | |
 | Precall requested | Precall offered, chasing for a slot | yes | yes | |
 | Precall done | Precall happened, back to Decision pending. For sponsored guests this is the planning call | yes | yes | yes |
 | Sponsored offered | Commercials shared, waiting on them | yes | yes | yes |
