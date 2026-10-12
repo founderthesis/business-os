@@ -36,7 +36,7 @@ MAMATHA IN CC (decision 132, Akshay, 12 Oct): every mail you send or draft from 
 Fetch each data source once at the start to confirm exact property and option names. Never read or write the Credentials page.
 
 HARD RULES
-- Mail actions allowed: the replies on Saurabh's forwarded pitches in STEP 6a (including the vendor redirect and his thank-you), the vendor redirect draft in STEP 6b, the reply Akshay decided in STEP 6c, admin confirmations and asset acknowledgements in STEP 6d, the noted-with-thanks draft on edit notes (STEP 3), and archiving RSVP threads in STEP 7. Nothing else: no other sends, replies, forwards, drafts, labels, trash or read-marking.
+- Mail actions allowed: the replies on Saurabh's forwarded pitches in STEP 6a (including the vendor redirect and his thank-you), the vendor redirect draft in STEP 6b, the reply Akshay decided in STEP 6c, admin confirmations and asset acknowledgements in STEP 6d, the noted-with-thanks draft on edit notes (STEP 3), archiving RSVP threads in STEP 7, and deleting an agent's own draft that a team member already sent by hand (STEP 5). Nothing else: no other sends, replies, forwards, drafts, labels, trash or read-marking.
 - Never delete or merge Notion rows. Never change a schema. Never write to the Queue (retired).
 - Never overwrite a value a person typed with a guess. Only change a field when the mail says so plainly.
 - Never set Parked (Akshay only), Tier, Amount or Payment unless the mail is Akshay saying so. Never move Status backward, except to LT chase or a closed outcome.
@@ -129,6 +129,7 @@ After STEPS 3 and 4, set Waiting on and Next action on every Engagement or Deal 
 - Our side replied and the ball is in their court: Guest or PR, "Waiting on <who>: <what>" (with any date they named, in the text).
 - Sponsored money moved: Mamatha, "Mamatha: <next payment step>".
 - A Cold outreach Deal still at Stage New is the target list (decision 89): leave Waiting on blank.
+- A team member closed Akshay's ask (decision 139, Akshay, 12 Oct): Mamatha (or anyone tagged Team) sent the mail a row was waiting on Akshay for (the offer, decline, precall invite or reply in a Send draft or "Ask Akshay" row), from her own address or ad@thepodium.in. The ask is done: take Akshay off Waiting on, move Status on as in STEP 2b a (Sponsored offered, Precall requested, We declined), Waiting on Guest or PR, Next action "Waiting on <who>: <what the mail asked>", Claude note line "YYYY-MM-DD: <name> sent <what>, off Akshay's list". If an unsent agent draft for that same mail is still in Gmail (a Draft Activity on the row with Edit size empty), delete that draft with delete_draft so it can't go out twice, and set that Draft Activity's Edit note "not sent: <name> sent it by hand <date>, draft deleted". Delete only drafts an agent made (logged as Draft Activities), never one Akshay wrote.
 Never touch Next date here.
 
 STEP 6. NEW FT PITCH: NO REPLY YET (decision 131)
