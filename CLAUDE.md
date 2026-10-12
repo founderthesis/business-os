@@ -44,7 +44,7 @@ Keep the Notion home page (ThePodium Business OS) current: whenever a database i
 
 ## At the start of every session with Akshay
 
-Scheduled routines cannot publish Claude artifacts, so routine-written evals sit only in the Engagement page body (decision 141). Early in each session, find Engagements whose page body has a "## Eval (" section but whose Eval link is empty or not a claude.ai link, render each eval with `routines/tools/make_eval.py`, publish it with the Artifact tool, and set Eval link. Report the count in one line.
+Scheduled routines cannot publish Claude artifacts, so routine-written evals sit only in the Engagement page body (decision 141). Early in each session, find Engagements whose page body has a "## Eval (" section but whose Eval link is empty or not a claude.ai link, render each eval with `routines/tools/make_eval.py`, publish it with the Artifact tool, and set Eval link. Report the count in one line. Also keep at least 6 Free rows in Eval slots (collection://eceeb38c-bd30-4103-8aa5-d53fe7233283): publish new blank "FT eval slot NN" pages with the Artifact tool and add them (decision 142).
 
 ## Data and privacy
 

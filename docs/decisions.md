@@ -148,6 +148,7 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 | 139 | When Mamatha (or any team member) sends the mail a row was waiting on Akshay for, the inbox takes Akshay off the row, moves it on (Status per the mail, Waiting on Guest or PR) and deletes the agent's own unsent draft for that mail so it can't go twice. Never deletes a draft Akshay wrote. | Akshay, 12 Oct |
 | 140 | Outbound + New never waits on Akshay: on Founder Thesis and un# it goes to Mamatha as outreach (inbox STEP 5, daily sweep FLAGGING). First row: Adithya LHS (Nyayanidhi, 3one4 referral). B2S rows marked as Akshay's own connect left as they are pending his call. | Akshay, 12 Oct |
 | 141 | Routine sessions have no Artifact tool, so routine evals land only in the page body. Every interactive session starts by converting those evals to claude.ai artifacts (routines/tools/make_eval.py) and setting Eval link (CLAUDE.md). Akshay to ask Anthropic support whether routines can get the Artifact tool. | Akshay, 12 Oct |
+| 142 | Per Anthropic support (12 Oct): routines can republish an existing artifact they own without a prompt, but not create a new one. So chat sessions pre-create blank "FT eval slot" pages listed in the Eval slots database (home page), and the evals routine publishes each new eval into the next Free slot and sets Eval link. Fallback stays decision 141. 12 slots made 12 Oct. | Akshay, 12 Oct |
 
 ## Open
 
