@@ -319,3 +319,6 @@ One row per Founder Thesis guest form submission, made by the Notion form behind
 | Merge status | select | Auto | New, Merged, Needs review |
 | Merge note | text | Auto | What the routine changed, or why it could not match |
 
+
+### Your call (Engagements, added 12 Oct 2026, decision 157)
+Text. Written by whoever the row is waiting on (Akshay, Chaandini, Mamatha, a host): their decision or instruction. The inbox routine acts on it at its next run, copies it word for word with the writer's name into Claude note, and clears it. Agents never write here; their state and proposals stay in Next action.

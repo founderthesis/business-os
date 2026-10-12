@@ -93,7 +93,7 @@ c. Log it per TEMPLATE MODES AND LOGGING, and flag the Engagement: Waiting on Ak
 STEP 3e. TEMPLATE REVIEW (Fridays only)
 For each Templates row with at least two Draft Activities in the last 7 days whose Edit size is Minor, Major or Rewritten: read their Edit notes and the sent mails, and if the same change keeps coming up, add a section at the end of the template's page headed "## Proposed (<date>)" with a full proposed body that folds the repeated edits in, followed by the Edit notes it is based on. Never change the live body, Subject, Version, Approved or Mode. Also list the templates whose Ready to send shows "Ready" and whose Mode is still Draft.
 
-STEP 3f. SPONSORED NURTURE (decisions 148, 155; Akshay, 13 Oct: "you handle all mails related to sponsored")
+STEP 3f. SPONSORED NURTURE (decisions 148, 158; Akshay, 13 Oct: "you handle all mails related to sponsored")
 Founder Thesis only. Every open FT sponsored lead gets up to ten short follow-ups over about 90 days, sent by you, on the original thread, from ad@thepodium.in. Rows: FT Engagements whose Next action starts "Agent: sponsored step" and whose Next date is today or earlier. Send at most 20 of these per run, oldest Next date first; leave the rest for tomorrow.
 a. Read the sales page first, every run: Notion page "Founder Thesis: sponsored guest features" (3ea19a301a7f8109ac3ed03e82c9a9c0). Numbers in any mail come only from that page as it reads today (they change); if a planned mail quotes a number the page no longer shows, use the page's current figure.
 b. Read the whole Gmail thread (get_thread) before sending. Stop rules, checked in this order:

@@ -1,4 +1,4 @@
-"""Build the Notion AI upload that starts the sponsored nurture (decision 155).
+"""Build the Notion AI upload that starts the sponsored nurture (decision 158).
 
 Reads the per-lead research files in data/review/sponsored_nurture_<date>/
 (<page id>.json, written by read-only research agents) plus _plan.json
@@ -51,7 +51,7 @@ def row_block(i, p, r):
         out += [f"- Status: {status}", "- Waiting on: Guest or PR (remove every other value)",
                 f"- Next date: {p['date']}", f"- Chase step: {cs}",
                 f"- Next action: Agent: sponsored step {step} ({label}) on {fmt(p['date'])}; mail planned in the page body",
-                f"- Claude note line: {DATE}: sponsored nurture planned, step {step} on {fmt(p['date'])} (decision 155). {p['reason']}"]
+                f"- Claude note line: {DATE}: sponsored nurture planned, step {step} on {fmt(p['date'])} (decision 158). {p['reason']}"]
         if p.get("kind") == "GST":
             out.append("- Payment: Not started")
         out += ["- Page body: insert this section at the very top:", "", "````", section(p, r), "````"]
@@ -59,7 +59,7 @@ def row_block(i, p, r):
         f = p["fields"]
         for k, v in f.items():
             out.append(f"- {k}: {v}")
-        out.append(f"- Claude note line: {DATE}: sponsored review (decision 155): {p['reason']}")
+        out.append(f"- Claude note line: {DATE}: sponsored review (decision 158): {p['reason']}")
     return "\n".join(out) + "\n"
 
 
