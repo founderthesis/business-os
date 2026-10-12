@@ -120,7 +120,7 @@ Find the Deal by Organisation or Contacts. Update only where the mail is clear:
 - Waiting on, Next action, Chase step: as for Engagements (Next date only on a new Deal).
 - Contacts: add new people from their side.
 - A new production-sales conversation with no Deal: create one. Company, Organisation, Contacts, Stage from the mail, Source Agent, Source ID "gmail:<thread id>". Warm or cold = Warm only if Akshay already knows them: a guest who has recorded with us, or a personal introduction (set From engagement when it grew out of a guest row). Everyone else is Cold outreach.
-A guest paying to appear on a show is Tier Sponsored on the Engagement, not a Deal.
+Deals are only for PaaS, our podcast production service (decision 156, Akshay, 12 Oct). Everything paid on our own shows stays in Engagements: a guest paying to appear (Tier Sponsored), and brand or influencer requests such as paid articles, partner content, newsletter or LinkedIn mentions. For a brand request create an Engagement "<Brand> <what they want> @ <Brand>, <Show>" with the sender in Via, Direction Inbound, Status Decision pending, Tier empty (never Sponsored, so no offer template fires), Waiting on Akshay, and Next action "Akshay: <brand> wants <what>. Proposed: <price and terms>. Reply draft in the page body. Write ok, not ok, or a change." Put the proposed reply in the page body. Price from the paid-article rate (USD 750 base, about INR 60k + GST for Indian brands; crypto, betting and similar +50%; a LinkedIn or newsletter mention +USD 400) unless Akshay has set another. Never send it until Akshay writes ok.
 
 STEP 5. WHO IS IT WAITING ON
 After STEPS 3 and 4, set Waiting on and Next action on every Engagement or Deal you touched:
