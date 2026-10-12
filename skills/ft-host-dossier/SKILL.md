@@ -1,6 +1,6 @@
 ---
 name: ft-host-dossier
-description: 'Produce the Founder Thesis host dossier pack for Akshay Datt: an HTML dossier plus a ~500-word HTML guest prep note. Trigger on "ft-host- dossier", "/ft-host-dossier", "FT dossier for [guest]", "host dossier for [founder]", "prep me for [guest]", or a pre-call transcript/PR backgrounder upload. Single run: first checks Drive and Gmail for a pre-call transcript and PR mail chain, asking only if not found, then researches via web_search/web_fetch across five layers, drafts, copywriter pass, ships. Dark-mode HTML, sticky nav. Four acts: grounding, low point, mechanics, hard questions. Opens with a short business-in-the-stack explainer and a founder paragraph, not a chronological journey - a career timeline carries the dates. Snapshot and numbers cheat sheet sit after Themes, cheat sheet and sources collapsed into an appendix. Questions follow Akshay''s register per akshay-question-voice.md. Guest note never promises edit rights. Finishes by writing the Dossier link onto the guest''s Founder Thesis Engagement in the Business OS (Notion).'
+description: 'Produce the Founder Thesis host dossier pack for Akshay Datt: an HTML dossier plus a ~400-word HTML guest prep note. Trigger on "ft-host- dossier", "/ft-host-dossier", "FT dossier for [guest]", "host dossier for [founder]", "prep me for [guest]", or a pre-call transcript/PR backgrounder upload. Single run: first checks Drive and Gmail for a pre-call transcript and PR mail chain, asking only if not found, then researches via web_search/web_fetch across five layers, drafts, copywriter pass, ships. Dark-mode HTML, sticky nav. Four acts: grounding, low point, mechanics, hard questions. Opens with a short business-in-the-stack explainer and a founder paragraph, not a chronological journey - a career timeline carries the dates. Snapshot and numbers cheat sheet sit after Themes, cheat sheet and sources collapsed into an appendix. Questions follow Akshay''s register per akshay-question-voice.md. Guest note never promises edit rights. Finishes by writing the Dossier link onto the guest''s Founder Thesis Engagement in the Business OS (Notion).'
 ---
 
 # ft-host-dossier — Founder Thesis Host Dossier Pack
@@ -65,7 +65,7 @@ Mine every upload FIRST, same as anything found via Stage 0's Drive/Gmail search
 ## Outputs
 
 1. **Host Dossier (HTML)** — `/mnt/user-data/outputs/<lastname>_ft_dossier.html` — **dark mode**: dark background, light text, one accent colour, a second accent for flags, sticky in-page nav, visual stat strip and career timeline. No light/white theme.
-2. **Guest Prep Note (HTML)** — `/mnt/user-data/outputs/<lastname>_ft_guest_prep.html` — ~500 words, branded, warm, first-person Akshay. Base: `references/guest-prep-template.html`.
+2. **Guest Prep Note (HTML)** — `/mnt/user-data/outputs/<lastname>_ft_guest_prep.html` — ~400 words, branded, warm, first-person Akshay. Base: `references/guest-prep-template.html`.
 
 Then `present_files` with both, dossier first. Ship one dossier only; if a superseded format version sits in outputs, delete it.
 
@@ -181,7 +181,9 @@ Per theme: catchy specific heading, one context line carrying the fact that powe
 - [ ] Snapshot (stat strip + table) placed after Themes/Fact flags/Past appearances, not before
 - [ ] Numbers cheat sheet and Sources collapsed into an appendix at the bottom
 - [ ] No em-dashes, no AI vocabulary, no repeated facts
-- [ ] Guest note 480-550 words, first-person Akshay, no specific questions, no edit or approval promise
+- [ ] Guest note 350-450 words, first-person Akshay, no edit or approval promise
+- [ ] Guest note themes: 5-6 broad territories, a few words each; no specific questions, named incidents, products, numbers, dates or "stories to bring" (guests must not script answers)
+- [ ] Guest note practical section: laptop raised so the camera is at eye level, no background blur so pick a good-looking backdrop and avoid plain white walls, AirPods are fine; never "join early"
 - [ ] Both files in `/mnt/user-data/outputs/`, presented dossier-first, no stale format version left behind
 - [ ] Dark mode throughout, no light background
 - [ ] Dossier link written to the guest's FT Engagement in Notion, or the reply says why not (Stage 6)
@@ -200,7 +202,7 @@ Per theme: catchy specific heading, one context line carrying the fact that powe
 - **Don't average conflicting numbers.**
 - **Don't ship two versions or leave a superseded file in outputs.**
 - **Don't let themes go generic.** "Fundraising lessons" is a category; "raising at a $200m mark on a base that was zero eighteen months ago" is a theme.
-- **Don't put specific questions, or any edit/approval language, in the guest note.**
+- **Don't put specific questions, named incidents, numbers, or any edit/approval language in the guest note.** Themes stay broad so guests don't script their answers (Akshay, 12 Oct).
 - **Don't put the Snapshot or the numbers cheat sheet up front.** They go after Themes now.
 - **Don't use a light background. Don't use em-dashes.**
 
