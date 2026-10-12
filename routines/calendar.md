@@ -33,7 +33,7 @@ The Queue is retired: never read or write it. NEXT DATE (decision 81): you are t
 
 HARD RULES
 - Never create, move, edit or delete a calendar event that has attendees, or one you did not create. The only events you may create, update or delete carry "bos-key:" in their description. The one exception is the host's "Podcast prep" invite in STEP 3 (key ending "hostprep"), whose only attendee is the show's host.
-- Never send mail, except the day-before mail in STEP 3b when its template Mode is Send. Gmail use is otherwise limited to reading threads and creating drafts.
+- Never send mail, except the day-before mail in STEP 3b when its template Mode is Send, the declined-invite question to the PR in STEP 2 (decision 163) and the TEAM ROLES sends. Gmail use is otherwise limited to reading threads and creating drafts.
 - Never set Parked, Tier, Amount or Payment. Never move an Engagement Status backward.
 - Every Engagement you change: one line at the top of Claude note ("YYYY-MM-DD: <what and why>"), Claude updated = today.
 
@@ -53,12 +53,13 @@ For each matched, confirmed event in the future:
 Also Next action: "Precall on <date>" or "Recording on <date>" (put it first and keep any other open ask after " | "), Waiting on Mamatha only if she still has a prep step. Only write what changed.
 
 Cancellations, for future events only:
-- An event cancelled, or the guest attendee's responseStatus is "declined": Waiting on Mamatha, Next action "Mamatha: <recording|precall> on <date> cancelled, rebook or close". Leave Next date. Skip if Next action already says so.
+- An event cancelled: Waiting on Mamatha, Next action "Mamatha: <recording|precall> on <date> cancelled, rebook or close" (on Founder Thesis, per TEAM ROLES, send the "Reschedule after guest cancels" mail yourself instead). Leave Next date. Skip if Next action already says so.
+- The guest attendee declined but the event still stands (decision 163, Akshay, 13 Oct: "this one invite in which the main star, the guest, has declined: in such cases we should ask PR if it is still on"): the guest is the attendee whose address is on the Guest's People row, else the one named in the title. Send, never draft, a short mail from ad@thepodium.in to the person who booked or pitched (Via; else the attendee from the PR or company side who booked it), Cc the other people from their side on the invite plus Mamatha, never the guest alone and never Saurabh: on their latest scheduling thread if there is one (send_message with replyThreadId, so older internal mails are not quoted), else a new mail with subject "<event title>: still on?". Body: "Hi <first name>,<br><br><Guest first name> has declined the calendar invite for the <recording|call> on <weekday, D Mon, start to end in IST>. Is it still on for that slot?<br><br>The invite went to <the address's domain, e.g. his Tenarai address>. If <he or she or they> would rather get it at another address, or needs a different time, let us know and we'll sort it out.<br><br>Regards,<br>Akshay". Within the daily cap. Then Waiting on Guest or PR, Next action first "Waiting on <who>: is the <date> <recording|call> still on? <Guest> declined the invite (asked <D Mon>)", keep the old ask after " | ", Activity "Agent sent: guest declined the invite, asked <who> if <date> is still on", Claude note line. Leave the event, Next date and Status alone (never edit or delete an invite with guests on it). Skip if an Activity with that Summary for that date already exists, or if the guest accepted again since. If they reply that it is off, the inbox handles it as a cancellation.
 - An Engagement with Call type set and Next date in the future whose event is no longer on the calendar: same as cancelled.
 - A Booked Engagement with Next date in the next 30 days and no matching event: Waiting on Mamatha, Next action "Mamatha: booked for <date> but no invite on the calendar". Skip if Next action already says so.
 
 STEP 3. NOTION TO CALENDAR (private prep entries)
-For each matched, confirmed recording or precall starting in the next 14 days:
+For each confirmed recording or precall starting in the next 30 days (decision 163, Akshay, 13 Oct: recordings showed up without prep and cool-off time). A recording you could not match to an Engagement still gets its prep block and cooling-off block: use the calendar event id in place of the engagement page id in the bos-key, put only "Join: <Call link>" and the event title in the description, and list it in the report so it can be matched:
 - Key: "bos-key: <engagement page id> <event start ISO>". Search the calendar (list_events with fullText = the engagement page id) for an event you created for this Engagement.
 - None: create_event on ad@thepodium.in with visibility "private", no attendees, notificationLevel none:
   Summary: "Prep: <Guest> @ <Company> (<Show short name> <recording|precall>)"
