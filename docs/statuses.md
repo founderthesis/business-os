@@ -74,7 +74,7 @@ Open means Status is not They declined, We declined, Unresponsive or Form filled
 
 Each tab shows Name, Status, Eval verdict, Tier, Next action, Next date, Eval link, Guest, Stakeholders, and nothing else unless the tab needs it.
 
-un# has the same set (6 Oct): **un#: Pipeline** (open rows, with Host verdict, Eval verdict and Dossier link, quick filters on Status, Direction and Host verdict), **un#: Sponsored** and **un#: Closed**.
+un# has the same set (6 Oct): **un#: Pipeline** (open rows, with Host verdict, Eval verdict and Dossier link, quick filters on Status, Direction and Host verdict), **un#: Sponsored** and **un#: Closed**. Since 13 Oct also **un#: Needs action**: open rows where our side has a move (due or overdue, no Next date, or waiting on the team or host), grouped by Status. un#: Today only catches dated rows, so undated Contacted, Interested and LT chase rows never surfaced there.
 
 ## Deals: the sales table (new)
 
