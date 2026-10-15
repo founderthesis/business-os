@@ -14,7 +14,6 @@ Open work for the next session. Read CLAUDE.md, docs/decisions.md (81 to 89 are 
 - Members page: 13 Added members have no one-liner (doc-list rows with no intro blurb); fill them or leave the cell blank. Share the page with the group when happy.
 - .claude/settings.json: the "mcp__Claude_Code_Remote" allow rule does not match the server name (claude-code-remote).
 - Patron paragraph: live in the calendar routine since 9 Oct (decision 95).
-- Sri board (Business OS > Host boards > un# with Sri): check Luca Prosperi's verdict, the four stale "No" precall rows (Shevchenko, Meggs, Ober, Asher Tan), three thin short pitches, and eval/dossier links Sri can't open, before sharing.
 - Scimplify: one guest or two (Salil Srivastava, Sachin Santhosh)?
 - Transcripts: run routines/transcripts-backfill.md in Claude Code on his Mac (needs his folder paths); set up routines/transcripts-after-recording.md as a desktop scheduled task.
 - Upload downloads/all-skills.zip skills in claude.ai.

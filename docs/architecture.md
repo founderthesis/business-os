@@ -43,7 +43,7 @@ SOURCES      Gmail · Calendar · Gemini notes · Zencastr · Sheets · Blue · 
 |---|---|---|
 | People | a human; the master network list | name, LinkedIn, email, phone, location (from LinkedIn), organisation, role, blurb, research history (evals, dossiers, prep notes), tags (guest, prospect, sponsor, PR contact, host), FT guest, Substack article, in WhatsApp group |
 | Organisations | a company, fund or agency | domain, type, client status, people |
-| Engagements | one pursuit with a person or organisation | type (guest outbound, guest inbound, BD, sponsor, partner, client), show, stage, outcome, whose move, next action and date, eval verdict, host verdict, commercial terms, via (PR contact, a Person), stakeholders (everyone else on the thread, all copied on guest emails) |
+| Engagements | one pursuit with a person or organisation | type (guest outbound, guest inbound, BD, sponsor, partner, client), show, stage, outcome, whose move, next action and date, eval verdict, host approval (hosts answer on their host board, decision 185), commercial terms, via (PR contact, a Person), stakeholders (everyone else on the thread, all copied on guest emails) |
 | Shows | a podcast | host, owned or client, active, templates, default price (Spotlight is FT Tier 3, not a show) |
 | Episodes | an episode | show, guest(s), tier, recording and publish dates, transcript, links, Final fields (title, cinematic title, thumbnail copy, intro VO, show notes, LinkedIn post, trailer copy); page body is the working doc every skill writes into |
 | Tasks | a unit of work with an owner | episode or engagement, owner, due, status; a handful per episode, auto-created |

@@ -1,5 +1,7 @@
 # un# eval refresh and Sri board rebuild (one-off, 9 Oct 2026)
 
+Retired 15 Oct 2026 (decision 185). Kept for history; do not run. un# evals come from the un-guest-eval skill, and the daily sweep (STEP 3c) keeps the host boards.
+
 Akshay, 9 Oct: Sri's board is no good. Redo the guest eval for every un# Engagement at Decision pending, and for every other active un# guest whose eval is more than 3 months old (not for parked or closed rows). Update the Engagements, then rebuild the board so Sri can read every eval without opening a link. First run (9 Oct): routines created from a chat get no connectors, so the 34 evals were researched in the chat and applied with one Notion AI upload (decision 91). To run it as a routine later, create it in the claude.ai Routines page with the Notion and Gmail connectors. Decision 94.
 
 ## Prompt
