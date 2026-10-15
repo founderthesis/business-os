@@ -24,7 +24,7 @@ When Akshay asks what's pending on him, read this list, check each item is still
   4. Lock the public directory (database menu, Lock database) so nobody edits the copy.
 - Founder Thesis guests list (decisions 221, 222), in this order:
   1. Upload data/review/ft_guests_enrich_2026-10-16_notion_ai_part1.md, then part2, to Notion AI (each fills Role, What the company does, Tags and LinkedIn on about 300 guests, and fixes 6 misspelt names such as Greg Moran and Sagar Agarwal).
-  2. Say whether to fold the 5 people listed twice (Nikhil Aggarwal, Vishal Gondal, Vatsal Singhal, Prabhtej Singh Bhatia, Raghu Kumar) into one row each, the extra row marked REMOVE for you to delete.
+  2. Delete the 5 rows named REMOVE (the second rows of Nikhil Aggarwal, Vishal Gondal, Vatsal Singhal, Prabhtej Singh Bhatia, Raghu Kumar; folded 16 Oct, their other company now shows as Ex- or Now in Role).
   3. Publish the database (Share > Publish, search indexing off) and point podm.in/guest-list at its notion.site link.
   4. Paste the updated routines/cowork-evals.md prompt into the Cowork "Founder Thesis guest evals" task (it still names podm.in/founders; Claude can't edit Cowork tasks).
 - Rules for Zoya, 2 more open questions (15 Oct): keep the day-before release WhatsApp (it was deleted from the release table, restored per the landing page); should the agent write the 3 post options from the transcript.
