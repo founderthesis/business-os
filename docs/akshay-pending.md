@@ -14,3 +14,4 @@ When Akshay asks what's pending on him, read this list, check each item is still
 - Follow-up automation (15 Oct): comment on owners in the "AD comments" columns and answer the 6 questions at the bottom of the page. Pick Zoya's sign-off (A, B or C) from the test mail.
 - Zoya rewire: the daily sweep's scheduled task needs the MCP Emails connector (Zoya's inbox) attached before it can send from her. Claude can't add connectors to an existing scheduled task.
 - ad@thepodium.in is connected to MCP Emails (15 Oct). Add the MCP Emails connector to the Inbox, Calendar sync, Daily sweep and Founder Thesis guest evals scheduled tasks, as done for Blueticks.
+- WhatsApp to Business OS: attach the bluetick and Notion connectors to the new scheduled task (trig_01MnmJYorWrd61K7b5BCqXr1), then delete the old paused "whatsapp to business OS".
