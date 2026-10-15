@@ -95,6 +95,8 @@ Private prep calendar: a separate calendar only Akshay sees. Agents never write 
 | Migration, identity resolution | Python in `migration/`, re-runnable |
 | Rules, prompts, skill versions | This repo |
 
+Google Workspace access. Claude reaches Gmail, Calendar, Drive, Docs and Sheets through the connectors Akshay approved with ad@thepodium.in. In the Workspace admin console these are third-party connections, managed under Security, Access and data control, API controls, app access control. Claude must stay Trusted or Unrestricted there: Limited or Blocked cuts every routine off from mail, calendar and Drive at once. The admin page "Agents, Agent access management" is only for Google's own Gemini agents and does not govern Claude (checked 15 Oct 2026; no Gemini agents in use).
+
 ## Build order
 
 1. Audits (done or running; see `docs/audits/`)
