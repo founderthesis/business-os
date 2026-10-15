@@ -2,7 +2,7 @@
 
 When Akshay asks what's pending on him, read this list, check each item is still open, and give him the open ones. Remove an item once it's done.
 
-- Mac transcript task (Claude desktop, Scheduled tasks): replace its prompt with mac-transcripts-v2.txt so it also saves each transcript to Drive. This now blocks the automatic thank-you (decision 228): no transcript has reached Drive since 10 Oct, so Sankalp Arora's thank-you (recorded 15 Oct) is waiting on it.
+- Mac transcript task (Claude desktop, Scheduled tasks): replace its prompt with mac-transcripts-v2.txt so it also saves each transcript to Drive. This now blocks the automatic thank-you (decision 228): no transcript has reached Drive since 10 Oct, so Sankalp Arora's thank-you (recorded 15 Oct) is waiting on it. Also have it mail each transcript .txt into ad@thepodium.in as an attachment, subject "Transcript | <guest full name>": the cloud routines can only attach a file that is already in the mailbox, so this is what lets the thank-you carry it attached (decision 228); without it they share the Drive link.
 - Zencastr: reply on whether they can back up transcripts to Drive. If yes, the Mac transcript task can go.
 - "FT Newsjack, daily archive scan" routine: switch the model to Sonnet (Claude can't edit it).
 - Blueticks support: report that get_participants ignores skip and cursor and stops at 100 members (draft text given 14 Oct).
