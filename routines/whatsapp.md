@@ -72,7 +72,7 @@ FT Community is the only place anyone edits member details. The public database 
 - Source: FT Community rows with Membership Added. The public value of each field: Name = Name; Company = Company; What they do = One-liner (empty if it holds an email, phone number, handle or money figure); Type = Type; LinkedIn = LinkedIn, else the linked People row's LinkedIn; City = City.
 - Read both sides with one SQL query each. Match by Name (case and accents ignored); if a name repeats, by LinkedIn.
 - No public row for a member: create it (batches of up to 100 pages per call). A public row whose six fields differ from the member's values: update it to the FT Community values (an empty FT Community field clears the public one). Write only rows that differ.
-- A public row with no matching member, not already named "REMOVE: ...": if an unmatched member has the same LinkedIn, it was renamed: rename the public row and update it. Otherwise rename it "REMOVE: <Name>" and clear every other field, for Akshay to delete.
+- A public row with no matching member, not already named "REMOVE" or "REMOVE: ...": if an unmatched member has the same LinkedIn, it was renamed: rename the public row and update it. Otherwise rename it "REMOVE" (no name, so a former member never shows on the web) and clear every other field, for Akshay to delete; list the former member by name in the report.
 - Write nothing else there: never an email, phone number, WhatsApp id, Blurb, review note, Person link or link into the Business OS.
 
 STEP 5. REPORT
