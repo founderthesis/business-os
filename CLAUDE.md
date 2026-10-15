@@ -79,6 +79,8 @@ Evals are written by the Cowork "Founder Thesis guest evals" task, which runs th
 
 No em-dashes. Short varied paragraphs, contractions, specifics over generalities. No "delve", "leverage", "unlock", "robust", "seamless". No "it's not X, it's Y". Sentence case headers. No sign-offs.
 
+WhatsApp messages an agent sends on Akshay's behalf (Akshay, 15 Oct) are signed "Zoya, Akshay's AI Chief of Staff" and open by saying who is writing; never pose as Akshay.
+
 WhatsApp messages Akshay sends or forwards (Akshay, 14 Oct): several short messages, not one long one (long messages read as AI); each starts lowercase; one message per send so he can forward each.
 
 ## Repo layout
