@@ -97,7 +97,7 @@ c. The mail. The page body section "## Next sponsored mail" holds the planned te
    The sequence (day = days after the offer): weekly for the first 3, then every 2 weeks, the last at 6 months.
    R (restart, offers older than 180 days): checking back in, the B2B influencer marketing framing, 2 peers. After R, continue from step 3.
    1 (day 7): soft bump, making sure it reached the founder.
-   2 (day 14): peers.
+   2 (day 14): open by asking for an update from <guest first name> and team, then peers.
    3 (day 21): audience seniority, LinkedIn followers at director level or above with the director, VP and CXO split.
    4 (day 35): proof story: during a founder's fundraise, someone in the investment committee said they had listened to his Founder Thesis interview as part of due diligence, to understand the business. Never name him.
    5 (day 49): a real, recent (last 60 days) news item about the founder or company, found with web search and checked, tied to why it would make a good conversation. Nothing solid: use a recent FT episode from their sector instead.
@@ -108,11 +108,11 @@ c. The mail. The page body section "## Next sponsored mail" holds the planned te
    10 (day 119): a recent Founder Thesis episode from their sector (Episodes, released in the last 60 days), with its short link.
    11 (day 133): a new milestone of ours from the sales page (views, reach, followers), as it reads today.
    12 (day 147): founder or company news again, a different item from step 5.
-   13 (day 161): what one episode delivers: the typical reach from the sales page, plus clips and thumbnails they can run on their own channels.
+   13 (day 161): ask whether they still represent the founder, and that we're happy to reach out to him directly if not (Akshay, 15 Oct). When the founder wrote directly: a short "is this still on your radar?" instead.
    14 (day 180): close the loop: last note from me, the door stays open, pricing may change by then.
    Step 0 rows carry a one-off reply (commercials, a call link, GST details) planned in the body: send it, then continue the sequence at step 1 from today.
 d. After sending: log an Activity "Agent sent: sponsored step <n> to <name>" (Kind Email out, Link the thread, Engagement, Captured today); Chase step = <n> (R counts as 2); Last activity; Claude note line "YYYY-MM-DD: sponsored step <n> sent (<angle>)". Then plan the next step: Next date = offer date + that step's day (never sooner than 3 working days from today; weekdays only), Next action "Agent: sponsored step <n+1> (<angle>) on <D Mon>; mail planned in the page body", Waiting on Guest or PR, and replace the "## Next sponsored mail" section at the top of the page body with the next mail written now (Planned date, Step, To, Thread, then the text in a code block), so Akshay can always read what goes next.
-e. After step 14, if no reply in 14 days: Status Unresponsive, Next date empty, Next action "Closed: 14 sponsored follow-ups unanswered". A sponsored row never goes to Mamatha's list and never closes on the three-chase rule (decision 118).
+e. Close rule (decision 189, Akshay, 15 Oct: "if there is no reply for 2 months or if 6 months are over, close as unresponsive; if there was a response in month 5, we don't automatically close in month 6"). Check it before b. on every row: when 60 days have passed since the later of the offer date and their last reply on the thread, with nothing from their side since, set Status Unresponsive, Next date empty, Next action "Closed: no reply in 60 days (sponsored)", Claude note line, and send nothing. A reply restarts the 60 days, so a lead that never replies closes on day 60, after step 5, and one that replied in month 5 stays open past month 6. After step 14, plan no more mails; the row closes when its 60 days run out unless they write again. A sponsored row never goes to Mamatha's list and never closes on the three-chase rule (decision 118).
 f. Report: sends by step, rows stopped by a reply and where they went, and rows skipped with the reason.
 
 STEP 4. FLAG WHAT HAS GONE QUIET OR IS MISSING
