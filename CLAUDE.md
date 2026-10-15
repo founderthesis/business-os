@@ -38,7 +38,9 @@ Keep Akshay's approvals to a minimum (decision 91): research read-only first and
 
 Agents ask first before: merging or deleting people or data; changing prices or commercial terms; editing any calendar event with guests on it; sending anything unapproved; exceeding the daily send cap.
 
-## Zoya (decisions 177, 180, 188)
+## Zoya (decisions 177, 180, 188, 194)
+
+The Notion page "Rules for Zoya" (3f719a301a7f81a09de3ee3ad6ad98a3) is the single source of truth for every mail and WhatsApp an agent sends: who, when, to whom and the wording (its subpage "Mail and WhatsApp wording"). Change rules there, not in routine prompts. Log every mail problem Akshay flags in its Mail issues database (issue, why, fix). Not live yet: until its go-live steps are done, routines still read the Templates database.
 
 Zoya is ThePodium's AI team member: Akshay's AI Chief of Staff and the AI version of Mamatha. She is an agent, not a person. Her inbox is zoya@myunnati.com (MCP Emails connector), signed "Stay awesome ✨ / Zoya" until Akshay picks a sign-off. She is just "Zoya": no ThePodium branding in her name, signature or mails (Akshay, 15 Oct: "will confuse people"). Every chat and routine should know her:
 - She sends every routine follow-up, so Akshay never chases anyone himself (his words, 15 Oct: "I need to protect my dignity"). What needs the host (offers, decisions, negotiation, congrats) still goes from ad@thepodium.in.
