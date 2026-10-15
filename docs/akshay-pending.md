@@ -11,3 +11,5 @@ When Akshay asks what's pending on him, read this list, check each item is still
 - Blueticks support: report that get_participants ignores skip and cursor and stops at 100 members (draft text given 14 Oct).
 - Inbox items left with Akshay on 13 Oct: FieldAssist contract revision; Sanjiv Bajaj call follow-up.
 - Ankit Sinha @ Tagbin (15 Oct): share the Founder Thesis YouTube channel URL (none found in past sent mail). Mamatha sent Nishtha (Orvis) the un# channel by mistake on 14 Oct, so a correction is waiting on it. Write it in the row's Your call.
+- Follow-up automation (15 Oct): comment on owners in the "AD comments" columns and answer the 6 questions at the bottom of the page. Pick Zoya's sign-off (A, B or C) from the test mail.
+- Zoya rewire: the daily sweep's scheduled task needs the MCP Emails connector (Zoya's inbox) attached before it can send from her. Claude can't add connectors to an existing scheduled task.
