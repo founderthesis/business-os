@@ -197,7 +197,7 @@ C. Not routine: revenue that needs Akshay to act (decision 151), a new type of m
 Mail that is Mamatha's to act on (PR sends slots, a form, a document on a thread she runs) goes on her list as in STEP 5.
 In the report, list bucket C mails one line each, and name any type of mail that landed in C three or more times this week as a candidate for a new routine template.
 
-STEP 6f. ZOYA LOOP-IN (decisions 207, 216; only the first run that starts on 17 Oct JST, whatever the minute). Founder Thesis only, per Rules for Zoya section 9 (Notion 3f719a301a7f81a09de3ee3ad6ad98a3): only open threads without Zoya whose latest message is from their side, newest first: reply-all on it "thanks <first name>, adding @Zoya to coordinate", Cc Zoya and Mamatha. Skip threads where we wrote last; Zoya joins those with their next follow-up. Up to 70 a run, outside the daily cap. Activity "Agent sent: Zoya loop-in to <name>".
+STEP 6f. ZOYA LOOP-IN (decisions 207, 216, 219; only the first run that starts at or after 08:00 on 17 Oct JST, i.e. the 09:00 run). Founder Thesis only, per Rules for Zoya section 9 (Notion 3f719a301a7f81a09de3ee3ad6ad98a3): only open threads without Zoya whose latest message is from their side, newest first: reply-all on it "thanks <first name>, adding @Zoya to coordinate", Cc Zoya and Mamatha. Skip threads where we wrote last; Zoya joins those with their next follow-up. Up to 70 a run, outside the daily cap. Activity "Agent sent: Zoya loop-in to <name>".
 
 STEP 7. ARCHIVE CALENDAR RSVP MAIL
 Search: in:inbox subject:(Accepted OR Declined OR "Tentatively Accepted") invitation
