@@ -27,3 +27,8 @@ Open work for the next session. Read CLAUDE.md, docs/decisions.md (81 to 89 are 
 - Built to Share migration.
 
 - Templates (decision 98): calendar and evals prompts read from Templates and are live (9 Oct). inbox.md and daily-sweep.md are updated in the repo but not yet pushed to their triggers (inbox trig_0189eZvAD8x4357cfevgZ3No, daily sweep trig_01MdfUFg2qrebDWgiHwncgnd); their template rows match the wording already live, so push them with the next change to either prompt.
+
+## 15 Oct, inbox prompt (from the host-boards session)
+- Decision numbers: 190 FT Community source of truth, 191 podm.in/community, 192 host boards never show Pre-call needed, 193 Saurabh-forwarded pitches (reply on the original pitch message when it also reached ad@).
+- Live inbox prompt was pushed 09:18 UTC from the merged file (your community and guests-list changes included) and verified byte for byte, except that it still cites "decision 190" in STEP 7d c and "decisions 122, 192" in STEP 6c d. The next push from the repo fixes both.
+- Size cap: update_trigger rejects prompts over 65,536 bytes. Inbox is at 64,764. Check `len(prompt.encode())` before pushing, and push from the main session, not a subagent (a subagent's push was cut off mid-prompt today and left a truncated live prompt).
