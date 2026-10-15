@@ -21,7 +21,11 @@ When Akshay asks what's pending on him, read this list, check each item is still
   2. In the public directory, delete the now-empty "To delete" view (Claude can't delete views).
   3. Publish the public directory (Share > Publish, search indexing off) and point podm.in/community at its notion.site link.
   4. Lock the public directory (database menu, Lock database) so nobody edits the copy.
-- Founder Thesis guests database (decision 191): publish it (search indexing off) and repoint podm.in/founders from the old sheet to it.
+- Founder Thesis guests list (decisions 221, 222), in this order:
+  1. Upload data/review/ft_guests_enrich_2026-10-16_notion_ai_part1.md, then part2, to Notion AI (each fills Role, What the company does, Tags and LinkedIn on about 300 guests, and fixes 6 misspelt names such as Greg Moran and Sagar Agarwal).
+  2. Say whether to fold the 5 people listed twice (Nikhil Aggarwal, Vishal Gondal, Vatsal Singhal, Prabhtej Singh Bhatia, Raghu Kumar) into one row each, the extra row marked REMOVE for you to delete.
+  3. Publish the database (Share > Publish, search indexing off) and point podm.in/guest-list at its notion.site link.
+  4. Paste the updated routines/cowork-evals.md prompt into the Cowork "Founder Thesis guest evals" task (it still names podm.in/founders; Claude can't edit Cowork tasks).
 - Rules for Zoya, 2 more open questions (15 Oct): keep the day-before release WhatsApp (it was deleted from the release table, restored per the landing page); should the agent write the 3 post options from the transcript.
 - Engagements views cleanup (after Fri 17 Oct): Zoya's poll ("Which Engagements views do you use?") went to Mamatha, Chaandini and Ranjita. Claude reads the replies (a reminder is set for 17 Oct, 18:00 JST) and brings you the retire list: keep your set (AD, Active, Cold per show, plus FT Sponsored and FT All), every view the team names, and B2S 1 and HBD 1 (Salesblink sync). You approve the list, then the rest is deleted and the dashboards, home page and the broken FT: Today links are repointed.
 - Cowork "Founder Thesis guest evals" task (15 Oct): set its schedule to 00:25, 09:25, 16:25 and 21:25 JST so it follows the four inbox runs (decision 202). Claude cannot change Cowork schedules.

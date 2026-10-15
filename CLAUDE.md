@@ -57,7 +57,7 @@ Short links (decision 168). Use only these, for these jobs, and never copy a lin
 - podm.in/book: book a 2-hour recording slot.
 - podm.in/sponsored: Founder Thesis sponsored features, the first sponsored link a lead sees (it looks better). unhashed.co/sponsored for un#.
 - podm.in/why-sponsor: the published sales page "Founder Thesis: sponsored guest features", with the full data. Use it in sponsored follow-ups (not the first mail) and when someone has questions about a sponsored feature; follow-ups also draw their facts from it (decision 218).
-- podm.in/founders: Founder Thesis guests, released and recorded (repoint it from the old sheet to the Founder Thesis guests database once published).
+- podm.in/guest-list: the full list of founders Akshay has interviewed (the published Founder Thesis guests database), to share with PR and potential guests (decision 222). It replaced podm.in/founders, which is retired: never send it.
 - podm.in/community: the public Founder Thesis Community member directory (decision 191).
 - podm.in/pitch-to-us: vendor and service pitches.
 - podm.in/thank-you: the guest thank-you and form after a recording (decision 179).
