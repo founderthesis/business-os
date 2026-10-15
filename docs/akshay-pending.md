@@ -17,8 +17,9 @@ When Akshay asks what's pending on him, read this list, check each item is still
 - Host board short links: once the team sets them up (for example unhashed.co/pipeline), confirm each so it joins the approved short-link list.
 - FT Community directory (decisions 186, 190), in this order:
   1. Vet the member list in FT Community, Members view (https://app.notion.com/p/9a1192a5e71b4a2fa6a585e3c3fd36f7?v=3f919a301a7f81a6b684000cb27582ff). Edit there only; the public copy follows within a WhatsApp run.
-  2. In the public directory, delete the 33 rows named "REMOVE: ..." (filter Name starts with REMOVE).
-  3. Publish the public directory (Share > Publish, search indexing off) and share its notion.site link.
+  2. In the public directory, delete the now-empty "To delete" view (Claude can't delete views).
+  3. Publish the public directory (Share > Publish, search indexing off) and point podm.in/community at its notion.site link.
   4. Lock the public directory (database menu, Lock database) so nobody edits the copy.
-- Follow-up automation, 3 open questions (15 Oct): is podm.in/members the link for the public directory (sponsored mail 7 waits on it); keep the day-before release WhatsApp (it was deleted from the release table, restored per the landing page); should the agent write the 3 post options from the transcript.
+- Founder Thesis guests database (decision 191): publish it (search indexing off) and repoint podm.in/founders from the old sheet to it.
+- Follow-up automation, 2 open questions (15 Oct): keep the day-before release WhatsApp (it was deleted from the release table, restored per the landing page); should the agent write the 3 post options from the transcript.
 - Engagements views cleanup (after Fri 17 Oct): Zoya's poll ("Which Engagements views do you use?") went to Mamatha, Chaandini and Ranjita. Claude reads the replies (a reminder is set for 17 Oct, 18:00 JST) and brings you the retire list: keep your set (AD, Active, Cold per show, plus FT Sponsored and FT All), every view the team names, and B2S 1 and HBD 1 (Salesblink sync). You approve the list, then the rest is deleted and the dashboards, home page and the broken FT: Today links are repointed.

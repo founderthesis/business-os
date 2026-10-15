@@ -85,6 +85,7 @@ Evals are written by the Cowork "Founder Thesis guest evals" task, which runs th
 - Notion custom agents are credit-metered. Scheduled Claude routines do skill and email work.
 - Zencastr has no export API. Transcripts are downloaded with Claude in Chrome on Akshay's Mac.
 - Meet transcripts are switched on per call, not by default.
+- A scheduled task prompt is capped at 65,536 bytes; the inbox prompt is close to it. Pull the repo file fresh, check its size, push it from the main session, and verify the live prompt against it.
 
 ## Writing rules (anything a person will read)
 
