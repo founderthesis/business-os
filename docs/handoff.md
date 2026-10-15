@@ -2,6 +2,10 @@
 
 Open work for the next session. Read CLAUDE.md, docs/decisions.md (81 to 89 are the newest, plus the 9 Oct override of 87) and this file first.
 
+## For the FT eval refresh session (15 Oct, from the business-os session)
+- FT Community cleanup is applied: Membership = Added is 511 (99 rows created with Needs review ticked, 33 set to Left, the other 412 already Added). Its own page could not take a comment (archived), so this note is the handoff.
+- A data accuracy pass on FT Community (LinkedIn, company, one-liner, Person links) is running and writes only to FT Community. The Founder Thesis Community database and its page were not touched. Refill the directory after that pass lands (see docs/notion.md for its row).
+
 ## Done
 - 8 Oct: the rewritten prompts (decisions 81 to 86) are live on all four routines, verified with get_trigger.
 
