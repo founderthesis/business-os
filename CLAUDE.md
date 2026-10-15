@@ -47,6 +47,8 @@ Zoya is ThePodium's AI team member: Akshay's AI Chief of Staff and the AI versio
 - WhatsApp messages agents send for Akshay are signed as her (see Writing rules). Never put Zoya in Waiting on; her work is the agents' work.
 
 
+Sending mail (decision 184): every agent mail goes through MCP Emails (ad@thepodium.in for Akshay, zoya@myunnati.com for Zoya) with html_body: one <p> per paragraph, <ul><li> for lists, real clickable links to the approved short links, plus a plain-text body. Never one block of lines joined with <br>; a mail must look typed by a person. Reading Gmail stays on the Gmail connector.
+
 Short links (decision 168). Use only these, for these jobs, and never copy a link out of a calendar title or booking page:
 - podm.in/30min: book a 30-minute call with Akshay (precalls, intros, rebooking any call with him).
 - podm.in/book: book a 2-hour recording slot.

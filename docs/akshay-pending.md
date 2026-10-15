@@ -13,3 +13,4 @@ When Akshay asks what's pending on him, read this list, check each item is still
 - Ankit Sinha @ Tagbin (15 Oct): share the Founder Thesis YouTube channel URL (none found in past sent mail). Mamatha sent Nishtha (Orvis) the un# channel by mistake on 14 Oct, so a correction is waiting on it. Write it in the row's Your call.
 - Follow-up automation (15 Oct): comment on owners in the "AD comments" columns and answer the 6 questions at the bottom of the page. Pick Zoya's sign-off (A, B or C) from the test mail.
 - Zoya rewire: the daily sweep's scheduled task needs the MCP Emails connector (Zoya's inbox) attached before it can send from her. Claude can't add connectors to an existing scheduled task.
+- Connect ad@thepodium.in to MCP Emails (Gmail tile, app password), then add the MCP Emails connector to the Inbox, Calendar sync, Daily sweep and Founder Thesis guest evals scheduled tasks, as done for Blueticks.
