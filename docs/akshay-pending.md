@@ -10,3 +10,4 @@ When Akshay asks what's pending on him, read this list, check each item is still
 - "FT Newsjack, daily archive scan" routine: switch the model to Sonnet (Claude can't edit it).
 - Blueticks support: report that get_participants ignores skip and cursor and stops at 100 members (draft text given 14 Oct).
 - Inbox items left with Akshay on 13 Oct: FieldAssist contract revision; Sanjiv Bajaj call follow-up.
+- Ankit Sinha @ Tagbin (15 Oct): share the Founder Thesis YouTube channel URL (none found in past sent mail). Mamatha sent Nishtha (Orvis) the un# channel by mistake on 14 Oct, so a correction is waiting on it. Write it in the row's Your call.
