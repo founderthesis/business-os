@@ -2,7 +2,7 @@
 
 These replace the cloud routines "FT guest evals" and "Dossiers" once a test run passes. Cowork scheduled tasks run in the cloud, can run account skills and can publish Claude pages, which cloud routines cannot (decision 141). Create each one in the Claude app: Cowork, Scheduled, New task, paste the prompt, connect Notion, Gmail and (dossiers) Google Drive.
 
-Suggested schedules: evals at 10:50, 16:50 and 23:50 JST daily (25 minutes after each inbox run); dossiers at 06:50 JST daily.
+Suggested schedules: evals at 09:25, 16:25 and 22:25 JST daily (25 minutes after each inbox run); dossiers at 06:50 JST daily.
 
 After both pass a test run: disable trig_01DbJZuBeC1TTven5wgjZxoA (evals) and trig_01KaofxCHxvNUSL8ATpqFx1t (dossiers), and retire Eval slots and the session-start conversion in CLAUDE.md.
 

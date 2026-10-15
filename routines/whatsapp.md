@@ -1,6 +1,6 @@
 # WhatsApp to Business OS
 
-Scheduled routine "WhatsApp to Business OS", three times a day after each inbox run (10:40, 16:40, 23:40 JST), with the Blueticks WhatsApp connector and Notion. Decision 169.
+Scheduled routine "WhatsApp to Business OS", three times a day, 45 minutes after each inbox run (09:45, 16:45, 22:45 JST, decision 174), with the Blueticks WhatsApp connector and Notion. Decision 169.
 
 Two jobs:
 1. **Work chats to Activities.** Guest, PR, client, host and team conversations on Akshay's WhatsApp become Activities (Kind and Source WhatsApp), one per chat per day, linked to the right Engagement, Deal or Episode. Clear facts (slots, a reschedule, a decision) update the row the way the inbox does for mail. Personal chats are never read past the chat name.

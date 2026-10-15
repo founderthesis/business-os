@@ -1,6 +1,6 @@
 # Calendar sync
 
-Scheduled routine "Calendar sync", three times a day about 35 minutes after each inbox run (07:35, 15:35, 21:35 JST), with the Google Calendar, Notion, Gmail and Google Drive connectors.
+Scheduled routine "Calendar sync", three times a day, 35 minutes after each inbox run (09:35, 16:35, 22:35 JST, decision 174), with the Google Calendar, Notion, Gmail and Google Drive connectors.
 
 Three jobs, in order:
 1. **Calendar to Notion.** Recording and precall events on the ad@thepodium.in calendar set Next date, Call type and Call link on the Engagement, move it to Booked for a recording, and put cancellations on Mamatha (Waiting on). It is the only routine that sets Next date from the calendar (decision 81).

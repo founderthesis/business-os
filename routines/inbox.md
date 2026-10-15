@@ -1,6 +1,6 @@
 # Inbox agent
 
-Scheduled routine "Inbox to Business OS", three times a day at 10:25, 16:25 and 23:25 JST, every day, on Sonnet (decision 138, Akshay, 12 Oct; was once a night), with the Gmail, Notion and Google Calendar connectors. When a run creates a new Founder Thesis pitch it fires the evals routine straight away (STEP 7c), so a pitch reaches Akshay's list within the hour.
+Scheduled routine "Inbox to Business OS", three times a day at 09:00, 16:00 and 22:00 JST, every day (decision 174; was 10:25, 16:25, 23:25), on Sonnet (decision 138, Akshay, 12 Oct; was once a night), with the Gmail, Notion and Google Calendar connectors. When a run creates a new Founder Thesis pitch it fires the evals routine straight away (STEP 7c), so a pitch reaches Akshay's list within the hour.
 
 Capture first. It reads the ad@thepodium.in mailbox and writes down what happened: one Activity per email, and the Engagements and Deals moved to match. It does three things beyond capture, all approved by Akshay on 5 Oct:
 - New FT guest pitch: replies "Thanks for your mail, adding Mamatha to coordinate" with Mamatha in Cc.

@@ -8,7 +8,7 @@ What runs, when, and what it is allowed to do. Built 5 Oct 2026 on Akshay's go-a
 |---|---|---|---|
 | Inbox to Business OS | 06:55, 14:55, 20:55 daily | Gmail, Notion | `routines/inbox.md` |
 | FT guest evals | 07:20, 15:20, 21:20 daily | Notion, Gmail | `routines/evals.md` |
-| Calendar sync | 07:35, 15:35, 21:35 daily | Google Calendar, Notion, Gmail | `routines/calendar.md` |
+| Calendar sync | 09:35, 16:35, 22:35 daily | Google Calendar, Notion, Gmail | `routines/calendar.md` |
 | Daily sweep | 13:10 Mon to Sat (09:40 IST) | Notion, Gmail | `routines/daily-sweep.md` |
 
 Each run starts a fresh cloud session and ends with a short report; a push notification goes to Akshay when a run has something worth knowing.
