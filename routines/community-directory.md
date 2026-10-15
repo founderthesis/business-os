@@ -1,6 +1,6 @@
 # FT Community directory sync
 
-Scheduled routine "FT Community directory sync", Saturdays at 10:00 JST, with the Notion and Apollo connectors (decision 186).
+Scheduled routine "FT Community directory sync" (trig_01EoP9zjHnaAeyKthSWdcums), Saturdays at 09:47 JST, with the Notion and Apollo connectors (decision 186).
 
 It keeps the public members directory (Notion page "The Founder Thesis Community", database "Members") in step with FT Community, where Membership = Added means in the WhatsApp group now. The directory is a separate database holding only public fields, so it can be published to the web: Notion has no row-level security, and a view of FT Community would expose everything (decisions 88, 171).
 
@@ -25,12 +25,12 @@ Fetch each data source once to confirm property and option names. Never read or 
 PUBLIC FIELDS ONLY (decision 186): a Members row holds Name, Company, What they do, City, Type and LinkedIn, and nothing else. Never write an email address, phone number, WhatsApp id or handle, the Blurb, a review note, a money figure, a Person link or any link into the Business OS. What they do is the FT Community One-liner as written; if it holds an email, phone number or money figure, leave What they do empty and list the row in the report.
 
 STEP 1. READ
-FT Community rows with Membership Added (the community now). LinkedIn = the row's LinkedIn, else the linked People row's LinkedIn, as https://www.linkedin.com/in/<slug>. All Members rows. Match a member to a Members row by Name plus Company (case and accents ignored); if a name appears twice in FT Community, use Name plus LinkedIn.
+FT Community rows with Membership Added (the community now). LinkedIn = the row's LinkedIn, else the linked People row's LinkedIn, as https://www.linkedin.com/in/<slug>. All Members rows. Match a member to a Members row by Name (case and accents ignored); if a name appears twice, use Name plus LinkedIn, then Name plus Company.
 
 STEP 2. SYNC
 - In FT Community (Added) but no Members row: create it (batches of up to 100 pages per call). City from STEP 3.
-- In both: update Company, What they do, Type and LinkedIn when they differ. Keep City unless it is empty (then try STEP 3).
-- A Members row with no Added FT Community row (they left, declined, or were renamed): Notion can't delete rows from here, so rename it "REMOVE: <Name>" and clear every other field, and list it in the report for Akshay to delete. Never leave a former member's details visible.
+- In both: the Members row is the master for public fields (decision 186). Fill Company, What they do, Type and LinkedIn only where the Members row is empty; never overwrite what is there. Keep City unless it is empty (then try STEP 3).
+- A Members row with no Added FT Community row (they left, declined, or were renamed), other than one already named "REMOVE: ...": first check for a renamed match (same LinkedIn, or same first name and Company); if found, rename the Members row to the FT Community Name. Otherwise Notion can't delete rows from here, so rename it "REMOVE: <Name>" and clear every other field, and list it in the report for Akshay to delete. Never leave a former member's details visible. Rows already named "REMOVE: ..." are counted in the report as waiting for deletion.
 
 STEP 3. CITY (new members, and members with no City)
 For each batch of up to 100 LinkedIn URLs, call apollo_mixed_people_api_search with person_linkedin_urls and person_locations set to one metro at a time, per_page 100, and give every returned person that metro (match back by first name plus organization or title; if unsure, narrow the batch until certain). Metros, in order, with the location strings to send:
