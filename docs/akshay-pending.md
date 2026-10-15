@@ -15,4 +15,9 @@ When Akshay asks what's pending on him, read this list, check each item is still
 - WhatsApp to Business OS: connectors attached (seen 15 Oct). Still to do: delete the old paused "whatsapp to business OS" task.
 - Host boards (decision 185): invite Sri, Satish and Arjun as Notion guests (Can edit), each to his own board page only: un# with Sri, B2S with Satish, HBD with Arjun. If any board page is still published to the web (Share > Publish), switch that off first.
 - Host board short links: once the team sets them up (for example unhashed.co/pipeline), confirm each so it joins the approved short-link list.
-- FT Community directory (decision 186): publish the directory database (search indexing off); delete the 33 rows named "REMOVE: ..." in it (filter Name starts with REMOVE); then lock the directory database (database menu, Lock database) so nobody edits the copy. Edit members only in FT Community, Members view (decision 190).
+- FT Community directory (decisions 186, 190), in this order:
+  1. Vet the member list in FT Community, Members view (https://app.notion.com/p/9a1192a5e71b4a2fa6a585e3c3fd36f7?v=3f919a301a7f81a6b684000cb27582ff). Edit there only; the public copy follows within a WhatsApp run.
+  2. In the public directory, delete the 33 rows named "REMOVE: ..." (filter Name starts with REMOVE).
+  3. Publish the public directory (Share > Publish, search indexing off) and share its notion.site link.
+  4. Lock the public directory (database menu, Lock database) so nobody edits the copy.
+- Follow-up automation, 3 open questions (15 Oct): is podm.in/members the link for the public directory (sponsored mail 7 waits on it); keep the day-before release WhatsApp (it was deleted from the release table, restored per the landing page); should the agent write the 3 post options from the transcript.
