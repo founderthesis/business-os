@@ -2,14 +2,15 @@
 
 When Akshay asks what's pending on him, read this list, check each item is still open, and give him the open ones. Remove an item once it's done.
 
-- Mac transcript task (Claude desktop, Scheduled tasks): replace its prompt with mac-transcripts-v2.txt so it also saves each transcript to Drive.
+- Mac transcript task (Claude desktop, Scheduled tasks): replace its prompt with mac-transcripts-v2.txt so it also saves each transcript to Drive. This now blocks the automatic thank-you (decision 228): no transcript has reached Drive since 10 Oct, so Sankalp Arora's thank-you (recorded 15 Oct) is waiting on it.
 - Zencastr: reply on whether they can back up transcripts to Drive. If yes, the Mac transcript task can go.
 - "FT Newsjack, daily archive scan" routine: switch the model to Sonnet (Claude can't edit it).
 - Blueticks support: report that get_participants ignores skip and cursor and stops at 100 members (draft text given 14 Oct).
 - Inbox items left with Akshay on 13 Oct: FieldAssist contract revision; Sanjiv Bajaj call follow-up.
 - Ankit Sinha @ Tagbin (15 Oct): share the Founder Thesis YouTube channel URL (none found in past sent mail). Mamatha sent Nishtha (Orvis) the un# channel by mistake on 14 Oct, so a correction is waiting on it. Write it in the row's Your call.
-- Routine audit (16 Oct): comment on the Notion page "Routine audit, 16 Oct: what needs fixing" (under Rules for Zoya): pause tonight or not, the 3 decisions, and any item you want handled differently. Uncommented items get the proposed fix.
+- Routine audit (16 Oct): answered; the "Added 16 Oct" items 3 to 5 (sponsored yes wording, payment reminders, paid flow) get the proposed fix unless you comment. Page: "Routine audit, 16 Oct: what needs fixing" (under Rules for Zoya): pause tonight or not, the 3 decisions, and any item you want handled differently. Uncommented items get the proposed fix.
 - Zoya (16 Oct): live for FT. Reply to any "[Zoya test NN]" mail or any mail of hers with feedback; she applies it. Still open on Rules for Zoya: podm.in/note and unhashed.co/precall, release WhatsApps, podm.in/{company}.
+- Cowork evals task: paste the updated routines/cowork-evals.md prompt (Book immediately now hands the slot ask to Zoya, decision 223) if the Mac task is the one running.
 - Guest Context on the Engagement (decisions 213, 214): update the installed ft-guest-eval skill from skills/ft-guest-eval/SKILL.md (new "Guest Context" paragraph) and paste step d of routines/cowork-evals.md into the Cowork evals task, so new evals write it. Until then Zoya writes it herself before her first mail to each guest.
 - Mail feedback summary (15 Oct): read the Notion page "Your mail feedback, 15 Oct: what happened and what's fixed" (under Rules for Zoya). Open on you: Vaia reply (Your call), go on reading attachments for evals (attach MCP Emails to the evals task).
 - ad@thepodium.in is connected to MCP Emails (15 Oct). Add the MCP Emails connector to the Inbox, Daily sweep and Founder Thesis guest evals scheduled tasks, as done for Blueticks.
