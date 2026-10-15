@@ -226,6 +226,19 @@ Eval page: <url>
 
 If Sales Fit is 7 or above, add a line `PaaS angle: <one sentence>`. Do not create a PaaS engagement; Akshay decides that.
 
+**Mail-safe copy (decision 213).** Also replace (or create) a section `## For mails` at the top of the engagement page body. Zoya writes guest mails from it alone, so it holds only what is safe to say to the guest side:
+
+```
+## For mails (<YYYY-MM-DD>)
+What they build: <one line>
+Public facts: <2 or 3 numbers, customers or milestones they have announced>
+Story angle: <why their story is worth telling, one line>
+Sector and stage: <for peer name-drops>
+Don't raise: <anything sensitive, or "nothing">
+```
+
+Never put the verdict, scores, route, tier, undisclosed revenue or funding, red flags or any reasoning in it.
+
 If any Notion write fails, finish the eval anyway and name the failed write in the chat reply.
 
 ## Chat reply
