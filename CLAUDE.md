@@ -55,7 +55,8 @@ Sending mail (decision 184): every agent mail goes through MCP Emails (ad@thepod
 Short links (decision 168). Use only these, for these jobs, and never copy a link out of a calendar title or booking page:
 - podm.in/30min: book a 30-minute call with Akshay (precalls, intros, rebooking any call with him).
 - podm.in/book: book a 2-hour recording slot.
-- podm.in/sponsored: Founder Thesis sponsored features. unhashed.co/sponsored for un#.
+- podm.in/sponsored: Founder Thesis sponsored features, the first sponsored link a lead sees (it looks better). unhashed.co/sponsored for un#.
+- podm.in/why-sponsor: the published sales page "Founder Thesis: sponsored guest features", with the full data. Use it in sponsored follow-ups (not the first mail) and when someone has questions about a sponsored feature; follow-ups also draw their facts from it (decision 218).
 - podm.in/founders: Founder Thesis guests, released and recorded (repoint it from the old sheet to the Founder Thesis guests database once published).
 - podm.in/community: the public Founder Thesis Community member directory (decision 191).
 - podm.in/pitch-to-us: vendor and service pitches.
