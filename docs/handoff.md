@@ -20,7 +20,7 @@ Open work for the next session. Read CLAUDE.md, docs/decisions.md (81 to 89 are 
 - Upload downloads/all-skills.zip skills in claude.ai.
 
 ## Next projects
-- Make the daily sweep regenerate the public members page from FT Network (Membership = Added) with migration/ft_network_members_page.py and have the calendar routine write new blurbs to FT Network (To invite) instead of People.Blurb.
+- FT Community directory split (decision 185): add the 66 members from the 14 Oct 511 list to the public database, link FT Community rows to their public row, drop Company, One-liner and LinkedIn from FT Community, retire People "In WhatsApp group", teach the WhatsApp routine to create and clear public rows, and set up the Saturday directory routine (routines/community-directory.md).
 - Built to Share migration.
 
 - Templates (decision 98): calendar and evals prompts read from Templates and are live (9 Oct). inbox.md and daily-sweep.md are updated in the repo but not yet pushed to their triggers (inbox trig_0189eZvAD8x4357cfevgZ3No, daily sweep trig_01MdfUFg2qrebDWgiHwncgnd); their template rows match the wording already live, so push them with the next change to either prompt.
