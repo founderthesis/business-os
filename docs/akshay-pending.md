@@ -2,7 +2,6 @@
 
 When Akshay asks what's pending on him, read this list, check each item is still open, and give him the open ones. Remove an item once it's done.
 
-- FT Community cleanup: upload ft-community-cleanup.md to Notion AI (412 rows updated, 99 created, 33 marked Left). Then tell Claude, so it can check the count is 511.
 - "whatsapp to business OS" routine (currently switched off): replace its prompt with whatsapp-routine-v3.txt (replaces v2), set the model to Sonnet, remove every connector except bluetick and Notion, set the schedule to "45 0,7,13 * * *" (UTC, which is 09:45, 16:45, 22:45 JST), then switch it on.
 - "Calendar sync" routine: add the Google Drive connector (it needs Drive for recording checks, transcripts and precall notes).
 - Mac transcript task (Claude desktop, Scheduled tasks): replace its prompt with mac-transcripts-v2.txt so it also saves each transcript to Drive.
@@ -15,3 +14,5 @@ When Akshay asks what's pending on him, read this list, check each item is still
 - Zoya rewire: the daily sweep's scheduled task needs the MCP Emails connector (Zoya's inbox) attached before it can send from her. Claude can't add connectors to an existing scheduled task.
 - ad@thepodium.in is connected to MCP Emails (15 Oct). Add the MCP Emails connector to the Inbox, Calendar sync, Daily sweep and Founder Thesis guest evals scheduled tasks, as done for Blueticks.
 - WhatsApp to Business OS: attach the bluetick and Notion connectors to the new scheduled task (trig_01MnmJYorWrd61K7b5BCqXr1), then delete the old paused "whatsapp to business OS".
+- Host boards (decision 185): invite Sri, Satish and Arjun as Notion guests (Can edit), each to his own board page only: un# with Sri, B2S with Satish, HBD with Arjun. If any board page is still published to the web (Share > Publish), switch that off first.
+- Host board short links: once the team sets them up (for example unhashed.co/pipeline), confirm each so it joins the approved short-link list.

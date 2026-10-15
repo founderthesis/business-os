@@ -1,6 +1,6 @@
 # FT Community directory sync
 
-Scheduled routine "FT Community directory sync", Saturdays at 10:00 JST, with the Notion and Apollo connectors (decision 185).
+Scheduled routine "FT Community directory sync", Saturdays at 10:00 JST, with the Notion and Apollo connectors (decision 186).
 
 It keeps the public members directory (Notion page "The Founder Thesis Community", database "Members") in step with FT Community, where Membership = Added means in the WhatsApp group now. The directory is a separate database holding only public fields, so it can be published to the web: Notion has no row-level security, and a view of FT Community would expose everything (decisions 88, 171).
 
@@ -22,7 +22,7 @@ NOTION
 - Members (public directory): collection://2ecb2b1f-6524-4a03-9f3b-87e5a365ef9b (Name, Company, What they do, City, Type, LinkedIn)
 Fetch each data source once to confirm property and option names. Never read or write the Credentials page.
 
-PUBLIC FIELDS ONLY (decision 185): a Members row holds Name, Company, What they do, City, Type and LinkedIn, and nothing else. Never write an email address, phone number, WhatsApp id or handle, the Blurb, a review note, a money figure, a Person link or any link into the Business OS. What they do is the FT Community One-liner as written; if it holds an email, phone number or money figure, leave What they do empty and list the row in the report.
+PUBLIC FIELDS ONLY (decision 186): a Members row holds Name, Company, What they do, City, Type and LinkedIn, and nothing else. Never write an email address, phone number, WhatsApp id or handle, the Blurb, a review note, a money figure, a Person link or any link into the Business OS. What they do is the FT Community One-liner as written; if it holds an email, phone number or money figure, leave What they do empty and list the row in the report.
 
 STEP 1. READ
 FT Community rows with Membership Added (the community now). LinkedIn = the row's LinkedIn, else the linked People row's LinkedIn, as https://www.linkedin.com/in/<slug>. All Members rows. Match a member to a Members row by Name plus Company (case and accents ignored); if a name appears twice in FT Community, use Name plus LinkedIn.
