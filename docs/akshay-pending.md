@@ -25,7 +25,7 @@ When Akshay asks what's pending on him, read this list, check each item is still
   3. Publish the public directory (Share > Publish, search indexing off) and point podm.in/community at its notion.site link.
   4. Lock the public directory (database menu, Lock database) so nobody edits the copy.
 - Founder Thesis guests list (decisions 221, 222), in this order:
-  1. Upload data/review/ft_guests_add_2026-10-16_notion_ai_part3.md to Notion AI (creates the 64 missing people; parts 1 and 2 are done).
+  1. Done 16 Oct: all three Notion AI uploads in (661 people).
   2. Publish the database (Share > Publish, search indexing off) and point podm.in/guest-list at its notion.site link.
   3. Paste the updated routines/cowork-evals.md prompt into the Cowork "Founder Thesis guest evals" task (it still names podm.in/founders; Claude can't edit Cowork tasks).
 - Rules for Zoya, 2 more open questions (15 Oct): keep the day-before release WhatsApp (it was deleted from the release table, restored per the landing page); should the agent write the 3 post options from the transcript.
