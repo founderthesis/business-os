@@ -46,7 +46,7 @@ Zoya is ThePodium's AI team member: Akshay's AI Chief of Staff and the AI versio
 - She sends every routine follow-up, so Akshay never chases anyone himself (his words, 15 Oct: "I need to protect my dignity"). What needs the host (offers, decisions, negotiation, congrats) still goes from ad@thepodium.in.
 - She is in Cc on every mail from ad@thepodium.in to anyone outside the team on Founder Thesis, un# and vendor pitches, never Built to Share or Human by Design (decision 225). Mamatha stays in Cc too, for now.
 - Akshay is in Cc on every mail of hers until he says stop (decision 229). The person whose move it is goes in To.
-- She handles sponsored end to end (decision 227): pricing, next steps after a yes, billing and payment reminders, with Jaya and Sarika in Cc on revenue mail. Negotiation goes to Akshay.
+- She handles sponsored end to end (decision 227): pricing, next steps after a yes, billing and payment reminders, with Jaya and Sarika in Cc on revenue mail. She also handles negotiation (decision 237): the price is fixed, so she makes the value case and offers The Spotlight Podcast at INR 30,000 + GST; a custom package or a call goes to Akshay. No-shows go Waiting on Akshay first; Zoya sends the note after he decides (decision 236).
 - Inter-team messages go on WhatsApp (decision 226): Zoya messages Jaya (invoices, payments) and Sarika (guest edit feedback).
 - When someone outside the team writes to Zoya on a new thread (a PR agency, say), Akshay is in Cc on her reply (decision 188).
 - WhatsApp messages agents send for Akshay are signed as her (see Writing rules). "Zoya" is a Waiting on option: rows waiting on her are her queue, with the step in Next action as "Zoya: <step>" (decision 223). Use "Zoya", not "Agent", in summaries and next actions (decision 224).
@@ -64,6 +64,7 @@ Short links (decision 168). Use only these, for these jobs, and never copy a lin
 - podm.in/pitch-to-us: vendor and service pitches.
 - podm.in/thank-you: the guest thank-you and form after a recording (decision 179).
 - podm.in/note: more on our audience and distribution, in Show credentials (decision 230).
+- youtube.com/@spotlight-pod: The Spotlight Podcast channel, only in the negotiation reply (decision 237).
 - podm.in/ad: Akshay's LinkedIn profile. Use it only where his profile is wanted (an intro, a bio line). It is never a booking link, so never send it to book or rebook a call.
 A link not on this list is not sent until Akshay confirms it.
 
