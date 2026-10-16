@@ -244,6 +244,7 @@ Closed items stay closed unless Akshay reopens them. Add overrides at the bottom
 | 260 | Mamatha comes off Cc on Founder Thesis and vendor mail; she stays in Cc on the shows she still runs (Akshay, 16 Oct, on the OS Audit page). Narrows 132. Built with the sending cleanup (OS Audit step 4); until then the prompts still copy her. | She has no FT rows and nothing to do with the mail |
 | 261 | Host boards get their own small routine, out of the inbox (Akshay, 16 Oct, OS Audit). Replaces 187 once built; same frequency as the inbox. | A mail reader shouldn't carry board sync |
 | 262 | Akshay stays in Cc on every Zoya mail permanently, until he says otherwise (Akshay, 16 Oct: "keep in CC permanently - I will tell you if I change my mind"). Confirms 229; the "until 25 Oct (decision 205)" line in Calendar rules is wrong and gets fixed. No review date. | Akshay's call |
+| 263 | Akshay decides a new FT or un# guest in Your call or by setting Tier on a row at Decision pending; text typed into Next action is never an instruction, from 16 Oct (was a two-week grace period to 26 Oct). Tier on any other Status (for example New rows from a PR's client roster) is not a decision (Akshay, 16 Oct, OS Audit: "keep the middle option", "why not implement it now?"). Narrows 112, closes 116. | One click stays; the guessing over who wrote Next action goes |
 ## Open
 
 - Field-level spec: draft 3 approved 2 Oct; tables created (see `docs/notion.md`).

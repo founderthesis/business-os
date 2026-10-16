@@ -75,7 +75,7 @@ Keep the Notion home page (ThePodium Business OS) current: whenever a database i
 
 When Akshay asks what is pending on him, read `docs/akshay-pending.md`, check each item, and list the open ones. Add anything he has to do there when you hand it to him.
 
-Evals are written by the Cowork "Founder Thesis guest evals" task, which runs the eval skill and publishes its pages (decision 146). Every Eval link must open the skill's own decision page (decision 160). Early in each session, find open Engagements whose page body has a "## Eval (" section but whose Eval link is empty or not a claude.ai link, re-run the show's eval skill for each (ft-guest-eval, un-guest-eval, bts-guest-eval or hbd-guest-eval), publish its page with the Artifact tool (into a Free Eval slot if new pages hit the daily limit) and set Eval link. Never render a page-body summary with routines/tools/make_eval.py; that tool is retired. Report the count in one line. Also keep Eval slots topped up: when fewer than 15 rows are Free, bring the Free count back to 40 in (collection://eceeb38c-bd30-4103-8aa5-d53fe7233283). Publish new blank "FT eval slot NN" pages with the Artifact tool and add them in one create call (decision 142).
+Evals are written by the Cowork "Founder Thesis guest evals" task, which runs the eval skill and publishes its pages (decision 146). Every Eval link must open the skill's own decision page (decision 160). Early in each session, find open Engagements whose page body has a "## Eval (" section but whose Eval link is empty or not a claude.ai link, re-run the show's eval skill for each (ft-guest-eval, un-guest-eval, bts-guest-eval or hbd-guest-eval), publish its page with the Artifact tool (into a Free Eval slot if new pages hit the daily limit) and set Eval link. Never render a page-body summary with routines/retired/make_eval.py; that tool is retired. Report the count in one line. Also keep Eval slots topped up: when fewer than 15 rows are Free, bring the Free count back to 40 in (collection://eceeb38c-bd30-4103-8aa5-d53fe7233283). Publish new blank "FT eval slot NN" pages with the Artifact tool and add them in one create call (decision 142).
 
 ## Data and privacy
 
@@ -112,8 +112,11 @@ docs/
   decisions.md       what is decided, open, and overridden
   audits/            measured facts about current systems
   schema.md          field-level spec (to be written)
+  archive/           finished handoffs and plans, kept for history
 migration/           re-runnable Python: profile, clean, match, export
-routines/            specs and prompts for each scheduled agent
+routines/            prompts for each live scheduled agent (one file each)
+  mac/               tasks that run on Akshay's Mac
+  retired/           routines no longer running, kept for history
 skills/              versioned copies of the skills the content pack runs
 data/                raw and processed exports (git-ignored)
 ```
