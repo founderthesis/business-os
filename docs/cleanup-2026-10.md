@@ -1,8 +1,8 @@
-# Business OS cleanup: audit and proposal (16 Oct 2026)
+# OS Audit: cleanup audit and proposal (16 Oct 2026)
 
 Akshay's brief, 16 Oct: "a comprehensive audit on all decisions and routines: retire old decisions, routines, artefacts, Notion pages, clean things up: no duplications, single source of truth."
 
-Status: **proposal, nothing built.** Akshay comments on the Notion copy (decision 220). Decisions 260 to 299 are reserved for what comes out of it. Every number below was measured on 16 Oct from the live scheduled tasks, Notion SQL counts and this repo.
+Status: **proposal, nothing built.** Akshay comments on the Notion copy, "OS Audit" under Business OS developer (decision 220). Decisions 260 to 299 are reserved for what comes out of it. Every number below was measured on 16 Oct from the live scheduled tasks, Notion SQL counts and this repo.
 
 ## Part 1. Audit
 
