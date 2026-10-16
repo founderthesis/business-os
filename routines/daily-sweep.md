@@ -106,7 +106,7 @@ c. The mail. The page body section "## Next sponsored mail" holds the planned te
    7 (day 77): proof story: a founder got into 3 deal conversations worth $500k+ each from inside the Founder Thesis community of past guests. Never name him. The package includes access to this community of 500+ founders and investors; this step may carry podm<span>.</span>in/community as its one link (decision 191).
    8 (day 91): search long tail: Google search impressions and the share of clicks to the show's site from searches that don't mention Founder Thesis (no link to the site), so the episode is what an investor or senior hire finds when they look the founder up.
    9 (day 105): peers again, different names from step 2 or R.
-   10 (day 119): a recent Founder Thesis episode from their sector (Episodes, released in the last 60 days), named by title; its one link, if any, is podm<span>.</span>in/founders.
+   10 (day 119): a recent Founder Thesis episode from their sector (Episodes, released in the last 60 days), named by title; its one link, if any, is podm<span>.</span>in/guest-list.
    11 (day 133): a new milestone of ours from the sales page (views, reach, followers), as it reads today.
    12 (day 147): founder or company news again, a different item from step 5.
    13 (day 161): ask whether they still represent the founder, and that we're happy to reach out to him directly if not (Akshay, 15 Oct). When the founder wrote directly: a short "is this still on your radar?" instead.
