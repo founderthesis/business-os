@@ -125,12 +125,20 @@ Also accept these as direct input when Akshay pastes them: a Gemini notes export
 
 ## Step 2: research
 
-Four to eight targeted searches. Stop when both axes can be scored. If a precall or a backgrounder exists, use it as the source of truth and verify only what it does not cover.
+Six to ten targeted searches, at least three of them on the numbers. Stop when both axes can be scored and the numbers table is filled. If a precall or a backgrounder exists, use it as the source of truth and verify only what it does not cover.
 
 **For the Fit axis:**
 
 1. LinkedIn profile, if not supplied. **Capture the URL, the short pitch needs it.**
-2. Company stage: TVL via DefiLlama, funding, token status, mainnet vs testnet, audits, regulatory permissions.
+2. Company stage and THE NUMBERS (Akshay, 18 Oct: "I am not getting enough numbers about the venture - like funding, TVL, AUM, GTV"). Spend at least three of the searches here, and fill every row of the numbers table in Step 5 that applies to the venture type:
+   - **Funding:** total raised, last round (size, stage, date, lead), named backers, valuation if public. Sources: the company's own announcement, Crunchbase, RootData, CryptoRank, The Block, press.
+   - **Scale, by what the firm does:** protocol or DeFi app → TVL (DefiLlama, with the date) and, where it applies, volume or open interest; exchange, payments, card, remittance or stablecoin flows → GTV, volume or payment volume for a stated period; stablecoin or tokenized asset issuer → supply or tokenized AUM (rwa.xyz, DefiLlama stablecoins, issuer attestations); asset manager or fund → AUM (filings, factsheets, the firm's site); operating company → revenue or ARR; chain → TVL, daily active addresses, fees (Artemis, Token Terminal).
+   - **Revenue or fees** where public (Token Terminal, DefiLlama fees, filings).
+   - **Users or customers:** monthly users, institutional clients, wallets, with the period.
+   - **Token:** ticker, market cap and FDV with the date, only when there is a token.
+   - **Team size and founding year.**
+   Every number carries its date and source. A number you looked for and could not find is written "Not public" with where you looked, never left out.
+   Also: token status, mainnet vs testnet, audits, regulatory permissions.
 3. Crypto career arc. A 2018 builder still building reads differently from a 2025 arrival. Pre-crypto career matters.
 4. Last 12 months of substance: regulatory milestones, institutional partnerships, marquee raises, named audits.
 5. Published thesis, paper, testimony or non-consensus position.
@@ -279,12 +287,13 @@ Sections, in order:
 3. **Two scorecards side by side.** Fit, with one line on how the guest sits against the bar. Partnership, with one line naming which of the four aarnâ needs it serves. If the editorial priority was applied, say so here
 4. **Competitor flag**, if the guest is a competitor or both. Omit when they are neither
 5. **Career timeline**, forward chronological, 5 to 8 rows, crypto entry point marked explicitly
-6. **Key facts.** Current state: stage, AUM or TVL or revenue, token, funding, backers, recent milestones, audits, regulatory permissions. For a non-founder: title, scope of authority, influence signals, the org's standing. **Where the precall and the public record disagree, show both and label which is which**
-7. **The story.** The angle this guest brings, or the honest absence of one. When a precall happened, say what it settled
-8. **Themes to cover**, 5 to 7
-9. **Better fit**, only when a stronger name at the same org was verified
-10. **Red flags**, only if any. Logistics from the precall belong here
-11. **Links.** LinkedIn, company, the precall notes Doc if one exists, one to three substantive recent pieces
+6. **The numbers**, a table, before the story: one row per metric from Step 2 (funding total, last round, backers, valuation, the scale metric for the venture type such as TVL, AUM, GTV, volume or supply, revenue or fees, users or clients, token market cap and FDV, team size, founded), each with value, date and source, and "Not public (searched: <where>)" for any you could not find. Never fewer than five rows for a founder's venture. The one-line synthesis in the header quotes the two numbers that matter most.
+7. **Key facts.** Current state: stage, token, recent milestones, audits, regulatory permissions. For a non-founder: title, scope of authority, influence signals, the org's standing. **Where the precall and the public record disagree, show both and label which is which**
+8. **The story.** The angle this guest brings, or the honest absence of one. When a precall happened, say what it settled
+9. **Themes to cover**, 5 to 7
+10. **Better fit**, only when a stronger name at the same org was verified
+11. **Red flags**, only if any. Logistics from the precall belong here
+12. **Links.** LinkedIn, company, the precall notes Doc if one exists, one to three substantive recent pieces
 
 ## Step 6: the short pitch
 
@@ -397,6 +406,7 @@ Each of these is a real failure, not a hypothetical.
 - **Don't put internal status on the published page.** No pipeline stage, no approval state, no CRM language. That page gets shared
 - **Don't ship the short pitch without a bio link.** Sri clicks through. A pitch with no link makes him go and search
 - **Don't copy an old short pitch's furniture.** The ticker in a previous WisdomTree line was carried over by pattern-matching rather than decided. Every element has to earn its words on this guest
+- **Don't ship an eval thin on numbers.** Akshay (18 Oct) wasn't getting funding, TVL, AUM or GTV in the evals. The numbers table is mandatory, and a metric searched and not found is written as "Not public", not dropped
 - **Don't swap one scale metric for another.** Market cap is not AUM. Using it on an asset manager shrinks the guest by an order of magnitude
 - **Don't let a title stand in for tenure.** A "Head of" at a marquee foundation one year out of an MBA was scored as a senior player; Akshay called him too junior for Sri. Count the years in the ecosystem from the career dates first
 - **Don't score the firm.** Two people from the same firm land on opposite sides, and both cases are in the record
