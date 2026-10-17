@@ -27,7 +27,7 @@ SOURCES      Gmail · Calendar · Gemini notes · Zencastr · Sheets · Blue · 
                 │
              Engagements ── Shows
                 │
-             Episodes (page body = working doc) ── Tasks
+             Episodes (page body = working doc)
              Templates · Credentials (walled off)
    │
 4 AGENTS     intake + eval · inbox sorter · chase · prep docs · content pack · skill learning · morning brief
@@ -43,10 +43,10 @@ SOURCES      Gmail · Calendar · Gemini notes · Zencastr · Sheets · Blue · 
 |---|---|---|
 | People | a human; the master network list | name, LinkedIn, email, phone, location (from LinkedIn), organisation, role, blurb, research history (evals, dossiers, prep notes), tags (guest, prospect, sponsor, PR contact, host), FT guest, Substack article, in WhatsApp group |
 | Organisations | a company, fund or agency | domain, type, client status, people |
-| Engagements | one pursuit with a person or organisation | type (guest outbound, guest inbound, BD, sponsor, partner, client), show, stage, outcome, whose move, next action and date, eval verdict, host approval (hosts answer on their host board, decision 185), commercial terms, via (PR contact, a Person), stakeholders (everyone else on the thread, all copied on guest emails) |
+| Engagements | one pursuit with a person or organisation, or one work item (Kind Task: internal task, reminder, builder action, other commitment; decision 329) | kind (Guest or Task; a Task row has Task state and links its guest row through For engagement, no fictional guest or show), type (guest outbound, guest inbound, BD, sponsor, partner, client), show, stage, outcome, whose move, next action and date, eval verdict, host approval (hosts answer on their host board, decision 185), commercial terms, via (PR contact, a Person), stakeholders (everyone else on the thread, all copied on guest emails) |
 | Shows | a podcast | host, owned or client, active, templates, default price (Spotlight is FT Tier 3, not a show) |
 | Episodes | an episode | show, guest(s), tier, recording and publish dates, transcript, links, Final fields (title, cinematic title, thumbnail copy, intro VO, show notes, LinkedIn post, trailer copy); page body is the working doc every skill writes into |
-| Tasks | a unit of work with an owner | episode or engagement, owner, due, status; a handful per episode, auto-created |
+| Tasks (retired 18 Oct 2026, decision 329) | history only | open work moved to Engagements, Kind Task |
 | Activities | something that happened | person, engagement, date, source (email, call, meeting, form, WhatsApp), summary, link |
 | Queue | something waiting for a human | type (decision, heads-up, reminder, action), related records, recommendation, prepared email or calendar change, status, decided by, decided at |
 | Templates | an email that can be sent | show, purpose, body, version, approved (a template edit resets approval) |

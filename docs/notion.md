@@ -12,7 +12,7 @@ Data source IDs are what scripts and routines use.
 | Engagements | `collection://5522ee21-d8e5-4ec0-bf3e-90bcf88d24c5` |
 | Shows | `collection://ebca6861-4d71-4555-a6ec-6ed76cc0c733` |
 | Episodes | `collection://5d250752-6db8-4ab6-8467-c68f5838278a` |
-| Tasks | `collection://751c3aed-8d7c-4a35-85f3-3a7815f7209b` |
+| Tasks (retired 18 Oct 2026, decision 329; history only, no routine reads or writes it) | `collection://751c3aed-8d7c-4a35-85f3-3a7815f7209b` |
 | Activities | `collection://290f715d-fd45-4203-ade6-3642c2326c6c` |
 | Queue | `collection://af59132c-92cb-4e87-85f0-266bd07309c4` |
 | Templates | `collection://b2976a03-9983-49e1-96cf-d237a395148d` |
@@ -20,7 +20,7 @@ Data source IDs are what scripts and routines use.
 
 Akshay's dashboard (page 3ee19a301a7f81c58589cc9ce372f86e): agent switches (Mode, Sending, cap), morning brief, Decide, Reminders, Heads-up, My move, In production. Queue gained Thread ID and Sent.
 
-Views on the home page: Akshay's dashboard (Queue), Release calendar (Episodes), Team tasks (Tasks by owner), Pipeline (Engagements by stage), Network (People who are FT guests or in the WhatsApp group). In Engagements: PaaS pipeline (board by stage) and US VC outreach (table by rank; quick filters on Tags so "No email" can be excluded).
+Views on the home page: Akshay's dashboard (Queue), Release calendar (Episodes), Team tasks (retired with the Tasks board, decision 329; work items are Engagements with Kind Task), Pipeline (Engagements by stage), Network (People who are FT guests or in the WhatsApp group). In Engagements: PaaS pipeline (board by stage) and US VC outreach (table by rank; quick filters on Tags so "No email" can be excluded).
 
 Shows seeded: Founder Thesis, un#, Built to Share, Human by Design. Hosts get linked once their People rows exist.
 
