@@ -123,7 +123,7 @@ Open "Mamatha: waiting on me" in Notion.
 
 Regards,
 Akshay"
-From 13 Oct (decision 167) the list holds only rows still waiting on her: Founder Thesis rows never go on it, not even outbound (decision 211), so it covers only the shows she still runs: no FT rows, counts or links. Skip the mail if nothing is on the list. Log an Activity: Kind Email out, Summary "Zoya sent: daily list to Mamatha", Source Gmail, Source ID = the sent message id, Captured today. Daily cap: 100 sends across all routines (today's Activities whose Summary starts "Zoya sent" or "Agent sent", not counting loop-in rows ("Zoya loop-in")).
+From 13 Oct (decision 167) the list holds only rows still waiting on her: Founder Thesis rows never go on it, not even outbound (decision 211), so it covers only the shows she still runs: no FT rows, counts or links. Skip the mail if nothing is on the list. Log an Activity: Kind Email out, Summary "Zoya sent: daily list to Mamatha", Source Gmail, Source ID = the sent message id, Captured today. Daily cap (decision 317): 150 sends across all routines (today's Activities whose Summary starts "Zoya sent" or "Agent sent", not counting loop-in rows ("Zoya loop-in")).
 
 STEP 6b. TEMPLATE REVIEW MAIL (Fridays only, only if STEP 3e found something)
 One plain mail from ad@thepodium.in to ad@thepodium.in, subject "Templates to review, <date>": one line per template with a new Proposed section (name, what the edits keep changing, link), then one line per template that looks ready to switch from Draft to Send (name, uses, clean sends). Log it as an Activity Kind Email out, Summary "Zoya sent: template review", within the daily cap.
