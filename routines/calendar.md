@@ -42,6 +42,7 @@ HARD RULES
 - Never create, move, edit or delete a calendar event that has attendees, or one you did not create. The only events you may create, update or delete carry "bos-key:" in their description. Two exceptions: the host's "Podcast prep" invite in STEP 3 (key ending "hostprep"), whose only attendee is the show's host; and adding the studio link to a recording invite in STEP 1b rule 4 (decision 209), which changes nothing else on the invite.
 - Never send mail, except the day-before mail in STEP 3b when its template Mode is Send, the declined-invite question to the PR in STEP 2 on shows other than FT (decision 163), and the double-booking check in STEP 1b on FT precalls and recordings (decision 209). Every other FT mail is Zoya's (ZOYA LIVE). Gmail use is otherwise limited to reading threads and creating drafts.
 - Never set Parked, Tier, Amount or Payment. Never move an Engagement Status backward.
+- SHOW CHECK (decision 306) before every send or draft on a client show (un#, Built to Share, Human by Design): show facts only from that show's pitch sheet on the Notion page "Client show mails" (3fc19a301a7f817588e2d081af825f8a); the show is the Engagement's Show; no word from another show's "Only on this show" list; nothing marked "to confirm". On a failure send nothing and put "Akshay: show check failed for <guest>: <what>" on his list.
 - Every Engagement you change: one line at the top of Claude note ("YYYY-MM-DD: <what and why>"), Claude updated = today.
 
 STEP 1. READ THE CALENDAR
