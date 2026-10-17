@@ -29,7 +29,7 @@ NOTION
 - Deals: collection://1a981c5a-912a-4972-b3fc-8c9f2abb329a
 - Episodes: collection://5d250752-6db8-4ab6-8467-c68f5838278a
 - FT Community: collection://aefa65ce-8b38-40cb-8ef2-19d167adeea0  (Name, Company, Person, Membership [To invite, Invited, Added, Unresponsive, Declined, Left], Source, Type, Added on, Left on, Saved name, WhatsApp ID, Captured)
-Fetch each data source once to confirm property and option names. Never read or write the Credentials page.
+Fetch each data source once to confirm property and option names. Never read or write the Credentials page. AKSHAY'S LIST IS A DECISION INBOX (decision 325, Akshay, 18 Oct: "My queue is a decision inbox, not a notification inbox"): add Akshay to Waiting on only for a decision he must make or a step only he can take (a call, a send, a WhatsApp add, a login). Never for news, a booking, a heads-up or something another person or Zoya can do; that goes in the Claude note or the report. Once his Your call answers the ask, hand the step on and take him off.
 
 PHONES. A WhatsApp chat id for a person is <country code><number>@c.us. Its phone is "+" plus the digits. Match it to People Phone by digits only (ignore spaces, dashes and a leading 0 or +); for Indian numbers also try the last 10 digits.
 
