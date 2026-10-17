@@ -179,6 +179,7 @@ Median scale in approved and declined pitches is roughly the same. **Big numbers
 - **White-label or B2B stablecoin issuance plumbing** → cap at 6. Separate from consumer-facing issuers like Circle, which he books.
 - **Crypto-adjacent consumer fintech** → cap at 5. Mortgages, travel, insurance, consumer trading apps.
 - **Commentator or influencer with no operating role** → cap at 4.
+- **Too junior: not enough years in the ecosystem** → cap at 4, whatever the title or the logo. Count the person's own career, not the org's: under about 5 years of senior, decision-making work in crypto, or a senior title reached within about 2 years of finishing an MBA or an analyst or associate track, fails Sri's bar. A grand title at a marquee foundation does not lift it. Example: Ramzy Ali, Head of DeFi & Trading at Solana Foundation (Oct 2026): MBA finished 2025, before that an associate at Draper Associates and an analyst then associate at FalconX, consulting at EY. Akshay: "he just finished his MBA, he is too junior for Sri to interview, not spent enough years in the ecosystem, not really a big deal." Read the career dates on LinkedIn before scoring seniority, and put the years-in-crypto count in the eval.
 - **Arrived in the space in the last 12 to 18 months** → cap at 5, unless the move carries institutional weight (running a major asset manager's digital-asset desk, building stablecoin infra inside a regulated bank).
 - **Pre-product** → cap at 4. Claims with no live product, no users, no commits.
 - **NFT-only, or a story the show has heard** → cap at 5. Another AMM, another perp DEX.
@@ -397,6 +398,7 @@ Each of these is a real failure, not a hypothetical.
 - **Don't ship the short pitch without a bio link.** Sri clicks through. A pitch with no link makes him go and search
 - **Don't copy an old short pitch's furniture.** The ticker in a previous WisdomTree line was carried over by pattern-matching rather than decided. Every element has to earn its words on this guest
 - **Don't swap one scale metric for another.** Market cap is not AUM. Using it on an asset manager shrinks the guest by an order of magnitude
+- **Don't let a title stand in for tenure.** A "Head of" at a marquee foundation one year out of an MBA was scored as a senior player; Akshay called him too junior for Sri. Count the years in the ecosystem from the career dates first
 - **Don't score the firm.** Two people from the same firm land on opposite sides, and both cases are in the record
 - **Don't let a big number carry a guest.** Approved and declined pitches have roughly the same median scale
 - **Don't inflate Partnership for proximity.** If you cannot name the specific thing the person controls, it is a 5 or below. The right function in the wrong jurisdiction is a 6
