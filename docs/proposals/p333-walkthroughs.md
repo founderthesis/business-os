@@ -25,3 +25,15 @@ The check before sending: the anchor's From is the person whose move it is, and 
 | 8. Criteria fully met | An entry cites the observed outcome the row's acceptance names | Done, with the evidence quoted. |
 | 9. Authorized cancellation | Akshay or Codex records that it is cancelled | Done (cancelled), quoted. |
 | 10. Owner question answered | Akshay answers an owner-mail question | Done (unchanged rule: the answer is the acceptance). |
+
+## v3 additions (cleanup review and Codex disposition, 18 Oct)
+
+| Case | Thread | Result under v3 |
+|---|---|---|
+| 6. Anchor only in Akshay's inbox | P pitched to ad@; A replied "thanks P, adding @Zoya"; P has not written since. Zoya's inbox holds only A's loop-in | No anchor in Zoya's inbox from P, so she sends a new mail To P, Cc A, subject "Re: <subject>", with one line of context. P's earlier mail in ad@ is context only. |
+| 7. We wrote last, Zoya not on the thread | Our last mail to P went from ad@ without Zoya; P is silent | No loop-in (decision 216 kept). Zoya sends a new mail To P, Cc A. |
+| 8. Reply addressed only to Akshay | P writes to ad@ only (no Zoya, nobody else) on a thread Zoya was on | No restore, no Zoya step, no new mail from Zoya. Other obligations on the row stay open, and nothing is marked done. Akshay can hand it back. |
+| 9. Many dropped-Zoya replies in one run | 25 messages need a restore | 20 restores this run, 5 next run; each message is restored once. |
+| 10. Pure acknowledgement on a thread Zoya isn't on | Bucket A step queued; loop-in sent | The loop-in is the acknowledgement; the step is done and no second thanks goes out. A decision mail or redirect still needs Zoya's own mail. |
+| 11. Saurabh forwards a vendor pitch | No vendor row yet | The inbox creates (or reuses by person, organisation or thread) "<name> @ <company>, Vendor" on the Vendor show, Waiting on Zoya, with the redirect step; Zoya's 0d links the later form to it. |
+| 12. Sweep closes an AR row | Page has many entries | One search or fetch per run, reused. Only the newest entry naming the id is read. No matching entry means the row stays open and the gap is reported. |
