@@ -1,6 +1,6 @@
 diff -ru a/routines/community-directory.md b/routines/community-directory.md
---- a/routines/community-directory.md	2026-10-18 13:04:09.601038592 +0000
-+++ b/routines/community-directory.md	2026-10-18 13:04:09.602839667 +0000
+--- a/routines/community-directory.md	2026-10-18 14:20:42.487676441 +0000
++++ b/routines/community-directory.md	2026-10-18 14:20:42.490004906 +0000
 @@ -2,7 +2,7 @@
  
  Scheduled routine "FT Community directory sync" (trig_01EoP9zjHnaAeyKthSWdcums), Saturdays at 09:47 JST, with the Notion and Apollo connectors (decision 186).
@@ -41,8 +41,8 @@ diff -ru a/routines/community-directory.md b/routines/community-directory.md
 +Plain and short, no em dashes: members (Added), cities found this run (counts per city), members still without a city, Apollo calls made, and confirm no credit-spending Apollo tool was called.
  ```
 diff -ru a/routines/daily-sweep.md b/routines/daily-sweep.md
---- a/routines/daily-sweep.md	2026-10-18 13:04:09.610303708 +0000
-+++ b/routines/daily-sweep.md	2026-10-18 13:04:09.612132656 +0000
+--- a/routines/daily-sweep.md	2026-10-18 14:20:42.498673261 +0000
++++ b/routines/daily-sweep.md	2026-10-18 14:20:42.500541561 +0000
 @@ -79,7 +79,7 @@
  For each Templates row with at least two Draft Activities in the last 7 days whose Edit size is Minor, Major or Rewritten: read their Edit notes and the sent mails, and if the same change keeps coming up, add a section at the end of the template's page headed "## Proposed (<date>)" with a full proposed body that folds the repeated edits in, followed by the Edit notes it is based on. Never change the live body, Subject, Version, Approved or Mode. Also list the templates whose Ready to send shows "Ready" and whose Mode is still Draft.
  

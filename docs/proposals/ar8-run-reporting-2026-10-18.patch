@@ -1,6 +1,6 @@
 diff -ru a/routines/inbox.md b/routines/inbox.md
---- a/routines/inbox.md	2026-10-18 13:04:09.457572214 +0000
-+++ b/routines/inbox.md	2026-10-18 13:04:09.459675918 +0000
+--- a/routines/inbox.md	2026-10-18 14:20:42.340942616 +0000
++++ b/routines/inbox.md	2026-10-18 14:20:42.342995764 +0000
 @@ -59,6 +59,8 @@
  To put something in front of someone, set Waiting on (multi-select: team first names such as Akshay, Mamatha, Sarika; client hosts Sri, Satish, Arjun; or "Guest or PR") and write Next action as who does what, starting with the person: "Mamatha: reply to Rhea with a recording slot", "Ask Akshay to approve: eval says Strong consider", "Waiting on Rhea: dates". Each person works from a view filtered on their name. When the ball moves (our reply sent, they replied, a decision came in), update Waiting on and Next action to the new owner and step. Read the current Waiting on first and write back the full list.
  LAST ACTIVITY: whenever you log an Activity linked to an Engagement or Deal, set that row's Last activity to "<D Mon>, <the Activity Summary>", unless the row already shows a newer one.
@@ -20,8 +20,8 @@ diff -ru a/routines/inbox.md b/routines/inbox.md
  - People created. Engagements created and moved (name: old status -> new status). Deals created and moved. Rows by Waiting on (name: Next action).
  - Pitch replies sent (guest names; Saurabh forwards thanked). Drafts created and sent drafts matched (template: edit size). RSVP threads archived (count). Guest forms merged (guest names) and sent for review.
 diff -ru a/routines/zoya.md b/routines/zoya.md
---- a/routines/zoya.md	2026-10-18 13:04:09.468260737 +0000
-+++ b/routines/zoya.md	2026-10-18 13:04:09.470051333 +0000
+--- a/routines/zoya.md	2026-10-18 14:20:42.351199138 +0000
++++ b/routines/zoya.md	2026-10-18 14:20:42.353780429 +0000
 @@ -68,6 +68,8 @@
  - A hand-written mail from Akshay or the team on a thread pauses its sequence for 14 days. The offer or ask that starts a sequence, a loop-in and any routine step don't count as hand-written.
  - A later date Akshay or the guest side names on the thread ("check back end of October", "after his surgery") becomes the next step's date.
