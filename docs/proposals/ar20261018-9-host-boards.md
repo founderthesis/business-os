@@ -208,3 +208,69 @@ The WhatsApp hashes are on the repo text with id placeholders.
 - **Eval maintenance triggers for un#** (item 4 of the design note): unchanged. Cleanup's source checks found no row needing a rerun.
 - **Public claude.ai link host access:** still unverified. The board keeps the Notion fallback unless a public link is recorded.
 - **Stale "Mamatha" in Waiting on** for Luca, Ryan and Adrian (un# moved to Zoya on 19 Oct): Zoya rewrites these when she touches the rows. This patch doesn't change them.
+
+## v2 delta: Codex's focused review of 01d0f9d (19 Oct)
+
+Only the three paths Codex named changed. The change-only diff is `ar20261018-9-01d0f9d-to-v2.diff`. Everything else in this package is as reviewed: fields, STEP 0, EVAL SNAPSHOT, projection, backfill and deploy steps.
+
+### 1. Guest availability is updated in part, and only from the guest side (inbox, WhatsApp)
+
+**Inbox, before:**
+> then reset Guest availability to their side's current items (…), never host slots.
+
+**Inbox, after:**
+> if their side states availability, update Guest availability: add or correct only what they state (Offer, Preference, Request, To confirm, as written with zone and source date), drop what they withdraw or replace and passed ones, keep the rest; host slots and other logistics never touch it.
+
+WhatsApp says the same, and adds that nothing here books a slot.
+
+### 2. Host return owns one step per field
+
+- A change writes the field, sets that field's own step and records "host … <date> routed", all in one page update.
+- A revision replaces that one step and never adds a second.
+- A clear removes the step and never leaves an offer with no slots.
+- After an interrupted run (field written, no routed line), the next run sets the step once.
+- A step someone has since done isn't added back.
+- Every other ask and owner stays.
+- A host note or availability is never a booking, approval or commercial decision.
+
+### 3. B2S and HBD call branches keep other obligations
+
+- The owner is added to Waiting on.
+- The step replaces only the host's own "your call" ask, and every other ask stays after " | ".
+- The host comes off Waiting on only if nothing else of theirs is left.
+- Each call is applied once ("<Host>'s call <call> pulled").
+- The team member is whoever sends that show's guest mail: Zoya on B2S and HBD from 19 Oct 08:00 JST (decision 323). Under the Built to Share hold, Zoya's own rules page stops her sending.
+
+### Replays for the delta
+
+| # | Case | Trace | Result |
+|---|---|---|---|
+| D1 | Alex's PR withdraws only Mon 26 Oct | Inbox: "drop what they withdraw" removes the 26 Oct line; 27 and 28 Oct and the qualified 29 Oct line stay | Three items left, uncertainty kept |
+| D2 | Ryan's PR writes "sorry, we meant EDT" | A correction of what they stated: the To confirm line is replaced by the corrected offer; the dates stay | Zone fixed, nothing else touched |
+| D3 | A mail that only carries Sri's slots or studio instructions | Not their side stating availability: Guest availability unchanged; Scheduling gets its dated line as before | Field untouched |
+| D4 | Luca's PR offers a new Nov 9 slot and says nothing about the old ones | Added; the three earlier offers kept | Partial update |
+| D5 | Sri's availability A, then B, then cleared | A: field, the Zoya offer step and a routed line. B: field and step replaced, one step only. Cleared: field emptied, step removed, cleared line, no empty offer | One step at most, never stale |
+| D6 | Unchanged rerun after D5's B | Routed line for B's stamp exists: nothing | No duplicate |
+| D7 | Run stops after writing Host availability, before Next action | Next run: field equals board, no routed line for the stamp, so it sets the step and the line once | Recovered, once |
+| D8 | Zoya offers Sri's slots and removes the step herself | The routed line for that stamp exists, so the step isn't re-added | No ping-pong |
+| D9 | B2S Yes on Approval pending, while the row also carries "Akshay: invite to the FT Community" | Host approval Yes, Status Booking (if Decision pending or Precall done); "Zoya: Satish said yes, get recording slots" replaces "Satish: your call on …"; Akshay's ask and his place in Waiting on stay | Independent ask kept |
+| D10 | HBD No while "Zoya: send the guest form" is open | Host approval No, Status We declined, "Zoya: send the decline (Arjun said no)" first; the form step stays after " | " for its owner to settle | Nothing erased |
+| D11 | The same B2S Yes seen on the next run | Claude note "Satish's call Yes pulled": not applied again | Once |
+
+### Bytes after the delta (prompt block, sha256 first 16)
+
+| Build | Host boards | Inbox (spare) | WhatsApp |
+|---|---|---|---|
+| Release (live now) + this | 13,369 / bf7ae5df8f1fa099 | 65,140 (396) / 38b73856e0e5bd86 | 23,083 / ec951c5796f58953 |
+| + AR-20261019-2 | 13,369 | 65,331 (205) / b64fd79f45ad87e1 | 32,793 / 422fc33384c11598 |
+| + pending chain | 13,369 | 65,394 (142) / 2ac894e097421c8d | |
+
+**Headroom flag:** this delta costs the inbox 134 bytes. With both AR-20261019-2 and AR-9 in, the margin is 205 bytes, and 142 with the chain as well. AR-9 alone on the live release leaves 396.
+
+**Orders replayed, all byte-equal:**
+- on-release patch (6d6c65b5…) on the release;
+- the same patch after AR-20261019-2;
+- AR-20261019-2 after this, by script and by its patch;
+- the pending chain's after-release patches after this.
+
+**Build:** ar20261018-9-build.py (905d4cea…).
