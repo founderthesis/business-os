@@ -1,4 +1,4 @@
-# AR-20261019-5: episode asset filing (Main 2), revision 4
+# AR-20261019-5: episode asset filing (Main 2), revision 5
 
 Branch claude/ar-20261019-5-episode-assets. It is separate from the AR-20261019-3 Episode-recovery proposal (branch claude/ar-20261019-3-episode-recovery), which it neither depends on nor touches. Revision 2 answers Codex's review of dac2f94. For cleanup review; Main 1 integrates and deploys. Nothing here is live. No mail was sent, nothing was uploaded and no Notion record was changed. The two Prashant Sachan photos already filed were not touched.
 
@@ -76,11 +76,13 @@ The inbox run (trig_0189eZvAD8x4357cfevgZ3No) executes in environment env_01Pb9x
 | 19 | Metadata only: the keyed line is on the Episode, no file block under it (rev 3) | Not filed. Reason "file block missing"; the file is downloaded and uploaded, and only the block is added under the existing line. Read-back then marks it filed. |
 | 20 | Block only: a file block with this filename, no line (rev 3) | The block is downloaded and hashed first. Same sha256: the line is written above it, no upload. Different: treated as another file and filed on its own. Not downloadable: "block unverified", stop. |
 | 21 | Both present after an uncertain write (rev 3) | "already filed": no download, no upload. |
-| 22 | Link Task marked Done, nothing under the link line (rev 4) | Line stays open. First Done: the same Task (found by Source ID "assets-links:<Engagement id>") goes back to Handed over with "files aren't on the Episode yet" and a "reopened <date>" line. Second Done: left Done, no new Task, reported every run. A link line added after the reopen date reopens the same Task once more. |
+| 22 | Link Task marked Done, nothing under the link line (rev 5) | Line stays open. First Done: the same Task (found by Source ID "assets-links:<Engagement id>") goes back to Handed over with "files aren't on the Episode yet" and a receipt "reopened <date> for <link keys>". A later Done with every open key already in a receipt: left Done, no new Task, reported every run. |
 | 23 | Link follow-up Task (rev 4) | Looked up by Source ID "assets-links:<Engagement id>" in any Task state, so a reopened Task with a rewritten Next action, or a Done one, is still found and never duplicated. Created only when that key is absent, with Show = the Engagement's Show checked equal to the Episode's (else "show mismatch", no Task). |
 | 24 | Link closed properly (rev 4) | File blocks under the link line, each hashed and given its own line, or a terminal disposition with name and date ("not needed", "cancelled by <who>"): then the line closes. |
 | 25 | "expired, asked again 20 Oct" written on a link line (rev 4) | Not terminal: the line stays open with that reason, and the Task stays with Sarika (reopened if it was Done). The replacement files close it when they land under the line. |
 | 26 | Two runs in a row after a reopen (rev 4) | Run 1 reopens the Task and rewrites its Next action. Run 2 finds it by its Source ID, open, and reuses it: still one Task. |
+| 27 | Second Done for the same link keys (rev 5) | Link keys mid:a1#link1 and mid:a1#link2 open; receipt "reopened 20 Oct for mid:a1#link1, mid:a1#link2". Sarika marks it Done again with nothing under the lines: both keys are in a receipt, so report only, Task left Done, nothing created or reopened, on this run and every later one. |
+| 28 | New link the same day as a reopen (rev 5) | 20 Oct 09:00 run reopens for mid:a1#link1 (receipt). Sarika marks it Done at 11:00; a new mail at 12:00 adds mid:b2#link1. 16:00 run: mid:b2#link1 is in no receipt, so the same Task reopens once more with receipt "reopened 20 Oct for mid:b2#link1". mid:a1#link1 alone would have been report only. A date test would have missed this; the key test does not. |
 
 ## 7. Revision 3: completion evidence (Codex's 0f25c83 review)
 
@@ -92,6 +94,7 @@ The inbox run (trig_0189eZvAD8x4357cfevgZ3No) executes in environment env_01Pb9x
 ## 7b. Revision 4: link follow-ups (cleanup's 107613d verdict)
 
 - **Only a terminal disposition closes a link line**: "not needed" or "cancelled by <who>", with name and date. "expired, asked again <date>" keeps the line open with its owner until the files land or someone cancels.
+- **Rev 5, reopen test by link key.** The date-based "reopened" test is replaced by receipts naming the exact link keys each reopen covered. A Done Task reopens only for open keys in no receipt; the same keys again are report-only. Rows 27 and 28. Delta: docs/proposals/ar20261019-5-rev4-to-rev5.diff.
 - **The follow-up Task has a stable key**, Source ID "assets-links:<Engagement page id>", looked up in any Task state. Open: reuse. Done once: reopen once (a "reopened <date>" line on its page body). Done again: report only, create nothing. A newer link line reopens the same Task. No path creates a second Task for the same Engagement.
 - Sections 5 and 2 to 4 are unchanged, and so is the inbox patch (+89 bytes). Delta: docs/proposals/ar20261019-5-rev3-to-rev4.diff.
 
