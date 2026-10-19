@@ -274,3 +274,73 @@ WhatsApp says the same, and adds that nothing here books a slot.
 - the pending chain's after-release patches after this.
 
 **Build:** ar20261018-9-build.py (905d4cea…).
+
+## v3 delta: Codex's v2 disposition at ad43ffb (19 Oct 15:24 JST)
+
+Only host-return completion changed. The change-only diff is `ar20261018-9-v2-to-v3.diff`, host boards only. The inbox and WhatsApp text are byte-identical to v2. Codex marked partial guest availability and the B2S/HBD branches resolved, and they're untouched.
+
+### The change
+
+The v2 marker "host <field> <date> routed" named only the field and the day. v3 keys each processed revision on the exact board text.
+
+- **REVISION LOG:** an Engagement page-body section, "## Host input (host boards)", newest line first, one line per processed revision:
+  - `<YYYY-MM-DD HH:MM JST> availability: routed '<the board text, exactly>'`, or
+  - `<…> availability: cleared`.
+
+  It's existing work record, so no new property, database or scheduler.
+- **Handled** means only this: the newest log line for that field matches the board now, as the same text with spaces collapsed, or "cleared" for an empty cell. A date alone never counts.
+- **Not handled:** (1) set or clear the field; (2) set this revision's owned step, replacing any earlier revision's, or remove it for a clear; (3) only once (1) and (2) are written, add the log line.
+  - A failed write adds no log line, so the next run redoes only what's missing. It matches its own step by its text, so nothing is added twice.
+- **Handled and the step is gone:** someone did it, and it isn't added back.
+- **Deploy baseline:** a row with no log section gets its fields written and logged as "routed (baseline)", with no new step. Existing host text doesn't raise a burst of asks on the first run.
+
+### Traces (against the v3 text)
+
+| # | Case | Run by run | Result |
+|---|---|---|---|
+| M1 | Availability A fully handled at 10:00 JST | Field A (19 Oct), "Zoya: offer Sri's slots … (Host availability, 2026-10-19)", log `10:00 availability: routed 'A'` | Handled |
+| M2 | Sri changes it to B at 14:00, same day. The 14:15 run writes the field, then fails before the step and the log | Field = B; Next action still has A's step; no log line for B | Not handled: newest log quotes 'A', board says 'B' |
+| M3 | Retry at 16:15 | Newest log 'A' ≠ board 'B', so not handled. (1) The field is already B, so it's left. (2) A's owned step is found by "(Host availability" and replaced by B's step. (3) Log `16:15 availability: routed 'B'` | B's step appears exactly once; A's is gone |
+| M4 | 21:15, unchanged | Newest log 'B' = board 'B' | Nothing |
+| M5 | Sri clears the cell at 22:00 (still 19 Oct). The 00:15 run removes the step, then fails before the log | Field cleared, B's step removed, no "cleared" line | Not handled (newest log is 'B'; the cell is empty) |
+| M5b | Next run | (1) Field already empty. (2) No owned step left to remove. (3) Log `availability: cleared` | No empty-slot offer, nothing duplicated |
+| M6 | Instead of M5: Zoya offers B's slots and removes the step herself; the host-boards run follows | Newest log 'B' = board 'B': handled, and the missing step is not re-added | Completed work stays done |
+| M7 | v2 failure Codex named, under v3: A routed, then B's field write succeeds and the step and log fail | v2 would have read the day's line and called B handled, with A's step still standing. v3 sees the log quote 'A' and repairs it, as in M3 | Fixed |
+| M8 | First run after deploy, with a host note on the board | No log section: field written, `routed (baseline)` line, no new step | No ask burst |
+
+The same rules apply to Host notes, with its own log lines and its "<Host> notes on" step.
+
+### Final inbox size and composition
+
+The live inbox was read back at 06:13 UTC as 64,848 B (07fbac63b5ca3509), and the repo's routines/inbox.md is byte-equal to it.
+
+| Composition | Inbox bytes | Spare | sha256 (16) |
+|---|---|---|---|
+| Live now: nurture v3 + trim | 64,848 | 688 | 07fbac63b5ca3509 |
+| + AR-9 v3 | 65,140 | 396 | 38b73856e0e5bd86 |
+| + AR-20261019-2 | 65,039 | 497 | 983d4bbaf590bf1a |
+| + AR-9 v3 + AR-20261019-2 | 65,331 | 205 | b64fd79f45ad87e1 |
+| + after-release chain | 64,911 | 625 | 5f3da504e8284f6f |
+| + chain + AR-20261019-2 | 65,102 | 434 | cd7f848311a3ea76 |
+| + chain + AR-20261019-2 + AR-9 v3 | 65,394 | 142 | 2ac894e097421c8d |
+
+**What adds what:**
+- AR-9 adds exactly one inbox clause, 292 B, in STEP 3's Scheduling bullet. Nothing else in the inbox changes.
+- AR-20261019-2 adds 191 B.
+- The pending chain adds 63 B.
+- No guard, sender or accepted text is removed by any of them.
+
+**Size plan, for review before anything is stacked on AR-9:**
+1. AR-9 alone ships on today's live inbox: 396 spare.
+2. Before AR-20261019-2 or the chain goes on top of AR-9, a second bounded trim is prepared and reviewed on its own, the way dfd44ca was. Its target is at least 500 B spare for the full stack. Its candidates are restatements and rationale only, with no guard, sender or accepted control.
+3. Until that trim is accepted, nothing is stacked past 205 B spare.
+
+**Host boards:** 13,897 B (cf236106a0f1da8c) in every composition.
+
+**Orders replayed, all byte-equal:**
+- on-release patch (2f7b2b32…) on the release;
+- the same patch after AR-20261019-2;
+- AR-20261019-2 after this one;
+- the after-release chain after this one.
+
+**Build:** ar20261018-9-build.py (72c090bb…).
