@@ -1,5 +1,7 @@
 # Transcripts from Blue and YouTube (Claude Code on Akshay's Mac, run once)
 
+Status, 19 Oct: a one-off, not a scheduled task. Most of it is done: the 18 Oct transcript audit found 11 Episodes still with no transcript anywhere, listed on the Engagements Task row 3fc19a301a7f81e8b013e8fb2206e787. Use part B (YouTube only) for those that have a YouTube link. Thank-you and Drive backlog items are handled by the nightly task, routines/mac/transcripts.md.
+
 The first Mac run (`transcripts-backfill.md`) attached what was on disk. What's left, as of 10 Oct, is 97 Episodes past Scheduled with no transcript:
 
 - **76 came from Blue** (un# 48, Built to Share 16, Human by Design 4, Founder Thesis 8). Their Blue record ID is in the Episode's Source ID ("Blue <id>"). Checked read-only on 10 Oct: 70 records hold a transcript file (all un#, B2S and HBD, 2 FT); 6 FT records have none.

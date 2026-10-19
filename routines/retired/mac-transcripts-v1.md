@@ -1,5 +1,7 @@
 # Transcript after each recording (scheduled task on Akshay's Mac)
 
+Retired 19 Oct 2026: replaced by routines/mac/transcripts.md (Episode by recording date, content check, Drive copy, the "Transcript |" mail, the thank-you backlog). Kept for history.
+
 The cloud routines can't reach Zencastr (no API) and can't download mail attachments, so this one runs on Akshay's Mac as a Claude desktop scheduled task, once a night, with Claude in Chrome, Google Calendar and Notion. Akshay already downloads the transcript to attach it to the thank-you mail; this task picks it up from Downloads, or fetches it from Zencastr if it isn't there yet. It also saves the transcript into Drive, "Zencastr Transcripts", where the cloud calendar routine finds it and sends the thank-you with it (decision 173). Once Zencastr backs transcripts up to Drive itself (Akshay asked them on 15 Oct), this task can stop.
 
 Set it up in the Claude desktop app: Scheduled tasks, new task, daily at 22:45 JST, paste the prompt.
