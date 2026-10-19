@@ -1,4 +1,4 @@
-# AR-20261019-5: episode asset filing (Main 2), revision 2
+# AR-20261019-5: episode asset filing (Main 2), revision 3
 
 Branch claude/ar-20261019-5-episode-assets. It is separate from the AR-20261019-3 Episode-recovery proposal (branch claude/ar-20261019-3-episode-recovery), which it neither depends on nor touches. Revision 2 answers Codex's review of dac2f94. For cleanup review; Main 1 integrates and deploys. Nothing here is live. No mail was sent, nothing was uploaded and no Notion record was changed. The two Prashant Sachan photos already filed were not touched.
 
@@ -26,7 +26,7 @@ The inbox run (trig_0189eZvAD8x4357cfevgZ3No) executes in environment env_01Pb9x
 
 **Evidence on a genuinely missing eligible file.** Rohit Manglik (Founder Thesis): headshot 16768.jpg, first sent 31 Aug (Gmail 1a056589dddf7302), quoted back inline on 19 Oct (Gmail 1a152a28fe0963b6, MCP Emails INBOX:48153). His Episode 3ed19a301a7f81c09fcbeb5d8be8e6a0 has no Guest assets section. Gmail RAW and MCP Emails original of both messages each gave 115,795 bytes, sha256 800a0253a8496d4b..., MIME part 2, inline with Content-ID. That equals MCP Emails size_bytes and the attachment-action download. The same check on Prashant's larger message (1,159,063 bytes) gave "Copy of 13.jpg" at 823,589 bytes, sha256 854e942b470053f3, from both sources. That is the photo already on his B2S Episode, which was read only, not uploaded again.
 
-**What is missing, exactly.** The Notion connector has no server-side way to upload a binary file. Its file-upload tool hands back an upload_url on api.notion.com that the runner must POST to itself. **Minimum network requirement:** in the cloud environment the inbox run uses (env_01Pb9xdJdFEZj6Xuxuq5Kxid), add **api.notion.com** under Network access > Allowed domains, keeping "Allow package managers" ticked. Nothing else is needed: downloads already work through the connectors. Added to docs/akshay-pending.md on this branch; Akshay makes the change in the environment's settings (cloud environment menu, Edit), only once Main 1 deploys the filing rule. Until then each binary file is recorded as pending, reason "upload blocked: 403", with its key, bytes and sha256, and never as filed. Uploading the original binary has not yet been proved end to end: the only missing step is the one POST.
+**What is missing, exactly.** The Notion connector has no server-side way to upload a binary file. Its file-upload tool hands back an upload_url on api.notion.com that the runner must POST to itself. **Minimum network requirement:** in the cloud environment the inbox run uses (env_01Pb9xdJdFEZj6Xuxuq5Kxid), add **api.notion.com** under Network access > Allowed domains, keeping "Allow package managers" ticked. Nothing else is needed: downloads already work through the connectors. Main 1 owns this step (section 8): it prepares the exact setting for Akshay and the upload and readback check, and the check doesn't have to wait for production deployment. Revision 3 drops this branch's pending-list edit: docs/akshay-pending.md is again identical to the integration branch at fa7062f, so the completed B2S relabel item from the older copy is not restored. Until then each binary file is recorded as pending, reason "upload blocked: 403", with its key, bytes and sha256, and never as filed. Uploading the original binary has not yet been proved end to end: the only missing step is the one POST.
 
 **Context cost per file**, once the network allows it: one saved-to-file read, a decode script that prints one line, one upload tool call, one curl, one page update. The rule page runs the downloads in one subagent that returns only key, path, bytes and sha256. A message small enough to come back inline is small by definition. No credentials were read or used.
 
@@ -40,7 +40,7 @@ The inbox run (trig_0189eZvAD8x4357cfevgZ3No) executes in environment env_01Pb9x
 
 - **Team-sent files are in.** Editor drafts, internal briefs and marketing deliverables are filed. Exclusions are by purpose and provenance: signature images, copies already filed (same sha256), templates sent to every guest, transcripts (Transcript file workflow), .ics, invoices and contracts, and anything not about one episode. An image the mail names is filed at any size.
 - **Zoya-only mail.** The inbox run already holds the MCP Emails connector, so it reads Zoya's inbox (last 72 hours) into the same filing path. That keeps one writer for Guest assets; the Zoya routine is not changed. Today Zoya's inbox (live since 15 Oct, 260 messages) has no Zoya-only attachment. The photo sends to it so far (INBOX:248, INBOX:253) also went to ad@ and collapse onto the same Message-ID key.
-- **Links.** The runner has no Drive, Dropbox or WeTransfer access, so a link is stored as given. The pending line names its owner, Sarika, and one Kind Task row puts it on her board. Main 1: confirm Sarika is the right owner for production files.
+- **Links.** The runner has no Drive, Dropbox or WeTransfer access, so a link is stored as given and that is never counted as storing the files. Sarika is the production default for episode files only; a link to a product or commercial document never reaches this path. See section 7 for how a link line closes.
 
 ## 5. Dry runs (read-only, 19 Oct)
 
@@ -66,15 +66,39 @@ The inbox run (trig_0189eZvAD8x4357cfevgZ3No) executes in environment env_01Pb9x
 | 9 | Two same-name, same-size files with different bytes in one message | Two part paths, two sha256: two keys, two lines, two blocks. |
 | 10 | The same bytes arriving again (quoted reply, forward) | Same sha256 on the Episode: already filed, no upload. |
 | 11 | Retry after the upload, before the page write | No block on the Episode; the line stays open and the next run uploads again (the orphan expires). |
-| 12 | Uncertain page write (the update errors or times out) | Read-back: if the block and line are there, mark filed; if not, "page write not confirmed". Next run starts at 5b, so a write that did land is never duplicated. |
+| 12 | Uncertain page write (the update errors or times out) | Read-back: only a file block directly under the keyed line marks it filed; else "page write not confirmed". The next run starts at 5b, which handles each partial outcome (rows 19 to 21). |
 | 13 | Upload blocked (403 today), size over 20 MB, decode mismatch | Pending with that reason; nothing marked filed; no other line touched. |
 | 14 | Transcript attachment | Not filed here: the transcript workflow owns it. |
 | 15 | Two Episodes could match | "unclear recording" with the dates; nothing filed. |
 | 16 | Pending older than the read window | Open lines go first, with no age limit. |
-| 17 | Drive or WeTransfer link | Link line stored, pending "link only: Sarika saves the files", one Task row for her. |
+| 17 | Drive or WeTransfer link | Link line stored, pending "link only: files not stored", one open Task for Sarika carrying the Engagement's Show (row 23). |
 | 18 | Edit notes as an attachment | Original filed with purpose "edit notes"; the STEP 3 list stays. |
+| 19 | Metadata only: the keyed line is on the Episode, no file block under it (rev 3) | Not filed. Reason "file block missing"; the file is downloaded and uploaded, and only the block is added under the existing line. Read-back then marks it filed. |
+| 20 | Block only: a file block with this filename, no line (rev 3) | The block is downloaded and hashed first. Same sha256: the line is written above it, no upload. Different: treated as another file and filed on its own. Not downloadable: "block unverified", stop. |
+| 21 | Both present after an uncertain write (rev 3) | "already filed": no download, no upload. |
+| 22 | Link Task marked Done, nothing under the link line (rev 3) | Line stays open. The Task goes back to Handed over once with "files aren't on the Episode yet"; a second Done with nothing stored is reported every run, never closed. |
+| 23 | Link follow-up Task (rev 3) | Show = the Engagement's Show, checked equal to the Episode's (else "show mismatch", no Task); one open Task per Engagement, reused for later links. |
+| 24 | Link closed properly (rev 3) | File blocks under the link line, each hashed and given its own line, or a dated disposition a person wrote: then the line closes. |
 
-## 7. Limits stated plainly
+## 7. Revision 3: completion evidence (Codex's 0f25c83 review)
+
+- **Only a stored file closes a file.** 5b now needs a file block directly under the keyed line. A line alone is pending ("file block missing"). A block alone is checked by downloading it and comparing sha256 before a line is added, so nothing is uploaded twice and nothing is closed on text. 5f's read-back uses the same test. Prashant's two hand-filed photos stay closed by their legacy receipts.
+- **Block check proven here, read-only.** Notion fetch with file URLs, then curl, then sha256 on the B2S Episode's "Copy of 13.jpg": HTTP 200, 823,589 bytes, sha256 854e942b470053f3, equal to the source. Notion's file host is reachable from this environment; only the upload host (api.notion.com) is blocked.
+- **Links close on evidence.** File blocks under the link line, or a dated disposition a person wrote. A Task marked Done alone never closes a line.
+- **Every follow-up Task carries its Show**, the Engagement's Show checked against the Episode's. There is one open Task per Engagement.
+
+## 8. For Main 1: network setting and upload check (proposed, not done by Main 2)
+
+1. Akshay, in the environment the inbox run uses (env_01Pb9xdJdFEZj6Xuxuq5Kxid; cloud environment menu, Edit, Network access): add api.notion.com under Allowed domains, "Allow package managers" left ticked. Nothing broader; no credentials.
+2. Confirm from a session in that environment: a CONNECT to api.notion.com no longer returns 403.
+3. Upload check on a genuinely missing file, Rohit Manglik's headshot (no test mail, no Prashant re-upload):
+   - Download Gmail 1a056589dddf7302 RAW and decode part 2: 16768.jpg, 115,795 bytes, sha256 800a0253a8496d4b.
+   - notion-create-file-upload, then one multipart POST.
+   - Place the line and file block under "## Guest assets" on Episode 3ed19a301a7f81c09fcbeb5d8be8e6a0.
+4. Readback: re-fetch the Episode with file URLs, download the block, and confirm 115,795 bytes and the same sha256. Only then is binary filing proven end to end.
+5. Until steps 1 to 4 pass, every binary file stays "upload blocked", and nobody claims automatic filing works.
+
+## 9. Limits stated plainly
 
 - Binary upload needs api.notion.com allowed in env_01Pb9xdJdFEZj6Xuxuq5Kxid. Text files of 200 KB or less don't.
 - Downloads were proven up to a 1.16 MB message. Messages near 25 MB have not been tried; a failure there becomes "download failed" and stays pending.
