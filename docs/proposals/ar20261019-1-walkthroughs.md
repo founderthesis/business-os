@@ -1,6 +1,38 @@
-# AR-20261019-1: acceptance walkthroughs, v2 (traced against the corrected text, 19 Oct)
+# AR-20261019-1: acceptance walkthroughs, v3 (traced against the corrected text, 19 Oct)
 
-Traced against ar20261019-1-build.py (the patches ar20261019-1-on-live.patch and ar20261019-1-nurture-2026-10-19.patch) and the payload. These are traces, not runs. "Zoya" is the patched zoya prompt, "sweep" the patched daily sweep, "5a" the new Rules for Zoya section. v2 answers Codex's content review of 58a26f5; rows marked (v2) are new or changed.
+Traced against ar20261019-1-build.py (the patches ar20261019-1-on-live.patch and ar20261019-1-nurture-2026-10-19.patch) and the payload. These are traces, not runs. "Zoya" is the patched zoya prompt, "sweep" the patched daily sweep, "5a" the new Rules for Zoya section. v2 answered Codex's content review of 58a26f5. v3 answers Codex's "v2 content disposition, 0c0ceaa": the inbox's three-chase path and Zoya's after-send. Rows marked (v3) are new or changed; the rest stand as in v2.
+
+## v3 correction 1: the inbox three-chase path takes exactly one branch
+
+The inbox text now reads, in order: (a) a precall or recording on the calendar, as the event says, or an Akshay or Jaya decision or hold on this pursuit: change nothing; (b) already in nurture: Chase step 0 only; (c) an approved pursuit: move to nurture; (d) else Unresponsive. In v2, a row that failed the GUARD fell into "Else Status Unresponsive, Waiting on empty". The sweep's STEP 3 now uses the same four branches.
+
+| # | Case | v2 (wrong) | v3 trace | Result |
+|---|---|---|---|---|
+| I1 (G1) | Three old unanswered chases, then the PR booked: a recording event is on the calendar, Status Booked, Call type Recording. A fourth team mail logs as a chase. | GUARD failed, so "Else": Unresponsive, Waiting on empty. | (a): the event is a recording. Status, Call type, Waiting on, Next action and Next date stay. | Unchanged, still Booked. |
+| I1p (G1) | The same, but the event is a precall (Call type Precall). | Same erase. | (a): the event says precall, so it stays a precall. Nothing is relabelled a booked recording and no recording ask goes out. | Unchanged. |
+| I2 (G2) | Precall done; Waiting on Akshay, "Ask Akshay: verdict after the precall"; three chases from before the precall. | Unresponsive, Waiting on empty: his verdict ask erased. | (a): a decision Akshay holds on this pursuit. | Unchanged, still on his list. |
+| I3 (G4) | Sponsored offered; Akshay holds a counter-offer decision. | Unresponsive. | (a). | Unchanged. |
+| I4 (G5) | No-show waiting on Akshay. | Unresponsive. | (a). | Unchanged; nothing sent until he decides. |
+| I5 | B2S row with a dated host hold ("revisit 15 Nov"). | Unresponsive. | (a): a hold on this pursuit. | Unchanged; revisited on 15 Nov. |
+| I6 | Row in nurture since 2 Nov 2026 (segment "Zoya: nurture ... (since 2 Nov 2026)"); three nurture mails have gone unanswered, so the inbox's count reaches 3. | Passed the GUARD, so nurture restarted: new start, Next date reset to 30 days. | (b): Chase step 0 only. Start, n, Next date and the segment stay. | The cadence carries on. |
+| I7 | FT Booking, three unanswered chases, nothing on the calendar, no decision or hold. | Nurture. | (c): Status LT chase, Zoya added (others stay), Next date our last mail + 30 days, only the chase segment becomes "Zoya: nurture ...", Claude note "nurture started". | Into nurture. |
+| I8 | A row that isn't an approved pursuit (no Tier 1, a lower eval, never at Precall requested, Sponsored offered, Booking or LT chase), three unanswered chases. | Unresponsive. | (d): its existing rule. | Unresponsive, as before. |
+
+## v3 correction 2: Zoya's after-send has explicit branches and reconciles before any retry
+
+In v2 the after-send kept the live "Waiting on Zoya; Next action "Zoya: <routine> step <n+1>"", which overwrote other owners and asks on every send. v3 replaces the whole sentence with AFTER SEND: check Sent and the thread first; one Activity per sent message with the provider's message id; Zoya added to Waiting on; only her own segment of Next action replaced; then the ordinary, nurture or nothing-sent branch.
+
+| # | Case | Trace | Result |
+|---|---|---|---|
+| A1 (v3) | Nurture row: start 2 Nov 2026 (Claude note "nurture started (60 silent days on sponsored)"), segment "Zoya: nurture <PR>: sponsored feature (since 2 Nov 2026)". Mail sent 2 Nov, message m1. | Nurture branch: Activity "Zoya sent: nurture 1 to <PR>", Source ID m1. Chase step 0. Next date 2 Nov + 60 = 1 Jan 2027. The segment and its "(since 2 Nov 2026)" stay. | n = 1, next 1 Jan. |
+| A2 (v3) | The same row, second real send on 1 Jan 2027, message m2. | Check first: no mail since the last nurture Activity, so it sends. Activity "Zoya sent: nurture 2 to <PR>", Source ID m2. Next date 1 Jan + 90 = 1 Apr 2027. Segment and start unchanged. | n = 2, next 1 Apr. The marker and the date progression survive both writes. |
+| A3 (v3) | Sankalp Arora: Recorded; Next action "Akshay: invite to the FT Community \| Zoya: guest form step 1 on <D Mon>"; Waiting on Akshay, Zoya. Form step 1 sends. | Ordinary branch: Activity "Zoya sent: guest form step 1 to Sankalp", Chase step 1, Zoya added (already there), Akshay stays; only "Zoya: guest form step 1" becomes "Zoya: guest form step 2 on <D Mon>". | Akshay's community ask and his place in Waiting on stay. |
+| A4 (v3) | Sankalp again: form step 2 sends a week later. | Same branch; the community segment is untouched a second time. | Two send-state writes, his ask intact. |
+| A5 (v3) | Amit Patni: the same shape (an Akshay community ask plus a form chase). The daily cap is hit before his step. | Nothing sent: no Activity; Chase step, segments, Waiting on and n stay; only Next date moves to the next working day, with "deferred: daily cap" in the Claude note. | Nothing erased, nothing duplicated. |
+| A6 (v3) | Patni's row on a run before his Next date. | Not due: nothing changes. | No-op. |
+| A7 (v3) | Crash after the mail went, before any write. | Next run, check first: the mail is in Sent and on the thread with no Activity. It sends nothing and does the writes for that message, with its real message id. | One mail, one Activity. |
+| A8 (v3) | The Activity was written, then the row update failed. | Retry only the write. If the run ends first, the next run finds the mail and its Activity: it sends nothing, adds no second Activity, and completes Chase step, Next date and the segment. | No resend, n right. |
+| A9 (v3) | Two runs on the same day for a nurture row. | The second run's check finds a mail since the last nurture Activity: no send. | n advances once. |
 
 ## Codex finding 1: one coordinated contact per person, no mutual blocking
 
@@ -24,7 +56,7 @@ How it's anchored: the start is the Claude note "nurture started" (or, for older
 | N3 (v2) | The same row, nurture start 2 Nov 2026; a mail due 10 Nov 2028. | The start is over 2 years old, so the next interval is 180 days. | Twice a year from then. |
 | N4 (v2) | A row at LT chase since 1 Mar 2025 (Claude note), silent. | The start is the first LT chase date (1 Mar 2025). Its 2 years end on 1 Mar 2027; until then 120-day intervals, then 180. In v1 the trace wrongly said 180 straight away. | Counted from the real start. |
 | N5 (v2) | Sweep: 3 unanswered chases on FT Booking, our last chase 10 Oct, no calendar event, no decision pending. | GUARD passes. LT chase, Zoya added, Next date 10 Oct + 30 = 9 Nov (the same anchor as Zoya), chase segment "Zoya: nurture <PR>: recording slot (since 19 Oct 2026)", Claude note "nurture started (3 chases unanswered, <dates>)". | Via Zoya on 9 Nov. |
-| N6 (v2) | Crash after the nurture mail sent, before the after-send write. | Next run: SENDING checks Sent and the thread first, finds the mail, logs it (Activity, which makes n correct) and sends nothing. | No duplicate; n right. |
+| N6 (v3) | Crash after the nurture mail sent, before the after-send write. | Next run: AFTER SEND checks Sent and the thread first, finds the mail, completes the writes (one Activity, which makes n correct) and sends nothing. v2 relied on a check the prompt didn't state; v3 states it (A7, A8). | No duplicate; n right. |
 | N7 (v2) | An early run (Next date in the future) and a cap-blocked run. | Not due: no change. Cap: nothing sent, so n and the anchor stay; only Next date moves, with the reason. | n not advanced. |
 | N8 | They reply during nurture. | Back on the active routine or their date; that nurture spell ends. A later silence starts a new spell with a new start line. | As routine. |
 
@@ -32,11 +64,11 @@ How it's anchored: the start is the Claude note "nurture started" (or, for older
 
 | # | Case | Trace | Result |
 |---|---|---|---|
-| G1 (v2) | Three old unanswered chases, then the PR booked: a recording event is on the calendar. Sweep runs. | GUARD: a recording on the calendar stops that chase; Status stays (Booked); no nurture move, no new booking ask. Booked is not in the approved-pursuit list anyway. | Unchanged. |
-| G2 (v2) | Precall done, waiting on Akshay's verdict; three chases from before the precall. | GUARD: a decision Akshay holds on this pursuit leaves the row as it is. Precall done isn't a chase. Zoya's STEP 2 skips it too. | Unchanged, on his list. |
-| G3 (v2) | Sankalp or Amit Patni: Recorded, "Akshay: invite to the FT Community" plus a guest form due. | Zoya's skip: the community add is an independent ask, not a decision on this pursuit, so the form chase (routine 5) runs. Any later nurture move would replace only the chase segment; Akshay's community ask and his place in Waiting on stay. | Form chase goes; his ask stays. |
-| G4 | Sponsored offered, Akshay holds a counter-offer decision. | A decision on this pursuit, so it's skipped and no nurture move happens. | None. |
-| G5 | No-show waiting on Akshay. | A decision gate, so nothing is sent. | None. |
+| G1 (v3) | Three old unanswered chases, then the PR booked: a recording event is on the calendar. Sweep runs. | Branch (a): the event's kind (recording, or precall) decides; nothing on the row changes. The inbox path is I1 and I1p. | Unchanged. |
+| G2 (v3) | Precall done, waiting on Akshay's verdict; three chases from before the precall. | Branch (a) in the sweep and the inbox (I2). Zoya's STEP 2 skips it too. | Unchanged, on his list. |
+| G3 (v3) | Sankalp or Amit Patni: Recorded, "Akshay: invite to the FT Community" plus a guest form due. | Zoya's skip: the community add is an independent ask, so the form chase (routine 5) runs. AFTER SEND now replaces only her segment and adds Zoya to Waiting on (A3 to A5); v2's after-send still overwrote both. | Form chase goes; his ask stays. |
+| G4 (v3) | Sponsored offered, Akshay holds a counter-offer decision. | Branch (a) everywhere (inbox: I3). | None. |
+| G5 (v3) | No-show waiting on Akshay. | Branch (a) everywhere (inbox: I4). | None. |
 
 ## Earlier cases, still holding (from v1, re-traced)
 
@@ -60,4 +92,6 @@ How it's anchored: the start is the Claude note "nurture started" (or, for older
 
 - A Tier 1 decision that lives only in an eval page body (Beerud) isn't found by a database query; the named cases and source checks cover it. The structured Tier changes only on Akshay's own decision.
 - "Approved pursuit" no longer includes Booked or Precall done (v2): a booked call and a decision waiting on Akshay are not chases.
-- The inbox's three-chase text grows 125 bytes over v1 (chain build 65,394; on live 65,331). AR-2's own inbox trim issue is separate and unchanged.
+- Inbox bytes (v3): 65,523 on the chain build (13 spare) and 65,460 on live (76 spare), against the 65,536 cap. The explicit branches cost 129 bytes over v2. The chain margin is thin; AR-2's own inbox trim issue is separate and unchanged.
+- Order: the patches don't commute byte for byte on one line. This change and AR-8 both edit Zoya's REPORT line. If nurture ships first, AR-8 applies from ar8-run-reporting-after-nurture.patch; that order was replayed and gives prompts identical to the chain build. v2 claimed full commutation; for this one line that was wrong in v2 too.
+- A row whose segments carry their own dates still has one Next date, which belongs to the routine that sets it. That is unchanged from live.
