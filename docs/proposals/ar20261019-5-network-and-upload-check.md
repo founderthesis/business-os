@@ -58,3 +58,21 @@ The official steps are at https://code.claude.com/docs/en/cloud-environments#net
 - Read back.
 
 Automatic capture stays **unobserved** until a real incoming eligible file is filed by the inbox run.
+
+## Result (19 Oct 2026, 13:10 to 13:15 UTC): passed
+
+Run by Main 1 after Akshay added api.notion.com.
+1. **Reachable:** `curl https://api.notion.com/` returns HTTP 302 from Notion, not a proxy 403.
+2. **Re-fetched:** the source Gmail message is unchanged (labels untouched, nothing marked read). The Episode had no file blocks and no Guest assets section, so there was nothing to reconcile.
+3. **Pending line** written on the Engagement (3ed19a301a7f8151a3e6fdb196f14e6f) before the upload: `mid:ddd162d5684f27bc#2 | 16768.jpg | 115795 bytes | to file | since 2026-10-19`.
+4. **Upload:** notion-create-file-upload, then one multipart POST: HTTP 200, status uploaded, content_length 115,795.
+5. **Placed:** "## Guest assets" on the Episode, the keyed line, then the file block directly under it.
+6. **Readback:**
+   - The block is directly under the keyed line.
+   - Downloading the stored block returns HTTP 200, 115,795 bytes, sha256 800a0253a8496d4b2e8ad9a2e38fbaeb9192db699b8bd45f035263e8126c25e0, byte-identical to the source part.
+   - Then the pending line was marked "filed 2026-10-19".
+
+**What this proves:** a binary upload works from this environment, through the same MCP upload URL the routine will use, and the stored bytes match the source. **What it doesn't prove:** the inbox routine filing a file on its own. That stays unobserved until AR-5 is deployed and a real incoming file is filed. The Prashant photos weren't touched.
+
+**Format note for the routine:** Notion returns the pipes in these lines escaped as `\|` when a page is fetched. The routine's parsing of key lines has to accept both.
+

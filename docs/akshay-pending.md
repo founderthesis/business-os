@@ -16,7 +16,7 @@ When Akshay asks what's pending on him, read this list, check each item is still
   3. Mac, Claude desktop app, Scheduled tasks: delete "Blue transcripts backfill (one-time, after maintenance)". On "Zencastr links ..." and "Zencastr transcripts ...", open each, set Model to Sonnet 5.5, the newest Sonnet in the list (not Default, not Opus, not Auto), Save.
   4. Optional, only if no other project uses them: claude.ai, Settings, Connectors, disconnect Salesblink and Blue.
   Then tell Claude "done" so it reads the settings back.
-- Guest files into Notion (AR-20261019-5, 19 Oct): one network setting so routines can upload files. In a Claude Code session on the web: the cloud environment menu in the title bar, Edit, Network access, Allowed domains: add api.notion.com, keep "Allow package managers" ticked, Save. Nothing else. Then tell Claude "api.notion.com added": it uploads Rohit Manglik's missing headshot as the check (docs/proposals/ar20261019-5-network-and-upload-check.md).
+- ~~Guest files into Notion (AR-20261019-5): add api.notion.com to the environment's Allowed domains.~~ Done 19 Oct; Rohit's headshot was uploaded, downloaded back and its hash matched.
 - Blueticks support: report that get_participants ignores skip and cursor and stops at 100 members (draft text given 14 Oct).
 - Inbox items left with Akshay on 13 Oct: FieldAssist contract revision; Sanjiv Bajaj call follow-up.
 - Ankit Sinha @ Tagbin (15 Oct): share the Founder Thesis YouTube channel URL (none found in past sent mail). Mamatha sent Nishtha (Orvis) the un# channel by mistake on 14 Oct, so a correction is waiting on it. Write it in the row's Your call.
