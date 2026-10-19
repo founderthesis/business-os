@@ -30,9 +30,9 @@ EDITS = {
         ("an active Salesblink sequence to them (Waiting on Chaandini or a Salesblink Activity in 14 days; recheck on its next step or end);",
          "a Salesblink mail to them recorded on any of their rows in the last 14 days (Salesblink was retired on 19 Oct 2026, so this ends by 2 Nov 2026; Waiting on Chaandini alone is never a hold);"),
         ("At most 10 nurture and revival mails a run,",
-         "At most 10 nurture and revival mails a day (JST),"),
+         "At most 20 nurture and revival mails a day (JST; was 10 in each of the two follow-up runs),"),
         ("At most 10 moves a run;",
-         "At most 10 moves a day (JST);"),
+         "At most 20 moves a day (JST; was 10 in each of the two follow-up runs);"),
     ]),
     # Calendar sync
     "trig_01Voiz5YsK2SnVf2STF8PoSH": ("3d9f8bd7bd5bcef9", [
@@ -41,7 +41,7 @@ EDITS = {
         ("and Chaandini keeps cold outreach (Salesblink) until their side replies",
          "and Chaandini keeps cold outreach until their side replies"),
         ("Check the next 30 days.",
-         "Run this audit in the first run at or after 08:00, 16:00 and 22:00 JST, as before; skip it in the other hourly runs. Check the next 30 days."),
+         "Run this audit once in each window, as before: 08:00 to 16:00, 16:00 to 22:00 and 22:00 to 08:00 JST. Skip it when the window already has the Activity \"Calendar audit done: <YYYY-MM-DD> <08|16|22> JST\" (Kind Note, Source Calendar, the window's start date). Write that Activity only after the whole audit finished and every finding is written; a run that stops part way writes none, so the next hourly run does the audit again. Check the next 30 days."),
     ]),
     # Daily sweep (stays daily)
     "trig_01MdfUFg2qrebDWgiHwncgnd": ("f0bf956ef3253898", [

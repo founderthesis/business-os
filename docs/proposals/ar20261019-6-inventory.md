@@ -82,7 +82,7 @@ The cloud can't read or edit these. Akshay does UI step 3, and the cloud reads b
 **Done in the repo now:**
 - `routines/salesblink-sync.md` and `routines/mac/transcripts-blue-youtube.md` removed (git history keeps both).
 - The Mac README, install doc, CLAUDE.md and architecture source line updated.
-- Decision 341.
+- Decision 344.
 - The owner UI steps added to the pending list.
 
 **Notion (developer page):** the Salesblink sync routine page is marked retired, with a Change log line.
