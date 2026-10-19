@@ -17,23 +17,40 @@ Desk checks of routines/mac/transcripts.md and routines/mac/zencastr-mac.md, tra
 
 ## Mac transcripts
 
-| # | Situation | What the prompt does | Duplicates? |
+Updated for Codex's three corrections (19 Oct). Earlier rows T1 to T15 still hold where not replaced here.
+
+### Correction 1: the exact draft (7a to 7f)
+
+| # | Case | Trace | Result |
 |---|---|---|---|
-| T1 | Recording ended 21:30; Zencastr still processing at 22:45. | 3b1 waits ("waiting for Zencastr"); all three jobs stay open. 10:45 retries. | n/a |
-| T2 | Transcript ready, 61 min; the recording page says 62:10. | Coverage passes (within 5 min). FILE, then COPY. THANKS: the calendar run wrote the draft at 22:35, so it's attached and read back. | n/a |
-| T3 | The run stopped after notion-create-attachment, before setting Transcript file. | Transcript file is still empty, so the next run attaches again. The first upload was never placed and expires. | One file on the Episode |
-| T4 | The run stopped after Transcript file was set, before the readback or COPY. | 3a downloads the Episode's own file, then 5's readback and COPY run. FILE is never uploaded twice because 5 re-fetches first. | None |
-| T5 | Transcript file filled, Drive copy present, no draft yet (Akshay deleted it, or the calendar run hasn't written it). | The work list still holds the Episode, because THANKS is open. 7b: "waiting for thank-you draft". Each run retries; after 21 days it reports "no thank-you draft after 21 days". | n/a |
-| T6 | The run stopped after the MCP Emails draft update, before the readback. | The next run's 7c finds FILE NAME on the draft with the same bytes and marks THANKS done. The snapshot is lost, so preservation of that one draft isn't re-proved; the probe (step 0) already proved the method. | One attachment |
-| T7 | Akshay edited the draft's wording and added a PDF. | 7d snapshots the edited body and the PDF. The update passes only the attachment. 7e checks body, recipients, thread and the PDF are unchanged. | n/a |
-| T8 | Akshay already attached a transcript himself. | 7c: done, no change. | None |
-| T9 | Akshay sent the thank-you without the transcript. | 7a: "thank-you sent without transcript", reported once. Nothing sent or drafted. | No mail |
-| T10 | Two matching drafts. | 7b touches neither and reports both. | n/a |
-| T11 | The readback finds the subject or thread changed. | Pauses THANKS everywhere ("draft attach paused") and reports. Akshay checks that draft. | n/a |
-| T12 | A returning guest; Drive has a copy dated six months ago. | 4a/6: another date is another recording, so a new copy is made with this date. | n/a |
-| T13 | A file in Downloads matches on first name only. | 3b4 needs full name and date, so it's not a source. 4a: "unidentified". | n/a |
-| T14 | un# studio recording; no duration anywhere. | 4b: "coverage unverified", not attached, retried and reported. | n/a |
-| T15 | A thank-you thread with an unread reply from the guest. | Only Gmail and MCP Emails reads; Chrome never opens Gmail; read state is untouched. | n/a |
+| A1 | Returning guest across two shows: FT recording 2 Oct, un# recording 16 Oct. Both have Episodes and thank-you Activities. | 7a takes, for each Episode, only the Activity on that Engagement captured after that Episode's Recording date and linked to that Episode (or, if unlinked, captured before the later Episode's date). The un# Episode gets the "client thank-you" draft, the FT one the "FT thank-you" draft. | Each draft gets only its own Episode's file. |
+| A2 | Shared PR address on two guests' threads. | No address or subject matching anywhere in 7: drafts come from the Activity's Draft ID and thread. | The other guest's draft is never touched. |
+| A3 | Akshay edits the draft's HTML (bold, a link), and the plaintext stays the same. | 7d snapshots the edited HTML. 7e compares the HTML too (whitespace between tags ignored). If the update changed the HTML, it fails and pauses. | His formatting is checked, not only the plaintext. |
+| A4 | The draft already has his PDF. | 7d hashes the PDF. 7e requires the same sha256 after. | The PDF's content is proven unchanged. |
+| A5 | Two Activities, or two drafts on the thread. | 7a or 7c: ambiguous, touch none, "no linked thank-you draft" or both reported. | Waits; nothing guessed, no second thank-you. |
+| A6 | Akshay sent a thank-you for this guest's earlier Episode, on another thread. | 7b looks only at the linked thread. Mail on other threads never counts. | Not marked sent. This Episode's own draft still gets its file. |
+| A7 | The connector refuses the attachment-only update. | 7d: the draft is untouched, the limitation is reported, THANKS stays open, and 7f pauses THANKS. | No partial edit; Akshay sees why. |
+
+### Correction 2: unfinished work carries on ("## Open Mac jobs")
+
+| # | Case | Trace | Result |
+|---|---|---|---|
+| B1 | Day 29: FILE and COPY done, no thank-you draft yet. | The Episode's line reads "open: THANKS". 7a: "no linked thank-you draft". | Waits. |
+| B2 | Day 31: the calendar run's draft appears (Activity with Draft ID). | 1b takes every Open Mac jobs line whatever its age. FILE and COPY are seen done from the Episode file and the Drive hash, not redone. 7 attaches; the line is removed. | THANKS resumes. No second upload or copy. |
+| B3 | Zencastr still processing for two days. | 3b1 waits; the line says "open: FILE, COPY, THANKS". The fresh window covers it anyway, and the line covers it past day 30. | Retried until ready. |
+| B4 | Crash after the line was written, mid-upload. | Next run: the line puts it in the work list; 5 re-fetches, sees Transcript file empty, uploads once. The unplaced earlier upload expires. | One file. |
+| B5 | Akshay writes "cancel THANKS" on a line. | The worker leaves that job and reports it. Age never closes a job. | Only Akshay cancels. |
+
+### Correction 3: no unverified or mismatched file goes anywhere
+
+| # | Case | Trace | Result |
+|---|---|---|---|
+| C1 | The WAV is 44.1 kHz stereo and the MP3 is 192 kbps. | 4b reads the duration from the provider page, else from the media header (afinfo or ffprobe), never from size. | The duration is the file's own; nothing is assumed. |
+| C2 | The transcript stops at 41:10 of a 62:00 recording. | 4b: "partial", not used, retried. | Not attached, copied or put on the draft. |
+| C3 | The Drive copy has the right name and size but different text. | 6 compares sha256: "Drive copy differs", never overwritten, COPY open, reported. | The mismatch is caught. |
+| C4 | The Episode's file doesn't match the sha256 in its "## Transcript" record. | 3a: no COPY, no THANKS for that Episode; line kept open; reported for Akshay. | Nothing known-mismatched spreads. |
+| C5 | No duration anywhere (the un# studio, no Drive for desktop). | 4b: "coverage unverified", not attached, line open, reported. | Never certified complete. |
+| C6 | The draft gains a file of the right name and size but different content. | 7e downloads it and compares its sha256 with the Episode file's: fail, pause. | Caught. |
 
 ## Readbacks done from the cloud, 19 Oct
 
@@ -41,9 +58,9 @@ Desk checks of routines/mac/transcripts.md and routines/mac/zencastr-mac.md, tra
 - **Hitarth Dadia, rechecked:** the recording event is Thu 29 Oct, 19:30 to 21:30 JST, accepted. The Engagement is Booked, Next date 29 Oct 10:30 UTC, and Recording link is empty. The 8 Sep event was the precall.
 - **Notion file:**
   - Sankalp Arora's 15 Oct Episode file, downloaded from Transcript file: 58,211 bytes, sha256 161a2e2f4818bea3, the same as the Episode's provenance line. It ends at 59:41 ("we are just at one hour mark. Let me stop").
-  - The Drive audio estimate from the same recording folder is 3,584 to 3,585 seconds (59:45) from both the .wav and the .mp3.
+  - A file-size estimate from the same Drive folder (3,584 seconds, assuming 48 kHz mono WAV and 128 kbps MP3) happened to agree. Codex is right that the size proves no encoding, so the prompt no longer uses it.
 - **Gmail draft attachment: not verified from the cloud.**
   - A test draft was made from ad@ to ad@ on an internal thread. The Gmail connector's draft read does not list existing attachments, and its update_draft drops attachments it isn't given again, so it is not used.
   - MCP Emails did see the test draft's attachment and its In-Reply-To.
   - The next step, editing the test draft, was refused by this session's safety check, so it was not tried another way. The test draft was deleted, and Drafts is empty again.
-  - The first Mac run's step 0 runs this same test, with Akshay watching, before any real draft is touched.
+  - The worker no longer runs this test itself. Step 0 is a gate that opens only after a supervised probe Akshay explicitly authorises (docs/install-2026-10-19.md, "The draft-attach probe").
