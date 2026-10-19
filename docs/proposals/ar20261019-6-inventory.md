@@ -112,9 +112,9 @@ The cloud can't read or edit these. Akshay does UI step 3, and the cloud reads b
 
    | Routine | Base sha256 (first 16) |
    |---|---|
-   | Inbox | 07fbac63b5ca3509 |
+   | Inbox (AR-5 live) | b3f1e632a6a5a40a |
    | Zoya | 7f71e2302f155d6f |
-   | Calendar | 3d9f8bd7bd5bcef9 |
+   | Calendar (AR-3 live) | cd50072ab657736a |
    | Sweep | f0bf956ef3253898 |
    | WhatsApp | d4c9986b750e9cbd |
 
@@ -124,11 +124,11 @@ The cloud can't read or edit these. Akshay does UI step 3, and the cloud reads b
    | Routine | Cron | Expected sha after |
    |---|---|---|
    | WhatsApp | `45 * * * *` (unchanged) | a501ba2a88a4080d |
-   | Calendar | `35 * * * *` | 800801f0906446cd alone; with AR-3 the composed hash is measured at deploy |
+   | Calendar | `35 * * * *` | 59559d2a4a868a89 (with AR-3, section 10) |
    | Zoya | `30 * * * *` | d528541c31a5f390, then Rules R1 the same hour |
    | Host boards | `15 * * * *` | prompt unchanged |
    | Evals | `25 * * * *` | prompt unchanged |
-   | Inbox | `2 * * * *` | c05203e2ccb0faba |
+   | Inbox | `2 * * * *` | 6e84c314a0165829 (with AR-5, section 10) |
 
    All crons are CRON_TZ=Asia/Tokyo. The sweep prompt goes with no cron change (651198505a972a60).
 3. **Observe the first three hourly passes:**
@@ -212,3 +212,19 @@ Section 6 holds the full list. This is its current state:
 2. Calendar is composed with AR-3 once cleanup accepts AR-3, re-measured, and sent to cleanup with the composed size before it's pushed. If AR-3 isn't accepted, calendar ships on revision 2 alone (50,214 B / 800801f0906446cd) and AR-3 lands on top later.
 3. Push one routine at a time (prompt, cron, model) and read each back. Zoya goes with Rules R1.
 4. Watch the first hourly passes. Check the served model, that nothing duplicates, and that sends don't go up.
+
+## 10. Composed on the live AR-3 and AR-5 prompts (19 Oct, 23:25 JST)
+
+AR-3 (eccf34f) and AR-5 (8148594) were accepted by cleanup and went live at 14:13 and 14:16 UTC, read back byte for byte. The AR-6 build now asserts those as its bases. The edits are unchanged from revision 3; only the inbox and calendar bases moved.
+
+| Routine | Live base | AR-6 composed |
+|---|---|---|
+| Inbox (with AR-5) | 64,936 B / b3f1e632a6a5a40a | 65,083 B / 6e84c314a0165829, 453 spare |
+| Calendar (with AR-3) | 54,862 B / cd50072ab657736a | 55,600 B / 59559d2a4a868a89 |
+| Zoya | 43,704 B / 7f71e2302f155d6f | 44,601 B / d528541c31a5f390 |
+| Sweep | 35,063 B / f0bf956ef3253898 | 35,050 B / 651198505a972a60 |
+| WhatsApp | 22,647 B / d4c9986b750e9cbd | 22,592 B / a501ba2a88a4080d |
+
+Calendar: the window guard replaces the start of "Check the next 30 days." in STEP 1b. AR-3 touched STEP 4, 4e and a2, so the two don't overlap. Inbox: the HOURLY line sits after the opening "you never act." sentence and the "(Salesblink)" drop is in HOUSE COPIES, apart from AR-5's STEP 3 and 6d edits. AR-9 stays out: with it the inbox would be about 65,375 B (161 spare), past AR-9's own 205-byte floor, so it waits for the reviewed trim.
+
+Still waiting on cleanup's narrow check (window and send-count cases, final composition). Not installed.

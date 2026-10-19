@@ -1,6 +1,6 @@
 """AR-20261019-6: hourly response loop and Salesblink retirement, prompt edits.
 
-Bases are the installed prompts read back 19 Oct 2026 (12:12 to 12:16 UTC).
+Bases are the installed prompts read back 19 Oct 2026: inbox and calendar after AR-5 and AR-3 went live (14:13 to 14:17 UTC), the others 12:12 to 12:16 UTC.
 Usage: python3 ar20261019-6-build.py <dir with trig_<id>.txt bases> <out dir>
 """
 import hashlib, os, sys
@@ -14,8 +14,8 @@ HOURLY = ("HOURLY (AR-20261019-6): you run every hour. Each run takes what is ne
           "once-a-day or one-time step keeps its own check.")
 
 EDITS = {
-    # Inbox, 64,848 B, cap 65,536
-    "trig_0189eZvAD8x4357cfevgZ3No": ("07fbac63b5ca3509", [
+    # Inbox with AR-5 live, 64,936 B, cap 65,536
+    "trig_0189eZvAD8x4357cfevgZ3No": ("b3f1e632a6a5a40a", [
         ("and Chaandini keeps cold outreach (Salesblink) until their side replies",
          "and Chaandini keeps cold outreach until their side replies"),
         ("You capture; apart from the replies in STEPS 6 to 6e, RSVP archiving (STEP 7) and merging guest forms (STEP 7b) you never act.",
@@ -36,8 +36,8 @@ EDITS = {
         ("Claude note \"YYYY-MM-DD: nurture started (<why>)\"",
          "Claude note \"YYYY-MM-DD: nurture started (<why>) (Zoya)\""),
     ]),
-    # Calendar sync
-    "trig_01Voiz5YsK2SnVf2STF8PoSH": ("3d9f8bd7bd5bcef9", [
+    # Calendar sync with AR-3 live
+    "trig_01Voiz5YsK2SnVf2STF8PoSH": ("cd50072ab657736a", [
         ("No human is watching this run: never stop to ask a question.",
          "No human is watching this run: never stop to ask a question. " + HOURLY),
         ("and Chaandini keeps cold outreach (Salesblink) until their side replies",
