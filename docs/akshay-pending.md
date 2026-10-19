@@ -39,3 +39,8 @@ When Akshay asks what's pending on him, read this list, check each item is still
 - Rules for Zoya, 2 more open questions (15 Oct): keep the day-before release WhatsApp (it was deleted from the release table, restored per the landing page); should the agent write the 3 post options from the transcript.
 - Calendar rules (15 Oct): two open questions on the page (https://app.notion.com/p/3fa19a301a7f816c9a53fe80557d0046): what Out of office means for you, and hours never to book.
 - Later (Akshay, 15 Oct: "we will handle it in future"): the 124 Founder Thesis outbound rows at New. Who does outreach now Mamatha is off FT (Zoya, Akshay picks first, or park). They stay blank in Waiting on and out of the "FT: waiting on nobody" view until then.
+- AR-20261020-1 (20 Oct), three things only you can do:
+  1. ok the "Sponsored for a repeat guest" wording (docs/proposals/ar20261020-1.md, payload 3).
+  2. Should a loop-in, or being in Cc, count toward the 7-day one-mail rule? Today it does, which holds Teja Gudena's chase to 24 Oct though it has been owed since 11 Oct.
+  3. Paste the Zencastr task's new step d into the Mac task once AR-20261020-1 is accepted (the daily sweep covers it until then).
+- Backlog decisions (20 Oct), each on its Engagement in Your call: close or park Benjamin Sharon, Utsav Dar, Lior Lamesh; fresh outreach or park Eric Barbier; decline Ramzy Ali via Hugh (Scrib3); withdraw the sponsored offer for Naoki Yamauchi, James Stephens, Aaron @ WYDE.
