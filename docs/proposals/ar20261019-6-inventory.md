@@ -1,0 +1,138 @@
+# AR-20261019-6: before/after inventory and deletion checklist (19 Oct 2026)
+
+Owner decision (Akshay, 19 Oct): retire Salesblink and Blue, kill FT Newsjack, run the response pipeline hourly, and run every recurring routine on Sonnet. Main owns deployment; cleanup reviews changed controls.
+
+The states are kept apart:
+- **Disabled/deleted:** done in the scheduler, read back.
+- **Pinned:** a model setting changed, read back.
+- **Prepared:** built, waiting on cleanup, not installed.
+- **Installed:** pushed and read back.
+- **Observed:** seen working in a real run.
+
+## 1. Cloud scheduled tasks (claude.ai)
+
+Read from the scheduler on 19 Oct, 12:05 to 12:16 UTC. The 19 one-shot reminders (all fired, all disabled) are left alone.
+
+| Task | Id | Before | After now | After cleanup accepts (prepared) | Model, read back | Connectors |
+|---|---|---|---|---|---|---|
+| Salesblink sync | trig_01KpyDSfNqRKAGEABwyMBREA | weekdays 09:10, 15:10 IST | **disabled 12:09 UTC, then deleted** | gone | sonnet-5-5 (moot) | Salesblink, Notion (gone with it) |
+| FT Newsjack, daily archive scan | trig_01WtqCKNrmaCGieif519N1WB | daily 02:30 UTC | **still enabled**: created by API, agents can't disable or delete it | Akshay deletes it (UI step 1) | claude-sonnet-5 | Canva, Slack, Unsplash, Drive, Remote, Calendar, Gmail, Notion |
+| Inbox to Business OS | trig_0189eZvAD8x4357cfevgZ3No | 00, 08, 16, 21 JST | unchanged | **hourly at :02 JST**; prompt 64,848 to 64,995 B (541 spare) | sonnet-5-5 (already set) | Notion, Gmail, Calendar, Blueticks, MCP Emails |
+| Host boards | trig_01K8bueCr2xsPkbgQzjeRKsz | 00:15, 08:15, 16:15, 21:15 JST | **pinned sonnet-5-5** (was empty) | **hourly at :15**; prompt unchanged | sonnet-5-5 | Notion |
+| Founder Thesis guest evals | trig_01R1yHgEztVEo832zMwUugBr | 00:25, 08:25, 16:25, 21:25 JST | unchanged | **hourly at :25**; prompt unchanged | sonnet-5-5 (already set) | 17 account connectors incl. **Salesblink, Blue**: remove (UI step 2) |
+| Zoya | trig_01UPT8LDrBDL5JQqW91Awgbo | 00:30, 08:30, 16:30, 21:30 JST | **pinned sonnet-5-5** (was empty); prompt unchanged 7f71e2302f155d6f | **hourly at :30**; prompt 43,704 to 44,114 B | sonnet-5-5 | MCP Emails, Notion, Gmail, Calendar, Blueticks |
+| Calendar sync | trig_01Voiz5YsK2SnVf2STF8PoSH | 08:35, 16:35, 22:35 JST | unchanged | **hourly at :35**; audit stays three a day; prompt 49,476 to 49,904 B | sonnet-5-5 (already set) | Gmail, Calendar, Notion, MCP Emails, Drive |
+| WhatsApp to Business OS | trig_01MnmJYorWrd61K7b5BCqXr1 | hourly at :45 JST | **pinned sonnet-5-5** (was empty) | hourly at :45 (same); prompt 22,647 to 22,592 B | sonnet-5-5 | Blueticks, Notion |
+| Daily sweep | trig_01MdfUFg2qrebDWgiHwncgnd | weekdays 13:10 JST | unchanged | **stays daily**; prompt 35,063 to 35,050 B | sonnet-5-5 (already set) | Gmail, Notion |
+| Host dossiers and prep notes | trig_01WfLf8Zx9c34fSzfrTeUY5M | daily 06:50 JST | unchanged | **stays daily**; no change | sonnet-5-5 (already set) | 17 incl. **Salesblink, Blue**: remove (UI step 2) |
+| FT Community directory sync | trig_01EoP9zjHnaAeyKthSWdcums | Saturdays 09:47 JST | **pinned sonnet-5-5** (was empty) | **stays weekly** | sonnet-5-5 | Blueticks, Notion, Apollo |
+
+**Why these offsets.** The order is inbox, then boards, evals, Zoya, calendar and WhatsApp, as before, each about a quarter-hour apart.
+- Last observed run lengths were 1.5 to 6.5 minutes, so a routine can't overlap its own next run.
+- Inbox sits at :02 rather than :00, because the scheduler re-anchors minute-0 hourly crons to the edit minute.
+
+**Opus fallback.** No task has Opus or Auto anywhere: every model field reads sonnet-5-5, except Newsjack, which is being deleted. The scheduler API has no fallback switch to set. The real check is each run's served model, `last_served_model`, on the first hourly runs. I'll report any fallback seen there.
+
+**Interactive sessions** (main, cleanup, misc) are authoring tools, not recurring workers, and are not pinned by this. Codex's CTO review is not a Claude worker: unchanged.
+
+## 2. Mac tasks (Claude desktop, local)
+
+The cloud can't read or edit these. Akshay does UI step 3, and the cloud reads back the outcomes.
+
+| Task | Before | After |
+|---|---|---|
+| Blue transcripts backfill (one-time, after maintenance) | paused | **delete** |
+| Zencastr links for confirmed FT recordings (nightly) | paused, cutover per docs/install-2026-10-19.md | keep its reviewed cadence; set model **Sonnet 5.5** |
+| Zencastr transcripts to Notion after FT recordings (nightly) | paused, same | keep its reviewed cadence; set model **Sonnet 5.5** |
+
+## 3. Salesblink, before it goes (read-only, then made safe)
+
+- **22 sequences.** Two were still running, both sending from Mamatha's mailbox:
+  - "Human By Design Podcast Invite": 358 leads, 66 in progress, 28 not started, 1,269 sent.
+  - "Test - Founder Thesis Podcast Invite".
+  - **Both paused at 12:20 UTC.** A recheck shows 0 running. Nothing was restarted or sent.
+- **30 reply threads, all read.**
+  - **Already settled in the OS or closed:** Euan, Barto, Bengio, Shoham/Noa, Koller, Farhadi, Hinton, Kaelbling, Simon Jagers (recorded), Maxim Galash, and the unsubscribes. Six are internal tests.
+  - **Never answered inside Salesblink and never in the OS: 8**, from January to July 2026. They went to Akshay as two Task rows (a decision, not a bulk create), with their Salesblink message ids as evidence:
+    - Human by Design, 7: [Task](https://app.notion.com/p/3fe19a301a7f8158899cee76e0167331).
+    - un#, 1: [Task](https://app.notion.com/p/3fe19a301a7f81508c2cd55163459e3b).
+  - **The named blocker:** these threads sit in Mamatha's and Chaandini's mailboxes, which no OS routine reads. A revive means Zoya writes a new mail, or Mamatha replies.
+- **Notion rows that mention Salesblink:**
+  - 132 B2S "Queued in Salesblink", 119 B2S and 134 HBD cold holds, 11 decision 328 holds, plus a handful of one-offs.
+  - All have no owner and no date except one HBD row waiting on Arjun, so none is due or mailable.
+  - Left as written: that's history, not a live integration. No bulk relabel.
+
+## 4. Source and controls
+
+**Prepared, not installed** (`ar20261019-6-build.py`, `ar20261019-6-prompts.patch`):
+- **Inbox:** an HOURLY line (new or unfinished work only; look-back windows are catch-up; more runs never mean more mails). "(Salesblink)" is dropped from cold outreach.
+- **Zoya:**
+  - The HOURLY line.
+  - Cold outreach is "(C1 and C2; Salesblink is retired)".
+  - ONE PERSON, ONE ASK no longer holds a mail for "Waiting on Chaandini" or an active Salesblink sequence. Only a real Salesblink mail on their rows in the last 14 days still holds it, which runs out by 2 Nov 2026.
+  - Nurture and revival mails, and nurture moves, are capped at 10 a day instead of 10 a run, so hourly can't multiply them.
+- **Calendar:** the HOURLY line and the "(Salesblink)" drop. The 30-day audit still runs three times a day, in the first runs at or after 08:00, 16:00 and 22:00 JST, so its mails don't multiply.
+- **WhatsApp:** inbox timing reads "hourly, a few minutes past each hour"; "still open" means two hours after it went into Your call.
+- **Sweep:** the "(Salesblink)" drop.
+- **Unchanged and still safe hourly:**
+  - The daily guards: owner mail once a day, briefs, FT Community once a day.
+  - Follow-ups only in the 16:00 to 22:00 JST runs, the 150-a-day send cap, and the 7-day per-person rule.
+  - The one-time loop-ins, already run.
+
+**Done in the repo now:**
+- `routines/salesblink-sync.md` and `routines/mac/transcripts-blue-youtube.md` removed (git history keeps both).
+- The Mac README, install doc, CLAUDE.md and architecture source line updated.
+- Decision 341.
+- The owner UI steps added to the pending list.
+
+**Notion (developer page):** the Salesblink sync routine page is marked retired, with a Change log line.
+
+**Not changed:**
+- Historical Source IDs, Activities, People, Episodes and transcripts.
+- The bts-guest-eval skill's "never Salesblink" guard, which is harmless.
+- The Salesblink and Blue accounts and billing.
+
+## 5. Deletion checklist
+
+| # | Item | Who | State |
+|---|---|---|---|
+| D1 | Salesblink sync schedule | main | disabled, then deleted (19 Oct 12:09 to 12:25 UTC) |
+| D2 | Two running Salesblink sequences | main | paused, rechecked 0 running |
+| D3 | FT Newsjack schedule | Akshay, UI step 1 | open: still enabled, next run 11:33 JST 20 Oct |
+| D4 | Salesblink and Blue on evals and dossiers | Akshay, UI step 2 | open |
+| D5 | Mac Blue backfill task | Akshay, UI step 3 | open |
+| D6 | Mac Zencastr tasks on Sonnet | Akshay, UI step 3 | open |
+| D7 | Repo routine files for Salesblink and Blue | main | removed in this commit |
+| D8 | Hourly crons plus prompt edits on 5 routines | main, after cleanup | prepared |
+| D9 | Account-level Salesblink and Blue connectors | Akshay, optional | open |
+
+## 6. Deploy (after cleanup accepts)
+
+1. **Fresh base check.** Each live prompt must still be byte-equal to its base:
+
+   | Routine | Base sha256 (first 16) |
+   |---|---|
+   | Inbox | 07fbac63b5ca3509 |
+   | Zoya | 7f71e2302f155d6f |
+   | Calendar | 3d9f8bd7bd5bcef9 |
+   | Sweep | f0bf956ef3253898 |
+   | WhatsApp | d4c9986b750e9cbd |
+
+   Rebuild if any moved.
+2. **Push prompt and cron together**, one routine at a time in this order: WhatsApp, calendar, Zoya, host boards (cron only), evals (cron only), inbox. Read back the sha and the cron after each.
+
+   | Routine | Cron | Expected sha after |
+   |---|---|---|
+   | WhatsApp | `45 * * * *` (unchanged) | a501ba2a88a4080d |
+   | Calendar | `35 * * * *` | 7eddd141669fb654 |
+   | Zoya | `30 * * * *` | 562034f3558c1781 |
+   | Host boards | `15 * * * *` | prompt unchanged |
+   | Evals | `25 * * * *` | prompt unchanged |
+   | Inbox | `2 * * * *` | c05203e2ccb0faba |
+
+   All crons are CRON_TZ=Asia/Tokyo. The sweep prompt goes with no cron change (651198505a972a60).
+3. **Observe the first three hourly passes:**
+   - no duplicate Activities, replies or loop-ins;
+   - Zoya sends no more than before;
+   - one owner mail and one of each brief per day;
+   - served model sonnet on every run.

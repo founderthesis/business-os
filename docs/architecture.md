@@ -16,7 +16,7 @@ Scope: owned shows, BD, client production. Ghostwriting later.
 ## Layers
 
 ```
-SOURCES      Gmail · Calendar · Gemini notes · Zencastr · Sheets · Blue · Guest form · WhatsApp (pasted)
+SOURCES      Gmail · Calendar · Gemini notes · Zencastr · Guest form · WhatsApp   (Sheets, Blue and Salesblink retired)
    │
 1 CAPTURE    everything becomes an Activity (append-only, with source)
    │
