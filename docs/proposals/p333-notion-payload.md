@@ -26,11 +26,11 @@ After (row): `Close note when they say no to sponsored | Zoya (decision 333) | W
 ### A3. New section "Who sends", inserted between the section 1 table and "## 2. Rules for every mail"
 After (new):
 > ## Who sends (decision 333, Akshay, 18 Oct)
-> Every routine reads this before any mail.
+> The inbox, calendar and Zoya prompts carry these rules; this page is the master copy.
 > Akshay's account (ad@thepodium.in) sends to anyone outside the team for three things only:
 > 1. **The reply that adds Zoya**, where their side wrote last: "thanks \<first name\>, adding @Zoya to coordinate", Zoya in Cc, nothing else. Where we wrote last there is no loop-in (decision 216): Zoya sends her mail as a new mail from her inbox, To the person whose move it is, Akshay in Cc, subject "Re: \<thread subject\>".
 > 2. **A personal reply Akshay writes himself.** Routines never send these: a mail in Akshay's voice is a draft in his Gmail.
-> 3. **A short reply putting Zoya back** on a thread someone dropped her from: "adding @Zoya back to coordinate", Zoya in Cc, once per message, at most 20 a run (the rest wait for the next run), outside the daily cap.
+> 3. **A short reply putting Zoya back** on a thread someone dropped her from: "adding @Zoya back to coordinate", Zoya in Cc, once per message, at most 20 a run (the rest wait for the next run), outside the daily cap, and only once its wording is approved (decision 238); until then nothing is sent or logged.
 >
 > Everything else a routine sends to someone outside the team comes from Zoya, on the thread, with Akshay in Cc. That covers decision mails, acknowledgements, edit-notes replies, vendor redirects, admin confirmations, assets received, no-show and close notes, chases and every follow-up. When the step is only an acknowledgement and Zoya isn't on the thread yet, the loop-in is the acknowledgement; it never stands in for a decision mail, a redirect or an answer.
 >
@@ -84,11 +84,14 @@ After: `2. **Everything else joins as needed.** That's 76 FT Sponsored offered (
 Before: `- **Live (15 Oct):** the one-line holding reply, the vendor one-liner, acknowledgements, Zoya in Cc on every reply, and no read-marking.`
 After: `- **Live (15 Oct):** the one-line holding reply, Zoya in Cc on every reply, and no read-marking. Since decision 333 the vendor redirect and acknowledgements come from Zoya.`
 
+Before: `- **Still open:** the inbox and calendar routines read the Templates database for the mails they send from ad@thepodium.in (step 5).`
+After: `- **Since decision 333:** no routine sends template mail from ad@thepodium.in; the inbox reads the Templates database only to fill drafts and Zoya's queued decision mail.`
+
 ## B. Mail and WhatsApp wording
 
 ### B1. Intro paragraph, two sentences
 Before: `The inbox and calendar routines still read the Templates database for the mails they send from ad@thepodium.in until it's retired (Rules for Zoya, section 10).`
-After: `No routine sends template mail from ad@thepodium.in (decision 333); the inbox reads the Templates database only to fill drafts and Zoya's queued decision mail.`
+After: `No routine sends template mail from ad@thepodium.in (decision 333); the inbox reads the Templates database only to fill drafts and Zoya's queued decision mail. A toggle whose Status says it waits for a [Zoya test] approval is not sent, whatever this paragraph says about earlier live wording; Akshay's own "approved" on that toggle's current test sets its Status to "approved <date> (decision 238)", and that Status is the one approval source the inbox and Zoya read.`
 
 Before: `**Since 16 Oct (decision 235), Akshay's account only sends the short, link-free lines in section 0**, through Gmail as replies inside the existing thread, so his inbox keeps the whole history.`
 After: `**Since 18 Oct (decision 333), Akshay's account sends only the two loop-in lines at the top of section 0**, through Gmail inside the existing thread.`
@@ -156,8 +159,8 @@ After (new):
 > Stay awesome ✨<br>Zoya
 
 ## C. Templates row "Sponsored turned down: close the thread"
-- Body before: the Akshay version (identical to B5's "Before" body lines, "Thanks & Regards, Akshay").
-- Body after: the same as B5's "After" body, from the bracketed instruction line to the sign-off.
+- Body before: the Akshay version. Its bracket line ends "(decision 196)", unlike B5's.
+- Body after: the same as B5's "After" body, from the bracketed instruction line to the sign-off. **Replace the row body whole at apply time** (replace_content on the row page), not by substring.
 - **Mode:** Send becomes **Off**. No routine sends this row after Stage B; Zoya sends the wording-page toggle.
 - **Approved:** stays ticked; not changed.
 - **Owner routine:** inbox becomes **none**.

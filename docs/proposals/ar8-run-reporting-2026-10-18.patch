@@ -1,6 +1,6 @@
 diff -ru a/routines/inbox.md b/routines/inbox.md
---- a/routines/inbox.md	2026-10-18 14:20:42.340942616 +0000
-+++ b/routines/inbox.md	2026-10-18 14:20:42.342995764 +0000
+--- a/routines/inbox.md	2026-10-19 00:55:01.132584273 +0000
++++ b/routines/inbox.md	2026-10-19 00:55:01.134214600 +0000
 @@ -59,6 +59,8 @@
  To put something in front of someone, set Waiting on (multi-select: team first names such as Akshay, Mamatha, Sarika; client hosts Sri, Satish, Arjun; or "Guest or PR") and write Next action as who does what, starting with the person: "Mamatha: reply to Rhea with a recording slot", "Ask Akshay to approve: eval says Strong consider", "Waiting on Rhea: dates". Each person works from a view filtered on their name. When the ball moves (our reply sent, they replied, a decision came in), update Waiting on and Next action to the new owner and step. Read the current Waiting on first and write back the full list.
  LAST ACTIVITY: whenever you log an Activity linked to an Engagement or Deal, set that row's Last activity to "<D Mon>, <the Activity Summary>", unless the row already shows a newer one.
@@ -20,8 +20,8 @@ diff -ru a/routines/inbox.md b/routines/inbox.md
  - People created. Engagements created and moved (name: old status -> new status). Deals created and moved. Rows by Waiting on (name: Next action).
  - Pitch replies sent (guest names; Saurabh forwards thanked). Drafts created and sent drafts matched (template: edit size). RSVP threads archived (count). Guest forms merged (guest names) and sent for review.
 diff -ru a/routines/zoya.md b/routines/zoya.md
---- a/routines/zoya.md	2026-10-18 14:20:42.351199138 +0000
-+++ b/routines/zoya.md	2026-10-18 14:20:42.353780429 +0000
+--- a/routines/zoya.md	2026-10-19 00:55:01.140434255 +0000
++++ b/routines/zoya.md	2026-10-19 00:55:01.141993737 +0000
 @@ -68,6 +68,8 @@
  - A hand-written mail from Akshay or the team on a thread pauses its sequence for 14 days. The offer or ask that starts a sequence, a loop-in and any routine step don't count as hand-written.
  - A later date Akshay or the guest side names on the thread ("check back end of October", "after his surgery") becomes the next step's date.
@@ -30,7 +30,7 @@ diff -ru a/routines/zoya.md b/routines/zoya.md
 +
  STEP 0. GO-LIVE AND AKSHAY'S FEEDBACK
  a. If Rules for Zoya does not yet open with "Zoya is live", insert at the very top: "Zoya is live (since <YYYY-MM-DD HH:MM> JST). Founder Thesis only."
- b. Akshay's replies to you (from ad@thepodium.in, on "[Zoya test NN]" threads or any mail you sent) are feedback on your mail (decision 315). Handled = you already replied after his message. For each one not handled yet:
+ b. Akshay's replies to you (from ad@thepodium.in, on "[Zoya test NN]" threads or any mail you sent) are feedback on your mail (decision 315). An "approved" Akshay writes himself (from ad@thepodium.in, his own words, not quoted or forwarded) on a "[Zoya test] <toggle>" thread, in reply to the test of that toggle's current wording, sets the toggle's Status on the wording page to "approved <D Mon> (decision 238, <his message id>)"; an approval of an older version approves nothing. Handled = you already replied after his message. For each one not handled yet:
 @@ -128,7 +130,7 @@
  After each send: Activity "Zoya sent: <routine> step <n> to <name>" (Kind Email out, Source Gmail, Source ID the sent message id, Link, Engagement, Episode if any, Captured today); Chase step = n; Last activity; Next date = the next step's due date (weekdays only); Waiting on Zoya; Next action "Zoya: <routine> step <n+1> on <D Mon>"; Claude note line "YYYY-MM-DD: Zoya sent <routine> step <n> (<angle>)". After the last step, close the row as the page says.
  
