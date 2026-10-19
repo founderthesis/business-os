@@ -1,6 +1,6 @@
 # AR-20261019-1: Notion payload for nurture and revival (exact before and after)
 
-These go onto Rules for Zoya (3f719a301a7f81a09de3ee3ad6ad98a3) and five routine pages. They are live controls: Zoya reads them every run. Nothing here is applied until cleanup accepts it. It is applied together with the prompt patch docs/proposals/ar20261019-1-nurture-2026-10-19.patch (Zoya, daily sweep, inbox), never one without the other.
+These go onto Rules for Zoya (3f719a301a7f81a09de3ee3ad6ad98a3) and five routine pages. They are live controls: Zoya reads them every run. Nothing here is applied until cleanup accepts it. It is applied together with the prompt change (Zoya, daily sweep, inbox), never one without the other. Two equivalent patch files carry that change: ar20261019-1-on-live.patch, built on today's live prompts, and ar20261019-1-nurture-2026-10-19.patch, built on the end of the pending chain. Both come from ar20261019-1-build.py and produce identical results in either order.
 
 No mail wording changes. Nurture and revival mails use the live angles of routines 7 and 8, adapted to the thread under decision 152. The close-out mails stop being sent; none is re-worded, so decision 238 needs no new test.
 
@@ -10,37 +10,51 @@ No mail wording changes. Nurture and revival mails use the live angles of routin
 After (new):
 > ## 5a. Nurture and revival (AR-20261019-1, Akshay, 19 Oct)
 > **Controls.** Zoya, the daily sweep and the inbox carry these rules; this section is the master copy. Silence never ends a relationship: Zoya keeps in touch for years until there's a clear no, slowing down when nobody answers and speeding up when someone does.
-> **Approved pursuit:** a row at Precall requested, Precall done, Sponsored offered, Booking, Booked or LT chase, or with Tier 1, or one Akshay asked to nurture.
+> **Approved pursuit:** a row at Precall requested, Sponsored offered, Booking or LT chase, or with Tier 1, or one Akshay asked to nurture. A booked call and a decision waiting on Akshay are not chases.
+> **Guard, before any move to nurture (every routine):** re-read the row, its calendar and its thread.
+> - A precall or recording on the calendar stops that chase: the row stays Booked, with no new booking ask.
+> - A decision Akshay or Jaya holds on this pursuit (a verdict after a precall, a price, an offer, a no-show) keeps the row as it is.
+> - Only the chase part of Next action changes. Other asks, their owners and independent obligations stay.
 >
 > | Situation | Next mail |
 > |---|---|
 > | A PR team is coordinating a precall or recording that isn't booked, and their side wrote in the last 30 days | 5 working days after the last real ask or exchange (a loop-in, a thanks or an out-of-office doesn't count). Weekdays only, never Diwali week. Their requested hold or date wins. |
 > | Within a routine's schedule | The routine page's dates. |
-> | The routine has run out (last step, span over, 60 silent days on a sponsored offer, our last mail a close-out, or 3 unanswered chases) | Nurture: 30, 60 and 90 days after our last mail, then every 120 days, then every 180 days once the row has been in nurture for 2 years. |
-> | They reply, give a date, or there's a real new opening (verified news, an episode on their topic) | Back on the active routine, or on their date. |
+> | The routine has run out (last step, span over, 60 silent days on a sponsored offer, our last mail a close-out, or 3 unanswered chases) | Nurture mail 1: 30 days after our last mail on the thread. |
+> | After nurture mail n is sent | Mail n+1 is due 60 days after mail 1, 90 days after mail 2, then 120 days after each, and 180 days once the nurture start is 2 years old. |
+> | They reply, give a date, or there's a real new opening (verified news, an episode on their topic) | Back on the active routine, or on their date; that nurture spell ends. |
+>
+> **Nurture state comes from what happened, not a typed counter:**
+> - The start is the Claude note line "nurture started (\<why\>)". For a row already at LT chase before 20 Oct 2026, it's the date it first went to LT chase, else 20 Oct 2026.
+> - n is the number of "Zoya sent: nurture" Activities since the start.
+> - Only a send moves n or the date the next interval counts from. A run that sends nothing (the cap, a deferral, a failure) changes only Next date, with a reason.
 >
 > **What nurture looks like on the row:**
-> - Status LT chase, Waiting on Zoya, Chase step 0.
+> - Status LT chase, Zoya added to Waiting on, Chase step 0.
 > - Next date = the next contact.
-> - Next action "Zoya: nurture \<recipient\>: \<the open ask\> (last contact \<D Mon\>, nurture \<n\>)".
-> - Holds and no-contact requests are dated lines in the page body section "## Standing", with their source.
-> - So every row reads as one of: scheduled (Waiting on Zoya with a Next date), held (a Standing hold with a revisit date), blocked (Parked, or no contact), needs a decision (Waiting on Akshay), inactive (Unresponsive, or never-contacted outbound), or done (Recorded onward).
+> - The chase part of Next action reads "Zoya: nurture \<recipient\>: \<the open ask\> (since \<D Mon YYYY\>)".
+> - So every row reads as one of: scheduled (Waiting on Zoya with a Next date), held (a hold with a revisit date), blocked (Parked, or no contact), needs a decision (Waiting on Akshay for this pursuit), inactive (Unresponsive, or never-contacted outbound), or done (Recorded onward).
 >
 > **The mails.** Routine 7's angles (routine 8's for sponsored rows, to whoever owns the thread), adapted to the thread. Each gives one clear next step and a true reason to write, never invents news or urgency, and never repeats an angle to the same person. The close-out mails are not sent: sponsored 14, precall A14, B8 and C4.
 >
 > **Stops, which send nothing:**
 > - a clear decline (They declined, with the close note);
-> - a no-contact request (Standing line, Status Parked);
+> - a no-contact request from that person, anywhere ("## Standing", Claude note, Your call or the thread; Status Parked). It stops every row of that person.
 > - Akshay's decline or park;
 > - a no-show waiting on Akshay;
-> - a dated host or show hold (revisit on its date).
+> - a dated host or show hold (wherever it's written). It stops only that show's row, revisit on its date.
 >
-> An old Unresponsive label or our own close-out mail is not a decline. A hold on one show never activates through another. A declined offer is never re-pitched through another show, contact or channel.
-> **One person, one ask.** Before any follow-up, Zoya reads the person's other Engagements on every show. If another row wrote to them in the last 7 days (14 for nurture or revival), has an unanswered ask, is in a Salesblink sequence, or is Booking, Booked or Recorded elsewhere, she waits.
+> An old Unresponsive label or our own close-out mail is not a decline. A show hold is never worked round through another show. A declined offer is never re-pitched through another show, contact or channel.
+> **One person, one ask.** Before a mail, Zoya reads the recipient's other rows on every show. She holds this mail only for:
+> - a mail to them from any row in the last 7 days (14 for nurture or revival);
+> - an active Salesblink sequence to them (rechecked at its next step or end);
+> - the same ask already open on another row.
+>
+> When two rows are due for the same person on the same day, the more urgent one goes (booked-call logistics, then PR coordination, then an active routine, then nurture). The other waits 7 days after that send. A Recorded or finished row elsewhere is context, never a reason to wait. Every hold writes a recheck Next date and the reason ("deferred: \<row\>, \<why\>, recheck \<D Mon\>") and never changes n.
 > **Revival of Tier 1 conversations, inbound or outbound:**
 > - **Who:** owner-approved Tier 1 rows closed by silence (Unresponsive, or LT chase gone quiet). Akshay's own decision is what makes a row Tier 1, never a model's suggestion.
-> - **Gate:** cleanup source-checks each candidate's thread and holds, and marks eligible ones in the Claude note: "revival checked \<date\> (cleanup): eligible, \<reason\>".
-> - **Start:** the daily sweep then moves each marked row into nurture, at most 5 a day.
+> - **Gate:** cleanup source-checks each candidate and marks eligible ones in the Claude note: "revival checked \<date\> (cleanup): eligible, \<reason\>".
+> - **Start:** the daily sweep starts nurture on each marked row (at most 5 a day). If the person was written to in the last 14 days, it starts after that, noted as a deferral.
 > - **Never revived:** declines, parks, no-contact or held rows. Targets who never wrote back stay with their cold-outreach owner. A guest who already recorded gets routine 9, not their old booking ask.
 >
 > **Caps.** At most 10 nurture and revival mails a Zoya run, inside the 150-a-day cap and the one-mail-per-person-per-7-days rule.

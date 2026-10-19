@@ -1,39 +1,63 @@
-# AR-20261019-1: acceptance walkthroughs (traced against the patch and payload, 19 Oct)
+# AR-20261019-1: acceptance walkthroughs, v2 (traced against the corrected text, 19 Oct)
 
-These are traced against docs/proposals/ar20261019-1-nurture-2026-10-19.patch and the payload, not run. "Zoya" means the patched routines/zoya.md, "sweep" the patched daily-sweep, "5a" the new Rules for Zoya section.
+Traced against ar20261019-1-build.py (the patches ar20261019-1-on-live.patch and ar20261019-1-nurture-2026-10-19.patch) and the payload. These are traces, not runs. "Zoya" is the patched zoya prompt, "sweep" the patched daily sweep, "5a" the new Rules for Zoya section. v2 answers Codex's content review of 58a26f5; rows marked (v2) are new or changed.
+
+## Codex finding 1: one coordinated contact per person, no mutual blocking
 
 | # | Case | Trace | Sends |
 |---|---|---|---|
-| N1 | Silent sponsored lead, day 61 (PR-routed). | Staleness gate: 60 silent days. Moved to nurture: LT chase, Waiting on Zoya, Next date +30 days, "Zoya: nurture <PR>: sponsored feature (last contact, nurture 1)". Routine 7 picks it on that date with routine 8's angles, to the PR. | Nothing today; nurture mail 1 in 30 days. |
-| N2 | Tier 1 precall, after mail 13 (day 300), still silent. | A14 "Close the loop" is not sent. Last step leads to nurture; 30/60/90, then every 120 days, then every 180 after 2 years. | No "last note" mail. |
-| N3 | Tier 2 precall, sequence C ends. | C4 close-out is not sent. It's an approved pursuit (Precall requested), so it moves to nurture. | Slow nurture. |
-| N4 | LT chase row 2 years in, silent. | Routine 7 "Ends" is now only on a 5a stop. Cadence goes to every 180 days. | Twice a year. |
-| N5 | Sweep: 3 unanswered chases on an FT Booking row. | Approved pursuit: LT chase, Waiting on Zoya (no longer Guest or PR), Next date +30, nurture step. | Via Zoya, in 30 days. |
-| N6 | Sweep: 3 unanswered chases on a never-approved inbound pitch (eval Decline, no Tier). | Not an approved pursuit, so Unresponsive as before. | None. |
-| P1 | Beerud (FT Booking, PR Satv, last PR mail 7 Oct "busy a couple of weeks"). | PR coordination active (PR wrote within 30 days, not booked): next mail 5 working days after the last real exchange. The 15 Oct loop-in doesn't count, so it's due now. Guest travel doesn't stop a check with the PR. The 9 Nov Next date is not a confirmed slot; cleanup reconciles the field from the thread. | A check with Satv, once cleanup confirms the thread. |
-| P2 | PR replies "hold till 15 Nov". | Their date wins: Next date 15 Nov, hold noted. | None until 15 Nov. |
-| P3 | 5 working days across a weekend and Diwali week. | Weekdays only, never Diwali week. | Pushed past the week. |
-| P4 | Our last message was an internal loop-in. | Loop-ins and thanks don't count as the last real ask. Counted from the ask before. | As per the rule. |
-| P5 | PR silent 31 days. | PR coordination ends; the page's slower schedule takes over, then nurture. | Slower. |
-| X1 | Sparsh: FT Booking plus B2S held by Satish ("no invite, Salesblink or follow-up until re-approved", 18 Oct). | One person, one ask: the B2S hold is a Standing hold on that row and never activates through FT. The FT row checks the other rows: B2S has no open ask (held), so FT may proceed if due, under its own rules. | FT only, if due; B2S nothing. |
-| X2 | Same person: FT row due and a B2S Salesblink sequence active. | Is in a Salesblink sequence, so wait; Next date moves past it. | None. |
-| X3 | Same person, FT mail 3 days ago, un# nurture due today. | Another row wrote in the last 14 days (nurture), so wait. | None. |
-| R1 | HBD Tier 1 outbound, Unresponsive, never replied (Salesblink cold). | Revival needs cleanup's "eligible" line; a target who never wrote back stays with cold outreach. Not revived. | None. |
-| R2 | FT Tier 1 inbound, closed Unresponsive by silence, real past exchange; cleanup marks eligible. | Sweep 3r re-reads Standing and other rows, then moves it to nurture with cleanup's reason and date (at most 5 a day). Zoya sends a contextual routine 7 mail. | One revival mail on cleanup's date. |
-| R3 | Prior guest with a completed Episode, Tier 1. | Never revived as a booking; routine 9 only. | None from revival. |
-| S1 | Genuine decline ("not interested"). | They declined, close note once, stop. Never re-pitched through another show. | Close note only. |
-| S2 | "Please don't contact me again." | Standing "no contact", Parked. All rows for that person stop. | None. |
-| S3 | Requested later revisit ("ping me in March"). | Their date wins: Next date in March, nurture resumes then. | None till March. |
-| S4 | Akshay parks the row. | Parked, never followed up (section 7). | None. |
-| S5 | No-show waiting on Akshay. | A decision on this pursuit by Akshay blocks it; no rebook mail until he answers. | None. |
-| O1 | Sankalp or Amit Patni: Recorded, Waiting on Akshay for the community add, guest form due. | Zoya's new skip rule: Akshay's community add is an independent ask, so the form chase still goes (AR-2's separate-obligation contract). | Form chase. |
-| O2 | Waiting on Akshay for a sponsored counter-offer. | A decision on this pursuit, so skipped. | None. |
-| Z1 | Second run the same day. | Steps are never sent twice (Chase step and thread dates). Nurture moves are already done. Sweep 3r skips rows with "revival started". | None new. |
-| Z2 | Crash after the move to nurture, before the report. | The row state is on the row; the next run reads it and carries on. | No duplicate. |
-| C1 | Cap: 150 a day reached. | Nurture and revival mails count in the cap and the 10-a-run limit; the rest wait, reported. | Deferred. |
+| X1 (v2) | Sparsh: FT Booking due; B2S row held by Satish ("no invite, Salesblink or follow-up until re-approved", 18 Oct). | ONE PERSON, ONE ASK holds only for a recent mail, active Salesblink, or the same ask open elsewhere. The B2S row has none of those; it's a show hold, which stops only the B2S row. FT goes if due under its own rules. Nothing is ever sent for B2S, and no B2S ask rides on the FT mail. | FT only. |
+| X2 (v2) | Same person: FT and un# rows both due today, both unanswered. | Two rows due the same day: the more urgent one sends (PR coordination before nurture). The other row gets "deferred: <FT row>, sent today, recheck <today+7>" and sends then. Neither blocks the other for good. | One today, one in 7 days. |
+| X3 (v2) | Same person, Salesblink sequence active on B2S, FT nurture due. | Held: "deferred: Salesblink, active sequence, recheck <its next step or end>". When that date comes and the sequence is over or they replied, the hold no longer applies and nurture sends. n is unchanged by the deferral. | Later, once. |
+| X4 (v2) | Person recorded for FT last year (Recorded); a new un# Precall requested row is due. | A Recorded or finished row elsewhere is context, never a reason to wait. The un# step goes; the mail may mention the past episode as context. | un# step. |
+| X5 (v2) | Revival-marked row whose person had an FT mail 5 days ago. | Sweep 3r doesn't skip it. It starts nurture with Next date 14 days after that mail, noted "deferred: <row>". | Later. |
+| X6 | A person said "please don't contact me" on any row. | A no-contact request stops every row of that person. | None anywhere. |
+
+## Codex finding 2: nurture progress stored on the record and advancing once
+
+How it's anchored: the start is the Claude note "nurture started" (or, for older LT rows, the first date at LT chase, else 20 Oct 2026). n = the count of "Zoya sent: nurture" Activities since the start. The next due date counts from the last actual nurture send. The after-send keeps the chase segment "Zoya: nurture <recipient>: <ask> (since <start>)".
+
+| # | Case | Trace | Result |
+|---|---|---|---|
+| N1 (v2) | Silent sponsored lead: our last mail 1 Sep; staleness gate on 2 Nov (60 silent days). | GUARD passes (no booking, no decision). Nurture start 2 Nov; Next date = 1 Sep + 30 = 1 Oct, which is past, so it's due at the next follow-up run. Nurture 1 sends 2 Nov to the PR (routine 8 angle); n=1; Next date 2 Nov + 60 = 1 Jan. | One mail, then 1 Jan. |
+| N2 (v2) | The same row on successive runs: 1 Jan (mail 2, then +90 to 1 Apr), 1 Apr (mail 3, then +120 to 30 Jul), 30 Jul (mail 4, then +120), and so on. | n comes from Activities, the anchor from the last send date. | 60, 90, 120, 120 ... |
+| N3 (v2) | The same row, nurture start 2 Nov 2026; a mail due 10 Nov 2028. | The start is over 2 years old, so the next interval is 180 days. | Twice a year from then. |
+| N4 (v2) | A row at LT chase since 1 Mar 2025 (Claude note), silent. | The start is the first LT chase date (1 Mar 2025). Its 2 years end on 1 Mar 2027; until then 120-day intervals, then 180. In v1 the trace wrongly said 180 straight away. | Counted from the real start. |
+| N5 (v2) | Sweep: 3 unanswered chases on FT Booking, our last chase 10 Oct, no calendar event, no decision pending. | GUARD passes. LT chase, Zoya added, Next date 10 Oct + 30 = 9 Nov (the same anchor as Zoya), chase segment "Zoya: nurture <PR>: recording slot (since 19 Oct 2026)", Claude note "nurture started (3 chases unanswered, <dates>)". | Via Zoya on 9 Nov. |
+| N6 (v2) | Crash after the nurture mail sent, before the after-send write. | Next run: SENDING checks Sent and the thread first, finds the mail, logs it (Activity, which makes n correct) and sends nothing. | No duplicate; n right. |
+| N7 (v2) | An early run (Next date in the future) and a cap-blocked run. | Not due: no change. Cap: nothing sent, so n and the anchor stay; only Next date moves, with the reason. | n not advanced. |
+| N8 | They reply during nurture. | Back on the active routine or their date; that nurture spell ends. A later silence starts a new spell with a new start line. | As routine. |
+
+## Codex finding 3: bookings and decision gates survive every move
+
+| # | Case | Trace | Result |
+|---|---|---|---|
+| G1 (v2) | Three old unanswered chases, then the PR booked: a recording event is on the calendar. Sweep runs. | GUARD: a recording on the calendar stops that chase; Status stays (Booked); no nurture move, no new booking ask. Booked is not in the approved-pursuit list anyway. | Unchanged. |
+| G2 (v2) | Precall done, waiting on Akshay's verdict; three chases from before the precall. | GUARD: a decision Akshay holds on this pursuit leaves the row as it is. Precall done isn't a chase. Zoya's STEP 2 skips it too. | Unchanged, on his list. |
+| G3 (v2) | Sankalp or Amit Patni: Recorded, "Akshay: invite to the FT Community" plus a guest form due. | Zoya's skip: the community add is an independent ask, not a decision on this pursuit, so the form chase (routine 5) runs. Any later nurture move would replace only the chase segment; Akshay's community ask and his place in Waiting on stay. | Form chase goes; his ask stays. |
+| G4 | Sponsored offered, Akshay holds a counter-offer decision. | A decision on this pursuit, so it's skipped and no nurture move happens. | None. |
+| G5 | No-show waiting on Akshay. | A decision gate, so nothing is sent. | None. |
+
+## Earlier cases, still holding (from v1, re-traced)
+
+| # | Case | Result under v2 |
+|---|---|---|
+| P1 | Beerud (FT Booking, PR Satv, last PR mail 7 Oct). | PR coordination: 5 working days after the last real exchange; the 15 Oct loop-in doesn't count, so it's due. Guest travel doesn't stop a check with Satv. The 9 Nov Next date is not a confirmed slot; cleanup reconciles it from the thread. |
+| P2 | PR replies "hold till 15 Nov". | Their date wins. |
+| P3 | 5 working days across a weekend and Diwali week (6 to 13 Nov). | Weekdays only, never Diwali week. |
+| P4 | Our last message was a loop-in. | Doesn't count; counted from the real ask before it. |
+| P5 | PR quiet 31 days. | The page's slower schedule, then nurture. |
+| R1 | HBD Tier 1 outbound, never replied (Salesblink cold). | Not revived; stays with cold outreach. |
+| R2 | FT Tier 1 inbound with a real past exchange, marked eligible by cleanup. | Sweep 3r starts nurture on cleanup's date; Zoya sends a contextual routine 7 mail. |
+| R3 | Prior guest with a completed Episode. | Never revived as a booking; routine 9 only. |
+| S1 | Genuine decline. | Close note once, stop; never re-pitched elsewhere. |
+| S3 | "Ping me in March". | Their date. |
+| S4 | Akshay parks. | Never followed up. |
+| Z1 | Second run the same day. | No step twice; no second nurture start (the Claude note line exists); sweep 3r skips rows with "nurture started (revival". |
+| C1 | Daily cap hit. | Deferred and reported; n unchanged. |
 
 ## Known limits for cleanup's review
 
-- The Engagements SQL can't read eval page bodies, so a Tier 1 that lives only in an eval (Beerud) isn't found by query. The named cases (Beerud, Aravind) and source checks cover it; the structured Tier stays as Akshay set it.
-- "Approved pursuit" includes every Precall requested and Booking row. That's Akshay's earlier approval of a precall or booking, not a new one.
-- The inbox gets only the shorter three-chase text (65,269 B). Nurture execution is Zoya's; state moves are the sweep's.
+- A Tier 1 decision that lives only in an eval page body (Beerud) isn't found by a database query; the named cases and source checks cover it. The structured Tier changes only on Akshay's own decision.
+- "Approved pursuit" no longer includes Booked or Precall done (v2): a booked call and a decision waiting on Akshay are not chases.
+- The inbox's three-chase text grows 125 bytes over v1 (chain build 65,394; on live 65,331). AR-2's own inbox trim issue is separate and unchanged.
