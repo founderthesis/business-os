@@ -14,10 +14,11 @@ It sends no mail and never edits a calendar (it reads Akshay's calendar to verif
 ## Setup
 
 - **App:** Claude desktop app on the Mac, Scheduled tasks. It's a local task, not a cloud routine. The Mac must be awake with the app open at run time.
-- **Name:** "Zencastr links".
+- **Task:** reuse the existing paused "Zencastr links for confirmed FT recordings (nightly)" task (Akshay's 19 Oct inventory); rename it "Zencastr links". No new task.
 - **Schedule:** daily at 09:52 and 17:52 JST. Each run follows a calendar run, so a link written at 09:52 is on the invite by 16:35 and checked at 17:52.
 - **Connectors:** Notion and Google Calendar (read only).
-- **Claude in Chrome:** connected and signed in to Zencastr. Site approval: zencastr.com (and app.zencastr.com if asked), "always allow"; "always allow" for the Notion and Calendar tools too.
+- **Claude in Chrome:** connected and signed in to Zencastr. Site approval: zencastr.com (and app.zencastr.com if asked), "always allow".
+- **Tool grants (per tool):** Notion query data sources (the prompt seen waiting in the paused task), fetch and update page; Google Calendar list, search and get event. All "always allow". Decline any calendar create, update or delete tool if it is ever offered.
 - **Install and cutover:** docs/install-2026-10-19.md.
 
 ## Prompt
