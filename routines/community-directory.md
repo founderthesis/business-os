@@ -35,7 +35,7 @@ STEP 2. MIRROR (same rules as the WhatsApp routine's STEP 4)
 - Read both sides with one SQL query each. Match by Name (case and accents ignored); if a name repeats, by LinkedIn.
 - No public row for a member: create it (batches of up to 100 pages per call). A public row whose six fields differ from the member's values: update it to the FT Community values (an empty FT Community field clears the public one). Write only rows that differ.
 - A public row with no matching member, not already named "REMOVE" or "REMOVE: ...": if an unmatched member has the same LinkedIn, it was renamed: rename the public row and update it. Otherwise rename it "REMOVE" (no name, so a former member never shows on the web) and clear every other field, for Akshay to delete; list the former member by name in the report.
-- Write nothing else there: never an email, phone number, WhatsApp id, Blurb, review note, Person link or link into the Business OS.
+- Write nothing else there: never an email, phone number, WhatsApp id, WA-Blurb, Blurb, review note, Person link or link into the Business OS.
 
 STEP 3. REPORT
 Plain and short, no em dashes: members (Added), cities found this run (counts per city), members still without a city, public rows created, updated and marked REMOVE (names), rows already waiting as REMOVE, Apollo calls made, and confirm no credit-spending Apollo tool was called.

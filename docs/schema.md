@@ -29,7 +29,7 @@ One row per human, forever. This is the master network list: every FT guest, eve
 | Organisation | relation → Organisations | Migrate / Auto | Current one |
 | Role | text | Auto | Title at the organisation |
 | Location | text | Auto | City, country from LinkedIn or the eval. Apollo fills the rest |
-| Blurb | text | Auto | Latest blurb (Slack #ft-blurbs, host DMs, or generated). About 150 words |
+| Blurb | text | Agent | Research profile, 2 to 3 neutral lines, any show (decision 342). The WhatsApp intro is WA-Blurb on FT Community (decision 331) |
 | Research | page body | Auto | Every eval, dossier, prep note and call summary, newest first, each with date and link |
 | Latest eval verdict | select | Auto | Book immediately / Strong consider / Pre-call needed / Decline |
 | Tags | multi-select | Auto / Human | Starts with Guest, Prospect, Sponsor, PR contact, Host, Client, Team, Investor, US VC, No email, Name guessed, Role inbox; anyone can add more |
