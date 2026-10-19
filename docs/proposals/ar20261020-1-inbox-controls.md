@@ -1,0 +1,32 @@
+# Inbox and Your call rules (Controls, AR-20261020-1)
+
+Every routine that reads this page applies it every run. Where it differs from the routine's own text, this page wins.
+
+## 1. Loop-ins (STEP 6a, Akshay, 20 Oct)
+
+- Before any "adding @Zoya" mail, read To and Cc of the latest message from their side. Zoya counts as on it when any address on her People row is there (aliases included).
+- Already on it: send no loop-in and no acknowledgement in its place. STEPS 3 to 5 still run: the eval, the row and Akshay's decision go on as normal.
+- A restore is the one exception: Zoya was on an earlier message from their side and someone dropped her. Then the loop-in goes, as now.
+- Before sending or retrying, check Sent and the thread for this loop-in. One that already went is logged with its message id and never sent again.
+
+## 2. Repeat guests (STEPS 3 and 6c, Akshay, 20 Oct)
+
+- When a guest is pitched, look for a completed prior appearance on any of our four shows: an Episodes row for this person with Status Recorded or Published, or a recording event that took place with them. A precall, an intro call or a cancelled or no-show event is not an appearance.
+- Found one: write "## Prior appearance" in the Engagement's page body: the show, the recording date and the episode (or "recorded, not yet released"). Say it in the line on Akshay's list.
+- When Akshay chooses Sponsored for that guest, the decision mail is "Sponsored for a repeat guest" on the wording page, never the usual sponsored offer. It says we generally avoid repeat guests, names the verified appearance (show and month), offers a sponsored appearance if they still want another, and ends "lmk if interested". No price, no link, no other offer. Price and next steps come only after they say yes.
+- No appearance you can verify: no repeat-guest wording. Never infer one from a name match alone.
+
+## 3. Your call snoozes (Akshay, 20 Oct; extends decision 302)
+
+- Who wrote it: a snooze word ("later", "snooze ...") on a row with Akshay in Waiting on is Akshay's. Never ask who wrote it.
+- The date it counts from is the day the text was written (the Your call edit time, or the WhatsApp message date when Zoya carried it over), not the day you read it.
+- "later" alone: 14 days. "snooze N days" or "in N weeks": N days or weeks from that date. "snooze until 27 Oct" or "remind me on 27 Oct": that date. A date already past: the next working day.
+- What changes: only Akshay's ask. Replace his segment of Next action with "Zoya: back to Akshay on <D Mon>: <the ask>"; Akshay leaves Waiting on and Zoya joins it; Next date = the return date unless another segment is due sooner. Steps that wait on his answer are held (write "(held for Akshay's snooze)" on them). Every other segment, its owner, booked events and links stay as they are.
+- Claude note: "YYYY-MM-DD: Akshay's call: '<text>' (written <D Mon>); snoozed to <D Mon>". Clear Your call.
+- The Engagements view "Snoozed" lists these rows. Zoya's SNOOZED ASKS step puts the ask back on its date.
+
+## 4. Owners follow their asks (all writers, Akshay, 20 Oct)
+
+- A name in Waiting on is there because a segment of Next action, a Your call, or a decision row needs that person. When a write removes or fulfils a segment, take its owner out of Waiting on too, unless another segment, a proposal ending "Write ok, not ok or a change in Your call", or an open decision still needs them.
+- Waiting on never ends up empty on an open row: the owner of the remaining step goes in (a booked recording with nothing else open is Guest or PR).
+- Independent asks and bookings stay. Never drop a segment you did not fulfil.
