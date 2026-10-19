@@ -32,7 +32,9 @@ EDITS = {
         ("At most 10 nurture and revival mails a run,",
          "At most 20 nurture and revival mails a day (JST), counted from today's \"Zoya sent: nurture\" Activities, one per sent message, so a retry or a run that sends nothing uses none (was 10 in each of the two follow-up runs),"),
         ("At most 10 moves a run;",
-         "At most 20 moves a day (JST), counted from today's Claude note lines that start \"nurture started\" and end \"(Zoya)\": end every move line you write that way, so the daily sweep's own nurture starts never count against you (was 10 in each of the two follow-up runs);"),
+         "At most 20 moves a day (JST), counted once per move from Claude note entries dated today whose text after the \"YYYY-MM-DD: \" date starts \"nurture started\" and ends \"(Zoya)\"; your own move entries end that way (see the start line above), so the daily sweep's nurture starts never count against you (was 10 in each of the two follow-up runs);"),
+        ("Claude note \"YYYY-MM-DD: nurture started (<why>)\"",
+         "Claude note \"YYYY-MM-DD: nurture started (<why>) (Zoya)\""),
     ]),
     # Calendar sync
     "trig_01Voiz5YsK2SnVf2STF8PoSH": ("3d9f8bd7bd5bcef9", [

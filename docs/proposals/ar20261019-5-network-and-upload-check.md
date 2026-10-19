@@ -30,7 +30,12 @@ The official steps are at https://code.claude.com/docs/en/cloud-environments#net
 
 **After the setting:**
 1. `curl https://api.notion.com/` from this session no longer gets a CONNECT 403. Any HTTP status from Notion itself counts as reachable.
-2. Re-fetch the Episode. If a 16768.jpg block has appeared meanwhile, stop: it's already filed.
+2. Re-fetch the Episode with file URLs. A block's filename never settles anything (Codex, 22:07 JST). For each file block on the Episode named 16768.jpg, or sitting under a line keyed `mid:ddd162d5684f27bc#2`:
+   - Download it into the scratch folder and hash it.
+   - **115,795 bytes and sha256 800a0253a8496d4b2e8ad9a2e38fbaeb9192db699b8bd45f035263e8126c25e0:** it's this file, so don't upload. Reconcile its keyed line under the accepted AR-5 rule (block only: write the line above it; line and block both present: nothing to write), then go to step 6.
+   - **Different bytes or hash:** it's a different file. Keep it, never overwrite it, record it as "same name, different file: investigate", and carry on with step 3 for the real one.
+   - **Can't be downloaded:** "block unverified". Leave the line pending and report it. Don't upload a second copy until that block is settled.
+   - **No such block:** go on to step 3.
 3. Make sure the Engagement's "## Assets to file" line exists, once.
 4. notion-create-file-upload with filename 16768.jpg, then one multipart POST of the staged file to the upload_url, with every returned header.
 5. Write under "## Guest assets" on the Episode (create the heading), newest first, the line below and directly under it the file block:
@@ -38,9 +43,9 @@ The official steps are at https://code.claude.com/docs/en/cloud-environments#net
 6. Readback:
    - Re-fetch the Episode with file URLs.
    - Download the block with curl into the scratch folder.
-   - Confirm **115,795 bytes and sha256 800a0253a8496d4b**, and that the block sits directly under the keyed line.
+   - Confirm **115,795 bytes and the full sha256 above**, and that the block sits directly under the keyed line.
    - Only then mark the pending line "filed 2026-10-19".
-7. Report on the AR-5 task.
+7. Report on the AR-5 task, as three separate results: the block is reachable, the hash matches, and the keyed line is reconciled.
 
 **Outcomes:**
 - **All pass:** binary filing proven end to end in the routine's own environment.
