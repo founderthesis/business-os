@@ -1,64 +1,83 @@
-# AR-20261019-5: episode asset filing (Main 2)
+# AR-20261019-5: episode asset filing (Main 2), revision 2
 
-Branch claude/ar-20261019-5-episode-assets, cut from main 6352db2. It is separate from the AR-20261019-3 Episode-recovery proposal (e250cd0), which neither depends on nor touches. This is for cleanup review; Main 1 integrates and deploys. Nothing here is live. No mail was sent, nothing was uploaded, and no Notion record was changed.
+Branch claude/ar-20261019-5-episode-assets. It is separate from the AR-20261019-3 Episode-recovery proposal (branch claude/ar-20261019-3-episode-recovery), which it neither depends on nor touches. Revision 2 answers Codex's review of dac2f94. For cleanup review; Main 1 integrates and deploys. Nothing here is live. No mail was sent, nothing was uploaded and no Notion record was changed. The two Prashant Sachan photos already filed were not touched.
 
 ## 1. Source versions and changed paths
 
-- routines/inbox.md at main 6352db2, blob f42afe42a6ee (the version the task names). Prompt block 64,848 bytes before, **64,934 after (+86, 602 under the 65,536 cap)**. Main 1 re-checks the size against whatever AR-9 and the WhatsApp work add.
+- routines/inbox.md at 420ca4f (integration branch), blob f42afe42a6ee, unchanged since 6352db2. Prompt block 64,848 bytes before, **64,937 after (+89, 599 under the 65,536 cap)**; result blob 8b46769a8901. Main 1 re-checks the size against whatever else lands first.
 - docs/proposals/ar20261019-5-inbox.patch changes two paragraphs:
-  - **STEP 6d "Assets for an episode"**: filing runs first, on every asset message and open pending line, whoever replied. The details move to the rule page. The reply text, its gate ("no reply from our side since") and its log are unchanged, except that the Claude note no longer claims "added to the Episode".
+  - **STEP 6d "Assets for an episode"**: anyone may send material, our team included, in ad@thepodium.in or Zoya's inbox. Filing runs first on every such message and every open pending line, whoever replied. The details live on the rule page. The reply keeps its gate and is sent only to a guest, PR or company.
   - **STEP 3 "Edit notes"**: the original attachment is filed too; extracted text never replaces it.
 - docs/proposals/ar20261019-5-episode-asset-filing.md: the text of a new Controls rule page, "Episode asset filing". Main 1 creates it and replaces PAGEID_PLACEHOLDER_32CHARS_XXXXXX (same length as a page id, so the size check holds).
-- No schema change, no new database, routine, watcher, sender or Mac dependency. Pending work uses an "## Assets to file" section on the existing Engagement page.
+- No schema change, new database, routine, sender or Mac dependency. Pending work lives in an "## Assets to file" section on the Engagement page; links get one Kind Task row for Sarika.
 
-## 2. What the cloud can do today (probed read-only, 19 Oct 06:50 UTC)
+## 2. Codex correction 1: the binary path in the actual runner
 
-| Step | Tool | Result |
+The inbox run (trig_0189eZvAD8x4357cfevgZ3No) executes in environment env_01Pb9xdJdFEZj6Xuxuq5Kxid: its last run, session 015MkYX3X9jTtqKkLtjCZbXg, shows that environment, Claude Code 2.1.303, and the Bash and Agent tools. This session runs in the same environment and version. Its connectors are Notion, Gmail, Google Calendar, Blueticks and MCP Emails; there is no Drive connector. All probes below ran read-only on 19 Oct.
+
+| Step | Path | Result |
 |---|---|---|
-| Find attachments, stable id | Gmail get_message | filename, mime type, attachment id; Gmail message id. No size, no bytes. |
-| Size and bytes | MCP Emails email_read (ad@thepodium.in) | read gives filename, mime type and size_bytes (114,483 and 823,589, both matching Codex's records). Action attachment returns base64, **and the session saves the original file to disk**: 823,589 bytes, JPEG, sha256 854e942b470053f3. |
-| Upload to Notion | notion-create-file-upload + POST | **Blocked here**: api.notion.com returns 403 at the proxy. This is the existing pending item "Network access: add api.notion.com under Allowed domains". |
-| Text files | notion-create-attachment with content | Works with no network change, for UTF-8 text of 200 KB or less. |
+| Download, ad@ | Gmail get_message, RAW | **Works with zero inline bytes.** The session saves the result to a file and shows only its path (no preview): 174,837, 179,200 and 1,159,063-byte messages. Python decodes it (field raw, base64url) into the original parts, with the Message-ID and each part's Content-ID and X-Attachment-Id. |
+| Download, either inbox | MCP Emails email_read, action original | **Works the same way.** Results of 239,236 and 1,545,721 characters were saved to file with no preview, and include a sha256 of the .eml that matched on decode. Message-ID and part bytes are identical to the Gmail RAW of the same message. |
+| Download (old path) | MCP Emails action attachment | Rejected. The image block and its base64 come inline until truncated at 25,000 tokens. The file lands on disk, but the context cost is that of a whole file, which is what Codex flagged. |
+| Native server-side upload | notion-create-attachment source_url | Not usable. It needs a public HTTPS URL, and neither mailbox connector exposes one: Gmail returns attachment ids only, MCP Emails returns bytes. |
+| Native text upload | notion-create-attachment content | Works with no network change, for UTF-8 text of 200 KB or less. |
+| Binary upload | notion-create-file-upload, then multipart POST to upload_url | **Blocked**: the CONNECT to api.notion.com is refused with 403 by this environment's network policy. Re-checked 19 Oct. |
 
-So binary filing becomes fully automatic once api.notion.com is allowed in the environment the inbox runs in (assumed to be the same one; the rule page detects a 403 and parks the file with reason "upload blocked"). Until then, every asset is still recorded as pending with its key and reason, never as filed. Each attachment download also puts its base64 into the run's context (about 25k tokens, truncated), so the rule caps uploads at 3 a run.
+**Evidence on a genuinely missing eligible file.** Rohit Manglik (Founder Thesis): headshot 16768.jpg, first sent 31 Aug (Gmail 1a056589dddf7302), quoted back inline on 19 Oct (Gmail 1a152a28fe0963b6, MCP Emails INBOX:48153). His Episode 3ed19a301a7f81c09fcbeb5d8be8e6a0 has no Guest assets section. Gmail RAW and MCP Emails original of both messages each gave 115,795 bytes, sha256 800a0253a8496d4b..., MIME part 2, inline with Content-ID. That equals MCP Emails size_bytes and the attachment-action download. The same check on Prashant's larger message (1,159,063 bytes) gave "Copy of 13.jpg" at 823,589 bytes, sha256 854e942b470053f3, from both sources. That is the photo already on his B2S Episode, which was read only, not uploaded again.
 
-## 3. Dry run: the Prashant Sachan thread (Built to Share)
+**What is missing, exactly.** The Notion connector has no server-side way to upload a binary file. Its file-upload tool hands back an upload_url on api.notion.com that the runner must POST to itself. **Minimum network requirement:** in the cloud environment the inbox run uses (env_01Pb9xdJdFEZj6Xuxuq5Kxid), add **api.notion.com** under Network access > Allowed domains, keeping "Allow package managers" ticked. Nothing else is needed: downloads already work through the connectors. Added to docs/akshay-pending.md on this branch; Akshay makes the change in the environment's settings (cloud environment menu, Edit), only once Main 1 deploys the filing rule. Until then each binary file is recorded as pending, reason "upload blocked: 403", with its key, bytes and sha256, and never as filed. Uploading the original binary has not yet been proved end to end: the only missing step is the one POST.
 
-Read window on 19 Oct: Vineeta's two messages on thread 1a13c903aeaaed42, plus earlier ones.
+**Context cost per file**, once the network allows it: one saved-to-file read, a decode script that prints one line, one upload tool call, one curl, one page update. The rule page runs the downloads in one subagent that returns only key, path, bytes and sha256. A message small enough to come back inline is small by definition. No credentials were read or used.
 
-| Message | File | Key | Step 4 result | Action |
-|---|---|---|---|---|
-| 1a152bc45497118d, 11:26 IST | Prashant Sachan Photo.png, 114,483 B | gmail:1a152bc45497118d#0 | B2S Episode has a file block with this name, a mail link ending /1a152bc45497118d and "114,483 bytes" | already filed, no upload, no line |
-| 1a152dda3e18bb7c, 12:03 IST | Copy of 13.jpg, 823,589 B | gmail:1a152dda3e18bb7c#0 | same, /1a152dda3e18bb7c, "823,589 bytes" | already filed, no upload, no line |
-| 1a149f36e53a11c9 (Akshay, 17 Oct) | prashant-satish-akshay.txt | n/a | sent by our side | skipped (rule 1) |
+## 3. Codex correction 2: recording and file identity
 
-Result: 0 uploads, 0 pending lines, 0 duplicates. Episode match: the Engagement is the Built to Share row, its Episode relation holds only the B2S Episode, and Prashant's Founder Thesis Episode is on another show, so it is never a candidate.
+- **Recording.** Rule page section 4: explicit evidence first (an Episode link or the recording date in the thread), then the Engagement's only recording, then the thread's own recording (the one booked, confirmed, moved or thanked on that thread). Otherwise pending, "unclear recording". The target is the Episode carrying that recording's cal: key (AR-20261019-3), in any status, Scheduled and booked included. "Latest Episode on or before the message date" is gone.
+- **Message.** Keyed by the RFC Message-ID (sha256, first 16 hex). It is the same in Gmail and MCP Emails and survives moves. This replaces the sender, date and subject bridge. Each file is downloaded from the inbox where it was found, so no cross-provider lookup is needed. Messages in both inboxes collapse onto one key.
+- **File.** Keyed by message key plus MIME part path, with sha256 of the decoded bytes on every line. Two same-name, same-size files in one message have different part paths and, when their bytes differ, different sha256.
 
-Unchanged and outside this patch: the acknowledgement gate. Akshay replied at 11:50 IST before the 12:03 message, so under today's gate that second message still counts as having no reply from our side since. Whether an acknowledgement is sent stays with the existing sender rules (Main 1).
+## 4. Codex correction 3: coverage
 
-## 4. Replay tests (traced against the patch and the rule page)
+- **Team-sent files are in.** Editor drafts, internal briefs and marketing deliverables are filed. Exclusions are by purpose and provenance: signature images, copies already filed (same sha256), templates sent to every guest, transcripts (Transcript file workflow), .ics, invoices and contracts, and anything not about one episode. An image the mail names is filed at any size.
+- **Zoya-only mail.** The inbox run already holds the MCP Emails connector, so it reads Zoya's inbox (last 72 hours) into the same filing path. That keeps one writer for Guest assets; the Zoya routine is not changed. Today Zoya's inbox (live since 15 Oct, 260 messages) has no Zoya-only attachment. The photo sends to it so far (INBOX:248, INBOX:253) also went to ad@ and collapse onto the same Message-ID key.
+- **Links.** The runner has no Drive, Dropbox or WeTransfer access, so a link is stored as given. The pending line names its owner, Sarika, and one Kind Task row puts it on her board. Main 1: confirm Sarika is the right owner for production files.
+
+## 5. Dry runs (read-only, 19 Oct)
+
+| Case | Key and evidence | Result |
+|---|---|---|
+| Prashant Sachan Photo.png, B2S | Gmail 1a152bc45497118d, 114,483 B | 5b legacy match (file block, Gmail id, bytes): already filed. 0 downloads, 0 uploads. |
+| Copy of 13.jpg, B2S | Gmail 1a152dda3e18bb7c, 823,589 B | Same: already filed, 0 uploads. |
+| Rohit 16768.jpg, FT, quoted on 19 Oct | sha 800a0253a8496d4b; earliest carrier is the 31 Aug message | Section 2 copy rule: file the 31 Aug message's part 2. Recording: one Engagement, one Episode (recorded 20 Aug, unkeyed, Source ID "Blue ..." kept), so 4b and the single-Episode rule apply if the calendar shows one recording. Download proven above. Upload: "upload blocked: 403". One pending line on the Engagement, nothing marked filed. |
+| Zoya-only attachment | none exists yet | Nothing to file; path tested on ad@ copies via MCP Emails original. |
+
+## 6. Acceptance tests (traced against the rule page and the patch)
 
 | # | Case | Expected |
 |---|---|---|
-| 1 | The two filed Prashant photos | Step 4 finds both: zero uploads. |
-| 2 | Akshay or anyone on our side already replied | Filing runs anyway; only the reply is gated. |
-| 3 | Two files with the same filename and different bytes (or different messages) | Different keys and sizes, so both are filed as separate lines and blocks. Neither is treated as a newer version. |
-| 4 | The same message arrives twice, or a run retries | Same key, step 4 finds the filed file: nothing new. |
-| 5 | Upload succeeds, then the page write fails | No block on the Episode; the pending line stays "to upload". The next run uploads again; the orphan upload expires in 1 hour. |
-| 6 | Page write succeeds, then the run stops before marking pending | Next run: step 4 finds block and key, marks the line filed, no upload. |
-| 7 | Asset arrives before the Episode exists (booked, not recorded) | Pending line "no Episode yet" on the Engagement. Once the calendar run creates the Episode, the next inbox run files it. No speculative Episode. |
-| 8 | Same guest on two shows (Prashant FT and B2S) | Only Episodes on the Engagement's own Show and in its relation are candidates. A name match never counts. |
-| 9 | Edit notes as an attachment | Original filed with purpose "edit notes"; the STEP 3 extracted list stays as it is. |
-| 10 | Signature logo, tracking pixel, .ics | Skipped by rule 1, not reported as pending. |
-| 11 | Upload fails (403, size mismatch, over 20 MB) | Pending line with that reason; nothing marked filed; no other line touched. |
-| 12 | Drive or WeTransfer folder link | Stored as a link line; pending stays open "link only" until a person adds the files. |
-| 13 | Two Episodes match | "unclear episode", nothing filed. |
-| 14 | Pending older than the read window | Open lines are taken first, with no age limit. |
+| 1 | Prashant's two filed photos | 5b finds both: zero downloads and uploads. |
+| 2 | Akshay or Zoya already acknowledged the mail | Filing runs anyway; only the reply is gated. |
+| 3 | Editor draft or internal brief from our team | Filed (section 2); no reply sent (the reply is only for guests, PR or companies). |
+| 4 | Zoya-only mail with an attachment | Read from Zoya's inbox, downloaded with MCP Emails original, filed by the same rules. |
+| 5 | Same mail in both inboxes | Same Message-ID key: filed once. |
+| 6 | Explicit small logo ("attaching our logo", 8 KB PNG) | Filed: the mail names it. A signature image001.png nobody mentions is not. |
+| 7 | Returning guest: an upcoming recording booked, an earlier Episode on the same show | Thread about the new booking: pending "no Episode yet (cal:<new event>)", never the earlier Episode. A thread naming neither: "unclear recording". |
+| 8 | Episode exists in Scheduled status for a booked recording | Filed on it if it carries that recording's key. |
+| 9 | Two same-name, same-size files with different bytes in one message | Two part paths, two sha256: two keys, two lines, two blocks. |
+| 10 | The same bytes arriving again (quoted reply, forward) | Same sha256 on the Episode: already filed, no upload. |
+| 11 | Retry after the upload, before the page write | No block on the Episode; the line stays open and the next run uploads again (the orphan expires). |
+| 12 | Uncertain page write (the update errors or times out) | Read-back: if the block and line are there, mark filed; if not, "page write not confirmed". Next run starts at 5b, so a write that did land is never duplicated. |
+| 13 | Upload blocked (403 today), size over 20 MB, decode mismatch | Pending with that reason; nothing marked filed; no other line touched. |
+| 14 | Transcript attachment | Not filed here: the transcript workflow owns it. |
+| 15 | Two Episodes could match | "unclear recording" with the dates; nothing filed. |
+| 16 | Pending older than the read window | Open lines go first, with no age limit. |
+| 17 | Drive or WeTransfer link | Link line stored, pending "link only: Sarika saves the files", one Task row for her. |
+| 18 | Edit notes as an attachment | Original filed with purpose "edit notes"; the STEP 3 list stays. |
 
-## 5. Limits stated plainly
+## 7. Limits stated plainly
 
-- Binary upload needs api.notion.com allowed in the routine environment. Text files of 200 KB or less don't.
-- Files only in Zoya's inbox (not copied to ad@) are out of scope here; the inbox reads ad@.
-- Over 20 MB (single-part upload limit): pending, filed by hand.
+- Binary upload needs api.notion.com allowed in env_01Pb9xdJdFEZj6Xuxuq5Kxid. Text files of 200 KB or less don't.
+- Downloads were proven up to a 1.16 MB message. Messages near 25 MB have not been tried; a failure there becomes "download failed" and stays pending.
+- Over 20 MB per file (single-part upload limit): pending, filed by hand.
 - Links: stored, not downloaded.
-- No real test mail and no draft-attachment probe were used. Calling automatic ingestion reliable needs the next real incoming file, after deploy and the network change.
+- No real test mail and no draft-attachment probe were used. Calling capture reliable needs one real incoming file after deploy and the network change.
