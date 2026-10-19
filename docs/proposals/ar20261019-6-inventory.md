@@ -136,3 +136,50 @@ The cloud can't read or edit these. Akshay does UI step 3, and the cloud reads b
    - Zoya sends no more than before;
    - one owner mail and one of each brief per day;
    - served model sonnet on every run.
+
+## 7. Revision 2 (19 Oct, 22:20 JST): Codex's three cutover corrections
+
+Prepared, not installed. Build and patch regenerated on the same live bases (`ar20261019-6-build.py`, `ar20261019-6-prompts.patch`). Changed vs eb6a9ec: calendar and Zoya only.
+
+| Routine | After (rev 2) |
+|---|---|
+| Calendar | 50,214 B / 800801f0906446cd |
+| Zoya | 44,517 B / 4c83e50a013430ce |
+| Inbox, WhatsApp, Sweep | unchanged from section 4 |
+
+**1. Calendar audit, once per window, with a completion record.**
+- Windows: 08:00 to 16:00, 16:00 to 22:00 and 22:00 to 08:00 JST. Each is keyed by the date it starts.
+- A run skips the audit when its window already has the Activity "Calendar audit done: <YYYY-MM-DD> <08|16|22> JST" (Kind Note, Source Calendar).
+- That Activity is written only after the whole audit has finished and every finding is written.
+- Everything else in the calendar run stays hourly.
+
+| Case | Result |
+|---|---|
+| Consecutive hourly runs | 08:35 audits and writes "done 08"; 09:35 to 15:35 skip it |
+| Missed first slot | The 08:35 run fails; 09:35 finds no "done 08" and audits. Exactly one catch-up, the current window only |
+| Crash part way | No completion Activity, so the next run audits again. Findings already written are Claude note lines that the audit skips when already present |
+| Midnight | A run at 01:35 on 21 Oct belongs to window "20 Oct 22", so it skips if 22:35 on 20 Oct completed |
+| Outage across a whole window | Only the current window is audited when runs resume. Missed windows are not replayed |
+
+**2. Nurture capacity kept at today's maximum.**
+- Today Zoya does follow-ups in two runs a day (16:30 and 21:30 JST, weekdays) at 10 a run, which is 20 a day. The new cap is 20 a day (JST), not 10.
+- **Nurture and revival mails** are counted from today's "Zoya sent: nurture" Activities, one per sent message.
+- **Moves** are counted from today's Claude note lines that start "nurture started" and end "(Zoya)". Zoya ends her move lines that way, so the sweep's own nurture starts never use her budget.
+- It's a ceiling, not a target. The 150-a-day cap, the 7-day per-person rule, due dates and the 16:00 to 22:00 JST follow-up hours still apply.
+
+| Case | Result |
+|---|---|
+| Two runs share the remainder | 16:30 sends 12; 17:30 sees 12 and may send up to 8 |
+| Retry after a real send | The mail is found in Sent first and logged once, so it counts once and isn't resent |
+| No-op run | Sends nothing, uses nothing |
+| Next JST day | The count starts again from 0 at 00:00 JST |
+
+**3. Decision number.** Misc's 341 to 343 stand. The retirement record is **344**, in every active reference: decisions.md, CLAUDE.md, notion.md, the Change log and the AR-6 page.
+
+**Matching Rules for Zoya edit (R1).** Applied in the same cutover as the Zoya prompt, then read back:
+- Section 5a, before: `**Caps.** At most 10 nurture and revival mails a Zoya run, inside the 150-a-day cap and the one-mail-per-person-per-7-days rule.`
+- After: `**Caps.** At most 20 nurture and revival mails a day (JST), inside the 150-a-day cap and the one-mail-per-person-per-7-days rule.`
+
+**Owner UI.** Akshay's screenshot shows FT Newsjack paused, with all triggers paused (Codex, 21:51 JST). Its future runs are stopped. Deleting it is housekeeping, not a blocker.
+
+**Composition note (Codex, 21:51).** AR-3 (calendar) and the WA-Blurb rename also change these files. Main 1 composes each routine against everything actually integrated at deploy time and re-measures, never against an isolated hash.

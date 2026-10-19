@@ -30,9 +30,9 @@ EDITS = {
         ("an active Salesblink sequence to them (Waiting on Chaandini or a Salesblink Activity in 14 days; recheck on its next step or end);",
          "a Salesblink mail to them recorded on any of their rows in the last 14 days (Salesblink was retired on 19 Oct 2026, so this ends by 2 Nov 2026; Waiting on Chaandini alone is never a hold);"),
         ("At most 10 nurture and revival mails a run,",
-         "At most 20 nurture and revival mails a day (JST; was 10 in each of the two follow-up runs),"),
+         "At most 20 nurture and revival mails a day (JST), counted from today's \"Zoya sent: nurture\" Activities, one per sent message, so a retry or a run that sends nothing uses none (was 10 in each of the two follow-up runs),"),
         ("At most 10 moves a run;",
-         "At most 20 moves a day (JST; was 10 in each of the two follow-up runs);"),
+         "At most 20 moves a day (JST), counted from today's Claude note lines that start \"nurture started\" and end \"(Zoya)\": end every move line you write that way, so the daily sweep's own nurture starts never count against you (was 10 in each of the two follow-up runs);"),
     ]),
     # Calendar sync
     "trig_01Voiz5YsK2SnVf2STF8PoSH": ("3d9f8bd7bd5bcef9", [
