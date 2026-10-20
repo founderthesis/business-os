@@ -64,11 +64,11 @@ def client():
 
 
 def params(row):
-    # Sonnet 5.5 thinks by default and thinking counts against max_tokens; medium effort buys better research within ~50% more spend (Akshay, 20 Oct).
+    # Sonnet 5.5 thinks by default and thinking counts against max_tokens. Medium effort doubled the cost per row (0.09 vs 0.045 USD live), past the +50% Akshay allowed on 20 Oct, so low effort with more searches and pages.
     return {
         "model": MODEL,
         "max_tokens": 16000,
-        "output_config": {"effort": "medium"},
+        "output_config": {"effort": "low"},
         "system": [{"type": "text", "text": SYSTEM, "cache_control": {"type": "ephemeral"}}],
         "tools": [{"type": "web_search_20260209", "name": "web_search", "max_uses": 6},
                   {"type": "web_fetch_20260209", "name": "web_fetch", "max_uses": 4, "max_content_tokens": 6000}],
