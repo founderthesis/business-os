@@ -13,4 +13,4 @@ Retired: routines/retired/mac-transcripts-v1.md (8 Oct nightly prompt, replaced 
 
 Not Mac tasks, despite the name: "Founder Thesis guest evals" (routines/cowork-evals.md) and "Host dossiers and prep notes" (routines/cowork-dossiers.md) were created from Cowork but run as cloud scheduled tasks on claude.ai (trig_01R1yHgEztVEo832zMwUugBr and trig_01WfLf8Zx9c34fSzfrTeUY5M, cloud sessions, all account connectors). The cloud can read their live prompts; for those two the whole file is the prompt.
 
-Mac task prompts are local to the Mac, so the cloud can't read what is deployed. It checks outcomes instead: Episode Transcript file and its hash, the Drive copy, the .txt on the thank-you draft, the Recording link on the Engagement and on the invite, and the "(Mac)" lines (decision 334).
+Mac task prompts are local to the Mac, so the cloud can't read what is deployed. It checks outcomes instead: Episode Transcript file and its hash, the .txt on the thank-you draft, the Recording link on the Engagement and on the invite, and the "(Mac)" lines (decision 334).
