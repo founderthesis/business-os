@@ -28,7 +28,7 @@ def edit(s):
         ('other shows: Waiting on Mamatha, "Mamatha: booked for <date> but no invite on the calendar". Skip if Next action already says so.', 'other shows the same. Skip if the Claude note already says so.'),
         ("Log per TEMPLATE MODES AND LOGGING (Summary", "Log per LOGGING (Summary"),
         ('(Blurb, and Blurb link unless it holds an editing-chat link, on the row, Membership stays Invited)', '(Blurb on the row, Membership stays Invited; Blurb link holds only the guest\'s editing chat, decision 359: never write it)'),
-        (', Blurb link = the Engagement\'s page URL (decision 120) unless it holds an editing-chat link (claude.ai/code/...), which stays (decision 347), and LinkedIn;', ', and LinkedIn; never write Blurb link (it holds only the guest\'s editing chat, decision 359);'),
+        (', Blurb link = the Engagement\'s page URL (decision 120) unless it holds an editing-chat link (claude.ai/code/...), which stays (decision 347), and LinkedIn;', '; set LinkedIn; never write Blurb link (it holds only the guest\'s editing chat, decision 359);'),
         ('it happened: set Status Recorded, clear Call type, Claude note line "YYYY-MM-DD: recorded <date> (Zencastr audio in Drive)".',
          'it happened: set Status Recorded, clear Call type, Claude note line "YYYY-MM-DD: recorded <date> (Zencastr audio in Drive)", and make sure the guest has an FT Community row (decision 359): by Person, else exact name plus company; none: create it (Name, Company, Person, Source FT guest, Membership To invite, Captured today); one row per person, never a second, and never touch Blurb link.'),
     ]
