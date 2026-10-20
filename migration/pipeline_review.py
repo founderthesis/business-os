@@ -1,4 +1,4 @@
-"""Pipeline review: one recommendation per open Engagement, on the Anthropic API credits (decision 358).
+"""Pipeline review: guest research (tier, tags, blurb, better guest; decision 342) and one recommendation per open Engagement, on the Anthropic API credits (decision 358).
 
 Read-only. Input is gathered by the API worker session (Notion row + Gmail excerpts) into
 data/pipeline_review/input.jsonl, one JSON object per line:
@@ -19,19 +19,31 @@ import sys
 import anthropic
 
 MODEL = "claude-sonnet-5-5"
+SEARCH_USD = 0.01  # web search, per search
 PRICE = {"input_tokens": 2.0, "output_tokens": 10.0, "cache_read_input_tokens": 0.2, "cache_creation_input_tokens": 2.5}  # USD per MTok
 DIR = "data/pipeline_review"
 
-SYSTEM = """You review one open guest or sponsor conversation for ThePodium, a podcast agency run by Akshay Datt.
+SYSTEM = """You research one guest and review their open conversation for ThePodium, a podcast agency run by Akshay Datt.
 Shows: Founder Thesis (FT), un#, Built to Share (B2S), Human by Design (HBD). Zoya is the AI team member who sends routine follow-ups.
-Recommend exactly one action:
+
+Part 1, research the guest (decision 342). Use web search, at most 5 searches. Use only facts you found, each with source and date.
+- guest_tier: "Tier 1" = founder or co-founder, still active, of a unicorn, a listed or IPO-filed company, revenue or ARR above about USD 50M, a serial founder with a real exit, or widely known. "Tier 1.5" = founder of a funded growth-stage company (Series B or later, or USD 20M+ raised) or a strong niche name. "Tier 2" = early or small, a hired executive, or left the company. Fame never lowers the tier.
+- research_tags: any that apply, only from this list: Big Indian founder, Big global founder, Global unicorn, Unicorn, Listed, Pre-IPO, Recently IPO'd, Serial founder, Outlier, Bootstrapped, Family business, ESOP track record, Hard to get, Needs research, Fintech, B2B SaaS, Edtech, Consumer, D2C, Healthtech, Deeptech, AI, Climate, Logistics, Marketplace, Mobility, Media, Gaming, Manufacturing, IT services, Crypto. Use Needs research when the facts are thin.
+- blurb: 2 to 3 neutral lines: who they are and the company in numbers (funding, valuation, revenue or ARR, customers, team), host-safe for any show.
+- blurb_evidence: each fact with its source link and date.
+- better_guest: if a co-founder or another leader at the company is a stronger guest (more stature, their own media presence), name them, their role and why; otherwise null.
+
+Part 2, recommend exactly one action on the conversation:
 - chase: a live conversation where it's our move or a reply is overdue; Zoya follows up.
 - nurture: no near-term deal but worth keeping warm; a slow, dated touch.
 - drop: closed in substance (clear decline, gone silent after the full sequence and no Tier 1 or sponsored value, wrong fit).
 - ask_akshay: needs his judgement (Tier 1, sponsored price, a guest decision, a relationship only he holds).
-Rules: respect explicit declines and anyone who asked us to stop. Revive a decline only if the no was to the sponsored price (decision 355). Silence alone never ends a Tier 1, sponsored or approved pursuit; move it to nurture (decision 335). A drop of a Tier 1 or sponsored lead is always ask_akshay. A Tier 1 or sponsored row at Booking whose next step is the other side's is chase, not nurture, unless they named a later date. Use only the facts given; if the evidence is missing say so and choose ask_akshay.
+Rules: respect explicit declines and anyone who asked us to stop. Revive a decline only if the no was to the sponsored price (decision 355). Silence alone never ends a Tier 1, sponsored or approved pursuit; move it to nurture (decision 335). A drop of a Tier 1 or sponsored lead is always ask_akshay. A Tier 1 or sponsored row at Booking whose next step is the other side's is chase, not nurture, unless they named a later date. Use only the thread facts given for part 2; if they are missing say so and choose ask_akshay.
+
 Reply with JSON only, no other text:
-{"action": "chase|nurture|drop|ask_akshay", "reason": "<one sentence>", "last_exchange": "<date, who, what>",
+{"guest_tier": "Tier 1|Tier 1.5|Tier 2", "research_tags": ["..."], "blurb": "...", "blurb_evidence": ["<fact> (<source>, <date>)"],
+ "better_guest": null or {"name": "...", "role": "...", "why": "..."},
+ "action": "chase|nurture|drop|ask_akshay", "reason": "<one sentence>", "last_exchange": "<date, who, what>",
  "best_route": "<direct mail | via PR <name> | WhatsApp | other>", "current_status": "<one line>",
  "next_step": "<one line, what Zoya or Akshay does>"}"""
 
@@ -47,15 +59,16 @@ def params(row):
     # Sonnet 5.5 thinks by default and thinking counts against max_tokens; low effort keeps it short.
     return {
         "model": MODEL,
-        "max_tokens": 4000,
+        "max_tokens": 8000,
         "output_config": {"effort": "low"},
         "system": [{"type": "text", "text": SYSTEM, "cache_control": {"type": "ephemeral"}}],
+        "tools": [{"type": "web_search_20260209", "name": "web_search", "max_uses": 5}],
         "messages": [{"role": "user", "content": f"Engagement: {row['name']}\n\nRow:\n{row['row']}\n\nThreads:\n{row['threads']}"}],
     }
 
 
 def parse(msg):
-    if msg.stop_reason != "end_turn":
+    if msg.stop_reason not in ("end_turn", "pause_turn"):
         return {"action": "ask_akshay", "reason": f"model stopped: {msg.stop_reason}"}
     text = "".join(b.text for b in msg.content if b.type == "text")
     try:
@@ -67,6 +80,8 @@ def parse(msg):
 def add(tot, usage):
     for k in PRICE:
         tot[k] = tot.get(k, 0) + (getattr(usage, k, 0) or 0)
+    stu = getattr(usage, "server_tool_use", None)
+    tot["web_searches"] = tot.get("web_searches", 0) + ((getattr(stu, "web_search_requests", 0) or 0) if stu else 0)
 
 
 def write(results, tot, n, discount=1.0):
@@ -75,9 +90,9 @@ def write(results, tot, n, discount=1.0):
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
     for r in results:
         print(f"\n{r.get('name', r['id'])}: {r.get('action')}")
-        for k in ("reason", "last_exchange", "best_route", "current_status", "next_step"):
+        for k in ("guest_tier", "research_tags", "blurb", "blurb_evidence", "better_guest", "reason", "last_exchange", "best_route", "current_status", "next_step"):
             print(f"  {k}: {r.get(k, '')}")
-    cost = discount * sum(tot[k] * PRICE[k] for k in tot) / 1e6
+    cost = discount * sum(tot.get(k, 0) * PRICE[k] for k in PRICE) / 1e6 + tot.get("web_searches", 0) * SEARCH_USD
     print(f"rows {n}, results {len(results)}")
     print("tokens", json.dumps(tot))
     print(f"cost about ${cost:.3f}, ${cost / max(n, 1):.4f} per row, ${330 * cost / max(n, 1):.2f} for 330 rows")
@@ -106,8 +121,15 @@ def main():
         print("batch", b.id, b.processing_status)
         return
     for r in rows:
-        msg = c.messages.create(**params(r))
+        p = params(r)
+        msg = c.messages.create(**p)
         add(tot, msg.usage)
+        for _ in range(3):  # a long web-search turn can pause; continue it
+            if msg.stop_reason != "pause_turn":
+                break
+            p["messages"] = p["messages"][:1] + [{"role": "assistant", "content": msg.content}]
+            msg = c.messages.create(**p)
+            add(tot, msg.usage)
         results.append({"id": r["id"], "name": r["name"], **parse(msg)})
     write(results, tot, len(rows))
 
