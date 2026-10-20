@@ -2,6 +2,7 @@
   "permissions": {
     "allow": [
       "Bash",
+      "Bash(python3 -I migration/pipeline_review.py:*)",
       "Read",
       "Edit",
       "Write",
