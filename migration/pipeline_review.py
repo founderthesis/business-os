@@ -26,9 +26,12 @@ DIR = "data/pipeline_review"
 SYSTEM = """You research one guest and review their open conversation for ThePodium, a podcast agency run by Akshay Datt.
 Shows: Founder Thesis (FT), un#, Built to Share (B2S), Human by Design (HBD). Zoya is the AI team member who sends routine follow-ups.
 
-Part 1, research the guest (decision 342). Use web search, at most 5 searches, then web fetch to open at most 3 pages that carry the key numbers (funding, revenue, valuation). Use only facts you found, each with its full source URL and date.
+Part 1, research the guest (decision 342). If the input carries an earlier eval, start from it and search only to confirm or update its facts. Use web search, at most 6 searches, then web fetch to open at most 4 pages that carry the key numbers (funding, revenue, valuation). Use only facts you found, each with its full source URL and date.
 - guest_tier: "Tier 1" = founder or co-founder, still active, of a unicorn, a listed or IPO-filed company, revenue or ARR above about USD 50M, a serial founder with a real exit, or widely known. "Tier 1.5" = founder of a funded growth-stage company (Series B or later, or USD 20M+ raised) or a strong niche name. "Tier 2" = early or small, a hired executive, or left the company. Fame never lowers the tier. Not a founder: tier on the bar of the show they best fit. A researcher with HBD-level stature (top citations, landmark work, still active) or the top AI executive at a Fortune 500 company is Tier 1; a genuinely senior, public-facing digital-assets leader at a systemically important institution (un#) is Tier 1; a VC fund GP of an established fund is Tier 1 or 1.5 by fund size and track record.
-- research_tags: any that apply, only from this list: Big Indian founder, Big global founder, Global unicorn, Unicorn, Listed, Pre-IPO, Recently IPO'd, Serial founder, Outlier, Bootstrapped, Family business, ESOP track record, Hard to get, Needs research, Fintech, B2B SaaS, Edtech, Consumer, D2C, Healthtech, Deeptech, AI, Climate, Logistics, Marketplace, Mobility, Media, Gaming, Manufacturing, IT services, Crypto, Fortune 500, India, US, Europe, Middle East, Southeast Asia. Big Indian founder and Big global founder are for founders only, never academics or hired executives. Fortune 500 = the guest leads, or the company counts as customers, Fortune 500 firms. India, US, Europe, Middle East, Southeast Asia = the company's headquarters, plus its main market only when a source says most revenue comes from there; an office, team or a few customers in a region is not enough; regions outside the list get no tag (an Israeli company gets none for Israel). Use Needs research when the facts are thin.
+- research_tags: any that apply, only from this list: Big Indian founder, Big global founder, Global unicorn, Unicorn, Listed, Pre-IPO, Recently IPO'd, Serial founder, Outlier, Bootstrapped, Family business, ESOP track record, Hard to get, Needs research, Fintech, B2B SaaS, Edtech, Consumer, D2C, Healthtech, Deeptech, AI, Climate, Logistics, Marketplace, Mobility, Media, Gaming, Manufacturing, IT services, Crypto, Fortune 500, India, US, Europe, Middle East, Southeast Asia. Unicorn and Global unicorn mean the guest's own company is valued at USD 1B or more (a VC's portfolio companies don't count). Big Indian founder and Big global founder are for founders only, never academics or hired executives. Fortune 500 = the guest leads, or the company counts as customers, Fortune 500 firms. India, US, Europe, Middle East, Southeast Asia = the company's headquarters, plus its main market only when a source says most revenue comes from there; an office, team or a few customers in a region is not enough; regions outside the list get no tag (an Israeli company gets none for Israel). Use Needs research when the facts are thin.
+- city: the city where the guest is based (usually the company HQ city), e.g. "Bengaluru"; "" if not found.
+- country: the country of the company's headquarters, never a branch or market country (for a researcher, the institution's country), as a full English name, e.g. "India", "United States"; "" if not found.
+- public_presence: "Famous" = a household name in their market (a Wikipedia page, regular mainstream press, a large following, widely recognised); "Visible" = regular press, talks or podcasts, an active public following; "Low" = little public footprint. Judge from what the searches already show; don't spend a search only on this. public_presence_evidence: one line with the signals and their sources (e.g. "Wikipedia page; 3 ET interviews in 2026; 120k X followers (x.com/..)"). Presence never lowers the tier.
 - blurb: 2 to 3 neutral lines: who they are and the company in numbers (funding, valuation, revenue or ARR, customers, team), host-safe for any show.
 - blurb_evidence: each fact with its full source URL and the publication date read from the page when the search result or an opened page shows it; otherwise write "date not found". Never spend a search or a fetch only to find a date, and skip sites that block fetching (Google Scholar, Tracxn, LinkedIn).
 - better_guest: if a co-founder or another leader at the company is a stronger guest (more stature, their own media presence), name them, their role and why; otherwise null.
@@ -36,7 +39,7 @@ Part 1, research the guest (decision 342). Use web search, at most 5 searches, t
   FT (Founder Thesis, Akshay): founders with real scale an Indian founder and operator audience recognises (IPO'd, unicorn, serious revenue or funding); hard deep tech (semis, drones, AI infra, climate hardware, novel finance) and VC fund GPs get a lift; young founders with under ~3 years of real operating tenure, hired CEOs of big corporates and pre-revenue founders in generic SaaS, D2C or marketplaces don't clear it.
   un# (Unhashed, Sri Misra): founder of a notable crypto org, or a genuinely senior, public-facing leader of digital assets at a systemically important institution; regulated tokenisation (tokenised funds, credit, transfer agents, licensed marketplaces) is the current tilt; commentators and mid-level people don't clear it.
   B2S (Built to Share, Satish Mugulavalli, Hissa): one of three lanes: an outlier business model or ownership structure (Jaipur Rugs, AppsForBharat), a famous discovery-name founder (Sanjeev Bikhchandani, Jaydeep Barman), or a global unicorn founder with a best practice to share; ESOPs and ownership are the theme; anyone linked to Qapita or another cap-table competitor of Hissa is out.
-  HBD (Human by Design, Arjun Jain, FastCode AI): rock-star AI researchers (Hinton, Karpathy, Fei-Fei Li level, ~8,000+ citations), the top AI executive at a Fortune 500 company, or founders who turned AI research into products; never quantum, defence or classified, regulated patient-data healthcare, simulation-only, anyone who has worked with Arjun, or anyone with nothing notable in ~3 years. Before listing HBD for a researcher, search their citation count (Google Scholar or Semantic Scholar) and whether they co-authored with Arjun Jain or shared his labs (MPI Informatik, NYU with LeCun, IIT Bombay, IISc); put both findings in best_show_why, and leave HBD out if either can't be checked.
+  HBD (Human by Design, Arjun Jain, FastCode AI): rock-star AI researchers (Hinton, Karpathy, Fei-Fei Li level, ~8,000+ citations), the top AI executive at a Fortune 500 company, or founders who turned AI research into products; never quantum, defence or classified, regulated patient-data healthcare, simulation-only, anyone who has worked with Arjun, or anyone with nothing notable in ~3 years. For a researcher, do these two checks first, before other research: search their citation count (Google Scholar or Semantic Scholar) and whether they co-authored with Arjun Jain or shared his labs (MPI Informatik, NYU with LeCun, IIT Bombay, IISc); put both findings in best_show_why, and leave HBD out if either can't be checked.
 
 Part 2, recommend exactly one action on the conversation:
 - chase: a live conversation where it's our move or a reply is overdue; Zoya follows up.
@@ -47,7 +50,7 @@ Rules: respect explicit declines and anyone who asked us to stop. Revive a decli
 
 Reply with JSON only, no other text:
 {"guest_tier": "Tier 1|Tier 1.5|Tier 2", "research_tags": ["..."], "blurb": "...", "blurb_evidence": ["<fact> (<source>, <date>)"],
- "better_guest": null or {"name": "...", "role": "...", "why": "..."}, "best_show": ["FT|un#|B2S|HBD"], "best_show_why": "...",
+ "city": "...", "country": "...", "public_presence": "Famous|Visible|Low", "public_presence_evidence": "...", "better_guest": null or {"name": "...", "role": "...", "why": "..."}, "best_show": ["FT|un#|B2S|HBD"], "best_show_why": "...",
  "action": "chase|nurture|drop|ask_akshay", "reason": "<one sentence>", "last_exchange": "<date, who, what>",
  "best_route": "<direct mail | via PR <name> | WhatsApp | other>", "current_status": "<one line>",
  "next_step": "<one line, what Zoya or Akshay does>"}"""
@@ -61,15 +64,15 @@ def client():
 
 
 def params(row):
-    # Sonnet 5.5 thinks by default and thinking counts against max_tokens; low effort keeps it short.
+    # Sonnet 5.5 thinks by default and thinking counts against max_tokens. Medium effort doubled the cost per row (0.09 vs 0.045 USD live), past the +50% Akshay allowed on 20 Oct, so low effort with more searches and pages.
     return {
         "model": MODEL,
-        "max_tokens": 8000,
+        "max_tokens": 16000,
         "output_config": {"effort": "low"},
         "system": [{"type": "text", "text": SYSTEM, "cache_control": {"type": "ephemeral"}}],
-        "tools": [{"type": "web_search_20260209", "name": "web_search", "max_uses": 5},
-                  {"type": "web_fetch_20260209", "name": "web_fetch", "max_uses": 3, "max_content_tokens": 6000}],
-        "messages": [{"role": "user", "content": f"Engagement: {row['name']}\n\nRow:\n{row['row']}\n\nThreads:\n{row['threads']}"}],
+        "tools": [{"type": "web_search_20260209", "name": "web_search", "max_uses": 6},
+                  {"type": "web_fetch_20260209", "name": "web_fetch", "max_uses": 4, "max_content_tokens": 6000}],
+        "messages": [{"role": "user", "content": f"Engagement: {row['name']}\n\nRow:\n{row['row']}\n\nEarlier eval:\n{row.get('eval') or 'none'}\n\nThreads:\n{row['threads']}"}],
     }
 
 
@@ -103,7 +106,7 @@ def write(results, tot, n, discount=1.0):
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
     for r in results:
         print(f"\n{r.get('name', r['id'])}: {r.get('action')}")
-        for k in ("guest_tier", "research_tags", "blurb", "blurb_evidence", "better_guest", "best_show", "best_show_why", "reason", "last_exchange", "best_route", "current_status", "next_step"):
+        for k in ("guest_tier", "city", "country", "public_presence", "public_presence_evidence", "research_tags", "blurb", "blurb_evidence", "better_guest", "best_show", "best_show_why", "reason", "last_exchange", "best_route", "current_status", "next_step"):
             print(f"  {k}: {r.get(k, '')}")
     cost = discount * sum(tot.get(k, 0) * PRICE[k] for k in PRICE) / 1e6 + tot.get("web_searches", 0) * SEARCH_USD
     print(f"rows {n}, results {len(results)}")
