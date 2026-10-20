@@ -30,7 +30,7 @@ Part 1, research the guest (decision 342). Use web search, at most 5 searches, t
 - guest_tier: "Tier 1" = founder or co-founder, still active, of a unicorn, a listed or IPO-filed company, revenue or ARR above about USD 50M, a serial founder with a real exit, or widely known. "Tier 1.5" = founder of a funded growth-stage company (Series B or later, or USD 20M+ raised) or a strong niche name. "Tier 2" = early or small, a hired executive, or left the company. Fame never lowers the tier. Not a founder: tier on the bar of the show they best fit. A researcher with HBD-level stature (top citations, landmark work, still active) or the top AI executive at a Fortune 500 company is Tier 1; a genuinely senior, public-facing digital-assets leader at a systemically important institution (un#) is Tier 1; a VC fund GP of an established fund is Tier 1 or 1.5 by fund size and track record.
 - research_tags: any that apply, only from this list: Big Indian founder, Big global founder, Global unicorn, Unicorn, Listed, Pre-IPO, Recently IPO'd, Serial founder, Outlier, Bootstrapped, Family business, ESOP track record, Hard to get, Needs research, Fintech, B2B SaaS, Edtech, Consumer, D2C, Healthtech, Deeptech, AI, Climate, Logistics, Marketplace, Mobility, Media, Gaming, Manufacturing, IT services, Crypto, Fortune 500, India, US, Europe, Middle East, Southeast Asia. Big Indian founder and Big global founder are for founders only, never academics or hired executives. Fortune 500 = the guest leads, or the company counts as customers, Fortune 500 firms. India, US, Europe, Middle East, Southeast Asia = the company's headquarters, plus its main market only when a source says most revenue comes from there; an office, team or a few customers in a region is not enough; regions outside the list get no tag (an Israeli company gets none for Israel). Use Needs research when the facts are thin.
 - blurb: 2 to 3 neutral lines: who they are and the company in numbers (funding, valuation, revenue or ARR, customers, team), host-safe for any show.
-- blurb_evidence: each fact with its full source URL and the publication date read from the page (open it with web fetch when the search result shows no date); write "date not found" only when the page itself has none.
+- blurb_evidence: each fact with its full source URL and the publication date read from the page when the search result or an opened page shows it; otherwise write "date not found". Never spend a search or a fetch only to find a date, and skip sites that block fetching (Google Scholar, Tracxn, LinkedIn).
 - better_guest: if a co-founder or another leader at the company is a stronger guest (more stature, their own media presence), name them, their role and why; otherwise null.
 - best_show: every show whose guest bar they clear, best first, from FT, un#, B2S, HBD; [] if none. best_show_why: one line.
   FT (Founder Thesis, Akshay): founders with real scale an Indian founder and operator audience recognises (IPO'd, unicorn, serious revenue or funding); hard deep tech (semis, drones, AI infra, climate hardware, novel finance) and VC fund GPs get a lift; young founders with under ~3 years of real operating tenure, hired CEOs of big corporates and pre-revenue founders in generic SaaS, D2C or marketplaces don't clear it.
@@ -78,9 +78,16 @@ def parse(msg):
         return {"action": "ask_akshay", "reason": f"model stopped: {msg.stop_reason}"}
     text = "".join(b.text for b in msg.content if b.type == "text")
     try:
-        return json.loads(text[text.find("{"):text.rfind("}") + 1])
+        out = json.loads(text[text.find("{"):text.rfind("}") + 1])
     except ValueError:
         return {"action": "ask_akshay", "reason": "unparseable model output", "raw": text[:500]}
+    if not out.get("guest_tier") or not out.get("blurb") or "{" in out["blurb"]:
+        return {"action": "ask_akshay", "reason": "empty research", "raw": text[:500]}
+    return out
+
+
+def failed(out):
+    return out.get("reason", "").startswith(("model stopped", "unparseable", "empty research", "batch "))
 
 
 def add(tot, usage):
@@ -101,12 +108,15 @@ def write(results, tot, n, discount=1.0):
     cost = discount * sum(tot.get(k, 0) * PRICE[k] for k in PRICE) / 1e6 + tot.get("web_searches", 0) * SEARCH_USD
     print(f"rows {n}, results {len(results)}")
     print("tokens", json.dumps(tot))
-    print(f"cost about ${cost:.3f}, ${cost / max(n, 1):.4f} per row, ${330 * cost / max(n, 1):.2f} for 330 rows")
+    print(f"cost about ${cost:.3f}, ${cost / max(n, 1):.4f} per row, ${1950 * cost / max(n, 1):.2f} for 1,950 rows")
+    bad = [r for r in results if failed(r)]
+    print(f"failed {len(bad)}: {[r.get('name') for r in bad]}")
 
 
 def main():
     c = client()
-    rows = [json.loads(l) for l in open(f"{DIR}/input.jsonl", encoding="utf-8") if l.strip()]
+    src = sys.argv[sys.argv.index("--input") + 1] if "--input" in sys.argv else f"{DIR}/input.jsonl"
+    rows = [json.loads(l) for l in open(src, encoding="utf-8") if l.strip()]
     tot, results = {}, []
     if "--collect" in sys.argv:
         bid = sys.argv[sys.argv.index("--collect") + 1]
@@ -121,22 +131,34 @@ def main():
             else:
                 out = {"action": "ask_akshay", "reason": f"batch {item.result.type}"}
             results.append({"id": item.custom_id, "name": names.get(item.custom_id, ""), **out})
+        by_id = {r["id"]: r for r in rows}
+        with open(f"{DIR}/retry_input.jsonl", "w", encoding="utf-8") as f:
+            for r in results:
+                if failed(r) and r["id"] in by_id:
+                    f.write(json.dumps(by_id[r["id"]], ensure_ascii=False) + "\n")
+        print(f"failed rows written to {DIR}/retry_input.jsonl; rerun them live with --input")
         return write(results, tot, len(rows), discount=0.5)
     if "--batch" in sys.argv:
         b = c.messages.batches.create(requests=[{"custom_id": r["id"], "params": params(r)} for r in rows])
         print("batch", b.id, b.processing_status)
         return
     for r in rows:
-        p = params(r)
-        msg = c.messages.create(**p)
-        add(tot, msg.usage)
-        for _ in range(3):  # a long web-search turn can pause; continue it
-            if msg.stop_reason != "pause_turn":
-                break
-            p["messages"] = p["messages"][:1] + [{"role": "assistant", "content": msg.content}]
+        for _attempt in range(3):  # an empty or broken answer is retried, never written
+            p = params(r)
             msg = c.messages.create(**p)
             add(tot, msg.usage)
-        results.append({"id": r["id"], "name": r["name"], **parse(msg)})
+            done = list(msg.content)
+            for _ in range(6):  # a long web-search turn pauses; resend everything so far and continue
+                if msg.stop_reason != "pause_turn":
+                    break
+                p["messages"] = p["messages"][:1] + [{"role": "assistant", "content": done}]
+                msg = c.messages.create(**p)
+                add(tot, msg.usage)
+                done += list(msg.content)
+            out = parse(msg)
+            if not failed(out):
+                break
+        results.append({"id": r["id"], "name": r["name"], **out})
     write(results, tot, len(rows))
 
 
