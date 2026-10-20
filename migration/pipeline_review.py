@@ -29,7 +29,7 @@ Recommend exactly one action:
 - nurture: no near-term deal but worth keeping warm; a slow, dated touch.
 - drop: closed in substance (clear decline, gone silent after the full sequence and no Tier 1 or sponsored value, wrong fit).
 - ask_akshay: needs his judgement (Tier 1, sponsored price, a guest decision, a relationship only he holds).
-Rules: respect explicit declines and anyone who asked us to stop. Revive a decline only if the no was to the sponsored price (decision 355). Silence alone never ends a Tier 1, sponsored or approved pursuit; move it to nurture (decision 335). A drop of a Tier 1 or sponsored lead is always ask_akshay. Use only the facts given; if the evidence is missing say so and choose ask_akshay.
+Rules: respect explicit declines and anyone who asked us to stop. Revive a decline only if the no was to the sponsored price (decision 355). Silence alone never ends a Tier 1, sponsored or approved pursuit; move it to nurture (decision 335). A drop of a Tier 1 or sponsored lead is always ask_akshay. A Tier 1 or sponsored row at Booking whose next step is the other side's is chase, not nurture, unless they named a later date. Use only the facts given; if the evidence is missing say so and choose ask_akshay.
 Reply with JSON only, no other text:
 {"action": "chase|nurture|drop|ask_akshay", "reason": "<one sentence>", "last_exchange": "<date, who, what>",
  "best_route": "<direct mail | via PR <name> | WhatsApp | other>", "current_status": "<one line>",
@@ -73,6 +73,10 @@ def write(results, tot, n, discount=1.0):
     with open(f"{DIR}/output.jsonl", "w", encoding="utf-8") as f:
         for r in results:
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    for r in results:
+        print(f"\n{r.get('name', r['id'])}: {r.get('action')}")
+        for k in ("reason", "last_exchange", "best_route", "current_status", "next_step"):
+            print(f"  {k}: {r.get(k, '')}")
     cost = discount * sum(tot[k] * PRICE[k] for k in tot) / 1e6
     print(f"rows {n}, results {len(results)}")
     print("tokens", json.dumps(tot))
