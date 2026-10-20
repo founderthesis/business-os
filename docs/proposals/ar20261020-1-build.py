@@ -27,6 +27,9 @@ EDITS = {
     "trig_0189eZvAD8x4357cfevgZ3No": ("b3f1e632a6a5a40a", [
         ("YOUR CALL (decision 157). Engagements",
          "YOUR CALL (decision 157; snoozes, loop-ins (6a), repeat guests (3, 6c) and owners: " + POINTER + "). Engagements"),
+        # rev 2b: Blurb link may hold the recording's editing chat
+        ("Blurb link = the Engagement's page URL, and leave Blurb to the calendar run",
+         "Blurb link = the Engagement's page URL unless it holds an editing-chat link (decision 347), and leave Blurb to the calendar run"),
     ]),
     # Zoya
     "trig_01UPT8LDrBDL5JQqW91Awgbo": ("7f71e2302f155d6f", [
@@ -72,6 +75,9 @@ EDITS = {
     ]),
     # WhatsApp: blurb posts and rewrites in the Zoya group retired (decision 347); everything else unchanged
     "trig_01MnmJYorWrd61K7b5BCqXr1": ("d4c9986b750e9cbd", [
+        # rev 2b: Blurb link may hold the recording's editing chat
+        ("(set Blurb and Blurb link from it)",
+         "(set Blurb, and Blurb link unless it holds an editing-chat link (claude.ai/code/...), decision 347)"),
         (" and the Skill tool (skill founder-thesis-blurb, for blurb rewrites). If either is missing,",
          ". If either is missing,"),
         (" A blurb goes as its own message so he can forward it untouched.",
@@ -87,6 +93,11 @@ EDITS = {
     ]),
     # Calendar, AR-3 live
     "trig_01Voiz5YsK2SnVf2STF8PoSH": ("cd50072ab657736a", [
+        # rev 2b: Blurb link may hold the recording's editing chat
+        ("(Blurb and Blurb link on the row, Membership stays Invited)",
+         "(Blurb, and Blurb link unless it holds an editing-chat link, on the row, Membership stays Invited)"),
+        ("Blurb link = the Engagement's page URL (decision 120) and LinkedIn;",
+         "Blurb link = the Engagement's page URL (decision 120) unless it holds an editing-chat link (claude.ai/code/...), which stays (decision 347), and LinkedIn;"),
         ('- Every Engagement you change: one line at the top of Claude note ("YYYY-MM-DD: <what and why>"), Claude updated = today.',
          '- Every Engagement you change: one line at the top of Claude note ("YYYY-MM-DD: <what and why>"), Claude updated = today.\n- ' + OWNERS),
     ]),
