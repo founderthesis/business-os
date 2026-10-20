@@ -27,6 +27,7 @@ def edit(s):
         ('"Zoya: recorded <date>, send the form reminder" with Waiting on Zoya on FT ("Mamatha:" on other shows).', '"Zoya: recorded <date>, send the form reminder" with Waiting on Zoya.'),
         ('"Zoya: send GST and invoice details" with Waiting on Zoya on FT ("Mamatha:" on other shows).', '"Zoya: send GST and invoice details" with Waiting on Zoya.'),
         ("- On Founder Thesis, skip any row whose Waiting on includes Zoya or whose Next action already starts \"Zoya:\": her routines own its follow-ups (decision 223).", "- Skip any row whose Waiting on includes Zoya or whose Next action already starts \"Zoya:\": her routines own its follow-ups (decision 223)."),
+        (" Zoya mails Akshay his items (her STEP 0f); a Notion row never wakes the main session, so Builder items wait until he starts one.", " Zoya mails Akshay his items (her STEP 0f); the CTO reads the Builder queue itself."),
         ("old notes rewritten (STEP 3a); rows changed from Gmail", "old notes rewritten (STEP 3a); owners removed (STEP 3a2); rows changed from Gmail"),
     ]
     for a, b in R:

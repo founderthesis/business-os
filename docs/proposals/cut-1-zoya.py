@@ -50,6 +50,8 @@ def edit(s):
          "remind on the invoice thread on the working days Cadences gives, Jaya, Sarika and Akshay in Cc; after the last,"),
         ("When two rows are due for the same person the same day, send the more urgent one (booked-call logistics, then PR coordination, then an active routine, then nurture); the other waits 7 days after that send.",
          "When two rows are due for the same person the same day, send the more urgent one (booked-call logistics, then PR coordination, then an active routine, then nurture); the other waits the 7-day rule."),
+        (' Builder items go in one line at the end: "Builder queue: <n> waiting. No routine can wake the builder; to start them, paste this into the main Claude session: Pick up the Engagements Task rows waiting on Builder." (only when n is above 0)', ""),
+        ("; Mail issues that went Fixed and live or Observed working since the last owner mail; Kind Task rows Waiting on Builder for more than 24 hours.", "; Mail issues that went Fixed and live or Observed working since the last owner mail."),
     ]
     for a, b in R:
         assert s.count(a) == 1, (a[:70], s.count(a))
@@ -61,5 +63,5 @@ def edit(s):
     s = region(s, "LIMITS\n- Daily cap (decision 317):", "- At most one mail from our side",
         "LIMITS (the numbers are on Cadences)\n- The daily cap and the per-run cap as Cadences gives them, counted as today's (JST) Activities whose Summary starts \"Zoya sent\" or \"Agent sent\", loop-ins excluded (decision 207). Replies to people who wrote to us come first, then your queue, then follow-ups, oldest due first. Stop at the cap and say so.\n")
     s = region(s, "- Follow-ups only on weekdays (India) and only in the runs that start 16:00 to 22:00 JST", "- A hand-written mail",
-        "- PR people (decision 354): for a PR or agency person the 7 days count per guest thread; at most 2 mails a week to that person across all their guests, and when two of their guests are due the same day, one mail covers both.\n- Follow-ups go only on the days and in the window Cadences gives (weekdays, runs starting 16:00 to 22:00 JST, never Diwali week). A follow-up run works its due list oldest first until it is empty, the cap is reached or a hold applies; never stop early because the window is ending: the next run carries on. Replies and queue steps go any run.\n")
+        "- PR people (decision 354): for a PR or agency person the 7 days count per guest thread; at most 2 mails a week to that person across all their guests, and when two of their guests are due the same day, one mail covers both.\n- Follow-ups go only on the days and in the window Cadences gives (weekdays, runs starting 10:00 to 22:00 JST, decision 362; never Diwali week). A follow-up run works its due list oldest first until it is empty, the cap is reached or a hold applies; never stop early because the window is ending: the next run carries on. Replies and queue steps go any run.\n")
     return s
