@@ -26,7 +26,7 @@ DIR = "data/pipeline_review"
 SYSTEM = """You research one guest and review their open conversation for ThePodium, a podcast agency run by Akshay Datt.
 Shows: Founder Thesis (FT), un#, Built to Share (B2S), Human by Design (HBD). Zoya is the AI team member who sends routine follow-ups.
 
-Part 1, research the guest (decision 342). Use web search, at most 5 searches. Use only facts you found, each with source and date.
+Part 1, research the guest (decision 342). Use web search, at most 5 searches, then web fetch to open at most 3 pages that carry the key numbers (funding, revenue, valuation). Use only facts you found, each with its full source URL and date.
 - guest_tier: "Tier 1" = founder or co-founder, still active, of a unicorn, a listed or IPO-filed company, revenue or ARR above about USD 50M, a serial founder with a real exit, or widely known. "Tier 1.5" = founder of a funded growth-stage company (Series B or later, or USD 20M+ raised) or a strong niche name. "Tier 2" = early or small, a hired executive, or left the company. Fame never lowers the tier.
 - research_tags: any that apply, only from this list: Big Indian founder, Big global founder, Global unicorn, Unicorn, Listed, Pre-IPO, Recently IPO'd, Serial founder, Outlier, Bootstrapped, Family business, ESOP track record, Hard to get, Needs research, Fintech, B2B SaaS, Edtech, Consumer, D2C, Healthtech, Deeptech, AI, Climate, Logistics, Marketplace, Mobility, Media, Gaming, Manufacturing, IT services, Crypto, Fortune 500, India, US, Europe, Middle East, Southeast Asia. Fortune 500 = the guest leads, or the company counts as customers, Fortune 500 firms. India, US, Europe, Middle East, Southeast Asia = where the company is headquartered or earns a large share of revenue; tag every region that applies. Use Needs research when the facts are thin.
 - blurb: 2 to 3 neutral lines: who they are and the company in numbers (funding, valuation, revenue or ARR, customers, team), host-safe for any show.
@@ -67,7 +67,8 @@ def params(row):
         "max_tokens": 8000,
         "output_config": {"effort": "low"},
         "system": [{"type": "text", "text": SYSTEM, "cache_control": {"type": "ephemeral"}}],
-        "tools": [{"type": "web_search_20260209", "name": "web_search", "max_uses": 5}],
+        "tools": [{"type": "web_search_20260209", "name": "web_search", "max_uses": 5},
+                  {"type": "web_fetch_20260209", "name": "web_fetch", "max_uses": 3, "max_content_tokens": 6000}],
         "messages": [{"role": "user", "content": f"Engagement: {row['name']}\n\nRow:\n{row['row']}\n\nThreads:\n{row['threads']}"}],
     }
 
