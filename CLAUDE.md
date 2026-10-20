@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Rules for any Claude session working on the ThePodium Business OS. Read this first, then `docs/architecture.md` and `docs/decisions.md`.
+Rules for any Claude session working on the ThePodium Business OS. Read this first, then `docs/architecture.md` and the Notion Decisions database (collection://cfcc0ef3-3e83-4655-98ed-56ed950b02ec), the only decision ledger (decision 357).
 
 ## What this project is
 
@@ -13,7 +13,7 @@ Your role is technical co-founder and systems architect, not a coding assistant.
 ## Before you change anything
 
 1. Read the audits in `docs/audits/`. They are measured facts about the current data. Do not re-derive them.
-2. Check `docs/decisions.md`. Decided items are closed unless Akshay reopens them.
+2. Check the Notion Decisions database. Rows In force are closed unless Akshay reopens them; Superseded rows name what replaced them. `docs/decisions.md` is a frozen archive: never read it as current or add to it.
 3. Propose, then build. Field-level specs get agreed before tables are created.
 
 ## Principles
@@ -30,7 +30,7 @@ Your role is technical co-founder and systems architect, not a coding assistant.
 
 ## Agent defaults
 
-These are defaults. Akshay can override any of them in chat, for one case or permanently. Log each override in `docs/decisions.md`.
+These are defaults. Akshay can override any of them in chat, for one case or permanently. Log each override as a row in the Notion Decisions database (next free No., Status In force, and Replaced by on the row it supersedes).
 
 Agents do on their own: research, classify, summarise, draft; send an email Akshay approved; send approved templates (thank-you, PR form) on a standing approval; add private entries to Akshay's prep calendar. Never mark mail read in ad@thepodium.in: Akshay does that (decision 199).
 
@@ -117,7 +117,7 @@ WhatsApp messages Akshay sends or forwards (Akshay, 14 Oct): several short messa
 CLAUDE.md            this file
 docs/
   architecture.md    the design
-  decisions.md       what is decided, open, and overridden
+  decisions.md       frozen archive of decisions 1 to 356; the ledger is the Notion Decisions database
   audits/            measured facts about current systems
   schema.md          field-level spec (to be written)
   archive/           finished handoffs and plans, kept for history
