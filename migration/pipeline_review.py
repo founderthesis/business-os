@@ -31,6 +31,7 @@ Part 1, research the guest (decision 342). If the input carries an earlier eval,
 - research_tags: any that apply, only from this list: Big Indian founder, Big global founder, Global unicorn, Unicorn, Listed, Pre-IPO, Recently IPO'd, Serial founder, Outlier, Bootstrapped, Family business, ESOP track record, Hard to get, Needs research, Fintech, B2B SaaS, Edtech, Consumer, D2C, Healthtech, Deeptech, AI, Climate, Logistics, Marketplace, Mobility, Media, Gaming, Manufacturing, IT services, Crypto, Fortune 500, India, US, Europe, Middle East, Southeast Asia. Unicorn and Global unicorn mean the guest's own company is valued at USD 1B or more (a VC's portfolio companies don't count). Big Indian founder and Big global founder are for founders only, never academics or hired executives. Fortune 500 = the guest leads, or the company counts as customers, Fortune 500 firms. India, US, Europe, Middle East, Southeast Asia = the company's headquarters, plus its main market only when a source says most revenue comes from there; an office, team or a few customers in a region is not enough; regions outside the list get no tag (an Israeli company gets none for Israel). Use Needs research when the facts are thin.
 - city: the city where the guest is based (usually the company HQ city), e.g. "Bengaluru"; "" if not found.
 - country: the country of the company's headquarters, never a branch or market country (for a researcher, the institution's country), as a full English name, e.g. "India", "United States"; "" if not found.
+- public_presence: "Famous" = a household name in their market (a Wikipedia page, regular mainstream press, a large following, widely recognised); "Visible" = regular press, talks or podcasts, an active public following; "Low" = little public footprint. Judge from what the searches already show; don't spend a search only on this. public_presence_evidence: one line with the signals and their sources (e.g. "Wikipedia page; 3 ET interviews in 2026; 120k X followers (x.com/..)"). Presence never lowers the tier.
 - blurb: 2 to 3 neutral lines: who they are and the company in numbers (funding, valuation, revenue or ARR, customers, team), host-safe for any show.
 - blurb_evidence: each fact with its full source URL and the publication date read from the page when the search result or an opened page shows it; otherwise write "date not found". Never spend a search or a fetch only to find a date, and skip sites that block fetching (Google Scholar, Tracxn, LinkedIn).
 - better_guest: if a co-founder or another leader at the company is a stronger guest (more stature, their own media presence), name them, their role and why; otherwise null.
@@ -49,7 +50,7 @@ Rules: respect explicit declines and anyone who asked us to stop. Revive a decli
 
 Reply with JSON only, no other text:
 {"guest_tier": "Tier 1|Tier 1.5|Tier 2", "research_tags": ["..."], "blurb": "...", "blurb_evidence": ["<fact> (<source>, <date>)"],
- "city": "...", "country": "...", "better_guest": null or {"name": "...", "role": "...", "why": "..."}, "best_show": ["FT|un#|B2S|HBD"], "best_show_why": "...",
+ "city": "...", "country": "...", "public_presence": "Famous|Visible|Low", "public_presence_evidence": "...", "better_guest": null or {"name": "...", "role": "...", "why": "..."}, "best_show": ["FT|un#|B2S|HBD"], "best_show_why": "...",
  "action": "chase|nurture|drop|ask_akshay", "reason": "<one sentence>", "last_exchange": "<date, who, what>",
  "best_route": "<direct mail | via PR <name> | WhatsApp | other>", "current_status": "<one line>",
  "next_step": "<one line, what Zoya or Akshay does>"}"""
@@ -105,7 +106,7 @@ def write(results, tot, n, discount=1.0):
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
     for r in results:
         print(f"\n{r.get('name', r['id'])}: {r.get('action')}")
-        for k in ("guest_tier", "city", "country", "research_tags", "blurb", "blurb_evidence", "better_guest", "best_show", "best_show_why", "reason", "last_exchange", "best_route", "current_status", "next_step"):
+        for k in ("guest_tier", "city", "country", "public_presence", "public_presence_evidence", "research_tags", "blurb", "blurb_evidence", "better_guest", "best_show", "best_show_why", "reason", "last_exchange", "best_route", "current_status", "next_step"):
             print(f"  {k}: {r.get(k, '')}")
     cost = discount * sum(tot.get(k, 0) * PRICE[k] for k in PRICE) / 1e6 + tot.get("web_searches", 0) * SEARCH_USD
     print(f"rows {n}, results {len(results)}")
