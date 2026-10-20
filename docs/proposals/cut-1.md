@@ -20,18 +20,18 @@ Prepared, not reviewed, not deployed.
 | Routine | Live | Cut 1 | Output hash |
 |---|---|---|---|
 | Inbox | 65,324 / d09f63ec081186de | 56,677 | 2832aa83db2e70ed |
-| Zoya | 49,048 / 487ebbf6feef8db7 | 48,900 | e7929bc75cb40caa |
+| Zoya | 49,048 / 487ebbf6feef8db7 | 48,658 | d728ddadf83da893 |
 | Calendar | 56,059 / 5576c67e1181d79e | 50,905 | 78f2abfe6d0688d3 |
-| Sweep | 35,943 / b0888b6624e6848f | 30,105 (incl. due vs done) | d943bf0aa6137e04 |
+| Sweep | 35,943 / b0888b6624e6848f | 30,059 (incl. due vs done) | 60aa8ecdbe064c78 |
 | WhatsApp | 21,846 / 80c9f92041f3b548 | 21,598 | 0b4dda9276486041 |
 
-Total: 228,220 to 208,185 bytes (minus 20,035).
+Total: 228,220 to 207,897 bytes (minus 20,323).
 
 ## Per routine
 
 **Inbox (cut-1-inbox.py).** Capture-only. It sends only the holding reply (STEP 6), the Saurabh thanks (6a), the vendor redirect (6b) and WhatsApp to Akshay. Akshay's decision mail was already Zoya's (d0); the sponsored close note, edit-notes reply, acknowledgements, admin and asset replies and routine replies become "Zoya: <step>" rows. Gone: TEMPLATE MODES, the Templates database, 6c b/d/e (the send and draft paths), the Mamatha eval bullet, every Mamatha step, the date-gated show text. New B2S and HBD pitches go to Akshay's list (they waited on Mamatha). Invite cancellations on a guest's plain request stay. Blurb link is never written (decision 359).
 
-**Zoya (cut-1-zoya.py).** Cadences is the master for every number (LIMITS, nurture intervals, payment reminders, revival caps). Decision 354 for PR people. Decision 355 for sponsored revival. Follow-up runs work their due list until it is empty, the cap is reached or a hold applies; never an early stop on the window. STEP 0g Monday scorecard: 5 lines, last week, counted from Activities, Engagements and run records, dedupe key Source ID "scorecard:<Monday>". Gone: the one-time loop-ins (ran 19 Oct), STEP 0a go-live, dated scope text, Mamatha, Proposed mail. Kept on purpose: the Salesblink hold in ONE PERSON, ONE ASK, which still applies until 2 Nov.
+**Zoya (cut-1-zoya.py).** Cadences is the master for every number (LIMITS, nurture intervals, payment reminders, revival caps). Decision 354 for PR people and 355 for sponsored revival, each from its start date on Cadences (Fri 23 Oct). Follow-up runs work their due list until it is empty, the cap is reached or a hold applies; never an early stop on the window. STEP 0g Monday scorecard: 5 lines, last week, counted from Activities, Engagements and run records, dedupe key Source ID "scorecard:<Monday>". Gone: the one-time loop-ins (ran 19 Oct), STEP 0a go-live, dated scope text, Mamatha, Proposed mail. Kept on purpose: the Salesblink hold in ONE PERSON, ONE ASK, which still applies until 2 Nov.
 
 **Calendar (cut-1-calendar.py).** ZOYA LIVE on every show. Wording from the wording page. The day-before note keeps its live behaviour: the Templates row's Mode was Send, so Founder Thesis sends it from Zoya's inbox with the existing checks and the unused draft-and-approve path goes; client shows stay drafts. The declined-invite question on client shows is now Zoya's (it was an ad@ mail). Decision 359: a confirmed Founder Thesis recording makes sure the guest's FT Community row exists (To invite, Person, Source FT guest, one per person), and no writer touches Blurb link. Decision 360: each precall promise is its own Kind Task row (For engagement, owner, date, Source ID "precall:<event id>:<n>"), never a Next action segment; a group add also ensures the FT Community row. Transcript location per decision 364.
 
