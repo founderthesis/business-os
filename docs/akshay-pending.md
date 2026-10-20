@@ -40,8 +40,8 @@ When Akshay asks what's pending on him, read this list, check each item is still
 - Calendar rules (15 Oct): two open questions on the page (https://app.notion.com/p/3fa19a301a7f816c9a53fe80557d0046): what Out of office means for you, and hours never to book.
 - Later (Akshay, 15 Oct: "we will handle it in future"): the 124 Founder Thesis outbound rows at New. Who does outreach now Mamatha is off FT (Zoya, Akshay picks first, or park). They stay blank in Waiting on and out of the "FT: waiting on nobody" view until then.
 - AR-20261020-1 (20 Oct), three things only you can do:
-  1. ok the "Sponsored for a repeat guest" wording (docs/proposals/ar20261020-1.md, payload 3).
+  1. ok the "Sponsored for a repeat guest" wording. It is now on the wording page, marked not approved (20 Oct), so nothing sends it until you ok it.
   2. Done 20 Oct (decision 346): loop-ins and incidental Cc don't count.
-  3. Paste the Zencastr task's new step d into the Mac task once AR-20261020-1 is accepted (the daily sweep covers it until then).
+  3. Paste the Zencastr task's new step d into the Mac task (AR-20261020-1 is live since 20 Oct; the daily sweep covers it until you do).
 - Backlog decisions (20 Oct), each on its Engagement in Your call: close or park Benjamin Sharon, Utsav Dar, Lior Lamesh; fresh outreach or park Eric Barbier; decline Ramzy Ali via Hugh (Scrib3); withdraw the sponsored offer for Naoki Yamauchi, James Stephens, Aaron @ WYDE.
 - Blurb editing chat proof (20 Oct, decision 347): open Sankalp Arora's chat (link under his newest Blurb section on his Engagement), check its "ready" line lists the transcript as read, send one change, then say save. Claude checks the saved text.
