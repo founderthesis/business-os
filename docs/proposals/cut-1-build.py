@@ -26,7 +26,13 @@ for name, (tid, n, h) in BASES.items():
         tmp = os.path.join(out, "sweep-dvd.txt")
         subprocess.run([sys.executable, os.path.join(HERE, "due-vs-done-build.py"), os.path.join(src, f"{tid}.txt"), tmp], check=True, capture_output=True)
         s = open(tmp, encoding="utf-8").read(); os.remove(tmp)
+    if name == "calendar":  # the orphan fix (93b24de + guard) deploys with Cut 1
+        tmp = os.path.join(out, "cal-orph.txt")
+        subprocess.run([sys.executable, os.path.join(HERE, "calendar-orphan-fix.py"), os.path.join(src, f"{tid}.txt"), tmp], check=True, capture_output=True)
+        s = open(tmp, encoding="utf-8").read(); os.remove(tmp)
     o = part(name).edit(s)
+    if name in ("inbox", "calendar", "zoya"):
+        o = part("outside").edit(name, o)
     assert len(o.encode()) < n, (name, len(o.encode()), n)
     assert "—" not in o.replace("Independent review — latest checkpoint", ""), name
     open(os.path.join(out, f"{tid}.txt"), "w", encoding="utf-8").write(o)
