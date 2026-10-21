@@ -65,7 +65,8 @@ b. Else, first hit wins:
    2. Drive: a .txt in "Zencastr Transcripts" named with the guest's full name and this Recording date, or a transcript in this recording's own Zencastr folder.
    3. Akshay's own thank-you for this Episode, where the Episode page names it: the .txt attached to it in ad@ Sent (MCP Emails email_read action attachment on that message, base64; never the inline preview or the extract action).
    4. ~/Downloads: a .txt whose name has the guest's full name and this Recording date.
-   The un# studio has no transcript export: only sources 2 to 4.
+   5. Ranjita's reply in Zoya's inbox (decision 376, while Zencastr blocks standalone downloads): MCP Emails, inbox zoya@myunnati.com, the thread with subject "Transcript: <guest> @ <company>, FT recording <D Mon>" for this guest and Recording date. A .txt, .docx or .pdf attached to Ranjita's reply (email_read action attachment, base64). On a FILE done from this source, also update the Internal Task row "Transcript: <guest> ..." (Engagements, Kind Task): Next action "Done: transcript attached to the Episode <D Mon> (Mac)", Waiting on cleared, Claude note line.
+   The un# studio has no transcript export: only sources 2 to 5.
 c. A .docx or .pdf: extract the text and save it as .txt.
 
 4. CHECK IT IS THIS RECORDING, AND ALL OF IT
