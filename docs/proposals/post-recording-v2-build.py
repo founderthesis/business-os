@@ -1,10 +1,9 @@
 """Decision 374 (post-recording v2), parts 2 and 3, composed on Cut 1 + decision 373 (cut-1-build.py, then cut-1-d373.py).
 Part 2: inbox and Zoya STEP 1 capture every outside address on a matched thread into People and Stakeholders; every
 guest-facing composer takes its Cc as the union of Stakeholders, Via and every outside address on the threads and invites.
-Part 3 (cloud side): the calendar creates the Episode "Awaiting transcript" when a recording ends, drops the Drive audio
-check and no longer sets Recorded or drafts the FT thank-you; the Mac transcripts task does both from the transcript
-(docs/proposals/post-recording-v2-mac-transcripts.md). un# keeps the 2-hour calendar rule. Part 1 (thank-you wording)
-is not touched.
+Part 3 (cloud side): on Founder Thesis the calendar creates the Episode "Awaiting transcript" when a recording ends, drops the
+Drive audio check and no longer sets Recorded or drafts the thank-you; the Mac transcripts task (routines/mac/transcripts.md,
+fed74f0) does both from the transcript. Client shows are unchanged. The thank-you wording is not touched.
 Usage: python3 post-recording-v2-build.py <dir with cut-1-d373 outputs trig_<id>.txt> <out dir>"""
 import hashlib, os, sys
 
@@ -55,19 +54,20 @@ def edits_for(tid, s):
          "Cc: per GUEST-FACING CC (the PR paragraph greets the main one), Zoya included."),
         (intro, "For each Engagement with Call type Recording whose recording event ended between 30 days ago and now, was not cancelled, and whose "
          "Status is Booked. Skip if Claude note already has a line \"recorded <that date> (\" (a confirmed recording)."),
-        (a, "a. Did it happen? On Founder Thesis, Built to Share and Human by Design the transcript decides (decision 374). Once the event has ended and "
-         "nothing on the thread or calendar says it was cancelled or moved, do a2 at once (the Episode, Status \"Awaiting transcript\") and add the Claude "
-         "note line \"YYYY-MM-DD: <D Mon> recording ended, Episode awaiting transcript\" once. Set nothing else: Status, Call type, Waiting on and Next "
-         "action stay. The Mac transcripts task reads the transcript, sets Recorded and drafts the Founder Thesis thank-you. 24 hours after the slot, "
-         "if that Episode is still \"Awaiting transcript\", or the Claude note says \"not recorded (transcript\" for that date, add Akshay to Waiting on "
-         "and put \"Akshay: <guest>'s <D Mon> recording: cancelled or no-show?\" first in Next action, once (decision 236); never chase the guest. "
-         "un# (its studio has no transcript export): once the event ended 2 or more hours ago and nothing on the thread or calendar says it was "
-         "cancelled or moved, set Status Recorded, clear Call type, Claude note line \"YYYY-MM-DD: recorded <date> (calendar, client show)\", then a2 "
-         "and STEP 4d. If the thread says it didn't happen, leave Status alone and write a Claude note line \"YYYY-MM-DD: <D Mon> recording: thread "
-         "says it didn't happen\" instead (decision 321, not on his list)."),
+        (a, "a. Did it happen? Founder Thesis: the transcript decides (decision 374). Once the event has ended and nothing on the thread or "
+         "calendar says it was cancelled or moved, do a2 at once (the Episode, Status \"Awaiting transcript\") and add the Claude note line "
+         "\"YYYY-MM-DD: <D Mon> recording ended, Episode awaiting transcript\" once. Set nothing else: Status, Call type, Waiting on and Next action "
+         "stay. The Mac transcripts task reads the transcript, sets Recorded, drafts the thank-you, and asks Akshay itself when Zencastr has no "
+         "recording. You ask only when it can't: 24 hours after the slot, if the Claude note says \"not counted as recorded\" for that date, or 48 "
+         "hours after it the Episode is still \"Awaiting transcript\" and Next action has no ask about this recording, add Akshay to Waiting on and "
+         "put \"Akshay: <guest>'s <D Mon> recording: cancelled or no-show?\" first in Next action, once (decision 236); never chase the guest. "
+         "Other shows (un#, Built to Share, Human by Design record on Riverside; there is no Drive check): once the event ended 2 or more hours ago "
+         "and nothing on the thread or calendar says it was cancelled or moved, set Status Recorded, clear Call type, Claude note line \"YYYY-MM-DD: "
+         "recorded <date> (calendar, client show)\", then a2 and STEP 4d. If the thread says it didn't happen, leave Status alone and write a Claude "
+         "note line \"YYYY-MM-DD: <D Mon> recording: thread says it didn't happen\" instead (decision 321, not on his list)."),
         ("Create: title \"<Guest full name> @ <Company> - <Show>\"", "Create: title \"<Guest full name> @ <Company> - <Show>\""),
         (", Status Recorded, Recording date = the recording's date,",
-         ", Status \"Awaiting transcript\" (un#: Recorded), Recording date = the recording's date,"),
+         ", Status \"Awaiting transcript\" on Founder Thesis, else Recorded, Recording date = the recording's date,"),
         ("at Status Recorded (set by STEP 4 or by Akshay)", "at Status Recorded (set by the Mac transcripts task or by Akshay)"),
         (ty, "   The Mac transcripts task drafts the thank-you, transcript attached, once the transcript confirms the recording (decision 374). Never draft one here."),
         ("2. Community. If the guest's FT Community row is Added, nothing.",
