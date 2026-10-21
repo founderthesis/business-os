@@ -37,18 +37,24 @@ Anything: a name, LinkedIn URL, company, pasted or screenshotted pitch email, ba
 
 **Pre-call re-run.** If the input includes pre-call notes or a transcript for someone who already has an FT engagement with Eval verdict "Pre-call needed", skip to Step 7 and re-score with the call evidence.
 
-## Step 1: Notion check (always first, before any web research)
+## Step 1: History check (always first, before any web research)
 
-Run these against the anchors above. Match on name AND organisation, since names collide.
+Find every past interaction with this person and their company before judging anything. Names are spelled many ways ("Shashwath T R", "Shashwath TR", "T.R.Shashwath"), so never rely on one name search.
 
-1. **People.** `SELECT url, Name, Role, "FT guest", Episodes, Engagements, Organisation, "Latest eval verdict", LinkedIn FROM "collection://e6c44319-..." WHERE Name LIKE ?` with `%<last name>%`, then pick the right person by first name and org.
-2. **Engagements for that person on FT.** Rows where `Guest` contains the person's page ID and `Show` matches FT. Pull `Status`, `Outcome`, `Stage`, `Eval verdict`, `Decision`, `Tier`, `Migration batch`, `Episode`.
-3. **Episodes.** If the person has an `Episodes` relation, fetch those episodes and check whether any belongs to the FT show.
+1. **People, three ways.** (a) LinkedIn: once you have the guest's `linkedin.com/in/...` URL (Step 2.0 can run first for this), match People `LinkedIn` on the profile slug. (b) Name: search each name token separately (first name, last name, and the last name with spaces and dots removed), `WHERE Name LIKE ?` per token, then pick by organisation. (c) Company: People whose Organisation or Role names the company. Several rows for the same person: use them all, and flag the extras with Match status "Possible duplicate" and Duplicate of the row that has the episode (never merge or delete).
+2. **FT guests directory** (collection://b460a8fa-1531-49e5-82f9-133478e2278d): match on LinkedIn, then on Company, then on name tokens.
+3. **Engagements** on any show for any of those People rows or the company: Status, Tier, Eval verdict, Migration batch, Episode, Claude note.
+4. **Episodes**: any FT episode linked to them, or whose title names the person or the company.
+5. **Mail** (Gmail on ad@thepodium.in and MCP Emails on zoya@myunnati.com, read only): search the full name, the name tokens and the company. Note every thread: the PR or agency, past pitches, a thank-you ("Next Steps |" or "Thank you for coming on"), a decline, a sponsored offer, a promise of dates.
+6. **Calls**: Drive for Gemini notes ("<Guest> and Akshay Datt ... Notes by Gemini") and the Zencastr folder for a recording under their name; the Engagement's page body for precall notes.
+
+Write what you found as a short **"History with us"** block at the top of the decision page and the Engagement eval: each interaction with its date, channel and outcome (pitched by X on D Mon; precall D Mon; recorded D Mon, episode link; declined; sponsored offered). "None found" only after all six checks.
 
 **Past guest = auto-decline.** Treat the person as a past FT guest if any of these hold:
 
-- People `FT guest` is checked
-- They are linked to an FT episode
+- People `FT guest` is checked on any of their People rows
+- They are linked to an FT episode, or the FT guests directory lists them (LinkedIn, company or name match)
+- A thank-you mail or a Zencastr recording exists for them
 - An FT engagement has Status `Booked` or `Recorded`, Outcome `Done`, or a `Migration batch` starting with `episodes-`
 
 As a backstop, run one web search: `"Founder Thesis" "<Guest Name>"`. A founderthesis.com, YouTube or Spotify episode link is also a match.
