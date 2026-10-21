@@ -94,7 +94,7 @@ Evals are written by the Cowork "Founder Thesis guest evals" task, which runs th
 
 ## Platform facts to design around
 
-- The Notion connector cannot delete rows. Dedupe flags rows and a human deletes.
+- The Notion connector can move rows to Trash (restorable). Dedupe flags rows; agents delete only with Akshay's go-ahead for that deletion (decision 384), after checking the row has no relations left.
 - Notion forms only create rows. Form input lands as an Activity and a job merges it.
 - Notion has no row-level security. A filtered view hides nothing from anyone with access. Outsiders (hosts, clients) get separate synced pages.
 - Relations do not come from CSV import. Resolve an exact-match key in the script, then wire relations once.
