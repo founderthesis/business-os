@@ -9,15 +9,17 @@ sweep, inbox and calendar as deployed 21 Oct). HealthQuad fixes (CTO, ~22:45 JST
 where we offered sponsored gets the close note, never an acknowledgement; a direct reply to their latest message is not a
 chase, so neither the 7-day limit nor the hand-written pause holds it (quiet hours and caps still do). The calendar's FT
 thank-you draft uses the wording page's approved text as it stands, with no local copy.
+Decision 385 (Akshay via the CTO): a step about a person or company with an Engagement goes on that Engagement as a Next
+action segment, not on a new Task row; all five routines that create Task rows (WhatsApp from its booking build too).
 Usage: python3 d382.py <live dir> <out dir>"""
 import sys, os, hashlib
 src, out = sys.argv[1], sys.argv[2]
 os.makedirs(out, exist_ok=True)
 sha = lambda b: hashlib.sha256(b).hexdigest()[:16]
 INBOX, ZOYA, SWEEP = "trig_0189eZvAD8x4357cfevgZ3No", "trig_01UPT8LDrBDL5JQqW91Awgbo", "trig_01MdfUFg2qrebDWgiHwncgnd"
-CAL = "trig_01Voiz5YsK2SnVf2STF8PoSH"
+CAL, WA = "trig_01Voiz5YsK2SnVf2STF8PoSH", "trig_01MnmJYorWrd61K7b5BCqXr1"
 BASE = {INBOX: (57898, "a0fd61ea7a394a08"), ZOYA: (55592, "98c508cf990d341d"), SWEEP: (31157, "64d6170090757a62"),
-        CAL: (54137, "f32d15fb85d8da18")}
+        CAL: (54137, "f32d15fb85d8da18"), WA: (25202, "269a436c477194c2")}
 # decision 383: one rule under the People line, for every create in the prompt
 MATCH = ("\n  PEOPLE MATCH (decision 383), before you create any People row anywhere below: 1/ look for the person by LinkedIn "
          "(the slug after /in/, case and a trailing slash ignored), Email and Other emails; 2/ then by Name with spaces, dots, "
@@ -92,6 +94,15 @@ EDITS[CAL] = [
 ]
 for tid, line in PEOPLE.items():
     EDITS[tid].insert(0, (line, line + MATCH))
+KIND = "closing it never touches the row in its For engagement or any other ask."
+ONROW = (KIND + " PERSON STEPS GO ON THEIR ROW (decision 385, Akshay, 21 Oct): before you create a Kind Task row, look for an "
+         "Engagement for the person or company it names (as Guest, Via, Stakeholder or Organisation; any Status, parked or closed "
+         "included). One fits: write the step there as a Next action segment \"<owner>: <step>\" after \" | \" (other segments "
+         "kept), add the owner to Waiting on, and create no Task row; several people, each one's own row. Create a Task row only "
+         "when no Engagement fits. Task rows a step below keys by its own Source ID (transcript:, precall:) keep their rule.")
+EDITS[WA] = []
+for tid in (INBOX, ZOYA, SWEEP, CAL, WA):
+    EDITS[tid].append((KIND, ONROW))
 for tid, edits in EDITS.items():
     s = open(os.path.join(src, f"{tid}.txt"), encoding="utf-8").read()
     assert (len(s.encode()), sha(s.encode())) == BASE[tid], (tid, len(s.encode()), sha(s.encode()))
