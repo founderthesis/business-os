@@ -9,13 +9,18 @@
    holding reply from Zoya the same run, at most once per thread per 7 days; Akshay's item stays.
 5/ Decision 392 (Akshay, 22 Oct): plain English in guest-facing mail ("a sponsored appearance", no idioms); Zoya's un#
    price line and her VOICE rules.
-Zoya and inbox, on the live prompts (d382 rev 7 as deployed 22 Oct). Usage: python3 d390.py <live dir> <out dir>"""
+6/ Decision 393 (Akshay, 22 Oct): quiet hours 00:30 to 07:30 JST; OUTSIDE MAIL in Zoya, inbox and calendar, and Zoya's
+   follow-up window, read the window from Cadences with today's numbers in brackets. Zoya's cron (30 7-23) is the CTO's.
+Zoya, inbox and calendar, on the live prompts (d382 rev 7 as deployed 22 Oct). Usage: python3 d390.py <live dir> <out dir>"""
 import sys, os, hashlib
 src, out = sys.argv[1], sys.argv[2]
 os.makedirs(out, exist_ok=True)
 sha = lambda b: hashlib.sha256(b).hexdigest()[:16]
-INBOX, ZOYA = "trig_0189eZvAD8x4357cfevgZ3No", "trig_01UPT8LDrBDL5JQqW91Awgbo"
-BASE = {INBOX: (59880, "e43762c3e3f36909"), ZOYA: (58765, "3bf4743448026ac2")}
+INBOX, ZOYA, CAL = "trig_0189eZvAD8x4357cfevgZ3No", "trig_01UPT8LDrBDL5JQqW91Awgbo", "trig_01Voiz5YsK2SnVf2STF8PoSH"
+BASE = {INBOX: (59880, "e43762c3e3f36909"), ZOYA: (58765, "3bf4743448026ac2"), CAL: (55582, "4f28ce91cd6dbc3f")}
+QUIET_OLD = "nothing goes to anyone outside the team in the quiet hours on Cadences (23:00 to 10:00 JST); it waits for the first run after 10:00."
+QUIET_NEW = ("nothing goes to anyone outside the team in the quiet hours on Cadences (read them there; decision 393: 00:30 to "
+             "07:30 JST); it waits for the first run after they end.")
 CLOSED = "Parked, We declined, They declined or Unresponsive"
 HOLD = ("\"hi <first name>, checking with akshay, will come back by <weekday, 3 working days out>.\"")
 EDITS = {
@@ -57,6 +62,11 @@ EDITS = {
    "thread in the last 7 days; Akshay's item stays. These are the only mails"),
  ],
 }
+EDITS[CAL] = []
+for tid in (INBOX, ZOYA, CAL):
+    EDITS[tid].append((QUIET_OLD, QUIET_NEW))
+EDITS[ZOYA].append(("runs starting 10:00 to 23:00 JST, decision 362, Akshay 21 Oct",
+                    "runs inside the follow-up window on Cadences, decision 393: 07:30 to 00:30 JST"))
 for tid, edits in EDITS.items():
     s = open(os.path.join(src, f"{tid}.txt"), encoding="utf-8").read()
     assert (len(s.encode()), sha(s.encode())) == BASE[tid], (tid, len(s.encode()), sha(s.encode()))
