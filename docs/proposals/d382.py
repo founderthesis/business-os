@@ -2,14 +2,29 @@
 are chased every 2 working days until a recording is on the calendar (Sri's windows are short); their own date wins; this
 beats the 5-working-day PR gap and the 7-day person limit for these rows only. 2/ A founder who wrote to us directly and went
 quiet: a sponsored row goes to nurture as now; a non-sponsored row goes on Akshay's list as one ask, nothing sent first.
-Zoya, sweep and inbox: every branch that moves a row to nurture. Built on the live prompts (Zoya 380, sweep and inbox as
-deployed 21 Oct). Usage: python3 d382.py <live dir> <out dir>"""
+Zoya, sweep and inbox: every branch that moves a row to nurture, chase run-outs included. Decision 383 (CTO, same delta):
+inbox, calendar and Zoya match People before creating one (LinkedIn slug, Email, Other emails, then normalised name plus
+company); a name-only match links the existing row and flags it Possible duplicate. Built on the live prompts (Zoya 380,
+sweep, inbox and calendar as deployed 21 Oct). Usage: python3 d382.py <live dir> <out dir>"""
 import sys, os, hashlib
 src, out = sys.argv[1], sys.argv[2]
 os.makedirs(out, exist_ok=True)
 sha = lambda b: hashlib.sha256(b).hexdigest()[:16]
 INBOX, ZOYA, SWEEP = "trig_0189eZvAD8x4357cfevgZ3No", "trig_01UPT8LDrBDL5JQqW91Awgbo", "trig_01MdfUFg2qrebDWgiHwncgnd"
-BASE = {INBOX: (57898, "a0fd61ea7a394a08"), ZOYA: (55592, "98c508cf990d341d"), SWEEP: (31157, "64d6170090757a62")}
+CAL = "trig_01Voiz5YsK2SnVf2STF8PoSH"
+BASE = {INBOX: (57898, "a0fd61ea7a394a08"), ZOYA: (55592, "98c508cf990d341d"), SWEEP: (31157, "64d6170090757a62"),
+        CAL: (54137, "f32d15fb85d8da18")}
+# decision 383: one rule under the People line, for every create in the prompt
+MATCH = ("\n  PEOPLE MATCH (decision 383), before you create any People row anywhere below: 1/ look for the person by LinkedIn "
+         "(the slug after /in/, case and a trailing slash ignored), Email and Other emails; 2/ then by Name with spaces, dots, "
+         "hyphens and initials ignored, plus the same Organisation or email domain. Found: use that row (a new address goes in "
+         "Other emails). 3/ The same name alone (company different or unknown): don't create; use that row, set Match status "
+         "Possible duplicate and add a dated line to Duplicate check \"YYYY-MM-DD <routine>: name-only match for <the address or "
+         "company seen>\" (once per address), and list it in the report. Create only when none of these finds a row. Never "
+         "merge or delete People rows.")
+PEOPLE = {INBOX: "- People: collection://e6c44319-7f81-4da6-8b80-8441a4875d7a  (Email, Other emails, Organisation, LinkedIn, Tags; team members are tagged Team, e.g. Sarika, Jaya)",
+          CAL: "- People: collection://e6c44319-7f81-4da6-8b80-8441a4875d7a  (Email, Other emails, LinkedIn, Blurb, Tags; team tagged Team)",
+          ZOYA: "- People: collection://e6c44319-7f81-4da6-8b80-8441a4875d7a (Email, Other emails, Phone, Tags; team members are tagged Team)"}
 # the one branch every nurture move checks first
 DIRECT = ("a founder who wrote to us directly (no PR or agency on the thread) on a row with no sponsored offer on its thread "
           "and Tier not Sponsored (decision 382): don't move it and send nothing; put it on Akshay's list once, Akshay added to "
@@ -41,6 +56,9 @@ EDITS = {
    " (c) An approved pursuit:"),
  ],
 }
+EDITS[CAL] = []
+for tid, line in PEOPLE.items():
+    EDITS[tid].insert(0, (line, line + MATCH))
 for tid, edits in EDITS.items():
     s = open(os.path.join(src, f"{tid}.txt"), encoding="utf-8").read()
     assert (len(s.encode()), sha(s.encode())) == BASE[tid], (tid, len(s.encode()), sha(s.encode()))
