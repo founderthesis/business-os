@@ -7,6 +7,8 @@
    neither does Zoya's ad@ fallback.
 4/ Decision 390 (Akshay, 22 Oct: "Yes"): someone outside the team writing on a row that waits on Akshay gets a one-line
    holding reply from Zoya the same run, at most once per thread per 7 days; Akshay's item stays.
+5/ Decision 392 (Akshay, 22 Oct): plain English in guest-facing mail ("a sponsored appearance", no idioms); Zoya's un#
+   price line and her VOICE rules.
 Zoya and inbox, on the live prompts (d382 rev 7 as deployed 22 Oct). Usage: python3 d390.py <live dir> <out dir>"""
 import sys, os, hashlib
 src, out = sys.argv[1], sys.argv[2]
@@ -36,6 +38,13 @@ EDITS = {
   ("if their side wrote last, send from there only \"thanks <first name>, adding @Zoya to coordinate\" (Cc you;",
    "if their side wrote last, send from there only \"thanks <first name>, adding @Zoya to coordinate\" (never on a row at "
    + CLOSED + ", or after our decline or close-out on the thread; Cc you;"),
+ ("a price question gets \"the un# sponsored feature is USD 1,500, details at unhashed.co/sponsored\" in your voice",
+   "a price question gets \"a sponsored appearance on un# is USD 1,500, details at unhashed.co/sponsored\" in your voice"),
+  ("are fine (\"works for us.\", \"lmk\")", "are fine (\"noted.\", \"lmk\")"),
+  (" Sign off exactly \"best,\" then",
+   " PLAIN ENGLISH (decision 392, Akshay, 22 Oct: many readers use English as a second language): follow the Plain English rule "
+   "on Rules for Zoya: \"a sponsored appearance on the pod\", never \"sponsored feature\" or \"sponsored route\", and no "
+   "idioms (\"works\", \"circling back\", \"holding this up\", \"bump\", \"keen\"). Sign off exactly \"best,\" then"),
  ],
  INBOX: [
   ("Skip repeat pitches (STEP 3) and vendor pitches (STEP 6b). Log \"Zoya sent: holding reply to <name>\";",
