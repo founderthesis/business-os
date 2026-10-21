@@ -5,7 +5,11 @@ quiet: a sponsored row goes to nurture as now; a non-sponsored row goes on Aksha
 Zoya, sweep and inbox: every branch that moves a row to nurture, chase run-outs included. Decision 383 (CTO, same delta):
 inbox, calendar and Zoya match People before creating one (LinkedIn slug, Email, Other emails, then normalised name plus
 company); a name-only match links the existing row and flags it Possible duplicate. Built on the live prompts (Zoya 380,
-sweep, inbox and calendar as deployed 21 Oct). Usage: python3 d382.py <live dir> <out dir>"""
+sweep, inbox and calendar as deployed 21 Oct). HealthQuad fixes (CTO, ~22:45 JST, a live miss): a no to paying on any row
+where we offered sponsored gets the close note, never an acknowledgement; a direct reply to their latest message is not a
+chase, so neither the 7-day limit nor the hand-written pause holds it (quiet hours and caps still do). The calendar's FT
+thank-you draft uses the wording page's approved text as it stands, with no local copy.
+Usage: python3 d382.py <live dir> <out dir>"""
 import sys, os, hashlib
 src, out = sys.argv[1], sys.argv[2]
 os.makedirs(out, exist_ok=True)
@@ -57,7 +61,35 @@ EDITS = {
    " (c) An approved pursuit:"),
  ],
 }
-EDITS[CAL] = []
+CLOSE_OLD = "\"Zoya: send Akshay's sponsored close note to <name>\""
+CLOSE_NEW = "\"Zoya: send the sponsored close note to <name>\""
+EDITS[INBOX] += [
+ ("on any row whose thread carries our sponsored offer, whatever its Status short of Booked",
+  "on any row where we offered the sponsored route (on this thread, on any other thread with their side in ad@thepodium.in or "
+  "Zoya's inbox, or Tier Sponsored), whatever its Status short of Booked"),
+ ("put " + CLOSE_OLD + " first in Next action.", "put " + CLOSE_NEW + " first in Next action."),
+ ("or a cc where a team member is the addressee.",
+  "or a cc where a team member is the addressee. Never for a no to paying: that is STEP 3's sponsored no and gets "
+  + CLOSE_NEW + " (decision 379)."),
+]
+EDITS[ZOYA] += [
+ ("(the inbox hands these to you as " + CLOSE_OLD + ").",
+  "(the inbox hands these to you as " + CLOSE_NEW + ", older rows " + CLOSE_OLD + ")."),
+ ("any routine step don't count as hand-written.",
+  "any routine step don't count as hand-written.\n- A reply to their latest message (a close note, an acknowledgement, an "
+  "answer to what they asked) is not a chase: the 7-day limit, ONE PERSON, ONE ASK and the hand-written pause don't hold it; "
+  "quiet hours and the caps still do (CTO, 21 Oct, the HealthQuad close note held by the limit)."),
+]
+EDITS[CAL] = [
+ ("Wording: Rules for Zoya, Mail and WhatsApp wording, \"FT thank-you after recording\" (or \"FT thank-you, PR block variant\" "
+  "when a PR is on the thread), in Akshay's voice: \"Akshay loved the conversation!\" becomes \"I loved the conversation!\", "
+  "signed \"Regards,\" then \"Akshay\", patron paragraphs dropped for a Sponsored guest, FORM LINK for the form, and the line "
+  "\"The transcript of the episode is attached for your reference.\" kept so he attaches it.",
+  "Wording: Rules for Zoya, Mail and WhatsApp wording, \"FT thank-you after recording\" (Akshay's approved version, 21 Oct), "
+  "read fresh each run and used exactly as the page has it: fill only its placeholders and follow its bracketed notes (patron "
+  "paragraphs out for a Sponsored guest, the PR block only when a PR is on the To line, the transcript line only while "
+  "transcripts are being attached, the form link as a real link); never a retired variant."),
+]
 for tid, line in PEOPLE.items():
     EDITS[tid].insert(0, (line, line + MATCH))
 for tid, edits in EDITS.items():
