@@ -5,9 +5,11 @@ set -e
 L=$1; O=$2; T=$(mktemp -d)
 mkdir -p "$O"
 python3 docs/proposals/d378.py "$L" "$T/378" 0           # WhatsApp (booking off)
-python3 docs/proposals/d377.py "$L" "$T/377"             # calendar, sweep, Zoya
+python3 docs/proposals/d377.py "$L" "$T/377a"            # calendar, sweep, Zoya
+python3 docs/proposals/d377-fix.py "$T/377a" "$T/377"    # Cleanup's 377 fixes
 cp "$L"/trig_0189eZvAD8x4357cfevgZ3No.txt "$T/377/"      # inbox is not in 377
-python3 docs/proposals/d379.py "$T/377" "$T/379"         # inbox, Zoya, sweep on top of 377
+python3 docs/proposals/d379.py "$T/377" "$T/379a"        # inbox, Zoya, sweep on top of 377
+python3 docs/proposals/d379-fix.py "$T/379a" "$T/379"    # Cleanup's 379 fixes
 cp "$T/378"/trig_01MnmJYorWrd61K7b5BCqXr1.txt "$O/"
 cp "$T/377"/trig_01Voiz5YsK2SnVf2STF8PoSH.txt "$O/"
 cp "$T/379"/trig_0189eZvAD8x4357cfevgZ3No.txt "$T/379"/trig_01UPT8LDrBDL5JQqW91Awgbo.txt "$T/379"/trig_01MdfUFg2qrebDWgiHwncgnd.txt "$O/"
