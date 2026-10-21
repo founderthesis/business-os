@@ -9,8 +9,8 @@ os.makedirs(out, exist_ok=True)
 sha = lambda b: hashlib.sha256(b).hexdigest()[:16]
 INBOX, ZOYA, SWEEP = "trig_0189eZvAD8x4357cfevgZ3No", "trig_01UPT8LDrBDL5JQqW91Awgbo", "trig_01MdfUFg2qrebDWgiHwncgnd"
 BASES = {INBOX: [(57267, "f48898f4ac396bf0")],
-         ZOYA: [(52034, "d74d56bb06f20147"), (54989, "0a3ed4eb90f7b158")],
-         SWEEP: [(30059, "60aa8ecdbe064c78"), (31253, "572dc9d9bd880de5")]}
+         ZOYA: [(52034, "d74d56bb06f20147"), (54989, "0a3ed4eb90f7b158"), (54995, "861d303bba42977c")],
+         SWEEP: [(30059, "60aa8ecdbe064c78"), (31253, "572dc9d9bd880de5"), (31123, "cd6ad35d11207751")]}  # third: after d377-fix.py (Cleanup)
 MARK = "No revival: PR declined"
 EDITS = {
  INBOX: [
