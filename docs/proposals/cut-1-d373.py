@@ -14,10 +14,16 @@ EDITS = {
  "trig_01UPT8LDrBDL5JQqW91Awgbo": ("move everyone else to Cc, Akshay included. ", "move everyone else to Cc, Akshay included. " + zl[i:j]),
 }
 assert len(cal) == 1
+# Cleanup's fix on b62e89b (21 Oct ~15:48 JST): no reply-all, recipients explicit
+RA = {"trig_01UPT8LDrBDL5JQqW91Awgbo": "(action reply, reply_all true, on its latest message in your inbox)",
+      "trig_01Voiz5YsK2SnVf2STF8PoSH": "(action reply, reply_all true)"}
 for tid in ["trig_0189eZvAD8x4357cfevgZ3No", "trig_01UPT8LDrBDL5JQqW91Awgbo", "trig_01Voiz5YsK2SnVf2STF8PoSH", "trig_01MdfUFg2qrebDWgiHwncgnd", "trig_01MnmJYorWrd61K7b5BCqXr1"]:
     s = open(os.path.join(src, f"{tid}.txt"), encoding="utf-8").read()
     if tid in EDITS:
         o, n = EDITS[tid]; assert s.count(o) == 1, tid; s = s.replace(o, n)
+        o = RA[tid]; assert s.count(o) == 1, (tid, "reply_all")
+        s = s.replace(o, o.replace("reply_all true", "reply_all false, To and Cc set explicitly"))
+    assert "reply_all true" not in s, tid
     b = s.encode(); assert len(b) <= 65536 - 200
     open(os.path.join(out, f"{tid}.txt"), "w", encoding="utf-8").write(s)
     print(tid, len(b), hashlib.sha256(b).hexdigest()[:16])
