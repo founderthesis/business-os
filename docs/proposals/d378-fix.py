@@ -1,4 +1,4 @@
-"""Cleanup on decision 378 rev 2 as carried in d378.py at 78be855 (Main folded in Cleanup's earlier fixes).
+"""SUPERSEDED: the booking line now lives in d382-fix.py (on d382.py output). Cleanup on decision 378 rev 2 as carried in d378.py at 78be855 (Main folded in Cleanup's earlier fixes).
 Without booking: accepted as is, WhatsApp 24,701 / 2fea6fc12f7e2e24 on the live base 21,598 / 0b4dda9276486041. No fix needed.
 With BOOKING 1 (only after Akshay's own ok): d378.py gives 25,202 / 269a436c477194c2; run this on it for the one fix below,
 which gives 25,285 / 1c58ce0b16317ee2. Fix: the slot is re-read just before the write, and the length is what they ask, else 30 minutes.
