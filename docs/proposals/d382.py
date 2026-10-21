@@ -27,7 +27,8 @@ PEOPLE = {INBOX: "- People: collection://e6c44319-7f81-4da6-8b80-8441a4875d7a  (
           ZOYA: "- People: collection://e6c44319-7f81-4da6-8b80-8441a4875d7a (Email, Other emails, Phone, Tags; team members are tagged Team)"}
 # the one branch every nurture move checks first
 DIRECT = ("a founder who wrote to us directly (no PR or agency on the thread) on a row with no sponsored offer on its thread "
-          "and Tier not Sponsored (decision 382): don't move it and send nothing; put it on Akshay's list once, Akshay added to "
+          "and Tier not Sponsored, and not at Status Booking (decision 382: a recording-slot chase that runs out always goes to "
+          "nurture, whoever pitched it): don't move it and send nothing; put it on Akshay's list once, Akshay added to "
           "Waiting on, the chase segment of Next action \"Akshay: <guest> went quiet after <the open ask> (since <D Mon YYYY>): "
           "nurture, park or decline?\", Claude note \"YYYY-MM-DD: went quiet, on Akshay's list (decision 382)\". A sponsored row "
           "goes to nurture as below.")
