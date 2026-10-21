@@ -1,6 +1,6 @@
 # Cut 1: Notion edits for Rules for Zoya and routine pages 1 to 9
 
-Prepared, not reviewed, not applied. Applied with the Cut 1 deploy, after Cleanup accepts it. Open points for Cleanup and Akshay are at the end.
+Applied 21 Oct 2026 (Builder), after the Cut 1 deploy. Pages 1 to 3 were rewritten with follow-up chains v2 on top of these edits. Held for Akshay (open points D1 and D2): edit 34, the section 5 "Form arrives" cell, page 5 edit 3 and page 8 edit 2. Open points for Cleanup and Akshay are at the end.
 
 Read-only prep, fetched 20 Oct 2026 (Rules for Zoya last edited 11:40 UTC, Cadences 13:45 UTC). Nothing applied.
 
