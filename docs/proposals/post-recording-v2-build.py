@@ -4,13 +4,13 @@ guest-facing composer takes its Cc as the union of Stakeholders, Via and every o
 Part 3 (cloud side): on Founder Thesis the calendar creates the Episode "Awaiting transcript" when a recording ends, drops the
 Drive audio check and no longer sets Recorded or drafts the thank-you; the Mac transcripts task (routines/mac/transcripts.md,
 fed74f0) does both from the transcript. Client shows are unchanged. The thank-you wording is not touched.
-Usage: python3 post-recording-v2-build.py <dir with cut-1-d373 outputs trig_<id>.txt> <out dir>"""
+Usage: python3 post-recording-v2-build.py <dir with the live prompts trig_<id>.txt (routines/*.md at 7eec76c)> <out dir>"""
 import hashlib, os, sys
 
 def sha(s): return hashlib.sha256(s.encode()).hexdigest()[:16]
 
 INBOX, ZOYA, CAL = "trig_0189eZvAD8x4357cfevgZ3No", "trig_01UPT8LDrBDL5JQqW91Awgbo", "trig_01Voiz5YsK2SnVf2STF8PoSH"
-BASES = {INBOX: (56942, "afc7176f665f1fe7"), ZOYA: (49590, "3b7fe7ed689c06ae"), CAL: (52992, "d036faaf20ef74cb")}
+BASES = {INBOX: (57267, "f48898f4ac396bf0"), ZOYA: (50247, "2e05abc111942c9e"), CAL: (52992, "d036faaf20ef74cb")}  # live at 7eec76c
 
 ROLE = "not the team's (People tagged Team, ad@thepodium.in, zoya@myunnati.com) and not a role or no-reply inbox (info@, hello@, contact@, press@, team@, noreply and the like)"
 CAPTURE = ("is found in People (Email, Other emails) or created (Name from the display name, else the address; Email; Organisation from the domain; "
@@ -58,7 +58,7 @@ def edits_for(tid, s):
          "calendar says it was cancelled or moved, do a2 at once (the Episode, Status \"Awaiting transcript\") and add the Claude note line "
          "\"YYYY-MM-DD: <D Mon> recording ended, Episode awaiting transcript\" once. Set nothing else: Status, Call type, Waiting on and Next action "
          "stay. The Mac transcripts task reads the transcript, sets Recorded, drafts the thank-you, and asks Akshay itself when Zencastr has no "
-         "recording. You ask only when it can't: 24 hours after the slot, if the Claude note says \"not counted as recorded\" for that date, or 48 "
+         "recording. You ask only when it can't, and only while Status is still Booked (never once it is Recorded): 24 hours after the slot, if the Claude note says \"not counted as recorded\" for that date, or 48 "
          "hours after it the Episode is still \"Awaiting transcript\" and Next action has no ask about this recording, add Akshay to Waiting on and "
          "put \"Akshay: <guest>'s <D Mon> recording: cancelled or no-show?\" first in Next action, once (decision 236); never chase the guest. "
          "Other shows (un#, Built to Share, Human by Design record on Riverside; there is no Drive check): once the event ended 2 or more hours ago "

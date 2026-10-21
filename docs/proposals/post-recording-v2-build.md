@@ -4,23 +4,19 @@ Spec: docs/proposals/post-recording-v2.md (33ca972). Main 2, 21 Oct. Prepared, n
 
 ## Build
 
-The base is Cut 1 plus decision 373, built from the live prompts at 9ae734d (`routines/*.md` at that commit, between the "```text" fences, are byte-equal to live):
+Rebuilt 21 Oct ~19:00 JST on the live prompts: `routines/*.md` at 7eec76c, between the "```text" fences, which match live (Cut 1 and decision 375 are deployed). The build checks each base's bytes and hash before editing, refuses an em dash, and refuses a calendar that still checks Drive audio.
 
 ```
-python3 docs/proposals/cut-1-build.py <live bases> <cut1>
-python3 docs/proposals/cut-1-d373.py <cut1> <base>
-python3 docs/proposals/post-recording-v2-build.py <base> <out>
+python3 docs/proposals/post-recording-v2-build.py <dir with the live prompts as trig_<id>.txt> <out dir>
 ```
 
-The build checks each base's bytes and hash before editing, refuses an em dash, and refuses a calendar that still checks Drive audio.
-
-| Prompt | Base (Cut 1 + 373) | v2 | Hash | Spare to 65,536 |
+| Prompt | Live base (7eec76c) | v2 | Hash | Spare to 65,536 |
 |---|---|---|---|---|
-| Inbox | 56,942 / afc7176f665f1fe7 | 57,681 (+739) | 42c692dcd33da47b | 7,855 |
-| Zoya | 49,590 / 3b7fe7ed689c06ae | 50,459 (+869) | f080df60fe1bc04f | 15,077 |
-| Calendar | 52,992 / d036faaf20ef74cb | 52,075 (-917) | e9261408652a5737 | 13,461 |
+| Inbox | 57,267 / f48898f4ac396bf0 | 58,006 (+739) | bf91c4368a9fba42 | 7,530 |
+| Zoya | 50,247 / 2e05abc111942c9e | 51,116 (+869) | 319db320cdb1b3fe | 14,420 |
+| Calendar | 52,992 / d036faaf20ef74cb | 52,142 (-850) | 4e46ceed7d112279 | 13,394 |
 
-Sweep and WhatsApp are unchanged. If Main's deployed Cut 1 differs from these base hashes, the build stops; rebase it on what is live.
+Sweep and WhatsApp are unchanged. If a live prompt changes before deploy, the build stops; rebase it on what is live.
 
 ## Part 2: everyone on a guest's threads is a Stakeholder
 
@@ -44,7 +40,7 @@ Sweep and WhatsApp are unchanged. If Main's deployed Cut 1 differs from these ba
 - **Calendar:** two cases the Mac doesn't cover.
   - The Mac wrote "not counted as recorded" (one speaker, or under 20 minutes). At 24 hours the calendar asks.
   - The Episode is still "Awaiting transcript" at 48 hours with no ask about this recording in Next action (for example the Mac is off). The calendar asks then.
-- Both use "Akshay: <guest>'s <D Mon> recording: cancelled or no-show?". The Mac's step 6 takes that ask out when the transcript confirms the recording.
+- Both use "Akshay: <guest>'s <D Mon> recording: cancelled or no-show?", and only while Status is still Booked: STEP 4 selects Booked rows only, and the ask is never added once the row is Recorded. The Mac's step 6 takes that ask out when the transcript confirms the recording.
 
 **Calendar a2.** A new Episode is created as "Awaiting transcript" on Founder Thesis, else Recorded.
 
@@ -60,7 +56,7 @@ Sweep and WhatsApp are unchanged. If Main's deployed Cut 1 differs from these ba
 | No recording at all | asks only at 48 h, if no ask exists | asks at 24 h ("no Zencastr recording found") |
 | Thank-you | never drafts on FT | drafts, Activity "Zoya drafted: FT thank-you ..." |
 
-**For the CTO, one gap in the Mac prompt.** After 6c ("not counted as recorded", no THANKS), Akshay may know the call happened, for example when the guest track was lost, and set Recorded himself. Then nothing drafts the thank-you: the calendar no longer does, and the Mac skips THANKS for that Episode. Suggested fix in the Mac: if the Engagement is Recorded by Akshay after a 6c verdict, write the 7g draft without the attachment, with "attach the transcript" in Next action. I haven't changed the Mac file.
+**The Matthew gap is closed on the Mac side (0fdecc1).** When Akshay sets Recorded himself, the Mac drafts the thank-you with the one-sided transcript, or without one after 24 hours.
 
 ## Replays
 
@@ -79,7 +75,7 @@ Under v2:
      - The Mac's 6c writes "20 Oct recording: transcript <mm> min, Akshay, not counted as recorded (Mac)".
      - At 24 hours (~16:35 JST, 21 Oct) the calendar puts "Akshay: Matthew's 20 Oct recording: cancelled or no-show?" first in Next action.
      - Akshay knows it happened and sets Recorded. The calendar's 4c adds the community ask, and the blurb step looks for a transcript.
-     - No thank-you draft is written. That's the gap flagged for the CTO above.
+     - The Mac (0fdecc1) then drafts the thank-you with the one-sided transcript. The calendar's ask doesn't come back, because the row is no longer Booked.
    - In both cases the Cc carries the PR people that were missing on the real draft. That was the cause of decision 374's part 2.
 3. **Before v2 is live:** a thank-you draft for Matthew already existed on 21 Oct (the one Akshay reviewed). Once v2 is live, the Mac's step 7 finds the "Zoya drafted: FT thank-you" Activity if one was logged and attaches the file to that draft instead of writing a second one.
 
@@ -93,11 +89,11 @@ Under v2:
 **R3. Retry safety.**
 - A calendar run that repeats after a2: it finds the keyed Episode and writes nothing.
 
-## Deploy (Main, after Cleanup accepts and Cut 1 is live and read back)
+## Deploy (Main, after Cleanup accepts)
 
-1. **Notion:** add the Status option "Awaiting transcript" to Episodes (collection://5d250752-6db8-4ab6-8467-c68f5838278a) before the calendar prompt goes live.
-2. **Cloud:** rebuild on the live bases. Push the inbox, Zoya and calendar one at a time, and read back bytes, hash, cron and model.
-3. **Order:** the CTO's Mac prompt goes in first (out of TEST MODE), so FT Episodes the new calendar creates are picked up straight away. Until it's in, "Awaiting transcript" Episodes wait, and the 48-hour fallback asks Akshay.
+1. **First, gating everything:** Akshay installs the Mac prompt (routines/mac/transcripts.md, 0fdecc1) and passes the "TEST Matthew" run. Nothing below goes live before that test passes.
+2. **Notion:** add the Status option "Awaiting transcript" to Episodes (collection://5d250752-6db8-4ab6-8467-c68f5838278a).
+3. **Cloud:** rebuild on the live bases. Push the calendar, then the inbox, then Zoya, one at a time, and read back bytes, hash, cron and model.
 4. **Records:** developer page change log and the calendar's routine page.
 
 ## Not in this package
