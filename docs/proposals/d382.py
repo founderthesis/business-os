@@ -99,7 +99,9 @@ ONROW = (KIND + " PERSON STEPS GO ON THEIR ROW (decision 385, Akshay, 21 Oct): b
          "Engagement for the person or company it names (as Guest, Via, Stakeholder or Organisation; any Status, parked or closed "
          "included). One fits: write the step there as a Next action segment \"<owner>: <step>\" after \" | \" (other segments "
          "kept), add the owner to Waiting on, and create no Task row; several people, each one's own row. Create a Task row only "
-         "when no Engagement fits. Task rows a step below keys by its own Source ID (transcript:, precall:) keep their rule.")
+         "when no Engagement fits. This covers guest-facing steps only: internal team requests (Show Internal, decision 376: "
+         "transcripts to Ranjita, anything to Jaya or Sarika) and rows a step below keys by its own Source ID (transcript:, "
+         "precall:) stay Kind Task rows.")
 EDITS[WA] = []
 for tid in (INBOX, ZOYA, SWEEP, CAL, WA):
     EDITS[tid].append((KIND, ONROW))
