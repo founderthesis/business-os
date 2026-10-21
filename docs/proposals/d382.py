@@ -11,6 +11,9 @@ chase, so neither the 7-day limit nor the hand-written pause holds it (quiet hou
 thank-you draft uses the wording page's approved text as it stands, with no local copy.
 Decision 385 (Akshay via the CTO): a step about a person or company with an Engagement goes on that Engagement as a Next
 action segment, not on a new Task row; all five routines that create Task rows (WhatsApp from its booking build too).
+Decisions 386 and 387 (Akshay via the CTO): routine 5 ends with one ask on Akshay's list after the page's last chaser
+(five), never closing on silence; the inbox's draft-and-edit comparison (STEP 2b a and b) is retired, keeping only the
+Send draft status move and 2b c.
 Usage: python3 d382.py <live dir> <out dir>"""
 import sys, os, hashlib
 src, out = sys.argv[1], sys.argv[2]
@@ -92,6 +95,33 @@ EDITS[CAL] = [
   "paragraphs out for a Sponsored guest, the PR block only when a PR is on the To line, the transcript line only while "
   "transcripts are being attached, the form link as a real link); never a retired variant."),
 ]
+EDITS[ZOYA].append((
+ "- 5 Guest form: Status Recorded, no guest form, counting from the thank-you mail. Akshay in Cc.",
+ "- 5 Guest form: Status Recorded, no guest form, counting from the thank-you mail. Akshay in Cc. The chaser count and days "
+ "come from the routine 5 page (decision 386: five). After the last, no form and no reply for 7 days: not nurture; Waiting on "
+ "Akshay, Next action \"Ask Akshay: no form from <guest> after <n> chasers. Chase another way, nurture, or close?\". The row "
+ "never closes on silence."))
+EDITS[INBOX] += [
+ ("STEP 2b. LEARN FROM SENT MAIL (decision 102)",
+  "STEP 2b. AKSHAY'S SENT MAIL (decision 387 retired the draft-and-edit comparison of decision 102)"),
+ ("a. Sent from a draft: if an Activity with Kind Draft and Edit size empty exists on the same thread (Link) or on the same "
+  "Engagement with the same subject, this mail is that draft going out. Compare the sent body with the drafted text in that "
+  "Draft Activity's page body and set, on the Draft Activity: Edit size (None: only names, dates or greetings differ; Minor: "
+  "small wording changes, up to one sentence; Major: a paragraph added, removed or rewritten; Rewritten: mostly new text), and "
+  "Edit note (one line on what changed, for example \"dropped the patron paragraphs, added the PR's name\"). If the Engagement",
+  "a. Sent from a draft: a Draft Activity on the same thread (Link) or on the same Engagement with the same subject means this "
+  "mail is that draft going out (nothing is compared or scored). If the Engagement"),
+ ("\nb. A Draft Activity older than 14 days that was never sent: Edit note \"not sent\", Edit size empty.\nc. His mail answers",
+  "\nb. His mail answers"),
+ ("(a Draft Activity on the row with Edit size empty)", "(a Draft Activity on the row whose draft is still in Gmail)"),
+ ("and set that Draft Activity's Edit note \"not sent: <name> sent it by hand <date>, draft deleted\"",
+  "and add the Claude note line \"YYYY-MM-DD: agent draft deleted, <name> sent it by hand\""),
+ ("Sent drafts matched (edit size).", "Send draft rows moved on."),
+]
+# 386: the inbox's 3-chases branch never closes a Recorded row waiting on its form
+EDITS[INBOX] = [(a, b.replace("or a un# row at Booking (decision 382: chased until a recording is on the calendar)",
+  "or a un# row at Booking (decision 382: chased until a recording is on the calendar), or a Recorded row waiting on its "
+  "guest form (decision 386: Zoya's routine 5 ends it)")) for a, b in EDITS[INBOX]]
 for tid, line in PEOPLE.items():
     EDITS[tid].insert(0, (line, line + MATCH))
 KIND = "closing it never touches the row in its For engagement or any other ask."
