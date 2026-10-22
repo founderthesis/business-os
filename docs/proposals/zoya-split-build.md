@@ -24,7 +24,8 @@ The CTO accepted about 30 KB for the trial: keep the rules for threads Zoya isn'
 
 - Version on the run record: each prompt's RUN RECORD writes its deployment reference as "zoya-fast a6d4dd148d42" or "zoya-slow 92cdf09faef9", the first 12 hex of the sha256 of the prompt with the stamp written as @@VERSION@@. build.py stamps it, so the trial measures can tie each run to a version. Only Zoya writes run records; the inbox, calendar, sweep and WhatsApp routines have none.
 - Reply recipients: SENDING now says MCP Emails' reply goes to the thread's last sender, so when the last message is ours, Zoya creates a draft reply, sets To and Cc, reads it back, and sends that draft (from the 12:38 run).
-- Rules for Zoya page: "works for us." becomes "that time is fine for us." (decision 392). This is a page edit, applied in the deploy window below.
+- Rules for Zoya page: the CTO removed "works for us." himself (22 Oct), so it is off the deploy list.
+- Decision 395 (LinkedIn numbers are "us" and rounded, no breakdown): no part file carries audience numbers or show facts; mails take them from the sales page and Rules for Zoya, which already carry 395. Nothing to change in the build.
 
 ## Cleanup's checks, and the text each relies on
 
@@ -43,5 +44,4 @@ The spec's go-live replays (21 Oct, crash test, same-minute FAST and SLOW, two a
 2. Deploy the ACTION KEYS delta to the inbox, calendar and sweep in the same window as the split, never before: the live single Zoya prompt doesn't read the keyed form.
 3. Point the Zoya trigger at zoya-fast (cron unchanged, CRON_TZ=Asia/Tokyo 30 7-23 * * *).
 4. Create the SLOW trigger: CRON_TZ=Asia/Tokyo 0 8-22/2 * * 1-5, Zoya's connectors.
-5. On Rules for Zoya, section 1, Zoya's tone: replace "works for us." with "that time is fine for us.".
-6. Read each back, sync `routines/`, update the developer page and Change log, and record FAST and SLOW bytes and version stamps in the trial log.
+5. Read each back, sync `routines/`, update the developer page and Change log, and record FAST and SLOW bytes and version stamps in the trial log.
