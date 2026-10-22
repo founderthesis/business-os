@@ -1,6 +1,6 @@
 # People research rerun: instructions for Notion AI (part 2 of 3)
 
-Engagements database: https://app.notion.com/p/5522ee21d8e54ec0bf3e90bcf88d24c5 (Engagements). People database: https://app.notion.com/p/f54094b86c3549dead74c0034afad86c
+Engagements database: https://app.notion.com/p/5e77c373909a4bf6b9195570de46c63b (Engagements). People database: https://app.notion.com/p/f54094b86c3549dead74c0034afad86c
 
 ## What to do
 
