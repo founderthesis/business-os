@@ -1,4 +1,4 @@
-# People research rerun: instructions for Notion AI (part 2 of 3)
+# People research rerun: instructions for Notion AI (part 2 of 6)
 
 Engagements database: https://app.notion.com/p/5e77c373909a4bf6b9195570de46c63b (Engagements). People database: https://app.notion.com/p/f54094b86c3549dead74c0034afad86c
 
