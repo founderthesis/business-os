@@ -26,6 +26,7 @@ The CTO accepted about 30 KB for the trial: keep the rules for threads Zoya isn'
 - Double sends (d-dbl22, CTO 22 Oct): ONE MAIL PER PERSON PER RUN groups each run's sends by To address, in FAST and SLOW alike (action keys are per Engagement, so they don't catch it); SENDING builds a reply as a draft with To and Cc from the thread wherever the team wrote last, and never sends a mail whose only recipients are team.
 - Rules for Zoya page: the CTO already removed "works for us." (22 Oct), so it is off the deploy list.
 - Decision 398 (a call cancelled in writing is admin): Zoya's mail and hard-rule lines carried into the mail and hard parts. The ACTION KEYS delta's calendar base is today's live calendar; once d398 is live (calendar 57,489 / c80b63e6bcf2e6ee), rebase d394-keys.py on it before the split deploys.
+- Decision 399 (never describe the guest's company): no part file asks for a business detail. The inbox's STEP 6c instruction goes in d399.py; once it is live, rebase d394-keys.py's inbox base on it too.
 - Decision 395 (LinkedIn numbers are "us" and rounded, no breakdown): no part file carries audience numbers or show facts; mails take them from the sales page and Rules for Zoya, which already carry 395. Nothing to change in the build.
 
 ## Cleanup's checks, and the text each relies on
