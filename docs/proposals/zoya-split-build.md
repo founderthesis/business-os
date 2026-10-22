@@ -1,19 +1,19 @@
 # Zoya split: build for Cleanup (decision 394)
 
-Built 22 Oct on the live prompts after the Codex batch went live (Zoya 62,409 / 6d26eaafecc9c94e). Spec: `zoya-split.md` v2.1. Nothing here is deployed. Deploy only on Akshay's yes in Main's chat, after Cleanup's checks pass.
+Built 22 Oct on the live prompts after the Codex batch went live (Zoya 62,409 / 6d26eaafecc9c94e), with the double-send fixes of d-dbl22 carried in (Zoya with them: 63,645 / 1569e456e69e6c4f). Spec: `zoya-split.md` v2.1. Nothing here is deployed. Deploy only on Akshay's yes in Main's chat, after Cleanup's checks pass.
 
 ## What's built
 
 | Output | Bytes | sha256 (first 16) | How |
 | --- | --- | --- | --- |
-| zoya-fast | 30,689 | ebd8c8dac2ccce0d | `python3 routines/zoya/build.py <out>` |
-| zoya-slow | 58,007 | 6c118861da53c4d4 | same |
+| zoya-fast | 31,614 | 194928d1a06205f2 | `python3 routines/zoya/build.py <out>` |
+| zoya-slow | 58,954 | b72abda40fc7c1df | same |
 | inbox + ACTION KEYS | 62,516 | 4ea87b9dfe33dad6 | `python3 docs/proposals/d394-keys.py <live dir> <out>` |
 | calendar + ACTION KEYS | 57,246 | 74b272ae87917e5e | same |
 | sweep + ACTION KEYS | 33,732 | 21abf475a49da21e | same |
 
 - 37 part files in `routines/zoya/parts`. Every rule lives in one file. FAST and SLOW manifests and the per-prompt rewrites (VARIANT) are in `build.py`.
-- Coverage: `build.py <out> <live Zoya prompt>` lists 13 live lines neither prompt carries word for word. All 13 are intended split edits: the intro, YOUR QUEUE, RUN ORDER (now FAST ORDER and SLOW ORDER), the report, the Action key edits to INTERNAL TASKS, SENDING, STEP 0e, STEP 1 a/b/e and AFTER SEND, the run-record name, and the hard WhatsApp line.
+- Coverage: `build.py <out> <live Zoya prompt>` lists 14 lines of the patched prompt that neither split prompt carries word for word. All 14 are intended split edits: the ONE MAIL PER PERSON bullet (now its own part, onemail, in both prompts), the intro, YOUR QUEUE, RUN ORDER (now FAST ORDER and SLOW ORDER), the report, the Action key edits to INTERNAL TASKS, SENDING, STEP 0e, STEP 1 a/b/e and AFTER SEND, the run-record name, and the hard WhatsApp line.
 - WhatsApp routine: unchanged. Its only Zoya step is the snooze segment, which keeps its own form (spec).
 
 ## FAST size: about 30 KB for the trial (CTO, 22 Oct)
@@ -22,8 +22,8 @@ The CTO accepted about 30 KB for the trial: keep the rules for threads Zoya isn'
 
 ## Added on the CTO's notes of 22 Oct
 
-- Version on the run record: each prompt's RUN RECORD writes its deployment reference as "zoya-fast a6d4dd148d42" or "zoya-slow 92cdf09faef9", the first 12 hex of the sha256 of the prompt with the stamp written as @@VERSION@@. build.py stamps it, so the trial measures can tie each run to a version. Only Zoya writes run records; the inbox, calendar, sweep and WhatsApp routines have none.
-- Reply recipients: SENDING now says MCP Emails' reply goes to the thread's last sender, so when the last message is ours, Zoya creates a draft reply, sets To and Cc, reads it back, and sends that draft (from the 12:38 run).
+- Version on the run record: each prompt's RUN RECORD writes its deployment reference as "zoya-fast 1a3b02e8a2aa" or "zoya-slow feefb6e8a8db", the first 12 hex of the sha256 of the prompt with the stamp written as @@VERSION@@. build.py stamps it, so the trial measures can tie each run to a version. Only Zoya writes run records; the inbox, calendar, sweep and WhatsApp routines have none.
+- Double sends (d-dbl22, CTO 22 Oct): ONE MAIL PER PERSON PER RUN groups each run's sends by To address, in FAST and SLOW alike (action keys are per Engagement, so they don't catch it); SENDING builds a reply as a draft with To and Cc from the thread wherever the team wrote last, and never sends a mail whose only recipients are team.
 - Rules for Zoya page: the CTO already removed "works for us." (22 Oct), so it is off the deploy list.
 - Decision 395 (LinkedIn numbers are "us" and rounded, no breakdown): no part file carries audience numbers or show facts; mails take them from the sales page and Rules for Zoya, which already carry 395. Nothing to change in the build.
 

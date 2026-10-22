@@ -14,10 +14,10 @@ sha = lambda b: hashlib.sha256(b).hexdigest()[:16]
 part = lambda n: open(os.path.join(PARTS, n + ".txt"), encoding="utf-8").read().rstrip("\n")
 
 FAST = ["intro-fast", "tools", "rules-common", "rules-tail", "notion-data", "scope", "actions", "queue-fast", "voice",
-        "sending", "limits-fast", "identity", "runrecord", "fast-order", "decision", "daybefore", "mail", "report-fast",
+        "sending", "limits-fast", "onemail", "identity", "runrecord", "fast-order", "decision", "daybefore", "mail", "report-fast",
         "hard"]
 SLOW = ["intro-slow", "tools", "rules-common", "rules-routines", "rules-tail", "notion-data", "scope", "actions",
-        "queue-slow", "internal", "editnotes", "snoozed", "voice", "sending", "teamwa", "limits", "identity", "runrecord",
+        "queue-slow", "internal", "editnotes", "snoozed", "voice", "sending", "teamwa", "limits", "onemail", "identity", "runrecord",
         "reconcile", "slow-order", "feedback", "bounces", "vendor", "ownermail", "scorecard", "payments", "followups",
         "report-slow", "hard"]
 # (part, old, new): rewrites that only one prompt needs
@@ -41,6 +41,7 @@ VARIANT = {
    "and keep the other row's Next action pointing to it.", ""),
   ("voice", ', with one exception: release mail 2 opens "Zoya here, I work with Akshay on the Founder Thesis podcast."', ""),
   ("hard", "Never introduce or describe yourself except in release mail 2.", "Never introduce or describe yourself."),
+  ("onemail", "(the order in ONE PERSON, ONE ASK)", "(FAST ORDER)"),
   ("runrecord", "Run zoya <", "Run zoya FAST <"),
   ("mail", "then WhatsApp Sarika the notes (guest, episode, each change with its timestamp, or the attachment's name).",
    "the WhatsApp to Sarika is your SLOW run's (EDIT NOTES TO SARIKA)."),
