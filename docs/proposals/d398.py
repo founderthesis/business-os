@@ -4,14 +4,14 @@ and cooling-off entries, Zoya chases a fresh slot, and nothing goes on Akshay's 
 editing guest events for this one case (CLAUDE.md, Calendar rules section 1, Rules for Zoya). A no-show stays Akshay's
 (decision 234). The inbox's own cancel of decision 165 is unchanged; when it got there first, the calendar run only clears
 the entries.
-Calendar on the live prompt (d-codex22-fix as deployed 22 Oct); Zoya on top of d-dbl22 (deploy the two together).
-Usage: python3 d398.py <live dir> <d-dbl22 out dir> <out dir>"""
+Calendar on the live prompt (d-codex22-fix as deployed 22 Oct); Zoya on top of d-dbl22 + d-dbl22-fix as Cleanup accepted
+it (deploy them together). Usage: python3 d398.py <live dir> <d-dbl22-fix out dir> <out dir>"""
 import sys, os, hashlib
 live, dbl, out = sys.argv[1], sys.argv[2], sys.argv[3]
 os.makedirs(out, exist_ok=True)
 sha = lambda b: hashlib.sha256(b).hexdigest()[:16]
 ZOYA, CAL = "trig_01UPT8LDrBDL5JQqW91Awgbo", "trig_01Voiz5YsK2SnVf2STF8PoSH"
-SRC = {ZOYA: (dbl, 63645, "1569e456e69e6c4f"), CAL: (live, 55992, "fba6e2cd186d0903")}
+SRC = {ZOYA: (dbl, 64004, "013a7ef0bd4dc21f"), CAL: (live, 55992, "fba6e2cd186d0903")}
 WRITTEN = ("- CANCELLED IN WRITING (decision 398, Akshay, 22 Oct: \"purely admin work\"). The guest, their PR or EA says in "
            "writing (a mail on the row's threads in ad@thepodium.in or Zoya's inbox, or the note on their declined invite) "
            "that they can't make a booked future precall or recording. Delete that one event yourself: delete_event on "
