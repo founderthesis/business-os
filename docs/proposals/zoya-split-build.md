@@ -24,7 +24,7 @@ The CTO accepted about 30 KB for the trial: keep the rules for threads Zoya isn'
 
 - Version on the run record: each prompt's RUN RECORD writes its deployment reference as "zoya-fast a6d4dd148d42" or "zoya-slow 92cdf09faef9", the first 12 hex of the sha256 of the prompt with the stamp written as @@VERSION@@. build.py stamps it, so the trial measures can tie each run to a version. Only Zoya writes run records; the inbox, calendar, sweep and WhatsApp routines have none.
 - Reply recipients: SENDING now says MCP Emails' reply goes to the thread's last sender, so when the last message is ours, Zoya creates a draft reply, sets To and Cc, reads it back, and sends that draft (from the 12:38 run).
-- Rules for Zoya page: the CTO removed "works for us." himself (22 Oct), so it is off the deploy list.
+- Rules for Zoya page: the CTO already removed "works for us." (22 Oct), so it is off the deploy list.
 - Decision 395 (LinkedIn numbers are "us" and rounded, no breakdown): no part file carries audience numbers or show facts; mails take them from the sales page and Rules for Zoya, which already carry 395. Nothing to change in the build.
 
 ## Cleanup's checks, and the text each relies on
