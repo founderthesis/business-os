@@ -14,6 +14,9 @@ When Akshay asks what's pending on him, read this list, check each item is still
 - Blurb editing chat: open Sankalp Arora's chat, send one change, say save.
 - Upload the un#, Built to Share and Human by Design eval skill zips when they arrive (decision 383).
 
+## Before the next paid API run
+- Add a standing permission rule for the run's script (e.g. `python3 -I data/pipeline_review/pr_force3.py`) yourself, before the worker starts, so it doesn't stop for approval every 3 to 4 chunks (Akshay, 22 Oct: "I will do it manually - remind me"). The CTO reminds you whenever a run is planned.
+
 ## Open questions on pages
 - Calendar rules: what Out of office means for you, and hours never to book.
 - Rules for Zoya: keep the day-before release WhatsApp? Should the agent write the 3 post options from the transcript?
