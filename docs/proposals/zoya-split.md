@@ -1,6 +1,6 @@
-# Proposal v2: a reduced FAST/SLOW trial for Zoya
+# Proposal v2.1: a reduced FAST/SLOW trial for Zoya
 
-Status: v2, 22 Oct 2026, revised after the Codex CTO's review of v1. Needs Akshay's yes before anything is built. Builds only after d390 (deploying now) and Codex's three audit fixes are live.
+Status: v2.1, 22 Oct 2026. v2 was revised after the Codex CTO's review of v1, and v2.1 applies Codex's three corrections and three rollout conditions on v2. Codex approves the direction. Needs Akshay's yes before anything is built. Builds only after d390 (deploying now) and Codex's three audit fixes are live.
 
 ## Why
 
@@ -28,9 +28,17 @@ d390 fixes the order: replies and queued decisions run first, and long-term chas
 
 ### 1. Actions, keyed
 
-An action is one obligation on an Engagement. It's either a segment of Next action, or a reply owed on a thread linked to the row. Each has a key:
+An action is one obligation on an Engagement. It's either a segment of Next action, or a substantive ask owed an answer on a thread linked to the row. Each has a key anchored to what created it, with the full timestamp (v2.1, Codex):
 
-`<engagement id>:<type>:<raised date YYYY-MM-DD>[:<thread id>]`
+`<engagement id>:<type>:<origin>:<raised ISO timestamp>`
+
+The origin is one of:
+
+- `msg-<Message-ID header>`: the inbound message that raised the ask.
+- `call-<Activity id>`: Akshay's decision, his Your call, or the Activity that recorded it.
+- `seq-<routine>-<step n>`: a follow-up sequence step.
+
+Two actions raised on the same row and day therefore never share a key. The key is never derived from our own outgoing email.
 
 The types and which run owns each:
 
@@ -43,15 +51,26 @@ The types and which run owns each:
 | nurture | nurture, revival, long-term chase | SLOW |
 | team | WhatsApp to Jaya, Sarika or Ranjita, internal asks | SLOW |
 
-Next action segments start with their owner today ("Zoya: ..."). v2 adds the type and the raised date in a fixed short form, for example "Zoya [decision 2026-10-21]: send Akshay's decision mail". Every routine that writes a Zoya step writes this form, so the step can be selected without reading prose. Completing an action removes only its own segment and leaves the others.
+Next action segments start with their owner today ("Zoya: ..."). v2 adds the key in a fixed short form, for example "Zoya [decision call-40019a30... 2026-10-21T13:07+09:00]: send Akshay's decision mail". Every routine that writes a Zoya step writes this form, so the step can be selected without reading prose. Completing an action removes only its own segment and leaves the others.
 
-Reply-owed actions are found from the mailboxes: the latest message on a linked thread is from outside the team and has no later message from us. That check runs in FAST against both inboxes, reusing the inbox routine's thread matching.
+**Old-format steps stay selectable (v2.1, Codex).** During the change, a Zoya step with no key is still picked up by its old wording and owner. Its key is built at that moment from the Engagement, the inferred type, the Activity or message that created it, and the Claude note date. It's written back onto the segment, so nothing queued before the change is stranded or done twice.
+
+**Reply-owed means an unresolved substantive ask (v2.1, Codex).** "The latest message is from us" isn't the test. A loop-in or "checking with akshay" can be the latest message while the question is still open, and an outside auto-reply, out-of-office or plain "thanks" needs no answer. FAST tracks asks:
+- When the inbox logs an inbound mail with a question, request or proposal, it raises a reply action keyed to that Message-ID. It uses the same exclusions it applies today for administrative mail: auto-replies, out-of-office, bounces, thanks or acknowledgements only, loop-ins and incidental Cc.
+- A holding reply (decision 390) satisfies the acknowledgement timer only. The substantive action stays open.
+- The action completes only on the message that answers that ask, on the same thread.
 
 ### 2. Sending safely
 
 - FAST runs at :30 every hour, 07:30 to 23:30 JST. SLOW runs at :00 every 2 hours, 08:00 to 22:00 JST, weekdays.
-- Before every send, both runs look for the action key on an Activity, then check Zoya's Sent folder and the thread for a message to that recipient after the action's raised date. Any match means don't send: log the Activity if it's missing, complete the action and move on.
-- The Activity is written only after a send receipt, with Source ID "action:<key>". An uncertain result leaves the action pending, and it's retried once after the Sent check. This is the same pattern as Codex's Sarika fix.
+- **Every send passes the action key as the sending tool's idempotency key** (MCP Emails email_compose idempotency_key, which runs once per key within 24 hours; keys over its 200-character limit are passed as a SHA-256 of the full key). Beyond 24 hours, the action's own completion and the thread check carry the dedupe. This is what stops two runs sending the same action at the same moment. Staggering and the Sent check only reduce how often it gets tested (v2.1, Codex).
+- Before sending, a run looks for the action key on an Activity. Then it checks the thread for a message from us that matches this specific action:
+  - same thread;
+  - after the action was raised;
+  - and it does what the action asks: the offer for an offer, the slots ask for a slots ask, the answer to that question.
+
+  A later acknowledgement, holding reply, loop-in or unrelated mail doesn't complete the action (v2.1, Codex). Only a match means don't send: log the Activity if it's missing, complete the action and move on.
+- **Identity stays separate (v2.1, Codex).** The Activity's Source ID stays the canonical message identity (the Message-ID header, per Codex's audit fix 2), so mailbox ingestion recognises it and never logs it twice. The action key goes in its own field on the Activity (a new text property, "Action key"). It's written only after a send receipt. An uncertain result leaves the action pending, and it's retried with the same idempotency key after the thread check. This is the same pattern as Codex's Sarika fix.
 
 ### 3. Reconcile, don't resend
 
@@ -73,9 +92,9 @@ Accept the split only if, over 7 days:
 
 | Measure | Target | Source |
 | --- | --- | --- |
-| Akshay decision queued until sent | 95% within 2 hours, none over 24 | action key times vs Activity times |
-| Reply owed until reply or holding reply | none over 1 working day | daily sweep reconcile |
-| Long-term and nurture actions progressing | no action unattempted more than 3 days past due | last-attempted notes |
+| Akshay decision queued until sent | 95% within 2 working hours, none over 24 (quiet hours and explicit holds excluded) | action key times vs Activity times |
+| Substantive ask until answered | holding reply within 1 working day; substantive answer within 1 working day of Akshay's decision, when one is needed | daily sweep reconcile |
+| Long-term and nurture actions progressing | completed actions (sent and matched), not attempts; no due action uncompleted more than 3 working days past due without a written hold | Activities with Action key |
 | Duplicate sends | 0, including on retries | Sent folder vs Activities |
 | Duplicate Activities | 0 on a full mailbox reread | Codex's acceptance test |
 | Cost per day | within 20% of the week before the trial | run usage |
@@ -88,13 +107,17 @@ FAST "always finishes" and "flat cost" are hypotheses the trial tests.
 2. Main builds the action format into every routine that writes Zoya steps (inbox, calendar, WhatsApp, sweep, Zoya), and the two prompts from shared files. Cleanup reviews it.
 3. Replay 21 Oct and a crash test before go-live:
    - Byufuel and Escobar clear in FAST's first run.
-   - A send killed after delivery and before logging is found by the Sent check and logged once.
-   - FAST and SLOW started at the same minute on one row send nothing twice.
+   - A send killed after delivery and before logging is found by the thread check and logged once.
+   - FAST and SLOW started at the same minute on one action send once: the idempotency key holds.
+   - Two actions raised on one row the same day get different keys and both complete.
+   - A holding reply leaves the substantive action open.
+   - A full mailbox reread creates no new Activities.
+   - Old-format queued steps are picked up and keyed.
 4. Akshay's yes in Main's chat, then go live, with the CTO reading the trial measures daily and reporting a verdict on day 7.
 
 ## Not in v2
 
-No Priority field, no new database, no separate watchdog sender. One extra trigger (SLOW) and shared rule files in the repo.
+No Priority field, no new database, no separate watchdog sender. Added: one extra trigger (SLOW), shared rule files in the repo, and one text property on Activities ("Action key").
 
 ## Decisions needed
 
