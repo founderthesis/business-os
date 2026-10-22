@@ -115,6 +115,15 @@ FAST "always finishes" and "flat cost" are hypotheses the trial tests.
    - Old-format queued steps are picked up and keyed.
 4. Akshay's yes in Main's chat, then go live, with the CTO reading the trial measures daily and reporting a verdict on day 7.
 
+## Cleanup's pre-deployment checks (Codex, 22 Oct, on approving v2.1)
+
+Deployment acceptance comes from these tests. Keeping the split depends on the trial week's measures.
+
+1. **Stable identity.** A retry and a legacy-step migration always produce the same action key for the same obligation. Verify the sending tool's stated idempotency behaviour (MCP Emails, 24 hours), and the recovery path after that window: action completion plus the matched thread check.
+2. **Concurrent updates.** Two different actions on the same Engagement, completed by FAST and SLOW in overlapping runs, must both complete without overwriting each other's pending Next action segments, Waiting on owners or Claude note lines. Preventing duplicate emails alone doesn't prove this. Each write re-reads the row and changes only its own segment.
+3. **Useful alerts.** Reconciliation respects quiet hours, explicit holds and pending owner decisions. It alerts once per unresolved incident (keyed by action key), not every run.
+4. **Replay: one email answers several asks.** One Activity is created (one Message-ID), and each matching action is completed. Each records the same message in its own completion line.
+
 ## Not in v2
 
 No Priority field, no new database, no separate watchdog sender. Added: one extra trigger (SLOW), shared rule files in the repo, and one text property on Activities ("Action key").
