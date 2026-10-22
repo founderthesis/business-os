@@ -6,8 +6,8 @@ Built 22 Oct on the live prompts after the Codex batch went live (Zoya 62,409 / 
 
 | Output | Bytes | sha256 (first 16) | How |
 | --- | --- | --- | --- |
-| zoya-fast | 32,275 | d668031a3dfc74c0 | `python3 routines/zoya/build.py <out>` |
-| zoya-slow | 59,590 | 4ec8f42428b4c4cc | same |
+| zoya-fast | 32,527 | 76b24e63b249ac1d | `python3 routines/zoya/build.py <out>` |
+| zoya-slow | 59,685 | 53d9a084456d8f27 | same |
 | inbox + ACTION KEYS | 62,516 | 4ea87b9dfe33dad6 | `python3 docs/proposals/d394-keys.py <live dir> <out>` |
 | calendar + ACTION KEYS | 57,246 | 74b272ae87917e5e | same |
 | sweep + ACTION KEYS | 33,732 | 21abf475a49da21e | same |
@@ -22,11 +22,11 @@ The CTO accepted about 30 KB for the trial: keep the rules for threads Zoya isn'
 
 ## Added on the CTO's notes of 22 Oct
 
-- Version on the run record: each prompt's RUN RECORD writes its deployment reference as "zoya-fast 7a1566ae8ca5" or "zoya-slow dcf544029889", the first 12 hex of the sha256 of the prompt with the stamp written as @@VERSION@@. build.py stamps it, so the trial measures can tie each run to a version. Only Zoya writes run records; the inbox, calendar, sweep and WhatsApp routines have none.
+- Version on the run record: each prompt's RUN RECORD writes its deployment reference as "zoya-fast 4c310b120755" or "zoya-slow 046dad5c053b", the first 12 hex of the sha256 of the prompt with the stamp written as @@VERSION@@. build.py stamps it, so the trial measures can tie each run to a version. Only Zoya writes run records; the inbox, calendar, sweep and WhatsApp routines have none.
 - Double sends (d-dbl22, CTO 22 Oct): ONE MAIL PER PERSON PER RUN groups each run's sends by To address, in FAST and SLOW alike (action keys are per Engagement, so they don't catch it); SENDING builds a reply as a draft with To and Cc from the thread wherever the team wrote last, and never sends a mail whose only recipients are team.
 - Rules for Zoya page: the CTO already removed "works for us." (22 Oct), so it is off the deploy list.
 - Decision 398 (a call cancelled in writing is admin): Zoya's mail and hard-rule lines carried into the mail and hard parts. The ACTION KEYS delta's calendar base is today's live calendar; once d398 is live (calendar 57,489 / c80b63e6bcf2e6ee), rebase d394-keys.py on it before the split deploys.
-- Decision 399 (never describe the guest's company): no part file asks for a business detail. The inbox's STEP 6c instruction goes in d399.py; once it is live, rebase d394-keys.py's inbox base on it too.
+- Decision 399 (never describe the guest's company): no part file asks for a business detail. The inbox's STEP 6c instruction goes in d399.py, and Zoya's STEP 0e strip plus the LEAK CHECK line are in d399.py and in the decision and hard parts; once it is live, rebase d394-keys.py's inbox base on it too.
 - Decision 395 (LinkedIn numbers are "us" and rounded, no breakdown): no part file carries audience numbers or show facts; mails take them from the sales page and Rules for Zoya, which already carry 395. Nothing to change in the build.
 
 ## Cleanup's checks, and the text each relies on
