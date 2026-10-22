@@ -1,13 +1,13 @@
 # Zoya split: build for Cleanup (decision 394)
 
-Built 22 Oct on the live prompts after the Codex batch went live (Zoya 62,409 / 6d26eaafecc9c94e), with the double-send fixes of d-dbl22 carried in (Zoya with them: 63,645 / 1569e456e69e6c4f). Spec: `zoya-split.md` v2.1. Nothing here is deployed. Deploy only on Akshay's yes in Main's chat, after Cleanup's checks pass.
+Built 22 Oct on the live prompts after the Codex batch went live (Zoya 62,409 / 6d26eaafecc9c94e), with the double-send fixes of d-dbl22 and decision 398 (d398) carried in (Zoya with both: 63,774 / 3a77bf84e14d18e1). Spec: `zoya-split.md` v2.1. Nothing here is deployed. Deploy only on Akshay's yes in Main's chat, after Cleanup's checks pass.
 
 ## What's built
 
 | Output | Bytes | sha256 (first 16) | How |
 | --- | --- | --- | --- |
-| zoya-fast | 31,614 | 194928d1a06205f2 | `python3 routines/zoya/build.py <out>` |
-| zoya-slow | 58,954 | b72abda40fc7c1df | same |
+| zoya-fast | 31,743 | 73e807d58490adc3 | `python3 routines/zoya/build.py <out>` |
+| zoya-slow | 59,031 | 0d6b0e073b354b4d | same |
 | inbox + ACTION KEYS | 62,516 | 4ea87b9dfe33dad6 | `python3 docs/proposals/d394-keys.py <live dir> <out>` |
 | calendar + ACTION KEYS | 57,246 | 74b272ae87917e5e | same |
 | sweep + ACTION KEYS | 33,732 | 21abf475a49da21e | same |
@@ -22,9 +22,10 @@ The CTO accepted about 30 KB for the trial: keep the rules for threads Zoya isn'
 
 ## Added on the CTO's notes of 22 Oct
 
-- Version on the run record: each prompt's RUN RECORD writes its deployment reference as "zoya-fast 1a3b02e8a2aa" or "zoya-slow feefb6e8a8db", the first 12 hex of the sha256 of the prompt with the stamp written as @@VERSION@@. build.py stamps it, so the trial measures can tie each run to a version. Only Zoya writes run records; the inbox, calendar, sweep and WhatsApp routines have none.
+- Version on the run record: each prompt's RUN RECORD writes its deployment reference as "zoya-fast a6a087f61d97" or "zoya-slow 8b00714b48b3", the first 12 hex of the sha256 of the prompt with the stamp written as @@VERSION@@. build.py stamps it, so the trial measures can tie each run to a version. Only Zoya writes run records; the inbox, calendar, sweep and WhatsApp routines have none.
 - Double sends (d-dbl22, CTO 22 Oct): ONE MAIL PER PERSON PER RUN groups each run's sends by To address, in FAST and SLOW alike (action keys are per Engagement, so they don't catch it); SENDING builds a reply as a draft with To and Cc from the thread wherever the team wrote last, and never sends a mail whose only recipients are team.
 - Rules for Zoya page: the CTO already removed "works for us." (22 Oct), so it is off the deploy list.
+- Decision 398 (a call cancelled in writing is admin): Zoya's mail and hard-rule lines carried into the mail and hard parts. The ACTION KEYS delta's calendar base is today's live calendar; once d398 is live (calendar 57,489 / c80b63e6bcf2e6ee), rebase d394-keys.py on it before the split deploys.
 - Decision 395 (LinkedIn numbers are "us" and rounded, no breakdown): no part file carries audience numbers or show facts; mails take them from the sales page and Rules for Zoya, which already carry 395. Nothing to change in the build.
 
 ## Cleanup's checks, and the text each relies on
