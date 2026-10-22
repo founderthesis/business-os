@@ -6,8 +6,8 @@ Built 22 Oct on the live prompts after the Codex batch went live (Zoya 62,409 / 
 
 | Output | Bytes | sha256 (first 16) | How |
 | --- | --- | --- | --- |
-| zoya-fast | 30,363 | 06e02da3d8d8c6c9 | `python3 routines/zoya/build.py <out>` |
-| zoya-slow | 57,681 | 37be2effa0bc451a | same |
+| zoya-fast | 30,689 | ebd8c8dac2ccce0d | `python3 routines/zoya/build.py <out>` |
+| zoya-slow | 58,007 | 6c118861da53c4d4 | same |
 | inbox + ACTION KEYS | 62,516 | 4ea87b9dfe33dad6 | `python3 docs/proposals/d394-keys.py <live dir> <out>` |
 | calendar + ACTION KEYS | 57,246 | 74b272ae87917e5e | same |
 | sweep + ACTION KEYS | 33,732 | 21abf475a49da21e | same |
@@ -16,13 +16,15 @@ Built 22 Oct on the live prompts after the Codex batch went live (Zoya 62,409 / 
 - Coverage: `build.py <out> <live Zoya prompt>` lists 13 live lines neither prompt carries word for word. All 13 are intended split edits: the intro, YOUR QUEUE, RUN ORDER (now FAST ORDER and SLOW ORDER), the report, the Action key edits to INTERNAL TASKS, SENDING, STEP 0e, STEP 1 a/b/e and AFTER SEND, the run-record name, and the hard WhatsApp line.
 - WhatsApp routine: unchanged. Its only Zoya step is the snooze segment, which keeps its own form (spec).
 
-## FAST is over the 25 KB target by 4,763 bytes
+## FAST size: about 30 KB for the trial (CTO, 22 Oct)
 
-FAST already leaves out everything it doesn't use: WhatsApp, web search, vendor forms, internal tasks, Mail issues, peers, Task-row creation, un# routine timing, two-show follow-ups and the release-mail exception. What's left is the rules a reply or decision run needs (sending, mail, scope for the three client shows, decision mail, hard rules, actions). Getting to 25 KB means changing behavior, so it's the CTO's call. The options:
+The CTO accepted about 30 KB for the trial: keep the rules for threads Zoya isn't on yet, and don't move rules to run-time page reads. The actual byte counts go in the trial log (above, and on the developer page at deploy). Trim after week 1 if FAST runs over time.
 
-1. Accept about 30 KB as the trial size. It's still half the single prompt.
-2. In FAST, drop SENDING's two paragraphs for a thread Zoya isn't on (about 1.9 KB). FAST would then loop in and send next run, the way decision mails already do. That's a slower path for short replies on threads she isn't on.
-3. Point FAST at Rules for Zoya sections 2 and 4 for copies, voice and the leak, show and context checks (about 3 KB). The page is staler than the prompt (it still shows "works for us.", which decision 392 banned), so this needs a page refresh first.
+## Added on the CTO's notes of 22 Oct
+
+- Version on the run record: each prompt's RUN RECORD writes its deployment reference as "zoya-fast a6d4dd148d42" or "zoya-slow 92cdf09faef9", the first 12 hex of the sha256 of the prompt with the stamp written as @@VERSION@@. build.py stamps it, so the trial measures can tie each run to a version. Only Zoya writes run records; the inbox, calendar, sweep and WhatsApp routines have none.
+- Reply recipients: SENDING now says MCP Emails' reply goes to the thread's last sender, so when the last message is ours, Zoya creates a draft reply, sets To and Cc, reads it back, and sends that draft (from the 12:38 run).
+- Rules for Zoya page: "works for us." becomes "that time is fine for us." (decision 392). This is a page edit, applied in the deploy window below.
 
 ## Cleanup's checks, and the text each relies on
 
@@ -41,4 +43,5 @@ The spec's go-live replays (21 Oct, crash test, same-minute FAST and SLOW, two a
 2. Deploy the ACTION KEYS delta to the inbox, calendar and sweep in the same window as the split, never before: the live single Zoya prompt doesn't read the keyed form.
 3. Point the Zoya trigger at zoya-fast (cron unchanged, CRON_TZ=Asia/Tokyo 30 7-23 * * *).
 4. Create the SLOW trigger: CRON_TZ=Asia/Tokyo 0 8-22/2 * * 1-5, Zoya's connectors.
-5. Read each back, sync `routines/`, and update the developer page and Change log.
+5. On Rules for Zoya, section 1, Zoya's tone: replace "works for us." with "that time is fine for us.".
+6. Read each back, sync `routines/`, update the developer page and Change log, and record FAST and SLOW bytes and version stamps in the trial log.

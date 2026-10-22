@@ -3,7 +3,8 @@ in routines/zoya/parts. Every rule lives in one part file; the manifests below s
 few per-prompt rewrites are listed in VARIANT. Usage: python3 build.py <out dir> [<single-prompt source to check coverage>]
 Writes zoya-fast.txt and zoya-slow.txt, prints bytes and the first 16 of sha256, flags a FAST prompt over the 25 KB target, refuses any
 prompt over the 65,536-byte cap less 200, or an em dash. With a source prompt, it also lists every source line that neither
-output carries word for word (the lines the split rewrote on purpose)."""
+output carries word for word (the lines the split rewrote on purpose). Each prompt's run record names its version, "zoya-<fast|slow>
+<12 hex>": to check one, write that stamp back as @@VERSION@@ and sha256 the prompt."""
 import sys, os, re, hashlib
 HERE = os.path.dirname(os.path.abspath(__file__))
 PARTS = os.path.join(HERE, "parts")
@@ -62,6 +63,9 @@ def build(name, manifest):
         assert texts[n].count(a) >= 1, (name, n, a[:50])
         texts[n] = texts[n].replace(a, b)
     s = "\n\n".join(texts[n] for n in manifest) + "\n"
+    # version stamp for the run record: first 12 of the sha256 of the prompt with the stamp written as @@VERSION@@
+    assert s.count("@@VERSION@@") == 1, (name, "version placeholder")
+    s = s.replace("@@VERSION@@", f"zoya-{name} {hashlib.sha256(s.encode()).hexdigest()[:12]}")
     b = s.encode()
     assert "—" not in s, (name, "em dash")
     assert len(b) <= 65536 - 200, (name, len(b))
