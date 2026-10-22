@@ -6,12 +6,12 @@ Reviewed 22 Oct on `zoya-split-build.md` at a8dd253, with d-dbl22 and Cleanup's 
 
 The text passes the four checks. It is **not accepted for deploy** until Main posts the replay outputs below: the gate is behaviour on live data, not wording.
 
-Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`, `sending.txt`, and d398 in `mail.txt` and `hard.txt`):
+Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`, `sending.txt`, d398 in `mail.txt` and `hard.txt`, d399 in `decision.txt` and `hard.txt`):
 
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
-| zoya-fast | 32,275 | d668031a3dfc74c0 |
-| zoya-slow | 59,590 | 4ec8f42428b4c4cc |
+| zoya-fast | 32,463 | 27ffbf84c540e360 |
+| zoya-slow | 59,685 | 53d9a084456d8f27 |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
