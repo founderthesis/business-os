@@ -1,67 +1,102 @@
-# Proposal: split Zoya's run so urgent mail always goes
+# Proposal v2: a reduced FAST/SLOW trial for Zoya
 
-Status: proposed by the CTO session, 22 Oct 2026. Needs Akshay's yes. For review by the Codex CTO.
+Status: v2, 22 Oct 2026, revised after the Codex CTO's review of v1. Needs Akshay's yes before anything is built. Builds only after d390 (deploying now) and Codex's three audit fixes are live.
 
 ## Why
 
-Zoya missed four approved mails in two days. Byufuel and Escobar Bandra got Akshay's "offer sponsored" call on 21 Oct, and both mails sat queued until the CTO sent them by hand on 22 Oct. Every miss has the same cause: one hourly run does all of Zoya's work and stops before it finishes.
+Zoya missed four approved mails in two days. On 21 Oct the 16:38, 17:38 and 21:38 JST runs ended Partial. The 21:38 run spent about 32 minutes on 5 overdue long-term chases and logged "other due follow-ups not worked (time and context limits)". Byufuel and Escobar Bandra had Akshay's "offer sponsored" queued, and both went out only when the CTO sent them by hand on 22 Oct.
 
-What the run records show (Activities "Run zoya ...", 21 Oct):
+Two causes:
 
-- The 16:38, 17:38 and 21:38 JST runs ended Partial. The 21:38 record says "other due follow-ups not worked (time and context limits)". It spent about 32 minutes on 5 overdue long-term chase rows.
-- Before any work, each run reads its prompt (about 59 KB) and the Notion pages it controls by: Rules for Zoya (about 59 KB), the wording page (about 57 KB), Cadences, and the routine pages. That's more than 150 KB of rules per run.
-- A long-term chase is the most expensive row. Zoya reads the whole thread (some have 50+ mails), checks the person's other rows for the 7-day limit, runs the staleness gate, then writes, logs and updates. That's 10 to 20 tool calls per row.
-- The rules say replies and Akshay's decisions come first, but the run worked due rows oldest first. The queue cleanup (decision 381) and nurture had just made dozens of old rows due, so they filled the run.
-- Nothing checks that what was due was sent. Akshay found the misses himself.
+1. **Cheap urgent work and expensive chases share one run.** Every run first loads the 59 KB prompt plus Rules for Zoya, the wording page and Cadences. That's more than 150 KB before any work. A long-term chase then reads whole threads and checks contact limits, at 10 to 20 tool calls a row. Urgent replies wait behind that work.
+2. **Nothing reconciles what was due against what was sent.** Akshay found the misses himself.
 
-The d390 batch (Cleanup accepted, e6605af) fixes the order and caps long-term chases at 10 a run. That stops today's failure. Two things stay true after it: replies and decisions still share a run with expensive chases, and a run that dies halfway goes unnoticed.
+d390 fixes the order: replies and queued decisions run first, and long-term chases are capped at 10 a run. v2 builds on that rather than replacing it.
+
+## What changed from v1 (Codex's points)
+
+| v1 | v2 | Why |
+| --- | --- | --- |
+| A whole Engagement belongs to FAST or SLOW, set by a Priority formula | Each pending **action** has a stable key and a type, and the action type decides the run. No Priority field | One row can hold a reply owed, a booking chase and a community-add ask. A formula can't see mailbox state |
+| Dedupe on Activity Source IDs | The same **action key** in both runs, plus a fresh Sent and thread check right before sending. Runs staggered | Provider message IDs exist only after a send, so two runs could both pass the Activity check |
+| Watchdog inside FAST, sends what it finds | **Reconcile only**, from SLOW and the daily sweep: check Sent and the thread first, then hand the action to the normal send path | A crash can leave a sent mail with no Activity, and FAST can't detect itself not running |
+| Capped rows held a working day | Capped actions **stay overdue**; the next run takes the least recently attempted first | A processing cap is not a business hold |
+| One prompt with a MODE line | **Two generated prompts** from shared rule files | A MODE line doesn't shrink what each run reads |
+| "Always finishes", "roughly flat cost" | **Hypotheses** with numbers to measure in the trial | Not shown yet |
 
 ## What
 
-Same routine, same rules, same inbox. Two schedules and one check.
+### 1. Actions, keyed
 
-1. **Zoya, fast run (hourly, 07:30 to 23:30 JST).** Only:
-   - replies to anyone outside the team who wrote to us;
-   - queue steps from Akshay's decisions (Waiting on Zoya where the step comes from his call or Your call);
-   - holding replies (decision 390);
-   - the watchdog (point 3).
+An action is one obligation on an Engagement. It's either a segment of Next action, or a reply owed on a thread linked to the row. Each has a key:
 
-   It reads only the rule sections these need. When nothing is due, it ends in under a minute.
-2. **Zoya, slow run (every 2 hours, 08:30 to 22:30 JST, weekdays).** Follow-ups by routine, nurture, revivals, long-term chases, the owner mail and the Monday scorecard. It keeps the d390 cap of 10 long-term rows a run, and any row it doesn't reach is held a working day with the reason written. It never touches a row the fast run owns.
-3. **Watchdog, inside the fast run (no new routine).** Each run checks two things:
-   - an Akshay decision queued for Zoya more than 2 hours ago, with no sent Activity;
-   - a message to Zoya's or Akshay's inbox from outside the team, older than one working day, with no reply and no hold rule that explains it (a pending Akshay decision gets a holding reply under decision 390).
+`<engagement id>:<type>:<raised date YYYY-MM-DD>[:<thread id>]`
 
-   It sends what's due with the approved wording and posts one line in the Zoya WhatsApp group: "Zoya ✨ caught 2: <names>, sent now". The Monday scorecard adds one number, inbound mail unanswered over 24 hours. The target is zero.
-4. **A computed priority field on Engagements.** A formula, set by no one: 1 = Akshay's decision or a reply owed, 2 = active follow-up, 3 = nurture or long-term chase. Each run selects its rows by Priority, Waiting on and Next date, never by reading Next action text.
+The types and which run owns each:
+
+| Type | Example | Run |
+| --- | --- | --- |
+| reply | someone outside the team wrote on a thread linked to the row and is owed an answer | FAST |
+| decision | a step from Akshay's call or Your call ("Zoya: send Akshay's decision mail") | FAST |
+| hold | holding reply (decision 390) | FAST |
+| followup | routines 1 to 5 chain steps | SLOW |
+| nurture | nurture, revival, long-term chase | SLOW |
+| team | WhatsApp to Jaya, Sarika or Ranjita, internal asks | SLOW |
+
+Next action segments start with their owner today ("Zoya: ..."). v2 adds the type and the raised date in a fixed short form, for example "Zoya [decision 2026-10-21]: send Akshay's decision mail". Every routine that writes a Zoya step writes this form, so the step can be selected without reading prose. Completing an action removes only its own segment and leaves the others.
+
+Reply-owed actions are found from the mailboxes: the latest message on a linked thread is from outside the team and has no later message from us. That check runs in FAST against both inboxes, reusing the inbox routine's thread matching.
+
+### 2. Sending safely
+
+- FAST runs at :30 every hour, 07:30 to 23:30 JST. SLOW runs at :00 every 2 hours, 08:00 to 22:00 JST, weekdays.
+- Before every send, both runs look for the action key on an Activity, then check Zoya's Sent folder and the thread for a message to that recipient after the action's raised date. Any match means don't send: log the Activity if it's missing, complete the action and move on.
+- The Activity is written only after a send receipt, with Source ID "action:<key>". An uncertain result leaves the action pending, and it's retried once after the Sent check. This is the same pattern as Codex's Sarika fix.
+
+### 3. Reconcile, don't resend
+
+- **SLOW, every run:** checks FAST's last run record. If FAST hasn't run in 90 minutes, or any decision or reply action is older than 2 hours, it reconciles: Sent and the thread first; if a mail was sent, it logs and completes the action; if not, it hands the action to FAST by keeping it due and leaves a note on the row. It doesn't send itself.
+- **Daily sweep:** the same check across all actions, plus inbound mail unanswered for more than one working day.
+- **WhatsApp alert** to Akshay's Zoya group only when an action is still unresolved after one reconcile pass.
+
+### 4. Fair ordering
+
+Within each run, actions are ordered by type, then by the date of the last attempt (oldest first), then by raised date. When a run hits its cap, unfinished actions stay due and carry a "last attempted <time>" note, so the next run starts with others. Nothing is postponed by a fixed delay.
+
+### 5. Smaller prompts
+
+The rules split into shared files: voice and links, sending and quiet hours, logging, contact limits, and the action format. Two deployed prompts are built from them: zoya-fast (replies, decisions, holds) and zoya-slow (routines 1 to 8, nurture, team, owner mail, scorecard). The target is FAST at 25 KB or less. Each prompt lists the Notion pages and sections it reads. FAST doesn't load the follow-up chains or the nurture rules.
+
+## Trial: one week, then keep or drop
+
+Accept the split only if, over 7 days:
+
+| Measure | Target | Source |
+| --- | --- | --- |
+| Akshay decision queued until sent | 95% within 2 hours, none over 24 | action key times vs Activity times |
+| Reply owed until reply or holding reply | none over 1 working day | daily sweep reconcile |
+| Long-term and nurture actions progressing | no action unattempted more than 3 days past due | last-attempted notes |
+| Duplicate sends | 0, including on retries | Sent folder vs Activities |
+| Duplicate Activities | 0 on a full mailbox reread | Codex's acceptance test |
+| Cost per day | within 20% of the week before the trial | run usage |
+
+FAST "always finishes" and "flat cost" are hypotheses the trial tests.
 
 ## How
 
-1. **Prompt.** One prompt file, routines/zoya.md, with a MODE line at the top that each trigger sets (FAST or SLOW). Shared rules stay in one place. Each mode lists the Notion sections it reads, so the fast run doesn't load the follow-up chains or the nurture rules.
-2. **Triggers.** The existing Zoya trigger becomes FAST, and one new trigger runs SLOW. Both use the same connectors (MCP Emails, Notion, Gmail read, Calendar read, Blueticks).
-3. **Notion.** Add the Priority formula to Engagements, plus one view, "Zoya due", sorted by Priority then Next date. No new database.
-4. **Ownership.** Rows at Priority 1 belong to FAST and the rest to SLOW. If a row changes priority mid-run, the next run of the right mode picks it up. Dedupe stays on Activity Source IDs, so a mail is never sent twice.
-5. **Build order.**
-   1. Deploy d390 (accepted).
-   2. Deploy Codex's three audit fixes: owner mail selects guest decisions, one message identity per send, Sarika edit notes logged only after a send receipt. These make "one ask, one verified send, one Activity, one next step" true, and the watchdog depends on that.
-   3. Build this split. Cleanup reviews it, then it goes live on Akshay's yes in Main's chat.
-6. **Test before go-live.** Replay 21 Oct against the new prompts. FAST must send Byufuel and Escobar within its first run. SLOW must work the long-term rows within its cap. The watchdog must flag nothing that was sent and catch a queued decision we hold back on purpose.
+1. d390 goes live (in progress). Next batch: Codex's three fixes, plus the d390 cap rule changed from "held a working day" to "stays overdue, least recently attempted first".
+2. Main builds the action format into every routine that writes Zoya steps (inbox, calendar, WhatsApp, sweep, Zoya), and the two prompts from shared files. Cleanup reviews it.
+3. Replay 21 Oct and a crash test before go-live:
+   - Byufuel and Escobar clear in FAST's first run.
+   - A send killed after delivery and before logging is found by the Sent check and logged once.
+   - FAST and SLOW started at the same minute on one row send nothing twice.
+4. Akshay's yes in Main's chat, then go live, with the CTO reading the trial measures daily and reporting a verdict on day 7.
 
-## Cost
+## Not in v2
 
-- **FAST:** 17 runs a day. Most find nothing and end quickly, so the extra cost is small. The current hourly run already pays the full rule-reading cost every time.
-- **SLOW:** 8 runs a weekday. It does the heavy work the single run does today, spread over fewer runs, so it costs about the same or less.
-- **Net:** roughly flat on tokens, in exchange for a guaranteed path for urgent mail.
+No Priority field, no new database, no separate watchdog sender. One extra trigger (SLOW) and shared rule files in the repo.
 
-## Risks and how they're handled
+## Decisions needed
 
-- **Two runs write the same row.** Ownership is by Priority; dedupe uses Source IDs, and the 7-day limit reads Activities, so a mail from either run counts once.
-- **Rules drift between modes.** One file and one set of Notion pages; modes only choose what to load.
-- **The watchdog duplicates a send.** It sends only when no Activity exists for that step, and it uses the same Source ID the run would have used.
-- **More moving parts.** One more trigger and one formula. No new database, page or decision process.
-
-## Decision needed
-
-Akshay: yes or no on the split (points 1 to 4), built after d390 and Codex's three fixes are live.
-
-Codex: comments welcome, especially on the Priority formula, the ownership rule, and whether the watchdog belongs in the fast run or the daily sweep.
+- **Akshay:** yes or no to the trial, built after the fixes above.
+- **Codex:** comments, especially on the action format in Next action, the reply-owed detection, and whether SLOW's reconcile check gives enough coverage between sweeps.
