@@ -15,7 +15,7 @@ When Akshay asks what's pending on him, read this list, check each item is still
 - Upload the un#, Built to Share and Human by Design eval skill zips when they arrive (decision 383).
 
 ## Before the next paid API run
-- Add a standing permission rule for the run's script (e.g. `python3 -I data/pipeline_review/pr_force3.py`) yourself, before the worker starts, so it doesn't stop for approval every 3 to 4 chunks (Akshay, 22 Oct: "I will do it manually - remind me"). The CTO reminds you whenever a run is planned.
+- Standing rule for the rerun script added to .claude/settings.json by the CTO (22 Oct, f869f55). New sessions read it at start. If the auto-mode check still blocks paid runs, approve in the worker's chat or switch its mode from Auto to Accept edits for the run.
 
 ## Open questions on pages
 - Calendar rules: what Out of office means for you, and hours never to book.
