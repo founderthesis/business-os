@@ -21,3 +21,7 @@ When Akshay asks what's pending on him, read this list, check each item is still
 - Calendar rules: what Out of office means for you, and hours never to book.
 - Rules for Zoya: keep the day-before release WhatsApp? Should the agent write the 3 post options from the transcript?
 - Inbox items from 13 Oct: FieldAssist contract revision; Sanjiv Bajaj call follow-up. Still open?
+
+## Go-aheads (23 Oct)
+- Deploy two fixes once Cleanup accepts them. 1/ Follow-up selection (d-sel23): 29 overdue chases were never picked up. 2/ Message identity (d-msgid23): one mail was logged twice.
+- Trash one duplicate Activity, Pranav's 22 Oct acknowledgement (the copy keyed "gmail:1a163a17a75785e4"), so the 7-day rule counts that mail once (decision 384).
