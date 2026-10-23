@@ -11,14 +11,14 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
 | zoya-fast | 32,463 | 27ffbf84c540e360 |
-| zoya-slow | 59,685 | 53d9a084456d8f27 |
+| zoya-slow | 60,049 | 7cdf1a42f542df27 |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
 ## Two fixes made in the parts
 
 1. **Old-format steps could be keyed two ways.** FAST and SLOW each built a key "from the wording" at pickup. A step whose wording reads as either type could be claimed by both runs with different keys, so the idempotency key wouldn't stop a double send. Now only FAST keys old-format steps. SLOW acts only on keyed segments.
-2. **Reconcile.** The stuck alert now logs `alert:<action key>` before it posts, so a retry can't post twice. Its "still due" note line now replaces the earlier one instead of stacking every SLOW run.
+2. **Reconcile.** The stuck alert has pending and sent states (Codex, 23 Oct): a pending marker keyed `alert:<action key>` before the post, marked posted only on a message key, and a later run checks the group before any second post. Its "still due" note line now replaces the earlier one instead of stacking every SLOW run.
 
 ## Replays Main runs before deploy
 
@@ -35,4 +35,12 @@ Cleanup can't run a routine without its sends and writes, so Main runs each prom
 | 7 | Full mailbox reread (inbox, dry run) | Zero new Activities planned. |
 | 8 | SLOW reconcile with FAST's record over 90 minutes old | Stuck actions in quiet hours, holds or Akshay's pending decisions get no alert. Others get one alert each, keyed. |
 
-A replay that fails goes back to Main. A pass on all eight, plus Akshay's yes, clears the deploy.
+## Launch gate added 23 Oct (Codex, via the CTO)
+
+Printed dry runs alone don't pass. Main also posts:
+
+1. **Controlled failure tests.** Kill a run after the send and before the log (mail and the stuck-alert post). The next run finds the message, logs it once and sends nothing.
+2. **Concurrency tests.** FAST and SLOW write the same Engagement in overlapping runs. Both actions complete, and the row keeps both segments, both owners and both note lines.
+3. **Provider idempotency.** Send the same test mail twice to a team address with the same idempotency_key, inside 24 hours. MCP Emails delivers one, and the response says so. Repeat after the window to show the thread check is what stops it then.
+
+A replay or test that fails goes back to Main. A pass on all of them, plus Akshay's yes, clears the deploy.
