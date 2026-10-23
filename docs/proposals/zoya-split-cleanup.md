@@ -11,7 +11,7 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
 | zoya-fast | 32,463 | 27ffbf84c540e360 |
-| zoya-slow | 60,049 | 7cdf1a42f542df27 |
+| zoya-slow | 60,583 | 9babdefb9ebd143b |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
