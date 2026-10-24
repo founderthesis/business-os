@@ -24,5 +24,5 @@ When Akshay asks what's pending on him, read this list, check each item is still
 - Inbox items from 13 Oct: FieldAssist contract revision; Sanjiv Bajaj call follow-up. Still open?
 
 ## Go-aheads (23 Oct)
-- Deploy two fixes in Main's chat (Cleanup accepted d-sel23 on 23 Oct; d-msgid23 waits on its review). 1/ Follow-up selection (d-sel23): 29 overdue chases were never picked up. 2/ Message identity (d-msgid23): one mail was logged twice.
-- Trash one duplicate Activity, Pranav's 22 Oct acknowledgement (the copy keyed "gmail:1a163a17a75785e4"), so the 7-day rule counts that mail once (decision 384).
+- Done 23 Oct: the follow-up fix (d-sel23) is live, and the duplicate Pranav Activity is in Trash.
+- Still to come: your yes on the message identity fix (d-msgid23), then on the invite rules (d-invites, decisions 400, 403, 406), each after Cleanup accepts it.
