@@ -647,3 +647,33 @@ Checks:
 - Retry double-send: one writer at a time, plus the 24-hour key, the unique Sent match and the decision 414 hold.
 - Bytes and hashes: above.
 
+## Rounds 5 and 5b, d-split26t and d-split26u, re-pinned to d0216f5 (f884dd7 to 9770ee8)
+
+**Verdict: accepted. Two pre-deploy items from e63106e are still open.**
+
+Reproduced: zoya-one **40,254 / 5ffcec2b6c1baf54**, built twice from the parts with branch `claude/business-os-structure-k3sqo5` and pin d0216f5a57cf..., matching the committed release file byte for byte. The pinned work file at d0216f5 hashes to 85d532e8d94c3c6a (61,358 B), as the prompt expects. Cleanup's LOCK fix (fetch again after a failed push) is in.
+
+**Round 5: 10 of 10 on both runs** (C, D, E, G, R1, R2, R3, I3, I4, SKIP), on the one-writer build. **Round 5b:** G, I3 and SKIP pass on both runs.
+- I3 shows the full outage path: hourly runs write only "Skipped: lock held by ...", the runbook releases, and the next run finds the one candidate, logs it and doesn't resend.
+- SKIP shows a held lock costs one record and nothing else.
+
+**d-split26t: sound.**
+- LOCK now comes before the Notion rules read; "before anything else" had contradicted it.
+- A skipped run's record is created once, as Skipped.
+- The Sent scan reaches back past a lock outage.
+- `@@VERSION@@` is now stamped.
+
+**d-split26u: sound.** The scan reaches back to the earliest run that took the lock since the last Completed one, with Skipped records not counting, so a crash before a day-long outage is still found. Two notes:
+- Partial runs, such as a daily cap, also don't end Completed. A run of Partial days widens the scan. That's a cost, not a risk, and it's bounded by the next Completed run.
+- The runbook now closes a crashed record as Failed. That's consistent: a Failed record still counts as a run that took the lock.
+
+**Still open before deploy (from e63106e):**
+1. **The pin is still on this branch.** The prompt fetches `claude/business-os-structure-k3sqo5` and shows d0216f5. That branch is restarted from the default branch after its PR merges, so a fresh routine checkout may then lose the commit, and every SLOW run would end Partial. Pin to a ref that never resets (the default branch after merge, or a no-force release ref) and rebuild.
+2. **The CTO's GitHub run of `lock-test.sh`** on refs/heads/zoya-lock-test hasn't landed. Every lock result so far uses a local bare repo.
+
+Checks:
+- Less text and fewer writers: +297 B over e63106e for four fixes, still one writer.
+- Selection by prefix or wording: none.
+- Retry double-send: closed across outages.
+- Bytes and hashes: above.
+
