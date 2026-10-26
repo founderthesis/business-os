@@ -399,3 +399,8 @@ Checks:
 - Retry double-send: crash A plans one Activity and no send; crash B is pending.
 - Bytes and hashes: above.
 
+
+## Notion edits applied by the CTO (4961d1b), read back
+
+- **Edit 1: "Inbox and Your call rules", section 5. Matches the spec word for word.** The chain holds: Akshay's "yes" sets Recorded. Calendar STEP 4c (frozen calendar d9d1f508b9c797fd) takes FT rows "at Status Recorded (set by STEP 4 or by Akshay)" within 14 days, removes the "did it happen?" ask, and drafts the thank-you on its first run after that, with no transcript. One limit: a "yes" given more than 14 days after the recording gets no automatic draft. The decision doesn't cover that case, so it's noted, not changed.
+- **Edit 2: crash A recovery Activity 40519a301a7f81daa9aec3268dac4369. Matches.** Kind Email out, Source Gmail, Source ID msgid:a21e2f20-…@mcpemails.com, Engagement 40519a301a7f8105a87edf64e65872b7, and the action key as the first line of the body (the property doesn't exist until deploy). Date reads 10:20:00Z against the spec's 10:20:28Z: Notion stores minutes. With this row in place, the crash A action is complete, and a later run finds it by Source ID and sends nothing.
