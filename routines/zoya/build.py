@@ -58,7 +58,7 @@ VARIANT = {
   ("lease", "KEY", "fast"),
   ("lease", "OTHER", "FAST"),
   ("lease", "WAIT", "25"),
-  ("lease", "STOP", " Start no new row 40 minutes after you hold the lease (on schedule, 11:30 or 17:30); the next run carries on."),
+  ("lease", "STOP", " Start no new row 40 minutes after you hold the lease or 45 minutes after your start, whichever comes first (your record must close before it turns stale at 60); the next run carries on."),
   ("hard", "- WhatsApp only to the team members TEAM WHATSAPP names.",
    "- WhatsApp only to the team members TEAM WHATSAPP names, and RECONCILE's one alert in the group \"Zoya\"."),
  ],

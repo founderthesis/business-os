@@ -13,3 +13,8 @@ b = "(a segment's date: the date its text gives, else its key's; undated segment
 assert s.count(a) == 1
 open(p, "w", encoding="utf-8").write(s.replace(a, b))
 print("d-split26m fix applied")
+# 2/ (on d-split26n, 2bdce3c) SLOW's window now counts from the lease, but staleness still counts from the record's start. SLOW 10:50
+#    waiting 25 minutes takes the lease at 11:15 and may start rows until 11:55; FAST 11:38 waits for the record to turn 60 at 11:50,
+#    closes it as Failed and writes beside a live SLOW. SLOW also stops 45 minutes after its start, so it ends about 10 minutes
+#    before its record turns stale. FAST is safe as built: at most a 20-minute wait plus 25 minutes, about 50 with its last row.
+#    Applied in routines/zoya/build.py (the lease STOP variant), by hand, after d-split26n.

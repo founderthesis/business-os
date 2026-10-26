@@ -10,8 +10,8 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
-| zoya-fast | 36,860 | ae7ca63be6b1980a |
-| zoya-slow | 63,894 | a0b03bbf09752673 |
+| zoya-fast | 37,284 | dc5774fcb161afcf |
+| zoya-slow | 64,348 | 58ffd91ad6e07317 |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
@@ -443,5 +443,27 @@ Checks:
 - Less text and fewer writers: +49 B, no new writer.
 - Selection by prefix or wording: none. The fix stops a stale date from re-selecting rows.
 - Retry double-send: crash A and B plan one Activity and no send.
+- Bytes and hashes: above.
+
+## d-split26n (2bdce3c), pushed beside Cleanup's c048bec
+
+The two commits crossed. Git merged them cleanly, and Cleanup's fix 7 correction survived in actions.txt.
+
+**Verdict: accepted with one fix to its lease timing.**
+
+- 1 (stale records closed as Failed), 2 (FAST waits out a lease about to go stale), 4 (1c adds per WRITE PATH), 5 (a cap ends Partial) and 6 (the holding reply's key form): sound.
+- **3, windows counted from the lease: fixed by Cleanup.** Staleness still counts from the record's start, and the closer now marks a stale record Failed and goes ahead. Take a SLOW starting 10:50 that waits the full 25 minutes:
+  - it takes the lease at 11:15 and may start rows until 11:55;
+  - FAST 11:38 waits until SLOW's record turns 60 at 11:50;
+  - FAST then closes it as Failed and writes beside a live SLOW.
+
+  SLOW now also stops 45 minutes after its start, whichever comes first, so its record closes about 10 minutes before it can turn stale. FAST is safe as built: at most a 20-minute wait plus 25 minutes is about 50 with its last row. Recorded as part 2 of `d-split26m-fix.py`, applied in build.py's SLOW lease variant.
+
+Result on the merged tree: FAST 37,284 / dc5774fcb161afcf, SLOW 64,348 / 58ffd91ad6e07317, identical on two builds, 1,188 B under the cap, no em dashes. These replace Main's 26n hashes. Round 4 must run on them, including L2 and L4 with a SLOW that waits the full 25 minutes.
+
+Checks:
+- Less text and fewer writers: +40 B over 26n plus fix 7. Closing a stale record makes a run write the other run's record, but only once that record is stale, so it never coexists with a live writer.
+- Selection by prefix or wording: none.
+- Retry double-send: unchanged.
 - Bytes and hashes: above.
 
