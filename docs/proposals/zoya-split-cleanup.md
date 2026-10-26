@@ -141,3 +141,25 @@ Before the gate closes:
 **The write:** one pass of 155 rows, direct (decision 341). Each row is read back. Counts are checked before and after: 144 keyed, 9 snoozes unchanged, the rest listed. Rule 7 rows edit another owner's text only by moving the Zoya clause out; the read-back confirms that owner's words are unchanged.
 
 d-split26f (e976831) accepted: held is a timing rule or a host's pick, blocked is a missing fact or someone else's decision. That closes replay 1b's only difference, so replay 1 passes. FAST 35,262 / 4d493ffe6f7f888d (reproduced), SLOW unchanged.
+
+## Keying migration, second build (083167c)
+
+Cleanup's five changes are in, and the build checks out. 153 rows, 142 keys, all unique and well-formed, byte-identical on repeat. Replay 1b's findings are folded in:
+- Sukant becomes a misc follow-up on 30 Oct.
+- Ankush is dropped (done by match).
+- The release-date steps (Vineet, Anmol, Srinivas, Mandar) are routine 6 step 0, rechecked weekly.
+- The AD Personal rows are gone.
+- Ankit Utreja gets Next date 27 Oct.
+- Rule 7 rows get `waiting_on_add` Zoya.
+- Mandar's step is a release-date follow-up, which is right since that is what it is.
+- Mohit Bedi stays at n=1.
+
+The rulings are written into d394-migrate.md, which Main publishes as the "Zoya action keys" Controls page.
+
+The drift guard is accepted, and it is the right answer to rows changing between build and write. Rows whose live text no longer matches `old_segment` are rebuilt by the same rules and come to Cleanup before they're written.
+
+The file is accepted for the write once Main's two open items are in it:
+1. Ankush: Zoya comes off Waiting on, since the migration removes her last step.
+2. Mithun Pangal, Priya Kumar, Gulab Patil, Rick Yvanovich and Dinesh Yadav: Zoya goes into Waiting on.
+
+Then rebuild once more, two identical builds, and post the drift list at the write. One process point: the write is a data change of 153 rows. It happens at the deploy, on Akshay's yes in Main's chat, with the counts reconciled after.
