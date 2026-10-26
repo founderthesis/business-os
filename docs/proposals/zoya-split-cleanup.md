@@ -10,8 +10,8 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
-| zoya-fast | 34,837 | 67fb06d626d03c71 |
-| zoya-slow | 64,676 | 567af96c27c1db2e |
+| zoya-fast | 35,144 | 36ffead8fae85afa |
+| zoya-slow | 64,996 | 7730656105c89751 |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
@@ -107,3 +107,13 @@ Accepted in text, with three changes in the parts:
 3. Builds: FAST 34,837 / 67fb06d626d03c71, SLOW 64,676 / 567af96c27c1db2e. **SLOW is 660 B under the ceiling.** The split has refilled the larger prompt. The next SLOW addition needs an equal cut, or rules moved to Notion pages.
 
 The migration gate stands as Main wrote it: two identical migration runs, then FAST twice with the file applied, giving identical keys and send lists. Cleanup also reviews `keys-migration.csv` before anything is written, the rule 7 splits in particular, since they edit text another owner wrote. Still before go-live: the provider idempotency test and a real kill test.
+
+## Re-run on split26d and d-split26e (f77f04e)
+
+Main's re-run: A, B, D, E and F pass; C (Vijay) is a partial fail and G (same minute: billing ask, vendor Your call) fails. d-split26e fixes both in text. Accepted in text; Cleanup reproduced the builds: FAST 35,144 / 36ffead8fae85afa, SLOW 64,996 / 7730656105c89751.
+
+Before the gate closes:
+1. Re-run C and G on split26e. Pass = Vijay is one hold with an owner and a recheck date; the billing ask and the vendor Your call appear in only one run's send list.
+2. Fix the three live rows at launch, as Main listed (Vijay's empty Waiting on, Mekin's missing Next date, Akshat's Next date to 29 Oct). That's 3 rows, a direct write.
+3. **SLOW is 340 B under the ceiling.** No further SLOW text goes in without a cut. Suggested cut, before launch: NURTURE and ONE PERSON, ONE ASK already have their master copy on Rules for Zoya section 5a, which SLOW reads every run. Point to it instead of carrying the full text. That saves about 3 KB with no rule change, but Cleanup reviews it as its own delta.
+4. Unchanged: two identical migration runs, Cleanup's review of keys-migration.csv, FAST twice identical with the keys applied, the provider idempotency test, and a real kill test. The overlap guard (no new row after 25 minutes) and the Controls page "Zoya action keys" stay required.
