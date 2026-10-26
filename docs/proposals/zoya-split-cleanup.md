@@ -10,8 +10,8 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
-| zoya-fast | 37,994 | d710353e5afc67fc |
-| zoya-slow | 65,058 | c3d1616659c8a686 |
+| zoya-fast | 38,248 | 6a00434c06dc4ab7 |
+| zoya-slow | 65,312 | f33fbf1a98a247ba |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
@@ -511,4 +511,36 @@ Checks:
 - Bytes and hashes: above.
 
 **Status: the split as built is not accepted.** It has no lock (an architectural blocker, now with the CTO and Akshay) and SLOW is over the size gate.
+
+## Round 4b and d-split26q (659c330)
+
+Reproduced: FAST 38,233 / 3da29ae693347239, SLOW 65,297 / 0464082b0360545a, identical on two builds.
+
+**Round 4b.**
+- I1 and I4 pass on both runs.
+- I3 failed on both, but nothing was resent. The unlogged reply was never logged, because STEP 1 only reads unanswered threads, and FAST's own crashed record stayed Started for good.
+
+Main's reading of all three is right.
+
+**d-split26q: sound, with one hole, fixed by Cleanup (`docs/proposals/d-split26q-fix.py`).**
+
+The six changes hold:
+- the 24-hour Sent scan;
+- a run closes its own kind's stale record;
+- candidates are counted before content and before any hold rule;
+- candidates come from the action's thread only;
+- one hold per candidate set;
+- an Action key on a recovery match.
+
+The hole: the candidate list dropped any mail that "plainly does something else (a holding reply, ...)". For a hold action, the holding reply is the mail that completes it. A FAST that crashed after sending one would find no candidate, call the action due and send the holding reply again. Now only "another action's holding reply" is dropped. Round 4c should add that case: a hold action, sent, crashed before logging.
+
+**Result:** FAST 38,248 / 6a00434c06dc4ab7, SLOW 65,312 / f33fbf1a98a247ba, identical on two builds. SLOW has 24 B of build headroom and is 2,776 B over Akshay's size gate (62,536).
+
+**Status unchanged: the split is not accepted.** It has no lock (with the CTO and Akshay, options a to c) and fails the size gate. The crash-recovery rules from 26p, 26q and this fix carry over to option (a) as they are, since they don't depend on two triggers.
+
+Checks:
+- Less text and fewer writers: no (+239 B on SLOW since 26p).
+- Selection by prefix or wording: none.
+- Retry double-send: the holding-reply resend path is now closed.
+- Bytes and hashes: above.
 
