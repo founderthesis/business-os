@@ -3,7 +3,7 @@ from collections import Counter
 OUT = sys.argv[1]
 T = lambda d: f"{d}T00:00:00+09:00"
 rows = []
-def add(rid, name, seg, typ=None, origin=None, raised=None, rule='', flag='', step=None, new=None):
+def add(rid, name, seg, typ=None, origin=None, raised=None, rule='', flag='', step=None, new=None, woa='', nd=''):
     if typ:
         if step is None:
             assert seg.startswith('Zoya: '), seg
@@ -16,7 +16,7 @@ def add(rid, name, seg, typ=None, origin=None, raised=None, rule='', flag='', st
     else:
         key = ''
         if new is None: new = seg
-    rows.append([rid, name, seg, new, key, rule, flag])
+    rows.append([rid, name, seg, new, key, rule, flag, woa, nd])
 def S(rid, name, seg): add(rid, name, seg, rule='1')
 def F(rid, name, seg, r, n, d, flag=''):  # literal rule 2
     add(rid, name, seg, 'followup', f'seq-{r}-{n}', T(d), '2', flag)
@@ -26,6 +26,14 @@ def N(rid, name, seg, n, d, flag='', rule='3'):
     add(rid, name, seg, 'nurture', f'seq-7-{n}', T(d), rule, flag)
 def R(rid, name, seg, msgid, raised, flag=''):
     add(rid, name, seg, 'reply', f'msg-{msgid}', raised, '4', flag)
+RECHECK = '2026-11-02'  # next Monday after the 26 Oct build; release-date steps are rechecked weekly
+def RL(rid, name, seg, was, flag='', step=None, new=None, rule='2 (release, replay 1b)', woa=''):  # replay 1b: release date as SLOW follow-up
+    if step is None:
+        step = seg[len('Zoya: '):]
+    step = step + ' (recheck weekly)'
+    add(rid, name, seg, 'followup', 'seq-6-0', T(RECHECK), rule,
+        flag or f"note: replay 1b: the release-date answer is a SLOW follow-up (routine 6 release, step 0), rechecked weekly; was {was}.",
+        step=step, new=new, woa=woa)
 def D(rid, name, seg, d, flag=''):
     add(rid, name, seg, 'decision', f'call-{rid}', T(d), '5', flag)
 def TM(rid, name, seg, d, flag=''):
@@ -38,22 +46,25 @@ WHY_LT = "LT chase row; revisit/check-in/chase wording is not rule 3's 'nurture'
 # ---- batch 1
 S('1a7647877a0345b18a89d7af96f325fd','Sanjeev Bikhchandani @ Info Edge, Built to Share',"Zoya: back to Akshay on 2 Nov: Sanjeev Bikhchandani for Built to Share, Akshay asks him again (he said November), not a cold mail")
 S('27542f7f2ea541ce984639b7f35bdf09','Aneesh Reddy @ Capillary, Built to Share',"Zoya: back to Akshay on 4 Jan 2027: Aneesh Reddy for Built to Share, Akshay asks him again (he declined this year), not a cold mail")
-add('3ed19a301a7f81249675cb216e4325bb','Mandar Dandekar @ Sorin Investments, Founder Thesis',"Sarika: confirm Mandar's release date; then Zoya tells Pragatti (Stratink)", rule='7 then 4',
-    new="Sarika: confirm Mandar's release date | Zoya: tell Pragatti (Stratink) Mandar's release date",
-    flag="REVIEW (unkeyed): rule 7, Zoya step inside Sarika's segment; rule 4 reply owed to Pragatti, but her ask came on WhatsApp 21 Oct (Activity wa:...:2026-10-21), so there is no Message-ID. Waiting on lacks Zoya.")
+RL('3ed19a301a7f81249675cb216e4325bb','Mandar Dandekar @ Sorin Investments, Founder Thesis',"Sarika: confirm Mandar's release date; then Zoya tells Pragatti (Stratink)", '',
+    rule='7 then 2 (release, replay 1b)',
+    step="tell Pragatti (Stratink) Mandar's release date",
+    new="Sarika: confirm Mandar's release date | {K}: tell Pragatti (Stratink) Mandar's release date (recheck weekly)",
+    flag="REVIEW: rule 7, Zoya step inside Sarika's segment (edits another owner's text). The whole Zoya step is the release-date answer to Pragatti, so replay 1b's release ruling wins over Cleanup item 3: keyed as SLOW follow-up seq-6-0, rechecked weekly. The reply-key alternative would have been reply:call-40019a301a7f81aa9a8ede0756fb5c8e:2026-10-21T16:18:00+09:00 (Pragatti's WhatsApp Activity). Waiting on was Sarika only; Zoya added.",
+    woa='Zoya')
 S('3ed19a301a7f81669b4bf3a99355b53d','Ezhilarasan Natarajan @ CoreStack, Founder Thesis',"Zoya: back to Akshay on 8 Nov: send Ezhilarasan the links to shorter clips (promised 23 Oct on WhatsApp)")
 S('3ed19a301a7f819284e7e17d698e55f2','Raghu Pareddy @ Wissen Technology, Founder Thesis',"Zoya: back to Akshay on 8 Nov: release date for Neha (Wissen PR) once the calendar is final, and her cut notes on the transcript")
 S('3ed19a301a7f81a08e66d02c507e0813','Anil Kumar @ Redseer Startegy Consultants, Founder Thesis',"Zoya: back to Akshay on 8 Nov: call Aanshul (RedSeer) about the first cut, if not done yet (recommend call, then Zoya confirms the date in writing)")
-R('3ed19a301a7f81ad9d12dff4c0145076','Vineet Agarwal @ Transport Corporation of India Ltd., Founder Thesis',"Zoya: send Urbashree (PR Pundit) the release date once the calendar is updated (Akshay told her 23 Oct he will send a date; check the Episode for the planned release first)",
-  'DB9PR05MB79803D8E37B4C6C88E3B747E8D642@DB9PR05MB7980.eurprd05.prod.outlook.com','2026-10-23T14:16:28+09:00')
+RL('3ed19a301a7f81ad9d12dff4c0145076','Vineet Agarwal @ Transport Corporation of India Ltd., Founder Thesis',"Zoya: send Urbashree (PR Pundit) the release date once the calendar is updated (Akshay told her 23 Oct he will send a date; check the Episode for the planned release first)",
+  'rule 4 reply msg-DB9PR05MB79803D8E37B4C6C88E3B747E8D642@DB9PR05MB7980.eurprd05.prod.outlook.com (2026-10-23T14:16:28+09:00)')
 F('3f019a301a7f81049f5dec32e9181d52','Shai Coelho @ Vtrender, Founder Thesis',"Zoya: precall step 2 on 28 Oct",2,2,'2026-10-28')
 F('3f019a301a7f8105bd90c184e3ec017d','Saloni @ DesiCrew, Founder Thesis',"Zoya: precall step 3 on 28 Oct (bypass skipped, Saloni wrote directly; then nurture)",2,3,'2026-10-28')
 add('3f019a301a7f810989d7e64802788b69','Shruthi Cauvery Iyer @ Vaia, Founder Thesis',
   "Divyanshi (Deqollab) to book the Vaia precall via the link (Akshay told her on 17 Oct to go ahead); Zoya chases from 24 Oct if no booking",
   'followup','seq-2-1',T('2026-10-27'),'7 then 2 (extension)',
-  "REVIEW: rule 7, Zoya step inside Divyanshi's segment (edits another owner's text). 'chases' is not rule 2 wording; routine 2 from the precall; Chase step empty so n=1; 'from 24 Oct' is not 'on <D Mon>', so date is Next date.",
+  "REVIEW: rule 7, Zoya step inside Divyanshi's segment (edits another owner's text). 'chases' is not rule 2 wording; routine 2 from the precall; Chase step empty so n=1; 'from 24 Oct' is not 'on <D Mon>', so date is Next date. Waiting on was Guest or PR only; Zoya added.",
   step='chase from 24 Oct if no booking',
-  new="Divyanshi (Deqollab) to book the Vaia precall via the link (Akshay told her on 17 Oct to go ahead) | {K}: chase from 24 Oct if no booking")
+  new="Divyanshi (Deqollab) to book the Vaia precall via the link (Akshay told her on 17 Oct to go ahead) | {K}: chase from 24 Oct if no booking", woa='Zoya')
 F('3f019a301a7f810bab4be69843d40ccf','Smriti Tandon @ Online Chikitsa Mitra and 120by80 and Salubrious Technologies, Founder Thesis',"Zoya: sponsored step 4 (due diligence story) on 4 Nov",1,4,'2026-11-04')
 N('3f019a301a7f810d9a3eff258a38bf93',"Aravind Sanka @ Rapido - Bike Taxi of India, Founder Thesis","Zoya: nurture Lakshashree (The Practice): Aravind's planning call (since 22 Oct 2026; PR asked to hold, multi-city launches)",1,'2026-11-23')
 F('3f019a301a7f8111b5ebcc4d67721479','Pratiqk Jaani @ Dhrasti Method, Founder Thesis',"Zoya: sponsored step 4 (due diligence story) on 4 Nov",1,4,'2026-11-04')
@@ -77,14 +88,16 @@ D('3f019a301a7f8123b098f6522d5f6080','Vishal Devanath @ SMERGERS, Founder Thesis
 F('3f019a301a7f81249148d12f4439ede4','Aman Arora @ Magical Theatre, Founder Thesis',"Zoya: sponsored step 3 (audience seniority) on 30 Oct",1,3,'2026-10-30')
 F('3f019a301a7f81249f57c4fedf5d4a7b','Neerja Hajela @ Yakult Danone India Pvt. Ltd, Founder Thesis',"Zoya: precall step 2 on 27 Oct",2,2,'2026-10-27')
 F('3f019a301a7f8129b418f49170519e55','Beerud Sheth @ Gupshup, Founder Thesis',"Zoya: recording step 2 on 28 Oct",3,2,'2026-10-28')
-D('3f019a301a7f812d8f24e8b4b7dbec9a','Ankush Tiwari @ pi-labs.ai, Founder Thesis',"Zoya: after your call, take the next steps with the pi-labs PR team (Ankita, Simran)",'2026-10-25',
-  "REVIEW: generic step; the decision mail it follows was sent 26 Oct (msgid 70008c86...), so it may already be complete. Two 'Akshay's call' lines dated 25 Oct; date is the same either way.")
+add('3f019a301a7f812d8f24e8b4b7dbec9a','Ankush Tiwari @ pi-labs.ai, Founder Thesis',"Zoya: after your call, take the next steps with the pi-labs PR team (Ankita, Simran)",
+  rule='done by match', new='',
+  flag="note: replay 1b: completed by match. The decision mail this step follows went 26 Oct (msgid 70008c86...), so the Zoya segment is dropped and no key is written; the other two segments (Waiting on Simran, Akshay: Flock Safety info) stay. Waiting on still lists Zoya.")
 F('3f019a301a7f812ea2a8d1e74b88113c','Amit Das @ Think360.ai, Founder Thesis',"Zoya: form chaser 2 on 29 Oct",5,2,'2026-10-29')
 D('3f019a301a7f813287bbf83d4112e716','Ankit Utreja @ WebEngage, Founder Thesis',"Zoya: chase Devanshi (SGA) hard for a pre-call date with Ankit, or ask for CEO Avlesh Singh instead (Akshay's call: chase hard)",'2026-10-19',
-  "REVIEW: chase wording (could be rule 2 by extension, routine 2) but the wording names Akshay's call, which literally matches rule 5.")
+  "REVIEW: chase wording (could be rule 2 by extension, routine 2) but the wording names Akshay's call, which literally matches rule 5. Replay 1b: Next date was 3 Jan 2027 despite Akshay's 19 Oct 'chase hard'; the write also sets Next date 2026-10-27 (first working day after this migration).")
+rows[-1][8] = '2026-10-27'  # next_date: replay 1b finding 1
 F('3f019a301a7f8132aef2d103e29c7f81','Abhilash Maurya @ Naxatra Labs, Founder Thesis',"Zoya: precall step 2 on 30 Oct",2,2,'2026-10-30')
-R('3f019a301a7f8136b0bef362b06d0f8c','Anmol Madan @ RadiantGraph, Founder Thesis',"Zoya: send Erin (JRB) the release date once the Episode has a confirmed date (we told her 24 Oct we will come back once the release calendar is finalized)",
-  'CAEx+WSJ9_98QWpX_8-8LDMPY-ExAZ_sXF1NNqZMC7SBo8ugTdw@mail.gmail.com','2026-10-24T02:44:23+09:00')
+RL('3f019a301a7f8136b0bef362b06d0f8c','Anmol Madan @ RadiantGraph, Founder Thesis',"Zoya: send Erin (JRB) the release date once the Episode has a confirmed date (we told her 24 Oct we will come back once the release calendar is finalized)",
+  'rule 4 reply msg-CAEx+WSJ9_98QWpX_8-8LDMPY-ExAZ_sXF1NNqZMC7SBo8ugTdw@mail.gmail.com (2026-10-24T02:44:23+09:00)')
 F('3f019a301a7f8137871efc1e8cb64837','Amit Patni @ RAAY Global, Founder Thesis',"Zoya: form chaser 2 on 27 Oct",5,2,'2026-10-27')
 F('3f019a301a7f81398033d155d0bbb727','Ashissh Raichura @ Scanbo, Founder Thesis',"Zoya: sponsored step 3 (audience seniority) on 30 Oct",1,3,'2026-10-30')
 F('3f019a301a7f813a841ecd974cdbc9b6','Andrey Fedorov @ STON.fi, un#',"Zoya: sponsored step 2 on 28 Oct",1,2,'2026-10-28')
@@ -108,8 +121,8 @@ FX('3f019a301a7f8161b326f5f8ff5da05a','Shekar Swamy and Srinivasan K. Swamy @ R 
   "'follow-up' names no routine; routine 2 taken from Status Precall requested; Chase step empty so n=1.")
 F('3f019a301a7f816580c1c65765fa601e','AJAY ASHAR @ Ashar group, Founder Thesis',"Zoya: precall step 2 (dates check) on 28 Oct",2,2,'2026-10-28')
 FX('3f019a301a7f8166bbd6ea76681505df','Praveen Gadelli @ STEMLearn.AI, Founder Thesis',SPCH,1,1,'2026-10-27',WHY_SPCH)
-R('3f019a301a7f8166bed5e8a0c985c035','Srinivas Choudhary @ Alligator Automations, Founder Thesis',"Zoya: send Nivedita (PRtainment) the release date once the calendar is final (Akshay told her on 25 Oct it is not finalised and he will mail it; never give a date before the Episode has one)",
-  'CALcgGRM+ty5Sd7Kv9=cDN3mmJsocuM1G3aPq5mZMadfVmYYayg@mail.gmail.com','2026-10-23T14:45:08+09:00')
+RL('3f019a301a7f8166bed5e8a0c985c035','Srinivas Choudhary @ Alligator Automations, Founder Thesis',"Zoya: send Nivedita (PRtainment) the release date once the calendar is final (Akshay told her on 25 Oct it is not finalised and he will mail it; never give a date before the Episode has one)",
+  'rule 4 reply msg-CALcgGRM+ty5Sd7Kv9=cDN3mmJsocuM1G3aPq5mZMadfVmYYayg@mail.gmail.com (2026-10-23T14:45:08+09:00)')
 N('3f019a301a7f81688a10fb6d95f13243','Ishank Joshi @ Mobavenue, Founder Thesis',"Zoya: Waiting on Simran for Ishank's precall dates; next check-in 27 Oct",1,'2026-10-27',
   "REVIEW: " + WHY_LT + " Could instead be routine 2 (precall dates). 'next check-in 27 Oct' has no 'on', so Next date (same day).", rule='3 (extension)')
 F('3f019a301a7f816d9919d82d4a41fd92','Gokul Cholaghar @ Libra AI, Founder Thesis',"Zoya: sponsored step 2 (peers) on 28 Oct",1,2,'2026-10-28')
@@ -156,7 +169,7 @@ F('3f019a301a7f81bd9ed6c7020bf96f3d','Matthew @ Magic Bus India Foundation, Foun
 F('3f019a301a7f81bf9f1ef006d096c482','Surya Khurana @ FlixBus India, Founder Thesis',"Zoya: sponsored step 3 on 29 Oct",1,3,'2026-10-29')
 N('3f019a301a7f81c08f87ef4adba6e79e','Pravesh Dudani @ National Skill Development Corporation (NSDC), Founder Thesis',"Zoya: nurture Gyanaranjan Mantri (Dentsu): Pravesh Dudani's preliminary call (since 21 Oct 2026)",1,'2026-11-02')
 N('3f019a301a7f81c1b612e8d8fb17c27a','Mohit Bedi @ Kiwi, Founder Thesis',"Zoya: LT check-in 2 on 14 Jan asks Devanshi (SGA) for the 30-min call; settle Mohit's role on that call",1,'2027-01-14',
-  "REVIEW: " + WHY_LT + " The wording says check-in 2 (the 16 Oct check-in was not logged as 'Zoya sent: nurture'), but rule 3 sets n from Activities, so n=1.", rule='3 (extension)')
+  "REVIEW: " + WHY_LT + " The wording says check-in 2 (the 16 Oct check-in was not logged as 'Zoya sent: nurture'), but rule 3 sets n from Activities, so n=1. Cleanup ruling 4: n=1 stands.", rule='3 (extension)')
 F('3f019a301a7f81cbbfbeeeedf10fc451','Raunak Bhinge @ Infinite Uptime, Founder Thesis',"Zoya: form chaser 2 on 28 Oct",5,2,'2026-10-28')
 N('3f019a301a7f81cc80d1c7b2308fd780','Mukund Jha @ Emergent, Founder Thesis',"Zoya: nurture Naresh (Moes Art): Mukund Jha's call dates (check-in sent from ad@ 21 Oct with Zoya added; follow with the mail from my inbox once the thread shows there) (Akshay: chase)",1,'2026-10-28',
   "note: also carries Akshay's call ('chase'), rule 5; rule 3 comes first in order. The 21 Oct ad@ check-in is not a 'Zoya sent: nurture' Activity, so n=1.")
@@ -188,9 +201,9 @@ F('3f119a301a7f81de9a40fba6f670a4c8','Zach Ipour @ MegPrime Pay, un#',"Zoya: spo
 add('3f219a301a7f815e8d20d3583af31ee2','Vivek Desai @ HOSMAC, Founder Thesis',
   "Waiting on Hasti (PR): rebook via podm.in/30min when they're ready (bereavement); Zoya chases gently per Cadences (decision 398)",
   'followup','seq-2-1',T('2026-10-29'),'7 then 2 (extension)',
-  "REVIEW: rule 7, Zoya step inside the Waiting on Hasti segment. 'chases' is not rule 2 wording; routine 2 (precall rebook); Chase step empty so n=1; no 'on' date, so Next date.",
+  "REVIEW: rule 7, Zoya step inside the Waiting on Hasti segment. 'chases' is not rule 2 wording; routine 2 (precall rebook); Chase step empty so n=1; no 'on' date, so Next date. Waiting on was Guest or PR only; Zoya added.",
   step='chase gently per Cadences (decision 398)',
-  new="Waiting on Hasti (PR): rebook via podm.in/30min when they're ready (bereavement) | {K}: chase gently per Cadences (decision 398)")
+  new="Waiting on Hasti (PR): rebook via podm.in/30min when they're ready (bereavement) | {K}: chase gently per Cadences (decision 398)", woa='Zoya')
 F('3f319a301a7f8174be9eed8eef11ebad','Ankit Kedia @ Capital A, Founder Thesis',"Zoya: precall step 2 on 30 Oct",2,2,'2026-10-30')
 FX('3f319a301a7f8175b9a6f78f2d4a2d8a','Sonu Kumar Yadav @ Hospitalstore.com, Founder Thesis',SPCH,1,1,'2026-10-27',WHY_SPCH)
 FX('3f319a301a7f81779aafea9e5cd2ed67','Nitin Kaushal @ SFK Group, Founder Thesis',SPCH,1,1,'2026-10-27',WHY_SPCH)
@@ -216,22 +229,22 @@ F('3fa19a301a7f814a8bb4cb52070733a4','Gagandeep Singh @ TIC, Founder Thesis',"Zo
 add('3fa19a301a7f81508e24e25202d1e571','Manan Thakkar @ Prozeal Green Energy, Founder Thesis',
   "Waiting on Vaibhav (Prozeal): a date and time for the informal precall with both co-founders (Zoya answered his process question 22 Oct; he asked for a week on 18 Oct); Zoya chases 29 Oct",
   'nurture','seq-7-1',T('2026-10-29'),'7 then 3 (extension)',
-  "REVIEW: rule 7 (this is the rule's own example). LT chase row, so keyed as nurture by extension (" + "chase wording, not 'nurture'); could equally be routine 2 seq-2-1 (an active precall-date ask). 'chases 29 Oct' has no 'on', so Next date (same day). Waiting on lacks Zoya.",
+  "REVIEW: rule 7 (this is the rule's own example). LT chase row, so keyed as nurture by extension (" + "chase wording, not 'nurture'); could equally be routine 2 seq-2-1 (an active precall-date ask). 'chases 29 Oct' has no 'on', so Next date (same day). Waiting on was Guest or PR only; Zoya added.",
   step='chase on 29 Oct',
-  new="Waiting on Vaibhav (Prozeal): a date and time for the informal precall with both co-founders (Zoya answered his process question 22 Oct; he asked for a week on 18 Oct) | {K}: chase on 29 Oct")
+  new="Waiting on Vaibhav (Prozeal): a date and time for the informal precall with both co-founders (Zoya answered his process question 22 Oct; he asked for a week on 18 Oct) | {K}: chase on 29 Oct", woa='Zoya')
 add('3fa19a301a7f81d1acc4c52ac663ef31','Anirudh Damani @ Artha Group, Founder Thesis',
   "Waiting on Sakshi (Artha) to rebook the planning call via podm.in/30min; Zoya chases per Cadences (decision 398)",
   'followup','seq-2-1',T('2026-10-29'),'7 then 2 (extension)',
-  "REVIEW: rule 7, Zoya step inside the Waiting on Sakshi segment. 'chases' is not rule 2 wording; routine 2 (planning call rebook); Chase step empty so n=1; no 'on' date, so Next date. Waiting on lacks Zoya.",
+  "REVIEW: rule 7, Zoya step inside the Waiting on Sakshi segment. 'chases' is not rule 2 wording; routine 2 (planning call rebook); Chase step empty so n=1; no 'on' date, so Next date. Waiting on was Guest or PR only; Zoya added.",
   step='chase per Cadences (decision 398)',
-  new="Waiting on Sakshi (Artha) to rebook the planning call via podm.in/30min | {K}: chase per Cadences (decision 398)")
+  new="Waiting on Sakshi (Artha) to rebook the planning call via podm.in/30min | {K}: chase per Cadences (decision 398)", woa='Zoya')
 F('3fb19a301a7f816aa87ff74b7ed6e517','Srikanth Velamakanni @ Fractal Analytics, Founder Thesis',"Zoya: precall step 2 on 27 Oct (Tier 1 inbound, 3 working days)",2,2,'2026-10-27',
   "note: Status is Booking but the wording names the precall routine; keyed by wording.")
 F('3fb19a301a7f817bab3df7c45662370b','Akshit Bansal @ Statiq, Founder Thesis',"Zoya: precall step 3 on 2 Nov",2,3,'2026-11-02')
-D('3fc19a301a7f8150b1ccf6c7949e6734','Task: tier the Founder Thesis backlog into FT1 and FT2',"Zoya: mail Akshay the link to the view of the Founder Thesis backlog so he can tier it into FT1 and FT2 (5-a-week release pilot)",'2026-10-18')
+# replay 1b: removed 3fc19a301a7f8150b1ccf6c7949e6734 (Task: tier the FT backlog into FT1 and FT2, AD Personal); FAST's scope never reaches it
 TM('3fc19a301a7f815aa863d9bb5772afcb','Task: chase the deals pipeline (Manu Iyer, Shubham and Som)',"Zoya: chase Manu Iyer (Bluehill-X call 10 Oct); find Shubham and Som on the Deals board and chase them; anything on price or a call goes to Akshay",'2026-10-21',
   "REVIEW: chase wording on a Task row with no Status; no routine named, so rule 6 team by fallback. Could be routine 4 misc chase (no step number to key it).")
-D('3fc19a301a7f81e8b013e8fb2206e787','Task: transcripts backlog on the Mac (9 in sent thank-yous, 3 Drive copies, 11 not found)',"Zoya: mail Akshay the mac-transcripts-v2 prompt so he can run the transcripts backlog on the Mac",'2026-10-18')
+# replay 1b: removed 3fc19a301a7f81e8b013e8fb2206e787 (Task: transcripts backlog on the Mac, AD Personal); FAST's scope never reaches it
 F('3ff19a301a7f81a8a754c14597421e3e','Rick Yvanovich @ Business As UnUsual, Founder Thesis',"Zoya: sponsored step 1 on 29 Oct",1,1,'2026-10-29',"note: Waiting on lacks Zoya.")
 F('3ff19a301a7f81a98224ee27aa4a5a7d','Matt Walker @ Lull, Founder Thesis',"Zoya: sponsored step 1 on 29 Oct",1,1,'2026-10-29')
 F('40019a301a7f81449b93c57ac653185a','Dinesh Yadav @ Fine Acers, Founder Thesis',"Zoya: sponsored step 1 on 29 Oct",1,1,'2026-10-29',"note: Waiting on lacks Zoya.")
@@ -242,9 +255,10 @@ R('40119a301a7f812b8fb3f593ee961296','Mekin Maheshwari @ Udhyam Learning Foundat
   "note: Satv's 23 Oct ask (dates, studio location); Zoya's 24 Oct holding reply answers nothing, so the reply stays owed. The step also follows Akshay's 25 Oct call; rule 4 comes first.")
 F('40119a301a7f8172995bef8144c91971','Rishabh Mishra @ RushDeploy, Founder Thesis',"Zoya: sponsored step 1 on 2 Nov",1,1,'2026-11-02')
 F('40219a301a7f81748630fb58c879c687','Vidhatha Annamaneni @ Ironhill, Founder Thesis',"Zoya: precall step 2 on 29 Oct",2,2,'2026-10-29')
-R('40419a301a7f8108a357cafb73469297','Sukant Kumar @ Sunday Labs, Founder Thesis',"Zoya: follow up with Sukant on Akshay's reverse proposal (Akshay mailed 25 Oct: he comes on Tech with Sukant as a collab with Founder Thesis; Sukant can book podm.in/30min). Sukant asked Zoya for next steps; answer only as that proposal settles. Eval Pre-call needed (page body).",
-  'MA0P287MB2024B2EE69BDB928CB7970E1CC622@MA0P287MB2024.INDP287.PROD.OUTLOOK.COM','2026-10-25T14:05:11+09:00',
-  "REVIEW: Akshay's 25 Oct 22:44 JST mail (reverse proposal, booking link) may count as the answer to Sukant's next-steps ask; if it does, no reply is owed and the step falls to rule 2 extension or rule 6.")
+add('40419a301a7f8108a357cafb73469297','Sukant Kumar @ Sunday Labs, Founder Thesis',"Zoya: follow up with Sukant on Akshay's reverse proposal (Akshay mailed 25 Oct: he comes on Tech with Sukant as a collab with Founder Thesis; Sukant can book podm.in/30min). Sukant asked Zoya for next steps; answer only as that proposal settles. Eval Pre-call needed (page body).",
+  'followup','seq-4-1',T('2026-10-30'),'2 (replay 1b)',
+  "note: replay 1b: the reply (msg-MA0P287MB2024B2EE69BDB928CB7970E1CC622@MA0P287MB2024.INDP287.PROD.OUTLOOK.COM) is complete by Akshay's 25 Oct 22:44 JST mail; Akshay's 'Zoya can follow up' is carried as a SLOW routine 4 misc chase on 30 Oct.",
+  step="follow up Sukant on Akshay's 25 Oct reverse proposal on 30 Oct")
 TM('40419a301a7f814799cee941518d9582',"Task: leave Chaandini's chats with AD out of transcripts shared with hosts","Zoya: when sharing a transcript (e.g. the one sent to Mekin for the B2S pitch), leave out Chaandini's conversation with AD; Chaandini asked 24 Oct via @zoya",'2026-10-25',
   "note: a standing instruction, not a one-off step; keyed as team (Chaandini's ask).")
 S('554c617ad3184a7a900f3b0588eb73cd','Noah Goodman @ humans&, Human by Design',"Zoya: back to Akshay on 1 Nov: Noah Goodman asked to revisit next year; eval now Decline, keep in LT chase or pass? Write ok, not ok or a change in Your call.")
@@ -255,7 +269,7 @@ TM('ff569bdb98dc4f84b22ac2b790348582','Karri Saarinen @ Linear, Built to Share',
   "note: internal review step dated 8 Dec; rule 6 raised time is the Claude note date, not 8 Dec.")
 
 with open(OUT,'w',newline='') as f:
-    w=csv.writer(f); w.writerow(['row_id','row_name','old_segment','new_segment','key','rule','review_flag'])
+    w=csv.writer(f); w.writerow(['row_id','row_name','old_segment','new_segment','key','rule','review_flag','waiting_on_add','next_date'])
     w.writerows(rows)
 ids=[r[0] for r in rows]
 print('segments',len(rows),'rows',len(set(ids)))
@@ -263,3 +277,4 @@ print('keys',sum(1 for r in rows if r[4]), 'unique keys', len({r[4] for r in row
 print('by rule',Counter(r[5] for r in rows))
 print('by type',Counter(r[4].split(':')[1] if r[4] else 'none' for r in rows))
 print('REVIEW',sum(1 for r in rows if r[6].startswith('REVIEW')),'notes',sum(1 for r in rows if r[6].startswith('note')))
+print('waiting_on_add',[r[0] for r in rows if r[7]],'next_date',[(r[0],r[8]) for r in rows if r[8]])
