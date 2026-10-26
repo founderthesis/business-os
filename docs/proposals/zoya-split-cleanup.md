@@ -10,8 +10,8 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
-| zoya-fast | 31,912 | afa1964929c5d7c3 |
-| zoya-slow | 61,292 | 8a54bb377f161054 |
+| zoya-fast | 33,788 | 40d6fffbda4a31a2 |
+| zoya-slow | 62,555 | 33e48c020b3a8657 |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
@@ -44,3 +44,17 @@ Printed dry runs alone don't pass. Main also posts:
 3. **Provider idempotency.** Send the same test mail twice to a team address with the same idempotency_key, inside 24 hours. MCP Emails delivers one, and the response says so. Repeat after the window to show the thread check is what stops it then.
 
 A replay or test that fails goes back to Main. A pass on all of them, plus Akshay's yes, clears the deploy.
+
+## Status, 26 Oct (outputs in `split-dryruns/`)
+
+| Gate | Result |
+| --- | --- |
+| Replay 1: FAST twice, same keys | **Fail.** Runs A and B on the same data differed: A held Todd McDonald and skipped Sukant; B completed Sukant and missed Todd. Neither wrote keys. Re-run twice after d-split26b and this fix; pass only on identical send lists, holds and keys. |
+| Replay 2: FAST and SLOW same minute | Not run. |
+| Replay 3: two actions on one row (Akshat) | **Fail**, fixed in d-segdates26 (dated segments). Re-run pending. |
+| Replays 4 to 8 | Not run. |
+| Failure, concurrency and provider idempotency tests | Not run. |
+
+Cleanup's change to d-split26b: the deadlock was real (SLOW could never act on an old-format step), but letting each run key "its own types" by wording brings back the two-readings risk. Now FAST keys every old-format step it reads, any type, and writes the type into the key; SLOW acts only on keyed segments. SLOW's old steps wait at most one FAST run.
+
+For the CTO, from fast-b.md: two Rules-page texts disagree with live rules (Client show mails sign-off "Stay awesome" vs decision 345; quiet hours 23:00 to 10:00 vs Cadences 00:30 to 07:30), and 10 rows wait on Mamatha with no Zoya step.
