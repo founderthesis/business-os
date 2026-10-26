@@ -10,8 +10,8 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
-| zoya-fast | 37,284 | dc5774fcb161afcf |
-| zoya-slow | 64,348 | 58ffd91ad6e07317 |
+| zoya-fast | 37,994 | d710353e5afc67fc |
+| zoya-slow | 65,058 | c3d1616659c8a686 |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
@@ -466,4 +466,49 @@ Checks:
 - Selection by prefix or wording: none.
 - Retry double-send: unchanged.
 - Bytes and hashes: above.
+
+## d-split26o (72aa104), the blocker write-up (1131e2e) and d-split26p (c78d8b9)
+
+Reproduced: FAST 37,994 / d710353e5afc67fc, SLOW 65,058 / c3d1616659c8a686, identical on two builds. Cleanup's 45-minute SLOW cap and fix 7 are in.
+
+### The lock: Cleanup agrees there is none
+
+Main's write-up is right on each point.
+- Notion has no compare-and-swap.
+- "Write mine, then read theirs" needs every query to see every earlier create. Notion queries come from an index, and that has never been measured.
+- Two runs of the same kind don't read each other.
+- A run that hangs past 60 minutes keeps writing after its record is closed as stale.
+
+The L1 to L4 passes show the rule is followed when each run sees the other. They can't show exclusion. Cleanup's earlier lease fixes (c66415e through d6a1209) narrowed windows; none made it a lock. Cleanup should have said so plainly sooner instead of tuning the timing.
+
+On the options, Cleanup agrees with (a), one trigger owning every write:
+- It removes the cross-kind race instead of guarding it.
+- The same-trigger exposure it keeps is the one production has today.
+- It keeps every gain the split review produced: action keys, 411 to 413, the round 3 fixes, run records and the Sent check.
+
+Two notes for the CTO's decision:
+- Under (a), the size gate (3,000 B under the cap) applies to the single prompt. The phase 8 work comes first.
+- The lease text "stays as a courtesy check": under (a) it should go, since there is no other kind to read. Text that claims a guarantee it can't give is worse than none.
+
+### d-split26o: sound, and moot under (a)
+
+The earlier Notion created time, to the second, holds. Only an exact same-second tie goes to FAST, and the re-read happens after acquiring.
+
+### d-split26p, crash recovery held for review: sound
+
+A match must be unique: the Activity's Message-ID, or exactly one unlogged message from us to that recipient (on that thread for a reply) since the raise. Anything else is held for Akshay and never resent, so a crash can strand an action but never double-send. Two notes:
+- **It overrides decision 90** ("never hand Akshay a data problem to solve by hand"). Per CLAUDE.md, an override is logged in decisions.md with its date. It isn't there yet.
+- **Rare false holds.** The check also runs before every normal send. An unlogged message only exists after a crash or a failed Activity write, so a false hold should be rare. Each one names its candidates, so it's cheap to settle.
+
+### Size: the build now fails gate item 1
+
+Akshay's gate requires SLOW at least 3,000 B under the 65,536 cap, which means 62,536 or less. SLOW is now 65,058: 2,522 B over that line and only 278 B under the 65,336 build ceiling. Each fix since the release cut (411 to 413, 26m, 26n, 26o, 26p) added text without cutting any. Whichever option is chosen, the release build has to come back under 62,536 before acceptance.
+
+Checks:
+- Less text and fewer writers: no. Every commit since the cut added text, and two writer kinds remain until (a) or (b).
+- Selection by prefix or wording: none.
+- Retry double-send: closed by the 24-hour key or a unique Sent match; otherwise held, never resent.
+- Bytes and hashes: above.
+
+**Status: the split as built is not accepted.** It has no lock (an architectural blocker, now with the CTO and Akshay) and SLOW is over the size gate.
 
