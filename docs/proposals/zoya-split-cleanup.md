@@ -11,7 +11,7 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
 | zoya-fast | 35,717 | c5c2c64c0ab380ae |
-| zoya-slow | 64,831 | bd6d25a767199f83 |
+| zoya-slow | 64,832 | 763ca3d646aefde5 |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
@@ -185,3 +185,13 @@ Accepted as residual risk, with no text fix possible: Notion has no conditional 
 Data at launch, as Main listed: Vijay, Akshat and Mekin. Payal Dash's two People rows are flagged only; merging is Akshay's call, under decision 384.
 
 Not yet on the branch: the migration write route. Cleanup reviews it when it lands.
+
+## Overlap at the real fire times (CTO, 26 Oct 16:20 JST)
+
+The server anchors an every-hour or every-N-hours cron to the minute it was created, so the live Zoya trigger fires at about :38, not :30, and the SLOW trigger would fire at about :50. With FAST at :38 and SLOW at :50, the two runs overlap on every even hour. A FAST run started at 10:38 may take new rows until 11:03, and SLOW starts at 10:50. **The 25-minute guards don't prevent that.**
+
+What passes: SLOW starts at about :08 past even hours. Then FAST runs :38 to :03 and SLOW :08 to :33, each with a 25-minute guard and five minutes clear either side. Set it with a non-zero minute so the server stores it verbatim: `CRON_TZ=Asia/Tokyo 8 8-22/2 * * 1-5`. Check `next_run_at` on both triggers after the deploy. The proof Cleanup accepts is two triggers' `next_run_at` plus one weekday of run records whose start and end times never overlap.
+
+Cleanup removed the stale ":30" from SLOW ORDER ("so you never overlap FAST's next run"): SLOW 64,832 / 763ca3d646aefde5, FAST unchanged.
+
+The retired single Zoya trigger: the deploy repoints it to FAST and doesn't create a second hourly Zoya, so nothing retires. If Main instead creates a new FAST trigger, the old one is disabled in the same deploy, and Cleanup checks `list_triggers` shows exactly one hourly Zoya.
