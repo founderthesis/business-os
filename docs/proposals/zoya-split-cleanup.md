@@ -10,8 +10,8 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
-| zoya-fast | 36,241 | 241555eabebac81c |
-| zoya-slow | 65,299 | e347c5cb20b7b720 |
+| zoya-fast | 35,155 | ec1df0e316436ac9 |
+| zoya-slow | 62,295 | e469a14d2cb7669d |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
@@ -286,5 +286,60 @@ Checks:
 - Less text and fewer writers: the fix is a net 2 B on SLOW, and no writer is added.
 - Selection by prefix or wording: none added.
 - Retry double-send: the provider is proven for identical retries, and the reworded case rests on the thread check (the kill test).
+- Bytes and hashes: above.
+
+## Release cut d-split26k and d-split26j (ab182a4)
+
+**Verdict: the cut passes with three fixes. The release build is not accepted until decision 412 is in it.**
+
+Cleanup reproduced Main's build: FAST 35,141 / 6b3bc064ebbe1c60, SLOW 62,217 / 1a833d7a8062f1b6, identical on two runs. Cleanup's 8896129 cadence, stop and lease fixes are in.
+
+### The 106 edits, line by line
+
+I read every old and new string from `d-split26k.py`.
+- About 60 edits drop dated attributions, AR ids, revision tags and decision numbers. None of them carries a rule.
+- The pointers were checked against the text they point to:
+  - Edit 9's "Outbound rows as on un#": the UN# bullet "Outbound un# rows at New or Contacted wait on no one" is there.
+  - Edit 13: the intro keeps "Replies owed, Akshay's decision mails and holding replies are your FAST run's".
+  - Edits 31 and 55: the same bullet still says it.
+  - Edit 33: "in the window Cadences gives" stays.
+  - Edit 65: un# links "only" stay in SCOPE.
+  - Edit 71: the UN# first bullet keeps "pitch sheet and templates".
+  - Edit 29: "Find the chat by their People Phone" stays.
+  - Edit 64: WRITE PATH gives Next date and keeps other segments.
+
+Main's least-sure edits:
+- **2, 5, 12, 23, 54, 64, 66: fine.** 23 merges the two THREADING statements and keeps every step: the draft, the read-back of To, Cc and thread, the explicit To and Cc, outsiders in To with Akshay in Cc where the team wrote last, the Sent-first retry, and never a "Re:" subject.
+- **26: fixed.** SENDING's crash-window check said "check your Sent and the thread first". The pointer went to ACTIONS' Before sending, which read only the thread. A fresh mail (a first step, a decision mail) has no thread, so only Sent finds it. That's the delivered-but-not-logged case in the CTO's gate item 3. ACTIONS now reads "your Sent and the thread".
+- **76 and 80: fixed.** These edits dropped "Next date today or earlier" from routine 1's and routine 7's own selector lines. Read alone, either line picks rows that aren't due yet. Both restored.
+
+Script: `docs/proposals/d-split26k-fix.py` (+78 B on SLOW, +14 on FAST).
+
+### d-split26j
+
+- **Lease tie-break: sound.** The earlier start holds the lease; in the same minute, FAST does. A start is recorded to the minute, so a same-second start resolves to FAST.
+- **SLOW self-key replacing the waiting segment: sound, within a limit.** It replaces only the guest or PR side's "Waiting on <their side>: ..." segment for the same ask, never Akshay's or a team member's.
+- **Usage receipts: fine.** Each run records its token, cache and cost figures, or "unknown" when it can't see them, never an estimate.
+
+### Coverage of approved rules (CTO 19:30)
+
+Main hasn't posted a coverage table, so Cleanup checked 411 to 413 against the build and Rules for Zoya, which both prompts read first every run:
+- **411 (recording status settled internally; Akshay's actions go in his Notion queue):** carried by Rules for Zoya. Nothing in the build contradicts it. Transcript failures and recording questions already go on Akshay's list.
+- **413 (themes from our side):** carried by Rules for Zoya. Nothing contradicts it.
+- **412 (the thank-you draft goes without the transcript, as a standalone mail To the guests, Cc the PR and other stakeholders): FAILS.** SLOW's INTERNAL TASKS c(4) does three things against it:
+  - it attaches the transcript to the thank-you draft;
+  - it creates the FT thank-you draft only once a transcript has arrived;
+  - it addresses that draft To the guest and the main PR.
+
+  The prompt names no precedence between Rules for Zoya and its own text, so c(4) wins in practice. The decision lists "calendar and Zoya prompts with Main", so the fix spans the calendar's STEP 4c too, and it is Main's.
+
+### Result
+
+FAST 35,155 / ec1df0e316436ac9, SLOW 62,295 / e469a14d2cb7669d, each identical on two builds. SLOW is 3,241 B under the cap. Not frozen yet: the 412 change will move both hashes, and the frozen round, crash and lock tests must name the final ones.
+
+Checks:
+- Less text and fewer writers: 3,299 B less on SLOW, with no new writer.
+- Selection by prefix or wording: none added. Edit 76 restores a date filter on a Status-based selector.
+- Retry double-send: edit 26 would have weakened the Sent check, and the fix restores it.
 - Bytes and hashes: above.
 
