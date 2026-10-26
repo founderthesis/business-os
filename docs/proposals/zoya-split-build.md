@@ -44,6 +44,6 @@ The spec's go-live replays (21 Oct, crash test, same-minute FAST and SLOW, two a
 
 1. Add a text property "Action key" to Activities.
 2. Deploy the ACTION KEYS delta to the inbox, calendar and sweep in the same window as the split, never before: the live single Zoya prompt doesn't read the keyed form.
-3. Point the Zoya trigger at zoya-fast (cron unchanged, CRON_TZ=Asia/Tokyo 30 7-23 * * *).
-4. Create the SLOW trigger: CRON_TZ=Asia/Tokyo 0 8-22/2 * * 1-5, Zoya's connectors.
+3. FAST replaces the single Zoya routine on its own trigger (trig_01UPT8LDrBDL5JQqW91Awgbo): its prompt becomes zoya-fast in the same deploy, so the old prompt never runs again. Its cron stays "CRON_TZ=Asia/Tokyo 30 7-23 * * *", which the server anchors to fire at :38 (observed 12:38 and 13:38 JST, 26 Oct). No second hourly Zoya trigger exists; list_triggers after the deploy must show exactly one.
+4. Create the SLOW trigger: CRON_TZ=Asia/Tokyo 8 8-22/2 * * 1-5 (Cleanup c66415e), with Zoya's connectors, then check next_run_at on both triggers. Overlap protection is twofold. First, the minutes: FAST :38 to :03, SLOW :08 to :30. Second, the LEASE part (d-split26h): neither run writes a row while the other's run record is Started and under 45 minutes old. Proof: one weekday of run records whose start and end times never overlap, plus any lease waits they report.
 5. Read each back, sync `routines/`, update the developer page and Change log, and record FAST and SLOW bytes and version stamps in the trial log.

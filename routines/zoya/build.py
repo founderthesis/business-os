@@ -14,10 +14,10 @@ sha = lambda b: hashlib.sha256(b).hexdigest()[:16]
 part = lambda n: open(os.path.join(PARTS, n + ".txt"), encoding="utf-8").read().rstrip("\n")
 
 FAST = ["intro-fast", "tools", "rules-common", "rules-tail", "notion-data", "scope", "actions", "queue-fast", "voice",
-        "sending", "limits-fast", "onemail", "identity", "runrecord", "fast-order", "decision", "daybefore", "invites", "mail", "report-fast",
+        "sending", "limits-fast", "onemail", "identity", "runrecord", "lease", "fast-order", "decision", "daybefore", "invites", "mail", "report-fast",
         "hard"]
 SLOW = ["intro-slow", "tools", "rules-common", "rules-routines", "rules-tail", "notion-data", "scope", "actions",
-        "queue-slow", "internal", "editnotes", "snoozed", "voice", "sending", "teamwa", "limits", "onemail", "identity", "runrecord",
+        "queue-slow", "internal", "editnotes", "snoozed", "voice", "sending", "teamwa", "limits", "onemail", "identity", "runrecord", "lease",
         "reconcile", "slow-order", "feedback", "bounces", "vendor", "ownermail", "scorecard", "payments", "invites", "followups",
         "report-slow", "hard"]
 # (part, old, new): rewrites that only one prompt needs
@@ -43,12 +43,18 @@ VARIANT = {
   ("voice", ', with one exception: release mail 2 opens "Zoya here, I work with Akshay on the Founder Thesis podcast."', ""),
   ("hard", "Never introduce or describe yourself except in release mail 2.", "Never introduce or describe yourself."),
   ("runrecord", "Run zoya <", "Run zoya FAST <"),
+  ("lease", "OTHER", "SLOW"),
+  ("lease", "WAIT", "10"),
+  ("lease", "STOP", ""),
   ("mail", "then WhatsApp Sarika the notes (guest, episode, each change with its timestamp, or the attachment's name).",
    "the WhatsApp to Sarika is your SLOW run's (EDIT NOTES TO SARIKA)."),
   ("hard", "- WhatsApp only to the team members TEAM WHATSAPP names.", "- No WhatsApp from this run."),
  ],
  "slow": [
   ("runrecord", "Run zoya <", "Run zoya SLOW <"),
+  ("lease", "OTHER", "FAST"),
+  ("lease", "WAIT", "25"),
+  ("lease", "STOP", " Start no new row after :30 past any hour, so FAST's :38 run finds you done; the next run carries on."),
   ("hard", "- WhatsApp only to the team members TEAM WHATSAPP names.",
    "- WhatsApp only to the team members TEAM WHATSAPP names, and RECONCILE's one alert in the group \"Zoya\"."),
  ],
