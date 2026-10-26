@@ -10,8 +10,8 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
-| zoya-fast | 35,155 | ec1df0e316436ac9 |
-| zoya-slow | 62,295 | e469a14d2cb7669d |
+| zoya-fast | 36,211 | f4a541d352980139 |
+| zoya-slow | 63,099 | 33ecf7c33c68d0ce |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
@@ -341,5 +341,61 @@ Checks:
 - Less text and fewer writers: 3,299 B less on SLOW, with no new writer.
 - Selection by prefix or wording: none added. Edit 76 restores a date filter on a Status-based selector.
 - Retry double-send: edit 26 would have weakened the Sent check, and the fix restores it.
+- Bytes and hashes: above.
+
+## Frozen build d-split26l (8e64140) and crash A (5d9c51d)
+
+**Verdict: accepted with one fix, which moves the Zoya hashes. Inbox, calendar and sweep are accepted as frozen.**
+
+### Reproduced
+
+- Zoya: FAST 36,257 / 96c11beae7ec325b, SLOW 63,145 / a5b4ef40cfd85bb1, identical on two builds. Cleanup's d33ef96 restorations are in (ACTIONS reads "your Sent and the thread"; the routine 1 and routine 7 date filters).
+- Inbox, calendar and sweep, rebuilt from the live prompts (inbox and calendar read by get_trigger today at 61,957 / aed0215a8bdf6a26 and 54,901 / 543c3499473860ac; sweep 33,824 / 7af60faaa021fa64) through `d394-keys.py` and `d-411-412-cal-sweep.py`:
+  - inbox 63,536 / 2eade949aa242970;
+  - calendar 56,272 / d9d1f508b9c797fd;
+  - sweep 35,319 / 9db06d64df11ff7d.
+
+  All three match Main's frozen hashes.
+
+### Decisions 411 to 413, against Rules for Zoya (read today)
+
+- **412: in.**
+  - SLOW c(4) never attaches or waits for a transcript.
+  - The FT thank-you is a standalone new mail ("Next Steps | ..."), To the guests, Cc the PR, every other stakeholder and the house copies.
+  - Akshay gets "(draft ready)".
+  - Calendar STEP 4c and 4d match.
+- **411: in.** NOTION DATA's RECORDING STATUS, calendar STEP 4 a and sweep STEP 3a all settle it from our side, put the question in Akshay's Notion queue once, and never ask the guest or PR, or on WhatsApp. RECONCILE's stuck alert in the group "Zoya" is a status alert, not an ask, so it stays.
+- **413: in.** Mail b takes themes from our side.
+- **The Your call answer** (yes sets Recorded, no becomes the cancelled-or-no-show ask) is in notion-edits-26oct.md item 1, for the CTO to apply. Until that edit is live, the inbox reads "yes" as approving a proposal, so it is part of the deploy.
+
+### Fixed: Mamatha and the recipient read-back
+
+Rules for Zoya, section 2 Copies (the master): "Mamatha is never in Cc, and nothing waits on her, on any show (decisions 260, 352)". Its 413 entry is themes only. The build had:
+- changed "never Mamatha" to "never add Mamatha (keep her only where she is on the latest inbound)";
+- added a read-back requiring To and Cc to hold "everyone on the latest inbound", cited as decision 413.
+
+The read-back would put Mamatha back on any thread she was on, and Sri back in Cc on un# ("Sri is never in Cc on routine mail"). The Krsnaa 17:40 mail was right to drop Mamatha. Main's open question is already answered by Rules for Zoya: never.
+
+`docs/proposals/d-split26l-fix.py`:
+- restores "never Mamatha";
+- keeps the read-back but excludes "Mamatha and, on un#, Sri";
+- drops the "decision 413" citation.
+
+The read-back still catches Sreepriya's four dropped recipients.
+
+Result: FAST 36,211 / f4a541d352980139, SLOW 63,099 / 33ecf7c33c68d0ce, identical on two builds, 2,437 B under the cap. Only SENDING changed, so frozen round 3 must run on these hashes. Crash A's trace reads ACTIONS and MESSAGE IDENTITY, which are unchanged, so it stands.
+
+### Crash A recovery: PASS as a trace
+
+The 19:20 self-addressed mail is in Zoya's Sent as two copies with one Message-ID, plus one INBOX delivery. Activities hold no row for it. The frozen ACTIONS ("read your Sent and the thread") and MESSAGE IDENTITY find it, so recovery plans one Activity and no send. This was Main's hand trace of what the prompt reads, not a prompt run. The Activity write is with the CTO (notion-edits item 2).
+
+### Crash B plan: one weakness
+
+The test puts the action key in the body as "bos-key", and recovery finds it by that marker. Real mails carry no such marker. Outside the provider window, recovery has to match by content: "a message from us after the action was raised that does what the action asks". Crash B should be judged on whether recovery finds the mail without the marker, or at least on both. Otherwise it proves less than gate item 3 asks.
+
+Checks:
+- Less text and fewer writers: the fix is -46 B, and no writer is added.
+- Selection by prefix or wording: none.
+- Retry double-send: crash A plans one Activity and no send; crash B is pending.
 - Bytes and hashes: above.
 
