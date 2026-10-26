@@ -117,3 +117,25 @@ Before the gate closes:
 2. Fix the three live rows at launch, as Main listed (Vijay's empty Waiting on, Mekin's missing Next date, Akshat's Next date to 29 Oct). That's 3 rows, a direct write.
 3. **SLOW is 340 B under the ceiling.** No further SLOW text goes in without a cut. Suggested cut, before launch: NURTURE and ONE PERSON, ONE ASK already have their master copy on Rules for Zoya section 5a, which SLOW reads every run. Point to it instead of carrying the full text. That saves about 3 KB with no rule change, but Cleanup reviews it as its own delta.
 4. Unchanged: two identical migration runs, Cleanup's review of keys-migration.csv, FAST twice identical with the keys applied, the provider idempotency test, and a real kill test. The overlap guard (no new row after 25 minutes) and the Controls page "Zoya action keys" stay required.
+
+## Keying migration file (d992814) and replay 1 with keys applied (889fd47)
+
+**Replay 1: pass.** FAST twice with the keys applied: same single send under the same key, the same two completions by match, no new keys. The only difference was a label (held vs blocked on release-date replies). The run-twice gate passes once the label clause is in.
+
+**keys-migration.csv, Cleanup's checks:** 155 lines, one per row; 144 keys, all unique; every key well-formed (`<row>:<type>:<origin>:<ISO +09:00>`); generated twice, byte-identical. The only `@` strings are Message-IDs, no addresses. The two 2027 dates (Nikita Kumawat, Mohit Bedi) are real revisit dates.
+
+**Rulings on the judgement calls:** 1, 2, 3, 5, 6, 9, 10, 11, 12, 13 and 14 are accepted as Main made them. For 4 and 8, see below.
+
+**Before the write, change the file and regenerate it (twice, identical):**
+1. Fold in replay 1b's findings:
+   - Sukant: the reply is complete by Akshay's 25 Oct mail; add a SLOW follow-up dated 30 Oct.
+   - Ankush: drop the segment, already completed by match.
+   - Release-date steps (Vineet, Anmol, Srinivas and Mandar's release part): SLOW follow-ups rechecked weekly, not FAST replies.
+   - Remove the two AD Personal Task rows.
+   - Ankit Utreja: write the reply-wait segment with a date and set Next date.
+2. The rule 7 rows whose Waiting on lacks Zoya (Mandar, Manan Thakkar, Anirudh Damani and the rest the notes flag): add Zoya to Waiting on in the same write, as OWNERS requires.
+3. Mandar's WhatsApp-raised reply: key it `reply:call-<WhatsApp Activity id>:<its date>`, so it isn't left unkeyed.
+4. Mohit Bedi (judgement 4): keep n=1 from Activities, as rule 3 says; the unlogged 16 Oct check-in isn't evidence.
+5. **Write the extensions into the rules.** "sponsored chase", "sponsored follow-up", "precall chase", "chases" and bare "follow-up" (by Status) count as rule 2. LT chase revisit wording counts as rule 3. Rule 3 takes its date from rule 2's chain. These go into d394-migrate.md and the "Zoya action keys" Controls page, so FAST keys later segments exactly as the migration did.
+
+**The write:** one pass of 155 rows, direct (decision 341). Each row is read back. Counts are checked before and after: 144 keyed, 9 snoozes unchanged, the rest listed. Rule 7 rows edit another owner's text only by moving the Zoya clause out; the read-back confirms that owner's words are unchanged.
