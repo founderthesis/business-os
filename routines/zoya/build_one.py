@@ -96,6 +96,8 @@ if len(sys.argv) >= 4:
     one = (one.replace("@@SLOWBRANCH@@", sys.argv[2]).replace("@@SLOWPIN@@", sys.argv[3])
               .replace("@@SLOWHASH@@", sha(sb)[:16]))
     assert "@@SLOW" not in one
+assert one.count("@@VERSION@@") == 1, "version placeholder"
+one = one.replace("@@VERSION@@", "zoya-one " + sha(one.encode())[:12])
 ob = one.encode()
 assert len(ob) <= 65536 - 200, ("one", len(ob))
 open(os.path.join(out, "zoya-one.txt"), "w", encoding="utf-8").write(one)

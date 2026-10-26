@@ -1,0 +1,338 @@
+{
+ "clock_date": "2026-10-27 (Tuesday, JST)",
+ "rule": "Each scenario sees snapshot.json plus only the additions listed for it. Act only on the rows listed in its scope; every other row in the snapshot is out of scope for that scenario (record nothing for it). Do not invent any id, address, message or row not given here. Lock and R scenarios use their own HYP rows and inbounds as given; no Notion data beyond these. There is one routine (zoya-one.txt). Every run does FAST work; the 10:38 and 16:38 weekday runs then do SLOW work from zoya-slow-work.txt (treat it as already fetched and hash-checked). Every run takes the LOCK first; assume the lock is free and this run takes it, unless the scenario says otherwise.",
+ "C": {
+  "run": "10:38 run (FAST work, then SLOW work)",
+  "scope": [
+   "3f019a301a7f812ea2a8d1e74b88113c",
+   "3fa19a301a7f811da4a8d2ff78897041",
+   "3f019a301a7f817fae25cc8414c31aa5",
+   "3f019a301a7f8126bd0ee7b39fd456b1"
+  ],
+  "additions": []
+ },
+ "D": {
+  "run": "10:38 run (FAST work, then SLOW work)",
+  "scope": [
+   "HYP-D-01 .. HYP-D-45"
+  ],
+  "additions": [
+   {
+    "type": "rows",
+    "count": 45,
+    "ids": "HYP-D-01 to HYP-D-45",
+    "each": {
+     "Status": "Sponsored offered",
+     "Show": "Founder Thesis",
+     "Next date": "2026-10-27",
+     "Chase step": 0,
+     "Next action": "Zoya [followup seq-1-1 2026-10-27T00:00:00+09:00]: sponsored step 1 on 27 Oct",
+     "key": "HYP-D-NN:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+     "raised order": "HYP-D-01 oldest",
+     "thread": "each has its own thread; the only mail on it is our sponsored offer of 13 Oct, no reply; no other holds apply",
+     "offer": "sponsored offer (routine 1, step 0) mailed 2026-10-13 10:00 JST; step 1 sent nowhere yet; Chase step 0"
+    }
+   }
+  ]
+ },
+ "E": {
+  "run": "11:38 run (FAST work only)",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-E-1010@impactkey.in",
+    "date": "2026-10-27T10:10:00+09:00",
+    "from": "Jheel Gehlot (impactkey.in)",
+    "to": [
+     "Zoya (myunnati.com)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "in_reply_to": "the latest message on Akshat's commercials thread in the snapshot",
+    "body": "1) Akshat is fine with INR 50,000 + GST, next steps? 2) for the January in-person shoot, what would the camera crew cost?",
+    "logged_by_inbox": false
+   }
+  ]
+ },
+ "G": {
+  "run": "10:38 run (FAST work, then SLOW work)",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-G-0955@impactkey.in",
+    "date": "2026-10-27T09:55:00+09:00",
+    "from": "Jheel Gehlot (impactkey.in)",
+    "to": [
+     "Zoya (myunnati.com)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "in_reply_to": "the latest message on Akshat's commercials thread in the snapshot",
+    "body": "Akshat is fine with the INR 50,000 + GST, what are the next steps?",
+    "logged_by_inbox": false
+   }
+  ]
+ },
+ "R1": {
+  "run": "10:38 run (FAST work, then SLOW work)",
+  "scope": [
+   "HYP-R1-TASK",
+   "HYP-R1-GUEST"
+  ],
+  "additions": [
+   {
+    "type": "rows",
+    "HYP-R1-GUEST": {
+     "Name": "Riya Sen @ Hypo Foods, Founder Thesis",
+     "Status": "Booked",
+     "Show": "Founder Thesis",
+     "Guest": "Riya Sen (People row has an Email)",
+     "Via": "Kabir (PR, hypopr.example)",
+     "Stakeholders": [
+      "Neha (Hypo Foods comms)"
+     ],
+     "Waiting on": [
+      "Guest or PR"
+     ],
+     "Next action": "Waiting on Kabir: nothing open",
+     "Next date": "2026-10-23",
+     "recording": "23 Oct 2026 11:00 JST, calendar event not cancelled",
+     "activities": "no thank-you Activity; no thank-you in Akshay's Sent"
+    },
+    "HYP-R1-TASK": {
+     "Name": "Transcript: Riya Sen @ Hypo Foods (FT, 23 Oct recording)",
+     "Kind": "Task",
+     "Show": "Internal",
+     "For engagement": "HYP-R1-GUEST",
+     "Task state": "Handed over",
+     "Waiting on": [
+      "Zoya"
+     ],
+     "Source ID": "transcript:cal:HYP-EVT-R1",
+     "Next action": "Ranjita: transcript for Riya's 23 Oct recording",
+     "Email out Activity": "Zoya sent: transcript request for Riya Sen (26 Oct)"
+    }
+   },
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-R1-RANJITA@myunnati.example",
+    "date": "2026-10-27T10:20:00+09:00",
+    "from": "Ranjita (Team)",
+    "to": [
+     "Zoya"
+    ],
+    "cc": [
+     "Akshay"
+    ],
+    "in_reply_to": "the transcript request",
+    "body": "attached",
+    "attachment": "riya-sen-23oct.txt, 61 KB, both voices speak at length, 52 minutes of conversation"
+   }
+  ],
+  "question": "Walk c(1) to (5). Give the thank-you draft exactly as addressed: mailbox, new mail or reply, subject, To, Cc, attachment. Give the guest row's Status, Waiting on and Next action after."
+ },
+ "R2": {
+  "run": "11:38 run (FAST work only)",
+  "scope": [
+   "HYP-R2"
+  ],
+  "additions": [
+   {
+    "type": "rows",
+    "HYP-R2": {
+     "Name": "Dev Rao @ Hypo Labs, Founder Thesis",
+     "Status": "Booked",
+     "Show": "Founder Thesis",
+     "Via": "Pallavi (PR)",
+     "Waiting on": [
+      "Guest or PR"
+     ],
+     "Next date": "2026-10-23",
+     "recording": "23 Oct 11:00 JST event still on the calendar, not cancelled; no Zencastr audio in Drive; no transcript; nothing from Akshay"
+    }
+   },
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-R2-PR@hypopr.example",
+    "date": "2026-10-27T10:05:00+09:00",
+    "from": "Pallavi (PR)",
+    "to": [
+     "Zoya"
+    ],
+    "cc": [
+     "Akshay"
+    ],
+    "body": "hi Zoya, just checking how the recording went with Dev? when can we expect the episode?",
+    "logged_by_inbox": false
+   }
+  ],
+  "question": "Is the recording settled? What does FAST reply to Pallavi (if anything), and what goes on the row (Waiting on, Next action)? Does anything go to WhatsApp or ask the PR or guest whether it happened?"
+ },
+ "R3": {
+  "run": "11:38 run (FAST work only)",
+  "scope": [
+   "HYP-R3"
+  ],
+  "additions": [
+   {
+    "type": "rows",
+    "HYP-R3": {
+     "Name": "Sreya Pal @ Hypo Bank, Founder Thesis",
+     "Status": "Booking",
+     "Show": "Founder Thesis",
+     "Via": "Rajmohan (PR)",
+     "Stakeholders": [
+      "Santhosh (PR)",
+      "Mala (Hypo Bank comms)"
+     ],
+     "Waiting on": [
+      "Guest or PR"
+     ]
+    }
+   },
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-R3-IN@hypopr.example",
+    "date": "2026-10-27T10:12:00+09:00",
+    "from": "Sreya Pal (hypobank.example)",
+    "to": [
+     "Zoya"
+    ],
+    "cc": [
+     "Akshay",
+     "Mamatha (myunnati.com)",
+     "Rajmohan (PR)",
+     "Santhosh (PR)",
+     "Mala (Hypo Bank comms)"
+    ],
+    "body": "Thursday 29 Oct 3pm IST works for the recording, can you send the invite?",
+    "logged_by_inbox": false
+   }
+  ],
+  "question": "Give the reply's To and Cc exactly, and the read-back check the prompt requires before sending."
+ },
+ "I3": {
+  "run": "Interaction: recovery + duplicate prevention. The 09:38 run held the lock and at 09:41 sent the 'Sponsored yes: next steps' reply for the G inbound (Message-ID HYP-I3-SENT@mcpemails.example, idempotency_key = the reply action key) on the thread, then crashed before logging and before releasing. The 10:38 to 16:38 runs found the lock held and skipped. At 17:20 the CTO completed the runbook (positive termination evidence) and released the lock WITHOUT having logged the send yet (assume the reconcile step was missed). The 17:38 run (FAST work only) takes the lock.",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-G-0955@impactkey.in",
+    "date": "2026-10-27T09:55:00+09:00",
+    "from": "Jheel Gehlot (impactkey.in)",
+    "to": [
+     "Zoya (myunnati.com)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "in_reply_to": "the latest message on Akshat's commercials thread in the snapshot",
+    "body": "Akshat is fine with the INR 50,000 + GST, what are the next steps?",
+    "logged_by_inbox": false
+   },
+   {
+    "type": "sent mail",
+    "message_id": "HYP-I3-SENT@mcpemails.example",
+    "date": "2026-10-27T10:41:00+09:00",
+    "from": "Zoya",
+    "to": [
+     "Jheel (PR)"
+    ],
+    "cc": [
+     "Akshay"
+    ],
+    "thread": "Akshat's commercials thread, reply to HYP-G-0955",
+    "logged": false
+   }
+  ],
+  "question": "What do the skipped runs write? What does the 17:38 run do with the unlogged reply and the inbound: is the reply resent? Final Activity count for HYP-I3-SENT."
+ },
+ "I4": {
+  "run": "Interaction: recovery with two candidates, outside the 24-hour idempotency window. On 2026-10-27 Payal (PR) wrote at 09:30 asking 'can you share the audience numbers again?' (Message-ID HYP-I4-IN@brandit.example; reply action key 3fa19a301a7f811da4a8d2ff78897041:reply:msg-HYP-I4-IN@brandit.example:2026-10-27T09:30:00+09:00). Ronit's routine 1 step 1 was also due (key 3fa19a301a7f811da4a8d2ff78897041:followup:seq-1-1:2026-10-27T00:00:00+09:00). Two mails from Zoya to Payal went on Ronit's thread that day, both unlogged after crashes and both sent without an idempotency key (treat the window as expired): HYP-I4-A@mcpemails.example at 11:05 and HYP-I4-B@mcpemails.example at 11:20. Their bodies are each one short line in Zoya's voice and do not clearly show which action each served. The 11:38 run (FAST work) and the 16:38 run (FAST work, then SLOW work) both take the lock in turn.",
+  "scope": [
+   "3fa19a301a7f811da4a8d2ff78897041"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-I4-IN@brandit.example",
+    "date": "2026-10-27T09:30:00+09:00",
+    "from": "Payal (PR)",
+    "to": [
+     "Zoya"
+    ],
+    "cc": [
+     "Akshay"
+    ],
+    "thread": "Ronit's commercials thread",
+    "body": "can you share the audience numbers again?",
+    "logged_by_inbox": true
+   },
+   {
+    "type": "sent mail",
+    "message_id": "HYP-I4-A@mcpemails.example",
+    "date": "2026-10-27T11:05:00+09:00",
+    "from": "Zoya",
+    "to": [
+     "Payal (PR)"
+    ],
+    "cc": [
+     "Akshay"
+    ],
+    "thread": "Ronit's commercials thread",
+    "body": "hey Payal, quick check, any thoughts on this?",
+    "logged": false
+   },
+   {
+    "type": "sent mail",
+    "message_id": "HYP-I4-B@mcpemails.example",
+    "date": "2026-10-27T11:20:00+09:00",
+    "from": "Zoya",
+    "to": [
+     "Payal (PR)"
+    ],
+    "cc": [
+     "Akshay"
+    ],
+    "thread": "Ronit's commercials thread",
+    "body": "hey Payal, following up here, lmk",
+    "logged": false
+   }
+  ],
+  "question": "For each of the two actions: is the original send identified uniquely? What does each run do: send, log, or hold? Give Waiting on and the Akshay segment exactly. Is anything resent?"
+ },
+ "SKIP": {
+  "run": "Lock held: the 12:38 run finds refs/heads/zoya-lock at 'held: <session X> 2026-10-27T03:38Z' (the 11:38 run, still going).",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-G-0955@impactkey.in",
+    "date": "2026-10-27T09:55:00+09:00",
+    "from": "Jheel Gehlot (impactkey.in)",
+    "to": [
+     "Zoya (myunnati.com)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "in_reply_to": "the latest message on Akshat's commercials thread in the snapshot",
+    "body": "Akshat is fine with the INR 50,000 + GST, what are the next steps?",
+    "logged_by_inbox": false
+   }
+  ],
+  "question": "List every read and write this run makes, the run record's Summary, and the state of the G inbound's reply action afterwards."
+ }
+}

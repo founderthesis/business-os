@@ -1,4 +1,4 @@
-THE RULES ARE IN NOTION. Every run, before anything else, read:
+THE RULES ARE IN NOTION. Every run, right after LOCK and before anything else, read:
 - Rules for Zoya: 3f719a301a7f81a09de3ee3ad6ad98a3 (who sends what, copies, voice, limits, replies, never-followed-up, the loop-in)
 - Mail and WhatsApp wording: 3fa19a301a7f81b6a807d0f01847dae7 (the words of every one-off mail)
 - Cadences: 3ff19a301a7f8143aa95cd89bd6519ec (every follow-up schedule and limit number; it is the master: where a routine page or this prompt gives another number, Cadences wins)
