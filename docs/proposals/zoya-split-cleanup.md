@@ -10,8 +10,8 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
-| zoya-fast | 33,788 | 40d6fffbda4a31a2 |
-| zoya-slow | 62,555 | 33e48c020b3a8657 |
+| zoya-fast | 34,091 | c1b292450f738a01 |
+| zoya-slow | 63,710 | b34422106ee6f517 |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
@@ -52,9 +52,12 @@ A replay or test that fails goes back to Main. A pass on all of them, plus Aksha
 | Replay 1: FAST twice, same keys | **Fail.** Runs A and B on the same data differed: A held Todd McDonald and skipped Sukant; B completed Sukant and missed Todd. Neither wrote keys. Re-run twice after d-split26b and this fix; pass only on identical send lists, holds and keys. |
 | Replay 2: FAST and SLOW same minute | Not run. |
 | Replay 3: two actions on one row (Akshat) | **Fail**, fixed in d-segdates26 (dated segments). Re-run pending. |
+| SLOW once (slow.md) | Informative, not a replay pass: no follow-up sends planned, 82 unkeyed steps left alone (the deadlock, fixed), 11 problems found and fixed in d-split26c (accepted in text). |
 | Replays 4 to 8 | Not run. |
 | Failure, concurrency and provider idempotency tests | Not run. |
 
 Cleanup's change to d-split26b: the deadlock was real (SLOW could never act on an old-format step), but letting each run key "its own types" by wording brings back the two-readings risk. Now FAST keys every old-format step it reads, any type, and writes the type into the key; SLOW acts only on keyed segments. SLOW's old steps wait at most one FAST run.
 
 For the CTO, from fast-b.md: two Rules-page texts disagree with live rules (Client show mails sign-off "Stay awesome" vs decision 345; quiet hours 23:00 to 10:00 vs Cadences 00:30 to 07:30), and 10 rows wait on Mamatha with no Zoya step.
+
+d-split26c (b7924b1) accepted in text: seq keys take the step's due date at 00:00 JST; a release date counts as confirmed only when Akshay wrote it or the episode link exists; feedback is Akshay's message about Zoya's mail, not his guest-facing replies; dateless holds get a rule; the Mamatha swap covers only Zoya's steps; bounces and edit notes look back 7 days, deduped by their existing Activity or marker. SLOW is now 63,710, 1,626 B under the ceiling: the same pressure as the single prompt is coming back on SLOW.
