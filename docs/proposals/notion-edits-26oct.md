@@ -41,3 +41,8 @@ Properties (exact):
 - Engagement: 40519a301a7f8105a87edf64e65872b7
 - Date: 2026-10-26 19:20 JST (10:20:28Z)
 - Page body: `Action key: <as above>`, then the sent plain-text body as read from Zoya's Sent (message [Gmail]/Sent Mail:645).
+
+## Applied by the CTO (26 Oct, about 21:50 JST)
+
+- Edit 1: applied. Section 5 on 3ff19a301a7f8148993ccea78fc66428 replaced with the exact text above. It supersedes the 21:14 version, which carried Main's earlier wording.
+- Edit 2: applied. Activity 40519a301a7f81daa9aec3268dac4369 (Email out, Source ID msgid:a21e2f20-99d5-4dce-a3ed-2d5a2c7c7ae4@mcpemails.com, Engagement 40519a301a7f8105a87edf64e65872b7, Date 10:20:28Z). The Action key is the first line of the page body, since the property doesn't exist yet.
