@@ -23,6 +23,7 @@ SLOW = ["intro-slow", "tools", "rules-common", "rules-routines", "rules-tail", "
 # (part, old, new): rewrites that only one prompt needs
 VARIANT = {
  "fast": [
+  ("sending", "(STEP 0c)", "(SLOW's bounce scan)"),
   # FAST-only cuts: text this run never uses (no WhatsApp, follow-ups, vendor forms, internal tasks, release mail)
   ("tools", " Blueticks sends WhatsApp to the team (TEAM WHATSAPP). Web search finds news for news angles.", ""),
   ("tools", ', "+bluetick"', ""),
