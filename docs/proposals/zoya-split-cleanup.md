@@ -10,8 +10,8 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
-| zoya-fast | 34,091 | c1b292450f738a01 |
-| zoya-slow | 63,710 | b34422106ee6f517 |
+| zoya-fast | 34,837 | 67fb06d626d03c71 |
+| zoya-slow | 64,676 | 567af96c27c1db2e |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
@@ -98,3 +98,12 @@ Main's direction is accepted, with four conditions:
 4. **One send, two Sent copies.** Say it in ACTIONS: two Sent copies with one Message-ID are one send. The 👍 reply goes only on updates under 48 hours old.
 
 Live check, done by Cleanup: Zoya is 65,210 / 90b11cd34a3bdca1, updated 12:28 JST. That matches d-thread26 with Cleanup's fix.
+
+## d-split26d and the migration spec (dab24c8)
+
+Accepted in text, with three changes in the parts:
+1. **No free reading after the migration.** ACTIONS still let FAST key a later unkeyed segment "from its wording", which is how replay 1 failed. The ACTION KEYS delta covers only the inbox, calendar and sweep, so evals, host boards and WhatsApp will still write old-form Zoya steps. FAST now keys those by the migration's fixed rules only, and reports and leaves alone any it can't type. The routines can't read the repo, so Main publishes the rules from d394-migrate.md on the developer page under Rules, as a Controls page named "Zoya action keys", before launch.
+2. **Overlap.** SLOW starts no new row after 25 minutes, so it never runs into FAST's :30 run.
+3. Builds: FAST 34,837 / 67fb06d626d03c71, SLOW 64,676 / 567af96c27c1db2e. **SLOW is 660 B under the ceiling.** The split has refilled the larger prompt. The next SLOW addition needs an equal cut, or rules moved to Notion pages.
+
+The migration gate stands as Main wrote it: two identical migration runs, then FAST twice with the file applied, giving identical keys and send lists. Cleanup also reviews `keys-migration.csv` before anything is written, the rule 7 splits in particular, since they edit text another owner wrote. Still before go-live: the provider idempotency test and a real kill test.
