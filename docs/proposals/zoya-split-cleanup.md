@@ -10,8 +10,8 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
-| zoya-fast | 38,248 | 6a00434c06dc4ab7 |
-| zoya-slow | 65,299 | 0a41fd25fbed7166 |
+| zoya-fast | 38,248 | a277f0f9fc4b73e0 |
+| zoya-slow | 65,299 | 4cda079b9f3ff923 |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
@@ -555,4 +555,24 @@ Checks:
 **R1's "house copies undefined": confirmed, and fixed by Cleanup (`docs/proposals/d-split26q-fix2.py`).** Neither Zoya prompt defines the term; the sweep and calendar do (Zoya in Cc on ad@ mail and drafts, plus Chaandini on Built to Share and Human by Design, never Mamatha). INTERNAL TASKS c(4) drafts only the Founder Thesis thank-you in ad@, so its house copy is Zoya, and it now says "you". That saves 13 B, so this fix doesn't have to wait for the size work. Run B's other R1 question, whether c(2)'s Episode retry holds back the thank-you, is answered by the text: c(4) doesn't depend on c(2), and the thank-you never waits for a transcript.
 
 Result: FAST 38,248 / 6a00434c06dc4ab7 (unchanged), SLOW 65,299 / 0a41fd25fbed7166, identical on two builds. SLOW is still 2,763 B over the size gate.
+
+## Round 4c and d-split26r (d4d9332), merged with Cleanup's c04ed40
+
+**Round 4c: I1, I3 and I4 pass on both runs, with nothing resent.** I3, which failed in round 4b, now passes: FAST closes its own crashed record, and the Sent scan logs the answered reply and its inbound once.
+
+**d-split26r: sound.**
+- A mail named in an open "can't tell" segment is left alone by the Sent scan, so the hold can't dissolve and let the step go twice.
+- An Activity that holds a candidate's Message-ID without an Action key still counts as that candidate.
+- Both cuts are covered elsewhere: "Two Sent copies with one Message-ID are one send" still appears twice in each prompt (ACTIONS and MESSAGE IDENTITY), and the property name stays in 'Write "Action key" on the Activity'.
+
+Main's noted items are agreed:
+- Recovery can't add a missing Cc to a sent mail.
+- One crash costs SLOW its slot; that's for the architecture choice.
+- WRITE PATH against a shared hold segment: both runs joined it anyway.
+
+**The merge.** Both of Cleanup's fixes are in the merged tree: "another action's holding reply" and the FT thank-you draft's "Stakeholder and you". The merged build is FAST 38,248 / a277f0f9fc4b73e0 and SLOW 65,299 / 0a41fd25fbed7166's successor, SLOW 65,299 / 4cda079b9f3ff923, identical on two builds.
+- FAST equals Main's 26r build. Main's 26r was built on 3dfa2e4, after Cleanup's holding-reply fix.
+- SLOW is Main's 65,312 less the 13 B from Cleanup's house-copies fix.
+
+The split is still not a release candidate. The CTO names the architecture first; then one final build is made and every affected test re-runs on it. That build must be at or under 62,536 B.
 
