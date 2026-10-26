@@ -223,3 +223,33 @@ Checks:
 
 The split is still not accepted for deploy. Still needed: replays C, G, H, D and E on this build against frozen inputs; the concurrency, retry, hold, cap, multi-ask, kill/recovery and provider duplicate-send outputs (the concurrency run should now show a lease wait); and the migration write route. The overlap proof stays next_run_at on both triggers plus one weekday of run records.
 
+
+## Keying migration, third build (7faa9b4)
+
+Accepted for the write, with one rekey. Cleanup reproduced Main's file byte for byte (sha256 d837edb33231084f): 155 segments and 144 keys, no duplicates, 38 REVIEW flags and 19 notes. The only @ strings are Message-IDs, and there are no phone numbers.
+
+The two owner-field corrections are in:
+- `waiting_on_remove` takes Zoya off Ankush's row, the only one where the migration drops her last segment.
+- `waiting_on_add` adds Zoya on 12 rows: the five rule 7 rows, plus Mithun Pangal, Priya Kumar, Rick Yvanovich, Dinesh Yadav, Akshit Bansal, Matthew (Magic Bus) and Vivek Iyer. Gulab Patil is no longer in scope, because his live row has no Zoya segment.
+
+The seven drift rows, checked one by one:
+- **Nikita Kumawat** and **Kumar Abhishek**: nurture n=1 on the segment's own date or on Next date. Correct.
+- **Ryan Louvar**: a team data fix, dated from the Claude note. Correct.
+- **Robert Mitchnick**: precall step 1 on 27 Oct by rulings 1 and 7. Correct.
+- **Vivek Iyer**: Zoya's step is split out of Deepayan's segment and keyed sponsored step 2 on 2 Nov. Correct.
+- **Matthew (Magic Bus)**: form chaser 1 is keyed for 29 Oct, but the row also carries Akshay's re-record question. STEP 2's skip ("Akshay holds a decision on this pursuit") stops the send until he answers. Correct, as long as that segment stays on the row.
+- **Prashant Sachan: rekeyed by Cleanup.** The rules took the routine from Status Recorded, which is routine 5, the guest form. Key seq-5-1 would send guest form chaser 1 to Vineeta, but the ask is a photo and transcript feedback. Rule 9's fallback is routine 4, misc chase, so the key is now seq-4-1. Built to Share has no misc-chase wording yet (flagged 26 Oct), so SLOW blocks and reports it instead of sending the wrong mail.
+
+Result: `keys-migration.csv` sha256 **d9366a4ef6593b5e**, identical on two builds, 155 segments and 144 unique keys.
+
+The write still needs, at deploy and on Akshay's yes:
+- The live re-read drift guard right before the write. Any row that changed since this build is rebuilt by the rules, or left out and listed, never written from the file.
+- One writer.
+- Counts before and after reconciled against the file.
+- A read-back of every keyed segment and both owner fields.
+
+Checks:
+- Less text and fewer writers: the migration is one write by one writer, after which FAST and SLOW key by field.
+- Selection by prefix or wording: the keys exist so nothing is selected by wording again. The build reads wording once, by fixed rules.
+- Retry double-send: the migration sends nothing. Keys make a retry a no-op.
+- Bytes and hashes: above.
