@@ -61,3 +61,28 @@ Cleanup's change to d-split26b: the deadlock was real (SLOW could never act on a
 For the CTO, from fast-b.md: two Rules-page texts disagree with live rules (Client show mails sign-off "Stay awesome" vs decision 345; quiet hours 23:00 to 10:00 vs Cadences 00:30 to 07:30), and 10 rows wait on Mamatha with no Zoya step.
 
 d-split26c (b7924b1) accepted in text: seq keys take the step's due date at 00:00 JST; a release date counts as confirmed only when Akshay wrote it or the episode link exists; feedback is Akshay's message about Zoya's mail, not his guest-facing replies; dateless holds get a rule; the Mamatha swap covers only Zoya's steps; bounces and edit notes look back 7 days, deduped by their existing Activity or marker. SLOW is now 63,710, 1,626 B under the ceiling: the same pressure as the single prompt is coming back on SLOW.
+
+## Scenario replays on split26c (ea4c8c5), 26 Oct 12:20 JST
+
+Main's seven read-only replays, as reported in `split-dryruns/`:
+
+| Replay | Main's verdict | Cleanup |
+| --- | --- | --- |
+| Retries (crash after send) | Pass on logic | Agree. Close its three gaps in text: a send recovered by the thread check writes the Action key; draft-then-send carries the idempotency key too; two Sent copies with one Message-ID are one send (say it in ACTIONS). |
+| Same minute | Pass by rule | Agree, with one condition: route SLOW's unkeyed reply-shaped sends (vendor Your call, "they've paid" thank-you, GST ask) through FAST or key them in SLOW. |
+| Concurrent asks (Akshat) | Fail | Agree. See below. |
+| Contact holds | Dated pass; cold and dateless fail | Agree. |
+| Capped leftovers | Fail | Agree. |
+| One inbound, several asks | Outbound pass, inbound fail | Agree. |
+| Holding reply | Pass | Agree; add hosts (Sri, Satish, Arjun) to RECONCILE's exemptions. |
+
+Not accepted. What would make the failures pass, in the fewest words:
+
+1. **Keying.** Cleanup's "SLOW acts only on keyed segments" deadlocks every follow-up on a row waiting on PR, because d-sel23 selects follow-ups by Status and Next date, and those rows have no Zoya segment. A follow-up key needs no wording: `<row>:followup:seq-<routine>-<step>:<due date>`. So SLOW keys the follow-ups it selects that way itself, and FAST keys every other old-format segment (the wording-typed ones). One run decides each key, and the deadlock goes.
+2. **Concurrency.** Notion has no compare-and-set, so the re-read before a write narrows the race but can't close it. Two cheap guards: run FAST and SLOW in different minutes with a hard runtime limit, so they never overlap (FAST at :30, SLOW at :00 on even hours, each told to stop new work after 25 minutes); and after every row write, re-read the row, and if this action's own segment or owner is missing, rewrite it once and report it.
+3. **Next date.** FAST needs the same rule as SLOW: Next date is the earliest open segment date. DATED SEGMENTS must also read the legacy forms ("original due <YYYY-MM-DD>"), or Main rewrites those rows once at deploy.
+4. **Caps.** One definition everywhere: a cap is not a hold; the row stays due; leftovers go first next run (oldest due first, not "least recently attempted"). STEP 2's hold list, AFTER SEND and NURTURE must say the same. RECONCILE exempts rows a cap held.
+5. **Holds.** A cold-outreach or dateless hold sets a recheck date (7 days) as the row's Next date, keeps an owner (Chaandini for cold outreach, never empty), and never re-asks Akshay (decision 381). ONE PERSON, ONE ASK follows Cadences' per-guest-thread PR limit.
+6. **Inbound completing asks.** One sentence: an inbound message that answers our open asks completes each of them, each completion line naming the inbound Activity. Two reply actions raised by one inbound take a suffix in the key (`msg-<id>-1`, `-2`).
+
+When these are in text, Main re-runs the seven replays, plus FAST twice on the same data (replay 1). Cleanup accepts on those outputs. The provider idempotency test and a real kill test still come before go-live.
