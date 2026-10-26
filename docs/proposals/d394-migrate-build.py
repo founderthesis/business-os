@@ -3,7 +3,7 @@ from collections import Counter
 OUT = sys.argv[1]
 T = lambda d: f"{d}T00:00:00+09:00"
 rows = []
-def add(rid, name, seg, typ=None, origin=None, raised=None, rule='', flag='', step=None, new=None, woa='', nd=''):
+def add(rid, name, seg, typ=None, origin=None, raised=None, rule='', flag='', step=None, new=None, woa='', nd='', wor=''):
     if typ:
         if step is None:
             assert seg.startswith('Zoya: '), seg
@@ -16,10 +16,10 @@ def add(rid, name, seg, typ=None, origin=None, raised=None, rule='', flag='', st
     else:
         key = ''
         if new is None: new = seg
-    rows.append([rid, name, seg, new, key, rule, flag, woa, nd])
+    rows.append([rid, name, seg, new, key, rule, flag, woa, nd, wor])
 def S(rid, name, seg): add(rid, name, seg, rule='1')
-def F(rid, name, seg, r, n, d, flag=''):  # literal rule 2
-    add(rid, name, seg, 'followup', f'seq-{r}-{n}', T(d), '2', flag)
+def F(rid, name, seg, r, n, d, flag='', woa=''):  # literal rule 2
+    add(rid, name, seg, 'followup', f'seq-{r}-{n}', T(d), '2', flag, woa=woa)
 def FX(rid, name, seg, r, n, d, why):     # rule 2 by extension
     add(rid, name, seg, 'followup', f'seq-{r}-{n}', T(d), '2 (extension)', 'REVIEW: ' + why)
 def N(rid, name, seg, n, d, flag='', rule='3'):
@@ -38,6 +38,8 @@ def D(rid, name, seg, d, flag=''):
     add(rid, name, seg, 'decision', f'call-{rid}', T(d), '5', flag)
 def TM(rid, name, seg, d, flag=''):
     add(rid, name, seg, 'team', f'call-{rid}', T(d), '6', flag)
+DRIFT = 'REVIEW: rebuilt for drift 2026-10-26. '  # live row changed after the second build; rebuilt by the rules from the 26 Oct re-read
+WOA_NOTE = "note: Waiting on lacked Zoya (re-read 26 Oct); waiting_on_add adds her (OWNERS)."
 
 SPCH = "Zoya: sponsored chase (ask if they're open to it) on 27 Oct"
 WHY_SPCH = "'sponsored chase' is follow-up wording naming routine 1 but not in rule 2's list ('sponsored step'); literal reading drops it to rule 6 team. n = Chase step + 1."
@@ -77,12 +79,8 @@ F('3f019a301a7f811bba3dced97384aed5','Vishal Virani @ Rocket, Founder Thesis',"Z
 F('3f019a301a7f811bbc5bc042f545d9c9','Sudhakar Chirra @ FreshBus, Founder Thesis',"Zoya: precall step 3 on 28 Oct",2,3,'2026-10-28')
 F('3f019a301a7f811e824fc9131a063226','Nishchay Nath @ BondScanner, Founder Thesis',"Zoya: sponsored step 2 on 2 Nov",1,2,'2026-11-02')
 F('3f019a301a7f8120be93f84d3ae3730f','Gautam Saraugi @ Go Colors, Founder Thesis',"Zoya: precall step 2 (dates check) on 28 Oct",2,2,'2026-10-28')
-add('3f019a301a7f812291c7e824de67fbc0','Nikita Kumawat @ Brandworks Technologies, Founder Thesis',
-  "Waiting on Ria (One Source): they want to take it up later; Zoya reconnects on the revisit date (long-term chase)",
-  'nurture','seq-7-1',T('2027-01-03'),'7 then 3 (extension)',
-  "REVIEW: rule 7, Zoya step inside the Waiting on Ria segment. " + WHY_LT + " No 'on' date, so Next date.",
-  step='reconnect on the revisit date (long-term chase)',
-  new="Waiting on Ria (One Source): they want to take it up later | {K}: reconnect on the revisit date (long-term chase)")
+N('3f019a301a7f812291c7e824de67fbc0','Nikita Kumawat @ Brandworks Technologies, Founder Thesis',"Zoya: nurture Nikita Kumawat: PR (Ria, One Source) paused on 5 Oct, 'later stage', no date; reconnect on 3 Jan 2027 (since 5 Oct 2026)",1,'2027-01-03',
+  DRIFT + "The rule 7 segment in the second build ('Waiting on Ria ...; Zoya reconnects on the revisit date') was rewritten live on 26 Oct as a plain nurture segment. Rule 3 literal: n = 0 'Zoya sent: nurture' Activities since 5 Oct + 1; date from the segment's own 'reconnect on 3 Jan 2027' ('paused on 5 Oct' is history, ruling 3), same as Next date. Waiting on has Zoya.")
 D('3f019a301a7f8123b098f6522d5f6080','Vishal Devanath @ SMERGERS, Founder Thesis',"Zoya: create an Engagement for the Charge Zone profile Vishal shared (Akshay: nothing is pending on him here)",'2026-10-25',
   "note: internal step from Akshay's 25 Oct call; rule 5 precedes rule 6, so typed decision (FAST) though the work is internal.")
 F('3f019a301a7f81249148d12f4439ede4','Aman Arora @ Magical Theatre, Founder Thesis',"Zoya: sponsored step 3 (audience seniority) on 30 Oct",1,3,'2026-10-30')
@@ -90,7 +88,8 @@ F('3f019a301a7f81249f57c4fedf5d4a7b','Neerja Hajela @ Yakult Danone India Pvt. L
 F('3f019a301a7f8129b418f49170519e55','Beerud Sheth @ Gupshup, Founder Thesis',"Zoya: recording step 2 on 28 Oct",3,2,'2026-10-28')
 add('3f019a301a7f812d8f24e8b4b7dbec9a','Ankush Tiwari @ pi-labs.ai, Founder Thesis',"Zoya: after your call, take the next steps with the pi-labs PR team (Ankita, Simran)",
   rule='done by match', new='',
-  flag="note: replay 1b: completed by match. The decision mail this step follows went 26 Oct (msgid 70008c86...), so the Zoya segment is dropped and no key is written; the other two segments (Waiting on Simran, Akshay: Flock Safety info) stay. Waiting on still lists Zoya.")
+  flag="note: replay 1b: completed by match. The decision mail this step follows went 26 Oct (msgid 70008c86...), so the Zoya segment is dropped and no key is written; the other two segments (Waiting on Simran, Akshay: Flock Safety info) stay. This was Zoya's last segment on the row, so waiting_on_remove drops her from Waiting on (live: Akshay, Guest or PR, Zoya).",
+  wor='Zoya')
 F('3f019a301a7f812ea2a8d1e74b88113c','Amit Das @ Think360.ai, Founder Thesis',"Zoya: form chaser 2 on 29 Oct",5,2,'2026-10-29')
 D('3f019a301a7f813287bbf83d4112e716','Ankit Utreja @ WebEngage, Founder Thesis',"Zoya: chase Devanshi (SGA) hard for a pre-call date with Ankit, or ask for CEO Avlesh Singh instead (Akshay's call: chase hard)",'2026-10-19',
   "REVIEW: chase wording (could be rule 2 by extension, routine 2) but the wording names Akshay's call, which literally matches rule 5. Replay 1b: Next date was 3 Jan 2027 despite Akshay's 19 Oct 'chase hard'; the write also sets Next date 2026-10-27 (first working day after this migration).")
@@ -151,7 +150,7 @@ N('3f019a301a7f8196a5f1c6b2f911781d','Pavan Kumar @ White Lotus Group, Founder T
 N('3f019a301a7f8198a658d25c5ef71f4c','Annanya Sarthak @ Awign, Founder Thesis',"Zoya: nurture Annanya Sarthak: reconnect for a Founder Thesis recording (since 20 Oct 2026)",2,'2026-12-21')
 F('3f019a301a7f81999073d3bd3b7bb44b','Rahul Chandola @ Institute of Heart Lungs Diseases Research Centre (IHLD), Founder Thesis',"Zoya: precall step 1 on 30 Oct (held for ONE PERSON, ONE ASK: Abhinav got the sponsored step 1 mail for Shailendra on 23 Oct)",2,1,'2026-10-30')
 F('3f019a301a7f819a9d8cd6811838989b','Mithun Pangal @ VYE Manufacturer and Consultants Pvt. Ltd, Founder Thesis',"Zoya: sponsored step 4 (proof story) on 22 Oct; mail planned in the page body; blocked until the due-diligence story is confirmed (Akshay) and an ad@ send is allowed",1,4,'2026-10-22',
-  "note: Waiting on lacks Zoya; step is blocked on Akshay.")
+  "note: Waiting on lacked Zoya (re-read 26 Oct); waiting_on_add adds her (OWNERS). The step is blocked on Akshay; she holds it until he confirms.", woa='Zoya')
 F('3f019a301a7f819ba6fbff3b6114faec','Stephen Somers and Lisa Somers @ Marketplace SuperHeroes, Founder Thesis',"Zoya: sponsored step 4 (questions) on 5 Nov",1,4,'2026-11-05')
 F('3f019a301a7f819c9730ccc8067f0927','Sanjiv Bajaj @ BajajCapital Ltd, Founder Thesis',"Zoya: sponsored step 3 (access) on 2 Nov",1,3,'2026-11-02')
 F('3f019a301a7f81a1b822cada647a9a47','Vijay Kumar @ Flexymanagers, Founder Thesis',"Zoya: sponsored step 4 on 29 Oct",1,4,'2026-10-29')
@@ -163,9 +162,14 @@ F('3f019a301a7f81afb875e1fcf11f366a','Ujwal Sutaria @ Trillion Dollar Venture (T
 F('3f019a301a7f81b0b751cb90cf585011','Dhruv Atreja @ Fastino Labs, Founder Thesis',"Zoya: sponsored step 2 on 30 Oct",1,2,'2026-10-30')
 F('3f019a301a7f81b28714f22c3d499471','IAS Balamurugan @ Anicut Capital, Founder Thesis',"Zoya: precall step 2 on 29 Oct",2,2,'2026-10-29')
 F('3f019a301a7f81b29089e20c8aab1b3e','Raghav Mahajan @ BECOME TANK READY, Founder Thesis',"Zoya: sponsored step 4 (due diligence story) on 30 Oct",1,4,'2026-10-30')
-F('3f019a301a7f81b498c2ec93a4c40b42',"Priya Kumar @ Priya Kumar's Training Systems, Founder Thesis","Zoya: sponsored step 1 on 29 Oct",1,1,'2026-10-29',"note: Waiting on lacks Zoya.")
+F('3f019a301a7f81b498c2ec93a4c40b42',"Priya Kumar @ Priya Kumar's Training Systems, Founder Thesis","Zoya: sponsored step 1 on 29 Oct",1,1,'2026-10-29',WOA_NOTE,woa='Zoya')
+N('3f019a301a7f81b7b36fcda18664be04','Kumar Abhishek @ ToneTag, Founder Thesis',"Zoya: nurture Kumar Abhishek: availability promised by Nikita (Adfactors) on 19 Aug, silent through 3 chases; consider a direct route if the PR stays silent (since 19 Aug 2026)",1,'2026-11-04',
+  DRIFT + "Live Zoya segment missing from the second build (nurture started 26 Oct, daily sweep). Rule 3 literal: n = 0 'Zoya sent: nurture' Activities since 19 Aug + 1; no 'on <D Mon>' for the step ('promised ... on 19 Aug' is history), so Next date 4 Nov. Waiting on has Zoya.")
 F('3f019a301a7f81bd92dcd5fcfcc17a98','Aayush Jindal @ Asian Footwears, Founder Thesis',"Zoya: precall step 3 on 2 Nov",2,3,'2026-11-02')
-F('3f019a301a7f81bd9ed6c7020bf96f3d','Matthew @ Magic Bus India Foundation, Founder Thesis',"Zoya: form chaser 1 on 2 Nov (7 days after the 26 Oct heads-up)",5,1,'2026-11-02')
+add('3f019a301a7f81bd9ed6c7020bf96f3d','Matthew @ Magic Bus India Foundation, Founder Thesis',"Zoya: form chaser 1 on hold until this is decided",
+  'followup','seq-5-1',T('2026-10-29'),'2',
+  DRIFT + "Live segment rewritten 26 Oct from 'form chaser 1 on 2 Nov (7 days after the 26 Oct heads-up)' to 'form chaser 1 on hold until this is decided' (Akshay's segment first: re-record Matthew?). Rule 2 literal: routine 5, n=1 from the wording; no 'on <D Mon>' ('on hold' is not a date), so Next date 29 Oct. Waiting on was Akshay, Guest or PR; Zoya added (OWNERS), though the step waits on Akshay's answer.",
+  woa='Zoya')
 F('3f019a301a7f81bf9f1ef006d096c482','Surya Khurana @ FlixBus India, Founder Thesis',"Zoya: sponsored step 3 on 29 Oct",1,3,'2026-10-29')
 N('3f019a301a7f81c08f87ef4adba6e79e','Pravesh Dudani @ National Skill Development Corporation (NSDC), Founder Thesis',"Zoya: nurture Gyanaranjan Mantri (Dentsu): Pravesh Dudani's preliminary call (since 21 Oct 2026)",1,'2026-11-02')
 N('3f019a301a7f81c1b612e8d8fb17c27a','Mohit Bedi @ Kiwi, Founder Thesis',"Zoya: LT check-in 2 on 14 Jan asks Devanshi (SGA) for the 30-min call; settle Mohit's role on that call",1,'2027-01-14',
@@ -174,6 +178,8 @@ F('3f019a301a7f81cbbfbeeeedf10fc451','Raunak Bhinge @ Infinite Uptime, Founder T
 N('3f019a301a7f81cc80d1c7b2308fd780','Mukund Jha @ Emergent, Founder Thesis',"Zoya: nurture Naresh (Moes Art): Mukund Jha's call dates (check-in sent from ad@ 21 Oct with Zoya added; follow with the mail from my inbox once the thread shows there) (Akshay: chase)",1,'2026-10-28',
   "note: also carries Akshay's call ('chase'), rule 5; rule 3 comes first in order. The 21 Oct ad@ check-in is not a 'Zoya sent: nurture' Activity, so n=1.")
 F('3f019a301a7f81cd9da9e84b67d7323e','Nupoor Mohan @ The Full Circle, Founder Thesis',"Zoya: sponsored step 3 (audience seniority) on 28 Oct",1,3,'2026-10-28')
+TM('3f019a301a7f81d7beffc35bc93cab2b','Ryan Louvar @ WisdomTree, un#',"Zoya: fix: no email for the guest (Ryan Louvar's People row)",'2026-10-12',
+  DRIFT + "Live Zoya segment missing from the second build. A data fix, not a send: no follow-up, nurture, reply or Akshay-call wording, so rule 6 team; dated by the newest Claude note line that mentions the step (12 Oct, ruling 4). The Sri segment stays. Waiting on has Zoya.")
 F('3f019a301a7f81d88f11e41f19abe30a','Narendra Sen @ RackBank and NeevCloud, Founder Thesis',"Zoya: precall step 3 on 30 Oct",2,3,'2026-10-30')
 N('3f019a301a7f81d98b02c0976a8f7152','Vandana Luthra @ VLCC, Founder Thesis',"Zoya: nurture Prerna (Group Teamwork): Vandana Luthra's precall availability (since 19 Oct 2026)",1,'2026-11-02')
 N('3f019a301a7f81da9692d252d41f78a4','Betsy Atkins @ Google cloud advisory board, Founder Thesis',"Zoya: nurture Sophia: Betsy's precall dates (since 20 Oct 2026)",1,'2026-11-05')
@@ -184,6 +190,8 @@ F('3f019a301a7f81eea46bc1cd9209dee5','Arindam Ghosh @ Management Accountants, Fo
 N('3f019a301a7f81f7a0cce391f7419444','Tanuj Shori @ Square Yards, Founder Thesis',"Zoya: nurture Poorvi (SGA): Tanuj Shori's call with Akshay (check-in sent from ad@ 21 Oct with Zoya added; follow with the mail from my inbox once the thread shows there) (Akshay: chase)",1,'2026-10-28',
   "note: also carries Akshay's call ('chase'), rule 5; rule 3 comes first in order. The 21 Oct ad@ check-in is not a 'Zoya sent: nurture' Activity, so n=1.")
 F('3f019a301a7f81f8bd99f895864aac42','Manish Chaudhary @ Flexprice, Founder Thesis',"Zoya: precall step 2 (dates check) on 28 Oct",2,2,'2026-10-28')
+FX('3f119a301a7f81018735ed9be408e9e1','Robert Mitchnick @ BlackRock, un#',"Zoya: followup for precall",2,1,'2026-10-27',
+  "rebuilt for drift 2026-10-26. Live Zoya segment missing from the second build. 'followup for precall' is follow-up wording naming the precall (ruling 1), so rule 2 wins over rule 3 though the row is LT chase (ruling 7); routine 2; Chase step empty so n=1; no 'on' date, so Next date. Waiting on has Zoya.")
 F('3f119a301a7f8109b90bdcdb3f057999','Vadim Voss @ Next Level DeFi Academy, un#',"Zoya: sponsored step 3 on 28 Oct",1,3,'2026-10-28')
 N('3f119a301a7f81218259fc7549b9aad0','Raj Gokal @ Solana, un#',"Zoya: revisit Raj via Hugh (Scrib3) on 3 Dec, after Breakpoint, with the topics list in place of a precall",1,'2026-12-03',
   "REVIEW: " + WHY_LT, rule='3 (extension)')
@@ -191,6 +199,8 @@ S('3f119a301a7f8130b2b5c4ee27753b9c','Alex Cutler @ Dromos Labs (Aerodrome), un#
 N('3f119a301a7f813d9756f1dabef70a41','Martin Quensel @ Centrifuge, un#',"Zoya: nurture Keith (Chap PR): get Martin on un# (since 24 Oct 2026)",1,'2026-11-23')
 FX('3f119a301a7f8170bbcaef18f8050a0b','Director (name not given) @ Lighthouse Info Systems, Founder Thesis',SPCH,1,1,'2026-10-27',WHY_SPCH)
 F('3f119a301a7f817787cafe7723021e29','Karl Floersch @ OP Labs, un#',"Zoya: sponsored step 2 on 2 Nov",1,2,'2026-11-02')
+FX('3f119a301a7f819f9a19f9f8a97ddb3e','Prashant Sachan @ AppsForBharat, Built to Share',"Zoya: chase Vineeta for the higher-resolution photo and transcript feedback (promised by 19 Oct)",5,1,'2026-10-16',
+  "rebuilt for drift 2026-10-26. Live Zoya segment missing from the second build (daily sweep moved Waiting on to Zoya 26 Oct). Chase wording with no routine named, so ruling 1 takes the routine from Status Recorded: 5; Chase step 0 so n=1. 'promised by 19 Oct' is not 'on <D Mon>', so the date is Next date, which is the stale 16 Oct recording time. Check: routine 4 misc may fit better (photo and feedback, not the guest form), and the date is in the past. The Chaandini segment stays. Waiting on has Zoya.")
 N('3f119a301a7f81a697ddc3ae930bc422','George Kikvadze @ Bitfury, un#',"Zoya: re-approach George's EA at Bitfury on 30 Oct for a slot with George himself",1,'2026-10-30',
   "REVIEW: " + WHY_LT, rule='3 (extension)')
 TM('3f119a301a7f81cba216d11b021aec16','Erik Voorhees @ Venice.ai, un#',"Zoya: send Erik the topics-list mail once those are in",'2026-10-26',
@@ -208,7 +218,7 @@ F('3f319a301a7f8174be9eed8eef11ebad','Ankit Kedia @ Capital A, Founder Thesis',"
 FX('3f319a301a7f8175b9a6f78f2d4a2d8a','Sonu Kumar Yadav @ Hospitalstore.com, Founder Thesis',SPCH,1,1,'2026-10-27',WHY_SPCH)
 FX('3f319a301a7f81779aafea9e5cd2ed67','Nitin Kaushal @ SFK Group, Founder Thesis',SPCH,1,1,'2026-10-27',WHY_SPCH)
 FX('3f319a301a7f81ee896fecd3eb44cae4','Harpreet Singh and Abhinav Awal @ F2 Fintech, Founder Thesis',SPCH,1,1,'2026-10-27',WHY_SPCH)
-F('3f419a301a7f8159a4c5de09d3408489','Gulab Patil @ Lemma, Founder Thesis',"Zoya: recording step 1 on 29 Oct",3,1,'2026-10-29',"note: Waiting on lacks Zoya.")
+# drift 26 Oct: removed 3f419a301a7f8159a4c5de09d3408489 (Gulab Patil @ Lemma): live Next action is now only Akshay's slot question and Waiting on is Akshay; no Zoya segment, out of scope
 # ---- batch 4
 FX('3f419a301a7f8178ba37c93bbfc9615b','Pavan Kosaraju @ AquaExchange, Founder Thesis',SPCH,1,1,'2026-10-27',WHY_SPCH)
 F('3f619a301a7f810196b8c39a3525ff42','Alykhan Jetha @ Daylite (Marketcircle), Founder Thesis',"Zoya: sponsored step 2 on 30 Oct",1,2,'2026-10-30')
@@ -223,7 +233,7 @@ F('3f919a301a7f815dad18ec15a1dd87b5','Mokksh Sani @ Living Liquidz, Founder Thes
 F('3f919a301a7f817bbe0ae544a22d7dfa','Ajay Gupta @ Perceptive Ideas, Founder Thesis',"Zoya: sponsored step 2 on 29 Oct",1,2,'2026-10-29')
 F('3f919a301a7f817e87f8ec7f57324ac6','Mauricio Zolliker @ XMAQUINA, un#',"Zoya: sponsored step 2 on 30 Oct",1,2,'2026-10-30')
 F('3f919a301a7f8198b010e0a43ed836fc','Matthew Shaw @ OpenWorld, un#',"Zoya: sponsored step 2 on 2 Nov",1,2,'2026-11-02')
-F('3fa19a301a7f8118a06aea18fea5d7f9','Subodh Bhardwaj @ Navaratna Concepts, Founder Thesis',"Zoya: sponsored step 2 on 2 Nov",1,2,'2026-11-02')
+# drift 26 Oct: removed 3fa19a301a7f8118a06aea18fea5d7f9 (Subodh Bhardwaj @ Navaratna Concepts): Status They declined 26 Oct, Next action empty; out of scope
 F('3fa19a301a7f814a83a8f28c4d25a7f1','Sandeep Shah @ Optimized Group, Founder Thesis',"Zoya: sponsored step 1 on 2 Nov",1,1,'2026-11-02')
 F('3fa19a301a7f814a8bb4cb52070733a4','Gagandeep Singh @ TIC, Founder Thesis',"Zoya: sponsored step 2 on 29 Oct",1,2,'2026-10-29')
 add('3fa19a301a7f81508e24e25202d1e571','Manan Thakkar @ Prozeal Green Energy, Founder Thesis',
@@ -240,16 +250,21 @@ add('3fa19a301a7f81d1acc4c52ac663ef31','Anirudh Damani @ Artha Group, Founder Th
   new="Waiting on Sakshi (Artha) to rebook the planning call via podm.in/30min | {K}: chase per Cadences (decision 398)", woa='Zoya')
 F('3fb19a301a7f816aa87ff74b7ed6e517','Srikanth Velamakanni @ Fractal Analytics, Founder Thesis',"Zoya: precall step 2 on 27 Oct (Tier 1 inbound, 3 working days)",2,2,'2026-10-27',
   "note: Status is Booking but the wording names the precall routine; keyed by wording.")
-F('3fb19a301a7f817bab3df7c45662370b','Akshit Bansal @ Statiq, Founder Thesis',"Zoya: precall step 3 on 2 Nov",2,3,'2026-11-02')
+F('3fb19a301a7f817bab3df7c45662370b','Akshit Bansal @ Statiq, Founder Thesis',"Zoya: precall step 3 on 2 Nov",2,3,'2026-11-02',WOA_NOTE,woa='Zoya')
 # replay 1b: removed 3fc19a301a7f8150b1ccf6c7949e6734 (Task: tier the FT backlog into FT1 and FT2, AD Personal); FAST's scope never reaches it
 TM('3fc19a301a7f815aa863d9bb5772afcb','Task: chase the deals pipeline (Manu Iyer, Shubham and Som)',"Zoya: chase Manu Iyer (Bluehill-X call 10 Oct); find Shubham and Som on the Deals board and chase them; anything on price or a call goes to Akshay",'2026-10-21',
   "REVIEW: chase wording on a Task row with no Status; no routine named, so rule 6 team by fallback. Could be routine 4 misc chase (no step number to key it).")
 # replay 1b: removed 3fc19a301a7f81e8b013e8fb2206e787 (Task: transcripts backlog on the Mac, AD Personal); FAST's scope never reaches it
-F('3ff19a301a7f81a8a754c14597421e3e','Rick Yvanovich @ Business As UnUsual, Founder Thesis',"Zoya: sponsored step 1 on 29 Oct",1,1,'2026-10-29',"note: Waiting on lacks Zoya.")
+F('3ff19a301a7f81a8a754c14597421e3e','Rick Yvanovich @ Business As UnUsual, Founder Thesis',"Zoya: sponsored step 1 on 29 Oct",1,1,'2026-10-29',WOA_NOTE,woa='Zoya')
 F('3ff19a301a7f81a98224ee27aa4a5a7d','Matt Walker @ Lull, Founder Thesis',"Zoya: sponsored step 1 on 29 Oct",1,1,'2026-10-29')
-F('40019a301a7f81449b93c57ac653185a','Dinesh Yadav @ Fine Acers, Founder Thesis',"Zoya: sponsored step 1 on 29 Oct",1,1,'2026-10-29',"note: Waiting on lacks Zoya.")
+F('40019a301a7f81449b93c57ac653185a','Dinesh Yadav @ Fine Acers, Founder Thesis',"Zoya: sponsored step 1 on 29 Oct",1,1,'2026-10-29',WOA_NOTE,woa='Zoya')
 F('40019a301a7f8190a195f2310a805f5a','Peter Imburg @ Elfster, Founder Thesis',"Zoya: sponsored step 1 on 29 Oct",1,1,'2026-10-29')
-F('40119a301a7f810e88a9ecb971df8966','Vivek Iyer @ D2L, Founder Thesis',"Zoya: sponsored step 1 on 2 Nov",1,1,'2026-11-02')
+add('40119a301a7f810e88a9ecb971df8966','Vivek Iyer @ D2L, Founder Thesis',
+  "Waiting on Deepayan (Brand Compr): reply to the sponsored commercials (sent 26 Oct); Zoya: sponsored step 2 on 2 Nov",
+  'followup','seq-1-2',T('2026-11-02'),'7 then 2',
+  DRIFT + "Live Next action rewritten 26 Oct: the separate 'Zoya: sponsored step 1 on 2 Nov' segment is gone and the Zoya step now sits inside Deepayan's segment after '; ' (rule 7, edits another owner's text). Rule 2 literal: routine 1, n=2 from the wording, date 2 Nov. Waiting on was Guest or PR only; Zoya added (OWNERS).",
+  step='sponsored step 2 on 2 Nov',
+  new="Waiting on Deepayan (Brand Compr): reply to the sponsored commercials (sent 26 Oct) | {K}: sponsored step 2 on 2 Nov", woa='Zoya')
 R('40119a301a7f812b8fb3f593ee961296','Mekin Maheshwari @ Udhyam Learning Foundation, Built to Share',"Zoya: update Satv by Wed 28 Oct (her holding reply) once Satish confirms the studio; Rainmatter studio in JP Nagar is the option, Mekin lives in Koramangala, office near Ulsoor Lake",
   'CAJTwtmP5jQ3f9fgb-be9bPN8dRc3O45cNr5X7-HaTQUzLnf4rQ@mail.gmail.com','2026-10-23T19:45:17+09:00',
   "note: Satv's 23 Oct ask (dates, studio location); Zoya's 24 Oct holding reply answers nothing, so the reply stays owed. The step also follows Akshay's 25 Oct call; rule 4 comes first.")
@@ -269,7 +284,7 @@ TM('ff569bdb98dc4f84b22ac2b790348582','Karri Saarinen @ Linear, Built to Share',
   "note: internal review step dated 8 Dec; rule 6 raised time is the Claude note date, not 8 Dec.")
 
 with open(OUT,'w',newline='') as f:
-    w=csv.writer(f); w.writerow(['row_id','row_name','old_segment','new_segment','key','rule','review_flag','waiting_on_add','next_date'])
+    w=csv.writer(f); w.writerow(['row_id','row_name','old_segment','new_segment','key','rule','review_flag','waiting_on_add','next_date','waiting_on_remove'])
     w.writerows(rows)
 ids=[r[0] for r in rows]
 print('segments',len(rows),'rows',len(set(ids)))
@@ -278,3 +293,5 @@ print('by rule',Counter(r[5] for r in rows))
 print('by type',Counter(r[4].split(':')[1] if r[4] else 'none' for r in rows))
 print('REVIEW',sum(1 for r in rows if r[6].startswith('REVIEW')),'notes',sum(1 for r in rows if r[6].startswith('note')))
 print('waiting_on_add',[r[0] for r in rows if r[7]],'next_date',[(r[0],r[8]) for r in rows if r[8]])
+print('waiting_on_remove',[r[0] for r in rows if r[9]])
+print('drift',[r[0] for r in rows if 'rebuilt for drift' in r[6]])

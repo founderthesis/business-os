@@ -37,7 +37,7 @@ The build agent's judgement calls, now fixed rules. They match what `d394-migrat
 9. A reply already answered by a later mail (Akshay's or Zoya's) is complete by match: no reply key. If that mail leaves a follow-up for Zoya, it is keyed by rule 2 (routine 4 misc chase when no other routine fits), dated as the step says.
 10. A segment whose key is already completed by match is dropped: empty new segment, no key, rule "done by match".
 11. Kind Task rows on the AD Personal show are out of scope; FAST never reaches them, so they are not in the migration file.
-12. The write also sets Waiting on and Next date where the file says so: `waiting_on_add` adds Zoya to every rule 7 row whose Waiting on lacked her (OWNERS), and `next_date` sets Next date (Ankit Utreja, 2026-10-27).
+12. The write also sets Waiting on and Next date where the file says so: `waiting_on_add` adds Zoya to every rule 7 row whose Waiting on lacked her (OWNERS), `next_date` sets Next date (Ankit Utreja, 2026-10-27), and `waiting_on_remove` drops Zoya where the migration removes her last segment (third build).
 
 First build: 155 segments and 144 keys, all unique. 34 are flagged for review. Two builds on the same data gave byte-identical output.
 
@@ -55,6 +55,9 @@ So the write never trusts the file blindly. Right before the write, re-read ever
 
 The write happens only when nothing is left unreviewed. The counts before and after are checked against the file plus the rebuilt rows.
 
-Open for the next build:
-- Drop Zoya from Waiting on where the migration removes her last segment (Ankush).
-- Mithun Pangal, Priya Kumar, Gulab Patil, Rick Yvanovich and Dinesh Yadav have Zoya follow-ups but no Zoya in Waiting on. Under OWNERS, add her.
+Done in the third build (26 Oct, live re-read):
+- `waiting_on_remove` drops Zoya from Waiting on where the migration removes her last segment (Ankush only).
+- `waiting_on_add` adds Zoya on every row whose new segment has a Zoya step and whose live Waiting on lacks her (OWNERS): Mithun Pangal, Priya Kumar, Rick Yvanovich, Dinesh Yadav, Akshit Bansal, plus the rebuilt Matthew (Magic Bus) and Vivek Iyer, on top of the five rule 7 rows. Gulab Patil drifted out of scope (no Zoya segment left), so his row is gone.
+- Drift rebuilt by these rules and flagged "REVIEW: rebuilt for drift 2026-10-26": Nikita, Matthew, Vivek Iyer rewritten; Kumar Abhishek, Ryan Louvar, Robert Mitchnick, Prashant Sachan added; Gulab and Subodh (They declined) removed; SREEPRIYA's Zoya segment is gone again.
+
+Third build: 155 segments and 144 keys, all unique. 38 REVIEW flags and 19 notes. Two builds byte-identical.
