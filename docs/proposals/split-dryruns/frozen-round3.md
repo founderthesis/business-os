@@ -48,10 +48,35 @@ The field-by-field match is by reading, not by string. The two runs wrote free t
 
 d-split26m changes behaviour, so the frozen hashes move:
 - FAST 36,811 / 1b4cca2a0d0b284e.
-- SLOW 63,845 / 94943a20df0745dd. That is 1,491 B under the cap less 200.
+- SLOW 63,845 / 94943a20df0745dd. That is 1,114 B under the cap less 200.
 
 Built on Cleanup's d-split26l-fix (1303cea: never Mamatha; the read-back excludes Mamatha and, on un#, Sri). Both reproduce from 1303cea in a clean worktree. Cleanup's fix alone gave FAST 36,211 / f4a541d352980139 and SLOW 63,099 / 33ecf7c33c68d0ce; round 3 ran on 8e64140, so its R3 expected Mamatha kept. Round 3b expects her dropped. Inbox, calendar and sweep are unchanged.
 
 Tests repeated on the new build: all twelve scenarios (round 3b). The lease text changed, so every run is affected.
 
 Not repeated, because the parts they read did not change (ACTIONS' Sent check, MESSAGE IDENTITY): the crash A and crash B recoveries.
+
+## Second re-freeze (CTO, 22:45 JST), d-split26n
+
+The CTO's list of round 3 run A findings. These were already fixed in d-split26m:
+- E's acknowledgement;
+- the same-minute re-read;
+- FAST's carve-out for an unrelated Akshay step;
+- Next date when no segment carries a date;
+- a read-back that takes the sender and leaves out our own address.
+
+d-split26n adds:
+1. A record still Started at 60 minutes or more is stale. The run that finds it closes it as Failed.
+2. A waiting run keeps waiting until the holder's record turns 60 minutes old, if that comes within 20 minutes of the run's start. FAST no longer gives up 2 minutes before a crashed lease expires.
+3. FAST's 25-minute and SLOW's 40-minute no-new-row windows count from when the run holds the lease. That also fixes the "(11:30, 17:30)" wording for an off-schedule start.
+4. Step 1c adds Akshay and his segment per WRITE PATH, never replacing other owners or segments.
+5. A cap ends the run Partial, and the prompt now says so.
+6. A holding reply's key has type hold, the origin of the ask it acknowledges, and the time it is sent.
+
+Data items 13 (Episode fallback) and 15 (Payal's duplicate People rows):
+- 13 was a one-liner, already in d-split26m (the transcript row stays Doing and retries).
+- 15 goes to the next change.
+
+Result: FAST 37,235 / d21d9c2e18364674, SLOW 64,222 / 4befbe932ccf315a. Each was built twice and is identical. Round 3b was stopped unfinished, since it ran on the superseded build.
+
+Round 4 re-runs all twelve scenarios twice on this build, because the lease text changed. R3 now expects Mamatha dropped (Cleanup's 1303cea).
