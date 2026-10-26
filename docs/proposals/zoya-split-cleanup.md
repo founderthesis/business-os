@@ -570,7 +570,7 @@ Main's noted items are agreed:
 - One crash costs SLOW its slot; that's for the architecture choice.
 - WRITE PATH against a shared hold segment: both runs joined it anyway.
 
-**The merge.** Both of Cleanup's fixes are in the merged tree: "another action's holding reply" and the FT thank-you draft's "Stakeholder and you". The merged build is FAST 38,248 / a277f0f9fc4b73e0 and SLOW 65,299 / 0a41fd25fbed7166's successor, SLOW 65,299 / 4cda079b9f3ff923, identical on two builds.
+**The merge.** Both of Cleanup's fixes are in the merged tree: "another action's holding reply" and the FT thank-you draft's "Stakeholder and you". The merged build is FAST 38,248 / a277f0f9fc4b73e0 and SLOW 65,299 / 4cda079b9f3ff923, identical on two builds.
 - FAST equals Main's 26r build. Main's 26r was built on 3dfa2e4, after Cleanup's holding-reply fix.
 - SLOW is Main's 65,312 less the 13 B from Cleanup's house-copies fix.
 
