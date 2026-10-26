@@ -19,3 +19,16 @@ Rules, applied in order to each "Zoya:" segment:
 Output: one reviewed file, docs/proposals/split-dryruns/keys-migration.csv (row id, old segment, new segment, key, rule, review flag). It is written to Notion in one pass at deploy, with each row read back. Under decision 341 bulk writes go direct.
 
 Gate: the migration runs twice on the same data and produces identical files. Then FAST dry runs twice with the file treated as applied, and both runs must print the same keys and send lists (replay 1).
+
+## Rulings from the first build (26 Oct)
+
+The build agent's judgement calls, now fixed rules. They match what `d394-migrate-build.py` does, except ruling 5.
+1. Rule 2 also covers "<routine> chase", "<routine> follow-up", "chases" and a bare "follow-up". When the wording names no routine, Status picks it: Sponsored offered 1, Precall requested 2, Booking 3, Recorded 5.
+2. Rule 3 also covers revisit, re-approach and LT check-in steps on LT chase rows. Its date comes from rule 2's chain.
+3. A rule matches the step's own instruction, never a past-tense note inside it ("precall step 3 sent 21 Oct" is history, not the step).
+4. Rule 6's date is the newest Claude note line that mentions the step, else the newest line.
+5. An ask raised on WhatsApp keys its origin as `wa-<message key>`. This one is not in the first build: Mandar is still unkeyed and flagged.
+6. A segment that only points to another row gets no key and stays as it is. "Zoya" named as the person who asked, on a transcript row, is not a step.
+7. When rules overlap, the first one that matches wins (1 to 7). Cleanup to confirm, because it decides FAST or SLOW for Mukund, Tanuj and Mekin.
+
+First build: 155 segments and 144 keys, all unique. 34 are flagged for review. Two builds on the same data gave byte-identical output. See `split-dryruns/keys-migration.csv` and `keys-migration-notes.md`.
