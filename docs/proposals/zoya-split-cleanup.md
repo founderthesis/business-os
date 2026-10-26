@@ -10,7 +10,7 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
-| zoya-fast | 35,144 | 36ffead8fae85afa |
+| zoya-fast | 35,262 | 4d493ffe6f7f888d |
 | zoya-slow | 64,996 | 7730656105c89751 |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
@@ -139,3 +139,5 @@ Before the gate closes:
 5. **Write the extensions into the rules.** "sponsored chase", "sponsored follow-up", "precall chase", "chases" and bare "follow-up" (by Status) count as rule 2. LT chase revisit wording counts as rule 3. Rule 3 takes its date from rule 2's chain. These go into d394-migrate.md and the "Zoya action keys" Controls page, so FAST keys later segments exactly as the migration did.
 
 **The write:** one pass of 155 rows, direct (decision 341). Each row is read back. Counts are checked before and after: 144 keyed, 9 snoozes unchanged, the rest listed. Rule 7 rows edit another owner's text only by moving the Zoya clause out; the read-back confirms that owner's words are unchanged.
+
+d-split26f (e976831) accepted: held is a timing rule or a host's pick, blocked is a missing fact or someone else's decision. That closes replay 1b's only difference, so replay 1 passes. FAST 35,262 / 4d493ffe6f7f888d (reproduced), SLOW unchanged.
