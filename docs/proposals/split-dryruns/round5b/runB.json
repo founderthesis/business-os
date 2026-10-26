@@ -1,0 +1,69 @@
+{
+  "hash_check": {
+    "zoya-one.txt": "5cb796cef84f6d3b... OK",
+    "zoya-slow-work.txt": "e7f3f392cf374031... OK",
+    "scenarios.json": "b03d1716af81cada... OK"
+  },
+  "G": {
+    "canon": {
+      "sends": 1,
+      "mails": [
+        {"row": "3f019a301a7f81ef81a4c4780c92fee2", "mailbox": "zoya@myunnati.com", "kind": "reply: Sponsored yes: next steps (reply on HYP-G-0955)", "to": ["Jheel"], "cc": ["Akshay", "Jaya", "Sarika"]}
+      ],
+      "rows": {
+        "3f019a301a7f81ef81a4c4780c92fee2": {"status": "Booking", "waiting_on": ["Guest or PR", "Akshay"], "next_date": "2026-10-29"}
+      },
+      "run_records": {"2026-10-27 10:38": "Completed"},
+      "record_writes_per_skipped_run": 0,
+      "reads_before_lock": [],
+      "activities_for_presend": 0
+    },
+    "verdict": "PASS",
+    "findings": "1/ Order: LOCK line 58 'Before ANY other read or action' and line 5 'right after LOCK and before anything else, read' the four Notion pages; RUN RECORD line 66 also says 'Right after LOCK' create Started. Both claim 'right after LOCK'; order between the Started record and the rules read is unstated (harmless, both after LOCK). 2/ No target Status is named for a mailed sponsored yes (STEP 1e just says 'Status'). I chose Booking. Left at Sponsored offered, SLOW routine 1 would select the row once Next date passes and could chase sponsored follow-ups at someone who already said yes (routine 1 only checks the thread for a decline). 3/ 'Sponsored yes: next steps' carries 'precall via podm.in/30min', but the precall already happened on 22 Oct. CONTEXT CHECK ('never repeat an answered ask... adapt it') drops that line, which the 40% adaptation allows. 4/ The standard price isn't in the snapshot (the sales page wasn't captured). INR 50,000 + GST is taken as standard because Zoya's 26 Oct commercials mail stated it. 5/ The 25 Oct Claude note 'handed to Zoya: tell Akshay the answer once it comes' becomes a Claude note line and a report line, not a new Waiting on Akshay (decision inbox rule, line 21). Akshay is already in Waiting on for his travel step. 6/ WRITE PATH: Next date goes to 2026-10-29 because the Akshay segment carries 'original due 2026-10-29' (was 2026-11-02). The new Jheel waiting segment is undated. 7/ SLOW work finds nothing due on this row: the Next date is in the future, 1b's mailed-yes branch is FAST's, and the travel ask was raised 25 Oct, so it isn't over 3 days old for the owner mail.",
+    "notes": "LOCK free and taken (steps 1, 2, 4), then the run record is created as Started, then the 4 rules pages are read, then FAST. STEP 1: HYP-G-0955 is unanswered in Zoya's inbox. 1a: Akshay is in Cc, but no Activity holds msgid:HYP-G-0955@impactkey.in, so one Email in Activity is logged. 1b: a yes at the standard price gets 'Sponsored yes: next steps'. Action key 3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00. Pre-send check: no Activity holds the key and nothing is in Sent since 09:55, so it is due. Sent as a reply on HYP-G-0955 from Zoya's inbox, idempotency_key = that key. Recipients: To Jheel (her move: billing details); Cc Akshay plus Jaya and Sarika for revenue mail (line 49). The latest inbound had From Jheel, To Zoya, Cc Akshay, so everyone on it is covered. Mamatha is absent. Then the Activity 'Zoya sent: reply to Jheel: sponsored yes next steps' with Action key. The 'Waiting on Jheel ... sponsored commercials' segment is completed with a line naming the inbound Activity and replaced by 'Waiting on Jheel (Impactkey PR): billing details for the 70% invoice (sent 27 Oct)'. The Akshay travel segment is untouched. Chase step 0, Last activity set, Claude note line. SLOW: the file is taken as fetched and hash-checked, the 8 routine pages are read, and nothing is due on the in-scope row. Activities written: inbound 1, sent 1, run record 1. Run record ends Completed."
+  },
+  "I3": {
+    "canon": {
+      "sends": 0,
+      "mails": [
+        {"row": "3f019a301a7f81ef81a4c4780c92fee2", "mailbox": "zoya@myunnati.com", "kind": "matched by Sent scan, not resent (HYP-I3-SENT, sent 10:41 JST by the crashed 09:38 run)", "to": ["Jheel"], "cc": ["Akshay"]}
+      ],
+      "rows": {
+        "3f019a301a7f81ef81a4c4780c92fee2": {"status": "Booking", "waiting_on": ["Guest or PR", "Akshay"], "next_date": "2026-10-29"}
+      },
+      "run_records": {
+        "2026-10-27 09:38": "Started (never finalised: crashed)",
+        "2026-10-27 10:38": "Skipped: lock held by <09:38 run id> 2026-10-27T00:38Z",
+        "2026-10-27 11:38": "Skipped: lock held by <09:38 run id> 2026-10-27T00:38Z",
+        "2026-10-27 12:38": "Skipped: lock held by <09:38 run id> 2026-10-27T00:38Z",
+        "2026-10-27 13:38": "Skipped: lock held by <09:38 run id> 2026-10-27T00:38Z",
+        "2026-10-27 14:38": "Skipped: lock held by <09:38 run id> 2026-10-27T00:38Z",
+        "2026-10-27 15:38": "Skipped: lock held by <09:38 run id> 2026-10-27T00:38Z",
+        "2026-10-27 16:38": "Skipped: lock held by <09:38 run id> 2026-10-27T00:38Z",
+        "2026-10-27 17:38": "Completed"
+      },
+      "record_writes_per_skipped_run": 1,
+      "reads_before_lock": [],
+      "activities_for_presend": 1
+    },
+    "verdict": "PASS",
+    "findings": "1/ Data inconsistency: the scenario text says the reply went at 09:41, but the sent-mail addition is dated 2026-10-27T10:41+09:00, and the inbound it answers arrived at 09:55. I used 10:41. At 09:41 the mail would predate the action's raised time, so the candidate rule ('since the action was raised') would exclude it and the action would be judged due and RESENT. The outcome depends on that timestamp being right. 2/ Sent scan window (line 40): 'last 24 hours, or back to the start of the latest run whose record isn't Completed if that is earlier'. Read literally, the latest non-Completed record is the 16:38 Skipped one (Skipped isn't Completed), not the crashed 09:38 Started one. The clause therefore adds nothing after a run of skips, and a lock held more than 24 hours would leave the crashed send outside the window. Here the 24-hour window covers 10:41, so the send is found. Suggested wording: 'the earliest run since the last Completed one that took the lock' (or ignore Skipped records). 3/ The crashed send's Cc lacks Jaya and Sarika, which revenue mail requires (line 49). The 17:38 run matches and logs it but has no rule to repair the missing copies, so Jaya isn't on the thread for SLOW 1b's 'she's in Cc' invoice step. 4/ The 09:38 record stays 'Started' forever: no rule makes a later run or the runbook mark it Failed. 5/ Both of Tuesday's SLOW runs (10:38 and 16:38) were skipped, and 17:38 does FAST work only. SLOW work is lost until Wednesday 10:38, with no catch-up rule ('its work stays due' holds only in the sense that it is picked up next time). 6/ The skipped runs follow LOCK step 3 exactly: fetch, M starts 'held:', one record created once, nothing else, no release (line 64: 'never release a lock you don't hold').",
+    "notes": "Skipped runs (10:38 to 16:38, 7 runs): each runs only LOCK steps 1 to 3 (remote check, run id, fetch and read the lock subject). Each writes exactly one Activity, never Started first: Kind Note, Summary 'Run zoya 2026-10-27 HH:38 JST: Skipped: lock held by <09:38 run id> 2026-10-27T00:38Z', Source ID run:zoya:<own run id>. No rules read, no mail read, nothing sent, no row touched, no release; the reply action stays due. 17:38 run: takes the lock (M starts 'free:' after the CTO release), creates the Started record, then reads the rules. STEP 1 doesn't select the thread, because our HYP-I3-SENT now follows the inbound. The Sent scan (24h back to 26 Oct 17:38) finds HYP-I3-SENT with no Activity and runs the pre-send check for the row. No Activity holds the action key; exactly one candidate (from us, to Jheel, on the thread, after 09:55, no Activity), so it is the match. Send nothing. Log 'Zoya sent: reply to Jheel: sponsored yes next steps', Source ID msgid:HYP-I3-SENT@mcpemails.example, Action key written because of the match. Also log the inbound HYP-G-0955 ('log the inbound it answers too'). Complete the action and move the row on as in G: complete the Jheel commercials segment, add the billing waiting segment, Next date 2026-10-29. Report: completed by match 1, plus a line on the unlogged send. Final Activity count for HYP-I3-SENT: 1. Not resent; even a stray retry would reuse the same idempotency_key. Record Completed, then release."
+  },
+  "SKIP": {
+    "canon": {
+      "sends": 0,
+      "mails": [],
+      "rows": {
+        "3f019a301a7f81ef81a4c4780c92fee2": {"status": "Sponsored offered", "waiting_on": ["Guest or PR", "Akshay"], "next_date": "2026-11-02"}
+      },
+      "run_records": {"2026-10-27 12:38": "Skipped: lock held by <session X> 2026-10-27T03:38Z"},
+      "record_writes_per_skipped_run": 1,
+      "reads_before_lock": [],
+      "activities_for_presend": 0
+    },
+    "verdict": "PASS",
+    "findings": "1/ 'Write only the run record... no other read' (line 61) conflicts mildly with NOTION DATA's 'Fetch each data source once to confirm property and option names' (line 21) and the RUN RECORD rule 'Unclear create response: query that Source ID first'. Read literally, the skipped run may do the Source ID query only after an unclear create, and needs a ToolSearch to load Notion; neither is a business read. 2/ RUN RECORD's Last-write body (report, deployment ref, counts, usage) isn't spelled out for a Skipped record. It can only go into the single create call, because step 3 forbids a second write. 3/ RELEASE says 'the very last step', but line 64 forbids releasing a lock you don't hold. The skipped run correctly does not release.",
+    "notes": "Reads, all inside LOCK: git remote get-url origin; printenv CLAUDE_CODE_REMOTE_SESSION_ID (or the one-time syn- id); git fetch origin refs/heads/zoya-lock; git rev-parse FETCH_HEAD; git log -1 --format=%s FETCH_HEAD, which gives 'held: <session X> 2026-10-27T03:38Z'. No Notion rules pages, no mail, no Engagement reads. Writes: one Notion Activity created once: Kind Note, Source empty, Summary 'Run zoya 2026-10-27 12:38 JST: Skipped: lock held by <session X> 2026-10-27T03:38Z', Source ID 'run:zoya:<this run id>', Date the start, Captured today, linked to nothing. No Started record, no lock push, no release. G inbound's reply action afterwards: untouched and still due (unkeyed on the row, no Activity, nothing sent). The next run that holds the lock, or the 11:38 run still holding it, picks it up."
+  }
+}

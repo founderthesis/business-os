@@ -42,6 +42,7 @@ Work in this order, and stop wherever a step can't be completed.
 
 4. **Reconcile its writes.**
    - Read its run record (Source ID `run:zoya:<run id>`): what it reported, and any blocked items.
+   - Its record stays at Started, because the run never wrote its end. Set it to Failed, "ended without a record (<terminal_reason>); lock released by the CTO <time>", so later reads see it closed.
    - Read the rows edited in its window: Engagements whose Claude note has a line from that date, and Activities created then.
    - A half-written row (a sent mail with no row update, or a segment changed with no Activity) is fixed by hand to match what actually happened, and noted on the row.
 
