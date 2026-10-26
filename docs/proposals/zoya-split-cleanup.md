@@ -10,8 +10,8 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
-| zoya-fast | 36,211 | f4a541d352980139 |
-| zoya-slow | 63,099 | 33ecf7c33c68d0ce |
+| zoya-fast | 36,860 | ae7ca63be6b1980a |
+| zoya-slow | 63,894 | a0b03bbf09752673 |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
@@ -404,3 +404,44 @@ Checks:
 
 - **Edit 1: "Inbox and Your call rules", section 5. Matches the spec word for word.** The chain holds: Akshay's "yes" sets Recorded. Calendar STEP 4c (frozen calendar d9d1f508b9c797fd) takes FT rows "at Status Recorded (set by STEP 4 or by Akshay)" within 14 days, removes the "did it happen?" ask, and drafts the thank-you on its first run after that, with no transcript. One limit: a "yes" given more than 14 days after the recording gets no automatic draft. The decision doesn't cover that case, so it's noted, not changed.
 - **Edit 2: crash A recovery Activity 40519a301a7f81daa9aec3268dac4369. Matches.** Kind Email out, Source Gmail, Source ID msgid:a21e2f20-…@mcpemails.com, Engagement 40519a301a7f8105a87edf64e65872b7, and the action key as the first line of the body (the property doesn't exist until deploy). Date reads 10:20:00Z against the spec's 10:20:28Z: Notion stores minutes. With this row in place, the crash A action is complete, and a later run finds it by Source ID and sends nothing.
+
+## Frozen round 3, lock tests, crash B and d-split26m (edc49c1)
+
+**Verdict: round 3's findings are accepted as fixed, with one correction to fix 7. Crash B passes. The lock tests pass. The re-frozen hashes move again, and round 3b must run on the hashes below.**
+
+Reproduced Main's re-freeze: FAST 36,811 / 1b4cca2a0d0b284e, SLOW 63,845 / 94943a20df0745dd, identical on two builds, with "never Mamatha" in.
+
+### Lock (gate item 4): PASS on both runs
+
+- L1, same-second acquire: FAST holds and SLOW only reads.
+- L2, crashed holder: still held at 48 minutes, so FAST waits 10 and ends Partial; stale at 68 minutes, so FAST runs.
+- L3, wait or skip: only the run record is written, and the reply stays due with Next date and owner unchanged.
+- L4, FAST 10:38 still running at 10:50: SLOW waits until 11:02. No row has two writers.
+
+Fix 4's second read 1 minute later closes the race L1 exposed. A run that read before the other's Started record existed now sees it on the second read. Both runs apply the same tie-break, so exactly one holds.
+
+### Crash B (gate item 3, outside the dedupe window): PASS
+
+One send with no idempotency key, so the provider made no second Sent copy and gave no dedupe. Judged without the bos-key marker, recovery reading ACTIONS literally ("your Sent and the thread for a message from us after the action was raised") finds exactly one unlogged message from us. Crash A is now logged, and the provider test's subject excludes it. So recovery plans one Activity and no send. The residual is Main's own: with two unlogged mails to one person after one raise, the match rests on content ("does what the action asks"), and that is untested.
+
+### d-split26m's eight fixes
+
+- 1 (E), 2 (G), 3 (R3: From, To and Cc, less our own address), 4 (lease second read), 5 (R1: no Episode yet), 6 (R2: no second Akshay ask) and 8 (D: next step never before the 7-day rule allows): sound.
+- **7: corrected by Cleanup (`docs/proposals/d-split26m-fix.py`).** "A segment's date: the date its text gives, else its key's, else the day it was written" gives every undated segment of another owner the day it was written. Examples are an old "Waiting on Payal: reply to the commercials" or an Akshay ask. A row whose Zoya step is dated 2 Nov but which carries a 14 Oct waiting segment would get Next date 14 Oct for good: SLOW's SELECT re-picks it every run with nothing due, nothing is written, the date never moves, and the sweep's STEP 4b counts it as unexplained overdue every day. The migration's rule 7 rows have exactly that shape. Now undated segments don't count, and only a row with no dated segment takes the day of the write. That still settles R1, R2 and E.
+
+### Main's open items for the CTO
+
+- **G, no Status after a mailed sponsored yes:** agreed it is a rule gap that predates the split. It is the CTO's to put to Akshay. Until then, the CONTEXT CHECK is the only stop.
+- **Lease timing:** a reply can slip one FAST run, about an hour, when SLOW runs long. L3 shows nothing is lost.
+- **Crashed run records stay Started:** the good-morning check will show them. A small follow-up would let the next run of the same kind mark a Started record over 60 minutes old as "Failed (no end record)". That's for after the split, since it's new behaviour.
+
+### Result
+
+FAST 36,860 / ae7ca63be6b1980a, SLOW 63,894 / a0b03bbf09752673, identical on two builds, 1,642 B under the cap. Inbox, calendar and sweep are unchanged. Round 3b must run on these. The crash recoveries read ACTIONS' Sent check and MESSAGE IDENTITY, whose recovery wording is unchanged, so they stand.
+
+Checks:
+- Less text and fewer writers: +49 B, no new writer.
+- Selection by prefix or wording: none. The fix stops a stale date from re-selecting rows.
+- Retry double-send: crash A and B plan one Activity and no send.
+- Bytes and hashes: above.
+
