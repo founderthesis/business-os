@@ -48,7 +48,7 @@ The field-by-field match is by reading, not by string. The two runs wrote free t
 
 d-split26m changes behaviour, so the frozen hashes move:
 - FAST 36,811 / 1b4cca2a0d0b284e.
-- SLOW 63,845 / 94943a20df0745dd. That is 1,114 B under the cap less 200.
+- SLOW 63,845 / 94943a20df0745dd. That is 878 B under the cap less 200.
 
 Built on Cleanup's d-split26l-fix (1303cea: never Mamatha; the read-back excludes Mamatha and, on un#, Sri). Both reproduce from 1303cea in a clean worktree. Cleanup's fix alone gave FAST 36,211 / f4a541d352980139 and SLOW 63,099 / 33ecf7c33c68d0ce; round 3 ran on 8e64140, so its R3 expected Mamatha kept. Round 3b expects her dropped. Inbox, calendar and sweep are unchanged.
 
@@ -80,3 +80,19 @@ Data items 13 (Episode fallback) and 15 (Payal's duplicate People rows):
 Result: FAST 37,235 / d21d9c2e18364674, SLOW 64,222 / 4befbe932ccf315a. Each was built twice and is identical. Round 3b was stopped unfinished, since it ran on the superseded build.
 
 Round 4 re-runs all twelve scenarios twice on this build, because the lease text changed. R3 now expects Mamatha dropped (Cleanup's 1303cea).
+
+## Third re-freeze (CTO, 22:55 JST), d-split26o
+
+1. **Tie: the later writer backs off.** The earlier record holds the lease, compared by created time to the second. Only an exact same-second tie goes to FAST. The re-read now happens explicitly after acquiring.
+2. **Crashed lock: keep 60 minutes and let the wait outlast it.** Close a stale record as Failed (both from d-split26n). Shortening the limit was rejected: a live run's record must never look stale, and a shorter limit would need a shorter window than SLOW's approved 40 minutes.
+   - The gap this exposed was that a SLOW which waited 25 minutes could start rows past 60.
+   - Cleanup found it at the same time and closed it with its 45-minute cap from SLOW's start (d-split26m-fix 2/, d6a1209). That cap is the one in the build. Main's 50-minute version is dropped.
+   - Cleanup also corrected fix 7 so undated segments don't set Next date (c048bec).
+
+Result: on Cleanup's dc5774fcb161afcf / 58ffd91ad6e07317 plus the tie fix, FAST 37,394 / 8164ff3dde5b2218 and SLOW 64,458 / 01495aef6aad16c0. Each was built twice and is identical, and reproduces from d6a1209 in a clean worktree. Round 4 on the d-split26n build was stopped unfinished.
+
+**Round 4** runs on this build, twice, with inputs pinned in round4/scenarios.json (73067b4c6217c776). It covers:
+- all twelve scenarios (L1 now has a sub-second tie);
+- I1, the lock plus crash recovery;
+- I2, the lock plus duplicate prevention, including two FAST runs at once;
+- I3, recovery plus duplicate prevention.
