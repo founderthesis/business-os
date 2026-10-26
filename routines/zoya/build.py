@@ -41,7 +41,6 @@ VARIANT = {
    "and keep the other row's Next action pointing to it.", ""),
   ("voice", ', with one exception: release mail 2 opens "Zoya here, I work with Akshay on the Founder Thesis podcast."', ""),
   ("hard", "Never introduce or describe yourself except in release mail 2.", "Never introduce or describe yourself."),
-  ("onemail", "(the order in ONE PERSON, ONE ASK)", "(FAST ORDER)"),
   ("runrecord", "Run zoya <", "Run zoya FAST <"),
   ("mail", "then WhatsApp Sarika the notes (guest, episode, each change with its timestamp, or the attachment's name).",
    "the WhatsApp to Sarika is your SLOW run's (EDIT NOTES TO SARIKA)."),
