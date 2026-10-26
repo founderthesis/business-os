@@ -14,11 +14,11 @@ sha = lambda b: hashlib.sha256(b).hexdigest()[:16]
 part = lambda n: open(os.path.join(PARTS, n + ".txt"), encoding="utf-8").read().rstrip("\n")
 
 FAST = ["intro-fast", "tools", "rules-common", "rules-tail", "notion-data", "scope", "actions", "queue-fast", "voice",
-        "sending", "limits-fast", "onemail", "identity", "runrecord", "fast-order", "decision", "daybefore", "mail", "report-fast",
+        "sending", "limits-fast", "onemail", "identity", "runrecord", "fast-order", "decision", "daybefore", "invites", "mail", "report-fast",
         "hard"]
 SLOW = ["intro-slow", "tools", "rules-common", "rules-routines", "rules-tail", "notion-data", "scope", "actions",
         "queue-slow", "internal", "editnotes", "snoozed", "voice", "sending", "teamwa", "limits", "onemail", "identity", "runrecord",
-        "reconcile", "slow-order", "feedback", "bounces", "vendor", "ownermail", "scorecard", "payments", "followups",
+        "reconcile", "slow-order", "feedback", "bounces", "vendor", "ownermail", "scorecard", "payments", "invites", "followups",
         "report-slow", "hard"]
 # (part, old, new): rewrites that only one prompt needs
 VARIANT = {
