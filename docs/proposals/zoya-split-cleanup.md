@@ -11,7 +11,7 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
 | zoya-fast | 38,248 | 6a00434c06dc4ab7 |
-| zoya-slow | 65,312 | f33fbf1a98a247ba |
+| zoya-slow | 65,299 | 0a41fd25fbed7166 |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
@@ -543,4 +543,16 @@ Checks:
 - Selection by prefix or wording: none.
 - Retry double-send: the holding-reply resend path is now closed.
 - Bytes and hashes: above.
+
+## Round 4 results (3dfa2e4)
+
+**The report is accepted as accurate.** It ran on 72aa104, before 26p, 26q and Cleanup's fixes.
+- Eleven scenarios pass on both runs.
+- L3 and I2b fail on both: the lock is blocked architecturally, as Cleanup's 0ec9e35 said. L3 shows that even with the 45-minute cap, a live run can be closed as stale, because no prompt rule can make a run finish on time.
+- I3 is fixed in 26q, with round 4c pending.
+- R2 is still failing, and Main's fix waits on the size work.
+
+**R1's "house copies undefined": confirmed, and fixed by Cleanup (`docs/proposals/d-split26q-fix2.py`).** Neither Zoya prompt defines the term; the sweep and calendar do (Zoya in Cc on ad@ mail and drafts, plus Chaandini on Built to Share and Human by Design, never Mamatha). INTERNAL TASKS c(4) drafts only the Founder Thesis thank-you in ad@, so its house copy is Zoya, and it now says "you". That saves 13 B, so this fix doesn't have to wait for the size work. Run B's other R1 question, whether c(2)'s Episode retry holds back the thank-you, is answered by the text: c(4) doesn't depend on c(2), and the thank-you never waits for a transcript.
+
+Result: FAST 38,248 / 6a00434c06dc4ab7 (unchanged), SLOW 65,299 / 0a41fd25fbed7166, identical on two builds. SLOW is still 2,763 B over the size gate.
 
