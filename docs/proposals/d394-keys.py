@@ -10,7 +10,8 @@ src, out = sys.argv[1], sys.argv[2]
 os.makedirs(out, exist_ok=True)
 sha = lambda b: hashlib.sha256(b).hexdigest()[:16]
 INBOX, CAL, SWEEP = "trig_0189eZvAD8x4357cfevgZ3No", "trig_01Voiz5YsK2SnVf2STF8PoSH", "trig_01MdfUFg2qrebDWgiHwncgnd"
-BASE = {INBOX: (60937, "40b7edec9145134e"), CAL: (55992, "fba6e2cd186d0903"), SWEEP: (32478, "6acd0d5b1ce40f20")}
+# Rebased 26 Oct on the live prompts as read back that day (the anchors are unchanged; 22 Oct bases were 60,937, 55,992, 32,478)
+BASE = {INBOX: (61957, "aed0215a8bdf6a26"), CAL: (54901, "543c3499473860ac"), SWEEP: (33824, "7af60faaa021fa64")}
 KEYS = ("ACTION KEYS (decision 394, the FAST/SLOW trial). Every Zoya step you write in Next action, wherever this prompt "
         "says \"Zoya: <step>\", goes in the keyed short form \"Zoya [<type> <origin> <raised>]: <step>\". Type, by what the "
         "step does: reply (an answer owed to someone who wrote: a reply, acknowledgement, admin confirmation, a rebook after "
