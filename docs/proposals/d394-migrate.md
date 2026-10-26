@@ -12,7 +12,7 @@ Rules, applied in order to each "Zoya:" segment:
    - Date: the segment's own "on <D Mon>", else "original due <YYYY-MM-DD>", else the row's Next date.
 3. Nurture wording: `nurture:seq-7-<n>:<date>T00:00:00+09:00`. n = the "Zoya sent: nurture" Activities since the nurture start, plus 1.
 4. A reply or acknowledgement owed to someone who wrote: `reply:msg-<Message-ID of that inbound>:<its Date in JST>`. The Message-ID comes from a Gmail rfc822msgid lookup. If it can't be found, the segment goes on the review list, unkeyed.
-5. A step from Akshay's decision or Your call: `decision:call-<id of the Activity that recorded it, else the row id>:<that Claude note date>T00:00:00+09:00`.
+5. A step from Akshay's decision or Your call (vendor Your call, billing and payment steps go to rule 6 instead): `decision:call-<id of the Activity that recorded it, else the row id>:<that Claude note date>T00:00:00+09:00`.
 6. Anything else (team asks, internal steps): `team:call-<row id>:<Claude note date>T00:00:00+09:00`.
 7. A Zoya step inside another owner's segment ("Waiting on X ...; Zoya chases 29 Oct") becomes its own segment. These are listed for review, because they edit text another owner wrote.
 
