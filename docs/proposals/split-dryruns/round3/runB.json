@@ -1,0 +1,540 @@
+{
+ "C": {
+  "action_keys": [
+   "3fa19a301a7f811da4a8d2ff78897041:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "3f019a301a7f8126bd0ee7b39fd456b1:nurture:seq-7-1:2026-10-20T00:00:00+09:00"
+  ],
+  "rows": {
+   "3f019a301a7f812ea2a8d1e74b88113c": "not due (Next date 2026-10-29 > 27 Oct; keyed segment seq-5-2 from the migration left alone); nothing written",
+   "3fa19a301a7f811da4a8d2ff78897041": "routine 1 sponsored step 1 SENT (due since 25 Oct; the 26 Oct 'one mail per person per run' hold is not a rule in this prompt); Activity 'Zoya sent: sponsored offers step 1 to Payal'; Chase step 1; next planned mail written to '## Next sponsored mail'; Last activity",
+   "3f019a301a7f817fae25cc8414c31aa5": "not due (Next date 2026-11-09); nothing written",
+   "3f019a301a7f8126bd0ee7b39fd456b1": "selected (LT chase, Next date 20 Oct <= today) then HELD: Akshay hold with no date / cold outreach; recheck in 7 days; no send, no new ask to Akshay (decision 381)"
+  },
+  "next_date": {
+   "3f019a301a7f812ea2a8d1e74b88113c": "unchanged",
+   "3fa19a301a7f811da4a8d2ff78897041": "2026-11-02 (Cadences day 14 from the 18 Oct offer = Sun 1 Nov, weekdays only; the 7-day per-thread PR limit would then hold it to 3 Nov)",
+   "3f019a301a7f817fae25cc8414c31aa5": "unchanged",
+   "3f019a301a7f8126bd0ee7b39fd456b1": "2026-11-03"
+  },
+  "waiting_on": {
+   "3f019a301a7f812ea2a8d1e74b88113c": "unchanged",
+   "3fa19a301a7f811da4a8d2ff78897041": [
+    "Guest or PR",
+    "Zoya"
+   ],
+   "3f019a301a7f817fae25cc8414c31aa5": "unchanged",
+   "3f019a301a7f8126bd0ee7b39fd456b1": [
+    "Zoya"
+   ]
+  },
+  "next_action": {
+   "3f019a301a7f812ea2a8d1e74b88113c": "unchanged",
+   "3fa19a301a7f811da4a8d2ff78897041": [
+    "Zoya [followup seq-1-2 2026-11-02T00:00:00+09:00]: sponsored step 2 on 2 Nov"
+   ],
+   "3f019a301a7f817fae25cc8414c31aa5": "unchanged",
+   "3f019a301a7f8126bd0ee7b39fd456b1": [
+    "Zoya [nurture seq-7-1 2026-10-20T00:00:00+09:00]: recheck Akshay's hold (cold outreach, Akshay will revisit) on 3 Nov"
+   ]
+  },
+  "mails": [
+   {
+    "key": "3fa19a301a7f811da4a8d2ff78897041:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "3fa19a301a7f811da4a8d2ff78897041",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "Payal Dash (branditcommunications.com, address from the thread)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "thread": "draft action reply on Zoya's own 17 Oct 23:40Z commercials reply (latest message, [Gmail]/Sent Mail:220) on 'Podcast Opportunity | From Digital India to Global Investing with Ronit Kar'; team wrote last so outside people in To, Akshay Cc; wording per routine 1 page / Rules for Zoya, planned from the thread and podm.in/why-sponsor",
+    "attachments": []
+   }
+  ],
+  "run_record": "Completed (1 sent, 1 held, 2 not due)",
+  "answer": "",
+  "verdict": "PASS",
+  "findings": "1/ Ronit's step-1 key raised time is ambiguous: 'the date the previous step set, else the row's Next date when the step was written'. Day 7 from the 18 Oct offer gives 2026-10-25; the current Next date (moved by holds) gives 2026-10-27. I used 27 Oct to match scenario D's convention. 2/ AFTER SEND sets Next date from the chain day (2 Nov) without applying the 7-day/PR per-thread limit, so the row is re-selected on 2 Nov just to be held to 3 Nov. 3/ The run starts at 10:08 while the prompt's cutoff reads 'Start no new row 40 minutes after your start (11:30, 17:30)'. 40 minutes gives 10:48, the parenthetical gives 11:30, and they conflict for off-schedule starts. 4/ Payal Dash has two unmerged People rows. The Ronit one holds a .co typo. ONE PERSON, ONE ASK reads 'the recipient's other Engagements (People)', so it would not see the 26 Oct Devesh mail. Today that has no effect because the PR weekly limit is 2 and the per-thread rule applies, but it undercounts the weekly limit. 5/ Vijay: it is unclear whether the keyed recheck segment replaces 'On hold: cold outreach, Akshay will revisit (21 Oct)' or sits beside it ('as its own segment'). I replaced it per line 44 ('in place of the row's waiting segment').",
+  "notes": "Hashes verified (96c11beae7ec325b..., a5b4ef40cfd85bb1...). Clock Tue 27 Oct, outside quiet hours, weekday, not Diwali week. STEP 2: 'Candidates are in-scope rows at Sponsored offered, Precall requested, Booking, Recorded or LT chase with Next date today or earlier'. Ronit: 'rows at Status Sponsored offered whose Next date is today or earlier, whatever Next action says'; first selection keys it 'in place of the row's waiting segment'. PR rule: 'for a PR or agency person the 7 days count per guest thread, within that person's weekly limit on Cadences' (Cadences: 'at most 2 mails a week each'); the Devesh step 1 on 26 Oct was on another guest thread, so it is no hold. Last mail to Payal on this thread was 18 Oct, so 7 days have passed. AFTER SEND: 'Zoya added to Waiting on (other owners stay)'; 'segment \"Zoya [followup seq-<routine>-<n+1> <its due date>]: <routine> step <n+1> on <D Mon>\"'. Vijay: 'Skip a row while Akshay or Jaya holds a decision ... (a hold goes by the hold rule below, never a skip)'; hold rule: 'a hold with no first day, cold outreach or an Akshay hold with no date, rechecks in 7 days as its own segment \"Zoya [nurture seq-7-<n> <date>]: recheck <hold> on <D Mon>\" and keeps an owner, never empty (... else Zoya); never a new ask to Akshay'. Claude note 'held: Akshay hold (cold outreach, decision 353), recheck 3 Nov'. Amit and Devesh carry the already-migrated keyed segments (keys-migration.csv) with future dates. RECONCILE and STEP 0 touch only out-of-scope items here."
+ },
+ "G": {
+  "action_keys": [
+   "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00"
+  ],
+  "rows": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "FAST holds the lease (same-minute start: 'in the same minute FAST does'). FAST logs the inbound (Activity 'Jheel to Zoya: Akshat fine with INR 50,000 + GST, asks next steps', Source ID msgid:HYP-G-0955@impactkey.in, Last activity), sends 'Sponsored yes: next steps' (STEP 1b), and logs 'Zoya sent: reply to Jheel: sponsored yes, next steps' with the Action key. The inbound completes the waiting segment on Jheel. Chase step 0. Claude note '2026-10-27: Zoya replied (sponsored yes: next steps)'. Status: not specified (likely Booking, see findings). SLOW waits until FAST's record leaves Started, then finds nothing due on this row."
+  },
+  "next_date": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "2026-10-29 (WRITE PATH: a write that changes Next action sets the earliest open segment date; 'original due 2026-10-29' counts)"
+  },
+  "waiting_on": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Guest or PR",
+    "Akshay"
+   ]
+  },
+  "next_action": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Waiting on Jheel (Impactkey PR): billing details for the 70% invoice (completion: the reply action keyed 3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00 done, Activity 'Zoya sent: reply to Jheel: sponsored yes, next steps')",
+    "Akshay: confirm your India travel plans with Akshat and plan the in-person interview for his Jan or Feb visit (original due 2026-10-29; consolidated from Task 40119a301a7f812ca6e0cba045fa9221)"
+   ]
+  },
+  "mails": [
+   {
+    "key": "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00",
+    "row": "3f019a301a7f81ef81a4c4780c92fee2",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "Jheel Gehlot (impactkey.in)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)",
+     "Jaya (People row, Team)",
+     "Sarika (People row, Team)"
+    ],
+    "thread": "draft action reply on HYP-G-0955@impactkey.in (the latest message on the commercials thread in Zoya's inbox), reply_all false, recipients set explicitly; wording 'Sponsored yes: next steps' per Rules for Zoya / wording page",
+    "attachments": []
+   }
+  ],
+  "run_record": "FAST: Completed. SLOW: waits (reads only) for FAST's record to leave Started, at most 25 minutes. FAST finishes one reply well inside that, so SLOW then runs: No-op for this scope (row not due, Next date 29 Oct). If FAST ran past 10:33, SLOW would end Partial 'lease held by FAST <run id>'.",
+  "answer": "",
+  "verdict": "FAIL",
+  "findings": "1/ FAST gives no Status for a mailed sponsored yes (STEP 1e only says 'Move each row on: Status, ...'); 'Booking' is the likely target (SLOW 1b names 'Status Booking or Sponsored offered with Payment empty'), but the prompt does not say. If Status stays Sponsored offered, the WRITE PATH pulls Next date to 2026-10-29 (Akshay's 'original due 2026-10-29' counts), and on 29 Oct SLOW routine 1 selects every Sponsored offered row with Next date today or earlier 'whatever Next action says', so a sponsored chase could be selected after a yes (only the CONTEXT CHECK would stop it). 2/ YOUR QUEUE says 'Rows waiting on Akshay are never yours to mail', and this row has Akshay in Waiting on (his own India-travel step). Read literally, FAST may not reply at all; STEP 1c only diverts 'a message on a row that waits on Akshay's decision or wording', and SLOW (not FAST) has the line that an independent Akshay ask 'doesn't stop a due step of yours on another obligation'. FAST lacks that carve-out. 3/ 'Sponsored yes: next steps' includes 'precall via podm.in/30min', but the precall already happened on 22 Oct. The CONTEXT CHECK says never repeat an answered ask and adapt, while VOICE says adapting must never change 'a fact, price, term, link or the ask'. The two lines conflict on whether to drop the precall link. 4/ The WRITE PATH moves Next date from 2 Nov to 29 Oct because of Akshay's 'original due' segment. That is correct by the letter, but it makes the row due for SLOW on 29 Oct (see 1). 5/ The lease itself is clear in this scenario.",
+  "notes": "FAST LEASE: 'if both are Started, the earlier start holds it, and in the same minute FAST does.' SLOW LEASE: same sentence, and SLOW waits 'for up to 25 minutes'. FAST 1b: 'a yes at the standard price gets \"Sponsored yes: next steps\" (billing details for the 70% invoice, precall via podm.in/30min, recording after), Jaya and Sarika in Cc'. SENDING: 'on revenue mail (sponsored from the guest's yes onward ...) also Jaya and Sarika'. Recipients: the latest inbound has From Jheel, To Zoya, Cc Akshay, so To Jheel and Cc Akshay + Jaya + Sarika covers everyone on it plus Akshay (decision 413 read-back). Akshay's 25 Oct call 'it will be sponsored only' closed his decision, so 1c ('a row that waits on Akshay's decision or wording') does not apply. The note 'handed to Zoya: tell Akshay the answer once it comes' is met because Akshay is Cc on both the inbound and the reply."
+ },
+ "H": {
+  "action_keys": [],
+  "rows": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "no change. SLOW (Started 10:08, still running) holds the lease. The row is not due for SLOW (Next date 2 Nov) and FAST has no reply, decision or hold action on it (no new inbound in H)."
+  },
+  "next_date": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "unchanged"
+  },
+  "waiting_on": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "unchanged"
+  },
+  "next_action": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "unchanged"
+  },
+  "mails": [],
+  "run_record": "FAST: No-op (literal reading: the lease is read only 'Before your first row write', and with nothing due FAST never writes a row). An implementation that checks the lease at start would wait 10 minutes (to 10:48) and end Partial 'lease held by SLOW <run id>'. SLOW: No-op for this scope.",
+  "answer": "",
+  "verdict": "PASS",
+  "findings": "1/ The run-record label for a FAST run that has nothing due while SLOW holds the lease depends on when the lease is read: No-op if read only before a row write (as written), Partial if read up front. The prompt does not define this case. 2/ SLOW at 10:08 was 30 minutes into its run, under 60, so the lease was not stale. 3/ The row's Next date (2 Nov) is later than the 'original due 2026-10-29' segment, against the WRITE PATH rule; no run rewrites it until Next action changes. The CTO audit flagged the same issue.",
+  "notes": "FAST LEASE: 'Before your first row write, read the latest run record with Source ID starting \"run:zoya:slow:\": one still at Started, begun under 60 minutes ago, holds the lease; if both are Started, the earlier start holds it'. SLOW started 10:08, earlier than FAST's 10:38, so SLOW holds it."
+ },
+ "E": {
+  "action_keys": [
+   "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-E-1010@impactkey.in-1:2026-10-27T10:10:00+09:00",
+   "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-E-1010@impactkey.in-2:2026-10-27T10:10:00+09:00"
+  ],
+  "rows": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "Logs the inbound (msgid:HYP-E-1010@impactkey.in). Ask 1 (yes at INR 50,000 + GST, next steps) is routine (1b): it gets 'Sponsored yes: next steps' and completes the Jheel waiting segment. Ask 2 (camera crew cost for the January in-person shoot) is a price/term not on the wording or sales page, so it goes to 1c: Ask Akshay, with Akshay in Waiting on (already there), and the holding line 'checking with akshay, will come back by Fri 30 Oct'. Because the real answer to ask 1 goes on the thread this run ('one receipt at most'), that line can only go inside the one next-steps reply, or not at all (ambiguous). Activity 'Zoya sent: reply to Jheel: sponsored yes, next steps' (+ holding line). Chase step 0. Claude note. Status: unspecified."
+  },
+  "next_date": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "2026-10-29 (earliest open segment date, Akshay's 'original due')"
+  },
+  "waiting_on": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Guest or PR",
+    "Akshay"
+   ]
+  },
+  "next_action": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Waiting on Jheel (Impactkey PR): billing details for the 70% invoice (completion: 3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-E-1010@impactkey.in-1:2026-10-27T10:10:00+09:00)",
+    "Akshay: confirm your India travel plans with Akshat and plan the in-person interview for his Jan or Feb visit (original due 2026-10-29; consolidated from Task 40119a301a7f812ca6e0cba045fa9221)",
+    "Ask Akshay: Jheel asks what a camera crew would cost for Akshat's January in-person shoot",
+    "possibly also 'Zoya [reply msg-HYP-E-1010@impactkey.in-2 2026-10-27T10:10:00+09:00]: camera crew cost for the January shoot' (open reply action, see findings)"
+   ]
+  },
+  "mails": [
+   {
+    "key": "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-E-1010@impactkey.in-1:2026-10-27T10:10:00+09:00",
+    "row": "3f019a301a7f81ef81a4c4780c92fee2",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "Jheel Gehlot (impactkey.in)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)",
+     "Jaya (People row, Team)",
+     "Sarika (People row, Team)"
+    ],
+    "thread": "draft action reply on HYP-E-1010@impactkey.in in Zoya's inbox; ONE mail: 'Sponsored yes: next steps' per wording page, with (ambiguous) the holding line for ask 2 'checking with akshay, will come back by Fri 30 Oct'; no separate holding reply ('one receipt at most')",
+    "attachments": []
+   }
+  ],
+  "run_record": "FAST: Completed (1 sent, 1 put on Akshay's list)",
+  "answer": "",
+  "verdict": "FAIL",
+  "findings": "1/ 1c's holding reply is skipped when 'the real answer goes on it this run (one receipt at most)', but the prompt never says whether the holding line rides inside the next-steps reply or is dropped, so ask 2 may get no acknowledgement. 2/ Line 39 says to 'write each open reply action as its own segment \"Zoya [reply msg-<id>-n <ts>]: <ask>\"' and that a holding reply leaves the action open, while 1c says to set Next action 'Ask Akshay: ...'. It is unclear whether both segments exist, which risks a duplicate ask or an orphaned Zoya action on a row waiting on Akshay. 3/ FAST gives no Status for a mailed sponsored yes (STEP 1e only says 'Move each row on: Status, ...'); 'Booking' is the likely target (SLOW 1b names 'Status Booking or Sponsored offered with Payment empty'), but the prompt does not say. If Status stays Sponsored offered, the WRITE PATH pulls Next date to 2026-10-29 (Akshay's 'original due 2026-10-29' counts), and on 29 Oct SLOW routine 1 selects every Sponsored offered row with Next date today or earlier 'whatever Next action says', so a sponsored chase could be selected after a yes (only the CONTEXT CHECK would stop it). 4/ YOUR QUEUE says 'Rows waiting on Akshay are never yours to mail', and this row has Akshay in Waiting on (his own India-travel step). Read literally, FAST may not reply at all; STEP 1c only diverts 'a message on a row that waits on Akshay's decision or wording', and SLOW (not FAST) has the line that an independent Akshay ask 'doesn't stop a due step of yours on another obligation'. FAST lacks that carve-out. 5/ 'Sponsored yes: next steps' includes 'precall via podm.in/30min', but the precall already happened on 22 Oct. The CONTEXT CHECK says never repeat an answered ask and adapt, while VOICE says adapting must never change 'a fact, price, term, link or the ask'. The two lines conflict on whether to drop the precall link. 6/ Akshay already told Jheel on WhatsApp (23 Oct) that the crew is hired and paid by their side directly. The prompt gives no way to reuse that known answer, so it routes to Akshay anyway (correctly, since a crew price is not on the pages).",
+  "notes": "Line 39: 'two reply actions raised by one inbound key as msg-<id>-1, msg-<id>-2, in the order the asks appear'. 1b: yes at standard price gets next steps; 'a counter-offer below INR 30,000 + GST, any other term, a custom package or a call request goes to Akshay (c)'. HARD RULES: 'Never a price, discount, term or deadline that isn't on the wording page or the sales page.' 1c: holding reply 'unless one went on it in the last 7 days or the real answer goes on it this run (one receipt at most)'. 3 working days after Tue 27 Oct = Fri 30 Oct. No SLOW record is Started at 10:38 (SLOW runs 10:50), so FAST holds the lease."
+ },
+ "D": {
+  "action_keys": [
+   "HYP-D-NN:followup:seq-1-1:2026-10-27T00:00:00+09:00 for NN=01..45 (01..40 sent, 41..45 left)"
+  ],
+  "rows": {
+   "HYP-D-01..HYP-D-40": "sponsored step 1 sent on each row's own thread (oldest raised first, HYP-D-01 first) until the per-run cap of 40 (Cadences: '40 per Zoya run'); Activity 'Zoya sent: sponsored offers step 1 to <name>' each with its Action key; Chase step 1; Last activity; '## Next sponsored mail' rewritten",
+   "HYP-D-41..HYP-D-45": "not reached: cap. 'A cap is never a hold: one you don't reach stays due as it is (Next date unchanged) and goes first next run'; nothing written, no Claude note change required ('a cap moves nothing')"
+  },
+  "next_date": {
+   "HYP-D-01..HYP-D-40": "literal AFTER SEND: Cadences day 14 from the 13 Oct offer = 2026-10-27 (already today), so the 16:50 run re-selects and holds each to 2026-11-03 by the 7-day rule; intended value is likely 2026-11-03",
+   "HYP-D-41..HYP-D-45": "unchanged (2026-10-27)"
+  },
+  "waiting_on": {
+   "HYP-D-01..HYP-D-40": "Zoya added, other owners stay",
+   "HYP-D-41..HYP-D-45": "unchanged"
+  },
+  "next_action": {
+   "HYP-D-01..HYP-D-40": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct (literal; see findings)"
+   ],
+   "HYP-D-41..HYP-D-45": [
+    "Zoya [followup seq-1-1 2026-10-27T00:00:00+09:00]: sponsored step 1 on 27 Oct (unchanged)"
+   ]
+  },
+  "mails": [
+   {
+    "key": "HYP-D-NN:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-01..40 (40 mails)",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on each thread (not given; not invented)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "thread": "draft action reply on each row's own offer thread (latest message = our 13 Oct offer); wording per routine 1 page / Rules for Zoya",
+    "attachments": []
+   }
+  ],
+  "run_record": "SLOW: Partial (due 45, sent 40, remaining 5; cap reached; report names HYP-D-41..45 with keys)",
+  "answer": "",
+  "verdict": "PASS",
+  "findings": "1/ The cap handling is clear. 2/ The step-2 date is not well defined after a late step 1. 'Next date = the earliest of the next step's due date ...' with Cadences days 7, 14 from the offer gives 27 Oct, a past date, so every sent row is due again at 16:50 and must be held by ONE PERSON, ONE ASK. AFTER SEND applies only weekdays and PR COORDINATION's gap, not the 7-day limit. 3/ The run started at 10:08, and 'Start no new row 40 minutes after your start (11:30, 17:30)' gives 10:48 by the rule but 11:30 by the parenthetical. Under the 10:48 reading the run may stop before 40 sends, and those rows stay due unchanged (correct by the cap rule). 4/ The run-record definitions don't name a cap: 'Partial: a step failed or was skipped' vs 'Completed: all sent, held or blocked'. SLOW ORDER's 'A Partial report names every action left' implies Partial.",
+  "notes": "LIMITS: per-run and daily caps 'as Cadences gives them' (40 per Zoya run, 150 a day shared). 'Stop at the cap and say so.' Each row has its own thread with no reply and no other holds; a sponsored lead is not stale (60-day rule not reached)."
+ },
+ "L1": {
+  "action_keys": [
+   "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00"
+  ],
+  "rows": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "as in G: FAST writes it (sponsored yes next steps); SLOW writes nothing on it while FAST holds the lease and, after, finds it not due"
+  },
+  "next_date": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "2026-10-29 (FAST's write)"
+  },
+  "waiting_on": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Guest or PR",
+    "Akshay"
+   ]
+  },
+  "next_action": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Waiting on Jheel (Impactkey PR): billing details for the 70% invoice (completion: the reply action keyed 3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00 done, Activity 'Zoya sent: reply to Jheel: sponsored yes, next steps')",
+    "Akshay: confirm your India travel plans with Akshat and plan the in-person interview for his Jan or Feb visit (original due 2026-10-29; consolidated from Task 40119a301a7f812ca6e0cba045fa9221)"
+   ]
+  },
+  "mails": [
+   {
+    "key": "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00",
+    "row": "3f019a301a7f81ef81a4c4780c92fee2",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "Jheel Gehlot (impactkey.in)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)",
+     "Jaya (People row, Team)",
+     "Sarika (People row, Team)"
+    ],
+    "thread": "draft action reply on HYP-G-0955@impactkey.in (the latest message on the commercials thread in Zoya's inbox), reply_all false, recipients set explicitly; wording 'Sponsored yes: next steps' per Rules for Zoya / wording page",
+    "attachments": []
+   }
+  ],
+  "run_record": "FAST: Completed. SLOW: waits, only reading, re-checking every 2 minutes up to 25 minutes. FAST (one reply) completes within that, so SLOW proceeds and ends No-op/Completed for this scope; had FAST still been Started at 10:33, SLOW would end Partial 'lease held by FAST <run id>' with no row written.",
+  "answer": "FAST holds the lease. Both prompts say: 'if both are Started, the earlier start holds it, and in the same minute FAST does.' SLOW only reads, re-checking every 2 minutes for up to 25 minutes. When FAST's record leaves Started, SLOW goes on. Still held at 25 minutes, SLOW ends Partial 'lease held by FAST <run id>' with no row written. Run records: FAST Completed; SLOW No-op for this scope (or Partial if the 25 minutes run out).",
+  "verdict": "PASS",
+  "findings": "1/ In this case the tie-break is unambiguous. 2/ There is a residual race that this scenario does not trigger. Each run checks the other's record once 'before your first row write' and never re-checks after acquiring. If SLOW reads before FAST's Started record exists, SLOW sees nothing and proceeds. FAST then reads SLOW's same-minute record and also proceeds, by 'in the same minute FAST does'. Both would then write rows. A post-acquire re-check is missing. 3/ SLOW's 25-minute wait equals FAST's 'Start no new row after 25 minutes'. A FAST run that uses its full window plus one row can make SLOW give up and lose its whole run (next at 16:50). 4/ FAST gives no Status for a mailed sponsored yes (STEP 1e only says 'Move each row on: Status, ...'); 'Booking' is the likely target (SLOW 1b names 'Status Booking or Sponsored offered with Payment empty'), but the prompt does not say. If Status stays Sponsored offered, the WRITE PATH pulls Next date to 2026-10-29 (Akshay's 'original due 2026-10-29' counts), and on 29 Oct SLOW routine 1 selects every Sponsored offered row with Next date today or earlier 'whatever Next action says', so a sponsored chase could be selected after a yes (only the CONTEXT CHECK would stop it).",
+  "notes": "Lease is the run record (Source ID run:zoya:fast:/run:zoya:slow:). Same second means same minute, so FAST wins by the explicit tie-break."
+ },
+ "L2": {
+  "action_keys": [
+   "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00"
+  ],
+  "rows": {
+   "3f019a301a7f81ef81a4c4780c92fee2 (case 1, SLOW Started 10:50, 48 min)": "held. FAST only reads, re-checks every 2 min until 11:48, and the record is still Started (about 58 min, under 60). FAST ends Partial 'lease held by SLOW <run id>' and writes nothing to the row. The G reply stays due and is found again by STEP 1 at 12:38, when the crashed record is 108 min old and stale, so FAST proceeds and sends it.",
+   "3f019a301a7f81ef81a4c4780c92fee2 (case 2, SLOW Started 10:30, 68 min)": "stale (not 'begun under 60 minutes ago'), so FAST holds the lease at once and does G's work: sends 'Sponsored yes: next steps' to Jheel, Cc Akshay, Jaya, Sarika, and writes the row as in G"
+  },
+  "next_date": {
+   "case 1": "unchanged (2026-11-02) after the 11:38 run",
+   "case 2": "2026-10-29"
+  },
+  "waiting_on": {
+   "case 1": "unchanged ['Guest or PR','Akshay']",
+   "case 2": [
+    "Guest or PR",
+    "Akshay"
+   ]
+  },
+  "next_action": {
+   "case 1": [
+    "Waiting on Jheel (Impactkey PR): reply to the sponsored commercials (sent 26 Oct)",
+    "Akshay: confirm your India travel plans with Akshat and plan the in-person interview for his Jan or Feb visit (original due 2026-10-29; consolidated from Task 40119a301a7f812ca6e0cba045fa9221)"
+   ],
+   "case 2": [
+    "Waiting on Jheel (Impactkey PR): billing details for the 70% invoice (completion: the reply action keyed 3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00 done, Activity 'Zoya sent: reply to Jheel: sponsored yes, next steps')",
+    "Akshay: confirm your India travel plans with Akshat and plan the in-person interview for his Jan or Feb visit (original due 2026-10-29; consolidated from Task 40119a301a7f812ca6e0cba045fa9221)"
+   ]
+  },
+  "mails": [
+   {
+    "key": "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00 (case 2 at 11:38; case 1 at 12:38)",
+    "row": "3f019a301a7f81ef81a4c4780c92fee2",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "Jheel Gehlot (impactkey.in)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)",
+     "Jaya (People row, Team)",
+     "Sarika (People row, Team)"
+    ],
+    "thread": "draft action reply on HYP-G-0955@impactkey.in (the latest message on the commercials thread in Zoya's inbox), reply_all false, recipients set explicitly; wording 'Sponsored yes: next steps' per Rules for Zoya / wording page",
+    "attachments": []
+   }
+  ],
+  "run_record": "Case 1: FAST Partial 'lease held by SLOW <run id>' (run record only). Case 2: FAST Completed.",
+  "answer": "Case 1 (48 min): held. FAST waits, only reading and re-checking every 2 minutes, for up to 10 minutes (11:38 to 11:48). At the last check the record is about 58 minutes old, still under 60, so FAST ends Partial 'lease held by SLOW <run id>' with no row written. The next FAST run at 12:38 finds the lease stale and sends. Case 2 (68 min): stale, so FAST does not wait and proceeds at once. The exact limits: a Started record holds the lease only if 'begun under 60 minutes ago'; FAST re-checks 'every 2 minutes (Bash sleep 120 ...) for up to 10 minutes'; SLOW waits 'for up to 25 minutes'.",
+  "verdict": "PASS",
+  "findings": "1/ Case 1 ends close to the boundary. The 10-minute wait ends at about 58 minutes, so a slower check loop (reads between sleeps) can cross 60 minutes and flip the outcome to stale. The result depends on run timing, not just the rule. 2/ A crashed SLOW blocks FAST for up to about 70 minutes. With FAST's 10-minute wait, one crash costs one or two FAST runs, so a 09:55 reply goes out at 12:38. 3/ Neither prompt says to mark a crashed record Failed, so it stays Started forever. That is harmless after 60 minutes, but it pollutes 'the latest run record' reads.",
+  "notes": "FAST LEASE quoted. 'under 60 minutes' means exactly 60 is stale."
+ },
+ "L3": {
+  "action_keys": [
+   "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00 (left due)"
+  ],
+  "rows": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "no write. FAST writes only its own run record (create Started, final update Partial). It does not log the inbound Activity either, because that sets Last activity on the row and only reading is allowed while the lease is held."
+  },
+  "next_date": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "unchanged (2026-11-02)"
+  },
+  "waiting_on": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "unchanged ['Guest or PR','Akshay']"
+  },
+  "next_action": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Waiting on Jheel (Impactkey PR): reply to the sponsored commercials (sent 26 Oct)",
+    "Akshay: confirm your India travel plans with Akshat and plan the in-person interview for his Jan or Feb visit (original due 2026-10-29; consolidated from Task 40119a301a7f812ca6e0cba045fa9221)"
+   ]
+  },
+  "mails": [],
+  "run_record": "FAST: Partial 'lease held by SLOW <run id>', no row written; report names the reply action left with its key",
+  "answer": "FAST writes only its run record: the Started Activity and its final update to Partial 'lease held by SLOW <run id>', listing the reply action left and its key. Nothing goes to the row: Next date stays 2026-11-02, Waiting on stays [Guest or PR, Akshay], and Next action stays 'Waiting on Jheel (Impactkey PR): reply to the sponsored commercials (sent 26 Oct) | Akshay: confirm your India travel plans ... (original due 2026-10-29; ...)'. Yes, the reply action is still due for the next FAST run (12:38) with owner and Next date unchanged. Reply actions come from the thread ('plus the reply actions STEP 1 finds'), and the thread's last outside message is still unanswered. SLOW must not send it ('never a send of FAST's types').",
+  "verdict": "PASS",
+  "findings": "1/ This is a structural mismatch. SLOW may start rows until 40 minutes after its start and then finish them, while FAST waits only 10 minutes. So any FAST run that begins during a SLOW run's last 30 or more minutes nearly always gives up, and replies can slip an hour. 2/ RECONCILE flags only reply actions older than 2 hours. The 09:55 inbound passes 2 hours at 11:55, so the 16:50 SLOW run would check it. If the 12:38 FAST sends it, nothing is flagged. 3/ The inbound is not logged while waiting, so the report's 'actions left' is the only trace.",
+  "notes": "FAST LEASE: 'While it does, only read ... still held, end Partial \"lease held by SLOW <run id>\" with no row written.' SLOW started 10:50, earlier than FAST's 11:38, and is under 60 minutes old at every check (up to 58 minutes)."
+ },
+ "L4": {
+  "action_keys": [
+   "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00"
+  ],
+  "rows": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "written only by FAST (10:38 to 11:02): G's sponsored-yes reply and row update. SLOW, after acquiring, finds it not due (Next date now 29 Oct). No SLOW write.",
+   "3f019a301a7f812ea2a8d1e74b88113c": "not due (Next date 29 Oct): no write by either run"
+  },
+  "next_date": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "2026-10-29 (FAST)",
+   "3f019a301a7f812ea2a8d1e74b88113c": "unchanged"
+  },
+  "waiting_on": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Guest or PR",
+    "Akshay"
+   ],
+   "3f019a301a7f812ea2a8d1e74b88113c": "unchanged"
+  },
+  "next_action": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Waiting on Jheel (Impactkey PR): billing details for the 70% invoice (completion: the reply action keyed 3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00 done, Activity 'Zoya sent: reply to Jheel: sponsored yes, next steps')",
+    "Akshay: confirm your India travel plans with Akshat and plan the in-person interview for his Jan or Feb visit (original due 2026-10-29; consolidated from Task 40119a301a7f812ca6e0cba045fa9221)"
+   ],
+   "3f019a301a7f812ea2a8d1e74b88113c": "unchanged (keyed seq-5-2 segment)"
+  },
+  "mails": [
+   {
+    "key": "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00",
+    "row": "3f019a301a7f81ef81a4c4780c92fee2",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "Jheel Gehlot (impactkey.in)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)",
+     "Jaya (People row, Team)",
+     "Sarika (People row, Team)"
+    ],
+    "thread": "draft action reply on HYP-G-0955@impactkey.in (the latest message on the commercials thread in Zoya's inbox), reply_all false, recipients set explicitly; wording 'Sponsored yes: next steps' per Rules for Zoya / wording page",
+    "attachments": []
+   }
+  ],
+  "run_record": "FAST: Completed (11:02). SLOW: No-op/Completed for this scope, after waiting from 10:50 until its first re-check at or after 11:02 (about 11:02 to 11:04).",
+  "answer": "From 10:50, SLOW sees FAST's record Started at 10:38 (12 minutes, under 60, and FAST started earlier), so it only reads: RECONCILE's read, the rules pages and the data sources. It re-checks every 2 minutes, for up to 25 minutes (to 11:15). At the first check after 11:02 (about 11:02 to 11:04) FAST is Completed, so SLOW takes the lease and may start rows. It must start no new row after 11:30 (40 minutes after its 10:50 start, 'Start no new row 40 minutes after your start (11:30, 17:30)'). No row is written by both: FAST writes the Akshat row before 11:02 and SLOW writes no in-scope row (both rows are not due).",
+  "verdict": "PASS",
+  "findings": "1/ The SLOW cutoff is fixed to its start time, not to when it got the lease, so a 12 to 14 minute wait comes out of SLOW's 40-minute window. The prompt says so implicitly through the fixed 11:30. 2/ Every row write re-reads the row first (WRITE PATH), which protects sequential writes, but nothing protects against the race described in L1.",
+  "notes": "SLOW LEASE: 'one still at Started, begun under 60 minutes ago, holds the lease; if both are Started, the earlier start holds it ... While it does, only read, re-checking every 2 minutes ... for up to 25 minutes'."
+ },
+ "R1": {
+  "action_keys": [
+   "HYP-R1-TASK: SLOW team action (transcript row, INTERNAL TASKS a/c); thank-you draft on HYP-R1-GUEST"
+  ],
+  "rows": {
+   "HYP-R1-TASK": "selected by INTERNAL TASKS a (Handed over, Waiting on Zoya, Source ID transcript:). LOOK BEFORE ASKING finds Ranjita's 10:20 reply with riya-sen-23oct.txt in Zoya's inbox, so no new request is sent. c(1) save the .txt via MCP Emails (action attachment); no conversion needed. c(2) attach it to the Episode's Transcript file (61 KB, under 200 KB, so create-attachment), re-fetch, write '## Transcript' (file name, bytes, sha256, source 'Ranjita's reply of 27 Oct'). BLOCKED: no Episode is given for this row, the prompt has no path for that, so report it. c(5) Task state Done, Waiting on cleared, Claude note '2026-10-27: transcript attached (<bytes> B, <sha256 first 16>)'. That note is only true if c(2) succeeded.",
+   "HYP-R1-GUEST": "c(3) FT, still Booked, both voices at length, 52 minutes (20 or more): Status Recorded, Call type cleared, Claude note '2026-10-27: recorded 23 Oct (transcript)'. c(4) no 'Zoya drafted: FT thank-you' Activity and no thank-you in Akshay's Sent, so create the draft (below), read it back, log 'Zoya drafted: FT thank-you for Riya Sen', then add Akshay to Waiting on and the Akshay segment to Next action."
+  },
+  "next_date": {
+   "HYP-R1-TASK": "unchanged (row Done)",
+   "HYP-R1-GUEST": "undefined by the prompt: no open segment carries a date ('sets Next date to the earliest open segment date'), so most likely left 2026-10-23"
+  },
+  "waiting_on": {
+   "HYP-R1-TASK": [],
+   "HYP-R1-GUEST": [
+    "Guest or PR",
+    "Akshay"
+   ]
+  },
+  "next_action": {
+   "HYP-R1-TASK": "unchanged text 'Ranjita: transcript for Riya's 23 Oct recording' (Done; not specified)",
+   "HYP-R1-GUEST": [
+    "Waiting on Kabir: nothing open",
+    "Akshay: send the thank-you draft to Riya (draft ready)"
+   ]
+  },
+  "mails": [
+   {
+    "key": "thank-you draft (not sent; Akshay sends it)",
+    "row": "HYP-R1-GUEST",
+    "mailbox": "ad@thepodium.in (draft)",
+    "from": "Akshay Datt (ad@thepodium.in)",
+    "to": [
+     "Riya Sen (her People row Email)"
+    ],
+    "cc": [
+     "Kabir (PR, hypopr.example)",
+     "Neha (Hypo Foods comms)",
+     "house copies: Zoya, plus Akshay per SENDING's 'Cc: Akshay on every mail' (the intent; redundant as he is the sender)"
+    ],
+    "thread": "standalone NEW mail, never a reply on the PR thread; subject 'Next Steps | Riya Sen @ Hypo Foods <> Founder Thesis'; wording 'FT thank-you after recording' per wording page / Rules for Zoya, in Akshay's voice",
+    "attachments": []
+   }
+  ],
+  "run_record": "SLOW: Partial (the c(2) Episode attach could not be done), else Completed",
+  "answer": "c(1): save riya-sen-23oct.txt from Ranjita's reply with MCP Emails (action attachment). It is already .txt, so no conversion. c(2): attach it to the Episode's Transcript file (61 KB, under 200 KB), re-fetch, confirm, and write '## Transcript' with name, bytes, sha256 and source 'Ranjita's reply of 27 Oct'. No Episode exists in the data, so this step fails and is reported. c(3): FT, still Booked, both voices at length, 52 minutes, so Status Recorded, Call type cleared, note 'recorded 23 Oct (transcript)'. c(4): there is no prior thank-you, so a draft goes in ad@thepodium.in as a standalone new mail with subject 'Next Steps | Riya Sen @ Hypo Foods <> Founder Thesis'. To: Riya Sen. Cc: Kabir (PR), Neha (Hypo Foods comms) and the house copies (Zoya; Akshay). No attachment, never the .txt. It is read back and logged 'Zoya drafted: FT thank-you for Riya Sen'. c(5): Task row Done, Waiting on cleared, note 'transcript attached (...)'. Guest row after: Status Recorded; Waiting on [Guest or PR, Akshay]; Next action 'Waiting on Kabir: nothing open | Akshay: send the thank-you draft to Riya (draft ready)'.",
+  "verdict": "PASS",
+  "findings": "1/ c(2) has no branch for a guest with no Episode row. The prompt neither creates one nor blocks. c(5) then writes 'transcript attached' and closes the Task Done even though the file is attached nowhere, so the note would be false. 2/ 'the house copies' is not defined in SLOW. For a draft in Akshay's own mailbox, 'Cc Akshay' is redundant, and whether Zoya is Cc'd (CLAUDE.md decisions 225/323) is left to inference. 3/ c(4)'s 'make sure Waiting on has Akshay' does not name a row. It must be the guest row, because c(5) clears the Task row's Waiting on, but the text says only 'the row' in a paragraph about the Task row. 4/ The WRITE PATH's Next date is undefined when no open segment has a date. 5/ The Task row was Waiting on Zoya with a 'Ranjita:' Next action, an inconsistency with a(...) ('then Waiting on Ranjita'). Selection still works only because of it. 6/ A guest form step (routine 5) should count from when Akshay sends the thank-you; nothing here starts it, which is correct.",
+  "notes": "INTERNAL TASKS c(4): 'Thank-you (decision 412): it never waits for a transcript and carries none; never attach the .txt to a thank-you draft. ... create the draft in ad@thepodium.in as a standalone new mail, never a reply on the PR thread: ... subject \"Next Steps | <guests> @ <company> <> Founder Thesis\", To the guests, Cc the PR, every other Stakeholder and the house copies, no attachment; read back, log ... Then make sure Waiting on has Akshay and Next action has \"Akshay: send the thank-you draft to <guest first name> (draft ready)\".' c(3): 'both voices in the transcript ... and 20 minutes or more of conversation: set Status Recorded, clear Call type'. Internal: 'quiet hours and the 7-day limit ... don't apply'."
+ },
+ "R2": {
+  "action_keys": [
+   "HYP-R2:reply:msg-HYP-R2-PR@hypopr.example-1:2026-10-27T10:05:00+09:00",
+   "HYP-R2:reply:msg-HYP-R2-PR@hypopr.example-2:2026-10-27T10:05:00+09:00"
+  ],
+  "rows": {
+   "HYP-R2": "Recording status is not settled. The event is on the calendar and not cancelled, but there is no Zencastr audio, no transcript and nothing from Akshay; an event existing does not show it happened. So, once: Akshay in Waiting on, and the segment 'Akshay: did the 23 Oct recording with Dev Rao happen? Write yes or no in Your call'. Pallavi's mail asks how it went and when the episode comes out, a release/publishing ask, so it goes to 1c: 'Ask Akshay: Pallavi asks how Dev's recording went and when the episode is out', plus the holding reply. The inbound is logged ('Pallavi to Zoya: asks how Dev's recording went and when the episode is out'). Activity 'Zoya sent: holding reply to Pallavi'. Status stays Booked."
+  },
+  "next_date": {
+   "HYP-R2": "undefined by the prompt (no dated open segment); most likely unchanged 2026-10-23"
+  },
+  "waiting_on": {
+   "HYP-R2": [
+    "Guest or PR",
+    "Akshay"
+   ]
+  },
+  "next_action": {
+   "HYP-R2": [
+    "Akshay: did the 23 Oct recording with Dev Rao happen? Write yes or no in Your call",
+    "Ask Akshay: Pallavi asks how Dev's recording went and when the episode is out"
+   ]
+  },
+  "mails": [
+   {
+    "key": "HYP-R2:reply:msg-HYP-R2-PR@hypopr.example-1:2026-10-27T10:05:00+09:00 (holding reply; the reply actions stay open)",
+    "row": "HYP-R2",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "Pallavi (PR)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "thread": "draft action reply on HYP-R2-PR@hypopr.example; one line 'hi Pallavi, checking with akshay, will come back by Fri 30 Oct.' (decision 390 wording as given in the prompt)",
+    "attachments": []
+   }
+  ],
+  "run_record": "FAST: Completed (holding reply sent, one row put on Akshay's list)",
+  "answer": "No, the recording is not settled. Our side has only a calendar event that was not cancelled: no Zencastr audio, no transcript, nothing from Akshay. FAST sends Pallavi only the holding reply 'hi Pallavi, checking with akshay, will come back by Fri 30 Oct.', To Pallavi, Cc Akshay, on her thread. It does not say whether the recording happened and does not ask. On the row: Waiting on [Guest or PR, Akshay]; Next action 'Akshay: did the 23 Oct recording with Dev Rao happen? Write yes or no in Your call | Ask Akshay: Pallavi asks how Dev's recording went and when the episode is out'. Nothing goes to WhatsApp ('No WhatsApp from this run'; decision 411 'never on WhatsApp'). Nothing asks the PR or the guest whether it happened.",
+  "verdict": "PASS",
+  "findings": "1/ The two Akshay segments overlap: the recording question and the 'how did it go / when is the episode' ask. The prompt has no rule to merge them, so Akshay gets two asks for one fact. 2/ Line 39 keeps the two reply actions open after a holding reply ('write each open reply action as its own segment \"Zoya [reply ...]\"'), while 1c writes 'Ask Akshay: ...'. It is unclear whether Zoya reply segments also sit on a row waiting on Akshay; the same issue appears in E. 3/ The Next date rule is undefined when no segment carries a date.",
+  "notes": "RECORDING STATUS (FAST NOTION DATA): 'settled from our side only: the calendar event, Zencastr, a transcript, Akshay's mail or WhatsApp. Never ask the guest, PR or anyone outside the team ... Still unclear: once, Akshay in Waiting on and the segment \"Akshay: did the <D Mon> recording with <guest> happen? Write yes or no in Your call\"'. 1c: 'a release-date ask, any publishing ask ... don't answer it. Set Waiting on Akshay, Next action \"Ask Akshay: ...\". Then the holding reply'. Holding replies avoid the leak and recording-status rules because they say nothing about the recording."
+ },
+ "R3": {
+  "action_keys": [
+   "HYP-R3:reply:msg-HYP-R3-IN@hypopr.example:2026-10-27T10:12:00+09:00"
+  ],
+  "rows": {
+   "HYP-R3": "Logs the inbound. INVITES: read Akshay's calendar for 29 Oct 18:30 JST (15:00 IST), the 30 minutes before and the 30 after the recording (calendar data not given). If clear: create the invite (organiser ad@thepodium.in, Meet link, attendees Sreya, Rajmohan, Santhosh, Mala, JST and IST, 'zoya-key:HYP-R3:<type>:2026-10-29' in the description), confirm it on the thread in the same run, set Next date, Call type Recording and Call link, log 'Zoya created: invite' and 'Zoya sent: reply to Sreya: recording invite for 29 Oct'. Status Booked (not named by FAST). Waiting on Guest or PR (a booked recording with nothing else open). If there is a clash: send nothing to them, and put 'Akshay: Sreya Pal's 29 Oct 18:30 JST clashes with <event>' on Akshay's list."
+  },
+  "next_date": {
+   "HYP-R3": "2026-10-29 (if clear)"
+  },
+  "waiting_on": {
+   "HYP-R3": [
+    "Guest or PR"
+   ]
+  },
+  "next_action": {
+   "HYP-R3": [
+    "Waiting on Sreya: recording 29 Oct 18:30 JST (15:00 IST) booked (exact wording not prescribed)"
+   ]
+  },
+  "mails": [
+   {
+    "key": "HYP-R3:reply:msg-HYP-R3-IN@hypopr.example:2026-10-27T10:12:00+09:00",
+    "row": "HYP-R3",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "Sreya Pal (hypobank.example)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)",
+     "Mamatha (myunnati.com)",
+     "Rajmohan (PR)",
+     "Santhosh (PR)",
+     "Mala (Hypo Bank comms)"
+    ],
+    "thread": "draft action reply on HYP-R3-IN@hypopr.example, reply_all false, recipients set explicitly; read back before send",
+    "attachments": []
+   }
+  ],
+  "run_record": "FAST: Completed",
+  "answer": "To: Sreya Pal (she asked; guest-facing recording mail goes 'To the guest when their People row has an Email'). Cc: Akshay, Mamatha, Rajmohan, Santhosh, Mala. Mamatha is kept only because she is on the latest inbound ('never add Mamatha (keep her only where she is on the latest inbound)'). Read-back before sending: confirm the draft is a reply on that thread (In-Reply-To/References from HYP-R3-IN), and 'that To and Cc together hold everyone on the latest inbound, To and Cc, less bounced addresses and Akshay's other addresses, plus Akshay' (decision 413). Any edit is read back again. LEAK CHECK and SHOW CHECK also run, and bounced addresses are dropped first.",
+  "verdict": "PASS",
+  "findings": "1/ Taken literally, the decision 413 read-back checks only the inbound's 'To and Cc'. The latest inbound's To is Zoya and its Cc is Akshay, Mamatha, Rajmohan, Santhosh and Mala, so the sender Sreya is not in that set. A draft that left Sreya out would pass the check, and the check also requires Zoya herself. It should say 'From, To and Cc, less our own inbox'. SENDING's 'To: whoever's move it is' still gives the right result. 2/ The invite needs calendar data the scenario does not give, and it needs the time 'agreed in writing': the guest proposed it, and whether that alone counts is not stated. 3/ FAST names no Status for a newly booked recording.",
+  "notes": "SENDING: 'read the draft back (that it is a reply on that thread, and that To and Cc together hold everyone on the latest inbound, To and Cc, less bounced addresses and Akshay's other addresses, plus Akshay: decision 413)'. 'To: whoever's move it is ...; move everyone else to Cc, Akshay included.' INVITES as quoted."
+ }
+}

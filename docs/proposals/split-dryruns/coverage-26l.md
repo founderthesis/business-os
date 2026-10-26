@@ -6,8 +6,8 @@ CTO order, 20:31 JST, step 1: fold decisions 411 to 413 in with the amendments, 
 
 | Prompt | Bytes | sha256 (first 16) | Built by |
 |---|---|---|---|
-| zoya-fast | 36,257 | 96c11beae7ec325b | `routines/zoya/build.py` after `docs/proposals/d-split26l.py` on d33ef96 |
-| zoya-slow | 63,145 | a5b4ef40cfd85bb1 | same; 2,191 B under the cap less 200 |
+| zoya-fast | 36,811 | 1b4cca2a0d0b284e | `routines/zoya/build.py` after `d-split26l.py`, Cleanup's `d-split26l-fix.py` and `d-split26m.py` (round 3 fixes; was 36,257 / 96c11beae7ec325b at 8e64140) |
+| zoya-slow | 63,845 | 94943a20df0745dd | same; 1,491 B under the cap less 200 (was 63,145 / a5b4ef40cfd85bb1) |
 | inbox | 63,536 | 2eade949aa242970 | `docs/proposals/d394-keys.py` (ACTION KEYS, rebased today) on live inbox 61,957 / aed0215a8bdf6a26 |
 | calendar | 56,272 | d9d1f508b9c797fd | `d394-keys.py` on live calendar 54,901 / 543c3499473860ac, then `docs/proposals/d-411-412-cal-sweep.py` |
 | daily sweep | 35,319 | 9db06d64df11ff7d | `d394-keys.py` on live sweep 33,824 / 7af60faaa021fa64, then `d-411-412-cal-sweep.py` |

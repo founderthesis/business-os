@@ -46,3 +46,18 @@ Properties (exact):
 
 - Edit 1: applied. Section 5 on 3ff19a301a7f8148993ccea78fc66428 replaced with the exact text above. It supersedes the 21:14 version, which carried Main's earlier wording.
 - Edit 2: applied. Activity 40519a301a7f81daa9aec3268dac4369 (Email out, Source ID msgid:a21e2f20-99d5-4dce-a3ed-2d5a2c7c7ae4@mcpemails.com, Engagement 40519a301a7f8105a87edf64e65872b7, Date 10:20:28Z). The Action key is the first line of the page body, since the property doesn't exist yet.
+
+## 3. Crash window B recovery: log the unlogged send
+
+- Data source: Activities, collection://290f715d-fd45-4203-ade6-3642c2326c6c.
+- Command: `create-pages`, one row. Record: split-dryruns/crash-b-recovery.md.
+
+Properties (exact):
+- Summary: `Zoya sent: [split launch test] crash window B (recovered, not resent)`
+- Kind: `Email out`
+- Source: `Gmail`
+- Source ID: `msgid:f3ce2f38-067e-4e3e-99bb-f5e102852671@mcpemails.com`
+- Action key: `40519a301a7f8105a87edf64e65872b7:followup:seq-4-2:2026-10-26T00:00:00+09:00` (property if it exists, else the first line of the page body)
+- Engagement: 40519a301a7f8105a87edf64e65872b7
+- Date: 2026-10-26 23:39 JST (14:39:43Z)
+- Page body: `Action key: <as above>`, then the sent plain-text body as read from Zoya's Sent ([Gmail]/Sent Mail:654).
