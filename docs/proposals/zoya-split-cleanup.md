@@ -10,8 +10,8 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
-| zoya-fast | 36,160 | cf2c34ef3465d775 |
-| zoya-slow | 65,229 | f43cf8b2c00d16e9 |
+| zoya-fast | 36,241 | 241555eabebac81c |
+| zoya-slow | 65,299 | e347c5cb20b7b720 |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
@@ -253,3 +253,38 @@ Checks:
 - Selection by prefix or wording: the keys exist so nothing is selected by wording again. The build reads wording once, by fixed rules.
 - Retry double-send: the migration sends nothing. Keys make a retry a no-op.
 - Bytes and hashes: above.
+
+## Cadence correction, and d-split26i (2ffa41c)
+
+**Cleanup's error.** The approved SLOW cadence is `CRON_TZ=Asia/Tokyo 50 10,16 * * 1-5` (d-split26; CTO 26 Oct 17:15 JST). Cleanup's c66415e proposed `8 8-22/2`, which would mean eight launches a day, a cadence change nobody approved. It is withdrawn. That proposal had carried into 26h's SLOW intro and deploy step 4, and the 1ff6953 wording was written for it. At :50 that wording fails twice:
+- "No new row after :30 past the hour you started" stops a 10:50 run before its first row.
+- The 45-minute stale limit lets FAST at 11:38 treat a live 10:50 SLOW (48 minutes old) as crashed, and write alongside it.
+
+`docs/proposals/d-split26h-fix2.py` corrects them:
+- SLOW starts no new row 40 minutes after its start (11:30, 17:30).
+- The lease's stale limit is 60 minutes.
+- SLOW's intro reads "10:50 and 16:50 JST, weekdays".
+- Deploy step 4 names `50 10,16`, with the lease as the overlap protection.
+
+The timeline at :50:
+- FAST 10:38 takes no new row after 11:03.
+- SLOW 10:50 finds FAST's record Started and waits (up to 25 minutes, so until 11:15 at most). It writes once FAST closes, and starts no row after 11:30.
+- FAST 11:38 finds SLOW's record either closed or Started under 60 minutes old, and waits up to 10 minutes.
+- A crashed SLOW costs one FAST run (11:38 waits to 11:48, 58 minutes); 12:38 goes ahead.
+
+The CTO's gate test, "FAST from 10:38 still running at 10:50", is Main's concurrency case. It must show SLOW reading only until FAST's record closes.
+
+**d-split26i: accepted.** A write that changes Next action recomputes Next date, and any other write leaves it as it is. That settles the H/D difference in frozen round 1 (Akshat's owner-mail line). Holds and deferrals move the segment's "on <D Mon>", so they change Next action and stay consistent. One overlap is left: STEP 2 says "a failed send moves only Next date", without changing Next action. It's harmless on either reading, because the retry falls to SLOW's next run either way. No change made.
+
+**Frozen round 1:** not a pass yet. C and H match on decision fields. G, D and E differ because the hypothetical inbounds had no fixed Message-IDs and run2 widened the scope. Main's round 2 fixes both in `scenarios.json`. Cleanup reviews round 2.
+
+**Provider duplicate-send test: PASS.** Two identical self-addressed `email_compose` calls with one idempotency_key gave one send and one delivery; the second call returned `idempotent_replay`. The two Sent copies share one Message-ID, which is the known double filing. A retry that rewords the body isn't deduped by the provider, only by the thread check, so the kill/recovery case has to show that path.
+
+**Result:** FAST 36,241 / 241555eabebac81c, SLOW 65,299 / e347c5cb20b7b720, each identical on two builds. **SLOW is 37 B under the ceiling.** The CTO's new gate item, actual token, cache and cost figures or "unknown" on each run record, adds text to RUN RECORD in both prompts. SLOW must lose about 200 B before that goes in.
+
+Checks:
+- Less text and fewer writers: the fix is a net 2 B on SLOW, and no writer is added.
+- Selection by prefix or wording: none added.
+- Retry double-send: the provider is proven for identical retries, and the reworded case rests on the thread check (the kill test).
+- Bytes and hashes: above.
+

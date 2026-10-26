@@ -58,7 +58,7 @@ VARIANT = {
   ("lease", "KEY", "fast"),
   ("lease", "OTHER", "FAST"),
   ("lease", "WAIT", "25"),
-  ("lease", "STOP", " Start no new row after :30 past the hour you started; the next run carries on."),
+  ("lease", "STOP", " Start no new row 40 minutes after your start (11:30, 17:30); the next run carries on."),
   ("hard", "- WhatsApp only to the team members TEAM WHATSAPP names.",
    "- WhatsApp only to the team members TEAM WHATSAPP names, and RECONCILE's one alert in the group \"Zoya\"."),
  ],
