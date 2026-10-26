@@ -44,12 +44,12 @@ VARIANT = {
   ("runrecord", "Run zoya <", "Run zoya FAST <"),
   ("mail", "then WhatsApp Sarika the notes (guest, episode, each change with its timestamp, or the attachment's name).",
    "the WhatsApp to Sarika is your SLOW run's (EDIT NOTES TO SARIKA)."),
-  ("hard", "- WhatsApp only to Jaya and Sarika, per TEAM WHATSAPP.", "- No WhatsApp from this run."),
+  ("hard", "- WhatsApp only to the team members TEAM WHATSAPP names.", "- No WhatsApp from this run."),
  ],
  "slow": [
   ("runrecord", "Run zoya <", "Run zoya SLOW <"),
-  ("hard", "- WhatsApp only to Jaya and Sarika, per TEAM WHATSAPP.",
-   "- WhatsApp only to Jaya and Sarika, per TEAM WHATSAPP, and RECONCILE's one alert in the group \"Zoya\"."),
+  ("hard", "- WhatsApp only to the team members TEAM WHATSAPP names.",
+   "- WhatsApp only to the team members TEAM WHATSAPP names, and RECONCILE's one alert in the group \"Zoya\"."),
  ],
 }
 
