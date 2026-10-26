@@ -9,6 +9,7 @@ When Akshay asks what's pending on him, read this list, check each item is still
 - Yuti (Varun Mukhi): send Zoya's "too early, reconnect next year, sponsored sooner" note, or skip.
 
 ## Steps only you can do in an app
+- Notion connector permission (26 Oct, CTOA-03): on claude.ai, Settings > Connectors > Notion > tool permissions, set notion-update-page to always allow (the 13:51 stall, rule source mcpServerPolicy). Optional: notion-create-pages and notion-create-comment. Leave notion-update-data-source, notion-move-pages and the delete tools on ask unless you want that wider delegation.
 - Retirement tidy-up: remove Salesblink and Blue connectors from "Founder Thesis guest evals" and "Host dossiers and prep notes"; delete "Blue transcripts backfill" (Mac), the paused "FT Article Queue" routine and the old paused "whatsapp to business OS" task.
 - Host boards: invite Sri, Satish and Arjun as Notion guests to their own board pages only.
 - FT Community directory: vet the member list, delete the empty "To delete" view, publish the public directory with indexing off, point podm.in/community at it, lock it.
