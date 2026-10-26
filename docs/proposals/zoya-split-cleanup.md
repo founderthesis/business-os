@@ -598,3 +598,52 @@ What a design must still say before Cleanup accepts it:
 
 Under option (a), a single Zoya trigger, the lock closes the same-trigger overlap that (a) otherwise leaves open, a manual fire beside a scheduled run included. Under (b) or (c) it also closes the cross-kind race. The size gate is unchanged: 62,536 B or less for the final build.
 
+## One-writer build (2636857, c1669fd)
+
+**Verdict: accepted in design and text, with one fix to LOCK. Not yet accepted for deploy.** Two things are still missing: the lock harness run against GitHub on a test ref, and a durable pin for the SLOW work file.
+
+### Shape and size
+
+- One routine, hourly at :38. Its 10:38 and 16:38 weekday runs also do SLOW work.
+- SLOW work lives in `routines/zoya/release/zoya-slow-work.txt`, read by `git show <full sha>` and checked by sha256 prefix. If it's missing or wrong, that run does no SLOW work and ends Partial.
+- The prompt is 39,819 B, well under the 62,536 gate. The work file is 61,204 B and isn't bound by the trigger cap.
+- Coverage is complete. `build_one.py` holds every old FAST and SLOW part except the lease, RECONCILE and the two intros, which LOCK, the new intro and the work-file intro replace. Its asserts refuse leftover RECONCILE, lease, "SLOW run" or "FAST run" wording.
+- Reproduced: zoya-one 39,819 / acc12bf038e76cf3 with the full 40-character pin, identical on two builds. The pinned file at 2636857 hashes to 461f6c4e79bb98b3, as the prompt expects.
+
+### The lock
+
+- **Main's "+" finding is correct, and it matters.** Cleanup reproduced it on git 2.43. With "+", a push from a stale "free" read went through as a "forced update" over a live holder, which means two holders. Without "+", it was "[rejected] (stale info)". The feasibility protocol had that flaw. LOCK now forbids "+" and --force, and each lock commit's parent is the sha read, so a plain push lands only as a fast-forward.
+- **Harness: Main's 37 of 37 reproduced, twice,** against a local bare repo seeded "free".
+- **Fixed by Cleanup (`docs/proposals/d-split26s-fix.py`), mirrored in `lock-test.sh`:**
+  1. **Ambiguous acquire.** A push can land on GitHub while the client sees an error. LOCK read that as "another run won" and stopped, leaving the lock held by a run that ended, so Zoya would pause until the runbook. Now a failed push fetches again, and if the ref is the run's own commit, it holds.
+  2. **A failed fetch** read as "held by <blank>". Now it ends Skipped "lock unreadable".
+  3. **A rejected release** is checked the same way: if the ref already reads the run's free commit, the release went.
+
+  New test T9: a push that lands but reports failure is read back as held, and released. Harness: **40 of 40, twice** (`lock-test-cleanup-run1.txt`, `-run2.txt`).
+- **Runbook: meets the CTO's bar.** Release happens only on a `terminal_reason` in the holder's events. Silence, elapsed time, idle status or a failed lookup don't count. Sends are reconciled by decision 414 before the release, and the release is itself guarded on the holder's commit.
+- **Still not shown:**
+  - the harness against GitHub on a test ref, from a routine with the repo attached (the CTO's run);
+  - fencing of a paused holder, which stays fail-closed by design.
+
+### Before deploy
+
+1. **The SLOW work pin must survive this branch.** The prompt fetches `claude/business-os-structure-k3sqo5` and shows a sha on it. This branch's own working rule restarts it from the default branch once its PR merges. After that, a fresh routine checkout may not reach 2636857, and every SLOW run ends Partial "slow work file unavailable". That fails closed, but it stops all follow-ups. Pin to a ref that is never reset: the default branch after merge, or a dedicated release ref with the same no-force rule as zoya-lock. Then rebuild with that branch and sha.
+2. **The CTO's GitHub run** of `lock-test.sh` on refs/heads/zoya-lock-test, seeded free per the runbook, passing.
+3. **The production trigger has the repo attached** and push access to zoya-lock. Setup step 1 creates the free ref, and a read-back confirms it.
+
+### d-split26s (R1, R2): sound
+
+- The thank-you never waits on the Episode, and only the attach does.
+- A question about a recording whose status is open gets a holding reply and no second Akshay ask.
+- Only a due date ("on", "by", "original due") counts as a segment's date, and undated segments still don't count.
+
+### Result
+
+zoya-one **39,957 / 472e4cbece0532cd** (pinned to 2636857bb683..., the work file unchanged at 461f6c4e79bb98b3), identical on two builds, and copied to `routines/zoya/release/zoya-one.txt`.
+
+Checks:
+- Less text and fewer writers: yes. One writer replaces two, and the prompt drops from 65,299 + 38,248 to 39,957 plus a 61,204 B file read twice a day.
+- Selection by prefix or wording: none. The lock reads the ref's commit message only for "free:" or "held:", which the lock itself writes.
+- Retry double-send: one writer at a time, plus the 24-hour key, the unique Sent match and the decision 414 hold.
+- Bytes and hashes: above.
+

@@ -16,13 +16,20 @@ acquire() {  # $1 run id; prints "HELD <sha>" or "SKIP <reason>"
   case "$M" in free:*) ;; *) echo "SKIP lock-held-by:${M#held: }"; return;; esac
   H=$($G commit-tree "$F^{tree}" -p "$F" -m "held: $id $(date -u +%FT%TZ)")
   out=$(git push --porcelain origin "$H:$REF" --force-with-lease="$REF:$F" 2>&1); rc=$?
-  if [ $rc -ne 0 ] || echo "$out" | grep -q rejected; then echo "SKIP lost-race"; else echo "HELD $H"; fi
+  [ "${FAKE_FAIL:-}" = 1 ] && rc=1   # T9: the push landed but the client saw an error
+  if [ $rc -ne 0 ] || echo "$out" | grep -q rejected; then
+    git fetch -q origin "$REF" 2>/dev/null && [ "$(git rev-parse FETCH_HEAD)" = "$H" ] && { echo "HELD $H"; return; }
+    echo "SKIP lost-race"
+  else echo "HELD $H"; fi
 }
 release() {  # $1 run id, $2 held sha; prints "RELEASED" or "REJECTED"
   local R out
   R=$($G commit-tree "$2^{tree}" -p "$2" -m "free: released by $1 $(date -u +%FT%TZ)")
   out=$(git push --porcelain origin "$R:$REF" --force-with-lease="$REF:$2" 2>&1); rc=$?
-  if [ $rc -ne 0 ] || echo "$out" | grep -q rejected; then echo "REJECTED"; else echo "RELEASED"; fi
+  if [ $rc -ne 0 ] || echo "$out" | grep -q rejected; then
+    git fetch -q origin "$REF" 2>/dev/null && [ "$(git rev-parse FETCH_HEAD)" = "$R" ] && { echo "RELEASED"; return; }
+    echo "REJECTED"
+  else echo "RELEASED"; fi
 }
 state() { git fetch -q origin "$REF"; git log -1 --format=%s FETCH_HEAD; }
 race() {  # $1 label, $2 n concurrent invocations; prints winners count
@@ -74,5 +81,9 @@ if [ $rc -ne 0 ] || echo "$out" | grep -q rejected; then r=REJECTED; else r=ACCE
 check "$r" REJECTED "T8: a push on a stale free read is rejected after another run acquired"
 check "$(state)" "$(git log -1 --format=%s "$h")" "T8: the winner still holds"
 check "$(release T8-winner "$h")" RELEASED "T8: winner releases"
+# T9 (Cleanup): a push that lands but reports failure. The run re-reads the ref, finds its own commit and holds; it then releases.
+a=$(FAKE_FAIL=1 acquire T9-ambiguous); check "${a%% *}" HELD "T9: an ambiguous push that landed is read back as held"
+check "$(release T9-ambiguous "${a#HELD }")" RELEASED "T9: that holder releases"
+b=$(acquire T9-next); check "${b%% *}" HELD "T9: the next run acquires"; release T9-next "${b#HELD }" >/dev/null
 echo "end: $(state)"
 echo "passed $pass, failed $fail"
