@@ -576,3 +576,25 @@ Main's noted items are agreed:
 
 The split is still not a release candidate. The CTO names the architecture first; then one final build is made and every affected test re-runs on it. That build must be at or under 62,536 B.
 
+## Lock feasibility: a GitHub ref as compare-and-swap (3d16a28)
+
+**Verdict: feasible as a mutual-exclusion primitive. Not yet a design Cleanup can accept.**
+
+What the evidence shows:
+- `git push --force-with-lease=<ref>:<expected>` is checked on GitHub's side. The loser gets "[remote rejected] cannot lock ref ... is at X but expected Y". That is a real compare-and-swap, the thing Notion lacks.
+- Three contended rounds from inside a routine each had exactly one winner, and the CTO read the ref back independently.
+- This session hit the same server-side rejection on its own crossed pushes today (d6a1209 and 0ec9e35 era), so the behaviour isn't specific to the test.
+- One sample caution: A won all three rounds, likely on launch order. That shows exclusion, not fairness. Exclusion is what matters.
+- It also covers what the lease couldn't: two runs of the same kind contend for the same ref.
+
+What a design must still say before Cleanup accepts it:
+1. **Ambiguous push results.** A push can succeed on GitHub while the client sees a network error. Before acting or retrying, the run reads the ref back (`git ls-remote`). The run holds only if the ref equals its own commit, and it never takes a second acquire attempt as proof.
+2. **Release is a compare-and-swap too.** Freeing the lock uses expected = the run's own held commit, so a run never frees a lock it no longer holds.
+3. **What the held commit records.** Run id, kind, start time and Zoya's trigger, so a person or the morning check can tell who holds it.
+4. **Fail closed, everywhere.** No GitHub access, no repo attached, or a lost or failed acquire means no Notion row write and no send. Run record and report only.
+5. **A crashed holder.** With no expiry or takeover, one crash stops every Zoya run until someone frees the ref. That can't be silent. The good-morning check (decision 401) and each blocked run's report must name the holder and how long it has held. Freeing it is a human step, or an explicit CTO rule. Expect it to happen: a crash today already left a Started record.
+6. **Fencing stays open, as Main says.** A paused holder that wakes after being freed can still write, because Notion and MCP Emails check no token. Combined with point 5 (no automatic takeover), this only arises when a person frees a lock whose holder is still alive. So the free step must first confirm the holder's session has ended.
+7. **Scope.** Only routines with the repo attached can take the lock. The inbox, calendar and sweep also write Engagements, and they don't take it. So the lock serialises Zoya with Zoya, not Zoya with the other writers. WRITE PATH's re-read-and-own-segment rule remains the only guard there, and that should be stated, not implied.
+
+Under option (a), a single Zoya trigger, the lock closes the same-trigger overlap that (a) otherwise leaves open, a manual fire beside a scheduled run included. Under (b) or (c) it also closes the cross-kind race. The size gate is unchanged: 62,536 B or less for the final build.
+
