@@ -10,8 +10,8 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
-| zoya-fast | 35,717 | c5c2c64c0ab380ae |
-| zoya-slow | 64,832 | 763ca3d646aefde5 |
+| zoya-fast | 36,160 | cf2c34ef3465d775 |
+| zoya-slow | 65,229 | f43cf8b2c00d16e9 |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
@@ -195,3 +195,31 @@ What passes: SLOW starts at about :08 past even hours. Then FAST runs :38 to :03
 Cleanup removed the stale ":30" from SLOW ORDER ("so you never overlap FAST's next run"): SLOW 64,832 / 763ca3d646aefde5, FAST unchanged.
 
 The retired single Zoya trigger: the deploy repoints it to FAST and doesn't create a second hourly Zoya, so nothing retires. If Main instead creates a new FAST trigger, the old one is disabled in the same deploy, and Cleanup checks `list_triggers` shows exactly one hourly Zoya.
+
+## d-split26h, the overlap lease (0cd9dfe)
+
+Accepted with three fixes, applied by `docs/proposals/d-split26h-fix.py` plus three byte trims. Cleanup reproduced Main's build first: FAST 36,165 / e8e94fc6c3afb3ff, SLOW 65,194 / 3a7dd1590f30770f, identical on two runs.
+
+What holds:
+- The run record is written before the first Notion write, and the lease is checked after it. If FAST and SLOW start together, each sees the other's Started record. FAST gives up after 10 minutes and ends Partial, which closes its record. SLOW then sees no live FAST record and goes ahead. That's no deadlock, and neither run writes rows while the other does.
+- A crashed run leaves a Started record that blocks the other run for at most 45 minutes. That costs at most one FAST run (the :38 after a crashed :08 SLOW). The lease waits show up in the run records.
+- A run that ends on a held lease has written no row. Every send is logged before it goes, so it has sent nothing either. A retry can't send twice.
+- Deploy steps 3 and 4 now repoint the existing Zoya trigger to FAST, keep exactly one hourly Zoya, and set SLOW to `8 8-22/2 * * 1-5`.
+
+Fixed:
+1. **The PR COORDINATION trim widened a rule.** "beating all of the above" sits below LIMITS in SLOW. It reads as exempting un# Booking rows from the daily cap, the follow-up window, quiet hours and Diwali week, and Diwali week is 8 Nov. Restored the named list: "beating the gaps and 30 quiet days above, the 7-day limit in LIMITS, the STALENESS GATE's span and the 3 unanswered chases".
+2. **The lease and RECONCILE found the other run by Summary wording** ("Run zoya FAST"). Run records now carry the run in their key: Source ID "run:zoya:fast:<run id>" or "run:zoya:slow:<run id>". The lease and RECONCILE read by that prefix. The sweep's STEP 4b still matches on "run:zoya:". The Started state still sits in the record's Summary, as AR-8 defines it. That is the record's own state, not work selection.
+3. **"No new row after :30 past any hour"** would let a SLOW run still going at 09:05 start rows again. Now it reads "past the hour you started".
+
+The trims needed to stay under the ceiling are the lease's wait clause, SLOW's stop sentence and one phrase in SLOW ORDER. They change no meaning.
+
+Result: FAST 36,160 / cf2c34ef3465d775, SLOW 65,229 / f43cf8b2c00d16e9. Both rebuilt twice and came out identical. Neither has an em dash or a leftover placeholder. SLOW is 107 B under the ceiling, so the next SLOW change has to cut before it adds.
+
+Checks:
+- Less text and fewer writers: the lease adds about 400 B to each prompt and no new writer. The lease is how FAST and SLOW stop being two writers at once.
+- Selection by prefix or wording: the lease now selects by key, not Summary.
+- Retry double-send: no.
+- Bytes and hashes: above.
+
+The split is still not accepted for deploy. Still needed: replays C, G, H, D and E on this build against frozen inputs; the concurrency, retry, hold, cap, multi-ask, kill/recovery and provider duplicate-send outputs (the concurrency run should now show a lease wait); and the migration write route. The overlap proof stays next_run_at on both triggers plus one weekday of run records.
+
