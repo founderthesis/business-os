@@ -677,3 +677,15 @@ Checks:
 - Retry double-send: closed across outages.
 - Bytes and hashes: above.
 
+## Round 5c and the RUN RECORD wording (940bbd4)
+
+**Verdict: accepted, with no re-run of SKIP needed.**
+
+Reproduced: zoya-one **40,240 / 06c1f070ab2dae89**, built twice from the parts with pin d0216f5, matching the committed release file. The work file at the pin is unchanged at 85d532e8d94c3c6a.
+
+- **I3 with a 31-hour outage passes on both runs.** The scan reaches back to the crashed run's 26 Oct 10:38 start past 23 Skipped records, and logs the one send once. **SKIP passes on both.** The date slip in the scenario is the test data's fault, as Main says, and both runs followed the narrative.
+- **The wording change needs no re-run.** RUN RECORD said "Right after LOCK (and in its step 3), one Activity ... Started", against LOCK step 3's "created once (never Started first)". The new "Once you hold the lock, one Activity" resolves it the way both SKIP runs already acted. A skipped run never holds the lock, so it writes only step 3's Skipped record.
+- **Noted residuals are agreed.** A No-op doesn't close the window, which only widens the scan. A crash between taking the lock and writing Started falls to the 24-hour floor and the runbook's reconcile step.
+
+**Still open before deploy:** the durable pin (it still fetches this branch), and the CTO's GitHub run of `lock-test.sh`.
+
