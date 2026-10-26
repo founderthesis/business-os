@@ -1,0 +1,66 @@
+{
+ "clock_date": "2026-10-27 (Tuesday, JST)",
+ "rule": "Each scenario sees snapshot.json plus only the additions listed for it. Act only on the rows listed in its scope; every other row in the snapshot is out of scope for that scenario (record nothing for it). Do not invent any id, address, message or row not given here. Lock and R scenarios use their own HYP rows and inbounds as given; no Notion data beyond these. There is one routine (zoya-one.txt). Every run does FAST work; the 10:38 and 16:38 weekday runs then do SLOW work from zoya-slow-work.txt (treat it as already fetched and hash-checked). Every run takes the LOCK first; assume the lock is free and this run takes it, unless the scenario says otherwise.",
+ "SKIP": {
+  "run": "Lock held: the 12:38 run finds refs/heads/zoya-lock at 'held: <session X> 2026-10-27T03:38Z' (the 11:38 run, still going).",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-G-0955@impactkey.in",
+    "date": "2026-10-27T09:55:00+09:00",
+    "from": "Jheel Gehlot (impactkey.in)",
+    "to": [
+     "Zoya (myunnati.com)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "in_reply_to": "the latest message on Akshat's commercials thread in the snapshot",
+    "body": "Akshat is fine with the INR 50,000 + GST, what are the next steps?",
+    "logged_by_inbox": false
+   }
+  ],
+  "question": "List every read and write this run makes, the run record's Summary, and the state of the G inbound's reply action afterwards."
+ },
+ "I3": {
+  "run": "Interaction: crash while holding the lock, long outage. On Mon 26 Oct the 10:38 run held the lock and at 10:41 JST sent the 'Sponsored yes: next steps' reply for the G inbound (treat the inbound as received 26 Oct 09:55; Message-ID HYP-I3-SENT@mcpemails.example, idempotency_key = the reply action key) on the thread, then crashed before logging and before releasing; its run record stays Started. Every run from 26 Oct 11:38 to 27 Oct 16:38 found the lock held and wrote a Skipped record. At 27 Oct 17:20 the CTO completed the runbook and released the lock without logging the send (assume that step was missed). The 27 Oct 17:38 run (FAST work only) takes the lock. The last Completed run before the crash was 26 Oct 09:38.",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-G-0955@impactkey.in",
+    "date": "2026-10-27T09:55:00+09:00",
+    "from": "Jheel Gehlot (impactkey.in)",
+    "to": [
+     "Zoya (myunnati.com)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "in_reply_to": "the latest message on Akshat's commercials thread in the snapshot",
+    "body": "Akshat is fine with the INR 50,000 + GST, what are the next steps?",
+    "logged_by_inbox": false
+   },
+   {
+    "type": "sent mail",
+    "message_id": "HYP-I3-SENT@mcpemails.example",
+    "date": "2026-10-27T10:41:00+09:00",
+    "from": "Zoya",
+    "to": [
+     "Jheel (PR)"
+    ],
+    "cc": [
+     "Akshay"
+    ],
+    "thread": "Akshat's commercials thread, reply to HYP-G-0955",
+    "logged": false
+   }
+  ],
+  "question": "Does the 17:38 run's Sent scan reach the 26 Oct 10:41 send (more than 24 hours earlier)? Is the reply resent? Final Activity count for HYP-I3-SENT."
+ }
+}

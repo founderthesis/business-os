@@ -54,7 +54,7 @@ VARIANT = {
   ("runrecord", "Before your first Notion write, fix this run's id once: Bash printenv CLAUDE_CODE_REMOTE_SESSION_ID; if empty, "
    "once echo \"syn-$(date -u +%Y%m%dT%H%M%SZ)-$(od -An -N4 -tx1 /dev/urandom | tr -d ' \\n')\" (synthetic); if neither works, "
    "write no record and report \"run record skipped: no id\". Never derive it again. Then one Activity:",
-   "Use LOCK's run id. Right after LOCK (and in its step 3), one Activity:"),
+   "Use LOCK's run id. Once you hold the lock, one Activity:"),
   ("runrecord", "Failed: stopped early)", "Failed: stopped early; Skipped: LOCK)"),
   ("fast-order", "Start no new row 25 minutes after you hold the lease.",
    "FAST work starts no new row 25 minutes after the run's start."),
