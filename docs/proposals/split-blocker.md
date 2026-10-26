@@ -8,6 +8,8 @@ Production is unchanged. The current Zoya trigger (trig_01UPT8LDrBDL5JQqW91Awgbo
 
 ## 1. The lock
 
+**Akshay decided (CTO, 00:05 JST 27 Oct):** no lock is built in the prompts. Serialising Zoya's writes is the CTO's to settle with Akshay. The lease text already in the build stays as a courtesy check, not a guarantee, and gets no further work.
+
 ### What the build does
 
 Each run writes its own run record (Started), then reads the other kind's latest record. If both are Started, the earlier one holds the lease, by Notion created time. Notion stores that to the second: three Activities created in one batch all read 14:41:34Z. The later writer backs off. Each run reads again a minute later.
@@ -87,9 +89,16 @@ This is a recommendation for the CTO and Akshay, not a decision.
 
 With two or more unlogged candidates, recovery should send nothing and log nothing. It should flag the action for a person in the run report: "<key>: <n> unlogged sends from us to <recipient> since <raised>, can't tell which". That risks a stuck action, never a double send.
 
-Neither fail-closed nor the hidden key is in the build today, and both would be new. Per Akshay's scope ("no new features"), they are listed here for a decision, not built.
+**Akshay decided (CTO, 00:05 JST 27 Oct): hold for review, now in the build (d-split26p).**
+- The original send counts only when it is uniquely identified: by the Message-ID on its Activity, or by exactly one unlogged message from us to that recipient (on that thread, for a reply) since the action was raised.
+- Two or more candidates, or one that can't be tied to the action, are HELD and never resent.
+  - Akshay goes in Waiting on, with "Akshay: can't tell which mail completed <action>: <each candidate's Message-ID and send time>. Write which in Your call".
+  - A Claude note line records it, and the report names it.
+- The hidden-key handle is not built.
+
+**The limitation, stated plainly:** guaranteed duplicate prevention holds only inside the provider's 24-hour idempotency window, unless a unique Sent match exists. Outside that window, with more than one candidate, the item is held rather than risked. So a crash can leave an action stuck for Akshay to settle. It never causes a double send.
 
 ### Status
 
 - **Crash A, crash B:** pass. Each had one unlogged candidate.
-- **Two unlogged sends to one person on one thread:** not handled, and not tested. **Blocked** on choosing the hidden key, fail-closed, or both.
+- **Two unlogged sends to one person on one thread:** fixed (held for review, d-split26p). Test pending: round 4b, scenario I4.
