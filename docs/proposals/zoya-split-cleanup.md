@@ -10,8 +10,8 @@ Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`
 
 | Output | Bytes | sha256 (first 16) |
 | --- | --- | --- |
-| zoya-fast | 35,262 | 4d493ffe6f7f888d |
-| zoya-slow | 64,996 | 7730656105c89751 |
+| zoya-fast | 35,717 | c5c2c64c0ab380ae |
+| zoya-slow | 64,831 | bd6d25a767199f83 |
 
 The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
 
@@ -163,3 +163,25 @@ The file is accepted for the write once Main's two open items are in it:
 2. Mithun Pangal, Priya Kumar, Gulab Patil, Rick Yvanovich and Dinesh Yadav: Zoya goes into Waiting on.
 
 Then rebuild once more, two identical builds, and post the drift list at the write. One process point: the write is a data change of 153 rows. It happens at the deploy, on Akshay's yes in Main's chat, with the counts reconciled after.
+
+## d-split26g (7f42237)
+
+Accepted in text. Cleanup reproduced FAST 35,717 / c5c2c64c0ab380ae and SLOW 64,831 / bd6d25a767199f83. The NURTURE shortening bought back 165 B on SLOW, which now sits 505 B under the ceiling. Both of Cleanup's earlier guards are still in: the "Zoya action keys" rules page, and the 25-minute stop, which now covers FAST too.
+
+Main's 26f replays (C, G, H, D, E) failed, and each failure has a matching fix in 26g:
+- holds move the segment's own date
+- undated holds become holds with a recheck segment
+- one PR same-day rule
+- the per-run cap counts this run's sends, not the day's
+- leftovers go first
+- restore covers note lines
+- one inbound completes every ask it answers, and the -n reply keys are stored as segments
+- a mailed sponsored yes is FAST's
+
+Re-run C, G, H, D and E on 26g before the gate closes.
+
+Accepted as residual risk, with no text fix possible: Notion has no conditional write. A third party's segment lost in a two-way race can't be restored, and row-level fields (Status, Chase step, Last activity) are last-writer-wins. The different minutes, the 25-minute stops and the re-read after each write keep the window small. The trial measures should count restore events, so the race shows up if it bites.
+
+Data at launch, as Main listed: Vijay, Akshat and Mekin. Payal Dash's two People rows are flagged only; merging is Akshay's call, under decision 384.
+
+Not yet on the branch: the migration write route. Cleanup reviews it when it lands.
