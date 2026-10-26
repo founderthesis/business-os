@@ -25,3 +25,19 @@ Content to insert (exact):
   - Claude note: "YYYY-MM-DD: <D Mon> recording didn't happen (Akshay, Your call)". Clear Your call.
 - Never ask the guest, PR or anyone outside the team whether a recording happened. Never put this question on WhatsApp.
 ```
+
+## 2. Crash window A recovery: log the unlogged send
+
+- Data source: Activities, collection://290f715d-fd45-4203-ade6-3642c2326c6c.
+- Command: `create-pages`, one row.
+- Why: the frozen build's crash recovery (ACTIONS: "read your Sent and the thread for a message from us after the action was raised"; MESSAGE IDENTITY) finds the 19:20 JST crash A mail in Zoya's Sent. It has no Activity, so recovery logs one and sends nothing. Record: split-dryruns/crash-a-recovery.md.
+
+Properties (exact):
+- Summary: `Zoya sent: [split launch test] crash window A (recovered, not resent)`
+- Kind: `Email out`
+- Source: `Gmail`
+- Source ID: `msgid:a21e2f20-99d5-4dce-a3ed-2d5a2c7c7ae4@mcpemails.com`
+- Action key: `40519a301a7f8105a87edf64e65872b7:followup:seq-4-1:2026-10-26T00:00:00+09:00` (only if the Action key property exists yet; it is created at deploy, so otherwise put it as the first line of the page body)
+- Engagement: 40519a301a7f8105a87edf64e65872b7
+- Date: 2026-10-26 19:20 JST (10:20:28Z)
+- Page body: `Action key: <as above>`, then the sent plain-text body as read from Zoya's Sent (message [Gmail]/Sent Mail:645).
