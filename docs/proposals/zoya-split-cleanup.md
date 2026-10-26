@@ -86,3 +86,15 @@ Not accepted. What would make the failures pass, in the fewest words:
 6. **Inbound completing asks.** One sentence: an inbound message that answers our open asks completes each of them, each completion line naming the inbound Activity. Two reply actions raised by one inbound take a suffix in the key (`msg-<id>-1`, `-2`).
 
 When these are in text, Main re-runs the seven replays, plus FAST twice on the same data (replay 1). Cleanup accepts on those outputs. The provider idempotency test and a real kill test still come before go-live.
+
+## Replay 1, FAST twice (e922498)
+
+Fail, and Cleanup agrees: two runs on the same data wrote 149 and 154 keys, typed one step two ways and sent different lists. Keys inferred from wording can't be stable. This supersedes fix 1 above.
+
+Main's direction is accepted, with four conditions:
+1. **Keys are migrated once, before launch.** One script builds every old-format step's key from Notion data and writes a review file: row, segment, type, origin, raised time and key, one line each. Cleanup reviews the file before anything is written, then the keys are written in one pass, with counts reconciled before and after.
+2. **After the migration, no run infers a key.** FAST and SLOW act only on keyed segments. An unkeyed Zoya segment is an error: it is reported and left alone, never guessed. The inbox, calendar and sweep write the keyed form from launch, via the ACTION KEYS delta, so new unkeyed segments shouldn't appear. Snoozes keep their own form.
+3. **Follow-ups chosen by Status and date** (rows waiting on PR with no Zoya segment) take the deterministic key `<row>:followup:seq-<routine>-<step>:<due date>`, built from fields, not wording.
+4. **One send, two Sent copies.** Say it in ACTIONS: two Sent copies with one Message-ID are one send. The 👍 reply goes only on updates under 48 hours old.
+
+Live check, done by Cleanup: Zoya is 65,210 / 90b11cd34a3bdca1, updated 12:28 JST. That matches d-thread26 with Cleanup's fix.
