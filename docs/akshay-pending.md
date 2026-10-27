@@ -15,6 +15,9 @@ When Akshay asks what's pending on him, read this list, check each item is still
 - Blurb editing chat: open Sankalp Arora's chat, send one change, say save.
 - Upload the un#, Built to Share and Human by Design eval skill zips when they arrive (decision 383).
 
+## Notion write approvals (27 Oct)
+- claude.ai Settings, Connectors, Notion, tool permissions: set the write tools back to Always allow (notion-update-page, notion-create-pages, notion-update-data-source, notion-create-comment, notion-move-pages, notion-create-view, notion-update-view). Keep notion-delete-pages and notion-delete-databases on Needs approval. Why: the policy this session loaded at 00:27Z on 27 Oct has every Notion write on always_ask. All 6 CTO writes since 23:53Z on 26 Oct asked for approval (mcpServerPolicy). They were always_allow at 08:45Z on 26 Oct. CTO checks the next policy push.
+
 ## Before the next paid API run
 - Standing rule for the rerun script added to .claude/settings.json by the CTO (22 Oct, f869f55). New sessions read it at start. If the auto-mode check still blocks paid runs, approve in the worker's chat or switch its mode from Auto to Accept edits for the run.
 
