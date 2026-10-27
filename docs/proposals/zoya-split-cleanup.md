@@ -689,3 +689,19 @@ Reproduced: zoya-one **40,240 / 06c1f070ab2dae89**, built twice from the parts w
 
 **Still open before deploy:** the durable pin (it still fetches this branch), and the CTO's GitHub run of `lock-test.sh`.
 
+## Lock harness on GitHub, routine-side (707c2e8)
+
+**Verdict: accepted. The real-mechanism lock gate is met.**
+
+Checked by Cleanup:
+- **The harness run is the reviewed one.** Blob b814cbb6 is the current `lock-test.sh`, the version from Cleanup's e63106e with the re-read after an ambiguous push and test T9. Its sha256 is 9ed2e1796bcc...7f4c32, matching the evidence file. It uses the same acquire and release commands as `routines/zoya/parts/lock.txt`.
+- **The ref on GitHub, read by Cleanup:** `git ls-remote` shows refs/heads/zoya-lock-test at bf57f85, "free: released by T9-next 2026-10-27T00:31:48Z", as reported. refs/heads/zoya-lock doesn't exist, so production was untouched.
+- **The ref's history is consistent with exclusion.** It runs from 30068e1 ("routine A3") through the guarded setup commit 8a9c376 ("free: harness setup ..."): 69 lock commits, a straight first-parent chain with no merges, strictly alternating held and free, never two of either in a row. A stale overwrite would drop the holder's commit, so alternation alone wouldn't catch one. T8, which passed, is the test for that.
+- **Results, both runs:** 40 of 40 against GitHub's own ref update, from the routine's own tools, with no auth or network errors. That covers T1 (one winner from 5, in 10 rounds), T2 and T3 (skips while held, with no expiry or takeover), T4 and T6 (non-holder releases rejected), T5 (the guarded release), T7, T8 (stale reader rejected) and T9 (ambiguous push read back as held).
+
+As Main says, this proves the git operation is exclusive on GitHub. It doesn't fence a paused holder's Notion or mail writes, which is why the design fails closed and recovery follows the runbook (decision 415).
+
+**Still open before deploy:**
+- **The durable SLOW work pin.** The prompt still fetches `claude/business-os-structure-k3sqo5` at d0216f5. Pin to a ref that never resets, then rebuild. The current zoya-one is 40,240 / 06c1f070ab2dae89.
+- **The deploy setup:** the repo attached to the production trigger with push access, and zoya-lock created free and read back, per the runbook.
+
