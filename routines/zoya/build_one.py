@@ -24,6 +24,16 @@ SLOWWORK = ["slowwork-intro", "tools", "rules-common", "rules-routines", "rules-
             "report-slow", "hard"]
 VARIANT = {
  "one": [
+  # Quote what you answer (Rules for Zoya; Akshay, 27 Oct, item 14), FAST work's replies only: the SLOW work file stays pinned
+  # by tag at dedea9f8 (CTO, 27 Oct). MCP Emails adds the quoted original to a reply's plain body itself and never to html_body.
+  ("sending", "Never action send with a \"Re:\" subject",
+   "QUOTE WHAT YOU ANSWER: every reply carries, below the sign-off, the latest inbound message it answers as \"On <date>, "
+   "<name> wrote:\" plus that message's own text, never the older chain, so Akshay in Cc sees what was asked (the quote is theirs: "
+   "VOICE's and the link rules cover your text, not it). MCP Emails "
+   "puts its quote of that message in the plain body itself: never paste one there; if html_body has none at the read-back, add "
+   "it there as <p>On <date>, <name> wrote:</p><blockquote>its text</blockquote>, then read back again. In-Reply-To and "
+   "References stay from that message. A reply from ad@thepodium.in (Gmail): put the quote in both bodies yourself. Never action "
+   "send with a \"Re:\" subject"),
   ("sending", "(STEP 0c)", "(SLOW work's bounce scan)"),
   # FAST work never uses these (no WhatsApp, follow-ups, vendor forms, internal tasks, release mail); the SLOW work file has them
   ("tools", " Blueticks sends WhatsApp to the team (TEAM WHATSAPP). Web search finds news for news angles.", ""),
