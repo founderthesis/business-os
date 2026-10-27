@@ -705,3 +705,58 @@ As Main says, this proves the git operation is exclusive on GitHub. It doesn't f
 - **The durable SLOW work pin.** The prompt still fetches `claude/business-os-structure-k3sqo5` at d0216f5. Pin to a ref that never resets, then rebuild. The current zoya-one is 40,240 / 06c1f070ab2dae89.
 - **The deploy setup:** the repo attached to the production trigger with push access, and zoya-lock created free and read back, per the runbook.
 
+## Final acceptance: one-writer Zoya release 49ba2fe, test record e51b2b4
+
+**ACCEPTED for deploy: zoya-one 40,975 / 56953088cc0ddf82, with the SLOW work file 61,447 / dedea9f8eb7af561 at e20647b through refs/heads/zoya-slow-pin.**
+
+### Reproduced and read back by Cleanup
+
+- `build_one.py` with `refs/heads/zoya-slow-pin` and e20647bc2da9... rebuilds zoya-one byte for byte, twice, matching `routines/zoya/release/zoya-one.txt`. There are no em dashes and no leftover `@@` placeholders.
+- The SLOW work file built from today's parts is byte-identical to the pinned file at e20647b.
+- **GitHub, by `git ls-remote`:**
+  - refs/heads/zoya-slow-pin is e20647b, and the file there hashes to dedea9f8eb7af561 (61,447 B).
+  - refs/heads/zoya-lock is 9aaa14e, "free: created by CTO 2026-10-27T08:37:11Z".
+- **The fetch is safe against a moved pin.** The prompt reads the file by full sha and checks its sha256. If the branch ever moves, a run fails closed ("slow work file unavailable") and never reads different text.
+
+### Both items from 14a44d3 are closed
+
+- **Durable pin:** a dedicated branch (tags are 403 here, and branch deletion is blocked), read by sha.
+- **Production setup:** the repo is attached to the Zoya routine (Akshay, 26 Oct), and zoya-lock was created free and read back.
+
+### The four deltas
+
+1. **Decision 418:** the holding line is "checking with akshay, will come back to you." with no date. No dated promise of ours is left in either file.
+2. **Reply all read-back (d-split26v):** the only new exclusion is a contact the mail itself says has handed over, with the new contact on it. It matches Rules for Zoya's "Reply all". The Mamatha and Sri exclusions stand.
+3. **Quote what you answer:** the latest inbound only, never the older chain. MCP Emails' plain quote isn't duplicated, and the html quote is added at read-back. Threading stays from that message.
+4. **The SLOW fetch** goes through zoya-slow-pin, as above.
+
+### Earlier Cleanup fixes, all present in the release
+
+- "never Mamatha", and Sri off Cc on un#;
+- LOCK's re-read after an ambiguous push, and "lock unreadable";
+- another action's holding reply excluded from recovery candidates, never its own;
+- the FT thank-you draft Cc names Zoya;
+- undated segments don't set Next date;
+- recovery candidates come from your Sent.
+
+### Tests
+
+- Rounds 5d (E, R3, R3H) and 5e (R3, R3H, and the pin check) pass on both independent runs.
+- The lock harness passed on GitHub, 40/40 twice (accepted at 14a44d3).
+- The release differs from 5e's prompt only in the SLOW fetch line and the version stamp, which those scenarios don't read. The pin check covers the fetch line.
+
+### Accepted gaps, for the next change list (not defects in this release)
+
+- **The SLOW file's SENDING lacks the quote block.** SLOW-work replies get only the server's plain quote, not the html one. The CTO accepted this.
+- **The invite step has no handover exception,** so a departed contact can stay on the calendar invite. Via isn't updated after a handover.
+- **The combined mail repeats the greeting** ("hey Jheel," then "hi Jheel,"). It's cosmetic, but it reads machine-made, so it should be first on the next change.
+- **Still open from before:** no Status after a mailed sponsored yes, and Payal's duplicate People rows.
+
+Checks:
+- Less text and fewer writers: yes. One writer replaces two, with a 40,975 B prompt plus a pinned file read twice a day.
+- Selection by prefix or wording: none. The lock reads only its own "free:" and "held:".
+- Retry double-send: the lock, the 24-hour key, a unique Sent match and the decision 414 hold.
+- Bytes and hashes: above.
+
+At deploy, Main reads back the live prompt at 40,975 / 56953088cc0ddf82. The cron is hourly at :38, with no second Zoya trigger. The first live runs show a held then free zoya-lock and Completed run records.
+
