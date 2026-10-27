@@ -38,7 +38,7 @@ Never hand Akshay a data problem to fix by hand or ask him to approve a bulk act
 
 Keep Akshay's approvals to a minimum (decision 91, as amended by decision 341): research read-only first and write once at the end; write directly in as few calls as possible, at any row count (decision 341 cancels the Notion AI upload for more than 10 rows), with one Notion writer at a time, a reviewed build, a drift check, count reconciliation and read-back; never run parallel agents that write to Notion; one commit and push per task.
 
-Agents ask first before: merging or deleting people or data; changing prices or commercial terms; moving or deleting any calendar event with guests on it (except deleting a call their side has cancelled in writing, decision 398; creating an invite for a time agreed in writing is Zoya's job, decision 400); sending anything unapproved; exceeding the daily send cap.
+Agents ask first before: merging people, or deleting a whole database (row deletions to Trash are delegated, decision 416); changing prices or commercial terms; moving or deleting any calendar event with guests on it (except deleting a call their side has cancelled in writing, decision 398; creating an invite for a time agreed in writing is Zoya's job, decision 400); sending anything unapproved; exceeding the daily send cap.
 
 ## Zoya (decisions 177, 180, 188, 194, 207)
 
@@ -96,7 +96,7 @@ Evals are written by the Cowork "Founder Thesis guest evals" task, which runs th
 
 ## Platform facts to design around
 
-- The Notion connector can move rows to Trash (restorable). Dedupe flags rows; agents delete only with Akshay's go-ahead for that deletion (decision 384), after checking the row has no relations left.
+- The Notion connector can move rows to Trash (restorable). Agents may move duplicate, test or asked-for rows to Trash on their own (decision 416, replacing 384's per-deletion go-ahead), after checking the row has no relations left, logging the reason and listing it in their next report. Merging people and deleting a whole database still ask first.
 - Notion forms only create rows. Form input lands as an Activity and a job merges it.
 - Notion has no row-level security. A filtered view hides nothing from anyone with access. Outsiders (hosts, clients) get separate synced pages.
 - Relations do not come from CSV import. Resolve an exact-match key in the script, then wire relations once.
