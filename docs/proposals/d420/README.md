@@ -43,9 +43,28 @@ Found by grepping each live prompt on 28 Oct: the calendar, sweep, WhatsApp, eva
 
 ## Status
 
-- **Inbox:** `inbox.py` is built twice, byte-identical.
-  - Input: 61,957 B / aed0215a8bdf6a26.
-  - Output: 63,550 B / ccd2817ab942c093, 1,786 B under the build limit.
-  - Two offline replays are running (scenarios.md, I1 to I10). Cleanup's quick acceptance comes next, then the CTO deploys it on its own.
-- **Batch:** not built yet. It's next, in the order of the table.
-- **Superseded:** the earlier Gmail hotfix in `docs/proposals/gmail-hotfix/`. Its tally and its lessons stand: no sleep, a "read to" anchor, day-granular search.
+**Inbox: round 3, 64,773 B / b3fd1a1ab8fb9f80.** Built twice, byte-identical. 563 B under the build limit, so the next inbox change needs a cut.
+
+Results so far:
+- **Round 1** (replay1A/1B): 12 defects, all fixed.
+- **Round 2** (replay2): all 12 scenarios pass, with zero Gmail calls and no ad@ mail other than the loop-in.
+
+Round 3 fixes:
+- The repeat-pitch wording: STEP 3 sends that loop-in, and STEP 6 skips it.
+- The vendor loop-in catch-up.
+- A "loop-in skipped: <why>" marker, so deliberate skips aren't re-read.
+- One read per message across folders.
+- "read to" no longer pinned by a message that fails twice.
+- One mapping for rfc822msgid.
+- "unlinked" defined.
+
+Known and accepted:
+- References aren't stored, so sibling replies in a chain can be missed.
+- `original` has no size guard.
+- There's no Drive connector to open Gemini notes (as before).
+
+For Akshay: STEP 6e's invite cancel (decision 398) makes Google mail cancellation notices from ad@'s calendar. Does decision 420 allow that?
+
+**Batch:** built (batch.py; Zoya parts with the SLOW file at c06b4c6; zoya-one candidate in this folder). Its replay is running. Cleanup reviews it after the inbox.
+
+**Superseded:** the gmail-hotfix build.

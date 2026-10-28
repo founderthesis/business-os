@@ -35,7 +35,7 @@ rep("TOOLS: Gmail, Notion, Google Calendar and Blueticks (WhatsApp) connectors. 
     "MAILBOX (decision 420, Akshay, 28 Oct, after the Gmail connector's quota ran out): ad@thepodium.in is read and written only "
     "through MCP Emails, inbox_id " + AD + "; never call the Gmail connector. Reading leaves mail unread (decision 199 holds). "
     "Where a step below names a Gmail tool, use instead: a Gmail search: email_read search (from, to, subject, body, since; "
-    "include_folders [\"inbox\", \"sent\", \"archive\"]); get_thread: THREAD; RAW or rfc822msgid: email_read original (decode it in Bash, keep "
+    "include_folders [\"inbox\", \"sent\", \"archive\"]); get_thread: THREAD; RAW: email_read original (decode it in Bash, keep "
     "only the Message-ID line); rfc822msgid: email_read search with text = the Message-ID; delete_draft: draft_list, then draft "
     "delete only for the draft whose subject, To and opening words match the Draft Activity (none or several: leave it, say so); "
     "unlabel_thread: email_organize archive (never flag read or unread). "
@@ -57,8 +57,8 @@ rep(" LINKS (decision 135): the Gmail connector turns links into google.com/url 
     "each paragraph in its own <p>, lists as <ul><li>, short paragraphs; where a body below shows <br><br>, that is a new <p>. "
     "Never one block of lines joined with <br>: a mail must look typed by a person. Mail only to team members may keep normal "
     "links.",
-    " LINKS: text you prepare for Zoya keeps each link as the wording page writes it (approved short links only); Zoya sends it "
-    "from her inbox.")
+    " LINKS: text you prepare for Zoya keeps each link as the wording page writes it (approved short links only; \"unlinked\" "
+    "means the short link written as text); Zoya sends it from her inbox.")
 rep("You send only the STEP 6 holding reply, STEP 6a, STEP 6b and WHATSAPP TO AKSHAY. Every other mail on every show (Akshay's "
     "decision mail, the sponsored close note, edit-notes, acknowledgement, admin, asset and routine replies, an approved "
     "proposal) is Zoya's: set Waiting on Zoya with \"Zoya: <step>\" first in Next action and log nothing as sent.",
@@ -77,7 +77,7 @@ RUNREC = (
     "nothing (an unclear create response: query that Source ID, reuse the row if found, else create it once; never a second). "
     "Your last write updates that row: Summary \"Run inbox <start> JST: <Completed|No-op|Partial|Failed>, read to <ISO time>\" "
     "(the newest received time up to which every message was logged or skipped as noise; one that failed to log stops it "
-    "there; left out if STEP 1 failed), page body = the report plus the end time, counts, each error as its tool gave it (shortened) and what was skipped, with why. No-op: nothing was due. "
+    "there, unless it failed in two runs: then skip it and name it in the report; left out if STEP 1 failed), page body = the report plus the end time, counts, each error as its tool gave it (shortened) and what was skipped, with why. No-op: nothing was due. "
     "Partial: a step failed, was skipped or was cut short. Failed: the run stopped early, or a connector error, quota or rate "
     "limit left work undone; such a run is never Completed (an error a retry cleared is not a failure). The record never sets "
     "Last activity, Waiting on or a date on any row and never counts toward a cap. A failed record write: retry once, then "
@@ -91,7 +91,7 @@ rep("Find the newest Activity with Source = Gmail (SQL: ORDER BY \"date:Date:sta
     "Gmail (SQL: ORDER BY \"date:Date:start\" DESC LIMIT 1) minus one day; none at all: 3 days ago. email_read search, inbox_id "
     "as in MAILBOX, since <the day before T's date> (a date matches from midnight UTC), include_folders [\"inbox\", \"sent\", \"archive\"], limit 100, every page (next_offset). STEPS 6 to 6e work on the "
     "messages this run read (plus STEP 6's catch-up from Notion), never a search of their own. Keep only messages dated at "
-    "or after T; read each once (action read, then original for its Message-ID) and skip any whose msgid: key an Activity "
+    "or after T, one copy each (the same sender, subject and time in two folders is one message); read each once (action read, then original for its Message-ID) and skip any whose msgid: key an Activity "
     "already holds. Read a message's THREAD only where a step needs the chain. An error: retry the call once after your next "
     "step that needs no mail; fails again: end Failed, naming it.\n")
 rep("In Gmail only messageFormat RAW carries the header (Codex, 23 Oct: Zoya's acknowledgement to Pranav got a second Activity "
@@ -126,7 +126,10 @@ rep("(Kind Email out, Source ID the sent message id; a loop-in, never logged as 
     "(Kind Email out, Source ID per MAILBOX; a loop-in, never logged as a reply)")
 rep("Within the daily cap.", "Loop-ins don't count toward the daily cap. A pitch logged earlier (quiet hours, a failed send) whose row has no "
     "loop-in Activity yet is still due here for 72 hours: find those from Notion (pitch Activities of the last 72 hours) and "
-    "re-read the pitch by its Message-ID.")
+    "re-read the pitch by its Message-ID (STEP 6b's vendor loop-ins too). A pitch skipped on purpose gets the Claude note line "
+    "\"loop-in skipped: <why>\" and is never caught up.")
+rep("the new thread gets the usual holding reply (STEP 6a, \"thanks", "the new thread gets the usual holding reply (the loop-in, sent here "
+    "per MAILBOX, so STEP 6 skips it: \"thanks")
 assert s.count(chr(0x2014)) == dashes and len(s.encode()) <= 65536 - 200, len(s.encode())
 assert "(unlabel_thread)" not in s and "get it as RAW" not in s and "in:inbox subject" not in s
 open(dst, "w", encoding="utf-8").write(s)
