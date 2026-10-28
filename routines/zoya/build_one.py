@@ -63,8 +63,9 @@ VARIANT = {
  "slowwork": [
   ("slow-order", "SLOW ORDER. RECONCILE first, then STEP 0",
    "SLOW ORDER. Before each SLOW step check Bash `date -u`: SLOW work starts no new step or row once 40 minutes (measured, TIME) "
-   "have passed since the run's start; the next run with SLOW work carries on. Nothing else (time, size, context) ends it early: "
-   "under 40 minutes, do every step; a report that cites the limit gives the measured minutes. STEP 0"),
+   "have passed since the run's start, and the run ends Partial; the next run with SLOW work carries on. Nothing else (a guess "
+   "at the time, size, context) ends it early: under 40 minutes, do every step; a report that cites the limit gives the measured "
+   "minutes. STEP 0"),
   ("report-slow", "STEP 3. REPORT\nAlso the run record's page body (RUN RECORD),",
    "SLOW REPORT\nAdd to the same run record's page body, after the FAST report,"),
   ("report-slow", "reconcile (FAST's last record, actions checked, alerts posted), ", ""),
