@@ -97,7 +97,7 @@ patch("trig_01MdfUFg2qrebDWgiHwncgnd", "sweep", {"7af60faaa021fa64"}, [
      "sponsored offer, the first mail linking unhashed.co/sponsored) whose Claude note has \"revival checked"),
 ], mb_after=True, drafts=True)
 
-patch("trig_01MnmJYorWrd61K7b5BCqXr1", "whatsapp", {"9e8b9f4891e9c03d", "1afc777019d1aefd"}, [
+patch("trig_01MnmJYorWrd61K7b5BCqXr1", "whatsapp", {"9e8b9f4891e9c03d", "1afc777019d1aefd", "051764ff6b21b716"}, [
     ("for STEP 0d also Gmail and MCP Emails (read only) and Google Calendar (ToolSearch \"+Gmail\", \"+MCPEmail\", "
      "\"+Google_Calendar\")",
      "for STEP 0d also MCP Emails (read only) and Google Calendar (ToolSearch \"+MCPEmail\", \"+Google_Calendar\")"),
