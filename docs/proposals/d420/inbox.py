@@ -140,6 +140,15 @@ rep("Within the daily cap.", "Loop-ins don't count toward the daily cap. A pitch
     "\"loop-in skipped: <why>\" and is never caught up.")
 rep("the new thread gets the usual holding reply (STEP 6a, \"thanks <first name>, adding @Zoya to coordinate\")", "the new "
     "thread gets the loop-in (LOOP-IN; sent here, so STEP 6 skips it)")
+# Decision 424 (CTO 28 Oct): a sender is not assumed to be the guest; duplicates are folded. Two provenance trims make room.
+rep("Find the Engagement where the person is the Guest, a Stakeholder or Via, on the right Show. Then",
+    "Find the Engagement where the person is the Guest, a Stakeholder or Via, on the right Show. None: first an open "
+    "Engagement whose Guest, Via or Stakeholders share the sender's Organisation or non-free-mail domain, or the guest the "
+    "thread names; the sender joins its Stakeholders (two candidates: report, never guess). A duplicate row (same guest and "
+    "show, or a contact's row standing in for the guest's): move its open asks, Waiting on and Activities over, Trash it once "
+    "unlinked (decision 416), report it; never merge People (decision 424). Then")
+rep("(Akshay, 8 Oct: every completed precall waits on his verdict)", "(Akshay, 8 Oct)")
+rep("(MAILBOX; decision 420: the one mail agents send from ad@thepodium.in)", "(MAILBOX; decision 420)")
 assert s.count(chr(0x2014)) == dashes and len(s.encode()) <= 65536 - 200, len(s.encode())
 assert "(unlabel_thread)" not in s and "get it as RAW" not in s and "in:inbox subject" not in s
 open(dst, "w", encoding="utf-8").write(s)
