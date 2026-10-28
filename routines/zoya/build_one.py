@@ -57,12 +57,14 @@ VARIANT = {
    "Use LOCK's run id. Once you hold the lock, one Activity:"),
   ("runrecord", "Failed: stopped early)", "Failed: stopped early; Skipped: LOCK)"),
   ("fast-order", "Start no new row 25 minutes after you hold the lease.",
-   "FAST work starts no new row 25 minutes after the run's start."),
+   "FAST work starts no new row 25 minutes after the run's start (measured, TIME)."),
   ("report-fast", "Summary \"Run zoya FAST <start> JST: <status>\"", "Summary \"Run zoya <start> JST: <status>\""),
  ],
  "slowwork": [
   ("slow-order", "SLOW ORDER. RECONCILE first, then STEP 0",
-   "SLOW ORDER. SLOW work starts no new row 45 minutes after the run's start; the next run with SLOW work carries on. STEP 0"),
+   "SLOW ORDER. Before each SLOW step check Bash `date -u`: SLOW work starts no new step or row once 40 minutes (measured, TIME) "
+   "have passed since the run's start; the next run with SLOW work carries on. Nothing else (time, size, context) ends it early: "
+   "under 40 minutes, do every step; a report that cites the limit gives the measured minutes. STEP 0"),
   ("report-slow", "STEP 3. REPORT\nAlso the run record's page body (RUN RECORD),",
    "SLOW REPORT\nAdd to the same run record's page body, after the FAST report,"),
   ("report-slow", "reconcile (FAST's last record, actions checked, alerts posted), ", ""),
