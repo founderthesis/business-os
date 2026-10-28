@@ -43,49 +43,37 @@ Found by grepping each live prompt on 28 Oct: the calendar, sweep, WhatsApp, eva
 
 ## Status
 
-**Inbox: round 3, 64,773 B / b3fd1a1ab8fb9f80.** Built twice, byte-identical. 563 B under the build limit, so the next inbox change needs a cut.
+**Inbox: round 4, 64,810 B / cd5165efbe2d9d50.**
+- Built twice, byte-identical. 526 B under the build limit, so the next inbox change needs a cut.
+- Rounds 1 and 2 of replay are in replay1A/1B and replay2.
+- Since round 3, the inbox searches `[Gmail]/All Mail`. folder_list on ad@ shows IMAP has no "archive" folder; All Mail holds inbox, sent and archived mail once each.
+- Accepted gaps: sibling replies in a chain can be missed; `original` has no size guard; there's still no Drive connector for Gemini notes.
 
-Results so far:
-- **Round 1** (replay1A/1B): 12 defects, all fixed.
-- **Round 2** (replay2): all 12 scenarios pass, with zero Gmail calls and no ad@ mail other than the loop-in.
+**Batch: round 3.** Builds, twice byte-identical:
+- Calendar: 56,348 / b6d381c24680e75a
+- Sweep: 34,329 / 473aacf9fd69efe8
+- WhatsApp: 27,015 / 0a20919c1584acad (on B2: 28,977 / cfb8ad74e8dcaa9f)
+- Evals: 15,734 / 97ec4f6541710b3f
+- Dossiers: 6,479 / 807a125e5518853f
+- Zoya SLOW file: 61,584 / 4f59cacb1676861a at c374c18
+- zoya-one candidate: 41,040 / 78e814f9dfed1270, pinned to c374c18 (this folder)
 
-Round 3 fixes:
-- The repeat-pitch wording: STEP 3 sends that loop-in, and STEP 6 skips it.
-- The vendor loop-in catch-up.
-- A "loop-in skipped: <why>" marker, so deliberate skips aren't re-read.
-- One read per message across folders.
-- "read to" no longer pinned by a message that fails twice.
-- One mapping for rfc822msgid.
-- "unlinked" defined.
+At deploy the CTO moves `refs/heads/zoya-slow-pin` to c374c18.
 
-Known and accepted:
-- References aren't stored, so sibling replies in a chain can be missed.
-- `original` has no size guard.
-- There's no Drive connector to open Gemini notes (as before).
+Replays: batch-replay1 and batch-replay2. Round 2 confirmed the Zoya loop-in fix. Round 3 fixes its smaller findings:
+- The idempotency key goes only on the call that sends.
+- A leftover loop-in draft is cleaned up.
+- ad@ is never in To or Cc on a loop-in.
+- The calendar's stakeholder rows are keyed msgid:.
+- Sweep 6c skips Akshay's own sent mail.
+- The stale cap clause is gone.
+- Drafts log their latest draft_id.
 
-For Akshay: STEP 6e's invite cancel (decision 398) makes Google mail cancellation notices from ad@'s calendar. Does decision 420 allow that?
-
-**Batch: round 2.**
-
-Builds (twice, byte-identical):
-- Calendar: 56,220 / 61cd1bb523e77225
-- Sweep: 34,289 / 1289ac6ee35c716b
-- WhatsApp: 26,977 / 0e08ab80d46e6cb8 (on B2: 28,939 / 0289a64b1f92e8f4)
-- Evals: 15,696 / 96ed4f172486c865
-- Dossiers: 6,441 / 43d8eae28c50f4f5
-- Zoya SLOW file: 61,353 / 0516b0cf911067ff at commit 2ee52c4
-- zoya-one candidate: 40,809 / eb083c28637ec9a0, pinned to 2ee52c4 (this folder)
-
-At deploy the CTO moves `refs/heads/zoya-slow-pin` to 2ee52c4.
-
-Round 1's batch replay is in batch-replay1.json. Fixed since:
-- **Zoya's loop-in:** where we wrote last it would have gone to Akshay. It now replies on the addressed person's own message, or uses a reply draft whose To is set by update.
-- **MAILBOX** now holds inside skills, reads archive and looks up Message-IDs.
-- **Sweep 6c:** the forward wording is gone, and there are no cross-week duplicates.
-- **Reply drafts:** their To is set by update.
-
-Two things for the CTO:
-- **Skills to update:** ft-guest-eval step 5 and ft-host-dossier Stage 0 still say "Gmail". MAILBOX tells the routines a skill's "Gmail" means MCP Emails, but the skills themselves should be updated (account skills, not in this repo's control).
-- **Rules for Zoya:** the page still describes the old terse follow-up from ad@ and needs the 420 wording. The CTO is updating it.
+**For the CTO and Akshay:**
+1. **Calendar writes:** writes with notificationLevel ALL make Google mail notices from ad@'s calendar. These are the inbox's 6e cancel, calendar moves, Zoya's invites and WhatsApp 0d bookings. Does 420 allow them?
+2. **Sweep 6c:** billing forwards to Jaya stopped. Akshay to choose: exempt, a Gmail filter, or stop.
+3. **Skills:** ft-guest-eval and ft-host-dossier still say "Gmail". The prompts override that, but the skills should be updated.
+4. **Rules for Zoya:** the page needs the 420 loop-in wording (the CTO).
+5. **Predating 420:** the FT thank-you is "a reply" in the calendar prompt but "a standalone new mail" in SLOW.
 
 **Superseded:** the gmail-hotfix build.
