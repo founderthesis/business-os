@@ -81,7 +81,12 @@ Keep the Notion home page (ThePodium Business OS) current: whenever a database i
 
 ## At the start of every session with Akshay
 
-When Akshay says "good morning" (decision 401), run an all-systems check before anything else: every scheduled routine's last run since the previous check (list_triggers or get_trigger: status, time, failures), live prompts byte-compared to the last deployed build, Zoya's run records (none missed, none failed), each builder session's state (blocked on a permission prompt, idle, or working), and anything due but not done. Report in this order: errors and stalls first, then what's live and on track, then what's waiting on him.
+When Akshay says "good morning" (decisions 401, 419), run an all-systems check before anything else. "Succeeded" in the scheduler only means the run ended, not that it did its job, so judge each routine by what its run did:
+- Every enabled routine: last run status, time and duration (list_triggers), and its outcome. Read that run's final report (list_events on last_run.session_id, kinds ["result","assistant"], small limit) and flag any error, quota or rate limit ("exhausted", "quota", "429", "504"), "could not", "skipped", "failed", "blocked", a push notification it sent, or a run that ended with nothing read when work existed.
+- Every run since the previous check, not just the last: every routine's run records in Activities (Summary "Run <routine> ..."); none missed for an expected slot, none Failed, Partial or Skipped without a stated reason. A routine with no run record has only its last run visible, so say so.
+- Connectors: one cheap read each on Gmail, MCP Emails, Notion and Calendar from this session, so an outage or quota error shows even between runs.
+- Live prompts byte-compared to the last deployed build; each builder session's state (blocked on a permission prompt, idle, or working); anything due but not done.
+Report in this order: errors and stalls first (a run that did nothing counts as an error), then what's live and on track, then what's waiting on him.
 
 When Akshay asks what is pending on him, read `docs/akshay-pending.md`, check each item, and list the open ones. Add anything he has to do there when you hand it to him.
 
