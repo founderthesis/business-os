@@ -41,15 +41,14 @@ rep("TOOLS: Gmail, Notion, Google Calendar and Blueticks (WhatsApp) connectors. 
     "ToolSearch (\"+MCPEmail\", \"+Notion\", \"+Google_Calendar\", \"+bluetick\"). If MCP Emails or Notion is missing, stop and "
     "say so. Without Calendar, skip STEP 6d and say so. Without Blueticks, skip WHATSAPP TO AKSHAY and say so. No partial work.\n"
     "MAILBOX (decision 420): ad@thepodium.in is read and written only "
-    "through MCP Emails, inbox_id " + AD + "; never call the Gmail connector. Reading leaves mail unread (decision 199 holds). "
-    "Where a step below names a Gmail tool, use instead: a Gmail search: email_read search (from, to, subject, body, since; "
-    "include_folders [\"[Gmail]/All Mail\"], which holds inbox, sent and archived mail once each); get_thread: THREAD; RAW: email_read original (decode it in Bash, keep "
+    "through MCP Emails, inbox_id " + AD + "; never the Gmail connector. Reading leaves mail unread. "
+    "Where a step below names a Gmail tool, use instead: a Gmail search: email_read search, "
+    "include_folders [\"[Gmail]/All Mail\"] (inbox, sent and archived once each); get_thread: THREAD; RAW: email_read original (decode it in Bash, keep "
     "only the Message-ID line); rfc822msgid: email_read search with text = the Message-ID; delete_draft: draft_list, then draft "
     "delete only for the draft whose subject, To and opening words match the Draft Activity (none or several: leave it, say so); "
     "unlabel_thread: email_organize archive (never flag read or unread). "
-    "THREAD: a message, the messages its References name, and every message whose headers hold its Message-ID (email_read "
-    "search with text = that Message-ID, folders as above); read each with action read; include_html only where a step needs "
-    "the HTML, such as Gemini notes. A new row's Source ID \"gmail:<thread "
+    "THREAD: a message, the messages its References name, and every message whose headers hold its Message-ID (search "
+    "text = it); read each with action read; include_html only where a step needs HTML (Gemini notes). A new row's Source ID \"gmail:<thread "
     "id>\" is \"msgid:<the first message's Message-ID>\" (older gmail: ids stay as they are). An Activity's Link: "
     "https://mail.google.com/mail/u/0/#search/rfc822msgid%3A<Message-ID>. The only mail you send from ad@thepodium.in is the "
     "loop-in (ZOYA LIVE): email_compose action reply on that message, inbox_id as above, reply_all false, To its sender, Cc set "
@@ -143,11 +142,12 @@ rep("the new thread gets the usual holding reply (STEP 6a, \"thanks <first name>
 # Decision 424 (CTO 28 Oct): a sender is not assumed to be the guest; duplicates are folded. Two provenance trims make room.
 rep("Find the Engagement where the person is the Guest, a Stakeholder or Via, on the right Show. Then",
     "Find the Engagement where the person is the Guest, a Stakeholder or Via, on the right Show. None, for a sender acting for "
-    "another: attach only on evidence naming the guest (the thread or form names them, or the sender works at the guest's "
-    "own company, not an agency, which has one open row on that show): the sender joins its Stakeholders. Organisation or "
-    "domain alone never does; no evidence or two candidates: create nothing, report it. Fold only a proven "
-    "duplicate: carry its note lines, open asks, Activities and Call, Eval and Dossier links to the kept row, read it back, "
-    "Trash it (decision 416), report it; never merge People (decision 424). Then")
+    "another: attach only on evidence naming the guest (the thread or form names them, or the sender works at the guest's own "
+    "company, not an agency, with exactly one open row on that show); the sender joins its Stakeholders. Organisation or domain "
+    "alone never does; no evidence or two candidates: report it, attach nothing (a named guest with no row is created below). "
+    "Fold only a proven duplicate: its note lines, open asks, Activities, Call, Eval (the kept row's wins) and Dossier links, "
+    "and its people as Stakeholders, move to the kept row; read it back, clear the duplicate's relations, Trash it (decision "
+    "416), report it; never merge People (decision 424). Then")
 rep(" (Akshay, 8 Oct: every completed precall waits on his verdict)", "")
 rep("(MAILBOX; decision 420: the one mail agents send from ad@thepodium.in)", "(MAILBOX; decision 420)")
 rep("(decision 382: a recording-slot chase that runs out always goes to nurture, whoever pitched it)", "(decision 382)")
