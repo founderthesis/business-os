@@ -43,7 +43,7 @@ Found by grepping each live prompt on 28 Oct: the calendar, sweep, WhatsApp, eva
 
 ## Status
 
-**Inbox: round 5 (decision 421 loop-in rule), 64,755 B / b529deaeb56489db.**
+**Inbox: round 5 (decision 421 loop-in rule), 64,755 B / 5eb83eabfc5bf31d.**
 - Built twice, byte-identical. 581 B under the build limit, so the next inbox change needs a cut.
 - Rounds 1 and 2 of replay are in replay1A/1B and replay2.
 - Since round 3, the inbox searches `[Gmail]/All Mail`. folder_list on ad@ shows IMAP has no "archive" folder; All Mail holds inbox, sent and archived mail once each.
@@ -56,7 +56,7 @@ Found by grepping each live prompt on 28 Oct: the calendar, sweep, WhatsApp, eva
 - Evals: 15,734 / 97ec4f6541710b3f
 - Dossiers: 6,479 / 807a125e5518853f
 - Zoya SLOW file: 61,749 / 4e4f4b59ce160b4b (decision 421 loop-in rule)
-- zoya-one candidate: 41,166 B, pinned to the SLOW commit named in the latest commit message (this folder)
+- zoya-one candidate: 41,209 B / 341e49f0887e9ef3, pinned to the SLOW commit named in the latest commit message (this folder)
 
 At deploy the CTO moves `refs/heads/zoya-slow-pin` to that commit.
 

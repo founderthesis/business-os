@@ -35,10 +35,11 @@ for a, b in [
 
 rep("You capture; apart from the replies in STEPS 6 to 6e,", "You capture; apart from STEPS 6 to 6e (the loop-in is your only mail),")
 rep("TOOLS: Gmail, Notion, Google Calendar and Blueticks (WhatsApp) connectors. If their tools are deferred, load them with "
-    "ToolSearch (\"+Gmail\", \"+Notion\", \"+Google_Calendar\", \"+bluetick\"). If Gmail or Notion is missing, stop and say so.",
+    "ToolSearch (\"+Gmail\", \"+Notion\", \"+Google_Calendar\", \"+bluetick\"). If Gmail or Notion is missing, stop and say so."
+    " Without Calendar, skip STEP 6d and say so. Without Blueticks, skip WHATSAPP TO AKSHAY and say so. No partial work.",
     "TOOLS: MCP Emails, Notion, Google Calendar and Blueticks (WhatsApp) connectors. If their tools are deferred, load them with "
     "ToolSearch (\"+MCPEmail\", \"+Notion\", \"+Google_Calendar\", \"+bluetick\"). If MCP Emails or Notion is missing, stop and "
-    "say so.\n"
+    "say so. Without Calendar, skip STEP 6d and say so. Without Blueticks, skip WHATSAPP TO AKSHAY and say so. No partial work.\n"
     "MAILBOX (decision 420): ad@thepodium.in is read and written only "
     "through MCP Emails, inbox_id " + AD + "; never call the Gmail connector. Reading leaves mail unread (decision 199 holds). "
     "Where a step below names a Gmail tool, use instead: a Gmail search: email_read search (from, to, subject, body, since; "
