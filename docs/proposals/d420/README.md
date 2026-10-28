@@ -65,6 +65,27 @@ Known and accepted:
 
 For Akshay: STEP 6e's invite cancel (decision 398) makes Google mail cancellation notices from ad@'s calendar. Does decision 420 allow that?
 
-**Batch:** built (batch.py; Zoya parts with the SLOW file at c06b4c6; zoya-one candidate in this folder). Its replay is running. Cleanup reviews it after the inbox.
+**Batch: round 2.**
+
+Builds (twice, byte-identical):
+- Calendar: 56,220 / 61cd1bb523e77225
+- Sweep: 34,289 / 1289ac6ee35c716b
+- WhatsApp: 26,977 / 0e08ab80d46e6cb8 (on B2: 28,939 / 0289a64b1f92e8f4)
+- Evals: 15,696 / 96ed4f172486c865
+- Dossiers: 6,441 / 43d8eae28c50f4f5
+- Zoya SLOW file: 61,353 / 0516b0cf911067ff at commit 2ee52c4
+- zoya-one candidate: 40,809 / eb083c28637ec9a0, pinned to 2ee52c4 (this folder)
+
+At deploy the CTO moves `refs/heads/zoya-slow-pin` to 2ee52c4.
+
+Round 1's batch replay is in batch-replay1.json. Fixed since:
+- **Zoya's loop-in:** where we wrote last it would have gone to Akshay. It now replies on the addressed person's own message, or uses a reply draft whose To is set by update.
+- **MAILBOX** now holds inside skills, reads archive and looks up Message-IDs.
+- **Sweep 6c:** the forward wording is gone, and there are no cross-week duplicates.
+- **Reply drafts:** their To is set by update.
+
+Two things for the CTO:
+- **Skills to update:** ft-guest-eval step 5 and ft-host-dossier Stage 0 still say "Gmail". MAILBOX tells the routines a skill's "Gmail" means MCP Emails, but the skills themselves should be updated (account skills, not in this repo's control).
+- **Rules for Zoya:** the page still describes the old terse follow-up from ad@ and needs the 420 wording. The CTO is updating it.
 
 **Superseded:** the gmail-hotfix build.
