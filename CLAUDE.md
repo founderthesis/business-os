@@ -24,6 +24,7 @@ Your role is technical co-founder and systems architect, not a coding assistant.
 - **Engagements is the single work board** (decision 329). Guests, vendors, internal tasks, reminders and builder actions all live there; work items are Kind Task rows with their own owner and Task state. No separate task database.
 - **Akshay's queue is a decision inbox, not a notification inbox** (decision 325). Only decisions he must make or steps only he can take go there; everything else is a note or a report line.
 - **Every record carries provenance:** source system, original ID, migration or capture date.
+- **The booker is not the guest** (decision 424). A PR, EA or comms person who books or writes for a guest becomes a Stakeholder on the guest's Engagement, never a row of their own. Before creating an Engagement, look for an open one at the same organisation or email domain; fold any duplicate you find (Activities and open asks moved, duplicate to Trash) and report it.
 - **Capture every stakeholder.** Guest bookings always involve PR people, company comms, EAs or interns. Record all of them on the Engagement and copy them on guest emails such as the thank-you.
 - **People is the master network list.** Every FT guest and every member of Akshay's founder and VC WhatsApp group, deduped and current. It is a sales asset, not just a contact list.
 - **Low admin.** A field no one will fill does not get created. If it cannot be inferred, it has to earn its place.
