@@ -43,8 +43,8 @@ Found by grepping each live prompt on 28 Oct: the calendar, sweep, WhatsApp, eva
 
 ## Status
 
-**Inbox: round 4, 64,810 B / cd5165efbe2d9d50.**
-- Built twice, byte-identical. 526 B under the build limit, so the next inbox change needs a cut.
+**Inbox: round 5 (decision 421 loop-in rule), 64,755 B / b529deaeb56489db.**
+- Built twice, byte-identical. 581 B under the build limit, so the next inbox change needs a cut.
 - Rounds 1 and 2 of replay are in replay1A/1B and replay2.
 - Since round 3, the inbox searches `[Gmail]/All Mail`. folder_list on ad@ shows IMAP has no "archive" folder; All Mail holds inbox, sent and archived mail once each.
 - Accepted gaps: sibling replies in a chain can be missed; `original` has no size guard; there's still no Drive connector for Gemini notes.
@@ -55,10 +55,10 @@ Found by grepping each live prompt on 28 Oct: the calendar, sweep, WhatsApp, eva
 - WhatsApp: 27,015 / 0a20919c1584acad (on B2: 28,977 / cfb8ad74e8dcaa9f)
 - Evals: 15,734 / 97ec4f6541710b3f
 - Dossiers: 6,479 / 807a125e5518853f
-- Zoya SLOW file: 61,584 / 4f59cacb1676861a at c374c18
-- zoya-one candidate: 41,040 / 78e814f9dfed1270, pinned to c374c18 (this folder)
+- Zoya SLOW file: 61,749 / 4e4f4b59ce160b4b (decision 421 loop-in rule)
+- zoya-one candidate: 41,166 B, pinned to the SLOW commit named in the latest commit message (this folder)
 
-At deploy the CTO moves `refs/heads/zoya-slow-pin` to c374c18.
+At deploy the CTO moves `refs/heads/zoya-slow-pin` to that commit.
 
 Replays: batch-replay1 and batch-replay2. Round 2 confirmed the Zoya loop-in fix. Round 3 fixes its smaller findings:
 - The idempotency key goes only on the call that sends.
