@@ -20,8 +20,7 @@ Akshay's open items now live in Engagements as Kind Task rows, Waiting on Akshay
 - Inbox items from 13 Oct: FieldAssist contract revision; Sanjiv Bajaj call follow-up. Still open?
 
 ## Go-aheads (23 Oct)
-- Done 23 Oct: the follow-up fix (d-sel23) is live, and the duplicate Pranav Activity is in Trash.
-- Still to come: your yes on the message identity fix (d-msgid23), then on the invite rules (d-invites, decisions 400, 403, 406), each after Cleanup accepts it.
+- Done: d-sel23 (23 Oct), d-msgid23 (26 Oct), and the invite rules (decisions 400, 403, 406) went live in the one-writer Zoya release on 28 Oct. Nothing left here.
 
 ## un# dossier as a Google Doc in Sri's prep invite (27 Oct)
 - Create one Drive folder for un# dossiers and share it with Sri once, as a viewer. The Drive share tool is blocked for agents in auto mode, so this one step is yours. Then tell us the folder's name. The dossier routine will put each Doc copy there, and Sri gets access through the folder. Until then, the invite carries only the existing dossier link.
