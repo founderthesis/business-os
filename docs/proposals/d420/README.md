@@ -58,19 +58,19 @@ Round 5 (decision 421 loop-in rule) was 64,755 B / 5eb83eabfc5bf31d.
 
 **Batch: round 3.** Builds, twice byte-identical:
 - Calendar: 56,348 / b6d381c24680e75a
-- Sweep: 34,918 / b7c298a7d9bc29ed (decision 423: 6c forwards billing docs to Jaya through MCP Emails `forward` on the ad@ inbox, with dedupe by Message-ID and the old Gmail-id rule kept through Sent Mail; the weekly list fallback is gone. Decision 422: STEP 3r never revives un# sponsored)
+- Sweep: 35,047 / 06c4120b2cd48ef1 (decision 423: 6c forwards billing docs to Jaya through MCP Emails `forward` on the ad@ inbox, with dedupe by Message-ID plus a Sent Mail check before every forward; the weekly list fallback is gone. Decision 422: STEP 3r never revives un# sponsored)
 - WhatsApp: 27,015 / 0a20919c1584acad (on B2: 28,977 / cfb8ad74e8dcaa9f)
 - Evals: 15,734 / 97ec4f6541710b3f
 - Dossiers: 6,479 / 807a125e5518853f
-- Zoya SLOW file: 62,979 / 4294a5faa12d5577 at commit 75daab4868ba7977216f30f4696798e4d2dde5fc. Adds decision 421's loop-in rule and decision 422's UN# SPONSORED rule:
+- Zoya SLOW file: 63,066 / 01edbe0bbe294d4a at commit c339665c7bd0dbc545698b7f2a1226b59108143e. Adds decision 421's loop-in rule and decision 422's UN# SPONSORED rule:
   - the offer is the first mail linking unhashed.co/sponsored;
   - at most 2 follow-ups, counting chases by anyone, but not loop-ins or answers;
   - the row closes Unresponsive when the step after follow-up 2 falls due;
   - no nurture, revival or last check;
   - disinterest gets one short thank-you, logged as a sponsored close, never the FT close note;
-  - a booking on the same row keeps its Status.
-  Replay: replay422.json. Its eight cases pass, and round 2 fixes its wording findings.
-- zoya-one candidate: 41,330 B / 2f59c32ee68182de, pinned to 75daab4 (built twice, identical)
+  - either end closes only the sponsored pursuit: a booking on the same row keeps its Status and can still go to nurture.
+  Replays: replay422.json (round 1) and replay422b.json (round 2: 11 of 12 pass; round 3 fixes the same-row booking case and the 6c retry risk).
+- zoya-one candidate: 41,330 B / 61e3ae94f48abb16, pinned to c339665 (built twice, identical)
 
 At deploy the CTO moves `refs/heads/zoya-slow-pin` to that commit.
 
