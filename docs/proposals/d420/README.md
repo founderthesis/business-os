@@ -43,7 +43,14 @@ Found by grepping each live prompt on 28 Oct: the calendar, sweep, WhatsApp, eva
 
 ## Status
 
-**Inbox: round 5 (decision 421 loop-in rule), 64,755 B / 5eb83eabfc5bf31d.**
+**Inbox: round 6 (auditor CX-20261028-mailbox-outage), 64,968 B / be47f9a467b0bc43, 368 B under the build limit.**
+- Cursor: T comes only from the inbox's own run record ("read to"), never another routine's Activity. Messages collapse only by RFC Message-ID.
+- A message that fails to log goes on the record's "pending" line, is retried every run, and holds "read to" back until it logs or is noise. Never dropped.
+- Replay replayCX.json (offline): P1 a failed log survives 3 runs, P2 a newer Zoya Activity doesn't move the cursor, P3 first run, P4 Message-ID dedupe. All pass.
+- Its three findings are fixed in this build: the pending line is carried from the same record T comes from (a run that died after "Started" can't drop it); a message pending over 24 hours shows as "pending since <time>" in the report, so the morning check sees it; the window filter uses received time, the same basis as "read to".
+- Ready for Cleanup.
+
+Round 5 (decision 421 loop-in rule) was 64,755 B / 5eb83eabfc5bf31d.
 - Built twice, byte-identical. 581 B under the build limit, so the next inbox change needs a cut.
 - Rounds 1 and 2 of replay are in replay1A/1B and replay2.
 - Since round 3, the inbox searches `[Gmail]/All Mail`. folder_list on ad@ shows IMAP has no "archive" folder; All Mail holds inbox, sent and archived mail once each.

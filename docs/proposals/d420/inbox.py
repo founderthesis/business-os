@@ -86,7 +86,7 @@ RUNREC = (
     "Your last write updates that row: Summary \"Run inbox <start> JST: <Completed|No-op|Partial|Failed>, read to <ISO time>\" "
     "(the newest received time up to which every message was logged or skipped as noise, never past a pending one; left out "
     "if STEP 1 failed), page body = a line \"pending: <Message-ID>, ...\" (every message that failed to log and is still not "
-    "logged; carried from the last record, never dropped), the report, the end time, counts, each error as its tool gave it (shortened) and what was skipped, with why. No-op: nothing was due. "
+    "logged; carried from the record T comes from, never dropped; one pending over 24 hours: \"pending since <time>\" in the report), the report, the end time, counts, each error as its tool gave it (shortened) and what was skipped, with why. No-op: nothing was due. "
     "Partial: a step failed, was skipped or was cut short. Failed: the run stopped early, or a connector error, quota or rate "
     "limit left work undone; such a run is never Completed (an error a retry cleared is not a failure). The record never sets "
     "Last activity, Waiting on or a date on any row and never counts toward a cap. A failed record write: retry once, then "
@@ -97,10 +97,10 @@ rep("Find the newest Activity with Source = Gmail (SQL: ORDER BY \"date:Date:sta
     "-category:social\nThat covers sent mail too. Read every thread in full with get_thread.\n",
     "Start time T: 30 minutes before the \"read to\" time in the Summary of the newest inbox run record that has one (a run whose read never "
     "finished has none, so its span is read again); only the inbox's own record moves it, never another routine's Activity "
-    "(Zoya logs ad@ mail too); none yet: 3 days ago. First retry each Message-ID on the last record's \"pending\" line (search "
+    "(Zoya logs ad@ mail too); none yet: 3 days ago. First retry each Message-ID on that record's \"pending\" line (search "
     "text = it): logged now, or noise, leaves it; else it stays pending. email_read search, inbox_id "
     "as in MAILBOX, since <the day before T's date> (a date matches from midnight UTC), include_folders [\"[Gmail]/All Mail\"], limit 100, every page (next_offset). STEPS 6 to 6e work on the "
-    "messages this run read (plus STEP 6's catch-up from Notion), never a search of their own. Keep only messages dated at "
+    "messages this run read (plus STEP 6's catch-up from Notion), never a search of their own. Keep only messages received at "
     "or after T, one copy per RFC Message-ID (never collapsed by sender, subject or time); read each once (action read, then original for its Message-ID) and skip any whose msgid: key an Activity "
     "already holds. Read a message's THREAD only where a step needs the chain. An error: retry the call once after your next "
     "step that needs no mail; fails again: end Failed, naming it.\n")
