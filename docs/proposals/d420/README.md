@@ -62,8 +62,8 @@ Round 5 (decision 421 loop-in rule) was 64,755 B / 5eb83eabfc5bf31d.
 - WhatsApp: 27,015 / 0a20919c1584acad (on B2: 28,977 / cfb8ad74e8dcaa9f)
 - Evals: 15,734 / 97ec4f6541710b3f
 - Dossiers: 6,479 / 807a125e5518853f
-- Zoya SLOW file: 61,749 / 4e4f4b59ce160b4b (decision 421 loop-in rule)
-- zoya-one candidate: 41,209 B / 341e49f0887e9ef3, pinned to the SLOW commit named in the latest commit message (this folder)
+- Zoya SLOW file: 62,483 / 9a1e19617f1cb83f at commit 64aed986b3e95c92f854f1fca79942f672bcaee1 (decision 421 loop-in rule, plus decision 422: un# sponsored ends after 2 follow-ups, counted from every earlier send; no nurture, revival or last check; disinterest gets one short thank-you, never the FT close note, no counter-pitch; it ends that pursuit only)
+- zoya-one candidate: 41,209 B / a7fbe5d2cac5ea87, pinned to 64aed98 (built twice, identical)
 
 At deploy the CTO moves `refs/heads/zoya-slow-pin` to that commit.
 
