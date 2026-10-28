@@ -84,16 +84,17 @@ patch("trig_01MdfUFg2qrebDWgiHwncgnd", "sweep", {"7af60faaa021fa64"}, [
      "Source Gmail, Source ID = the forwarded original message's Gmail id, Captured today); these count toward the daily cap.",
      "Once per message, by RFC Message-ID, never by subject (one vendor sends many invoices under one subject): before "
      "forwarding, skip the message if an Activity whose Summary starts \"Zoya sent: billing doc to Jaya\" or \"Agent sent: "
-     "billing doc to Jaya\" already holds it as Source ID (msgid:<Message-ID>). Forwards logged before 29 Oct hold a Gmail id "
-     "instead, so for a message older than 29 Oct also skip it if [Gmail]/Sent Mail has a forward to Jaya of that same message "
-     "(same sender and date). Log one Activity per forward (Kind Email out, Summary \"Zoya sent: billing doc to Jaya: <vendor>, "
+     "billing doc to Jaya\" already holds it as Source ID (msgid:<Message-ID>), or if [Gmail]/Sent Mail has a forward to Jaya "
+     "of that same message (same subject, sender and date; this also covers forwards logged with a Gmail id before 29 Oct, and "
+     "a forward sent before its Activity was written). Log one Activity per forward (Kind Email out, Summary \"Zoya sent: billing doc to Jaya: <vendor>, "
      "<what>\", Source Gmail, Source ID \"msgid:<the original's Message-ID>\", Captured today); these count toward the daily cap."),
     ("Never send mail other than STEP 6c (billing forwards to Jaya), within the daily cap on the Notion page \"Cadences\" "
      "(3ff19a301a7f8143aa95cd89bd6519ec; decision 317, JST);", "Never send mail other than STEP 6c (billing forwards to Jaya through "
      "MCP Emails, decisions 420 and 423), within the daily cap on the Notion page \"Cadences\" "
      "(3ff19a301a7f8143aa95cd89bd6519ec; decision 317, JST);"),
     ("For rows at Unresponsive or LT chase whose Claude note has \"revival checked",
-     "For rows at Unresponsive or LT chase (never un# sponsored, decision 422) whose Claude note has \"revival checked"),
+     "For rows at Unresponsive or LT chase (never a un# sponsored pursuit, decision 422: a un# row whose thread has our "
+     "sponsored offer, the first mail linking unhashed.co/sponsored) whose Claude note has \"revival checked"),
 ], mb_after=True, drafts=True)
 
 patch("trig_01MnmJYorWrd61K7b5BCqXr1", "whatsapp", {"9e8b9f4891e9c03d", "1afc777019d1aefd"}, [
