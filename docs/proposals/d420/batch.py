@@ -9,14 +9,16 @@ AD = "cd37e47e-89d8-4259-b907-9a243baf7048"
 
 def mailbox(drafts=False):
     return ("MAILBOX (decision 420, Akshay, 28 Oct, after the Gmail connector's quota ran out): read ad@thepodium.in only "
-            "through MCP Emails (inbox_id " + AD + "), never the Gmail connector; reading leaves mail unread (decision 199 "
-            "holds). Where a step below says Gmail, use: a search: email_read search (from, to, subject, body, since; "
-            "include_folders [\"inbox\", \"sent\"]; in:sent means folder sent); a thread: the message plus every message in "
-            "inbox and sent whose References or In-Reply-To holds its Message-ID (found by email_read search on its subject "
-            "words, each read with action read); a Gmail id or a \"gmail:<thread id>\" Source ID: find that thread by the "
-            "guest's or PR's address and the subject instead; a Message-ID: email_read original."
-            + (" A draft: MCP Emails draft (action reply on a thread's latest message, or create for a new mail) on that "
-               "inbox, body plus html_body; never sent by you." if drafts else "") + "\n")
+            "through MCP Emails (inbox_id " + AD + "), never the Gmail connector, also inside every skill you run (a skill "
+            "step that says Gmail means this); reading leaves mail unread (decision 199 holds). Where a step says Gmail, use: "
+            "a search: email_read search (from, to, subject, body, since; include_folders [\"inbox\", \"sent\", "
+            "\"archive\"]; in:sent means folder sent; one copy per message); a message by Message-ID: email_read search with "
+            "text = that Message-ID; a thread: the message, the messages its References name and every message whose headers "
+            "hold its Message-ID (search text = it), each read with action read; a \"gmail:<thread id>\" Source ID: the most "
+            "recent thread with the guest's name from the guest's or PR's address; a Message-ID header: email_read original."
+            + (" A draft: MCP Emails draft (action create for a new mail with to and cc; action reply on a thread's latest "
+               "message, then action update to set To and Cc, since a reply draft can't take them at creation) on that inbox, "
+               "body plus html_body; never sent by you." if drafts else "") + "\n")
 
 def patch(tid, name, ok, edits, mb_after=None, drafts=False):
     s = open(os.path.join(src, tid + ".txt"), encoding="utf-8").read()
@@ -65,17 +67,25 @@ patch("trig_01MdfUFg2qrebDWgiHwncgnd", "sweep", {"7af60faaa021fa64"}, [
     ("Create a Gmail draft from ad@thepodium.in:", "Create a draft in ad@thepodium.in (MAILBOX):"),
     ("Search Gmail since 4 days ago (-in:sent -in:spam -in:trash). Forward to Jaya (the Email on her People row, tagged Team; "
      "never typed from memory; Akshay, 15 Oct) every mail",
-     "Search ad@thepodium.in (MAILBOX, inbox folder) since 4 days ago. Decision 420: no agent mail from ad@thepodium.in but the "
+     "Search ad@thepodium.in (MAILBOX) since 4 days ago. Decision 420: no agent mail from ad@thepodium.in but the "
      "loop-in, so forward nothing until Akshay decides how these reach Jaya; list for Jaya every mail"),
     ("Use Gmail forward on that message (attachments travel with it), forwardText \"For the tax records: <vendor or client>, "
      "<what it is>, <amount if shown>.\" Never forward:",
      "Each goes as one line \"<date>: <vendor or client>, <what it is>, <amount if shown> (<Message-ID>)\" on the week's Task "
      "row \"Akshay: billing docs for Jaya\" (Kind Task, Show Internal 40019a301a7f81d1a33fd4fba7cd920c, Waiting on Akshay, Task "
-     "state Handed over, Source ID \"billing:<YYYY-Www>\": one row a week, lines added, never a second row; a Message-ID already "
-     "on it is skipped). Never list:"),
-    ("Log one Activity per forward (Kind Email out, Summary \"Zoya sent: billing doc to Jaya: <vendor>, <what>\", Source Gmail, "
-     "Source ID = the forwarded original message's Gmail id, Captured today); these count toward the daily cap.",
-     "Nothing is sent, so nothing counts toward the daily cap."),
+     "state Handed over, Source ID \"billing:<YYYY-Www of the run>\": one row a week, lines added, never a second row). Never list:"),
+    ("Once per message, by Gmail message id, never by subject (one vendor sends many invoices under one subject): before "
+     "forwarding, skip the message if an Activity whose Summary starts \"Zoya sent: billing doc to Jaya\" or \"Agent sent: "
+     "billing doc to Jaya\" already holds its message id as Source ID. Forwards logged before 16 Oct hold the sent forward's id "
+     "instead, so for a message older than 16 Oct also skip it if Sent has a forward to Jaya of that same message (same sender "
+     "and date). Log one Activity per forward (Kind Email out, Summary \"Zoya sent: billing doc to Jaya: <vendor>, <what>\", "
+     "Source Gmail, Source ID = the forwarded original message's Gmail id, Captured today); these count toward the daily cap.",
+     "Skip a message forwarded before 28 Oct (an Activity \"Zoya sent: billing doc to Jaya\" or \"Agent sent: billing doc to "
+     "Jaya\" naming it) or already on this or last week's row. Nothing is sent."),
+    ("Personal purchases (classes, school fees, groceries, tickets) are never forwarded.",
+     "Personal purchases (classes, school fees, groceries, tickets) are never listed."),
+    ("Never send mail other than STEP 6c (billing forwards to Jaya),", "Never send mail (decision 420; STEP 6c only lists billing docs),"),
+    ("billing docs forwarded to Jaya (vendor: what)", "billing docs listed for Jaya (vendor: what)"),
 ], mb_after=True, drafts=True)
 
 patch("trig_01MnmJYorWrd61K7b5BCqXr1", "whatsapp", {"9e8b9f4891e9c03d", "1afc777019d1aefd"}, [
@@ -85,7 +95,7 @@ patch("trig_01MnmJYorWrd61K7b5BCqXr1", "whatsapp", {"9e8b9f4891e9c03d", "1afc777
     ("(Gmail on ad@thepodium.in and MCP Emails on Zoya's inbox, read only)",
      "(MCP Emails on ad@thepodium.in, inbox_id " + AD + ", and on Zoya's inbox, read only; never the Gmail connector, decision 420)"),
     ("thank-you drafts waiting in Gmail", "thank-you drafts waiting in Akshay's Drafts"),
-])
+], mb_after=True)
 
 patch("trig_01R1yHgEztVEo832zMwUugBr", "evals", {"1d87f124107a06c6"}, [
     ("TOOLS: Notion and Gmail connectors (ToolSearch \"+Notion\", \"+Gmail\" if deferred), the Skill tool, and the Artifact "
