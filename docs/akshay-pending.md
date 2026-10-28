@@ -9,7 +9,7 @@ Akshay's open items now live in Engagements as Kind Task rows, Waiting on Akshay
 - Sanjiv Bajaj: Zoya runs the sponsored chase.
 
 ## Notion tool permissions (27 Oct)
-- notion-create-pages is still always_ask in the 00:49Z push, although the Write/delete group shows Always allow. Open the group and set that one tool to Always allow. Deletes may stay on Always allow (decision 416).
+- Done: notion-create-pages ran without a prompt on 28 Oct (CTO created a People row). Deletes stay on Always allow (decision 416).
 
 ## Before the next paid API run
 - Standing rule for the rerun script added to .claude/settings.json by the CTO (22 Oct, f869f55). New sessions read it at start. If the auto-mode check still blocks paid runs, approve in the worker's chat or switch its mode from Auto to Accept edits for the run.
