@@ -62,7 +62,7 @@ Round 5 (decision 421 loop-in rule) was 64,755 B / 5eb83eabfc5bf31d.
 - WhatsApp: 27,015 / 0a20919c1584acad (on B2 as amended 28 Oct, 28,344 / 5cac9f1325c2f2ba: 29,352 / 9eef0b863062cab2)
 - Evals: 15,734 / 97ec4f6541710b3f
 - Dossiers: 6,479 / 807a125e5518853f
-- Zoya SLOW file: 63,576 / fba6ef5e92ede911 at commit 3665eb177e35fd85807964427a1553a4fa8341d1. Adds the quote fix, the handover Cc rewording, and measured time (slow-partial-1638): start and end come from Bash date -u, and SLOW stops only at 40 measured minutes, never for size or context.
+- Zoya SLOW file: 63,617 / fae90990931445db at commit f70901f6f07d4a6610fda60132b4cdbb5ac43979. Adds the quote fix, the handover Cc rewording, and measured time (slow-partial-1638): start and end come from Bash date -u, and SLOW stops only at 40 measured minutes (then Partial), never for size or context. Replay: replayTIME.json, all pass.
   - the offer is the first mail linking unhashed.co/sponsored;
   - at most 2 follow-ups, counting chases by anyone, but not loop-ins or answers;
   - the row closes Unresponsive when the step after follow-up 2 falls due;
@@ -70,7 +70,7 @@ Round 5 (decision 421 loop-in rule) was 64,755 B / 5eb83eabfc5bf31d.
   - disinterest gets one short thank-you, logged as a sponsored close, never the FT close note;
   - either end closes only the sponsored pursuit: a booking on the same row keeps its Status and can still go to nurture.
   Replays: replay422.json (round 1) and replay422b.json (round 2: 11 of 12 pass; round 3 fixes the same-row booking case and the 6c retry risk).
-- zoya-one candidate: 42,065 B / 10fb02528eba3c8a, pinned to 3665eb1 (built twice, identical; carries decision 424's new-thread rule)
+- zoya-one candidate: 42,109 B / 23551dc5bb4a0d12, pinned to f70901f (built twice, identical; carries decision 424's new-thread rule)
 
 At deploy the CTO moves `refs/heads/zoya-slow-pin` to that commit.
 
