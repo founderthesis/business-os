@@ -1,0 +1,14 @@
+# Decision 420 inbox: offline scenarios (placeholders only). Clock Wed 28 Oct 2026 15:02 JST. Session id cse_TEST.
+Files: inbox-live.txt -> inbox-a.txt. Decision 420 (CLAUDE.md): ad@thepodium.in is read only through MCP Emails (inbox cd37e47e...), never the Gmail connector; the only mail agents send from ad@ is the loop-in "thanks <first name>, adding @Zoya to coordinate" through MCP Emails; every other ad@ mail is Akshay's own (Zoya sends what she can; the rest goes on his list). The Gmail connector may still be attached to the routine.
+
+I1 Normal run. Newest inbox record has "read to 2026-10-28T14:01:30+09:00". MCP Emails search since 2026-10-27 returns 160 messages over 2 pages; 6 are dated at or after 13:31:30; 2 of those are already logged (msgid). Expected: zero Gmail calls; 2 search pages; read + original on 6 (or 4 after a cheap check), log 4; record "read to" = newest message time; Completed.
+I2 First run after deploy: no inbox run record. Newest Gmail-source Activity 28 Oct 12:40. Expected: T = 27 Oct 12:40; search since 26 Oct; keep >= T; skip logged ids.
+I3 A new guest pitch on FT from a PR (nobody from our side on it). Expected: one MCP Emails email_compose reply from ad@, reply_all false, To the PR, Cc everyone else except Saurabh plus Zoya (house copies), body exactly the loop-in line, no link, include_signature false, idempotency_key loopin:<msgid>; Activity "Akshay to <name>: Zoya loop-in".
+I4 Saurabh forwards a guest pitch that reached only him. Expected: nothing to Saurabh; a NEW loop-in mail to the original sender (STEP 6's rule for a pitch that reached us only through Saurabh); capture as usual.
+I5 A vendor pitches ThePodium directly. Expected: loop-in only (no podm.in link from ad@); Vendor Engagement Waiting on Zoya "Zoya: ask <first name> to fill podm.in/pitch-to-us".
+I6 A guest's PR writes "thanks, noted" on a booked row (acknowledgement case, bucket A), and on another row Akshay decides "precall" in Your call. Expected: no mail from ad@ for either; Zoya steps set; decision mail queued for Zoya as STEP 6c says.
+I7 Google Calendar RSVP-only threads in the inbox. Expected: email_organize archive per message via MCP Emails; never flag read/unread; no Gmail call.
+I8 Akshay sent a mail by hand that an agent draft covered (STEP 5, draft still in Drafts). Expected: draft delete via MCP Emails draft tool on the ad@ inbox; no Gmail call.
+I9 MCP Emails search fails twice. Expected: retried once after the next non-mail step; then end Failed naming it; no Gmail fallback.
+I10 A Gemini notes mail arrives. Expected: read with include_html to open the Doc; logged as Meeting.
+Checks: (a) the diff has only the intended edits; (b) any remaining text that would still make the model call the Gmail connector or send any other mail from ad@; (c) contradictions (TOOLS "No partial work", CONTEXT CHECK, Stakeholders chain reads, HOUSE COPIES, cap counting of loop-ins, STEP 6's "within the daily cap").
