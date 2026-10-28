@@ -59,7 +59,7 @@ Round 5 (decision 421 loop-in rule) was 64,755 B / 5eb83eabfc5bf31d.
 **Batch: round 3.** Builds, twice byte-identical:
 - Calendar: 56,348 / b6d381c24680e75a
 - Sweep: 35,047 / 06c4120b2cd48ef1 (decision 423: 6c forwards billing docs to Jaya through MCP Emails `forward` on the ad@ inbox, with dedupe by Message-ID plus a Sent Mail check before every forward; the weekly list fallback is gone. Decision 422: STEP 3r never revives un# sponsored)
-- WhatsApp: 27,015 / 0a20919c1584acad (on B2 as amended 28 Oct, 28,265 / 051764ff6b21b716: 29,273 / dfe9c76be1354cf9)
+- WhatsApp: 27,015 / 0a20919c1584acad (on B2 as amended 28 Oct, 28,344 / 5cac9f1325c2f2ba: 29,352 / 9eef0b863062cab2)
 - Evals: 15,734 / 97ec4f6541710b3f
 - Dossiers: 6,479 / 807a125e5518853f
 - Zoya SLOW file: 63,349 / 62dacb959437628c at commit 7f1a55c78db8bfdafe09c66df0080f963e30b701. Adds the quote fix (no quote of Zoya's own; the MCP Emails quote carries the chain) and the handover Cc rewording (anyone who handed over anywhere on the thread is dropped, and the read-back fails if they're still on; a named new contact becomes Via). Adds decision 421's loop-in rule and decision 422's UN# SPONSORED rule:
