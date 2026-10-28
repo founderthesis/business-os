@@ -26,7 +26,7 @@ for a, b in [
 ]:
     rep(a, b)
 
-rep("You capture; apart from the replies in STEPS 6 to 6e,", "You capture; apart from the loop-ins in STEPS 6 to 6b,")
+rep("You capture; apart from the replies in STEPS 6 to 6e,", "You capture; apart from STEPS 6 to 6e (the loop-in is your only mail),")
 rep("TOOLS: Gmail, Notion, Google Calendar and Blueticks (WhatsApp) connectors. If their tools are deferred, load them with "
     "ToolSearch (\"+Gmail\", \"+Notion\", \"+Google_Calendar\", \"+bluetick\"). If Gmail or Notion is missing, stop and say so.",
     "TOOLS: MCP Emails, Notion, Google Calendar and Blueticks (WhatsApp) connectors. If their tools are deferred, load them with "
@@ -35,16 +35,19 @@ rep("TOOLS: Gmail, Notion, Google Calendar and Blueticks (WhatsApp) connectors. 
     "MAILBOX (decision 420, Akshay, 28 Oct, after the Gmail connector's quota ran out): ad@thepodium.in is read and written only "
     "through MCP Emails, inbox_id " + AD + "; never call the Gmail connector. Reading leaves mail unread (decision 199 holds). "
     "Where a step below names a Gmail tool, use instead: a Gmail search: email_read search (from, to, subject, body, since; "
-    "include_folders [\"inbox\", \"sent\"]); get_thread: THREAD; RAW or rfc822msgid: email_read original (decode it in Bash, keep "
-    "only the Message-ID line); delete_draft: draft delete; unlabel_thread: email_organize archive (never flag read or unread). "
-    "THREAD: a message plus every message in inbox and sent whose References or In-Reply-To holds its Message-ID or whose "
-    "Message-ID its References hold (find them by email_read search on its subject words, since a week before it; read each with "
-    "action read; include_html only where a step needs the HTML, such as Gemini notes). A new row's Source ID \"gmail:<thread "
+    "include_folders [\"inbox\", \"sent\", \"archive\"]); get_thread: THREAD; RAW or rfc822msgid: email_read original (decode it in Bash, keep "
+    "only the Message-ID line); rfc822msgid: email_read search with text = the Message-ID; delete_draft: draft_list, then draft "
+    "delete only for the draft whose subject, To and opening words match the Draft Activity (none or several: leave it, say so); "
+    "unlabel_thread: email_organize archive (never flag read or unread). "
+    "THREAD: a message, the messages its References name, and every message whose headers hold its Message-ID (email_read "
+    "search with text = that Message-ID, folders as above); read each with action read; include_html only where a step needs "
+    "the HTML, such as Gemini notes. A new row's Source ID \"gmail:<thread "
     "id>\" is \"msgid:<the first message's Message-ID>\" (older gmail: ids stay as they are). An Activity's Link: "
     "https://mail.google.com/mail/u/0/#search/rfc822msgid%3A<Message-ID>. The only mail you send from ad@thepodium.in is the "
     "loop-in (ZOYA LIVE): email_compose action reply on that message, inbox_id as above, reply_all false, To its sender, Cc set "
-    "explicitly, include_signature false, the loop-in line as body and html_body (<p>...</p>), no link, idempotency_key "
-    "\"loopin:<that message's Message-ID>\".")
+    "explicitly; where a step says a new mail, action send with to, cc and subject \"Re: <original subject>\"; either way "
+    "include_signature false, the loop-in line as body and html_body (<p>...</p>), no link, idempotency_key \"loopin:<the pitch "
+    "message's Message-ID>\"; log it with Source ID \"msgid:<the sent loop-in's Message-ID>\" (read from sent, action original).")
 rep(" LINKS (decision 135): the Gmail connector turns links into google.com/url redirects with a warning page, so in mail to "
     "anyone outside the team every link is unlinked text, short as Akshay types it (podm.in/sponsored, podm.in/why-sponsor, "
     "podm.in/30min, podm.in/book, podm.in/guest-list, podm.in/community, podm.in/note, podm.in/pitch-to-us, podm.in/thank-you, "
@@ -72,9 +75,9 @@ RUNREC = (
     "' \\n')\"; if neither works, write no record and say so in the report. Then one Activity: Kind Note, Source empty, Summary "
     "\"Run inbox <YYYY-MM-DD HH:MM> JST: Started\", Source ID \"run:inbox:<run id>\", Date the start, Captured today, linked to "
     "nothing (an unclear create response: query that Source ID, reuse the row if found, else create it once; never a second). "
-    "Your last write updates that row: Summary \"Run inbox <start> JST: <Completed|No-op|Partial|Failed>\", page body = the "
-    "report plus the end time, a line \"read to <ISO time>\": the newest message time up to which every message was logged or "
-    "skipped as noise (one that failed to log stops it there; no line if STEP 1 failed), counts, each error as its tool gave it (shortened) and what was skipped, with why. No-op: nothing was due. "
+    "Your last write updates that row: Summary \"Run inbox <start> JST: <Completed|No-op|Partial|Failed>, read to <ISO time>\" "
+    "(the newest received time up to which every message was logged or skipped as noise; one that failed to log stops it "
+    "there; left out if STEP 1 failed), page body = the report plus the end time, counts, each error as its tool gave it (shortened) and what was skipped, with why. No-op: nothing was due. "
     "Partial: a step failed, was skipped or was cut short. Failed: the run stopped early, or a connector error, quota or rate "
     "limit left work undone; such a run is never Completed (an error a retry cleared is not a failure). The record never sets "
     "Last activity, Waiting on or a date on any row and never counts toward a cap. A failed record write: retry once, then "
@@ -83,10 +86,11 @@ rep("STEP 1. WHAT TO READ\n", RUNREC + "STEP 1. WHAT TO READ\n")
 rep("Find the newest Activity with Source = Gmail (SQL: ORDER BY \"date:Date:start\" DESC LIMIT 1). Start one day before that "
     "date; if there is none, start 3 days ago. Search Gmail for: after:YYYY/MM/DD -in:spam -in:trash -category:promotions "
     "-category:social\nThat covers sent mail too. Read every thread in full with get_thread.\n",
-    "Start time T: 30 minutes before the \"read to\" time on the newest inbox run record that has one (a run whose read never "
+    "Start time T: 30 minutes before the \"read to\" time in the Summary of the newest inbox run record that has one (a run whose read never "
     "finished has none, so its span is read again), never more than 3 days ago; none yet: the newest Activity with Source = "
     "Gmail (SQL: ORDER BY \"date:Date:start\" DESC LIMIT 1) minus one day; none at all: 3 days ago. email_read search, inbox_id "
-    "as in MAILBOX, since <the day before T's date> (a date matches from midnight UTC), include_folders [\"inbox\", \"sent\"], every page (next_offset). Keep only messages dated at "
+    "as in MAILBOX, since <the day before T's date> (a date matches from midnight UTC), include_folders [\"inbox\", \"sent\", \"archive\"], limit 100, every page (next_offset). STEPS 6 to 6e work on the "
+    "messages this run read (plus STEP 6's catch-up from Notion), never a search of their own. Keep only messages dated at "
     "or after T; read each once (action read, then original for its Message-ID) and skip any whose msgid: key an Activity "
     "already holds. Read a message's THREAD only where a step needs the chain. An error: retry the call once after your next "
     "step that needs no mail; fails again: end Failed, naming it.\n")
@@ -113,11 +117,16 @@ rep("send, never draft, a one-line reply on the thread from ad@thepodium.in, To 
     "page 3fc19a301a7f811b829ae03fa68e235b, created as STEP 3 would) Waiting on Zoya, Next action \"Zoya: ask <first name> to "
     "fill podm.in/pitch-to-us\".")
 rep("Search: in:inbox subject:(Accepted OR Declined OR \"Tentatively Accepted\") invitation\n",
-    "Search: email_read search, inbox_id as in MAILBOX, folder inbox, subject \"invitation\", since 3 days ago.\n")
+    "Search: email_read search, inbox_id as in MAILBOX, folder inbox, from calendar-notification@google.com, since 3 days ago.\n")
 rep("remove the INBOX label only (unlabel_thread); never UNREAD.", "archive each message (email_organize archive); never flag read or unread.")
 rep("End with a short report, nothing else written anywhere:", "End with a short report, in the run record (RUN RECORD) and as your final message:")
 rep("- Pitch replies sent (guest names; Saurabh forwards thanked).", "- Loop-ins sent (names).")
 
+rep("(Kind Email out, Source ID the sent message id; a loop-in, never logged as a reply)",
+    "(Kind Email out, Source ID per MAILBOX; a loop-in, never logged as a reply)")
+rep("Within the daily cap.", "Loop-ins don't count toward the daily cap. A pitch logged earlier (quiet hours, a failed send) whose row has no "
+    "loop-in Activity yet is still due here for 72 hours: find those from Notion (pitch Activities of the last 72 hours) and "
+    "re-read the pitch by its Message-ID.")
 assert s.count(chr(0x2014)) == dashes and len(s.encode()) <= 65536 - 200, len(s.encode())
 assert "(unlabel_thread)" not in s and "get it as RAW" not in s and "in:inbox subject" not in s
 open(dst, "w", encoding="utf-8").write(s)
