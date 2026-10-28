@@ -32,19 +32,8 @@ VARIANT = {
    "VOICE's and the link rules cover your text, not it). MCP Emails "
    "puts its quote of that message in the plain body itself: never paste one there; if html_body has none at the read-back, add "
    "it there as <p>On <date>, <name> wrote:</p><blockquote>its text</blockquote>, then read back again. In-Reply-To and "
-   "References stay from that message. A reply from ad@thepodium.in (Gmail): put the quote in both bodies yourself. Never action "
-   "send with a \"Re:\" subject"),
+   "References stay from that message. Never action send with a \"Re:\" subject"),
   ("sending", "(STEP 0c)", "(SLOW work's bounce scan)"),
-  # Gmail quota incident (CTO, 28 Oct 13:20 JST): MCP Emails (IMAP) first for ad@thepodium.in reads, Gmail only when needed.
-  # FAST work only: the SLOW work file stays pinned at e20647b.
-  ("tools", "Gmail (get_thread on ad@thepodium.in) reads full threads.",
-   "MCP Emails also reads ad@thepodium.in threads (email_read on its inbox_id), so read them there first; Gmail (get_thread "
-   "on ad@thepodium.in) only when MCP Emails can't give the thread. A Gmail quota, \"exhausted\" or 429 error: no more "
-   "Gmail calls this run; carry on with MCP Emails and name the error in the report."),
-  ("identity", "read it with action original (decode it in Bash, keep only that line) or by Gmail search rfc822msgid.",
-   "read it with MCP Emails action original (decode it in Bash, keep only that line); Gmail search rfc822msgid only if that "
-   "fails."),
-  ("mail", "(read those on ad@thepodium.in with Gmail)", "(read those on ad@thepodium.in with MCP Emails, Gmail only if it can't)"),
   # FAST work never uses these (no WhatsApp, follow-ups, vendor forms, internal tasks, release mail); the SLOW work file has them
   ("tools", " Blueticks sends WhatsApp to the team (TEAM WHATSAPP). Web search finds news for news angles.", ""),
   ("tools", ', "+bluetick"', ""),

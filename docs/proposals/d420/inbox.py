@@ -22,7 +22,7 @@ for a, b in [
     ("(decision 399, Akshay, 22 Oct: \"pure AI tell\")", "(decision 399)"),
     ("(decision 325, Akshay, 18 Oct: \"My queue is a decision inbox, not a notification inbox\")", "(decision 325)"),
     ("STEP 2b. AKSHAY'S SENT MAIL (decision 387 retired the draft-and-edit comparison of decision 102)",
-     "STEP 2b. AKSHAY'S SENT MAIL (decision 387)"),
+     "STEP 2b. AKSHAY'S SENT MAIL (decisions 387, 102)"),
 ]:
     rep(a, b)
 
@@ -73,8 +73,8 @@ RUNREC = (
     "\"Run inbox <YYYY-MM-DD HH:MM> JST: Started\", Source ID \"run:inbox:<run id>\", Date the start, Captured today, linked to "
     "nothing (an unclear create response: query that Source ID, reuse the row if found, else create it once; never a second). "
     "Your last write updates that row: Summary \"Run inbox <start> JST: <Completed|No-op|Partial|Failed>\", page body = the "
-    "report plus the end time, a line \"read to <ISO time of the newest message read>\" once STEP 1's read finished (any "
-    "status), counts, each error as its tool gave it (shortened) and what was skipped, with why. No-op: nothing was due. "
+    "report plus the end time, a line \"read to <ISO time>\": the newest message time up to which every message was logged or "
+    "skipped as noise (one that failed to log stops it there; no line if STEP 1 failed), counts, each error as its tool gave it (shortened) and what was skipped, with why. No-op: nothing was due. "
     "Partial: a step failed, was skipped or was cut short. Failed: the run stopped early, or a connector error, quota or rate "
     "limit left work undone; such a run is never Completed (an error a retry cleared is not a failure). The record never sets "
     "Last activity, Waiting on or a date on any row and never counts toward a cap. A failed record write: retry once, then "
