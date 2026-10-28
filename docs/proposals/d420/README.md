@@ -58,7 +58,7 @@ Round 5 (decision 421 loop-in rule) was 64,755 B / 5eb83eabfc5bf31d.
 
 **Batch: round 3.** Builds, twice byte-identical:
 - Calendar: 56,348 / b6d381c24680e75a
-- Sweep: 34,365 / 81d8c85168bc7788 (plus decision 422: STEP 3r never revives un# sponsored)
+- Sweep: 34,918 / b7c298a7d9bc29ed (decision 423: 6c forwards billing docs to Jaya through MCP Emails `forward` on the ad@ inbox, with dedupe by Message-ID and the old Gmail-id rule kept through Sent Mail; the weekly list fallback is gone. Decision 422: STEP 3r never revives un# sponsored)
 - WhatsApp: 27,015 / 0a20919c1584acad (on B2: 28,977 / cfb8ad74e8dcaa9f)
 - Evals: 15,734 / 97ec4f6541710b3f
 - Dossiers: 6,479 / 807a125e5518853f
@@ -85,7 +85,7 @@ Replays: batch-replay1 and batch-replay2. Round 2 confirmed the Zoya loop-in fix
 
 **For the CTO and Akshay:**
 1. **Calendar writes:** writes with notificationLevel ALL make Google mail notices from ad@'s calendar. These are the inbox's 6e cancel, calendar moves, Zoya's invites and WhatsApp 0d bookings. Does 420 allow them?
-2. **Sweep 6c:** billing forwards to Jaya stopped. Akshay to choose: exempt, a Gmail filter, or stop.
+2. **Sweep 6c:** settled by decision 423 (option a): forwards stay, through MCP Emails.
 3. **Skills:** ft-guest-eval and ft-host-dossier still say "Gmail". The prompts override that, but the skills should be updated.
 4. **Rules for Zoya:** the page needs the 420 loop-in wording (the CTO).
 5. **Predating 420:** the FT thank-you is "a reply" in the calendar prompt but "a standalone new mail" in SLOW.

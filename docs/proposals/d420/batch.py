@@ -69,26 +69,29 @@ patch("trig_01MdfUFg2qrebDWgiHwncgnd", "sweep", {"7af60faaa021fa64"}, [
     ("Create a Gmail draft from ad@thepodium.in:", "Create a draft in ad@thepodium.in (MAILBOX):"),
     ("Search Gmail since 4 days ago (-in:sent -in:spam -in:trash). Forward to Jaya (the Email on her People row, tagged Team; "
      "never typed from memory; Akshay, 15 Oct) every mail",
-     "Search ad@thepodium.in (MAILBOX; not mail from ad@thepodium.in itself) since 4 days ago. Decision 420: no agent mail from ad@thepodium.in but the "
-     "loop-in, so forward nothing until Akshay decides how these reach Jaya; list for Jaya every mail"),
+     "Search ad@thepodium.in (MAILBOX; not mail from ad@thepodium.in itself) since 4 days ago. Forward to Jaya (the Email on her "
+     "People row, tagged Team; never typed from memory; Akshay, 15 Oct) every mail"),
     ("Use Gmail forward on that message (attachments travel with it), forwardText \"For the tax records: <vendor or client>, "
      "<what it is>, <amount if shown>.\" Never forward:",
-     "Each goes as one line \"<date>: <vendor or client>, <what it is>, <amount if shown> (<Message-ID>)\" on the week's Task "
-     "row \"Akshay: billing docs for Jaya\" (Kind Task, Show Internal 40019a301a7f81d1a33fd4fba7cd920c, Waiting on Akshay, Task "
-     "state Handed over, Source ID \"billing:<YYYY-Www of the run>\": one row a week, lines added, never a second row). Never list:"),
+     "Use MCP Emails email_compose forward on that message, inbox_id as in MAILBOX (decision 423; attachments travel with it), "
+     "include_signature false, idempotency_key \"billing:<its Message-ID>\", body \"For the tax records: <vendor or client>, "
+     "<what it is>, <amount if shown>.\" Never forward:"),
     ("Once per message, by Gmail message id, never by subject (one vendor sends many invoices under one subject): before "
      "forwarding, skip the message if an Activity whose Summary starts \"Zoya sent: billing doc to Jaya\" or \"Agent sent: "
      "billing doc to Jaya\" already holds its message id as Source ID. Forwards logged before 16 Oct hold the sent forward's id "
      "instead, so for a message older than 16 Oct also skip it if Sent has a forward to Jaya of that same message (same sender "
      "and date). Log one Activity per forward (Kind Email out, Summary \"Zoya sent: billing doc to Jaya: <vendor>, <what>\", "
      "Source Gmail, Source ID = the forwarded original message's Gmail id, Captured today); these count toward the daily cap.",
-     "Skip a message forwarded before 28 Oct (an Activity \"Zoya sent: billing doc to Jaya\" or \"Agent sent: billing doc to "
-     "Jaya\" naming it) or already on this or last week's row. Nothing is sent."),
-    ("Personal purchases (classes, school fees, groceries, tickets) are never forwarded.",
-     "Personal purchases (classes, school fees, groceries, tickets) are never listed."),
+     "Once per message, by RFC Message-ID, never by subject (one vendor sends many invoices under one subject): before "
+     "forwarding, skip the message if an Activity whose Summary starts \"Zoya sent: billing doc to Jaya\" or \"Agent sent: "
+     "billing doc to Jaya\" already holds it as Source ID (msgid:<Message-ID>). Forwards logged before 29 Oct hold a Gmail id "
+     "instead, so for a message older than 29 Oct also skip it if [Gmail]/Sent Mail has a forward to Jaya of that same message "
+     "(same sender and date). Log one Activity per forward (Kind Email out, Summary \"Zoya sent: billing doc to Jaya: <vendor>, "
+     "<what>\", Source Gmail, Source ID \"msgid:<the original's Message-ID>\", Captured today); these count toward the daily cap."),
     ("Never send mail other than STEP 6c (billing forwards to Jaya), within the daily cap on the Notion page \"Cadences\" "
-     "(3ff19a301a7f8143aa95cd89bd6519ec; decision 317, JST);", "Never send mail (decision 420; STEP 6c only lists billing docs);"),
-    ("billing docs forwarded to Jaya (vendor: what)", "billing docs listed for Jaya (vendor: what)"),
+     "(3ff19a301a7f8143aa95cd89bd6519ec; decision 317, JST);", "Never send mail other than STEP 6c (billing forwards to Jaya through "
+     "MCP Emails, decisions 420 and 423), within the daily cap on the Notion page \"Cadences\" "
+     "(3ff19a301a7f8143aa95cd89bd6519ec; decision 317, JST);"),
     ("For rows at Unresponsive or LT chase whose Claude note has \"revival checked",
      "For rows at Unresponsive or LT chase (never un# sponsored, decision 422) whose Claude note has \"revival checked"),
 ], mb_after=True, drafts=True)
