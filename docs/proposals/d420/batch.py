@@ -89,6 +89,8 @@ patch("trig_01MdfUFg2qrebDWgiHwncgnd", "sweep", {"7af60faaa021fa64"}, [
     ("Never send mail other than STEP 6c (billing forwards to Jaya), within the daily cap on the Notion page \"Cadences\" "
      "(3ff19a301a7f8143aa95cd89bd6519ec; decision 317, JST);", "Never send mail (decision 420; STEP 6c only lists billing docs);"),
     ("billing docs forwarded to Jaya (vendor: what)", "billing docs listed for Jaya (vendor: what)"),
+    ("For rows at Unresponsive or LT chase whose Claude note has \"revival checked",
+     "For rows at Unresponsive or LT chase (never un# sponsored, decision 422) whose Claude note has \"revival checked"),
 ], mb_after=True, drafts=True)
 
 patch("trig_01MnmJYorWrd61K7b5BCqXr1", "whatsapp", {"9e8b9f4891e9c03d", "1afc777019d1aefd"}, [
