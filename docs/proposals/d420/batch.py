@@ -11,14 +11,14 @@ def mailbox(drafts=False):
     return ("MAILBOX (decision 420, Akshay, 28 Oct, after the Gmail connector's quota ran out): read ad@thepodium.in only "
             "through MCP Emails (inbox_id " + AD + "), never the Gmail connector, also inside every skill you run (a skill "
             "step that says Gmail means this); reading leaves mail unread (decision 199 holds). Where a step says Gmail, use: "
-            "a search: email_read search (from, to, subject, body, since; include_folders [\"inbox\", \"sent\", "
-            "\"archive\"]; in:sent means folder sent; one copy per message); a message by Message-ID: email_read search with "
+            "a search: email_read search (from, to, subject, body, since; include_folders [\"[Gmail]/All Mail\"], which holds "
+            "inbox, sent and archived mail once each; in:sent means folder \"[Gmail]/Sent Mail\"); a message by Message-ID: email_read search with "
             "text = that Message-ID; a thread: the message, the messages its References name and every message whose headers "
             "hold its Message-ID (search text = it), each read with action read; a \"gmail:<thread id>\" Source ID: the most "
             "recent thread with the guest's name from the guest's or PR's address; a Message-ID header: email_read original."
             + (" A draft: MCP Emails draft (action create for a new mail with to and cc; action reply on a thread's latest "
                "message, then action update to set To and Cc, since a reply draft can't take them at creation) on that inbox, "
-               "body plus html_body; never sent by you." if drafts else "") + "\n")
+               "body plus html_body; never sent by you; log the draft_id the last call returned (it changes on every update)." if drafts else "") + "\n")
 
 def patch(tid, name, ok, edits, mb_after=None, drafts=False):
     s = open(os.path.join(src, tid + ".txt"), encoding="utf-8").read()
@@ -50,6 +50,8 @@ patch("trig_01Voiz5YsK2SnVf2STF8PoSH", "calendar", {"8fb664a1c94776b5"}, [
      "ad@thepodium.in is otherwise only read (MAILBOX) and drafted in."),
     ("in ad@thepodium.in with the Gmail connector (create_draft; a reply on the latest thread with the guest or PR, else a new mail),",
      "in ad@thepodium.in with MCP Emails (draft: a reply on the latest thread with the guest or PR, else a new mail),"),
+    ("Tags PR contact, Source Agent, Source ID \"gmail:<thread id>\", Captured today). Set Via",
+     "Tags PR contact, Source Agent, Source ID \"msgid:<the thread's first Message-ID>\", Captured today). Set Via"),
     ("in ad@thepodium.in with the Gmail connector: create_draft as a NEW mail,", "in ad@thepodium.in with MCP Emails: draft create as a NEW mail,"),
 ], mb_after=True, drafts=True)
 
@@ -67,7 +69,7 @@ patch("trig_01MdfUFg2qrebDWgiHwncgnd", "sweep", {"7af60faaa021fa64"}, [
     ("Create a Gmail draft from ad@thepodium.in:", "Create a draft in ad@thepodium.in (MAILBOX):"),
     ("Search Gmail since 4 days ago (-in:sent -in:spam -in:trash). Forward to Jaya (the Email on her People row, tagged Team; "
      "never typed from memory; Akshay, 15 Oct) every mail",
-     "Search ad@thepodium.in (MAILBOX) since 4 days ago. Decision 420: no agent mail from ad@thepodium.in but the "
+     "Search ad@thepodium.in (MAILBOX; not mail from ad@thepodium.in itself) since 4 days ago. Decision 420: no agent mail from ad@thepodium.in but the "
      "loop-in, so forward nothing until Akshay decides how these reach Jaya; list for Jaya every mail"),
     ("Use Gmail forward on that message (attachments travel with it), forwardText \"For the tax records: <vendor or client>, "
      "<what it is>, <amount if shown>.\" Never forward:",
@@ -84,7 +86,8 @@ patch("trig_01MdfUFg2qrebDWgiHwncgnd", "sweep", {"7af60faaa021fa64"}, [
      "Jaya\" naming it) or already on this or last week's row. Nothing is sent."),
     ("Personal purchases (classes, school fees, groceries, tickets) are never forwarded.",
      "Personal purchases (classes, school fees, groceries, tickets) are never listed."),
-    ("Never send mail other than STEP 6c (billing forwards to Jaya),", "Never send mail (decision 420; STEP 6c only lists billing docs),"),
+    ("Never send mail other than STEP 6c (billing forwards to Jaya), within the daily cap on the Notion page \"Cadences\" "
+     "(3ff19a301a7f8143aa95cd89bd6519ec; decision 317, JST);", "Never send mail (decision 420; STEP 6c only lists billing docs);"),
     ("billing docs forwarded to Jaya (vendor: what)", "billing docs listed for Jaya (vendor: what)"),
 ], mb_after=True, drafts=True)
 
