@@ -15,18 +15,21 @@ def rep(a, b):
 rep("Then search Gmail for the address and the name to learn who they are (a PR pitch, a guest we asked to book, a sales lead, "
     "a friend). Create one Engagement:",
     "Then search Gmail for the address and the name to learn who they are (a PR pitch, a guest we asked to book, a sales lead, "
-    "a friend). BOOKER (decision 424): never assume the booker is the guest. First look for an open Engagement whose Guest, "
-    "Via or Stakeholders share the person's Organisation or email domain (never gmail.com or another free-mail domain), or "
-    "whose guest the booking or its thread names (they book or write for someone else). Found: add the person to that row's "
-    "Stakeholders, link the event there, set Call type, Call link and Next date as STEP 2 does, add the Claude note line "
-    "\"YYYY-MM-DD: <person> booked <event title> for <guest> (decision 424)\", and create no row. Two candidates: never guess, "
-    "one report line. Only when nothing matches, create one Engagement:")
+    "a friend). BOOKER (decision 424, amended): never assume the booker is the guest. Attach to an open Engagement only on "
+    "evidence naming its guest: the guest is named in the invite title, description, thread or form; or the booker works at "
+    "the guest's own company (not an agency) and that company has exactly one open row on that show. Organisation or email "
+    "domain alone never attaches. Attached: add the person to that row's Stakeholders, link the event there, set Call type, "
+    "Call link and Next date as STEP 2 does, add the Claude note line \"YYYY-MM-DD: <person> booked <event title> for <guest> "
+    "(decision 424)\", and create no row. A booker who acts for someone else (PR, agency, EA, comms, or Via or a Stakeholder "
+    "on another row) without that evidence, or with two candidate rows: attach nothing, create nothing, one report line for "
+    "the CTO. Only someone booking for themselves with no match gets a new Engagement:")
 rep("Family and personal rows go on AD Personal and are never named in a mail or to anyone but Akshay.",
     "Family and personal rows go on AD Personal and are never named in a mail or to anyone but Akshay. FOLD (decision 424): "
-    "a row you find duplicating another (same guest on the same show, or a contact's row standing in for the guest's) is "
-    "folded: its open Next action segments, Waiting on and Activities move to the right row, every line kept, then it goes to "
-    "Trash once no relations remain (decision 416), listed in the report. Never merge People; both rows holding different "
-    "decisions: report it, never Akshay's list.")
+    "only a proven duplicate (the same guest on the same show, or a contact's row standing in for the guest's, shown by "
+    "BOOKER's evidence, never by organisation or domain alone). Carry every Claude note line, every open Next action segment "
+    "and commitment, Waiting on, all Activities, and the Call, Eval and Dossier links to the kept row; read the kept row back; "
+    "then Trash the duplicate once no relations remain (decision 416) and list it in the report. Never merge People; both rows "
+    "holding different decisions: report it, never Akshay's list.")
 
 out = s.encode()
 assert s.count(chr(0x2014)) == dashes and len(out) <= 65536 - 200, len(out)

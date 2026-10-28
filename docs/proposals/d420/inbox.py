@@ -142,13 +142,15 @@ rep("the new thread gets the usual holding reply (STEP 6a, \"thanks <first name>
     "thread gets the loop-in (LOOP-IN; sent here, so STEP 6 skips it)")
 # Decision 424 (CTO 28 Oct): a sender is not assumed to be the guest; duplicates are folded. Two provenance trims make room.
 rep("Find the Engagement where the person is the Guest, a Stakeholder or Via, on the right Show. Then",
-    "Find the Engagement where the person is the Guest, a Stakeholder or Via, on the right Show. None: first an open "
-    "Engagement whose Guest, Via or Stakeholders share the sender's Organisation or non-free-mail domain, or the guest the "
-    "thread names; the sender joins its Stakeholders (two candidates: report, never guess). A duplicate row (same guest and "
-    "show, or a contact's row standing in for the guest's): move its open asks, Waiting on and Activities over, Trash it once "
-    "unlinked (decision 416), report it; never merge People (decision 424). Then")
-rep("(Akshay, 8 Oct: every completed precall waits on his verdict)", "(Akshay, 8 Oct)")
+    "Find the Engagement where the person is the Guest, a Stakeholder or Via, on the right Show. None, for a sender acting for "
+    "another: attach only on evidence naming the guest (the thread or form names them, or the sender works at the guest's "
+    "own company, not an agency, which has one open row on that show): the sender joins its Stakeholders. Organisation or "
+    "domain alone never does; no evidence or two candidates: create nothing, report it. Fold only a proven "
+    "duplicate: carry its note lines, open asks, Activities and Call, Eval and Dossier links to the kept row, read it back, "
+    "Trash it (decision 416), report it; never merge People (decision 424). Then")
+rep(" (Akshay, 8 Oct: every completed precall waits on his verdict)", "")
 rep("(MAILBOX; decision 420: the one mail agents send from ad@thepodium.in)", "(MAILBOX; decision 420)")
+rep("(decision 382: a recording-slot chase that runs out always goes to nurture, whoever pitched it)", "(decision 382)")
 assert s.count(chr(0x2014)) == dashes and len(s.encode()) <= 65536 - 200, len(s.encode())
 assert "(unlabel_thread)" not in s and "get it as RAW" not in s and "in:inbox subject" not in s
 open(dst, "w", encoding="utf-8").write(s)
