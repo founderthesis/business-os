@@ -8,14 +8,21 @@ s = open(src, encoding="utf-8").read()
 assert hashlib.sha256(s.encode()).hexdigest()[:16] == "aed0215a8bdf6a26", "not the live inbox prompt"
 dashes = s.count(chr(0x2014))
 AD = "cd37e47e-89d8-4259-b907-9a243baf7048"
+RULE = 'LOOP-IN (decision 421): no fixed words; in Akshay\'s terse voice it only loops Zoya in. Their side wrote last: "thanks <first name>, adding @Zoya to coordinate"; our side wrote last (a chase from Mamatha, say): "adding @Zoya to coordinate further", no thanks. Optionally the ask in a few words. Never thank anyone for a mail they didn\'t send.'
 
 def rep(a, b):
     global s
     assert s.count(a) == 1, (a[:70], s.count(a))
     s = s.replace(a, b)
 
+rep("Body, one line, exactly: \"thanks <sender's first name>, adding @Zoya to coordinate\" (lowercase, no greeting line, "
+    "no sign-off, nothing else).", "Body: the loop-in (LOOP-IN), one line, lowercase, no greeting, no sign-off.")
 # Size: history out of provenance notes; every decision number and rule stays.
 for a, b in [
+    ("(Akshay, 25 Oct: Claude writes no blurbs; the Codex blurb chat writes them; Blurb link holds only the guest's editing "
+     "chat, decision 359)", "(decision 359: no routine writes blurbs; Blurb link holds only the guest's editing chat)"),
+    ("(decision 385, Akshay, 21 Oct)", "(decision 385)"),
+    ("(Akshay, 12 Oct, decision 144)", "(decision 144)"),
     ("MESSAGE IDENTITY (Codex, 22 Oct: four sends were logged twice, once per mailbox).", "MESSAGE IDENTITY."),
     (" (CTO, 22 Oct: a loop-in reopened a Parked thread).", "."),
     ("(decision 316, Akshay, 18 Oct: \"why is eximple in my queue? I already replied\")", "(decision 316)"),
@@ -31,8 +38,8 @@ rep("TOOLS: Gmail, Notion, Google Calendar and Blueticks (WhatsApp) connectors. 
     "ToolSearch (\"+Gmail\", \"+Notion\", \"+Google_Calendar\", \"+bluetick\"). If Gmail or Notion is missing, stop and say so.",
     "TOOLS: MCP Emails, Notion, Google Calendar and Blueticks (WhatsApp) connectors. If their tools are deferred, load them with "
     "ToolSearch (\"+MCPEmail\", \"+Notion\", \"+Google_Calendar\", \"+bluetick\"). If MCP Emails or Notion is missing, stop and "
-    "say so (RUN RECORD still written).\n"
-    "MAILBOX (decision 420, Akshay, 28 Oct, after the Gmail connector's quota ran out): ad@thepodium.in is read and written only "
+    "say so.\n"
+    "MAILBOX (decision 420): ad@thepodium.in is read and written only "
     "through MCP Emails, inbox_id " + AD + "; never call the Gmail connector. Reading leaves mail unread (decision 199 holds). "
     "Where a step below names a Gmail tool, use instead: a Gmail search: email_read search (from, to, subject, body, since; "
     "include_folders [\"[Gmail]/All Mail\"], which holds inbox, sent and archived mail once each); get_thread: THREAD; RAW: email_read original (decode it in Bash, keep "
@@ -46,8 +53,8 @@ rep("TOOLS: Gmail, Notion, Google Calendar and Blueticks (WhatsApp) connectors. 
     "https://mail.google.com/mail/u/0/#search/rfc822msgid%3A<Message-ID>. The only mail you send from ad@thepodium.in is the "
     "loop-in (ZOYA LIVE): email_compose action reply on that message, inbox_id as above, reply_all false, To its sender, Cc set "
     "explicitly; where a step says a new mail, action send with to, cc and subject \"Re: <original subject>\"; either way "
-    "include_signature false, the loop-in line as body and html_body (<p>...</p>), no link, idempotency_key \"loopin:<the pitch "
-    "message's Message-ID>\"; log it with Source ID \"msgid:<the sent loop-in's Message-ID>\" (read from sent, action original).")
+    "include_signature false, the loop-in (LOOP-IN) as body and html_body (<p>...</p>), no link, idempotency_key \"loopin:<the pitch "
+    "message's Message-ID>\"; log it with Source ID \"msgid:<the sent loop-in's Message-ID>\" (read from sent, action original).\n" + RULE)
 rep(" LINKS (decision 135): the Gmail connector turns links into google.com/url redirects with a warning page, so in mail to "
     "anyone outside the team every link is unlinked text, short as Akshay types it (podm.in/sponsored, podm.in/why-sponsor, "
     "podm.in/30min, podm.in/book, podm.in/guest-list, podm.in/community, podm.in/note, podm.in/pitch-to-us, podm.in/thank-you, "
@@ -97,7 +104,7 @@ rep("Find the newest Activity with Source = Gmail (SQL: ORDER BY \"date:Date:sta
 rep("In Gmail only messageFormat RAW carries the header (Codex, 23 Oct: Zoya's acknowledgement to Pranav got a second Activity "
     "keyed \"gmail:\" because the other reads have no headers): for each new message under 200 KB (sizeEstimate), get it as RAW, "
     "decode it in Bash and keep only its Message-ID line.",
-    "email_read read has no headers (23 Oct: a second Activity keyed by provider id): for each new message, read it with "
+    "email_read read has no headers: for each new message, read it with "
     "email_read original, decode it in Bash and keep only its Message-ID line.")
 rep("Link: the thread's Gmail URL.", "Link: as MAILBOX gives it.")
 rep("- Reply on the thread from ad@thepodium.in to Saurabh, Cc the house copies. Body, exactly:\n  \"Thanks for sharing, SG.\n\n"
@@ -112,7 +119,7 @@ s = (s[:i] + "A forward from Saurabh that is a vendor or service pitch (decision
 rep("send, never draft, a one-line reply on the thread from ad@thepodium.in, To the sender, Cc the house copies: \"thanks "
     "<first name>, pls could you fill out this form for us to evaluate your offering: podm.in/pitch-to-us\". Mail to team "
     "aliases (built2share@ and the like) counts. Log \"Zoya sent: vendor redirect to <name>\", within the daily cap.",
-    "the loop-in on the thread, To the sender, Cc the house copies: \"thanks <first name>, adding @Zoya to coordinate\". Mail to "
+    "the loop-in (LOOP-IN) on the thread, To the sender, Cc the house copies. Mail to "
     "team aliases (built2share@ and the like) counts. Log \"Akshay to <name>: Zoya loop-in\" and on its Engagement (Vendor show "
     "page 3fc19a301a7f811b829ae03fa68e235b, created as STEP 3 would) Waiting on Zoya, Next action \"Zoya: ask <first name> to "
     "fill podm.in/pitch-to-us\".")
@@ -128,8 +135,8 @@ rep("Within the daily cap.", "Loop-ins don't count toward the daily cap. A pitch
     "loop-in Activity yet is still due here for 72 hours: find those from Notion (pitch Activities of the last 72 hours) and "
     "re-read the pitch by its Message-ID (STEP 6b's vendor loop-ins too). A pitch skipped on purpose gets the Claude note line "
     "\"loop-in skipped: <why>\" and is never caught up.")
-rep("the new thread gets the usual holding reply (STEP 6a, \"thanks", "the new thread gets the usual holding reply (the loop-in, sent here "
-    "per MAILBOX, so STEP 6 skips it: \"thanks")
+rep("the new thread gets the usual holding reply (STEP 6a, \"thanks <first name>, adding @Zoya to coordinate\")", "the new "
+    "thread gets the loop-in (LOOP-IN; sent here, so STEP 6 skips it)")
 assert s.count(chr(0x2014)) == dashes and len(s.encode()) <= 65536 - 200, len(s.encode())
 assert "(unlabel_thread)" not in s and "get it as RAW" not in s and "in:inbox subject" not in s
 open(dst, "w", encoding="utf-8").write(s)
