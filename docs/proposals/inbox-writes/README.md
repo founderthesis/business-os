@@ -6,11 +6,11 @@ Asked by the CTO (30 Oct, 00:05 JST). It has to be accepted before the 07:02 JST
 
 | Routine | File | Bytes / sha256 | Input (live) |
 |---|---|---|---|
-| Inbox | `inbox.txt` | 65,334 / 8135ce730219bb21 | 65,333 / d1bba5802ca8872d |
-| WhatsApp (live prompt, not B2) | `whatsapp.txt` | 26,328 / effaeb38503513c3 | 26,007 / 9e8b9f4891e9c03d |
+| Inbox | `inbox.txt` | 65,336 / 403f49ac840dc31b | 65,333 / d1bba5802ca8872d |
+| WhatsApp (live prompt, not B2) | `whatsapp.txt` | 26,336 / ca8009c24aaeda15 | 26,007 / 9e8b9f4891e9c03d |
 
 Each is built by `patch.py` / `patch_wa.py` from the live prompt, twice, byte-identical.
-- The inbox file is 2 bytes under the build limit and 202 under the real cap. The next inbox change needs a cut first.
+- The inbox file is exactly at the build limit, 200 bytes under the real cap. The next inbox change needs a cut first.
 - B2 and the d420 WhatsApp batch rebase onto `whatsapp.txt` once it's accepted.
 
 ## (a) Why the creates had no parent
@@ -27,8 +27,9 @@ Each is built by `patch.py` / `patch_wa.py` from the live prompt, twice, byte-id
 
 **The fix (both prompts): a WRITES rule.**
 - Every create names `parent {"type": "data_source_id", "data_source_id": "<the collection id above>"}`, with `allow_async false` and the title set.
-- After a create, the run queries that data source by Source ID.
-- Not found means a failed write, never a logged one. It's retried once, then reported, and the inbox run ends Partial.
+- After a create, the run fetches the page it got back. If that page has no parent data source, the write failed and is never counted as logged. It's retried once, then reported, and the inbox run ends Partial.
+- Checking the parent works for creates that carry no Source ID (People, brand Engagements, FT Network, WhatsApp digests), so the replay's R7 case is covered.
+- In the inbox, the WRITES line sits right under the NOTION heading, so "its collection id below" covers every data source in the list.
 
 ## (b) A lighter Message-ID read
 
@@ -37,6 +38,14 @@ Each is built by `patch.py` / `patch_wa.py` from the live prompt, twice, byte-id
 - The old Gmail-era fallback for mail from Zoya now uses an MCP Emails `search text = <Message-ID>` instead of `rfc822msgid`.
 - The identity rules hold otherwise: one Activity per message, and date plus recipient never match.
 - **Cost:** a large message from someone other than Zoya, which another routine logged under `msgid:`, can get a second Activity under `allmail:`. That's rare (large attachments) and visible in the sweep's duplicate count.
+
+## Round 2 (replayIW.json)
+
+The first replay failed two cases, now fixed:
+- **R2:** STEP 1's read line still said "then original" without condition. It now reads "original only per IDENTITY".
+- **R7 and W1:** the read-back by Source ID couldn't find rows created without one, so they'd have been retried into duplicates. The check is now the fetched page's parent.
+
+Also restored: "that day (JST)" in the check for mail from Zoya.
 
 ## Room made
 

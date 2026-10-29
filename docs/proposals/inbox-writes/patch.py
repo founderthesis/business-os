@@ -13,11 +13,11 @@ def rep(a, b):
 
 # 1. Writes. The 23:19 run's run record and 17 Activities were created with no parent: the Notion tool then makes a loose,
 #    untitled workspace page and drops the properties, and the run still counted them as logged.
-rep("- Activities: collection://290f715d-fd45-4203-ade6-3642c2326c6c",
-    "- Activities: collection://290f715d-fd45-4203-ade6-3642c2326c6c\n"
-    "WRITES: every create names parent {\"type\": \"data_source_id\", \"data_source_id\": \"<the collection id above>\"}, "
-    "allow_async false, the title set. Then query that data source by Source ID: not "
-    "found: a failed write, never logged; retry once, else report it, end Partial.")
+rep("NOTION\n- Activities: collection://290f715d-fd45-4203-ade6-3642c2326c6c",
+    "NOTION\nWRITES: every create names parent {\"type\": \"data_source_id\", \"data_source_id\": \"<its collection id "
+    "below>\"}, allow_async false, the title set. Then fetch the page it returns: no parent data source: a "
+    "failed write, never logged; retry once, else report it, end Partial.\n- Activities: collection://290f715d-fd45-4203-ade6-3642c2326c6c")
+rep("(action read, then original for its Message-ID)", "(action read; original only per IDENTITY)")
 
 # 2. Message-ID. `original` returns the whole .eml as base64: 1 to 2 MB messages filled the run and hit the 2-download limit.
 rep("email_read read has no headers: for each new message, read it with email_read original, decode it in Bash and keep only "
@@ -28,7 +28,7 @@ rep("When the header still can't be read, before creating an Activity keyed by a
     "logged by Zoya, so for each \"Zoya sent:\" Activity on the same Engagement captured that day (JST) whose Source ID holds a "
     "Message-ID, search Gmail rfc822msgid:<that Message-ID>; one that returns this mail's Gmail id is this mail, create nothing.",
     "Header unreadable: key \"allmail:<MCP Emails id>\"; a mail From Zoya is Zoya's: for each \"Zoya sent:\" Activity on its "
-    "Engagement that day, search text = its Message-ID; one returning this mail is it, create nothing.")
+    "Engagement that day (JST), search text = its Message-ID; one returning this mail is it, create nothing.")
 
 # 3. Room: decision 424's fold is on hold until CX-20261029-03 is built (Codex, 29 Oct); until then duplicates are reported.
 rep("Fold only a proven duplicate: its note lines, open asks, Activities, Call, Eval (the kept row's wins) and Dossier links, "
