@@ -48,6 +48,16 @@ All four run on claude-sonnet-5-5, and so does every routine except dossiers, wh
 
 **The common thread:** no run had to account for each step. A skipped step left no trace, so skipping cost the model nothing. Time and size (evals aside) weren't the cause.
 
+## A fifth case: a report that claims a write it never made (CTO, 29 Oct)
+
+The Zoya 16:38 SLOW run of 29 Oct (session cse_019pwcV2Fge74KCPM8Xi8tAz) took about 3 minutes and worked none of its 5 due rows. Its final report says "run record updated", but Activities holds no record for it.
+
+So a run can claim a write that didn't happen, the same way the 28 Oct run claimed a time limit it never reached. The ledger has to catch this too:
+
+> Every claim of a write in the report ("run record updated", "row moved", "Activity logged") names the id the tool returned. The run record's own last write is read back (fetch by its Source ID) before the run ends. Not found: create it once, read it back again, and if it is still missing end the run with "run record missing" as its final line. Never report a write the tool didn't confirm.
+
+**Morning check:** a run seen in the scheduler with no run record in Activities is a Failed run, whatever its report says.
+
 ## The shared fix, folded into decision 419's run record
 
 One STEP LEDGER block, worded the same in every routine. It's added where R-runrec adds the run record, about 650 bytes per prompt:
