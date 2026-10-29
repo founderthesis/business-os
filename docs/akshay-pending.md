@@ -27,3 +27,6 @@ Akshay's open items now live in Engagements as Kind Task rows, Waiting on Akshay
 
 ## Apify (30 Oct)
 - Sign up at apify.com, set a USD 20 monthly cap in its billing, then add the custom connector https://mcp.apify.com at claude.ai/customize/connectors (sign in with OAuth). Tell the CTO when it's done; a new session then runs a 20-profile LinkedIn test and one un# X-research test. Plan: docs/proposals/apify-setup.md.
+
+## Release calendar (30 Oct)
+- Review the FT release calendar (Episodes, "Founder Thesis — planned releases"; decision 431) and decide. Release dates are on HOLD in Rules for Zoya until you lift it; dates go to PRs the week of 2 Nov at the earliest. Open point: Ashish Goel's PR was told 10 to 12 weeks on 16 Oct; FIFO puts him on 2 Mar.
