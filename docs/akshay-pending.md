@@ -24,3 +24,6 @@ Akshay's open items now live in Engagements as Kind Task rows, Waiting on Akshay
 
 ## un# dossier as a Google Doc in Sri's prep invite (27 Oct)
 - Create one Drive folder for un# dossiers and share it with Sri once, as a viewer. The Drive share tool is blocked for agents in auto mode, so this one step is yours. Then tell us the folder's name. The dossier routine will put each Doc copy there, and Sri gets access through the folder. Until then, the invite carries only the existing dossier link.
+
+## Apify (30 Oct)
+- Sign up at apify.com, set a USD 20 monthly cap in its billing, then add the custom connector https://mcp.apify.com at claude.ai/customize/connectors (sign in with OAuth). Tell the CTO when it's done; a new session then runs a 20-profile LinkedIn test and one un# X-research test. Plan: docs/proposals/apify-setup.md.
