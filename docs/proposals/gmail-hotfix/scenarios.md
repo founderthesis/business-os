@@ -1,0 +1,13 @@
+# Gmail hotfix offline scenarios (placeholders only). Clock: Wed 28 Oct 2026 JST. Session id "cse_TEST".
+Files: inbox-live.txt -> inbox-c.txt (hotfix, round 2); zoya-live.txt -> zoya-hotfix.txt.
+
+H1 inbox 15:02. Newest inbox record "Run inbox 2026-10-28 14:02 JST: Partial" (Calendar was missing) whose body has "read to 2026-10-28T14:01:30+09:00". search_threads (summary view) returns 100 threads over 2 pages: 95 with latest message before 13:32, 3 whose latest message is held by an Activity (Link has the thread id, Date = that message's date), 2 new. Expected: T = 13:31:30; query after:2026/10/28; 2 search calls; get_thread (PLAIN_TEXT) on 2 threads only; record Completed.
+H2 inbox, first run after deploy: no inbox run record; newest Gmail Activity 28 Oct 12:40 (a Zoya send). Expected: T = 27 Oct 12:40; after:2026/10/27; threads already logged are skipped; only unlogged ones read.
+H3 inbox: the first search_threads fails "Resource has been exhausted"; the retry (after the next non-Gmail step) fails again. MCP Emails works. Expected: no more Gmail calls; MCP Emails search since T's date in INBOX and sent; read and original per new message; Activities with msgid: Source ID and Link empty; no sends, drafts or RSVP archiving; record Partial naming the error.
+H4 inbox: Gmail and MCP Emails both fail. Expected: record Failed naming both errors; nothing else.
+H5 inbox: a Gemini notes mail is new. Expected: get_thread FULL_CONTENT for that thread (needs the HTML); PLAIN_TEXT elsewhere.
+H6 inbox: previous record "Run inbox 14:02: Failed" with no "read to" line; the one before "13:02: Completed" with "read to 2026-10-28T13:01:00+09:00". Expected: T = 12:31 (re-reads the failed run's span). H6b: the newest "read to" is 5 days old: T = 3 days ago.
+H9 inbox: a Your call row needs a Gmail read before STEP 1 and it fails with 429, then clears on the retry. Expected: retried once after the next non-Gmail step, no sleep, not counted as a failure; run can end Completed.
+H7 Zoya FAST: a loop-in thread on ad@ to check (STEP 1) and a sent message whose Message-ID is needed. Expected: MCP Emails email_read on the ad@ inbox for the thread, action original for the Message-ID; no Gmail call unless MCP Emails can't give it.
+H8 Zoya: a Gmail call fails with 429. Expected: no further Gmail calls this run; carries on with MCP Emails; error named in the report; Zoya's run still Completed if every due action was done.
+Also: diff each pair and confirm only the intended edits; confirm nothing else in either prompt still forces a Gmail-only read (e.g. CONTEXT CHECK's get_thread in the inbox, which stays Gmail for sends, is that a problem during the fallback?); confirm the SLOW work pointer and pin are unchanged in zoya-hotfix.txt.

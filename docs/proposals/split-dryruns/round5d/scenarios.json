@@ -1,0 +1,112 @@
+{
+ "clock_date": "2026-10-27 (Tuesday, JST)",
+ "rule": "Each scenario sees snapshot.json plus only the additions listed for it. Act only on the rows listed in its scope; every other row in the snapshot is out of scope for that scenario (record nothing for it). Do not invent any id, address, message or row not given here. Lock and R scenarios use their own HYP rows and inbounds as given; no Notion data beyond these. There is one routine (zoya-one.txt). Every run does FAST work; the 10:38 and 16:38 weekday runs then do SLOW work from zoya-slow-work.txt (treat it as already fetched and hash-checked). Every run takes the LOCK first; assume the lock is free and this run takes it, unless the scenario says otherwise.",
+ "E": {
+  "run": "11:38 run (FAST work only)",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-E-1010@impactkey.in",
+    "date": "2026-10-27T10:10:00+09:00",
+    "from": "Jheel Gehlot (impactkey.in)",
+    "to": [
+     "Zoya (myunnati.com)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "in_reply_to": "the latest message on Akshat's commercials thread in the snapshot",
+    "body": "1) Akshat is fine with INR 50,000 + GST, next steps? 2) for the January in-person shoot, what would the camera crew cost?",
+    "logged_by_inbox": false
+   }
+  ]
+ },
+ "R3": {
+  "run": "11:38 run (FAST work only)",
+  "scope": [
+   "HYP-R3"
+  ],
+  "additions": [
+   {
+    "type": "rows",
+    "HYP-R3": {
+     "Name": "Sreya Pal @ Hypo Bank, Founder Thesis",
+     "Status": "Booking",
+     "Show": "Founder Thesis",
+     "Via": "Rajmohan (PR)",
+     "Stakeholders": [
+      "Santhosh (PR)",
+      "Mala (Hypo Bank comms)"
+     ],
+     "Waiting on": [
+      "Guest or PR"
+     ]
+    }
+   },
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-R3-IN@hypopr.example",
+    "date": "2026-10-27T10:12:00+09:00",
+    "from": "Sreya Pal (hypobank.example)",
+    "to": [
+     "Zoya"
+    ],
+    "cc": [
+     "Akshay",
+     "Mamatha (myunnati.com)",
+     "Rajmohan (PR)",
+     "Santhosh (PR)",
+     "Mala (Hypo Bank comms)"
+    ],
+    "body": "Thursday 29 Oct 3pm IST works for the recording, can you send the invite?",
+    "logged_by_inbox": false
+   }
+  ],
+  "question": "Give the reply's To and Cc exactly, and the read-back check the prompt requires before sending."
+ },
+ "R3H": {
+  "run": "11:38 run (FAST work only): a handover",
+  "scope": [
+   "HYP-R3"
+  ],
+  "additions": [
+   {
+    "type": "rows",
+    "HYP-R3": {
+     "Name": "Sreya Pal @ Hypo Bank, Founder Thesis",
+     "Status": "Booking",
+     "Show": "Founder Thesis",
+     "Via": "Rajmohan (PR)",
+     "Stakeholders": [
+      "Santhosh (PR)",
+      "Mala (Hypo Bank comms)"
+     ],
+     "Waiting on": [
+      "Guest or PR"
+     ]
+    }
+   },
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-R3H-IN@hypopr.example",
+    "date": "2026-10-27T10:12:00+09:00",
+    "from": "Rajmohan (PR)",
+    "to": [
+     "Zoya"
+    ],
+    "cc": [
+     "Akshay",
+     "Santhosh (PR)",
+     "Mala (Hypo Bank comms)",
+     "Sreya Pal (hypobank.example)"
+    ],
+    "body": "I'm moving on from the agency this week, Santhosh is taking over from me for Sreya. Thursday 29 Oct 3pm IST works for the recording, can you send the invite?",
+    "logged_by_inbox": false
+   }
+  ],
+  "question": "Give the reply's To and Cc exactly, and whether the read-back passes with Rajmohan left off."
+ }
+}

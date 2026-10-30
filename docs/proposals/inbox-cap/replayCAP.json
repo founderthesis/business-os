@@ -1,0 +1,13 @@
+{
+  "prompt": "ic1.txt 65295 B sha256 93dff86a00e91b7d (patch.py on iw3.txt 403f49ac840dc31b, reproduced byte-identical); headroom 41 B under the 65336 budget",
+  "diff": {"verdict": "PASS", "lines_changed": [50, 53], "edits": ["cap sentence in STEP 1", "3 parentheticals removed (span re-read, Zoya logs ad@, midnight UTC): explanations; the rules they explain stay (record without read to is skipped; only the inbox record moves T; since = day before T)", "RUN RECORD unclear create compressed to 'query that Source ID first; never a second row': reuse-if-found is implied, no rule lost"]},
+  "cases": {
+    "C1": {"verdict": "PASS", "notes": "15 oldest worked ('work them oldest received first, at most 15 a run; the rest wait for the next run (not pending). A backlog never means working none'); original per IDENTITY; read to = 15th's time ('newest received time up to which every message was logged or skipped as noise'); status Partial via 'Partial: a step failed, was skipped or was cut short', implied not stated; left count only via 'what was skipped, with why'"},
+    "C2": {"verdict": "FAIL", "defect": "cap is not stated to exclude already-logged re-reads; cap sentence precedes 'skip any whose msgid: key an Activity already holds', so the 30-min overlap eats the 15; 15+ messages in 30 min, or C4, stalls progress"},
+    "C3": {"verdict": "PASS", "notes": "12 plus 1-2 overlap re-reads fit in 15; read to = newest; nothing cut short so Completed"},
+    "C4": {"verdict": "PASS with defect via C2", "notes": "7 pending, read to before 7 ('never past a pending one'), 8-15 logged ('If a step fails, carry on with the rest'), retried next run; read to stuck behind 7 by design ('pending since <time>' over 24h); with re-reads counted, run 2 re-reads 8-15 (8 of 15), run 3 re-reads 8-20, run 4 makes 0 progress"},
+    "C5": {"verdict": "PASS", "notes": "No-op ('nothing was due'); read to carried unchanged (overlap re-reads end at the old read to; no rule says now); safe either way"},
+    "C6": {"verdict": "PASS", "notes": "unreached pitch gets its loop-in in the run that works it ('STEPS 6 to 6e work on the messages this run read'; 72h window); Notion catch-up covers only logged pitches; a C4 stall past 72h would lose loop-ins"}
+  },
+  "fix": "STEP 1: 'at most 15 a run' -> 'at most 15 unlogged a run' (+9 B, fits the 41 B headroom)"
+}

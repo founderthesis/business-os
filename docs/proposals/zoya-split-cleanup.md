@@ -1,0 +1,762 @@
+# Zoya split: Cleanup's review (decision 394)
+
+Reviewed 22 Oct on `zoya-split-build.md` at a8dd253, with d-dbl22 and Cleanup's d-dbl22-fix carried in.
+
+## Verdict
+
+The text passes the four checks. It is **not accepted for deploy** until Main posts the replay outputs below: the gate is behaviour on live data, not wording.
+
+Build after Cleanup's edits (parts `actions.txt`, `reconcile.txt`, `onemail.txt`, `sending.txt`, d398 in `mail.txt` and `hard.txt`, d399 in `decision.txt` and `hard.txt`):
+
+| Output | Bytes | sha256 (first 16) |
+| --- | --- | --- |
+| zoya-fast | 38,248 | a277f0f9fc4b73e0 |
+| zoya-slow | 65,299 | 4cda079b9f3ff923 |
+
+The inbox, calendar and sweep ACTION KEYS deltas are unchanged from Main's table.
+
+## Two fixes made in the parts
+
+1. **Old-format steps could be keyed two ways.** FAST and SLOW each built a key "from the wording" at pickup. A step whose wording reads as either type could be claimed by both runs with different keys, so the idempotency key wouldn't stop a double send. Now only FAST keys old-format steps. SLOW acts only on keyed segments.
+2. **Reconcile.** The stuck alert has pending and sent states (Codex, 23 Oct): a pending marker keyed `alert:<action key>` before the post, marked posted only on a message key, and a later run checks the group before any second post. Its "still due" note line now replaces the earlier one instead of stacking every SLOW run.
+
+## Replays Main runs before deploy
+
+Cleanup can't run a routine without its sends and writes, so Main runs each prompt as a one-off session. Each run starts with a dry-run preamble: no sends, no Notion or calendar writes. The run prints the send list (action key, To, Cc, row) and every row write it would make. Post the printed outputs on the branch.
+
+| # | Replay | Pass when |
+| --- | --- | --- |
+| 1 | FAST on today's data, twice in a row | Byufuel and Escobar Bandra are in the first send list. Both runs print the same action keys, and old-format steps get the same key both times. |
+| 2 | FAST and SLOW started in the same minute | No action key appears in both send lists. |
+| 3 | One row with two actions (a reply and a follow-up) | Two different keys. Each run's planned write changes only its own segment and owner. |
+| 4 | The 21 Oct crash case: a mail in Sent with no Activity | Thread check finds it. Planned: log once, send nothing. |
+| 5 | One inbound mail answering two asks | One Activity planned, and both actions get a completion line naming it. |
+| 6 | A holding reply on a row | The reply action stays open. |
+| 7 | Full mailbox reread (inbox, dry run) | Zero new Activities planned. |
+| 8 | SLOW reconcile with FAST's record over 90 minutes old | Stuck actions in quiet hours, holds or Akshay's pending decisions get no alert. Others get one alert each, keyed. |
+
+## Launch gate added 23 Oct (Codex, via the CTO)
+
+Printed dry runs alone don't pass. Main also posts:
+
+1. **Controlled failure tests.** Kill a run after the send and before the log (mail and the stuck-alert post). The next run finds the message, logs it once and sends nothing.
+2. **Concurrency tests.** FAST and SLOW write the same Engagement in overlapping runs. Both actions complete, and the row keeps both segments, both owners and both note lines.
+3. **Provider idempotency.** Send the same test mail twice to a team address with the same idempotency_key, inside 24 hours. MCP Emails delivers one, and the response says so. Repeat after the window to show the thread check is what stops it then.
+
+A replay or test that fails goes back to Main. A pass on all of them, plus Akshay's yes, clears the deploy.
+
+## Status, 26 Oct (outputs in `split-dryruns/`)
+
+| Gate | Result |
+| --- | --- |
+| Replay 1: FAST twice, same keys | **Fail.** Runs A and B on the same data differed: A held Todd McDonald and skipped Sukant; B completed Sukant and missed Todd. Neither wrote keys. Re-run twice after d-split26b and this fix; pass only on identical send lists, holds and keys. |
+| Replay 2: FAST and SLOW same minute | Not run. |
+| Replay 3: two actions on one row (Akshat) | **Fail**, fixed in d-segdates26 (dated segments). Re-run pending. |
+| SLOW once (slow.md) | Informative, not a replay pass: no follow-up sends planned, 82 unkeyed steps left alone (the deadlock, fixed), 11 problems found and fixed in d-split26c (accepted in text). |
+| Replays 4 to 8 | Not run. |
+| Failure, concurrency and provider idempotency tests | Not run. |
+
+Cleanup's change to d-split26b: the deadlock was real (SLOW could never act on an old-format step), but letting each run key "its own types" by wording brings back the two-readings risk. Now FAST keys every old-format step it reads, any type, and writes the type into the key; SLOW acts only on keyed segments. SLOW's old steps wait at most one FAST run.
+
+For the CTO, from fast-b.md: two Rules-page texts disagree with live rules (Client show mails sign-off "Stay awesome" vs decision 345; quiet hours 23:00 to 10:00 vs Cadences 00:30 to 07:30), and 10 rows wait on Mamatha with no Zoya step.
+
+d-split26c (b7924b1) accepted in text: seq keys take the step's due date at 00:00 JST; a release date counts as confirmed only when Akshay wrote it or the episode link exists; feedback is Akshay's message about Zoya's mail, not his guest-facing replies; dateless holds get a rule; the Mamatha swap covers only Zoya's steps; bounces and edit notes look back 7 days, deduped by their existing Activity or marker. SLOW is now 63,710, 1,626 B under the ceiling: the same pressure as the single prompt is coming back on SLOW.
+
+## Scenario replays on split26c (ea4c8c5), 26 Oct 12:20 JST
+
+Main's seven read-only replays, as reported in `split-dryruns/`:
+
+| Replay | Main's verdict | Cleanup |
+| --- | --- | --- |
+| Retries (crash after send) | Pass on logic | Agree. Close its three gaps in text: a send recovered by the thread check writes the Action key; draft-then-send carries the idempotency key too; two Sent copies with one Message-ID are one send (say it in ACTIONS). |
+| Same minute | Pass by rule | Agree, with one condition: route SLOW's unkeyed reply-shaped sends (vendor Your call, "they've paid" thank-you, GST ask) through FAST or key them in SLOW. |
+| Concurrent asks (Akshat) | Fail | Agree. See below. |
+| Contact holds | Dated pass; cold and dateless fail | Agree. |
+| Capped leftovers | Fail | Agree. |
+| One inbound, several asks | Outbound pass, inbound fail | Agree. |
+| Holding reply | Pass | Agree; add hosts (Sri, Satish, Arjun) to RECONCILE's exemptions. |
+
+Not accepted. What would make the failures pass, in the fewest words:
+
+1. **Keying.** Cleanup's "SLOW acts only on keyed segments" deadlocks every follow-up on a row waiting on PR, because d-sel23 selects follow-ups by Status and Next date, and those rows have no Zoya segment. A follow-up key needs no wording: `<row>:followup:seq-<routine>-<step>:<due date>`. So SLOW keys the follow-ups it selects that way itself, and FAST keys every other old-format segment (the wording-typed ones). One run decides each key, and the deadlock goes.
+2. **Concurrency.** Notion has no compare-and-set, so the re-read before a write narrows the race but can't close it. Two cheap guards: run FAST and SLOW in different minutes with a hard runtime limit, so they never overlap (FAST at :30, SLOW at :00 on even hours, each told to stop new work after 25 minutes); and after every row write, re-read the row, and if this action's own segment or owner is missing, rewrite it once and report it.
+3. **Next date.** FAST needs the same rule as SLOW: Next date is the earliest open segment date. DATED SEGMENTS must also read the legacy forms ("original due <YYYY-MM-DD>"), or Main rewrites those rows once at deploy.
+4. **Caps.** One definition everywhere: a cap is not a hold; the row stays due; leftovers go first next run (oldest due first, not "least recently attempted"). STEP 2's hold list, AFTER SEND and NURTURE must say the same. RECONCILE exempts rows a cap held.
+5. **Holds.** A cold-outreach or dateless hold sets a recheck date (7 days) as the row's Next date, keeps an owner (Chaandini for cold outreach, never empty), and never re-asks Akshay (decision 381). ONE PERSON, ONE ASK follows Cadences' per-guest-thread PR limit.
+6. **Inbound completing asks.** One sentence: an inbound message that answers our open asks completes each of them, each completion line naming the inbound Activity. Two reply actions raised by one inbound take a suffix in the key (`msg-<id>-1`, `-2`).
+
+When these are in text, Main re-runs the seven replays, plus FAST twice on the same data (replay 1). Cleanup accepts on those outputs. The provider idempotency test and a real kill test still come before go-live.
+
+## Replay 1, FAST twice (e922498)
+
+Fail, and Cleanup agrees: two runs on the same data wrote 149 and 154 keys, typed one step two ways and sent different lists. Keys inferred from wording can't be stable. This supersedes fix 1 above.
+
+Main's direction is accepted, with four conditions:
+1. **Keys are migrated once, before launch.** One script builds every old-format step's key from Notion data and writes a review file: row, segment, type, origin, raised time and key, one line each. Cleanup reviews the file before anything is written, then the keys are written in one pass, with counts reconciled before and after.
+2. **After the migration, no run infers a key.** FAST and SLOW act only on keyed segments. An unkeyed Zoya segment is an error: it is reported and left alone, never guessed. The inbox, calendar and sweep write the keyed form from launch, via the ACTION KEYS delta, so new unkeyed segments shouldn't appear. Snoozes keep their own form.
+3. **Follow-ups chosen by Status and date** (rows waiting on PR with no Zoya segment) take the deterministic key `<row>:followup:seq-<routine>-<step>:<due date>`, built from fields, not wording.
+4. **One send, two Sent copies.** Say it in ACTIONS: two Sent copies with one Message-ID are one send. The 👍 reply goes only on updates under 48 hours old.
+
+Live check, done by Cleanup: Zoya is 65,210 / 90b11cd34a3bdca1, updated 12:28 JST. That matches d-thread26 with Cleanup's fix.
+
+## d-split26d and the migration spec (dab24c8)
+
+Accepted in text, with three changes in the parts:
+1. **No free reading after the migration.** ACTIONS still let FAST key a later unkeyed segment "from its wording", which is how replay 1 failed. The ACTION KEYS delta covers only the inbox, calendar and sweep, so evals, host boards and WhatsApp will still write old-form Zoya steps. FAST now keys those by the migration's fixed rules only, and reports and leaves alone any it can't type. The routines can't read the repo, so Main publishes the rules from d394-migrate.md on the developer page under Rules, as a Controls page named "Zoya action keys", before launch.
+2. **Overlap.** SLOW starts no new row after 25 minutes, so it never runs into FAST's :30 run.
+3. Builds: FAST 34,837 / 67fb06d626d03c71, SLOW 64,676 / 567af96c27c1db2e. **SLOW is 660 B under the ceiling.** The split has refilled the larger prompt. The next SLOW addition needs an equal cut, or rules moved to Notion pages.
+
+The migration gate stands as Main wrote it: two identical migration runs, then FAST twice with the file applied, giving identical keys and send lists. Cleanup also reviews `keys-migration.csv` before anything is written, the rule 7 splits in particular, since they edit text another owner wrote. Still before go-live: the provider idempotency test and a real kill test.
+
+## Re-run on split26d and d-split26e (f77f04e)
+
+Main's re-run: A, B, D, E and F pass; C (Vijay) is a partial fail and G (same minute: billing ask, vendor Your call) fails. d-split26e fixes both in text. Accepted in text; Cleanup reproduced the builds: FAST 35,144 / 36ffead8fae85afa, SLOW 64,996 / 7730656105c89751.
+
+Before the gate closes:
+1. Re-run C and G on split26e. Pass = Vijay is one hold with an owner and a recheck date; the billing ask and the vendor Your call appear in only one run's send list.
+2. Fix the three live rows at launch, as Main listed (Vijay's empty Waiting on, Mekin's missing Next date, Akshat's Next date to 29 Oct). That's 3 rows, a direct write.
+3. **SLOW is 340 B under the ceiling.** No further SLOW text goes in without a cut. Suggested cut, before launch: NURTURE and ONE PERSON, ONE ASK already have their master copy on Rules for Zoya section 5a, which SLOW reads every run. Point to it instead of carrying the full text. That saves about 3 KB with no rule change, but Cleanup reviews it as its own delta.
+4. Unchanged: two identical migration runs, Cleanup's review of keys-migration.csv, FAST twice identical with the keys applied, the provider idempotency test, and a real kill test. The overlap guard (no new row after 25 minutes) and the Controls page "Zoya action keys" stay required.
+
+## Keying migration file (d992814) and replay 1 with keys applied (889fd47)
+
+**Replay 1: pass.** FAST twice with the keys applied: same single send under the same key, the same two completions by match, no new keys. The only difference was a label (held vs blocked on release-date replies). The run-twice gate passes once the label clause is in.
+
+**keys-migration.csv, Cleanup's checks:** 155 lines, one per row; 144 keys, all unique; every key well-formed (`<row>:<type>:<origin>:<ISO +09:00>`); generated twice, byte-identical. The only `@` strings are Message-IDs, no addresses. The two 2027 dates (Nikita Kumawat, Mohit Bedi) are real revisit dates.
+
+**Rulings on the judgement calls:** 1, 2, 3, 5, 6, 9, 10, 11, 12, 13 and 14 are accepted as Main made them. For 4 and 8, see below.
+
+**Before the write, change the file and regenerate it (twice, identical):**
+1. Fold in replay 1b's findings:
+   - Sukant: the reply is complete by Akshay's 25 Oct mail; add a SLOW follow-up dated 30 Oct.
+   - Ankush: drop the segment, already completed by match.
+   - Release-date steps (Vineet, Anmol, Srinivas and Mandar's release part): SLOW follow-ups rechecked weekly, not FAST replies.
+   - Remove the two AD Personal Task rows.
+   - Ankit Utreja: write the reply-wait segment with a date and set Next date.
+2. The rule 7 rows whose Waiting on lacks Zoya (Mandar, Manan Thakkar, Anirudh Damani and the rest the notes flag): add Zoya to Waiting on in the same write, as OWNERS requires.
+3. Mandar's WhatsApp-raised reply: key it `reply:call-<WhatsApp Activity id>:<its date>`, so it isn't left unkeyed.
+4. Mohit Bedi (judgement 4): keep n=1 from Activities, as rule 3 says; the unlogged 16 Oct check-in isn't evidence.
+5. **Write the extensions into the rules.** "sponsored chase", "sponsored follow-up", "precall chase", "chases" and bare "follow-up" (by Status) count as rule 2. LT chase revisit wording counts as rule 3. Rule 3 takes its date from rule 2's chain. These go into d394-migrate.md and the "Zoya action keys" Controls page, so FAST keys later segments exactly as the migration did.
+
+**The write:** one pass of 155 rows, direct (decision 341). Each row is read back. Counts are checked before and after: 144 keyed, 9 snoozes unchanged, the rest listed. Rule 7 rows edit another owner's text only by moving the Zoya clause out; the read-back confirms that owner's words are unchanged.
+
+d-split26f (e976831) accepted: held is a timing rule or a host's pick, blocked is a missing fact or someone else's decision. That closes replay 1b's only difference, so replay 1 passes. FAST 35,262 / 4d493ffe6f7f888d (reproduced), SLOW unchanged.
+
+## Keying migration, second build (083167c)
+
+Cleanup's five changes are in, and the build checks out. 153 rows, 142 keys, all unique and well-formed, byte-identical on repeat. Replay 1b's findings are folded in:
+- Sukant becomes a misc follow-up on 30 Oct.
+- Ankush is dropped (done by match).
+- The release-date steps (Vineet, Anmol, Srinivas, Mandar) are routine 6 step 0, rechecked weekly.
+- The AD Personal rows are gone.
+- Ankit Utreja gets Next date 27 Oct.
+- Rule 7 rows get `waiting_on_add` Zoya.
+- Mandar's step is a release-date follow-up, which is right since that is what it is.
+- Mohit Bedi stays at n=1.
+
+The rulings are written into d394-migrate.md, which Main publishes as the "Zoya action keys" Controls page.
+
+The drift guard is accepted, and it is the right answer to rows changing between build and write. Rows whose live text no longer matches `old_segment` are rebuilt by the same rules and come to Cleanup before they're written.
+
+The file is accepted for the write once Main's two open items are in it:
+1. Ankush: Zoya comes off Waiting on, since the migration removes her last step.
+2. Mithun Pangal, Priya Kumar, Gulab Patil, Rick Yvanovich and Dinesh Yadav: Zoya goes into Waiting on.
+
+Then rebuild once more, two identical builds, and post the drift list at the write. One process point: the write is a data change of 153 rows. It happens at the deploy, on Akshay's yes in Main's chat, with the counts reconciled after.
+
+## d-split26g (7f42237)
+
+Accepted in text. Cleanup reproduced FAST 35,717 / c5c2c64c0ab380ae and SLOW 64,831 / bd6d25a767199f83. The NURTURE shortening bought back 165 B on SLOW, which now sits 505 B under the ceiling. Both of Cleanup's earlier guards are still in: the "Zoya action keys" rules page, and the 25-minute stop, which now covers FAST too.
+
+Main's 26f replays (C, G, H, D, E) failed, and each failure has a matching fix in 26g:
+- holds move the segment's own date
+- undated holds become holds with a recheck segment
+- one PR same-day rule
+- the per-run cap counts this run's sends, not the day's
+- leftovers go first
+- restore covers note lines
+- one inbound completes every ask it answers, and the -n reply keys are stored as segments
+- a mailed sponsored yes is FAST's
+
+Re-run C, G, H, D and E on 26g before the gate closes.
+
+Accepted as residual risk, with no text fix possible: Notion has no conditional write. A third party's segment lost in a two-way race can't be restored, and row-level fields (Status, Chase step, Last activity) are last-writer-wins. The different minutes, the 25-minute stops and the re-read after each write keep the window small. The trial measures should count restore events, so the race shows up if it bites.
+
+Data at launch, as Main listed: Vijay, Akshat and Mekin. Payal Dash's two People rows are flagged only; merging is Akshay's call, under decision 384.
+
+Not yet on the branch: the migration write route. Cleanup reviews it when it lands.
+
+## Overlap at the real fire times (CTO, 26 Oct 16:20 JST)
+
+The server anchors an every-hour or every-N-hours cron to the minute it was created, so the live Zoya trigger fires at about :38, not :30, and the SLOW trigger would fire at about :50. With FAST at :38 and SLOW at :50, the two runs overlap on every even hour. A FAST run started at 10:38 may take new rows until 11:03, and SLOW starts at 10:50. **The 25-minute guards don't prevent that.**
+
+What passes: SLOW starts at about :08 past even hours. Then FAST runs :38 to :03 and SLOW :08 to :33, each with a 25-minute guard and five minutes clear either side. Set it with a non-zero minute so the server stores it verbatim: `CRON_TZ=Asia/Tokyo 8 8-22/2 * * 1-5`. Check `next_run_at` on both triggers after the deploy. The proof Cleanup accepts is two triggers' `next_run_at` plus one weekday of run records whose start and end times never overlap.
+
+Cleanup removed the stale ":30" from SLOW ORDER ("so you never overlap FAST's next run"): SLOW 64,832 / 763ca3d646aefde5, FAST unchanged.
+
+The retired single Zoya trigger: the deploy repoints it to FAST and doesn't create a second hourly Zoya, so nothing retires. If Main instead creates a new FAST trigger, the old one is disabled in the same deploy, and Cleanup checks `list_triggers` shows exactly one hourly Zoya.
+
+## d-split26h, the overlap lease (0cd9dfe)
+
+Accepted with three fixes, applied by `docs/proposals/d-split26h-fix.py` plus three byte trims. Cleanup reproduced Main's build first: FAST 36,165 / e8e94fc6c3afb3ff, SLOW 65,194 / 3a7dd1590f30770f, identical on two runs.
+
+What holds:
+- The run record is written before the first Notion write, and the lease is checked after it. If FAST and SLOW start together, each sees the other's Started record. FAST gives up after 10 minutes and ends Partial, which closes its record. SLOW then sees no live FAST record and goes ahead. That's no deadlock, and neither run writes rows while the other does.
+- A crashed run leaves a Started record that blocks the other run for at most 45 minutes. That costs at most one FAST run (the :38 after a crashed :08 SLOW). The lease waits show up in the run records.
+- A run that ends on a held lease has written no row. Every send is logged before it goes, so it has sent nothing either. A retry can't send twice.
+- Deploy steps 3 and 4 now repoint the existing Zoya trigger to FAST, keep exactly one hourly Zoya, and set SLOW to `8 8-22/2 * * 1-5`.
+
+Fixed:
+1. **The PR COORDINATION trim widened a rule.** "beating all of the above" sits below LIMITS in SLOW. It reads as exempting un# Booking rows from the daily cap, the follow-up window, quiet hours and Diwali week, and Diwali week is 8 Nov. Restored the named list: "beating the gaps and 30 quiet days above, the 7-day limit in LIMITS, the STALENESS GATE's span and the 3 unanswered chases".
+2. **The lease and RECONCILE found the other run by Summary wording** ("Run zoya FAST"). Run records now carry the run in their key: Source ID "run:zoya:fast:<run id>" or "run:zoya:slow:<run id>". The lease and RECONCILE read by that prefix. The sweep's STEP 4b still matches on "run:zoya:". The Started state still sits in the record's Summary, as AR-8 defines it. That is the record's own state, not work selection.
+3. **"No new row after :30 past any hour"** would let a SLOW run still going at 09:05 start rows again. Now it reads "past the hour you started".
+
+The trims needed to stay under the ceiling are the lease's wait clause, SLOW's stop sentence and one phrase in SLOW ORDER. They change no meaning.
+
+Result: FAST 36,160 / cf2c34ef3465d775, SLOW 65,229 / f43cf8b2c00d16e9. Both rebuilt twice and came out identical. Neither has an em dash or a leftover placeholder. SLOW is 107 B under the ceiling, so the next SLOW change has to cut before it adds.
+
+Checks:
+- Less text and fewer writers: the lease adds about 400 B to each prompt and no new writer. The lease is how FAST and SLOW stop being two writers at once.
+- Selection by prefix or wording: the lease now selects by key, not Summary.
+- Retry double-send: no.
+- Bytes and hashes: above.
+
+The split is still not accepted for deploy. Still needed: replays C, G, H, D and E on this build against frozen inputs; the concurrency, retry, hold, cap, multi-ask, kill/recovery and provider duplicate-send outputs (the concurrency run should now show a lease wait); and the migration write route. The overlap proof stays next_run_at on both triggers plus one weekday of run records.
+
+
+## Keying migration, third build (7faa9b4)
+
+Accepted for the write, with one rekey. Cleanup reproduced Main's file byte for byte (sha256 d837edb33231084f): 155 segments and 144 keys, no duplicates, 38 REVIEW flags and 19 notes. The only @ strings are Message-IDs, and there are no phone numbers.
+
+The two owner-field corrections are in:
+- `waiting_on_remove` takes Zoya off Ankush's row, the only one where the migration drops her last segment.
+- `waiting_on_add` adds Zoya on 12 rows: the five rule 7 rows, plus Mithun Pangal, Priya Kumar, Rick Yvanovich, Dinesh Yadav, Akshit Bansal, Matthew (Magic Bus) and Vivek Iyer. Gulab Patil is no longer in scope, because his live row has no Zoya segment.
+
+The seven drift rows, checked one by one:
+- **Nikita Kumawat** and **Kumar Abhishek**: nurture n=1 on the segment's own date or on Next date. Correct.
+- **Ryan Louvar**: a team data fix, dated from the Claude note. Correct.
+- **Robert Mitchnick**: precall step 1 on 27 Oct by rulings 1 and 7. Correct.
+- **Vivek Iyer**: Zoya's step is split out of Deepayan's segment and keyed sponsored step 2 on 2 Nov. Correct.
+- **Matthew (Magic Bus)**: form chaser 1 is keyed for 29 Oct, but the row also carries Akshay's re-record question. STEP 2's skip ("Akshay holds a decision on this pursuit") stops the send until he answers. Correct, as long as that segment stays on the row.
+- **Prashant Sachan: rekeyed by Cleanup.** The rules took the routine from Status Recorded, which is routine 5, the guest form. Key seq-5-1 would send guest form chaser 1 to Vineeta, but the ask is a photo and transcript feedback. Rule 9's fallback is routine 4, misc chase, so the key is now seq-4-1. Built to Share has no misc-chase wording yet (flagged 26 Oct), so SLOW blocks and reports it instead of sending the wrong mail.
+
+Result: `keys-migration.csv` sha256 **d9366a4ef6593b5e**, identical on two builds, 155 segments and 144 unique keys.
+
+The write still needs, at deploy and on Akshay's yes:
+- The live re-read drift guard right before the write. Any row that changed since this build is rebuilt by the rules, or left out and listed, never written from the file.
+- One writer.
+- Counts before and after reconciled against the file.
+- A read-back of every keyed segment and both owner fields.
+
+Checks:
+- Less text and fewer writers: the migration is one write by one writer, after which FAST and SLOW key by field.
+- Selection by prefix or wording: the keys exist so nothing is selected by wording again. The build reads wording once, by fixed rules.
+- Retry double-send: the migration sends nothing. Keys make a retry a no-op.
+- Bytes and hashes: above.
+
+## Cadence correction, and d-split26i (2ffa41c)
+
+**Cleanup's error.** The approved SLOW cadence is `CRON_TZ=Asia/Tokyo 50 10,16 * * 1-5` (d-split26; CTO 26 Oct 17:15 JST). Cleanup's c66415e proposed `8 8-22/2`, which would mean eight launches a day, a cadence change nobody approved. It is withdrawn. That proposal had carried into 26h's SLOW intro and deploy step 4, and the 1ff6953 wording was written for it. At :50 that wording fails twice:
+- "No new row after :30 past the hour you started" stops a 10:50 run before its first row.
+- The 45-minute stale limit lets FAST at 11:38 treat a live 10:50 SLOW (48 minutes old) as crashed, and write alongside it.
+
+`docs/proposals/d-split26h-fix2.py` corrects them:
+- SLOW starts no new row 40 minutes after its start (11:30, 17:30).
+- The lease's stale limit is 60 minutes.
+- SLOW's intro reads "10:50 and 16:50 JST, weekdays".
+- Deploy step 4 names `50 10,16`, with the lease as the overlap protection.
+
+The timeline at :50:
+- FAST 10:38 takes no new row after 11:03.
+- SLOW 10:50 finds FAST's record Started and waits (up to 25 minutes, so until 11:15 at most). It writes once FAST closes, and starts no row after 11:30.
+- FAST 11:38 finds SLOW's record either closed or Started under 60 minutes old, and waits up to 10 minutes.
+- A crashed SLOW costs one FAST run (11:38 waits to 11:48, 58 minutes); 12:38 goes ahead.
+
+The CTO's gate test, "FAST from 10:38 still running at 10:50", is Main's concurrency case. It must show SLOW reading only until FAST's record closes.
+
+**d-split26i: accepted.** A write that changes Next action recomputes Next date, and any other write leaves it as it is. That settles the H/D difference in frozen round 1 (Akshat's owner-mail line). Holds and deferrals move the segment's "on <D Mon>", so they change Next action and stay consistent. One overlap is left: STEP 2 says "a failed send moves only Next date", without changing Next action. It's harmless on either reading, because the retry falls to SLOW's next run either way. No change made.
+
+**Frozen round 1:** not a pass yet. C and H match on decision fields. G, D and E differ because the hypothetical inbounds had no fixed Message-IDs and run2 widened the scope. Main's round 2 fixes both in `scenarios.json`. Cleanup reviews round 2.
+
+**Provider duplicate-send test: PASS.** Two identical self-addressed `email_compose` calls with one idempotency_key gave one send and one delivery; the second call returned `idempotent_replay`. The two Sent copies share one Message-ID, which is the known double filing. A retry that rewords the body isn't deduped by the provider, only by the thread check, so the kill/recovery case has to show that path.
+
+**Result:** FAST 36,241 / 241555eabebac81c, SLOW 65,299 / e347c5cb20b7b720, each identical on two builds. **SLOW is 37 B under the ceiling.** The CTO's new gate item, actual token, cache and cost figures or "unknown" on each run record, adds text to RUN RECORD in both prompts. SLOW must lose about 200 B before that goes in.
+
+Checks:
+- Less text and fewer writers: the fix is a net 2 B on SLOW, and no writer is added.
+- Selection by prefix or wording: none added.
+- Retry double-send: the provider is proven for identical retries, and the reworded case rests on the thread check (the kill test).
+- Bytes and hashes: above.
+
+## Release cut d-split26k and d-split26j (ab182a4)
+
+**Verdict: the cut passes with three fixes. The release build is not accepted until decision 412 is in it.**
+
+Cleanup reproduced Main's build: FAST 35,141 / 6b3bc064ebbe1c60, SLOW 62,217 / 1a833d7a8062f1b6, identical on two runs. Cleanup's 8896129 cadence, stop and lease fixes are in.
+
+### The 106 edits, line by line
+
+I read every old and new string from `d-split26k.py`.
+- About 60 edits drop dated attributions, AR ids, revision tags and decision numbers. None of them carries a rule.
+- The pointers were checked against the text they point to:
+  - Edit 9's "Outbound rows as on un#": the UN# bullet "Outbound un# rows at New or Contacted wait on no one" is there.
+  - Edit 13: the intro keeps "Replies owed, Akshay's decision mails and holding replies are your FAST run's".
+  - Edits 31 and 55: the same bullet still says it.
+  - Edit 33: "in the window Cadences gives" stays.
+  - Edit 65: un# links "only" stay in SCOPE.
+  - Edit 71: the UN# first bullet keeps "pitch sheet and templates".
+  - Edit 29: "Find the chat by their People Phone" stays.
+  - Edit 64: WRITE PATH gives Next date and keeps other segments.
+
+Main's least-sure edits:
+- **2, 5, 12, 23, 54, 64, 66: fine.** 23 merges the two THREADING statements and keeps every step: the draft, the read-back of To, Cc and thread, the explicit To and Cc, outsiders in To with Akshay in Cc where the team wrote last, the Sent-first retry, and never a "Re:" subject.
+- **26: fixed.** SENDING's crash-window check said "check your Sent and the thread first". The pointer went to ACTIONS' Before sending, which read only the thread. A fresh mail (a first step, a decision mail) has no thread, so only Sent finds it. That's the delivered-but-not-logged case in the CTO's gate item 3. ACTIONS now reads "your Sent and the thread".
+- **76 and 80: fixed.** These edits dropped "Next date today or earlier" from routine 1's and routine 7's own selector lines. Read alone, either line picks rows that aren't due yet. Both restored.
+
+Script: `docs/proposals/d-split26k-fix.py` (+78 B on SLOW, +14 on FAST).
+
+### d-split26j
+
+- **Lease tie-break: sound.** The earlier start holds the lease; in the same minute, FAST does. A start is recorded to the minute, so a same-second start resolves to FAST.
+- **SLOW self-key replacing the waiting segment: sound, within a limit.** It replaces only the guest or PR side's "Waiting on <their side>: ..." segment for the same ask, never Akshay's or a team member's.
+- **Usage receipts: fine.** Each run records its token, cache and cost figures, or "unknown" when it can't see them, never an estimate.
+
+### Coverage of approved rules (CTO 19:30)
+
+Main hasn't posted a coverage table, so Cleanup checked 411 to 413 against the build and Rules for Zoya, which both prompts read first every run:
+- **411 (recording status settled internally; Akshay's actions go in his Notion queue):** carried by Rules for Zoya. Nothing in the build contradicts it. Transcript failures and recording questions already go on Akshay's list.
+- **413 (themes from our side):** carried by Rules for Zoya. Nothing contradicts it.
+- **412 (the thank-you draft goes without the transcript, as a standalone mail To the guests, Cc the PR and other stakeholders): FAILS.** SLOW's INTERNAL TASKS c(4) does three things against it:
+  - it attaches the transcript to the thank-you draft;
+  - it creates the FT thank-you draft only once a transcript has arrived;
+  - it addresses that draft To the guest and the main PR.
+
+  The prompt names no precedence between Rules for Zoya and its own text, so c(4) wins in practice. The decision lists "calendar and Zoya prompts with Main", so the fix spans the calendar's STEP 4c too, and it is Main's.
+
+### Result
+
+FAST 35,155 / ec1df0e316436ac9, SLOW 62,295 / e469a14d2cb7669d, each identical on two builds. SLOW is 3,241 B under the cap. Not frozen yet: the 412 change will move both hashes, and the frozen round, crash and lock tests must name the final ones.
+
+Checks:
+- Less text and fewer writers: 3,299 B less on SLOW, with no new writer.
+- Selection by prefix or wording: none added. Edit 76 restores a date filter on a Status-based selector.
+- Retry double-send: edit 26 would have weakened the Sent check, and the fix restores it.
+- Bytes and hashes: above.
+
+## Frozen build d-split26l (8e64140) and crash A (5d9c51d)
+
+**Verdict: accepted with one fix, which moves the Zoya hashes. Inbox, calendar and sweep are accepted as frozen.**
+
+### Reproduced
+
+- Zoya: FAST 36,257 / 96c11beae7ec325b, SLOW 63,145 / a5b4ef40cfd85bb1, identical on two builds. Cleanup's d33ef96 restorations are in (ACTIONS reads "your Sent and the thread"; the routine 1 and routine 7 date filters).
+- Inbox, calendar and sweep, rebuilt from the live prompts (inbox and calendar read by get_trigger today at 61,957 / aed0215a8bdf6a26 and 54,901 / 543c3499473860ac; sweep 33,824 / 7af60faaa021fa64) through `d394-keys.py` and `d-411-412-cal-sweep.py`:
+  - inbox 63,536 / 2eade949aa242970;
+  - calendar 56,272 / d9d1f508b9c797fd;
+  - sweep 35,319 / 9db06d64df11ff7d.
+
+  All three match Main's frozen hashes.
+
+### Decisions 411 to 413, against Rules for Zoya (read today)
+
+- **412: in.**
+  - SLOW c(4) never attaches or waits for a transcript.
+  - The FT thank-you is a standalone new mail ("Next Steps | ..."), To the guests, Cc the PR, every other stakeholder and the house copies.
+  - Akshay gets "(draft ready)".
+  - Calendar STEP 4c and 4d match.
+- **411: in.** NOTION DATA's RECORDING STATUS, calendar STEP 4 a and sweep STEP 3a all settle it from our side, put the question in Akshay's Notion queue once, and never ask the guest or PR, or on WhatsApp. RECONCILE's stuck alert in the group "Zoya" is a status alert, not an ask, so it stays.
+- **413: in.** Mail b takes themes from our side.
+- **The Your call answer** (yes sets Recorded, no becomes the cancelled-or-no-show ask) is in notion-edits-26oct.md item 1, for the CTO to apply. Until that edit is live, the inbox reads "yes" as approving a proposal, so it is part of the deploy.
+
+### Fixed: Mamatha and the recipient read-back
+
+Rules for Zoya, section 2 Copies (the master): "Mamatha is never in Cc, and nothing waits on her, on any show (decisions 260, 352)". Its 413 entry is themes only. The build had:
+- changed "never Mamatha" to "never add Mamatha (keep her only where she is on the latest inbound)";
+- added a read-back requiring To and Cc to hold "everyone on the latest inbound", cited as decision 413.
+
+The read-back would put Mamatha back on any thread she was on, and Sri back in Cc on un# ("Sri is never in Cc on routine mail"). The Krsnaa 17:40 mail was right to drop Mamatha. Main's open question is already answered by Rules for Zoya: never.
+
+`docs/proposals/d-split26l-fix.py`:
+- restores "never Mamatha";
+- keeps the read-back but excludes "Mamatha and, on un#, Sri";
+- drops the "decision 413" citation.
+
+The read-back still catches Sreepriya's four dropped recipients.
+
+Result: FAST 36,211 / f4a541d352980139, SLOW 63,099 / 33ecf7c33c68d0ce, identical on two builds, 2,437 B under the cap. Only SENDING changed, so frozen round 3 must run on these hashes. Crash A's trace reads ACTIONS and MESSAGE IDENTITY, which are unchanged, so it stands.
+
+### Crash A recovery: PASS as a trace
+
+The 19:20 self-addressed mail is in Zoya's Sent as two copies with one Message-ID, plus one INBOX delivery. Activities hold no row for it. The frozen ACTIONS ("read your Sent and the thread") and MESSAGE IDENTITY find it, so recovery plans one Activity and no send. This was Main's hand trace of what the prompt reads, not a prompt run. The Activity write is with the CTO (notion-edits item 2).
+
+### Crash B plan: one weakness
+
+The test puts the action key in the body as "bos-key", and recovery finds it by that marker. Real mails carry no such marker. Outside the provider window, recovery has to match by content: "a message from us after the action was raised that does what the action asks". Crash B should be judged on whether recovery finds the mail without the marker, or at least on both. Otherwise it proves less than gate item 3 asks.
+
+Checks:
+- Less text and fewer writers: the fix is -46 B, and no writer is added.
+- Selection by prefix or wording: none.
+- Retry double-send: crash A plans one Activity and no send; crash B is pending.
+- Bytes and hashes: above.
+
+
+## Notion edits applied by the CTO (4961d1b), read back
+
+- **Edit 1: "Inbox and Your call rules", section 5. Matches the spec word for word.** The chain holds: Akshay's "yes" sets Recorded. Calendar STEP 4c (frozen calendar d9d1f508b9c797fd) takes FT rows "at Status Recorded (set by STEP 4 or by Akshay)" within 14 days, removes the "did it happen?" ask, and drafts the thank-you on its first run after that, with no transcript. One limit: a "yes" given more than 14 days after the recording gets no automatic draft. The decision doesn't cover that case, so it's noted, not changed.
+- **Edit 2: crash A recovery Activity 40519a301a7f81daa9aec3268dac4369. Matches.** Kind Email out, Source Gmail, Source ID msgid:a21e2f20-…@mcpemails.com, Engagement 40519a301a7f8105a87edf64e65872b7, and the action key as the first line of the body (the property doesn't exist until deploy). Date reads 10:20:00Z against the spec's 10:20:28Z: Notion stores minutes. With this row in place, the crash A action is complete, and a later run finds it by Source ID and sends nothing.
+
+## Frozen round 3, lock tests, crash B and d-split26m (edc49c1)
+
+**Verdict: round 3's findings are accepted as fixed, with one correction to fix 7. Crash B passes. The lock tests pass. The re-frozen hashes move again, and round 3b must run on the hashes below.**
+
+Reproduced Main's re-freeze: FAST 36,811 / 1b4cca2a0d0b284e, SLOW 63,845 / 94943a20df0745dd, identical on two builds, with "never Mamatha" in.
+
+### Lock (gate item 4): PASS on both runs
+
+- L1, same-second acquire: FAST holds and SLOW only reads.
+- L2, crashed holder: still held at 48 minutes, so FAST waits 10 and ends Partial; stale at 68 minutes, so FAST runs.
+- L3, wait or skip: only the run record is written, and the reply stays due with Next date and owner unchanged.
+- L4, FAST 10:38 still running at 10:50: SLOW waits until 11:02. No row has two writers.
+
+Fix 4's second read 1 minute later closes the race L1 exposed. A run that read before the other's Started record existed now sees it on the second read. Both runs apply the same tie-break, so exactly one holds.
+
+### Crash B (gate item 3, outside the dedupe window): PASS
+
+One send with no idempotency key, so the provider made no second Sent copy and gave no dedupe. Judged without the bos-key marker, recovery reading ACTIONS literally ("your Sent and the thread for a message from us after the action was raised") finds exactly one unlogged message from us. Crash A is now logged, and the provider test's subject excludes it. So recovery plans one Activity and no send. The residual is Main's own: with two unlogged mails to one person after one raise, the match rests on content ("does what the action asks"), and that is untested.
+
+### d-split26m's eight fixes
+
+- 1 (E), 2 (G), 3 (R3: From, To and Cc, less our own address), 4 (lease second read), 5 (R1: no Episode yet), 6 (R2: no second Akshay ask) and 8 (D: next step never before the 7-day rule allows): sound.
+- **7: corrected by Cleanup (`docs/proposals/d-split26m-fix.py`).** "A segment's date: the date its text gives, else its key's, else the day it was written" gives every undated segment of another owner the day it was written. Examples are an old "Waiting on Payal: reply to the commercials" or an Akshay ask. A row whose Zoya step is dated 2 Nov but which carries a 14 Oct waiting segment would get Next date 14 Oct for good: SLOW's SELECT re-picks it every run with nothing due, nothing is written, the date never moves, and the sweep's STEP 4b counts it as unexplained overdue every day. The migration's rule 7 rows have exactly that shape. Now undated segments don't count, and only a row with no dated segment takes the day of the write. That still settles R1, R2 and E.
+
+### Main's open items for the CTO
+
+- **G, no Status after a mailed sponsored yes:** agreed it is a rule gap that predates the split. It is the CTO's to put to Akshay. Until then, the CONTEXT CHECK is the only stop.
+- **Lease timing:** a reply can slip one FAST run, about an hour, when SLOW runs long. L3 shows nothing is lost.
+- **Crashed run records stay Started:** the good-morning check will show them. A small follow-up would let the next run of the same kind mark a Started record over 60 minutes old as "Failed (no end record)". That's for after the split, since it's new behaviour.
+
+### Result
+
+FAST 36,860 / ae7ca63be6b1980a, SLOW 63,894 / a0b03bbf09752673, identical on two builds, 1,642 B under the cap. Inbox, calendar and sweep are unchanged. Round 3b must run on these. The crash recoveries read ACTIONS' Sent check and MESSAGE IDENTITY, whose recovery wording is unchanged, so they stand.
+
+Checks:
+- Less text and fewer writers: +49 B, no new writer.
+- Selection by prefix or wording: none. The fix stops a stale date from re-selecting rows.
+- Retry double-send: crash A and B plan one Activity and no send.
+- Bytes and hashes: above.
+
+## d-split26n (2bdce3c), pushed beside Cleanup's c048bec
+
+The two commits crossed. Git merged them cleanly, and Cleanup's fix 7 correction survived in actions.txt.
+
+**Verdict: accepted with one fix to its lease timing.**
+
+- 1 (stale records closed as Failed), 2 (FAST waits out a lease about to go stale), 4 (1c adds per WRITE PATH), 5 (a cap ends Partial) and 6 (the holding reply's key form): sound.
+- **3, windows counted from the lease: fixed by Cleanup.** Staleness still counts from the record's start, and the closer now marks a stale record Failed and goes ahead. Take a SLOW starting 10:50 that waits the full 25 minutes:
+  - it takes the lease at 11:15 and may start rows until 11:55;
+  - FAST 11:38 waits until SLOW's record turns 60 at 11:50;
+  - FAST then closes it as Failed and writes beside a live SLOW.
+
+  SLOW now also stops 45 minutes after its start, whichever comes first, so its record closes about 10 minutes before it can turn stale. FAST is safe as built: at most a 20-minute wait plus 25 minutes is about 50 with its last row. Recorded as part 2 of `d-split26m-fix.py`, applied in build.py's SLOW lease variant.
+
+Result on the merged tree: FAST 37,284 / dc5774fcb161afcf, SLOW 64,348 / 58ffd91ad6e07317, identical on two builds, 1,188 B under the cap, no em dashes. These replace Main's 26n hashes. Round 4 must run on them, including L2 and L4 with a SLOW that waits the full 25 minutes.
+
+Checks:
+- Less text and fewer writers: +40 B over 26n plus fix 7. Closing a stale record makes a run write the other run's record, but only once that record is stale, so it never coexists with a live writer.
+- Selection by prefix or wording: none.
+- Retry double-send: unchanged.
+- Bytes and hashes: above.
+
+## d-split26o (72aa104), the blocker write-up (1131e2e) and d-split26p (c78d8b9)
+
+Reproduced: FAST 37,994 / d710353e5afc67fc, SLOW 65,058 / c3d1616659c8a686, identical on two builds. Cleanup's 45-minute SLOW cap and fix 7 are in.
+
+### The lock: Cleanup agrees there is none
+
+Main's write-up is right on each point.
+- Notion has no compare-and-swap.
+- "Write mine, then read theirs" needs every query to see every earlier create. Notion queries come from an index, and that has never been measured.
+- Two runs of the same kind don't read each other.
+- A run that hangs past 60 minutes keeps writing after its record is closed as stale.
+
+The L1 to L4 passes show the rule is followed when each run sees the other. They can't show exclusion. Cleanup's earlier lease fixes (c66415e through d6a1209) narrowed windows; none made it a lock. Cleanup should have said so plainly sooner instead of tuning the timing.
+
+On the options, Cleanup agrees with (a), one trigger owning every write:
+- It removes the cross-kind race instead of guarding it.
+- The same-trigger exposure it keeps is the one production has today.
+- It keeps every gain the split review produced: action keys, 411 to 413, the round 3 fixes, run records and the Sent check.
+
+Two notes for the CTO's decision:
+- Under (a), the size gate (3,000 B under the cap) applies to the single prompt. The phase 8 work comes first.
+- The lease text "stays as a courtesy check": under (a) it should go, since there is no other kind to read. Text that claims a guarantee it can't give is worse than none.
+
+### d-split26o: sound, and moot under (a)
+
+The earlier Notion created time, to the second, holds. Only an exact same-second tie goes to FAST, and the re-read happens after acquiring.
+
+### d-split26p, crash recovery held for review: sound
+
+A match must be unique: the Activity's Message-ID, or exactly one unlogged message from us to that recipient (on that thread for a reply) since the raise. Anything else is held for Akshay and never resent, so a crash can strand an action but never double-send. Two notes:
+- **It overrides decision 90** ("never hand Akshay a data problem to solve by hand"). Per CLAUDE.md, an override is logged in decisions.md with its date. It isn't there yet.
+- **Rare false holds.** The check also runs before every normal send. An unlogged message only exists after a crash or a failed Activity write, so a false hold should be rare. Each one names its candidates, so it's cheap to settle.
+
+### Size: the build now fails gate item 1
+
+Akshay's gate requires SLOW at least 3,000 B under the 65,536 cap, which means 62,536 or less. SLOW is now 65,058: 2,522 B over that line and only 278 B under the 65,336 build ceiling. Each fix since the release cut (411 to 413, 26m, 26n, 26o, 26p) added text without cutting any. Whichever option is chosen, the release build has to come back under 62,536 before acceptance.
+
+Checks:
+- Less text and fewer writers: no. Every commit since the cut added text, and two writer kinds remain until (a) or (b).
+- Selection by prefix or wording: none.
+- Retry double-send: closed by the 24-hour key or a unique Sent match; otherwise held, never resent.
+- Bytes and hashes: above.
+
+**Status: the split as built is not accepted.** It has no lock (an architectural blocker, now with the CTO and Akshay) and SLOW is over the size gate.
+
+## Round 4b and d-split26q (659c330)
+
+Reproduced: FAST 38,233 / 3da29ae693347239, SLOW 65,297 / 0464082b0360545a, identical on two builds.
+
+**Round 4b.**
+- I1 and I4 pass on both runs.
+- I3 failed on both, but nothing was resent. The unlogged reply was never logged, because STEP 1 only reads unanswered threads, and FAST's own crashed record stayed Started for good.
+
+Main's reading of all three is right.
+
+**d-split26q: sound, with one hole, fixed by Cleanup (`docs/proposals/d-split26q-fix.py`).**
+
+The six changes hold:
+- the 24-hour Sent scan;
+- a run closes its own kind's stale record;
+- candidates are counted before content and before any hold rule;
+- candidates come from the action's thread only;
+- one hold per candidate set;
+- an Action key on a recovery match.
+
+The hole: the candidate list dropped any mail that "plainly does something else (a holding reply, ...)". For a hold action, the holding reply is the mail that completes it. A FAST that crashed after sending one would find no candidate, call the action due and send the holding reply again. Now only "another action's holding reply" is dropped. Round 4c should add that case: a hold action, sent, crashed before logging.
+
+**Result:** FAST 38,248 / 6a00434c06dc4ab7, SLOW 65,312 / f33fbf1a98a247ba, identical on two builds. SLOW has 24 B of build headroom and is 2,776 B over Akshay's size gate (62,536).
+
+**Status unchanged: the split is not accepted.** It has no lock (with the CTO and Akshay, options a to c) and fails the size gate. The crash-recovery rules from 26p, 26q and this fix carry over to option (a) as they are, since they don't depend on two triggers.
+
+Checks:
+- Less text and fewer writers: no (+239 B on SLOW since 26p).
+- Selection by prefix or wording: none.
+- Retry double-send: the holding-reply resend path is now closed.
+- Bytes and hashes: above.
+
+## Round 4 results (3dfa2e4)
+
+**The report is accepted as accurate.** It ran on 72aa104, before 26p, 26q and Cleanup's fixes.
+- Eleven scenarios pass on both runs.
+- L3 and I2b fail on both: the lock is blocked architecturally, as Cleanup's 0ec9e35 said. L3 shows that even with the 45-minute cap, a live run can be closed as stale, because no prompt rule can make a run finish on time.
+- I3 is fixed in 26q, with round 4c pending.
+- R2 is still failing, and Main's fix waits on the size work.
+
+**R1's "house copies undefined": confirmed, and fixed by Cleanup (`docs/proposals/d-split26q-fix2.py`).** Neither Zoya prompt defines the term; the sweep and calendar do (Zoya in Cc on ad@ mail and drafts, plus Chaandini on Built to Share and Human by Design, never Mamatha). INTERNAL TASKS c(4) drafts only the Founder Thesis thank-you in ad@, so its house copy is Zoya, and it now says "you". That saves 13 B, so this fix doesn't have to wait for the size work. Run B's other R1 question, whether c(2)'s Episode retry holds back the thank-you, is answered by the text: c(4) doesn't depend on c(2), and the thank-you never waits for a transcript.
+
+Result: FAST 38,248 / 6a00434c06dc4ab7 (unchanged), SLOW 65,299 / 0a41fd25fbed7166, identical on two builds. SLOW is still 2,763 B over the size gate.
+
+## Round 4c and d-split26r (d4d9332), merged with Cleanup's c04ed40
+
+**Round 4c: I1, I3 and I4 pass on both runs, with nothing resent.** I3, which failed in round 4b, now passes: FAST closes its own crashed record, and the Sent scan logs the answered reply and its inbound once.
+
+**d-split26r: sound.**
+- A mail named in an open "can't tell" segment is left alone by the Sent scan, so the hold can't dissolve and let the step go twice.
+- An Activity that holds a candidate's Message-ID without an Action key still counts as that candidate.
+- Both cuts are covered elsewhere: "Two Sent copies with one Message-ID are one send" still appears twice in each prompt (ACTIONS and MESSAGE IDENTITY), and the property name stays in 'Write "Action key" on the Activity'.
+
+Main's noted items are agreed:
+- Recovery can't add a missing Cc to a sent mail.
+- One crash costs SLOW its slot; that's for the architecture choice.
+- WRITE PATH against a shared hold segment: both runs joined it anyway.
+
+**The merge.** Both of Cleanup's fixes are in the merged tree: "another action's holding reply" and the FT thank-you draft's "Stakeholder and you". The merged build is FAST 38,248 / a277f0f9fc4b73e0 and SLOW 65,299 / 4cda079b9f3ff923, identical on two builds.
+- FAST equals Main's 26r build. Main's 26r was built on 3dfa2e4, after Cleanup's holding-reply fix.
+- SLOW is Main's 65,312 less the 13 B from Cleanup's house-copies fix.
+
+The split is still not a release candidate. The CTO names the architecture first; then one final build is made and every affected test re-runs on it. That build must be at or under 62,536 B.
+
+## Lock feasibility: a GitHub ref as compare-and-swap (3d16a28)
+
+**Verdict: feasible as a mutual-exclusion primitive. Not yet a design Cleanup can accept.**
+
+What the evidence shows:
+- `git push --force-with-lease=<ref>:<expected>` is checked on GitHub's side. The loser gets "[remote rejected] cannot lock ref ... is at X but expected Y". That is a real compare-and-swap, the thing Notion lacks.
+- Three contended rounds from inside a routine each had exactly one winner, and the CTO read the ref back independently.
+- This session hit the same server-side rejection on its own crossed pushes today (d6a1209 and 0ec9e35 era), so the behaviour isn't specific to the test.
+- One sample caution: A won all three rounds, likely on launch order. That shows exclusion, not fairness. Exclusion is what matters.
+- It also covers what the lease couldn't: two runs of the same kind contend for the same ref.
+
+What a design must still say before Cleanup accepts it:
+1. **Ambiguous push results.** A push can succeed on GitHub while the client sees a network error. Before acting or retrying, the run reads the ref back (`git ls-remote`). The run holds only if the ref equals its own commit, and it never takes a second acquire attempt as proof.
+2. **Release is a compare-and-swap too.** Freeing the lock uses expected = the run's own held commit, so a run never frees a lock it no longer holds.
+3. **What the held commit records.** Run id, kind, start time and Zoya's trigger, so a person or the morning check can tell who holds it.
+4. **Fail closed, everywhere.** No GitHub access, no repo attached, or a lost or failed acquire means no Notion row write and no send. Run record and report only.
+5. **A crashed holder.** With no expiry or takeover, one crash stops every Zoya run until someone frees the ref. That can't be silent. The good-morning check (decision 401) and each blocked run's report must name the holder and how long it has held. Freeing it is a human step, or an explicit CTO rule. Expect it to happen: a crash today already left a Started record.
+6. **Fencing stays open, as Main says.** A paused holder that wakes after being freed can still write, because Notion and MCP Emails check no token. Combined with point 5 (no automatic takeover), this only arises when a person frees a lock whose holder is still alive. So the free step must first confirm the holder's session has ended.
+7. **Scope.** Only routines with the repo attached can take the lock. The inbox, calendar and sweep also write Engagements, and they don't take it. So the lock serialises Zoya with Zoya, not Zoya with the other writers. WRITE PATH's re-read-and-own-segment rule remains the only guard there, and that should be stated, not implied.
+
+Under option (a), a single Zoya trigger, the lock closes the same-trigger overlap that (a) otherwise leaves open, a manual fire beside a scheduled run included. Under (b) or (c) it also closes the cross-kind race. The size gate is unchanged: 62,536 B or less for the final build.
+
+## One-writer build (2636857, c1669fd)
+
+**Verdict: accepted in design and text, with one fix to LOCK. Not yet accepted for deploy.** Two things are still missing: the lock harness run against GitHub on a test ref, and a durable pin for the SLOW work file.
+
+### Shape and size
+
+- One routine, hourly at :38. Its 10:38 and 16:38 weekday runs also do SLOW work.
+- SLOW work lives in `routines/zoya/release/zoya-slow-work.txt`, read by `git show <full sha>` and checked by sha256 prefix. If it's missing or wrong, that run does no SLOW work and ends Partial.
+- The prompt is 39,819 B, well under the 62,536 gate. The work file is 61,204 B and isn't bound by the trigger cap.
+- Coverage is complete. `build_one.py` holds every old FAST and SLOW part except the lease, RECONCILE and the two intros, which LOCK, the new intro and the work-file intro replace. Its asserts refuse leftover RECONCILE, lease, "SLOW run" or "FAST run" wording.
+- Reproduced: zoya-one 39,819 / acc12bf038e76cf3 with the full 40-character pin, identical on two builds. The pinned file at 2636857 hashes to 461f6c4e79bb98b3, as the prompt expects.
+
+### The lock
+
+- **Main's "+" finding is correct, and it matters.** Cleanup reproduced it on git 2.43. With "+", a push from a stale "free" read went through as a "forced update" over a live holder, which means two holders. Without "+", it was "[rejected] (stale info)". The feasibility protocol had that flaw. LOCK now forbids "+" and --force, and each lock commit's parent is the sha read, so a plain push lands only as a fast-forward.
+- **Harness: Main's 37 of 37 reproduced, twice,** against a local bare repo seeded "free".
+- **Fixed by Cleanup (`docs/proposals/d-split26s-fix.py`), mirrored in `lock-test.sh`:**
+  1. **Ambiguous acquire.** A push can land on GitHub while the client sees an error. LOCK read that as "another run won" and stopped, leaving the lock held by a run that ended, so Zoya would pause until the runbook. Now a failed push fetches again, and if the ref is the run's own commit, it holds.
+  2. **A failed fetch** read as "held by <blank>". Now it ends Skipped "lock unreadable".
+  3. **A rejected release** is checked the same way: if the ref already reads the run's free commit, the release went.
+
+  New test T9: a push that lands but reports failure is read back as held, and released. Harness: **40 of 40, twice** (`lock-test-cleanup-run1.txt`, `-run2.txt`).
+- **Runbook: meets the CTO's bar.** Release happens only on a `terminal_reason` in the holder's events. Silence, elapsed time, idle status or a failed lookup don't count. Sends are reconciled by decision 414 before the release, and the release is itself guarded on the holder's commit.
+- **Still not shown:**
+  - the harness against GitHub on a test ref, from a routine with the repo attached (the CTO's run);
+  - fencing of a paused holder, which stays fail-closed by design.
+
+### Before deploy
+
+1. **The SLOW work pin must survive this branch.** The prompt fetches `claude/business-os-structure-k3sqo5` and shows a sha on it. This branch's own working rule restarts it from the default branch once its PR merges. After that, a fresh routine checkout may not reach 2636857, and every SLOW run ends Partial "slow work file unavailable". That fails closed, but it stops all follow-ups. Pin to a ref that is never reset: the default branch after merge, or a dedicated release ref with the same no-force rule as zoya-lock. Then rebuild with that branch and sha.
+2. **The CTO's GitHub run** of `lock-test.sh` on refs/heads/zoya-lock-test, seeded free per the runbook, passing.
+3. **The production trigger has the repo attached** and push access to zoya-lock. Setup step 1 creates the free ref, and a read-back confirms it.
+
+### d-split26s (R1, R2): sound
+
+- The thank-you never waits on the Episode, and only the attach does.
+- A question about a recording whose status is open gets a holding reply and no second Akshay ask.
+- Only a due date ("on", "by", "original due") counts as a segment's date, and undated segments still don't count.
+
+### Result
+
+zoya-one **39,957 / 472e4cbece0532cd** (pinned to 2636857bb683..., the work file unchanged at 461f6c4e79bb98b3), identical on two builds, and copied to `routines/zoya/release/zoya-one.txt`.
+
+Checks:
+- Less text and fewer writers: yes. One writer replaces two, and the prompt drops from 65,299 + 38,248 to 39,957 plus a 61,204 B file read twice a day.
+- Selection by prefix or wording: none. The lock reads the ref's commit message only for "free:" or "held:", which the lock itself writes.
+- Retry double-send: one writer at a time, plus the 24-hour key, the unique Sent match and the decision 414 hold.
+- Bytes and hashes: above.
+
+## Rounds 5 and 5b, d-split26t and d-split26u, re-pinned to d0216f5 (f884dd7 to 9770ee8)
+
+**Verdict: accepted. Two pre-deploy items from e63106e are still open.**
+
+Reproduced: zoya-one **40,254 / 5ffcec2b6c1baf54**, built twice from the parts with branch `claude/business-os-structure-k3sqo5` and pin d0216f5a57cf..., matching the committed release file byte for byte. The pinned work file at d0216f5 hashes to 85d532e8d94c3c6a (61,358 B), as the prompt expects. Cleanup's LOCK fix (fetch again after a failed push) is in.
+
+**Round 5: 10 of 10 on both runs** (C, D, E, G, R1, R2, R3, I3, I4, SKIP), on the one-writer build. **Round 5b:** G, I3 and SKIP pass on both runs.
+- I3 shows the full outage path: hourly runs write only "Skipped: lock held by ...", the runbook releases, and the next run finds the one candidate, logs it and doesn't resend.
+- SKIP shows a held lock costs one record and nothing else.
+
+**d-split26t: sound.**
+- LOCK now comes before the Notion rules read; "before anything else" had contradicted it.
+- A skipped run's record is created once, as Skipped.
+- The Sent scan reaches back past a lock outage.
+- `@@VERSION@@` is now stamped.
+
+**d-split26u: sound.** The scan reaches back to the earliest run that took the lock since the last Completed one, with Skipped records not counting, so a crash before a day-long outage is still found. Two notes:
+- Partial runs, such as a daily cap, also don't end Completed. A run of Partial days widens the scan. That's a cost, not a risk, and it's bounded by the next Completed run.
+- The runbook now closes a crashed record as Failed. That's consistent: a Failed record still counts as a run that took the lock.
+
+**Still open before deploy (from e63106e):**
+1. **The pin is still on this branch.** The prompt fetches `claude/business-os-structure-k3sqo5` and shows d0216f5. That branch is restarted from the default branch after its PR merges, so a fresh routine checkout may then lose the commit, and every SLOW run would end Partial. Pin to a ref that never resets (the default branch after merge, or a no-force release ref) and rebuild.
+2. **The CTO's GitHub run of `lock-test.sh`** on refs/heads/zoya-lock-test hasn't landed. Every lock result so far uses a local bare repo.
+
+Checks:
+- Less text and fewer writers: +297 B over e63106e for four fixes, still one writer.
+- Selection by prefix or wording: none.
+- Retry double-send: closed across outages.
+- Bytes and hashes: above.
+
+## Round 5c and the RUN RECORD wording (940bbd4)
+
+**Verdict: accepted, with no re-run of SKIP needed.**
+
+Reproduced: zoya-one **40,240 / 06c1f070ab2dae89**, built twice from the parts with pin d0216f5, matching the committed release file. The work file at the pin is unchanged at 85d532e8d94c3c6a.
+
+- **I3 with a 31-hour outage passes on both runs.** The scan reaches back to the crashed run's 26 Oct 10:38 start past 23 Skipped records, and logs the one send once. **SKIP passes on both.** The date slip in the scenario is the test data's fault, as Main says, and both runs followed the narrative.
+- **The wording change needs no re-run.** RUN RECORD said "Right after LOCK (and in its step 3), one Activity ... Started", against LOCK step 3's "created once (never Started first)". The new "Once you hold the lock, one Activity" resolves it the way both SKIP runs already acted. A skipped run never holds the lock, so it writes only step 3's Skipped record.
+- **Noted residuals are agreed.** A No-op doesn't close the window, which only widens the scan. A crash between taking the lock and writing Started falls to the 24-hour floor and the runbook's reconcile step.
+
+**Still open before deploy:** the durable pin (it still fetches this branch), and the CTO's GitHub run of `lock-test.sh`.
+
+## Lock harness on GitHub, routine-side (707c2e8)
+
+**Verdict: accepted. The real-mechanism lock gate is met.**
+
+Checked by Cleanup:
+- **The harness run is the reviewed one.** Blob b814cbb6 is the current `lock-test.sh`, the version from Cleanup's e63106e with the re-read after an ambiguous push and test T9. Its sha256 is 9ed2e1796bcc...7f4c32, matching the evidence file. It uses the same acquire and release commands as `routines/zoya/parts/lock.txt`.
+- **The ref on GitHub, read by Cleanup:** `git ls-remote` shows refs/heads/zoya-lock-test at bf57f85, "free: released by T9-next 2026-10-27T00:31:48Z", as reported. refs/heads/zoya-lock doesn't exist, so production was untouched.
+- **The ref's history is consistent with exclusion.** It runs from 30068e1 ("routine A3") through the guarded setup commit 8a9c376 ("free: harness setup ..."): 69 lock commits, a straight first-parent chain with no merges, strictly alternating held and free, never two of either in a row. A stale overwrite would drop the holder's commit, so alternation alone wouldn't catch one. T8, which passed, is the test for that.
+- **Results, both runs:** 40 of 40 against GitHub's own ref update, from the routine's own tools, with no auth or network errors. That covers T1 (one winner from 5, in 10 rounds), T2 and T3 (skips while held, with no expiry or takeover), T4 and T6 (non-holder releases rejected), T5 (the guarded release), T7, T8 (stale reader rejected) and T9 (ambiguous push read back as held).
+
+As Main says, this proves the git operation is exclusive on GitHub. It doesn't fence a paused holder's Notion or mail writes, which is why the design fails closed and recovery follows the runbook (decision 415).
+
+**Still open before deploy:**
+- **The durable SLOW work pin.** The prompt still fetches `claude/business-os-structure-k3sqo5` at d0216f5. Pin to a ref that never resets, then rebuild. The current zoya-one is 40,240 / 06c1f070ab2dae89.
+- **The deploy setup:** the repo attached to the production trigger with push access, and zoya-lock created free and read back, per the runbook.
+
+## Final acceptance: one-writer Zoya release 49ba2fe, test record e51b2b4
+
+**ACCEPTED for deploy: zoya-one 40,975 / 56953088cc0ddf82, with the SLOW work file 61,447 / dedea9f8eb7af561 at e20647b through refs/heads/zoya-slow-pin.**
+
+### Reproduced and read back by Cleanup
+
+- `build_one.py` with `refs/heads/zoya-slow-pin` and e20647bc2da9... rebuilds zoya-one byte for byte, twice, matching `routines/zoya/release/zoya-one.txt`. There are no em dashes and no leftover `@@` placeholders.
+- The SLOW work file built from today's parts is byte-identical to the pinned file at e20647b.
+- **GitHub, by `git ls-remote`:**
+  - refs/heads/zoya-slow-pin is e20647b, and the file there hashes to dedea9f8eb7af561 (61,447 B).
+  - refs/heads/zoya-lock is 9aaa14e, "free: created by CTO 2026-10-27T08:37:11Z".
+- **The fetch is safe against a moved pin.** The prompt reads the file by full sha and checks its sha256. If the branch ever moves, a run fails closed ("slow work file unavailable") and never reads different text.
+
+### Both items from 14a44d3 are closed
+
+- **Durable pin:** a dedicated branch (tags are 403 here, and branch deletion is blocked), read by sha.
+- **Production setup:** the repo is attached to the Zoya routine (Akshay, 26 Oct), and zoya-lock was created free and read back.
+
+### The four deltas
+
+1. **Decision 418:** the holding line is "checking with akshay, will come back to you." with no date. No dated promise of ours is left in either file.
+2. **Reply all read-back (d-split26v):** the only new exclusion is a contact the mail itself says has handed over, with the new contact on it. It matches Rules for Zoya's "Reply all". The Mamatha and Sri exclusions stand.
+3. **Quote what you answer:** the latest inbound only, never the older chain. MCP Emails' plain quote isn't duplicated, and the html quote is added at read-back. Threading stays from that message.
+4. **The SLOW fetch** goes through zoya-slow-pin, as above.
+
+### Earlier Cleanup fixes, all present in the release
+
+- "never Mamatha", and Sri off Cc on un#;
+- LOCK's re-read after an ambiguous push, and "lock unreadable";
+- another action's holding reply excluded from recovery candidates, never its own;
+- the FT thank-you draft Cc names Zoya;
+- undated segments don't set Next date;
+- recovery candidates come from your Sent.
+
+### Tests
+
+- Rounds 5d (E, R3, R3H) and 5e (R3, R3H, and the pin check) pass on both independent runs.
+- The lock harness passed on GitHub, 40/40 twice (accepted at 14a44d3).
+- The release differs from 5e's prompt only in the SLOW fetch line and the version stamp, which those scenarios don't read. The pin check covers the fetch line.
+
+### Accepted gaps, for the next change list (not defects in this release)
+
+- **The SLOW file's SENDING lacks the quote block.** SLOW-work replies get only the server's plain quote, not the html one. The CTO accepted this.
+- **The invite step has no handover exception,** so a departed contact can stay on the calendar invite. Via isn't updated after a handover.
+- **The combined mail repeats the greeting** ("hey Jheel," then "hi Jheel,"). It's cosmetic, but it reads machine-made, so it should be first on the next change.
+- **Still open from before:** no Status after a mailed sponsored yes, and Payal's duplicate People rows.
+
+Checks:
+- Less text and fewer writers: yes. One writer replaces two, with a 40,975 B prompt plus a pinned file read twice a day.
+- Selection by prefix or wording: none. The lock reads only its own "free:" and "held:".
+- Retry double-send: the lock, the 24-hour key, a unique Sent match and the decision 414 hold.
+- Bytes and hashes: above.
+
+At deploy, Main reads back the live prompt at 40,975 / 56953088cc0ddf82. The cron is hourly at :38, with no second Zoya trigger. The first live runs show a held then free zoya-lock and Completed run records.
+

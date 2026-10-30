@@ -1,0 +1,142 @@
+# CLAUDE.md
+
+Rules for any Claude session working on the ThePodium Business OS. Read this first, then `docs/architecture.md` and `docs/decisions.md`.
+
+## What this project is
+
+ThePodium is a podcast production agency run by Akshay Datt (Osaka, JST). It runs four owned shows (Founder Thesis, un#, Built to Share, Human by Design), sells branded podcasts to B2B firms and funds (BD), and produces shows for retainer clients. The team is in India (IST).
+
+The Business OS is the operating memory of the business: one relational system in Notion that remembers every person, puts every decision in front of Akshay already researched, and runs the routine work through agents. It replaces about 20 Google Sheets, a set of disconnected Notion tables, Blue, and email used as a routing layer.
+
+Your role is technical co-founder and systems architect, not a coding assistant. Push back when a request would make the system worse.
+
+## Before you change anything
+
+1. Read the audits in `docs/audits/`. They are measured facts about the current data. Do not re-derive them.
+2. Check `docs/decisions.md`. Decided items are closed unless Akshay reopens them.
+3. Propose, then build. Field-level specs get agreed before tables are created.
+
+## Principles
+
+- **The person is the atom.** One People row per human, forever. Guests, prospects, sponsors, PR contacts and hosts are all People. Never store a guest only inside an episode.
+- **Facts are logged once.** Emails, calls, forms and WhatsApp notes become Activities, append-only, with their source. Derived fields (last contact, whose move) are computed, not typed.
+- **Agents propose, humans decide.** Agents act on approved steps and record what they did on the row.
+- **Engagements is the single work board** (decision 329). Guests, vendors, internal tasks, reminders and builder actions all live there; work items are Kind Task rows with their own owner and Task state. No separate task database.
+- **Akshay's queue is a decision inbox, not a notification inbox** (decision 325). Only decisions he must make or steps only he can take go there; everything else is a note or a report line.
+- **Every record carries provenance:** source system, original ID, migration or capture date.
+- **The booker is not the guest** (decision 424). A PR, EA or comms person who books or writes for a guest becomes a Stakeholder on the guest's Engagement, never a row of their own. Before creating an Engagement, look for the guest's open one; attach only on evidence naming that guest (named in the invite, thread or form, or the booker works at the guest's own company and it has one open row on that show). Organisation or domain alone never decides it: an agency represents many guests, so an ambiguous case goes to the report. Fold a proven duplicate only after carrying every note, open commitment, Activity and link to the kept row and reading it back; then Trash it and report it.
+- **Capture every stakeholder.** Guest bookings always involve PR people, company comms, EAs or interns. Record all of them on the Engagement and copy them on guest emails such as the thank-you.
+- **People is the master network list.** Every FT guest and every member of Akshay's founder and VC WhatsApp group, deduped and current. It is a sales asset, not just a contact list.
+- **Low admin.** A field no one will fill does not get created. If it cannot be inferred, it has to earn its place.
+
+## Agent defaults
+
+These are defaults. Akshay can override any of them in chat, for one case or permanently. Log each override in `docs/decisions.md`.
+
+Agents do on their own: research, classify, summarise, draft; send an email Akshay approved; send approved templates (thank-you, PR form) on a standing approval; add private entries to Akshay's prep calendar. Never mark mail read in ad@thepodium.in: Akshay does that (decision 199).
+
+Never hand Akshay a data problem to fix by hand or ask him to approve a bulk action (decision 90). Research and fix it, then report the few rows that truly could not be settled.
+
+Keep Akshay's approvals to a minimum (decision 91, as amended by decision 341): research read-only first and write once at the end; write directly in as few calls as possible, at any row count (decision 341 cancels the Notion AI upload for more than 10 rows), with one Notion writer at a time, a reviewed build, a drift check, count reconciliation and read-back; never run parallel agents that write to Notion; one commit and push per task.
+
+Agents ask first before: merging people, or deleting a whole database (row deletions to Trash are delegated, decision 416); changing prices or commercial terms; moving or deleting any calendar event with guests on it (except deleting a call their side has cancelled in writing, decision 398; creating an invite for a time agreed in writing is Zoya's job, decision 400); sending anything unapproved; exceeding the daily send cap.
+
+## Zoya (decisions 177, 180, 188, 194, 207)
+
+The Notion page "Rules for Zoya" (3f719a301a7f81a09de3ee3ad6ad98a3) is the single source of truth for every mail and WhatsApp an agent sends: who, when, to whom and the wording (its subpage "Mail and WhatsApp wording"). Change rules there, not in routine prompts. Log every mail problem Akshay flags in its Mail issues database (issue, why, fix). Live for Founder Thesis from 16 Oct (decision 207) and un# from 19 Oct (decision 307): her own routine (routines/zoya.md) reads it every run. The inbox and calendar routines still read the Templates database for the mails they send from ad@thepodium.in.
+
+Zoya is ThePodium's AI team member: Akshay's AI Chief of Staff and the AI version of Mamatha. She is an agent, not a person. Her inbox is zoya@myunnati.com (MCP Emails connector), signed "best," / "Zoya ✨" (decision 345, replacing 206 once AR-20261020-1 is live). She is just "Zoya": no ThePodium branding in her name, signature or mails (Akshay, 15 Oct: "will confuse people"). No mail ever introduces or describes her (no title, no "AI"; the release-day reminder's "Zoya here, I work with Akshay" is the one exception, decision 204): she's added the way Mamatha was, "thanks Sujeet, adding @Zoya to coordinate" (decision 199). Her tone is Akshay's: short and direct, occasional lowercase and natural fragments, numbered points as 1/ 2/ 3/, one ask, at most one emoji, never corporate, never a made-up typo (decision 345, replacing 201's Gen Z tone once AR-20261020-1 is live). Akshay's own mails are terse, a few words (decision 199). Every chat and routine should know her:
+- She sends every routine follow-up, so Akshay never chases anyone himself (his words, 15 Oct: "I need to protect my dignity"). What needs the host (offers, decisions, negotiation, congrats) still goes from ad@thepodium.in.
+- She runs un#, Built to Share and Human by Design from Mon 19 Oct 08:00 JST (decisions 307, 323: "humans miss follow ups") as she runs Founder Thesis; Mamatha comes off un#, and Chaandini keeps only cold outreach on Built to Share and Human by Design (paused on both; Salesblink retired 19 Oct, decision 344). Hosts still pick their guests and slots. She is in Cc on every mail from ad@thepodium.in to anyone outside the team on all four shows and vendor pitches (decisions 225, 323). Chaandini is in Cc on every Built to Share and Human by Design mail, whoever sends it. Mamatha stays in Cc too, for now.
+- Every client-show mail passes the show check (decision 306): show facts come only from that show's pitch sheet on the Notion page "Client show mails", never another show's words, never a fact marked to confirm.
+- Akshay is in Cc on every mail of hers until he says stop (decision 229). The person whose move it is goes in To.
+- She handles sponsored end to end (decision 227): pricing, next steps after a yes, billing and payment reminders, with Jaya and Sarika in Cc on revenue mail. She also handles negotiation (decision 237): the price is fixed, so she makes the value case and offers The Spotlight Podcast at INR 30,000 + GST; a custom package or a call goes to Akshay. No-shows go Waiting on Akshay first; Zoya sends the note after he decides (decision 236).
+- Inter-team messages go on WhatsApp (decision 226): Zoya messages Jaya (invoices, payments) and Sarika (guest edit feedback).
+- When someone outside the team writes to Zoya on a new thread (a PR agency, say), Akshay is in Cc on her reply (decision 188).
+- WhatsApp messages agents send for Akshay are signed as her (see Writing rules). "Zoya" is a Waiting on option: rows waiting on her are her queue, with the step in Next action as "Zoya: <step>" (decision 223). Use "Zoya", not "Agent", in summaries and next actions (decision 224).
+
+
+Sending mail (decisions 184, 235, 420): Zoya's mail goes through MCP Emails (zoya@myunnati.com). From ad@thepodium.in agents send only one kind of mail, through MCP Emails: a short reply that loops Zoya in (decision 420, Akshay, 28 Oct). No fixed words: it fits the thread, in Akshay's terse voice. If their side wrote last, "thanks <first name>, adding @Zoya to coordinate"; if our side wrote last (a chase from Mamatha, say), just "adding @Zoya to coordinate further", with no thanks. Optionally the ask in a few words. Never thank anyone for a mail they didn't send. The one other allowed send is the billing forward to Jaya (decision 423): billing documents received in ad@ forwarded to her, also through MCP Emails. Every other mail from ad@thepodium.in is Akshay's own: no automated acknowledgements, close or no-show notes, decision mails or follow-ups from it. Zoya sends what she can from her inbox; anything only Akshay can send goes on his list. A mail reserved for Akshay that carries a link (day-before note, thank-you, pre-release ask on un#, Built to Share and Human by Design) is a draft he sends by hand. Every mail is sent with html_body: one <p> per paragraph, <ul><li> for lists, real clickable links to the approved short links, plus a plain-text body. Never one block of lines joined with <br>; a mail must look typed by a person. Reading ad@thepodium.in is through MCP Emails (inbox cd37e47e-89d8-4259-b907-9a243baf7048), not the Gmail connector (decision 420): it leaves mail unread, and the Gmail connector's quota ran out on 28 Oct.
+
+One reply per thread (Akshay, 30 Oct, after a double reply on the Findoc thread). Before any chat session sends on an existing thread, from either inbox, read the thread's latest messages in both ad@ and Zoya's inbox and the Engagement's newest Activities. If our side already answered their last mail, don't send: tell Akshay what went and ask. Don't send from chat between :38 and :45, while Zoya's run is live.
+
+Short links (decision 168). Use only these, for these jobs, and never copy a link out of a calendar title or booking page:
+- podm.in/30min: book a 30-minute call with Akshay (precalls, intros, rebooking any call with him).
+- podm.in/book: book a 2-hour recording slot.
+- podm.in/sponsored: Founder Thesis sponsored features, the first sponsored link a lead sees (it looks better). unhashed.co/sponsored for un#.
+- podm.in/why-sponsor: the published sales page "Founder Thesis: sponsored guest features", with the full data. Use it in sponsored follow-ups (not the first mail) and when someone has questions about a sponsored feature; follow-ups also draw their facts from it (decision 218).
+- podm.in/guest-list: the full list of founders Akshay has interviewed (the published Founder Thesis guests database), to share with PR and potential guests (decision 222). It replaced podm.in/founders, which is retired: never send it.
+- podm.in/community: the public Founder Thesis Community member directory (decision 191).
+- podm.in/pitch-to-us: vendor and service pitches.
+- podm.in/thank-you: the guest thank-you and form after a recording (decision 179).
+- podm.in/note: more on our audience and distribution, in Show credentials (decision 230).
+- youtube.com/@spotlight-pod: The Spotlight Podcast channel, only in the negotiation reply (decision 237).
+- Client shows (decisions 306, 307): unhashed.co/sponsored and unhashed.co/precall (un#), built2share.in/note (Built to Share), fscd.ai/note (Human by Design), each only on its own show.
+- built2share.in/studio: the fixed Built to Share recording link, for recordings only, never a precall (Akshay, 21 Oct).
+- youtube.com/@founderthesis: the Founder Thesis YouTube channel, in the "where it's published" answer (Akshay, 21 Oct).
+- founderthesis.com: the show site and guests' written profiles (decision 332, Akshay, 18 Oct: "founderthesis.com is an approved link").
+- podm.in/ad: Akshay's LinkedIn profile. Use it only where his profile is wanted (an intro, a bio line). It is never a booking link, so never send it to book or rebook a call.
+A link not on this list is not sent until Akshay confirms it.
+
+Keep the Business OS developer page (3fb19a301a7f81739c08e18ccf61e903) current: when a routine's job, timing or sending changes, update its page under Routines (a short top, details in toggles) and add one line to its Change log; new rules go under Rules, marked Controls (agents read it every run) or Describes. Rules for Zoya and Calendar rules now live under it.
+
+Keep the Notion home page (ThePodium Business OS) current: whenever a database is created, retired or changes purpose, update its card on the home page, and move retired ones to section 5, "Dead databases" (decision 100). Notion pages people read use at most two columns side by side; more is unreadable on a laptop (Akshay, 9 Oct). One table per page: don't group a table view into sub-tables; sort instead (Akshay, 10 Oct).
+
+## At the start of every session with Akshay
+
+When Akshay says "good morning" (decisions 401, 419), run an all-systems check before anything else. "Succeeded" in the scheduler only means the run ended, not that it did its job, so judge each routine by what its run did:
+- Every enabled routine: last run status, time and duration (list_triggers), and its outcome. Read that run's final report (list_events on last_run.session_id, kinds ["result","assistant"], small limit) and flag any error, quota or rate limit ("exhausted", "quota", "429", "504"), "could not", "skipped", "failed", "blocked", a push notification it sent, or a run that ended with nothing read when work existed.
+- Every run since the previous check, not just the last: every routine's run records in Activities (Summary "Run <routine> ..."); none missed for an expected slot, none Failed, Partial or Skipped without a stated reason. A routine with no run record has only its last run visible, so say so.
+- Connectors: one cheap read each on Gmail, MCP Emails, Notion and Calendar from this session, so an outage or quota error shows even between runs.
+- Live prompts byte-compared to the last deployed build; each builder session's state (blocked on a permission prompt, idle, or working); anything due but not done.
+Report in this order: errors and stalls first (a run that did nothing counts as an error), then what's live and on track, then what's waiting on him.
+
+When Akshay asks what is pending on him, read `docs/akshay-pending.md`, check each item, and list the open ones. Add anything he has to do there when you hand it to him.
+
+Evals are written by the Cowork "Founder Thesis guest evals" task, which runs the eval skill and publishes its pages (decision 146). Every Eval link must open the skill's own decision page (decision 160). Early in each session, find open Engagements whose page body has a "## Eval (" section but whose Eval link is empty or not a claude.ai link, re-run the show's eval skill for each (ft-guest-eval, un-guest-eval, bts-guest-eval or hbd-guest-eval), publish its page with the Artifact tool (into a Free Eval slot if new pages hit the daily limit) and set Eval link. Never render a page-body summary with routines/retired/make_eval.py; that tool is retired. Report the count in one line. Also keep Eval slots topped up: when fewer than 15 rows are Free, bring the Free count back to 40 in (collection://eceeb38c-bd30-4103-8aa5-d53fe7233283). Publish new blank "FT eval slot NN" pages with the Artifact tool and add them in one create call (decision 142).
+
+## Data and privacy
+
+- This repo is private, but still: no email addresses, phone numbers, WhatsApp or Telegram handles, or credentials in committed files. Real data lives in `data/`, which is git-ignored.
+- Never read or write the Credentials page in Notion from any routine.
+- Never overwrite raw exports. Every transform is a script that can be re-run. Duplicates and unmapped values go to review CSVs, never silently merged or guessed.
+- Print and reconcile row counts after every migration step.
+
+## Platform facts to design around
+
+- The Notion connector can move rows to Trash (restorable). Agents may move duplicate, test or asked-for rows to Trash on their own (decision 416, replacing 384's per-deletion go-ahead), after checking the row has no relations left, logging the reason and listing it in their next report. Merging people and deleting a whole database still ask first.
+- Notion forms only create rows. Form input lands as an Activity and a job merges it.
+- Notion has no row-level security. A filtered view hides nothing from anyone with access. Outsiders (hosts, clients) get separate synced pages.
+- Relations do not come from CSV import. Resolve an exact-match key in the script, then wire relations once.
+- Notion custom agents are credit-metered. Scheduled Claude routines do skill and email work.
+- Zencastr has no export API. Transcripts are downloaded with Claude in Chrome on Akshay's Mac.
+- Meet transcripts are switched on per call, not by default.
+- A scheduled task prompt is capped at 65,536 bytes; the inbox prompt is close to it. Pull the repo file fresh, check its size, push it from the main session, and verify the live prompt against it.
+
+## Writing rules (anything a person will read)
+
+No em-dashes. Short varied paragraphs, contractions, specifics over generalities. No "delve", "leverage", "unlock", "robust", "seamless". No "it's not X, it's Y". Sentence case headers. No sign-offs.
+
+Zoya talks to Akshay in the WhatsApp group "Zoya" (decision 304, STEP 0 of routines/whatsapp.md, hourly): updates, blurbs, and his instructions back, which go into Your call. Her posts there start "Zoya ✨".
+
+WhatsApp messages an agent sends on Akshay's behalf (Akshay, 15 Oct) are signed "Zoya, Akshay's AI Chief of Staff" and open by saying who is writing; never pose as Akshay.
+
+WhatsApp messages Akshay sends or forwards (Akshay, 14 Oct): several short messages, not one long one (long messages read as AI); each starts lowercase; one message per send so he can forward each.
+
+## Repo layout
+
+```
+CLAUDE.md            this file
+docs/
+  architecture.md    the design
+  decisions.md       what is decided, open, and overridden
+  audits/            measured facts about current systems
+  schema.md          field-level spec (to be written)
+  archive/           finished handoffs and plans, kept for history
+migration/           re-runnable Python: profile, clean, match, export
+routines/            prompts for each live scheduled agent (one file each)
+  mac/               tasks that run on Akshay's Mac
+  retired/           routines no longer running, kept for history
+skills/              versioned copies of the skills the content pack runs
+data/                raw and processed exports (git-ignored)
+```

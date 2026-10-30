@@ -1,0 +1,32 @@
+{
+ "clock": "2026-10-27 14:45 JST run (Tuesday)",
+ "rule": "Akshay's own id is AKSHAY-ID (the 'from' of his fromMe messages). Chat ids are placeholders. Each scenario sees only what it lists; assume Notion lookups return what the scenario says.",
+ "A1": {
+  "what": "The search (list_messages, no chat_id, query @zoya, sender AKSHAY-ID, since 48h) returns: (1) fromMe, chat GROUP-ADCMSG (a work group named 'AD CM SG' with a team member in it), 2026-10-26 06:17 JST, text '@zoya can you ingest this list and compare with the founder thesis network? Find names that are common.', quoting a message from another member: 'this is a list of angels ... - <a Google Sheets link>'; key KEY-A1. No Activity has Source ID wa:KEY-A1.",
+  "question": "What is created, where does the reply go and what does it say, what is logged? Is anything posted in GROUP-ADCMSG?"
+ },
+ "A2": {
+  "what": "Same as A1, but an Activity with Source ID wa:KEY-A1 already exists.",
+  "question": "What happens?"
+ },
+ "A3": {
+  "what": "The search also returns fromMe, chat CHAT-TEAM1 (a team member's one-to-one chat), text 'zoya here: got your @zoya, but no question came with it ...' (Zoya's own earlier reply), key KEY-A3.",
+  "question": "Is it handled?"
+ },
+ "A4": {
+  "what": "The search returns a non-fromMe message in CHAT-TEAM1 from a People row tagged Team: '@Zoya, Book a call with Akshay at 3PM IST', key KEY-A4, 20 hours old, no Activity.",
+  "question": "Which step handles it (0a1 or 0d) and does 0a1 change 0d's behaviour?"
+ },
+ "A5": {
+  "what": "The search returns fromMe in CHAT-FAMILY (a chat named like a family chat), text '@zoya remind me to renew Zencastr on 1 Nov', key KEY-A5, 3 hours old.",
+  "question": "What is created, how is the chat named in the reply, Activity and report, and is anything else in that chat read?"
+ },
+ "A6": {
+  "what": "Akshay fromMe in GROUP-ADCMSG 52 hours ago: '@zoya check this'; and fromMe 2 hours ago: 'can you check this @zoya' (doesn't start with @zoya).",
+  "question": "Are either handled?"
+ },
+ "A7": {
+  "what": "The search result has coverage.truncated true and oldestScannedIso 30 hours ago.",
+  "question": "What does the run do?"
+ }
+}

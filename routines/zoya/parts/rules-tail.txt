@@ -1,0 +1,1 @@
+Those pages decide who gets which mail, when, and in what words. Where a page and this prompt differ, the page wins, except for the HARD RULES at the end, which always hold.
