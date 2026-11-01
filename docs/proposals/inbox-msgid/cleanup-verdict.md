@@ -1,11 +1,15 @@
 # Cleanup verdict: inbox Message-ID patch (1 Nov)
 
-**Accepted as Cleanup's rev: `cleanup/inbox.txt`, 65,328 / 32697b029b1fde5f.** Main's build, 65,334 / 2f3250ed1d45e7db, isn't accepted as it stands. The rev is Main's build plus four small edits (`cleanup/patch2.py`). Built twice, byte-identical, 8 bytes under the build limit, em-dash count unchanged.
+**Accepted as Cleanup's rev: `cleanup/inbox.txt`, 65,227 / 3bb46f9332241e3b.** Main's rev 2 (65,233 / debcde463cd9cd0f) isn't accepted as it stands. The rev is rev 2 plus four small edits (`cleanup/patch2.py`). Built twice, byte-identical, 109 bytes under the build limit, em-dash count unchanged.
+
+Main pushed rev 2 (6ceefb6) while this review was running, so the verdict is on rev 2. Round 2's 65,334 / 2f3250ed1d45e7db is superseded.
 
 ## What I checked
 
 - **Live base.** I read the live inbox trigger back at 1 Nov 04:50Z: 65,325 / e6cf4db2bc37918b, enabled, cron `2 7-23` JST. That's the cap build.
-- **Main's build.** `patch.py` on the cap build reproduces 65,334 / 2f3250ed1d45e7db byte for byte. The diff holds only the intended edits, in STEP 1, IDENTITY and STEP 2's batching.
+- **Main's build.** `patch.py` on the cap build reproduces rev 2, 65,233 / debcde463cd9cd0f, byte for byte. The diff holds only the intended edits, in STEP 1, IDENTITY and STEP 2's batching, plus rev 2's changes:
+  - "Your call first" ("every run, first and in full; the mail cap and any backlog never delay or shorten it"), which is right;
+  - three cut sentences, each of which repeats a rule the prompt still states. STEP 2 still sets Kind ("Email out" if the sender is Akshay or Team), and IDENTITY still says one row per message.
 - **What's right in it.**
   - "no Message-ID, no Activity" and "never skipped to save load" close the 12:12 and 13:02 path.
   - The `allmail:` fallback is gone, and the lookup now finds `allmail:` rows.
@@ -38,9 +42,10 @@
 
 ## Next action inbox rebases cleanly
 
-- `docs/proposals/next-action/patch.py inbox` on 2f3250ed reproduces 65,297 / 932472e0a326181e.
-- With only its INPUT hash changed to 32697b029b1fde5f, it applies to this rev and gives **65,291 / 2352e359308b3306**, with 45 bytes of headroom.
-- Main should rebuild Next action's inbox on this rev, not on 2f3250ed.
+- `docs/proposals/next-action/patch.py inbox` on rev 2 reproduces 65,306 / dcd1c44215676619.
+- With only its INPUT hash changed to 3bb46f9332241e3b, it applies to this rev. Built twice, it gives **65,300 / 430ceefdda112a3f**, with 36 bytes of headroom.
+- The two cuts are what make the room for this. Without them it comes to 65,394, which is over the limit.
+- Main should rebuild Next action's inbox on this rev, not on rev 2.
 
 ## Reconciliation plan (`reconcile-allmail.md`)
 

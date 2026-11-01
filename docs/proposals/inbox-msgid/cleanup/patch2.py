@@ -1,11 +1,11 @@
-"""Cleanup rev of the inbox Message-ID patch (1 Nov). Input: Main's build, 65,334 / 2f3250ed1d45e7db.
+"""Cleanup rev of the inbox Message-ID patch (1 Nov). Input: Main's rev 2, 65,233 / debcde463cd9cd0f.
 1/ a pending mcp: id (retried by id) never holds "read to", so one unreadable mail can't freeze the cursor;
 2/ the 50 KB guard comes back as a bound, not a skip: at most 2 heavy originals a run, the rest wait;
 3/ a lone allmail: row is worked on that row, never a second Activity.
-Room: a redundant parenthesis and the RAW alias (defined in the Gmail tool map). Usage: python3 patch2.py <in> <out>."""
+Room for the Next action patch on top: a redundant parenthesis and the RAW alias (defined in the Gmail tool map). Usage: python3 patch2.py <in> <out>."""
 import hashlib, os, sys
 s = open(sys.argv[1], encoding="utf-8").read()
-assert hashlib.sha256(s.encode()).hexdigest()[:16] == "2f3250ed1d45e7db"
+assert hashlib.sha256(s.encode()).hexdigest()[:16] == "debcde463cd9cd0f"
 dashes = s.count(chr(0x2014))
 def rep(a, b):
     global s
