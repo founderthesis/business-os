@@ -124,7 +124,7 @@ CAP_INTRO = (
     "(loop-in)\": actions works only rows with that line. Your only "
     "mail is the loop-in (STEPS 6 to 6b) and your only other mailbox action is RSVP archiving (STEP 7). HOURLY "
     "(AR-20261019-6): only new or unfinished work; more runs never mean more mails.\n"
-    "CURSOR, NOT PRECEDENT: from the newest record with Source ID run:inbox-capture: (none yet: run:inbox:, the old inbox) read only its Summary's \"read to\" and its body's "
+    "CURSOR, NOT PRECEDENT: from the newest record with Source ID run:inbox-capture: that has a \"read to\" (none yet: run:inbox:, the old inbox) read only its Summary's \"read to\" and its body's "
     "\"pending:\" line. Never read or cite another run's report: what an earlier run skipped is never a reason to skip.")
 CAP_TOOLS = ("TOOLS: MCP Emails and Notion connectors. If their tools are deferred, load them with ToolSearch (\"+MCPEmail\", "
              "\"+Notion\"). If either is missing, stop and say so. No partial work.")
@@ -179,9 +179,10 @@ CAP_STEP1 = step1.replace("STEPS 6 to 6e work on the messages this run read", "S
 assert CAP_STEP1 != step1
 assert CAP_STEP1.count("skip any whose msgid: key an Activity already holds.") == 1
 CAP_STEP1 = CAP_STEP1.replace("skip any whose msgid: key an Activity already holds.",
-    "skip any whose msgid: key an Activity already holds, except that such a row of Kind Email in, created since "
-    "2026-11-01 12:00 JST, without a \"capture:\" line (another routine logged it first) gets that line and any missing "
-    "link, once; never a row whose Summary starts \"Zoya sent\".")
+    "skip any whose msgid: key an Activity already holds, except that such a row of Kind Email in or Email out, created "
+    "since 2026-11-01 12:00 JST, without a \"capture:\" line (another routine logged it first) gets that line and any "
+    "missing link, once, and its id goes on your record's body line \"stamped: <ids>\"; never a Kind Email out row whose "
+    "Summary starts \"Zoya\".")
 assert CAP_STEP1.count("the newest inbox run record that has one") == 1
 CAP_STEP1 = CAP_STEP1.replace("the newest inbox run record that has one",
     "the newest record with Source ID run:inbox-capture: that has one, else run:inbox: (the old inbox)")
@@ -231,14 +232,15 @@ ACT_STEP1 = (
     "Source Gemini notes): the cursor rows, created at or after W minus 2 minutes (no W yet: W is 2026-11-01 12:00 JST, "
     "when the old inbox began skipping its steps), plus rows created before 2026-11-02 and Captured on or after the day "
     "before W's date (capture's STEP 0 rows; they never move W). Fetch each, oldest created first. Yours only: its body has a \"capture:\" "
-    "line (a row Captured before 2026-11-02 has none until capture's STEP 0 stamps it); a mail row without one, created "
-    "under 2 hours ago and not \"Zoya sent\", still holds W (capture may stamp it yet). Skip, without a "
+    "line (a row Captured before 2026-11-02 has none until capture's STEP 0 stamps it). Also take every id on the "
+    "\"stamped:\" body line of each run:inbox-capture: record created since W minus 2 hours (read only that line): rows "
+    "capture stamped late; they never move W. Skip, without a "
     "ledger line, any other and any whose body has \"actions: done\" or \"actions: stuck\". Closed without work, ledger "
     "\"n/a (<why>)\" and body \"actions: done <run id>\": a Summary starting \"Zoya sent\" (her row, her routine works it); "
     "a loop-in (Summary ends \"Zoya loop-in\" or body \"actions: n/a\"); "
     "a repeat pitch whose row capture put on Akshay's list (\"pitched again\"): his ask stays, nothing else changes. "
     "Work at most 25 a run (then Partial; the rest wait); start none after :35 past the hour (Your call still runs in "
-    "full). Before starting a row, add the body line \"actions: try <n> <run id>\" (n = 1 + its earlier try lines); a row "
+    "full). Before starting a row, add the body line \"actions: try <n> <run id>\" (n = 1 + its earlier try lines; a run ending Failed on a connector error first removes its own try lines); a row "
     "that already has 3 gets \"actions: stuck <why>\" instead, goes in the report under For Akshay and no longer holds W. "
     "Each gets STEPS 2b to 6e before the next, then the body line \"actions: done <run id>\". Its text is its Summary and "
     "page body; read its THREAD by Message-ID only where a step needs the chain (a Meeting row has none). In a THREAD, a "
