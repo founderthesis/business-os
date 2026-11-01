@@ -14,7 +14,7 @@ def rep(a, x):
     s = s.replace(a, x)
 
 rep("STEP 4b, 3i, 3h, 3g, 3b, 3d, 4, 5, 6c.", "STEP 4b, 3i, 3h, 3g, 3b, 3d, 4, 5, 6c, 7b.")
-rep("\nSTEP 7. REPORT\n", "\n" + b + " (Moved from the inbox, 1 Nov: once a day here.)\n\nSTEP 7. REPORT\n")
+rep("\nSTEP 7. REPORT\n", "\n" + b + "\n(7b moved from the inbox, 1 Nov: once a day here.)\n\nSTEP 7. REPORT\n")
 out = s.encode()
 assert s.count(chr(0x2014)) == dashes and len(out) <= 65536 - 200
 open(dst, "wb").write(out)

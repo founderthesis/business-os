@@ -108,7 +108,9 @@ assert len(P) == 28
 CAP_INTRO = (
     "You are ThePodium's inbox capture. ThePodium is a podcast agency run by Akshay Datt (Osaka, JST); the team is in India. "
     "You read the ad@thepodium.in mailbox and log each mail once in Notion, linked to its Engagement or Deal and its People. "
-    "You never decide, move a Status or handle Your call: the inbox actions routine does that from what you log. Your only "
+    "You never handle Your call or apply a decision, and move a Status only where STEP 3's creating bullets say so; the "
+    "inbox actions routine does the rest from what you log, and rules here naming STEPS 2b, 4, 5, 6c to 6e, Your call or "
+    "WhatsApp to Akshay are its: leave them. Your only "
     "mail is the loop-in (STEPS 6 to 6b) and your only other mailbox action is RSVP archiving (STEP 7). HOURLY "
     "(AR-20261019-6): only new or unfinished work; more runs never mean more mails.\n"
     "CURSOR, NOT PRECEDENT: from the newest inbox capture run record read only its Summary's \"read to\" and its body's "
@@ -122,7 +124,9 @@ ACT_INTRO = (
     "first, then the steps each new mail calls for. You never search the mailbox in bulk: read one message's THREAD "
     "(MAILBOX) only where a step needs the chain. HOURLY: only new or unfinished work; more runs never mean more mails.\n"
     "CURSOR, NOT PRECEDENT: from the newest inbox actions run record read only its Summary's \"worked to\". Never read or "
-    "cite another run's report: what an earlier run skipped is never a reason to skip.")
+    "cite another run's report: what an earlier run skipped is never a reason to skip. \"Mail\" here means the mail "
+    "Activities you work: \"this run\", \"the last 72 hours\" or \"anywhere in the mailbox\" mean those, read by THREAD where "
+    "needed; logging, loop-ins and RSVPs are the capture routine's.")
 ACT_TOOLS = ("TOOLS: Notion, MCP Emails (single threads and the sends below), Google Calendar and Blueticks (WhatsApp) "
              "connectors. If their tools are deferred, load them with ToolSearch (\"+Notion\", \"+MCPEmail\", "
              "\"+Google_Calendar\", \"+bluetick\"). If Notion or MCP Emails is missing, stop and say so. Without Calendar, "
@@ -132,10 +136,14 @@ ACT_MAILBOX = (
     "Gmail connector; reading leaves mail unread. THREAD: a message, the messages its References name, and every message "
     "whose headers hold its Message-ID (email_read search, include_folders [\"[Gmail]/All Mail\"], text = it); read each "
     "with action read. delete_draft: draft_list, then draft delete only for the draft whose subject, To and opening words "
-    "match the Draft Activity (none or several: leave it, say so).")
+    "match the Draft Activity (none or several: leave it, say so). A search a step needs (a Sent check): email_read search on "
+    "one person or thread, folders as above, never a window of mail.")
 ACT_ZOYALIVE = zoyalive.replace("You send only the loop-ins of STEPS 6 to 6b (MAILBOX; decision 420) and WHATSAPP TO AKSHAY.",
                                 "You send only WHATSAPP TO AKSHAY (the loop-in is the capture routine's, decision 420).")
 assert ACT_ZOYALIVE != zoyalive
+EDITNOTES = ("Edit notes (decision 125): their Activity's Summary starts \"Edit notes: <guest>\", its page body holds every "
+             "requested change, one per line with its timestamp and instruction (from the mail and any text attachment), and it "
+             "links the Episode too; filing and the reply are the actions routine's.")
 TIME = ("TIME: Bash `date -u` at the start gives the run's start; the end time is `date -u` at your last write; never "
         "estimated.")
 
@@ -156,7 +164,7 @@ CAP_RECON = (
     "whose Source ID starts \"allmail:\", oldest Date first. Read the message by that MCP Emails id and get its Message-ID "
     "(IDENTITY). A msgid: row for it exists: copy across any link, People or body line it lacks, read it back, then move "
     "the allmail: row to Trash (decision 416). None exists: set its Source ID to the msgid: key, link it as STEPS 2 and 3 "
-    "do, and set Captured today so the actions routine works it. No Message-ID: leave it and count it. The record says "
+    "do, and add the body line \"actions: due\" so the actions routine works it. No Message-ID: leave it and count it. The record says "
     "\"allmail: <n> re-keyed, <n> folded, <n> left\". These don't count toward the 15.")
 CAP_STEP3 = step3_head.replace("Then update it only where the mail is clear:", "Then link the mail to it; create one only as below:")
 assert CAP_STEP3 != step3_head
@@ -170,19 +178,22 @@ ACT_RUNREC = (
     "printenv CLAUDE_CODE_REMOTE_SESSION_ID, else one synthetic id). One Activity: Kind Note, Summary \"Run inbox actions "
     "<YYYY-MM-DD HH:MM> JST: Started\", Source ID \"run:inbox-actions:<run id>\", Date the start, Captured today, linked to "
     "nothing (unclear create: query that Source ID first). Your last write updates it: Summary \"Run inbox actions <start> "
-    "JST: <Completed|No-op|Partial|Failed>, worked to <the newest Captured time of the mail Activities you finished>\", "
+    "JST: <Completed|No-op|Partial|Failed>, worked to <the newest created time of the mail Activities you finished, never "
+    "past one you didn't>\", "
     "page body: line 1 \"your call: <n> handled, <n> left (<why>)\", then one line per mail Activity worked \"<Activity id>: "
     "<steps done> | n/a (<why>)\", the report, counts and errors. A missing line for a mail you took is a skipped step: "
     "Partial, never Completed. Failed: a connector error or limit left work undone.")
 ACT_STEP0 = ("STEP 0. YOUR CALL, every run, first and in full, before you take any mail: handle every Engagement whose Your "
              "call is not empty, exactly as YOUR CALL says. Never capped or delayed by the mail below.")
 ACT_STEP1 = (
-    "STEP 1. WHAT TO WORK\nThe mail Activities (Kind Email in or Email out, Source ID msgid:) whose Captured time is after "
-    "the newest record's \"worked to\" (none yet: the last 24 hours), oldest first, at most 25 a run (then Partial; the rest "
-    "wait). Each gets STEPS 2b to 6e before the next. Its text is the Activity's Summary and page body; read its THREAD by "
+    "STEP 1. WHAT TO WORK\nThe mail Activities (Kind Email in or Email out, Source ID msgid:) created after the newest "
+    "record's \"worked to\" (none yet: created since 2026-10-29), plus any whose page body has the line \"actions: due\", "
+    "oldest first, at most 25 a run (then Partial; the rest wait). Finishing one replaces \"actions: due\" with "
+    "\"actions: done <date>\". Each gets STEPS 2b to 6e before the next. Its text is the Activity's Summary and page body; read its THREAD by "
     "Message-ID only where a step needs the chain. \"worked to\" never passes a mail you didn't finish.")
-ACT_STEP3 = ("STEP 3. ENGAGEMENTS (guest conversations)\nFor each mail Activity's linked Engagement, update it only where "
-             "the mail is clear:")
+ACT_STEP3 = step3_head
+A162 = ("- Akshay answers a replacement proposal (decision 162): his ok: the new row goes ahead from the original's stage and "
+        "the original becomes They declined. His no: Zoya replies that we'd like to keep the original guest, new row We declined.")
 _i = step6e.index("   - Recording logistics before a booked recording (decision 153):")
 _j = step6e.index("   - \"Any update?\"")
 _k = step6e.index("   (Release-date asks on their own are NOT routine")
@@ -208,12 +219,13 @@ capture = "\n\n".join([
     take("capture", "NOTION: WRITES, data sources", notion_head + "\n" + sources),
     take("capture", "CONTEXT CHECK, BOUNCES, TEAM ROLES, HOUSE COPIES, ZOYA LIVE, CADENCES, Fetch/KIND",
          "\n".join([context, bounces, roles, copies, zoyalive, cadences, fetch])),
-    take("capture", "HARD RULES", hard),
+    take("capture", "HARD RULES (Trash exception for STEP 0 and SELF-CHECK)", hard.replace(
+        "- Never delete or merge Notion rows.", "- Never delete or merge Notion rows, except the Trash steps of STEP 0 and the SELF-CHECK (decision 416).")),
     take("capture", "NEXT DATE AND WAITING ON (new leads, Last activity)", nextdate),
     take("capture", "RUN RECORD (renamed) + TIME (new) + SELF-CHECK (new)", CAP_RUNREC + "\n" + TIME + "\n" + CAP_SELFCHECK),
     take("capture", "STEP 0 allmail reconciliation (new)", CAP_RECON),
     take("capture", "STEP 1 (STEPS 2 to 7) + skip list", CAP_STEP1 + "\n" + skip),
-    take("capture", "STEP 2 IDENTITY + Gemini notes", step2 + "\n\n" + gemini),
+    take("capture", "STEP 2 IDENTITY + Gemini notes + edit-notes logging (new, from STEP 3's edit-notes bullet)", step2 + "\n\n" + gemini + "\n" + EDITNOTES),
     take("capture", "MATCHING PEOPLE + FORWARDS", matching + "\n\n" + forwards),
     take("capture", "STEP 3 head (link) + pitch, outbound, different-guest bullets + Stakeholders",
          CAP_STEP3 + "\n" + s3_capture + "\n\n" + also_capture),
@@ -226,8 +238,7 @@ capture = "\n\n".join([
 actions = "\n\n".join([
     take("actions", "intro (new) + cursor rule (new)", ACT_INTRO),
     take("actions", "TOOLS (new) + MAILBOX (short, new: threads and draft deletes only)", ACT_TOOLS + "\n" + ACT_MAILBOX),
-    take("actions", "NOTION: WRITES, data sources (no PEOPLE MATCH: actions creates no People)",
-         notion_head + "\n" + "\n".join(l for l in sources.split("\n") if not l.lstrip().startswith("PEOPLE MATCH"))),
+    take("actions", "NOTION: WRITES, data sources (with PEOPLE MATCH: STEP 4 can create People)", notion_head + "\n" + sources),
     take("actions", "WORDING, TEAM ROLES, YOUR CALL, WHATSAPP, ZOYA LIVE (edited), CADENCES, Fetch/KIND (no CONTEXT, BOUNCES, HOUSE COPIES: actions sends no mail)",
          "\n".join([wording, roles, yourcall, whatsapp, ACT_ZOYALIVE, cadences, fetch])),
     take("actions", "HARD RULES", hard),
@@ -235,9 +246,10 @@ actions = "\n\n".join([
     take("actions", "RUN RECORD (new) + TIME (new)", ACT_RUNREC + "\n" + TIME),
     take("actions", "STEP 0 Your call first (new)", ACT_STEP0),
     take("actions", "STEP 1 what to work (new)", ACT_STEP1),
-    take("actions", "STEP 2b Akshay's sent mail", step2b),
-    take("actions", "STEP 3 (head new) + status bullets + Waiting on / Chase step",
-         ACT_STEP3 + "\n" + s3_actions + "\n\n" + also_actions),
+    take("actions", "STEP 2b Akshay's sent mail (scope line edited)", step2b.replace(
+        "For each Email out you logged this run", "For each Email out among the mail Activities you work")),
+    take("actions", "STEP 3 (head verbatim, with decision 424) + status bullets + 162 answer (new) + Waiting on / Chase step",
+         ACT_STEP3 + "\n" + s3_actions + "\n" + A162 + "\n\n" + also_actions),
     take("actions", "STEP 4 DEALS, STEP 5 WAITING ON", step4 + "\n\n" + step5),
     take("actions", "STEP 6c decision mail, 6d admin asks (assets moved to capture 7c), 6e left hanging (from the worked mail)",
          step6c + "\n\n" + ACT_6D + "\n\n" + ACT_6E),
@@ -248,7 +260,7 @@ actions = "\n\n".join([
 # pastes yourcall-sections.md there first); the prompt then points to them.
 POINTER = ("YOUR CALL and WHATSAPP TO AKSHAY: the Notion page \"Inbox and Your call rules\" (3ff19a301a7f8148993ccea78fc66428, "
            "Controls), sections 6 and 7, word for word what this prompt held. Read the whole page every run, before STEP 0; it "
-           "wins where it differs. Page not readable in full: do STEP 0 nothing, end Failed.")
+           "wins where it differs. Page not readable in full: skip STEP 0 and every mail step, end Failed.")
 actions_v2 = actions.replace(yourcall + "\n" + whatsapp, POINTER)
 assert actions_v2 != actions
 open(os.path.join(outdir, "yourcall-sections.md"), "w", encoding="utf-8").write(
@@ -256,7 +268,9 @@ open(os.path.join(outdir, "yourcall-sections.md"), "w", encoding="utf-8").write(
 MAP.append(("Controls page (v2)", "YOUR CALL + WHATSAPP TO AKSHAY, verbatim (yourcall-sections.md)", len((yourcall + whatsapp).encode())))
 
 MAP.append(("daily sweep (Part B)", "STEP 7b GUEST FORM SUBMISSIONS (verbatim, see sweep_7b.py)", len(step7b.encode())))
-open(os.path.join(outdir, "step7b.txt"), "w", encoding="utf-8").write(step7b + "\n")
+PM = [l for l in sources.split("\n") if l.lstrip().startswith("PEOPLE MATCH")]
+assert len(PM) == 1
+open(os.path.join(outdir, "step7b.txt"), "w", encoding="utf-8").write(step7b + "\n" + PM[0].strip() + "\n")
 
 for name, text in (("capture", capture), ("actions", actions), ("actions-v2", actions_v2)):
     b = text.encode()

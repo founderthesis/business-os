@@ -8,10 +8,10 @@
 
 | Routine | File | Bytes / sha256 |
 |---|---|---|
-| Inbox capture (the existing trigger, re-pointed) | `capture.txt` | 33,088 / 3df35d3de429dc49 |
-| Inbox actions, **v2** (recommended) | `actions-v2.txt` | 37,705 / 137b9c7083f7125b |
-| Inbox actions, v1 (everything in the prompt) | `actions.txt` | 41,554 / 523500f34027655c |
-| Daily sweep (takes STEP 7b) | `sweep.txt` | 38,113 / 1ae5ff08c2dbfb9d (on the accepted d420 sweep, 35,047 / 06c4120b2cd48ef1) |
+| Inbox capture (the existing trigger, re-pointed) | `capture.txt` | 33,626 / c2054076f189667a |
+| Inbox actions, **v2** (recommended) | `actions-v2.txt` | 39,710 / 54f7b98bb5a7e506 |
+| Inbox actions, v1 (everything in the prompt) | `actions.txt` | 43,545 / 05b3596c1ba66e7f |
+| Daily sweep (takes STEP 7b and PEOPLE MATCH) | `sweep.txt` | 38,837 / e7716b9e2d0346f2 (on the accepted d420 sweep, 35,047 / 06c4120b2cd48ef1) |
 | Text for the Controls page (v2 only) | `yourcall-sections.md` | 4,276 / 6c23f51241fe6621 |
 
 **v2 versus v1.** v1 keeps YOUR CALL and WHATSAPP TO AKSHAY in the prompt, which puts it over 40 KB. v2 moves those two blocks, word for word, to the existing Controls page "Inbox and Your call rules" (3ff19a301a7f8148993ccea78fc66428) as sections 6 and 7, and the prompt points to them. If that page can't be read in full, the run does nothing and ends Failed. That page already holds the snooze, owner and recording-happened rules Your call uses. The CTO pastes `yourcall-sections.md` there before cutover.
@@ -79,9 +79,7 @@ The full list is in `map.txt`.
 - 6e's recording-logistics bullet keeps the hand-off "Zoya: recording logistics reply to <who>". The reply's contents are Zoya's rules.
 - Actions' MAILBOX is the THREAD and draft-delete part only.
 
-**Not carried into actions** (not dropped: capture keeps them):
-- CONTEXT CHECK, BOUNCES and HOUSE COPIES: actions sends no mail.
-- PEOPLE MATCH: actions creates no People.
+**Not carried into actions** (not dropped: capture keeps them): CONTEXT CHECK, BOUNCES and HOUSE COPIES, because actions sends no mail. PEOPLE MATCH and the decision 424 attach rules are in both, because actions' STEP 4 can create People and Deals.
 
 ## Cutover plan
 
@@ -96,3 +94,24 @@ The full list is in `map.txt`.
 7. **Rollback:** disable both new prompts and paste back the old inbox, 65,227 / 3bb46f9332241e3b, which is kept here unchanged. The old trigger is the capture trigger, so rollback is one paste plus re-enabling it.
 
 **Order matters:** actions only works mail that capture has logged. While the `allmail:` backlog drains, Your call still runs first every hour.
+
+## Round 2 (replaySPLIT.json)
+
+The first replay passed completeness and seven of eight cases. A1 failed. Fixes:
+
+| Defect | Problem | Fix |
+|---|---|---|
+| D1 | Actions' cursor used Captured, a date field, so mail captured later the same day would be skipped | Its cursor is now the Activity's created time ("worked to", never past an unfinished one). Re-keyed allmail: rows are flagged "actions: due" in the body, and the flag becomes "actions: done <date>" when worked |
+| D10 | Mail captured after the failures began fell outside actions' first window | The first run takes everything created since 29 Oct, 25 a run |
+| D2 | STEP 2b's scope said "logged this run" | It now reads "among the mail Activities you work" |
+| D3 | Capture's hard rules forbade its own Trash steps | They make an exception for STEP 0's and the SELF-CHECK's Trash steps (decision 416) |
+| D4 | Some decision work stayed in capture, or had no home | Capture's intro hands Your call, decisions and the actions-only steps to actions, except the status moves its own creating bullets make. Actions gains decision 162's ok/no answer |
+| D5 | Actions creates People and Deals without the matching rules | PEOPLE MATCH and the full STEP 3 head (decision 424) are back in actions |
+| D6 | The sweep's 7b creates People without PEOPLE MATCH | The sweep gets PEOPLE MATCH with 7b |
+| D7 | Capture's Activity didn't carry what edit notes need | Capture logs edit notes with the "Edit notes: <guest>" Summary and every requested change in the body. Filing and the reply stay with actions |
+| D8 | "Can't read the Controls page" was ambiguous | Actions then skips STEP 0 and every mail step, and ends Failed |
+| D9 | Stale cross-references could pull a run into the other routine's job | Each intro scopes them: capture leaves the actions-only references, and in actions "mail" means the worked Activities. Actions' MAILBOX allows a one-person or one-thread search, never a window |
+
+**Size.** actions-v2 is now 39,710 B, under 40 KB but not by much. If more room is wanted, STEP 6e's bucket B detail (about 2 KB of reply types) can move to Rules for Zoya, where the replies are decided.
+
+Round 2 hasn't been replayed yet.

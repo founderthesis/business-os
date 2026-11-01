@@ -1,0 +1,21 @@
+{
+  "inputs": {"live": "65227/3bb46f9332241e3b", "capture": "33088/3df35d3de429dc49", "actions_v2": "37705/137b9c7083f7125b", "sweep": "38113/1ae5ff08c2dbfb9d", "yourcall": "4276/6c23f51241fe6621"},
+  "completeness": {"verdict": "PASS", "lines_checked": "all 28 paragraphs, line by line", "not_verbatim": ["0.0 intro (new)", "1.0 TOOLS (new)", "5.0 RUN RECORD (renamed/new)", "26.2, 26.4 report (new)", "6.1 STEP 1: '6 to 6e'->'6 to 6b', '2 to 6e'->'2 to 7' (in split.py/map, not README Rewritten)", "13.1 STEP 3 head: capture tail changed; actions drops the 424 attach paragraph (map: head new)", "23.1 6e scope 'inbox thread last 72h'->'threads of the mail Activities you work' (map only)", "23.8, 23.9 documented", "ZOYA LIVE send sentence edited in actions (map only)"], "missing": []},
+  "cases": {
+    "C1": "PASS", "C2": "PASS", "C3": "PASS (capture moves Status on a repeat pitch, see D4)",
+    "A1": "FAIL (D1 cursor, D2 STEP 2b trigger)", "A2": "PASS", "A3": "PASS", "A4": "PASS (wording ambiguous, D8)", "S1": "PASS (D6 no PEOPLE MATCH in sweep)"
+  },
+  "defects": {
+    "D1": "Actions cursor uses 'Captured time' but Captured is a date (schema.md). worked to = today: later same-day captures are never 'after' it.",
+    "D2": "Actions STEP 2b still says 'each Email out you logged this run'. Actions logs nothing, so a literal run skips 2b.",
+    "D3": "HARD RULES 'Never delete or merge Notion rows' (capture) contradicts STEP 0 and SELF-CHECK moving rows to Trash.",
+    "D4": "Capture STEP 3 repeat pitch moves a closed row to Decision pending and resets Direction, against 'never ... move a Status'. Decision 162 'His ok/His no' outcome is only in capture, which never sees Your call.",
+    "D5": "Actions creates People/Deals/Engagements (STEP 4 Contacts and new Deal, brand Engagement; report says 'People created') but PEOPLE MATCH and the 424 attach rules were dropped.",
+    "D6": "Sweep has no PEOPLE MATCH; 7b creates People.",
+    "D7": "Edit notes: actions STEP 3 says to 'Log the Activity with Summary starting Edit notes:' and the full change list. Capture logs a generic 2-3 line body and has no rule for it.",
+    "D8": "A4 pointer 'do STEP 0 nothing, end Failed' does not say whether the mail steps still run.",
+    "D9": "Stale cross-refs: capture ZOYA LIVE 'and WHATSAPP TO AKSHAY'; 6a 'STEPS 3 to 5', 'STEP 6c onward'; pitch 'STEP 5'; actions ZOYA LIVE header 'capture-only'; actions 6d 'a message in the last 72 hours'; STEP 3 'anywhere in the mailbox'; Your call 'read ... Sent' with no search mapping in actions MAILBOX.",
+    "D10": "Backlog gap: msgid: mail the failed runs logged but never acted on, older than 24 h at cutover, is outside actions' first window ('none yet: the last 24 hours')."
+  },
+  "size": {"capture": 33088, "actions_v2": 37705, "limit": 40000, "verdict": "PASS"}
+}
