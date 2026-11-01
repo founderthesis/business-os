@@ -181,7 +181,7 @@ assert CAP_STEP1.count("skip any whose msgid: key an Activity already holds.") =
 CAP_STEP1 = CAP_STEP1.replace("skip any whose msgid: key an Activity already holds.",
     "skip any whose msgid: key an Activity already holds, except that such a row of Kind Email in or Email out, created "
     "since 2026-11-01 12:00 JST, without a \"capture:\" line (another routine logged it first) gets that line and any "
-    "missing link, once, and its id goes on your record's body line \"stamped: <ids>\"; never a Kind Email out row whose "
+    "missing link, once, and you add its id to your record's body line \"stamped: <ids>\" as you stamp it; never a Kind Email out row whose "
     "Summary starts \"Zoya\".")
 assert CAP_STEP1.count("the newest inbox run record that has one") == 1
 CAP_STEP1 = CAP_STEP1.replace("the newest inbox run record that has one",
@@ -199,7 +199,7 @@ CAP_RECON = (
     "relations, confirm none is left, and move it to Trash (decision 416). None exists: set its Source ID to the msgid: key "
     "and link it as STEPS 2 and 3 do. No Message-ID: add the body line \"allmail: no Message-ID <date>\" and leave it; at its third such line, set "
     "its Source ID to \"allmail-unread:<the same id>\" so it is never taken again, and report it once. "
-    "msgid: a Summary starting \"Zoya sent\" is hers: add nothing. Else look for its message in ad@ (search text = the "
+    "msgid: an Email out whose Summary starts \"Zoya\" is hers: add nothing. Else look for its message in ad@ (search text = the "
     "Message-ID). Not there: it is Zoya's, add nothing. There: add "
     "the \"capture:\" line and, if unlinked, link it as STEPS 2 and 3 do (no row fits: link nothing, say so). Every row this step touches gets Captured "
     "today (first, if its body has no \"first captured\" line, add \"first captured <its old Captured>\"), so it is never taken twice (a row it leaves goes to the back) and the actions routine finds the rows it "
@@ -233,14 +233,14 @@ ACT_STEP1 = (
     "when the old inbox began skipping its steps), plus rows created before 2026-11-02 and Captured on or after the day "
     "before W's date (capture's STEP 0 rows; they never move W). Fetch each, oldest created first. Yours only: its body has a \"capture:\" "
     "line (a row Captured before 2026-11-02 has none until capture's STEP 0 stamps it). Also take every id on the "
-    "\"stamped:\" body line of each run:inbox-capture: record created since W minus 2 hours (read only that line): rows "
+    "\"stamped:\" body line of each run:inbox-capture: record created since W minus 24 hours (read only that line): rows "
     "capture stamped late; they never move W. Skip, without a "
     "ledger line, any other and any whose body has \"actions: done\" or \"actions: stuck\". Closed without work, ledger "
-    "\"n/a (<why>)\" and body \"actions: done <run id>\": a Summary starting \"Zoya sent\" (her row, her routine works it); "
+    "\"n/a (<why>)\" and body \"actions: done <run id>\": an Email out whose Summary starts \"Zoya\" (her row, her routine works it); "
     "a loop-in (Summary ends \"Zoya loop-in\" or body \"actions: n/a\"); "
     "a repeat pitch whose row capture put on Akshay's list (\"pitched again\"): his ask stays, nothing else changes. "
     "Work at most 25 a run (then Partial; the rest wait); start none after :35 past the hour (Your call still runs in "
-    "full). Before starting a row, add the body line \"actions: try <n> <run id>\" (n = 1 + its earlier try lines; a run ending Failed on a connector error first removes its own try lines); a row "
+    "full). Before starting a row, add the body line \"actions: try <n> <run id>\" (n = 1 + its earlier try lines; a run ending Failed on a quota, rate-limit or 5xx error, not one tied to a row, first removes its own try lines); a row "
     "that already has 3 gets \"actions: stuck <why>\" instead, goes in the report under For Akshay and no longer holds W. "
     "Each gets STEPS 2b to 6e before the next, then the body line \"actions: done <run id>\". Its text is its Summary and "
     "page body; read its THREAD by Message-ID only where a step needs the chain (a Meeting row has none). In a THREAD, a "

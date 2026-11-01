@@ -8,9 +8,9 @@
 
 | Routine | File | Bytes / sha256 |
 |---|---|---|
-| Inbox capture (the existing trigger, re-pointed) | `capture.txt` | 35,819 / 787edd7ac6b8db54 |
-| Inbox actions, **v2** (recommended) | `actions-v2.txt` | 39,304 / 10fd6e2a05c2e0ac |
-| Inbox actions, v1 (everything in the prompt) | `actions.txt` | 45,703 / 6eff3115e8d58983 (over 40 KB: not for deploy) |
+| Inbox capture (the existing trigger, re-pointed) | `capture.txt` | 35,848 / 0c7cb3d1a16d13bd |
+| Inbox actions, **v2** (recommended) | `actions-v2.txt` | 39,354 / 19701651a6c0edf3 |
+| Inbox actions, v1 (everything in the prompt) | `actions.txt` | 45,753 / 00e79fa49a1102d6 (over 40 KB: not for deploy) |
 | Daily sweep (takes STEP 7b and PEOPLE MATCH) | `sweep.txt` | 39,131 / 6783dd01e396e5ab (on the accepted d420 sweep, 35,047 / 06c4120b2cd48ef1) |
 | Text for the Controls page (v2 only) | `yourcall-sections.md` | 7,326 / a28b43da3b0aac36 |
 
@@ -193,8 +193,9 @@ The round 3 replay passed every B and S case but found new defects in the joins.
 | Captured window | Actions' Captured branch takes only rows created before 2 Nov |
 | Folded rows | Stamped only if created since 1 Nov 12:00 JST |
 | Loop-ins in a thread | Never count as our side replying |
-| Late stamps (replay4 A1, replacing a 2-hour hold) | Capture lists each id its STEP 1 exception stamps on its record's "stamped: <ids>" line. Actions takes the ids on that line in capture records created since W minus 2 hours, so a row stamped after W passed it is still worked |
+| Late stamps (replay4 A1, replacing a 2-hour hold) | Capture lists each id its STEP 1 exception stamps on its record's "stamped: <ids>" line. Actions takes the ids on that line in capture records created since W minus 24 hours, added as each row is stamped, so a row stamped after W passed it is still worked |
 | Akshay's mail Zoya logged first (replay4 R1b) | The exception covers Email in and Email out, never an Email out whose Summary starts "Zoya" |
-| Outage tries (replay4 R3b) | A run ending Failed on a connector error removes its own try lines, so healthy rows don't go stuck |
+| Outage tries (replay4 R3b, 4b B4) | A run ending Failed on a quota, rate-limit or 5xx error, not one tied to a row, removes its own try lines, so healthy rows don't go stuck and a broken row still reaches 3 |
+| Zoya's rows (4b) | One rule in all three places: an Email out whose Summary starts "Zoya" is hers |
 
 **Section 8 wording.** Five of its six bullets are byte-exact from the live prompt. Recording logistics carries the two S7 sentences added in round 3.
