@@ -1,0 +1,58 @@
+{
+ "reviewed": "219d0ee..849dc1d, docs/proposals/inbox-split; capture 35848/0c7cb3d1a16d13bd, actions-v2 39354/19701651a6c0edf3, yourcall 7326/a28b43da3b0aac36, sweep 39131/6783dd01e396e5ab (hashes match handoff)",
+ "blocking": {
+  "B1_step0_add_nothing": {
+   "quote": "capture STEP 0: 'msgid: an Email out whose Summary starts \"Zoya\" is hers: add nothing.' and 'Not there: it is Zoya's, add nothing.' vs 'Every row this step touches gets Captured today ... so it is never taken twice'",
+   "scenario": "STEP 0's msgid class selects Email rows 'created since 2026-11-01 12:00 JST' with Captured before 2026-11-02, which includes every 'Zoya sent' row and every '<who> to Zoya' row Zoya logged from 1 Nov 12:00 JST to cutover. Read literally, 'add nothing' leaves Captured unchanged, so the same rows are re-selected first every run (oldest Captured, then Date) and fill the 7 to 15 slots forever; old-inbox rows behind them by Date are never stamped, so actions never works them, and STEP 0 never ends (an ad@ search per row per run). Read the other way, capture writes Captured and a 'first captured' line onto Zoya's rows, a second writer on her rows.",
+   "fix": "Exclude them in the query: msgid class adds 'not (Kind Email out and Summary starts \"Zoya\")'; for 'Not there' rows set only Captured today, nothing else (or list them once on the record and skip by id)."
+  },
+  "B2_stamped_line_survival": {
+   "quote": "capture STEP 1: 'you add its id to your record's body line \"stamped: <ids>\" as you stamp it'; RUN RECORD: 'Your last write updates that row: ... page body = a line \"pending: ...\", the report, the end time, counts...'",
+   "scenario": "RUN RECORD's last write defines the whole body and does not list 'stamped:'. A run that rewrites the body at the end drops the line; actions ('Also take every id on the \"stamped:\" body line') then never sees late stamps, so replay4 A1 reopens silently. Plus replay4c N1: crash between stamping and listing loses the row for good.",
+   "fix": "RUN RECORD body list: 'a line \"stamped: <ids>\" (kept as written during the run)'. And: 'add its id to the stamped: line first, then the capture: line'."
+  }
+ },
+ "should_fix": {
+  "S1_akshay_mail_logged_by_zoya_is_email_in": {
+   "quote": "routines/zoya.md 111: 'Log it if Akshay isn't on To or Cc (the inbox routine logs the rest): ... Summary \"<who> to Zoya: <what>\", Kind Email in'; actions STEP 2b: 'For each Email out among the mail Activities you work that Akshay sent'; capture STEP 2: 'never change its Kind'",
+   "scenario": "Akshay mails a guest with Zoya in Cc. Akshay is From, not To/Cc, so Zoya's :38 run logs it first as Kind Email in 'Akshay to Zoya: ...'. Capture stamps it (Email in qualifies), may not fix Kind. Actions skips STEP 2b (Email out only) so his answer never takes him off his list, and STEP 5 may read it as their side replying. This answers the CTO's R1b precondition: Zoya does log it, but as Email in.",
+   "fix": "Capture's exception: 'if its sender is Akshay or Team and Kind is Email in, set Kind Email out' (an allowed correction), or actions STEP 2b: 'Email out, or Email in whose sender is Akshay'."
+  },
+  "S2_try_reset_loophole": {
+   "quote": "actions: 'a run ending Failed on a quota, rate-limit or 5xx error, not one tied to a row, first removes its own try lines'",
+   "scenario": "One row's THREAD read returns 504 every time (oversized message). The model files it as a 5xx, the run ends Failed and erases the try line; every run repeats, the row never reaches 3, W never passes it. replay4c B4 itself says this is 'left to the model to classify'. Also: if the quota is Notion's, the removal write fails and healthy rows still climb to stuck.",
+   "fix": "'removes its try lines only when the failing call was not about a row (the first query, the record write, the Controls page read); an error on a row's own read or write keeps the try.'"
+  },
+  "S3_overlap_guard_eats_your_call": {
+   "quote": "actions: 'still says Started and is under 90 minutes old: write only this run's record as \"No-op, previous run still live\"'",
+   "scenario": "Any crashed run leaves its record at Started; the next run (60 min later) No-ops, so Your call is skipped for an hour. With a crash-looping row: crash (try 1), No-op, crash (try 2), No-op, crash (try 3), No-op, stuck: Your call runs in 3 of 6 hours.",
+   "fix": "'under 50 minutes old' (a live run can't reach :15 next hour given the :35 stop), or No-op only the mail steps and still run Your call."
+  },
+  "S4_clock_ambiguity": {
+   "quote": "actions: 'plus rows created before 2026-11-02'; capture/actions: 'read to <ISO time>', 'worked to <ISO>'; TIME: 'every date you write or compare ... are the JST date'",
+   "scenario": "'created before 2026-11-02' has no zone (Notion created_time is UTC). A row STEP 0 stamps that was created 2 Nov 00:00 to 08:59 JST with a UTC-dated Captured 11-01 by another routine is outside the Captured branch under a JST reading, not on 'stamped:', and older than W: never worked. Also 'every date you write ... JST' invites writing read to / worked to as JST wall time without offset, then comparing to UTC created times: a 9-hour skip.",
+   "fix": "'created before 2026-11-02 00:00 JST'; 'read to'/'worked to' as ISO with offset (+09:00). Simpler: STEP 0 also lists its stamps on 'stamped:'."
+  },
+  "S5_zoya_rule_kind_bound": {
+   "quote": "'an Email out whose Summary starts \"Zoya\"' (all three places, consistent)",
+   "scenario": "If capture logs an ad@ copy of Zoya's send first (her Source ID fell back to a provider id: zoya.md 75 'the provider's own id only when the header can't be read'), its Summary is 'Zoya to <name>: ...' and Kind is Email out only if Zoya's People row is tagged Team; otherwise Email in, stamped, and worked by actions (R1 again). No capture Summary form starts 'Zoya' that isn't hers.",
+   "fix": "Drop the Kind: 'a mail Activity whose Summary starts \"Zoya\"'."
+  },
+  "nit_whatsapp_sending_found": {
+   "quote": "'on a \"Zoya sending\" row: check Akshay's chat in Blueticks for it before any resend'",
+   "fix": "Add 'found: rename it to section 7's Summary and finish'."
+  }
+ },
+ "checks": {
+  "zoya_rule_three_places": "consistent wording and scope (STEP 0, STEP 1, actions); loop-in 'Akshay to X: Zoya loop-in' and WhatsApp 'Zoya sending' (Kind WhatsApp) don't match",
+  "today_JST": "TIME sentence byte-identical in both prompts",
+  "sizes": "actions-v2 39354 < 40000; all < 65536",
+  "emdash": "capture 0, actions-v2 0, yourcall 0; sweep 1, inside the quoted Notion heading 'Independent review — latest checkpoint' (unchanged since round 3, needed to match)",
+  "completeness": "v2 missing 36 vs 35 at round 3; the one new absence is STEP 1's old cursor sentence ('...of the newest inbox run record that has one; ...'), the README-named R2 rewrite",
+  "replay4c_spotchecks": {
+   "B4": "conditional pass only: depends on the model calling a per-message 5xx 'tied to a row' (S2)",
+   "S2": "bare PASS; the guard now fires, but costs a full Your call run after every crash (S3)",
+   "prefix": "misses STEP 0 add-nothing re-selection (B1)"
+  }
+ }
+}
