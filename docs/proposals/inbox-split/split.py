@@ -108,7 +108,9 @@ _MA = ("only the sends, draft deletions, RSVP archiving, invite cancellations an
        "describe, limited by ZOYA LIVE.")
 assert hard.count(_MA) == 1
 HARD_CAP = hard.replace(_MA, "only the loop-in sends and RSVP archiving the steps below describe, limited by ZOYA LIVE.")
-HARD_ACT = hard.replace(_MA, "only the draft deletions, invite cancellations and WhatsApp messages the steps below describe, "
+assert hard.count("- Mail actions allowed, all through MCP Emails: ") == 1
+HARD_ACT = hard.replace("- Mail actions allowed, all through MCP Emails: ", "- Mail actions allowed (MCP Emails; cancels by Google "
+                        "Calendar, WhatsApp by Blueticks): ").replace(_MA, "only the draft deletions, invite cancellations and WhatsApp messages the steps below describe, "
                         "limited by ZOYA LIVE.")
 # ---- NEW framing text ----
 CAP_INTRO = (
@@ -116,9 +118,10 @@ CAP_INTRO = (
     "You read the ad@thepodium.in mailbox and log each mail once in Notion, linked to its Engagement or Deal and its People. "
     "You never handle Your call or apply a decision, and move a Status only where STEP 3's creating bullets say so; the "
     "inbox actions routine does the rest from what you log, and rules here naming STEPS 2b, 4, 5, 6c to 6e, Your call or "
-    "WhatsApp to Akshay are its: leave them. Every mail Activity you create, re-key or link (STEP 0) ends its page body with the "
-    "line \"capture: <run id>\" (round 3; Gemini notes Meeting rows too), except a loop-in, whose last line is \"actions: n/a (loop-in)\": actions works only "
-    "your rows. Your only "
+    "WhatsApp to Akshay are its: leave them. Every mail Activity you create or re-key, every one STEP 0 finds in ad@, and "
+    "every one another routine logged first for a message you read in ad@ (once) ends its page body with the line "
+    "\"capture: <run id>\" (round 3; Gemini notes Meeting rows too), except a loop-in, whose last line is \"actions: n/a "
+    "(loop-in)\": actions works only rows with that line. Your only "
     "mail is the loop-in (STEPS 6 to 6b) and your only other mailbox action is RSVP archiving (STEP 7). HOURLY "
     "(AR-20261019-6): only new or unfinished work; more runs never mean more mails.\n"
     "CURSOR, NOT PRECEDENT: from the newest inbox capture run record read only its Summary's \"read to\" and its body's "
@@ -177,15 +180,16 @@ assert CAP_STEP1 != step1
 CAP_RECON = (
     "STEP 0. OLD ROWS (one-off, every run until none is left; CTO, 1 Nov): before STEP 1, take up to 15 Activities, up to 8 "
     "of each class and the other class filling the rest: rows whose Source ID starts \"allmail:\", and Kind Email in or "
-    "Email out with Source ID msgid:, created since 2026-10-29, Captured before 2026-11-02, no Engagement and no Deal, and a "
-    "Summary neither starting \"Zoya\" nor holding \" to Zoya: \" (the old inbox's unlinked rows; Zoya's are hers); within "
-    "each, oldest Captured first, then oldest Date. allmail: read the message by that MCP Emails id and get its Message-ID (IDENTITY). A msgid: "
+    "Email out with Source ID msgid:, Captured before 2026-11-02, either unlinked (no Engagement and no Deal) and created "
+    "since 2026-10-29, or created since 2026-11-01 12:00 JST (rows the old inbox never worked); within each, oldest "
+    "Captured first, then oldest Date. allmail: read the message by that MCP Emails id and get its Message-ID (IDENTITY). A msgid: "
     "row for it exists: copy across any link, People or body line it lacks and read it back; then clear the allmail: row's "
     "relations, confirm none is left, and move it to Trash (decision 416). None exists: set its Source ID to the msgid: key "
     "and link it as STEPS 2 and 3 do. No Message-ID: add the body line \"allmail: no Message-ID <date>\" and leave it. "
-    "msgid: link it as STEPS 2 and 3 do (no row fits: link nothing, say so). Every row this step touches gets Captured "
-    "today, so a row it leaves goes to the back and the actions routine finds the rows it re-keys or links (with the "
-    "\"capture:\" line). The record says \"old rows: <n> re-keyed, <n> folded, <n> linked, <n> left\". STEP 0's rows "
+    "msgid: look for its message in ad@ (search text = the Message-ID). Not there: it is Zoya's, add nothing. There: add "
+    "the \"capture:\" line and, if unlinked, link it as STEPS 2 and 3 do (no row fits: link nothing, say so). Every row this step touches gets Captured "
+    "today, so it is never taken twice (a row it leaves goes to the back) and the actions routine finds the rows it "
+    "stamps. The record says \"old rows: <n> re-keyed, <n> folded, <n> linked, <n> left\". STEP 0's rows "
     "don't count toward STEP 1's cap of 15.")
 CAP_STEP3 = step3_head.replace("Then update it only where the mail is clear:", "Then link the mail to it; create one only as below:")
 assert CAP_STEP3 != step3_head
@@ -214,16 +218,14 @@ ACT_STEP1 = (
     "Source Gemini notes): the cursor rows, created at or after W minus 2 minutes (no W yet: W is 2026-11-01 12:00 JST, "
     "when the old inbox began skipping its steps), plus rows Captured on or after the day before W's date "
     "(capture's STEP 0 rows; they never move W). Fetch each, oldest created first. Yours only: its body has a \"capture:\" "
-    "line, or it is a mail row created before your first record whose Summary neither starts \"Zoya\" nor holds \" to "
-    "Zoya: \" (old inbox rows); never "
-    "one with no Engagement and no Deal Captured before 2026-11-02 (capture's STEP 0 links it first). Skip, without a "
+    "line (a row Captured before 2026-11-02 has none until capture's STEP 0 stamps it). Skip, without a "
     "ledger line, any other and any whose body has \"actions: done\" or \"actions: stuck\". Closed without work, ledger "
     "\"n/a (<why>)\" and body \"actions: done <run id>\": a loop-in (Summary ends \"Zoya loop-in\" or body \"actions: n/a\"); "
     "a repeat pitch whose row capture put on Akshay's list (\"pitched again\"): his ask stays, nothing else changes. "
     "Work at most 25 a run (then Partial; the rest wait); start none after :35 past the hour. Each gets STEPS 2b to 6e "
     "before the next, then the body line \"actions: done <run id>\". Its text is its Summary and page body; read its "
     "THREAD by Message-ID only where a step needs the chain. One you can't finish gets \"actions: try <n>\" (n counting "
-    "up); at 3 it gets \"actions: stuck <why>\" instead, goes in the report under For Akshay and no longer holds W.")
+    "up; a Meeting row has no THREAD, which is never a try); at 3 it gets \"actions: stuck <why>\" instead, goes in the report under For Akshay and no longer holds W.")
 ACT_STEP3 = step3_head
 _SPNO = "(one found but not logged: log it with its message id)"
 _EDN = ("Log the Activity with Summary starting \"Edit notes: <guest>\", linked to the Episode as well as the Engagement, so "
