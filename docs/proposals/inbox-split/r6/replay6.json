@@ -1,0 +1,37 @@
+{
+ "round": "r6",
+ "inputs": {
+  "cto-r5/capture.txt": "36666/405a30d3ba6cbea2",
+  "r6/capture.txt": "37601/bd937363f8e8e5fa"
+ },
+ "diff": "PASS: a sentence-level diff of r5 (36,666) against r6 (first build, 37,479) shows only edits 1 and 2a to 2e. The rebuild to 37,601 / bd937363f8e8e5fa changes only the two stop rules (f). No U+2014.",
+ "cases": {
+  "1_duplicate_108855": "PASS: an allmail: row's Message-ID resolves to a key Zoya's row already holds. 'then run STEP 2's full lookup for it (the IN on its ids and the LIKE on the Message-ID's part before @, Zoya's rows included). Any hit other than this row: fold into that row, never re-key'. The fold copies links and reads them back, then 'clear the allmail: row's relations, confirm none is left, and move it to Trash (decision 416)'. That's allowed by HARD RULES' STEP 0 Trash exception, and SELF-CHECK ignores it because it covers only rows this run created. Nit: with two or more hits, it doesn't say which row to fold into.",
+  "2a_early_stop": "PASS: 60 due and the run stops after 6. 'Work until the cap or STOP TIME, whichever comes first: ending earlier while due messages remain is Partial, \"stopped early\", listed in the report as a defect'. Nit: messages held back by 'at most 2 with attachments over 50 KB a run' or pended as mcp: aren't 'due', but a literal model may still flag them as stopped early.",
+  "2b_read_batch": "PASS: the email_read schema has action read_batch (up to 50 ids, default body_max_chars 2000 on read_batch) and a body_truncated flag. 20 a call is inside the limit. Risk: a 2,000-character window can cut a forward's inner From: line, edit notes (every change) or a long pitch, and 'action read only where a step needs the full body' leaves the model to notice. See R6-3.",
+  "2c_stakeholders": "PASS: a reply on a known thread with everyone already in People reads 'otherwise only this message's From, To and Cc', with no get_thread. No contradiction with CONTEXT CHECK, whose get_thread runs 'before any mail' (the loop-in send) and is unchanged.",
+  "2d_references_msgid": "CONDITIONAL: the HEADER query proves that some message carries that Message-ID, but it doesn't prove that it's the message being identified. '(the message it returns has that Message-ID)' never asks for the returned message's MCP Emails id to match the one being logged. A literal model can map an In-Reply-To or References id onto the wrong earlier message in the thread, for example a reply to the second-to-last message. That gives a wrong msgid: key, which leads to a duplicate Activity, or worse, the real message is skipped as 'already logged' and lost without trace. It's sound once the ids are required to match; see R6-1.",
+  "2e_backlog_60_due": "FAIL (counterproductive): STEP 0 runs 'before STEP 1' and can take up to 15 rows before the run knows it's in BACKLOG, which 'more than 15 due at the start' is only learned in STEP 1. In BACKLOG 'STEP 0's rows count toward' the cap of 25, so new mail gets 25 - 15 = 10, fewer than the normal 15. The backlog drains more slowly. See R6-2.",
+  "f_hand_run_at_40": "PASS on the window: started at :40, no new message after :58 ('more than 18 minutes after the run's start (TIME, Bash date -u)'), STEP 0 none after :48, and the clock-hour stops are gone. FAIL on overlap: :40 falls inside Zoya's :38 run (CLAUDE.md: nothing from chat between :38 and :45), and a hand run near :02 overlaps the scheduled capture. Capture has no OVERLAP guard. Two loggers reading the same new mail at once can each miss the other's row in the single IDENTITY query and create a second row, which is the same duplicate pattern as edit 1. See R6-4.",
+  "contradictions": "No hard contradictions. CONTEXT CHECK's get_thread before a send is intact. The fold path keeps decision 416 (clear relations, confirm, Trash). SELF-CHECK only checks rows this run created, so folded allmail: rows are out of its scope. Cleanup nit, carried over from r5: when the fold copies the 'capture:' line onto a target row created before 2 Nov, it doesn't say to set the target's Captured to today, so actions' Captured branch may never see it."
+ },
+ "defects": {
+  "R6-1_msgid_confirm_match": {
+   "quote": "'confirm it with query HEADER Message-ID \"<id>\" (the message it returns has that Message-ID) and skip that message's RAW'",
+   "fix": "'... and the message it returns is that same message (the same MCP Emails id); otherwise RAW'. One clause. Must fix before going live."
+  },
+  "R6-2_backlog_order": {
+   "quote": "'BACKLOG: more than 15 due at the start: 25, and STEP 0's rows count toward it' + STEP 0 'before STEP 1'",
+   "fix": "'In BACKLOG skip STEP 0 that run (run STEP 1's search first to know)', or 'STEP 0's rows count toward it only up to 5'. It isn't dangerous, but it should go in today."
+  },
+  "R6-3_batch_truncation": {
+   "quote": "'action read_batch, up to 20 ids a call, body_max_chars 2000 (action read only where a step needs the full body'",
+   "fix": "Add 'a body marked body_truncated that is a forward, edit notes or a pitch is read in full'."
+  },
+  "R6-4_no_capture_overlap_guard": {
+   "quote": "STOP TIME '... so a run fired by hand or in another slot gets the same window'",
+   "fix": "Add 'OVERLAP: the newest capture record still says Started and is under 30 minutes old: write a No-op record and stop. Don't start a hand run between :35 and :50 (Zoya's run).' Until that's in, don't fire capture by hand near :02 or :38."
+  }
+ },
+ "verdict": "r6 (37,601 / bd937363f8e8e5fa) can go live for 09:02 JST once R6-1 is in; it's one clause. Edit 1, which fixes the live duplicate, 2a to 2c and (f)'s window all pass. 2e makes a backlog drain more slowly (R6-2). (f) invites hand runs, but capture has no overlap guard against Zoya at :38 or the :02 run (R6-4). Fix both today, and until then don't fire capture by hand."
+}
