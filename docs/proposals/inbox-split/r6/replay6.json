@@ -33,5 +33,19 @@
    "fix": "Add 'OVERLAP: the newest capture record still says Started and is under 30 minutes old: write a No-op record and stop. Don't start a hand run between :35 and :50 (Zoya's run).' Until that's in, don't fire capture by hand near :02 or :38."
   }
  },
- "verdict": "r6 (37,601 / bd937363f8e8e5fa) can go live for 09:02 JST once R6-1 is in; it's one clause. Edit 1, which fixes the live duplicate, 2a to 2c and (f)'s window all pass. 2e makes a backlog drain more slowly (R6-2). (f) invites hand runs, but capture has no overlap guard against Zoya at :38 or the :02 run (R6-4). Fix both today, and until then don't fire capture by hand."
+ "verdict": "r6 (37,601 / bd937363f8e8e5fa) can go live for 09:02 JST once R6-1 is in; it's one clause. Edit 1, which fixes the live duplicate, 2a to 2c and (f)'s window all pass. 2e makes a backlog drain more slowly (R6-2). (f) invites hand runs, but capture has no overlap guard against Zoya at :38 or the :02 run (R6-4). Fix both today, and until then don't fire capture by hand.",
+ "r6b": {
+  "input": {
+   "r6/capture.txt": "37954/9b55110e2cead4c2"
+  },
+  "diff": "PASS: a sentence-level diff against r5 shows only edits 1, 2a to 2e, (f), and the R6-1 to R6-4 and nit fixes. The r5 sentence 'STEP 0's rows don't count toward STEP 1's cap of 15' is back unchanged. No U+2014.",
+  "cases": {
+   "R6-1": "PASS: '(the message it returns must be that same message, the same MCP Emails id; otherwise RAW)'. A References id mapped to the wrong message now fails the match and falls back to RAW.",
+   "R6-2": "PASS: 60 due, so the cap is 25. 'STEP 0 only shares the time window' and its rows don't count toward the cap. STEP 0's 8-minute limit still uses part of the 18 minutes, but it no longer cuts the cap.",
+   "R6-3": "PASS: 'action read only where a step needs the full body, and always for a truncated forward, pitch or edit notes'. That matches the schema's body_truncated flag.",
+   "R6-4": "PASS for capture against capture: a hand run at :10 sees the :02 record still Started and under 30 minutes old, writes 'No-op, previous run still live' and stops. CURSOR skips that record because it has no read to. Residual: the guard doesn't cover Zoya's :38 run, so a hand run at :40 can still race her logging. Keep hand runs out of :35 to :50 (operating rule; a one-line prompt add is optional).",
+   "nit_fold_target": "PASS: 'several: the one whose Source ID is exactly the msgid: key, else the oldest'."
+  },
+  "verdict": "r6b (37,954 / 9b55110e2cead4c2) is accepted for the 09:02 JST run. All five fixes pass and the diff holds only intended edits. The one residual: no hand runs between :35 and :50 (Zoya's run)."
+ }
 }
