@@ -1,0 +1,32 @@
+capture                   768  intro (new) + cursor rule (new)
+capture                  2213  TOOLS (new, MCP Emails + Notion only)
+capture                  2514  NOTION: WRITES, data sources
+capture                  4283  CONTEXT CHECK, BOUNCES, TEAM ROLES, HOUSE COPIES, ZOYA LIVE, CADENCES, Fetch/KIND
+capture                  1726  HARD RULES
+capture                  1495  NEXT DATE AND WAITING ON (new leads, Last activity)
+capture                  2099  RUN RECORD (renamed) + TIME (new) + SELF-CHECK (new)
+capture                   661  STEP 0 allmail reconciliation (new)
+capture                  1473  STEP 1 (STEPS 2 to 7) + skip list
+capture                  3258  STEP 2 IDENTITY + Gemini notes
+capture                  1460  MATCHING PEOPLE + FORWARDS
+capture                  5059  STEP 3 head (link) + pitch, outbound, different-guest bullets + Stakeholders
+capture                  4057  STEP 6, 6a, 6b loop-ins
+capture                   666  STEP 7 RSVP archiving
+capture                   903  STEP 7c episode assets (from 6d, verbatim)
+capture                   422  STEP 8 REPORT (new, shorter) + fail line
+actions                   778  intro (new) + cursor rule (new)
+actions                   921  TOOLS (new) + MAILBOX (short, new: threads and draft deletes only)
+actions                  1791  NOTION: WRITES, data sources (no PEOPLE MATCH: actions creates no People)
+actions                  7926  WORDING, TEAM ROLES, YOUR CALL, WHATSAPP, ZOYA LIVE (edited), CADENCES, Fetch/KIND (no CONTEXT, BOUNCES, HOUSE COPIES: actions sends no mail)
+actions                  1726  HARD RULES
+actions                  1495  NEXT DATE AND WAITING ON
+actions                  1007  RUN RECORD (new) + TIME (new)
+actions                   198  STEP 0 Your call first (new)
+actions                   449  STEP 1 what to work (new)
+actions                  1391  STEP 2b Akshay's sent mail
+actions                  7489  STEP 3 (head new) + status bullets + Waiting on / Chase step
+actions                  5289  STEP 4 DEALS, STEP 5 WAITING ON
+actions                 10519  STEP 6c decision mail, 6d admin asks (assets moved to capture 7c), 6e left hanging (from the worked mail)
+actions                   548  STEP 8 REPORT (trimmed) + fail line
+Controls page (v2)       4156  YOUR CALL + WHATSAPP TO AKSHAY, verbatim (yourcall-sections.md)
+daily sweep (Part B)     3012  STEP 7b GUEST FORM SUBMISSIONS (verbatim, see sweep_7b.py)
