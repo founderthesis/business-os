@@ -15,6 +15,11 @@ def rep(a, x):
 
 rep("STEP 4b, 3i, 3h, 3g, 3b, 3d, 4, 5, 6c.", "STEP 4b, 3i, 3h, 3g, 3b, 3d, 4, 5, 6c, 7b.")
 rep("\nSTEP 7. REPORT\n", "\n" + b + "\n(7b moved from the inbox, 1 Nov: once a day here.)\n\nSTEP 7. REPORT\n")
+# round 3 (Cleanup S6): the inbox's WRITES line, so 7b's People and Form Activity creates name their data source
+W = ('WRITES (from the inbox, 1 Nov): every create names parent {"type": "data_source_id", "data_source_id": "<its collection id '
+     'above>"}, allow_async false, the title set. Then fetch the page it returns: no parent data source: a failed write, never '
+     'logged; retry once, else report it, end Partial.')
+rep("STEP 7b. GUEST FORM SUBMISSIONS", W + "\n\nSTEP 7b. GUEST FORM SUBMISSIONS")
 out = s.encode()
 assert s.count(chr(0x2014)) == dashes and len(out) <= 65536 - 200
 open(dst, "wb").write(out)

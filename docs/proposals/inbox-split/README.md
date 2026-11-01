@@ -4,17 +4,17 @@
 
 **Source.** `split.py` builds everything from the live prompt, 65,227 / 3bb46f9332241e3b (`docs/proposals/inbox-msgid/cleanup/inbox.txt`). Blocks are copied verbatim and located by their opening words, with each location asserted. `map.txt` lists every block and where it went. Only the lines marked "new" in `split.py` are new text.
 
-## Files (each built twice, byte-identical)
+## Files (round 3; each built twice, byte-identical)
 
 | Routine | File | Bytes / sha256 |
 |---|---|---|
-| Inbox capture (the existing trigger, re-pointed) | `capture.txt` | 33,626 / c2054076f189667a |
-| Inbox actions, **v2** (recommended) | `actions-v2.txt` | 39,710 / 54f7b98bb5a7e506 |
-| Inbox actions, v1 (everything in the prompt) | `actions.txt` | 43,545 / 05b3596c1ba66e7f |
-| Daily sweep (takes STEP 7b and PEOPLE MATCH) | `sweep.txt` | 38,837 / e7716b9e2d0346f2 (on the accepted d420 sweep, 35,047 / 06c4120b2cd48ef1) |
-| Text for the Controls page (v2 only) | `yourcall-sections.md` | 4,276 / 6c23f51241fe6621 |
+| Inbox capture (the existing trigger, re-pointed) | `capture.txt` | 34,423 / 019b447635d19b44 |
+| Inbox actions, **v2** (recommended) | `actions-v2.txt` | 38,332 / d0a44c4f7de2803f |
+| Inbox actions, v1 (everything in the prompt) | `actions.txt` | 44,914 / 43b6b29264250fad (over 40 KB: not for deploy) |
+| Daily sweep (takes STEP 7b and PEOPLE MATCH) | `sweep.txt` | 39,131 / 6783dd01e396e5ab (on the accepted d420 sweep, 35,047 / 06c4120b2cd48ef1) |
+| Text for the Controls page (v2 only) | `yourcall-sections.md` | 7,326 / a28b43da3b0aac36 |
 
-**v2 versus v1.** v1 keeps YOUR CALL and WHATSAPP TO AKSHAY in the prompt, which puts it over 40 KB. v2 moves those two blocks, word for word, to the existing Controls page "Inbox and Your call rules" (3ff19a301a7f8148993ccea78fc66428) as sections 6 and 7, and the prompt points to them. If that page can't be read in full, the run does nothing and ends Failed. That page already holds the snooze, owner and recording-happened rules Your call uses. The CTO pastes `yourcall-sections.md` there before cutover.
+**v2 versus v1.** v1 keeps everything in the prompt, which puts it over 40 KB. v2 moves three blocks, word for word, to the existing Controls page "Inbox and Your call rules" (3ff19a301a7f8148993ccea78fc66428): YOUR CALL (section 6), WHATSAPP TO AKSHAY (section 7) and STEP 6e's bucket B reply types (section 8). The page text ends with the line "END OF INBOX ACTIONS SECTIONS 6-8". A read without the three headings and that line counts as not full: the run does nothing and ends Failed. That page already holds the snooze, owner and recording-happened rules Your call uses. The CTO pastes `yourcall-sections.md` there before cutover.
 
 ## What each routine does
 
@@ -28,17 +28,27 @@
 New rules in capture:
 - **Cursor, not precedent:** it reads only "read to" and "pending" from the newest capture record, and never another run's report.
 - **TIME:** start and end come from `date`.
-- **SELF-CHECK:** any Activity this run created without `msgid:` goes to Trash, and the run ends Failed. Each worked message gets one ledger line.
-- **STEP 0, one-off:** up to 15 `allmail:` rows a run.
-  - If a `msgid:` row exists, the `allmail:` row is folded into it, then trashed.
-  - If none exists, the row is re-keyed and linked, with Captured set to today so actions works it.
-  - If no Message-ID can be read, the row is left and counted.
+- **STOP TIME:** no new message after :20.
+- **SELF-CHECK:** of the Activities this run created (its ledger ids, never another routine's), any without `msgid:` goes to Trash, and the run ends Failed. Each worked message gets one ledger line.
+- **Its rows are marked:** every mail Activity it creates, re-keys or links ends with the body line "capture: <run id>". A loop-in ends "actions: n/a (loop-in)" instead.
+- **STEP 0, one-off:** up to 15 old rows a run. First `allmail:` rows, then the old inbox's unlinked `msgid:` mail rows (created since 29 Oct, Captured before 2 Nov, no Engagement and no Deal). Within each, oldest Captured first.
+  - `allmail:` with a `msgid:` row: the links are copied over and read back, its relations cleared and checked, then it goes to Trash (decision 416).
+  - `allmail:` with none: re-keyed to `msgid:` and linked.
+  - `allmail:` with no Message-ID: the body line "allmail: no Message-ID <date>", left.
+  - Unlinked `msgid:`: linked as STEPS 2 and 3 do.
+  - Every row it touches gets Captured today. A row it leaves goes to the back of the queue, and actions finds the rows it re-keys or links.
 
-  It stops once there are none; at the last count there were 98.
+  It stops once there are none; at the last count there were 83 `allmail:` rows and 84 unlinked rows.
 
 **Inbox actions** (new trigger, hourly at :25, after capture):
 - **STEP 0 Your call:** it runs every run, first and in full, before any mail.
-- **Then the captured mail:** the mail Activities captured since its own record's "worked to", oldest first, at most 25 a run. Each gets:
+- **Then the captured mail:** the mail Activities created at or after W minus 2 minutes, where W is the "worked to" of the newest actions record other than this run's that has one. Rows Captured since the day before W's date are added (capture's STEP 0 rows; they never move W). Oldest first, at most 25 a run, none started after :35.
+  - Only capture's rows ("capture:" line), plus the old inbox's rows from before actions' first record (not Zoya's sends).
+  - Skipped: anything already "actions: done" or "actions: stuck". A loop-in is closed as n/a.
+  - Each worked row gets "actions: done <run id>". One it can't finish gets "actions: try <n>"; at 3 it's "actions: stuck <why>", goes in the report for Akshay, and stops holding W.
+  - It does nothing if the previous actions record is still Started and under 60 minutes old.
+
+  Each worked row gets:
   - STEP 2b (Akshay's sent mail);
   - STEP 3's status rules;
   - STEP 4 (Deals) and STEP 5 (waiting on);
@@ -83,8 +93,8 @@ The full list is in `map.txt`.
 
 ## Cutover plan
 
-1. **Review:** Cleanup reviews `capture.txt`, `actions-v2.txt` and `sweep.txt` (or `actions.txt`, if v1 is chosen).
-2. **Controls page (v2):** the CTO pastes `yourcall-sections.md` as sections 6 and 7 of "Inbox and Your call rules", then reads it back.
+1. **Review:** Cleanup reviews `capture.txt`, `actions-v2.txt`, `yourcall-sections.md` and `sweep.txt`.
+2. **Controls page (v2):** the CTO pastes `yourcall-sections.md` as sections 6 to 8 of "Inbox and Your call rules", ending with its END line, then reads it back.
 3. **Capture:** Akshay pastes `capture.txt` into the existing inbox trigger (trig_0189eZvAD8x4357cfevgZ3No), still disabled. Read it back byte for byte.
 4. **Actions:** after Akshay's yes, the CTO creates the actions trigger, hourly at :25, with Notion, MCP Emails, Google Calendar and Blueticks attached. Akshay pastes `actions-v2.txt`. Read it back.
 5. **Sweep:** paste `sweep.txt` into the daily sweep (if the sweep has moved on since the accepted d420 build, rebuild `sweep_7b.py` on it first).
@@ -114,4 +124,36 @@ The first replay passed completeness and seven of eight cases. A1 failed. Fixes:
 
 **Size.** actions-v2 is now 39,710 B, under 40 KB but not by much. If more room is wanted, STEP 6e's bucket B detail (about 2 KB of reply types) can move to Rules for Zoya, where the replies are decided.
 
-Round 2 hasn't been replayed yet.
+
+## Round 3 (Cleanup's verdict on round 2, `cleanup-verdict.md`)
+
+| Item | Fix |
+|---|---|
+| B1 | W is the "worked to" of the newest actions record other than this run's that has one. worked to = the later of W and the newest closed cursor row, never past an open one; a run that closes none carries W |
+| B2 | No body flag. Capture's STEP 0 sets Captured today; actions also takes rows Captured since the day before W's date, outside the cursor, so W never moves backward |
+| B3 | Cursor rows are created at or after W minus 2 minutes. Every worked row gets "actions: done <run id>", and done rows are skipped |
+| B4 | "actions: try <n>"; at 3, "actions: stuck <why>", reported for Akshay, and it no longer holds W |
+| B5 | Capture marks loop-ins "actions: n/a (loop-in)"; actions closes any Summary ending "Zoya loop-in" as n/a, before STEP 2b or 5 can see it |
+| B6 | The page ends "END OF INBOX ACTIONS SECTIONS 6-8"; actions needs the three headings and that line, or ends Failed |
+| B7 | Actions' MAILBOX carries the gmail: to msgid: remap sentence |
+| B8 | Actions never creates a mail Activity. Sponsored no: "leave it for capture, name it in the report". Edit notes: update capture's Activity, never a second one |
+| B9 | A row STEP 0 leaves gets "allmail: no Message-ID <date>" and Captured today, so it goes to the back. The fold clears and checks relations before Trash |
+| B10 | STEP 0 also links the old inbox's unlinked `msgid:` rows; actions doesn't take them until then |
+| S1 | Actions works only capture's rows and the old inbox's pre-cutover rows (not "Zoya sent" ones). The old inbox also skipped any mail Zoya had logged first, so this keeps its behaviour |
+| S2 | Capture: no new message after :20. Actions: none after :35, and nothing if the previous record is still Started and under 60 minutes old |
+| S3 | 6c's cap of 15 counts mail only; Your call decisions are never capped |
+| S4 | The WhatsApp to Akshay is logged first, keyed "wa-akshay:<row id>:<the Your call text's first 40 characters>"; a key already logged means it went. A failed send renames the row and clears the key. The prompt says the page never overrides this |
+| S5 | SELF-CHECK covers only this run's ledger ids |
+| S6 | The sweep gets the WRITES line with 7b |
+| S7 | Recording logistics keeps "never questions, data asks or the dossier; skip any part a team member already answered on the thread" |
+| S8 | "No partial work." is back in actions' TOOLS |
+| S9 | Report "W to worked to"; actions' ZOYA LIVE "you queue, Zoya sends"; capture's ZOYA LIVE without WhatsApp; this README now matches STEP 0 |
+
+**Room.** v2 needed about 1.7 KB for these fixes. It came from moving 6e's bucket B reply types (2.7 KB) to the Controls page as section 8, and from three lines actions doesn't need:
+- OUTSIDE MAIL becomes QUIET HOURS for invite cancels, because actions sends no outside mail;
+- personal mail (capture never logs it);
+- LAST ACTIVITY (actions logs no mail).
+
+v1 now has no use, so it isn't for deploy.
+
+**Cutover additions.** The CTO pastes all of `yourcall-sections.md` (sections 6 to 8 and the end line) and reads it back. STEP 0's dates assume the old inbox stays off; if it runs again on or after 2 Nov, move "Captured before 2026-11-02" to the cutover date.

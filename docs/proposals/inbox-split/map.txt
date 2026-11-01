@@ -1,11 +1,11 @@
-capture                   931  intro (new) + cursor rule (new)
+capture                  1144  intro (new) + cursor rule (new)
 capture                  2213  TOOLS (new, MCP Emails + Notion only)
 capture                  2514  NOTION: WRITES, data sources
-capture                  4283  CONTEXT CHECK, BOUNCES, TEAM ROLES, HOUSE COPIES, ZOYA LIVE, CADENCES, Fetch/KIND
+capture                  4260  CONTEXT CHECK, BOUNCES, TEAM ROLES, HOUSE COPIES, ZOYA LIVE (no WhatsApp), CADENCES, Fetch/KIND
 capture                  1794  HARD RULES (Trash exception for STEP 0 and SELF-CHECK)
 capture                  1495  NEXT DATE AND WAITING ON (new leads, Last activity)
-capture                  2099  RUN RECORD (renamed) + TIME (new) + SELF-CHECK (new)
-capture                   675  STEP 0 allmail reconciliation (new)
+capture                  2209  RUN RECORD (renamed) + TIME (new) + SELF-CHECK (new)
+capture                  1173  STEP 0 allmail reconciliation (new)
 capture                  1473  STEP 1 (STEPS 2 to 7) + skip list
 capture                  3551  STEP 2 IDENTITY + Gemini notes + edit-notes logging (new, from STEP 3's edit-notes bullet)
 capture                  1460  MATCHING PEOPLE + FORWARDS
@@ -13,20 +13,20 @@ capture                  5059  STEP 3 head (link) + pitch, outbound, different-g
 capture                  4057  STEP 6, 6a, 6b loop-ins
 capture                   666  STEP 7 RSVP archiving
 capture                   903  STEP 7c episode assets (from 6d, verbatim)
-capture                   422  STEP 8 REPORT (new, shorter) + fail line
-actions                   983  intro (new) + cursor rule (new)
-actions                  1044  TOOLS (new) + MAILBOX (short, new: threads and draft deletes only)
+capture                   421  STEP 8 REPORT (new, shorter) + fail line
+actions                  1024  intro (new) + cursor rule (new)
+actions                  1285  TOOLS (new) + MAILBOX (short, new: threads and draft deletes only)
 actions                  2514  NOTION: WRITES, data sources (with PEOPLE MATCH: STEP 4 can create People)
-actions                  7926  WORDING, TEAM ROLES, YOUR CALL, WHATSAPP, ZOYA LIVE (edited), CADENCES, Fetch/KIND (no CONTEXT, BOUNCES, HOUSE COPIES: actions sends no mail)
+actions                  7935  WORDING, TEAM ROLES, YOUR CALL, WHATSAPP, ZOYA LIVE (edited), CADENCES, Fetch/KIND (no CONTEXT, BOUNCES, HOUSE COPIES: actions sends no mail)
 actions                  1726  HARD RULES
 actions                  1495  NEXT DATE AND WAITING ON
-actions                  1033  RUN RECORD (new) + TIME (new)
+actions                  1286  RUN RECORD (new) + TIME (new)
 actions                   198  STEP 0 Your call first (new)
-actions                   562  STEP 1 what to work (new)
+actions                  1244  STEP 1 what to work (new)
 actions                  1406  STEP 2b Akshay's sent mail (scope line edited)
-actions                  8275  STEP 3 (head verbatim, with decision 424) + status bullets + 162 answer (new) + Waiting on / Chase step
+actions                  8247  STEP 3 (head verbatim, with decision 424) + status bullets + 162 answer (new) + Waiting on / Chase step
 actions                  5289  STEP 4 DEALS, STEP 5 WAITING ON
-actions                 10519  STEP 6c decision mail, 6d admin asks (assets moved to capture 7c), 6e left hanging (from the worked mail)
-actions                   548  STEP 8 REPORT (trimmed) + fail line
-Controls page (v2)       4156  YOUR CALL + WHATSAPP TO AKSHAY, verbatim (yourcall-sections.md)
+actions                 10679  STEP 6c decision mail, 6d admin asks (assets moved to capture 7c), 6e left hanging (from the worked mail)
+actions                   559  STEP 8 REPORT (trimmed) + fail line
+Controls page (v2)       7086  YOUR CALL + WHATSAPP TO AKSHAY + 6e bucket B types, verbatim (yourcall-sections.md)
 daily sweep (Part B)     3012  STEP 7b GUEST FORM SUBMISSIONS (verbatim, see sweep_7b.py)
