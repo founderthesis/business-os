@@ -83,3 +83,21 @@ Both are in ad@ All Mail, and both are Activities Zoya logged as Email in with `
 - Paste sections 6 to 8 of the Controls page and read them back before actions is enabled. Actions fails closed without the three headings and the end line, confirmed in round 3.
 - Capture can be enabled any time on or after 2 Nov JST now that today is JST, but only once V1 to V4 are in.
 - **Separately, V3 affects the live single-prompt inbox (disabled) and the rollback build** 65,227 / 3bb46f9332241e3b: its pending retry and THREAD lookups use the same text search. If the inbox is re-enabled before the split, the same one-line fix applies.
+
+## Addendum: the four blockers as a ready patch (CTO, 1 Nov ~22:20: inbox live tonight, blockers only)
+
+`cleanup/round4/capture_fix.py` applies V1 to V4 to Main's capture.txt (0c7cb3d1a16d13bd) with seven exact replacements.
+
+**Output:** `cleanup/round4/capture.txt`, **36,007 / 60ee33adf4659c03**. Built twice, byte-identical, with no em-dashes added. Actions-v2, yourcall and sweep are unchanged.
+
+**What each replacement does:**
+- **V1:** RUN RECORD's body is now "the "stamped:" line as built (first line, kept), then" the pending line.
+- **V2:**
+  - In STEP 1, the id is written to "stamped:" before the row is stamped.
+  - In STEP 0's ad@ branch, the "capture:" line and Captured today go in one write. Actions reaches those rows through its Captured window.
+- **V3:** the rfc822msgid map, the pending retry and STEP 0's lookup now use query `HEADER Message-ID "<id>"`.
+- **V4:** both "add nothing" branches now "only set Captured today". The row leaves STEP 0's queue, which takes only rows Captured before 2026-11-02. It gets no "capture:" line, so actions skips it.
+
+**With this patch, capture is accepted on the blockers**, as `cleanup/round4/capture.txt` 36,007 / 60ee33adf4659c03, with actions-v2 39,354 / 19701651a6c0edf3. If Main folds the same seven edits into split.py instead, its output must match this file byte for byte.
+
+**Follow-ups, not reasons to reject:** should-fix 1 to 6 above, and THREAD's forward search ("search text = it", which finds nothing in ad@). That last one is already in the live prompt today. The most worthwhile of them before or soon after cutover is confirming Zoya's People row is tagged Team (should-fix 1), because a send that capture logs before Zoya does turns into Email in otherwise.
