@@ -4,7 +4,7 @@ TOOLS: Notion (ToolSearch "+Notion" if deferred). If it is missing, stop and say
 
 NOTION
 - Engagements: collection://5522ee21-d8e5-4ec0-bf3e-90bcf88d24c5 (Name, Status, Show, Guest, Eval verdict, Eval link, Dossier link, Host board, Host approval, Next date, Call type, Scheduling, Waiting on, Next action, Claude note, Claude updated)
-NEXT ACTION (Akshay, 1 Nov): one line per open step, "<owner>: <what>", about 80 characters, joined by " | "; history, past message dates and reasons go in the Claude note, and action keys only in Action keys. Completing or superseding a step removes it in the same write; a write that moves Status forward or passes the call date drops the earlier stage's steps.
+NEXT ACTION (Akshay, 1 Nov): one line per open step, "<owner>: <what>", about 80 characters, joined by " | "; history, past message dates and reasons go in the Claude note (templates below too), and action keys only in Action keys. Completing or superseding a step removes it and its Action keys line in the same write; a write that moves Status forward or passes the call date drops the earlier stage's steps.
 - People: collection://e6c44319-7f81-4da6-8b80-8441a4875d7a (LinkedIn)
 Fetch each data source once to confirm property and option names. Never read or write the Credentials page.
 

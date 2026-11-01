@@ -16,11 +16,11 @@ def rep(a, b):
     s = s.replace(a, b)
 
 RULE = ("NEXT ACTION (Akshay, 1 Nov): one line per open step, \"<owner>: <what>\", about 80 characters, joined by \" | \"; "
-        "history, past message dates and reasons go in the Claude note, and action keys only in Action keys. Completing or "
-        "superseding a step removes it in the same write; a write that moves Status forward or passes the call date drops the "
+        "history, past message dates and reasons go in the Claude note (templates below too), and action keys only in Action "
+        "keys. Completing or superseding a step removes it and its Action keys line in the same write; a write that moves Status forward or passes the call date drops the "
         "earlier stage's steps.")
 SHORT = ("NEXT ACTION: one line per open step, \"<owner>: <what>\", about 80 characters, joined by \" | \"; "
-         "history and reasons go in the Claude note; a step done or superseded leaves in the same write.")
+         "history and reasons go in the Claude note (templates too); a step done or superseded leaves, with its key, in one write.")
 
 def after_engagements_line(rule):
     """Insert the rule on its own line right after the NOTION list's Engagements line (and its indented detail line)."""
@@ -36,6 +36,8 @@ if name == "inbox":
     # Room: three sentences that repeat rules stated just before them.
     rep(" The same mail read again, by a later run or from the other inbox, makes zero rows.", "")
     rep(" Kind follows the From header.", "")
+    rep("Earlier: <D Mon> to <first name>, \\\"<that thread's subject without Re:>\\\", <what we said or where it stood>.",
+        "Earlier thread and our answer: Claude note.")
     rep("HOURLY (AR-20261019-6): each run takes only new or unfinished work; the look-back windows are catch-up after a missed "
         "run, and more runs never mean more mails.", "HOURLY (AR-20261019-6): only new or unfinished work; more runs never mean more mails.")
 elif name == "sweep":
@@ -45,7 +47,7 @@ elif name == "sweep":
         "STEP 3t. TIDY NEXT ACTION (Akshay, 1 Nov). Open Engagements whose Next action has a step tied to a past stage or a "
         "settled ask, a segment over 120 characters, or a \"[...]\" action key: remove the step (and its Action keys line), "
         "shorten a long one to NEXT ACTION's form keeping its owner and ask, move a bracketed key to Action keys as \"<short "
-        "name> = <key>\"; one Claude note line \"YYYY-MM-DD: Next action tidied: removed <what> (daily sweep)\". Never drop a "
+        "name> = <key>\" (short name: the step's first words, kept when you shorten it); one Claude note line \"YYYY-MM-DD: Next action tidied: removed <what> (daily sweep)\". Never drop a "
         "step whose key is still open or that waits on a decision. At most 30 rows a run, oldest Claude updated first.\n\n"
         "STEP 3b. LINK STRAY MAIL")
 else:

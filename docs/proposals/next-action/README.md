@@ -10,25 +10,36 @@
 
 **Deploy order.** Create the "Action keys" field first (text, on Engagements; approved, created at deploy). Then deploy the prompts. Then the backfill.
 
-## Files (each built twice, byte-identical)
+## Files (round 2; each built twice, byte-identical)
 
 | Routine | File | Bytes / sha256 | Built on |
 |---|---|---|---|
-| Zoya FAST | `zoya-one.txt` | 42,879 / 05927d11c1225f47 | parts at 6948d57, pinned to SLOW at 6948d57 |
-| Zoya SLOW | `routines/zoya/release/zoya-slow-work.txt` at 6948d572794c9cf38a7f0ee3bbe4544376837108 | 64,387 / 20bc0a0389291942 | f70901f |
-| Inbox | `inbox.txt` | 65,336 / f960013dfd8bc96e | the msgid patch, 65,334 / 2f3250ed1d45e7db |
-| Calendar | `calendar.txt` | 58,332 / 616420ef070ba51f | B1, 57,968 / f6d140196f3b75b4 |
-| Daily sweep | `sweep.txt` | 35,983 / 5370749162eb70d6 | accepted d420, 35,047 / 06c4120b2cd48ef1 |
-| Host boards | `hostboards.txt` | 8,838 / a7d31a70b3b491d2 | live, 8,474 / 5819ccf7528ca16f |
+| Zoya FAST | `zoya-one.txt` | 43,206 / f35016c5fe448a94 | pinned to SLOW at 39a5cce |
+| Zoya SLOW | `routines/zoya/release/zoya-slow-work.txt` at 39a5cce90dfd468ecd3bdfe413e5ef9981b4313d | 64,714 / 9403ac13d1527139 | f70901f |
+| Inbox | `inbox.txt` | 65,297 / 932472e0a326181e | the msgid patch, 65,334 / 2f3250ed1d45e7db |
+| Calendar | `calendar.txt` | 58,379 / 60535446d9b0d650 | B1, 57,968 / f6d140196f3b75b4 |
+| Daily sweep | `sweep.txt` | 36,093 / 642eb4bd576c1d93 | accepted d420, 35,047 / 06c4120b2cd48ef1 |
+| Host boards | `hostboards.txt` | 8,885 / 8a3fd4b5a3bb6b77 | live, 8,474 / 5819ccf7528ca16f |
 
-**The inbox needed a trim.** It's now exactly at the build limit, 200 bytes under the real cap. The room came from three sentences that repeat earlier rules:
-- "The same mail read again ... makes zero rows" repeats "one Activity per message, ever".
-- "Kind follows the From header" repeats the Kind line below it.
-- The HOURLY paragraph's explanation of the look-back windows.
+**The inbox needed a trim.** It's now 39 bytes under the build limit. The room came from:
+- three sentences that repeat earlier rules ("zero rows", "Kind follows the From header", HOURLY's look-back explanation);
+- the repeat-pitch template's history ("Earlier: <date> to <name>, <subject>, <what we said>"), which now goes in the Claude note, as the new rule says.
 
-Its NEXT ACTION rule is the short form. The next inbox change needs a real cut. Candidates: the MAILBOX paragraph once every routine is on MCP Emails, and the release-date aside, which decision 427 may have overtaken.
+**Pin.** At deploy, Zoya's pin moves to 39a5cce. Cleanup accepted the d420 Zoya build at f70901f, and this build sits on top of it.
 
-**Pin.** Zoya's pin moves from f70901f (or wherever it is at deploy) to 6948d57. Cleanup accepted the d420 Zoya build at f70901f, and this build sits on top of it.
+## Replay (`replayNA.json`) and round 2
+
+Every round 1 diff held only the intended edits, and Z1, I1, H1 and the sizes passed.
+
+| Case | Round 1 finding | Round 2 fix |
+|---|---|---|
+| Z2 | A step with a bracketed key counted as old-format, so its key was rebuilt | Old-format means "no Action keys line and no "[...]"; a "[...]" is its key" |
+| Z3 | The key-writing phrases weren't covered, and nurture never moved its key line on | KEYS covers "writes a key onto a segment"; a send that moves a step on replaces its line with the next key. WRITE PATH now lists the Action keys line and allows the bracket move and NEXT ACTION's drops |
+| Z4 | Short names could prefix each other | No short name is the start of another on the row; a segment's key is the line whose name its step starts with |
+| S1 | Sweep 3t didn't define the short name, and shortening could break the match | Defined, and kept when shortening |
+| Others | Removing a done step left its key behind; long templates conflicted with the rule | The other routines' rule says the step leaves with its key; templates follow the rule, with history in the Claude note |
+
+Round 2 hasn't been re-replayed.
 
 ## One-off backfill plan (read-only first)
 
