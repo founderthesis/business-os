@@ -1,13 +1,13 @@
-capture                  1282  intro (new) + cursor rule (new)
+capture                  1296  intro (new) + cursor rule (new)
 capture                  2213  TOOLS (new, MCP Emails + Notion only)
 capture                  2514  NOTION: WRITES, data sources
 capture                  4260  CONTEXT CHECK, BOUNCES, TEAM ROLES, HOUSE COPIES, ZOYA LIVE (no WhatsApp), CADENCES, Fetch/KIND
 capture                  1744  HARD RULES (Trash exception for STEP 0 and SELF-CHECK; mail actions: loop-in and RSVP only)
 capture                  1495  NEXT DATE AND WAITING ON (new leads, Last activity)
-capture                  2246  RUN RECORD (renamed) + TIME (new) + SELF-CHECK (new)
-capture                  1443  STEP 0 allmail reconciliation (new)
-capture                  1599  STEP 1 (STEPS 2 to 7) + skip list
-capture                  3591  STEP 2 IDENTITY + Gemini notes + edit-notes logging (new, from STEP 3's edit-notes bullet)
+capture                  2354  RUN RECORD (renamed) + TIME (new) + SELF-CHECK (new)
+capture                  1832  STEP 0 allmail reconciliation (new)
+capture                  1756  STEP 1 (STEPS 2 to 7) + skip list
+capture                  3608  STEP 2 IDENTITY + Gemini notes + edit-notes logging (new, from STEP 3's edit-notes bullet)
 capture                  1460  MATCHING PEOPLE + FORWARDS
 capture                  5059  STEP 3 head (link) + pitch, outbound, different-guest bullets + Stakeholders
 capture                  4057  STEP 6, 6a, 6b loop-ins
@@ -20,9 +20,9 @@ actions                  2514  NOTION: WRITES, data sources (with PEOPLE MATCH: 
 actions                  7935  WORDING, TEAM ROLES, YOUR CALL, WHATSAPP, ZOYA LIVE (edited), CADENCES, Fetch/KIND (no CONTEXT, BOUNCES, HOUSE COPIES: actions sends no mail)
 actions                  1743  HARD RULES (mail actions: draft deletes, cancels, WhatsApp)
 actions                  1495  NEXT DATE AND WAITING ON
-actions                  1340  RUN RECORD (new) + TIME (new)
+actions                  1448  RUN RECORD (new) + TIME (new)
 actions                   198  STEP 0 Your call first (new)
-actions                  1376  STEP 1 what to work (new)
+actions                  1713  STEP 1 what to work (new)
 actions                  1406  STEP 2b Akshay's sent mail (scope line edited)
 actions                  8247  STEP 3 (head verbatim, with decision 424) + status bullets + 162 answer (new) + Waiting on / Chase step
 actions                  5289  STEP 4 DEALS, STEP 5 WAITING ON

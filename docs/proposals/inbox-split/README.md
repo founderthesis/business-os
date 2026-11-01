@@ -4,13 +4,13 @@
 
 **Source.** `split.py` builds everything from the live prompt, 65,227 / 3bb46f9332241e3b (`docs/proposals/inbox-msgid/cleanup/inbox.txt`). Blocks are copied verbatim and located by their opening words, with each location asserted. `map.txt` lists every block and where it went. Only the lines marked "new" in `split.py` are new text.
 
-## Files (round 3; each built twice, byte-identical)
+## Files (round 4; each built twice, byte-identical)
 
 | Routine | File | Bytes / sha256 |
 |---|---|---|
-| Inbox capture (the existing trigger, re-pointed) | `capture.txt` | 35,029 / 4cbe89dfde09147c |
-| Inbox actions, **v2** (recommended) | `actions-v2.txt` | 38,584 / b6e90754d9823051 |
-| Inbox actions, v1 (everything in the prompt) | `actions.txt` | 45,117 / f404fa8f19d7ef16 (over 40 KB: not for deploy) |
+| Inbox capture (the existing trigger, re-pointed) | `capture.txt` | 35,714 / 59532e71fb2c52db |
+| Inbox actions, **v2** (recommended) | `actions-v2.txt` | 39,163 / 54b70ee8e8fa1559 |
+| Inbox actions, v1 (everything in the prompt) | `actions.txt` | 45,562 / 15df15862564ef7c (over 40 KB: not for deploy) |
 | Daily sweep (takes STEP 7b and PEOPLE MATCH) | `sweep.txt` | 39,131 / 6783dd01e396e5ab (on the accepted d420 sweep, 35,047 / 06c4120b2cd48ef1) |
 | Text for the Controls page (v2 only) | `yourcall-sections.md` | 7,326 / a28b43da3b0aac36 |
 
@@ -175,4 +175,24 @@ The round 3 replay passed every B and S case but found new defects in the joins.
 | D9, D9b ad@ mail Zoya logged first was never worked | Capture's STEPS 1 and 2 add the "capture:" line to such a row, once. This is new: the old inbox skipped that mail |
 | Stale text | HARD RULES name each routine's own mail actions (Calendar, Blueticks); 7c points to STEP 2; STEP 0's cap wording is fixed |
 
-**Precondition:** deploy capture on or after 2 Nov JST. STEP 0 drops a row from its queue by setting Captured to today, which only works once today is past its "Captured before 2026-11-02" cut.
+**Precondition:** deploy capture on or after 2 Nov JST. Round 4 defines today as the JST date in both prompts, so 2 Nov 00:00 JST is safe; without that, it would be 09:00 JST.
+
+## Round 4 (Cleanup's verdict on round 3, `cleanup-verdict-round3.md`)
+
+| Item | Fix |
+|---|---|
+| R1 Zoya's sends worked by actions | Capture's exception stamps only Kind Email in rows created since 1 Nov 12:00 JST, never a "Zoya sent" row. STEP 0 adds nothing to a "Zoya sent" row. Actions closes "Zoya sent" rows as n/a |
+| R2 Capture's first run re-stamped the old inbox's rows | CURSOR and STEP 1 read the newest run:inbox-capture: record, else run:inbox: (the old inbox). Stamps are bounded by the 1 Nov 12:00 JST cut |
+| R3 A crashing row froze actions | "actions: try <n> <run id>" is written before a row is started. A row with 3 tries goes stuck |
+| R4 "Today" had no time zone | TIME in both prompts: today and every date written or compared are the JST date (`TZ=Asia/Tokyo date +%F`) |
+| Overlap | The guard is 90 minutes, and actions starts no mail after :35 (Your call runs in full) |
+| WhatsApp | Logged "Zoya sending:", renamed after the send; a "sending" row is checked in Blueticks before any resend |
+| Dead allmail: rows | At the third "no Message-ID" line the row is re-keyed "allmail-unread:<same id>" and reported once |
+| Captured provenance | Before STEP 0 changes Captured, it writes "first captured <old date>" in the body |
+| STEP 0 slot | STEP 0 starts no row after :10 |
+| Captured window | Actions' Captured branch takes only rows created before 2 Nov |
+| Folded rows | Stamped only if created since 1 Nov 12:00 JST |
+| Loop-ins in a thread | Never count as our side replying |
+| Added | An unstamped mail row under 2 hours old (not "Zoya sent") holds W, so actions never passes a row before capture stamps it |
+
+**Section 8 wording.** Five of its six bullets are byte-exact from the live prompt. Recording logistics carries the two S7 sentences added in round 3.

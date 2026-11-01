@@ -119,12 +119,12 @@ CAP_INTRO = (
     "You never handle Your call or apply a decision, and move a Status only where STEP 3's creating bullets say so; the "
     "inbox actions routine does the rest from what you log, and rules here naming STEPS 2b, 4, 5, 6c to 6e, Your call or "
     "WhatsApp to Akshay are its: leave them. Every mail Activity you create or re-key, every one STEP 0 finds in ad@, and "
-    "every one another routine logged first for a message you read in ad@ (once) ends its page body with the line "
+    "every one STEP 1's exception covers ends its page body with the line "
     "\"capture: <run id>\" (round 3; Gemini notes Meeting rows too), except a loop-in, whose last line is \"actions: n/a "
     "(loop-in)\": actions works only rows with that line. Your only "
     "mail is the loop-in (STEPS 6 to 6b) and your only other mailbox action is RSVP archiving (STEP 7). HOURLY "
     "(AR-20261019-6): only new or unfinished work; more runs never mean more mails.\n"
-    "CURSOR, NOT PRECEDENT: from the newest inbox capture run record read only its Summary's \"read to\" and its body's "
+    "CURSOR, NOT PRECEDENT: from the newest record with Source ID run:inbox-capture: (none yet: run:inbox:, the old inbox) read only its Summary's \"read to\" and its body's "
     "\"pending:\" line. Never read or cite another run's report: what an earlier run skipped is never a reason to skip.")
 CAP_TOOLS = ("TOOLS: MCP Emails and Notion connectors. If their tools are deferred, load them with ToolSearch (\"+MCPEmail\", "
              "\"+Notion\"). If either is missing, stop and say so. No partial work.")
@@ -162,7 +162,7 @@ EDITNOTES = ("Edit notes (decision 125): their Activity's Summary starts \"Edit 
              "requested change, one per line with its timestamp and instruction (from the mail and any text attachment), and it "
              "links the Episode too; filing and the reply are the actions routine's.")
 TIME = ("TIME: Bash `date -u` at the start gives the run's start; the end time is `date -u` at your last write; never "
-        "estimated.")
+        "estimated. \"Today\" and every date you write or compare (Captured too) are the JST date, Bash `TZ=Asia/Tokyo date +%F`.")
 
 CAP_RUNREC = runrec.replace("Run inbox <YYYY-MM-DD HH:MM> JST: Started", "Run inbox capture <YYYY-MM-DD HH:MM> JST: Started") \
     .replace("Source ID \"run:inbox:<run id>\"", "Source ID \"run:inbox-capture:<run id>\"") \
@@ -179,22 +179,29 @@ CAP_STEP1 = step1.replace("STEPS 6 to 6e work on the messages this run read", "S
 assert CAP_STEP1 != step1
 assert CAP_STEP1.count("skip any whose msgid: key an Activity already holds.") == 1
 CAP_STEP1 = CAP_STEP1.replace("skip any whose msgid: key an Activity already holds.",
-    "skip any whose msgid: key an Activity already holds, except that such a row without a \"capture:\" line (another "
-    "routine logged it first) gets that line and any missing link, once.")
+    "skip any whose msgid: key an Activity already holds, except that such a row of Kind Email in, created since "
+    "2026-11-01 12:00 JST, without a \"capture:\" line (another routine logged it first) gets that line and any missing "
+    "link, once; never a row whose Summary starts \"Zoya sent\".")
+assert CAP_STEP1.count("the newest inbox run record that has one") == 1
+CAP_STEP1 = CAP_STEP1.replace("the newest inbox run record that has one",
+    "the newest record with Source ID run:inbox-capture: that has one, else run:inbox: (the old inbox)")
 assert step2.count("(only add a missing link)") == 1
-CAP_STEP2 = step2.replace("(only add a missing link)", "(only add a missing link, and the \"capture:\" line if it has none)")
+CAP_STEP2 = step2.replace("(only add a missing link)", "(only add a missing link, and the \"capture:\" line where STEP 1's exception allows)")
 CAP_RECON = (
     "STEP 0. OLD ROWS (one-off, every run until none is left; CTO, 1 Nov): before STEP 1, take up to 15 Activities, up to 8 "
     "of each class and the other class filling the rest: rows whose Source ID starts \"allmail:\", and Kind Email in or "
     "Email out with Source ID msgid:, Captured before 2026-11-02, either unlinked (no Engagement and no Deal) and created "
     "since 2026-10-29, or created since 2026-11-01 12:00 JST (rows the old inbox never worked); within each, oldest "
-    "Captured first, then oldest Date. allmail: read the message by that MCP Emails id and get its Message-ID (IDENTITY). A msgid: "
-    "row for it exists: copy across any link, People or body line it lacks and read it back; then clear the allmail: row's "
+    "Captured first, then oldest Date. Start no row after :10 past the hour. allmail: read the message by that MCP Emails id and get its Message-ID (IDENTITY). A msgid: "
+    "row for it exists: copy across any link, People or body line it lacks (the \"capture:\" line only if that row was "
+    "created since 2026-11-01 12:00 JST) and read it back; then clear the allmail: row's "
     "relations, confirm none is left, and move it to Trash (decision 416). None exists: set its Source ID to the msgid: key "
-    "and link it as STEPS 2 and 3 do. No Message-ID: add the body line \"allmail: no Message-ID <date>\" and leave it. "
-    "msgid: look for its message in ad@ (search text = the Message-ID). Not there: it is Zoya's, add nothing. There: add "
+    "and link it as STEPS 2 and 3 do. No Message-ID: add the body line \"allmail: no Message-ID <date>\" and leave it; at its third such line, set "
+    "its Source ID to \"allmail-unread:<the same id>\" so it is never taken again, and report it once. "
+    "msgid: a Summary starting \"Zoya sent\" is hers: add nothing. Else look for its message in ad@ (search text = the "
+    "Message-ID). Not there: it is Zoya's, add nothing. There: add "
     "the \"capture:\" line and, if unlinked, link it as STEPS 2 and 3 do (no row fits: link nothing, say so). Every row this step touches gets Captured "
-    "today, so it is never taken twice (a row it leaves goes to the back) and the actions routine finds the rows it "
+    "today (first, if its body has no \"first captured\" line, add \"first captured <its old Captured>\"), so it is never taken twice (a row it leaves goes to the back) and the actions routine finds the rows it "
     "stamps. The record says \"old rows: <n> re-keyed, <n> folded, <n> linked, <n> left\". STEP 0's rows "
     "don't count toward STEP 1's cap of 15.")
 CAP_STEP3 = step3_head.replace("Then update it only where the mail is clear:", "Then link the mail to it; create one only as below:")
@@ -205,7 +212,7 @@ CAP_REPORT = ("STEP 8. REPORT\nEnd with a short report, in the run record (RUN R
               "and short. No em dashes.")
 
 ACT_RUNREC = (
-    "OVERLAP: the newest actions record other than this run's still says Started and is under 45 minutes old: write only "
+    "OVERLAP: the newest actions record other than this run's still says Started and is under 90 minutes old: write only "
     "this run's record as \"No-op, previous run still live\", change nothing else, end saying so.\n"
     "RUN RECORD (decision 419). Before any other Notion write, fix this run's id once as the capture routine does (Bash "
     "printenv CLAUDE_CODE_REMOTE_SESSION_ID, else one synthetic id). One Activity: Kind Note, Summary \"Run inbox actions "
@@ -222,16 +229,20 @@ ACT_STEP0 = ("STEP 0. YOUR CALL, every run, first and in full, before you take a
 ACT_STEP1 = (
     "STEP 1. WHAT TO WORK\nQuery mail Activities (Kind Email in or Email out with Source ID msgid:, or Kind Meeting with "
     "Source Gemini notes): the cursor rows, created at or after W minus 2 minutes (no W yet: W is 2026-11-01 12:00 JST, "
-    "when the old inbox began skipping its steps), plus rows Captured on or after the day before W's date "
-    "(capture's STEP 0 rows; they never move W). Fetch each, oldest created first. Yours only: its body has a \"capture:\" "
-    "line (a row Captured before 2026-11-02 has none until capture's STEP 0 stamps it). Skip, without a "
+    "when the old inbox began skipping its steps), plus rows created before 2026-11-02 and Captured on or after the day "
+    "before W's date (capture's STEP 0 rows; they never move W). Fetch each, oldest created first. Yours only: its body has a \"capture:\" "
+    "line (a row Captured before 2026-11-02 has none until capture's STEP 0 stamps it); a mail row without one, created "
+    "under 2 hours ago and not \"Zoya sent\", still holds W (capture may stamp it yet). Skip, without a "
     "ledger line, any other and any whose body has \"actions: done\" or \"actions: stuck\". Closed without work, ledger "
-    "\"n/a (<why>)\" and body \"actions: done <run id>\": a loop-in (Summary ends \"Zoya loop-in\" or body \"actions: n/a\"); "
+    "\"n/a (<why>)\" and body \"actions: done <run id>\": a Summary starting \"Zoya sent\" (her row, her routine works it); "
+    "a loop-in (Summary ends \"Zoya loop-in\" or body \"actions: n/a\"); "
     "a repeat pitch whose row capture put on Akshay's list (\"pitched again\"): his ask stays, nothing else changes. "
-    "Work at most 25 a run (then Partial; the rest wait); start none after :35 past the hour. Each gets STEPS 2b to 6e "
-    "before the next, then the body line \"actions: done <run id>\". Its text is its Summary and page body; read its "
-    "THREAD by Message-ID only where a step needs the chain. One you can't finish gets \"actions: try <n>\" (n counting "
-    "up; a Meeting row has no THREAD, which is never a try); at 3 it gets \"actions: stuck <why>\" instead, goes in the report under For Akshay and no longer holds W.")
+    "Work at most 25 a run (then Partial; the rest wait); start none after :35 past the hour (Your call still runs in "
+    "full). Before starting a row, add the body line \"actions: try <n> <run id>\" (n = 1 + its earlier try lines); a row "
+    "that already has 3 gets \"actions: stuck <why>\" instead, goes in the report under For Akshay and no longer holds W. "
+    "Each gets STEPS 2b to 6e before the next, then the body line \"actions: done <run id>\". Its text is its Summary and "
+    "page body; read its THREAD by Message-ID only where a step needs the chain (a Meeting row has none). In a THREAD, a "
+    "loop-in (\"adding @Zoya\") is never our side replying.")
 ACT_STEP3 = step3_head
 _SPNO = "(one found but not logged: log it with its message id)"
 _EDN = ("Log the Activity with Summary starting \"Edit notes: <guest>\", linked to the Episode as well as the Engagement, so "
@@ -317,10 +328,11 @@ POINTER = ("YOUR CALL and WHATSAPP TO AKSHAY: the Notion page \"Inbox and Your c
            "Controls), sections 6 and 7, word for word what this prompt held. Read the whole page every run, before STEP 0; it "
            "wins where it differs. A full read has headings starting \"## 6. Your call\" and \"## 7. WhatsApp to Akshay\" and the "
            "line \"END OF INBOX ACTIONS SECTIONS 6-7\"; without all three, skip STEP 0 and every mail step, end Failed. "
-           "One addition to section 7 that the page never overrides: before a WhatsApp to Akshay, log section 7's Activity (one row, "
-           "never a second after the send) with Source ID \"wa-akshay:<row id>:<the Your call text's first 40 "
-           "characters>\"; that key already on an Activity: it went, don't resend, just finish. A failed send renames it "
-           "\"Zoya WhatsApp failed: <topic>\" and clears its Source ID.")
+           "One addition to section 7 that the page never overrides: before a WhatsApp to Akshay, log section 7's Activity (one row) "
+           "as \"Zoya sending: <topic> to Akshay's WhatsApp\", Source ID \"wa-akshay:<row id>:<the Your call text's first 40 "
+           "characters>\", and rename it to section 7's Summary after the send. That key on a \"Zoya sent\" row: it went, "
+           "just finish; on a \"Zoya sending\" row: check Akshay's chat in Blueticks for it before any resend. A failed send "
+           "renames it \"Zoya WhatsApp failed: <topic>\" and clears its Source ID.")
 # v2 round 3: 6e bucket B's reply types move verbatim to the same Controls page, section 8 (room under 40 KB).
 _b0 = ACT_6E.index("B. Routine, we know the answer (Zoya's reply, by type):\n") + len("B. Routine, we know the answer (Zoya's reply, by type):\n")
 _b1 = ACT_6E.index("   Then move Status as the reply implies")
