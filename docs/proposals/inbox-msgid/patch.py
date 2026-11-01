@@ -20,11 +20,15 @@ rep("email_read read has no Message-ID: get it from email_read original (decode 
     "\"allmail:<MCP Emails id>\"; a mail From Zoya is Zoya's: for each \"Zoya sent:\" Activity on its Engagement that day (JST), "
     "search text = its Message-ID; one returning this mail is it, create nothing.",
     "email_read read has no Message-ID: get it from email_read original (decode in Bash, keep that line), one call at a time, "
-    "never skipped to save load. None after one retry: create nothing; add it to pending.")
+    "never skipped to save load. None after one retry, error or not: create nothing; pend it as \"mcp:<its id>\", not Failed.")
 rep("Source ID containing the Gmail id (", "Source ID \"allmail:<its MCP Emails id>\", containing the Gmail id (")
 rep("An id that comes back already has its Activity:",
-    "An allmail: row alone (with a msgid: row too: report both): set its Source ID to the msgid: key, then work it from STEP 3. Any other id that comes back already has its Activity:")
+    "A lone allmail: row: set its Source ID to the msgid: key and work it as new. Any other id that comes back already has its Activity:")
 
+rep("any hit means it is logged, so add only a missing link", "any hit but a lone allmail: row means it is logged; add only a missing link")
+rep("line (search text = it)", "line (search text = it; mcp: ones by id)")
+# M1: batching across messages broke "before the next".
+rep("Batch the creates (up to 50 pages per call).", "Batch one message's creates.")
 # 2/ and 3/ The cap limits messages, never steps, and is the approval.
 rep("A backlog never means working none.",
     "Each gets STEPS 2 to 6e before the next; the cap is the approval: a backlog never means working none, "
