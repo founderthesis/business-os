@@ -19,7 +19,8 @@ R("allmail: read the message by that MCP Emails id and get its Message-ID (IDENT
 R("None exists: set its Source ID to the msgid: key", "No hit: set its Source ID to the msgid: key")
 # 2a. Work to the cap or STOP TIME.
 R("STOP TIME: start no new message after :20 past the hour; the rest wait for the next run (not pending).",
-  "STOP TIME: start no new message after :20 past the hour; the rest wait for the next run (not pending). Work until the "
+  "STOP TIME: start no new message more than 18 minutes after the run's start (TIME, Bash date -u), so a run fired by hand "
+  "or in another slot gets the same window; the rest wait for the next run (not pending). Work until the "
   "cap or STOP TIME, whichever comes first: ending earlier while due messages remain is Partial, \"stopped early\", listed "
   "in the report as a defect.")
 # 2b + 2e. Batched reads; backlog mode.
@@ -31,6 +32,8 @@ R("read each once (action read; original only per IDENTITY)",
   "the full body; original only per IDENTITY)")
 R("STEP 0's rows don't count toward STEP 1's cap of 15.",
   "STEP 0's rows don't count toward STEP 1's cap of 15, except in BACKLOG.")
+# 2f. STEP 0's stop, relative to the run's start too (CTO addendum).
+R("Start no row after :10 past the hour.", "Start no row more than 8 minutes after the run's start.")
 # 2d. Message-ID from a later message's References or In-Reply-To.
 R("get it from RAW (the Bash recipe in MAILBOX), one call at a time, never skipped to save load;",
   "get it from RAW (the Bash recipe in MAILBOX), one call at a time, never skipped to save load, except: when a later "
