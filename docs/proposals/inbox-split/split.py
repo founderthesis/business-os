@@ -177,6 +177,12 @@ CAP_SELFCHECK = (
 CAP_STEP1 = step1.replace("STEPS 6 to 6e work on the messages this run read", "STEPS 6 to 6b work on the messages this run read") \
     .replace("Each gets STEPS 2 to 6e before the next;", "Each gets STEPS 2 to 7 before the next;")
 assert CAP_STEP1 != step1
+assert CAP_STEP1.count("skip any whose msgid: key an Activity already holds.") == 1
+CAP_STEP1 = CAP_STEP1.replace("skip any whose msgid: key an Activity already holds.",
+    "skip any whose msgid: key an Activity already holds, except that such a row without a \"capture:\" line (another "
+    "routine logged it first) gets that line and any missing link, once.")
+assert step2.count("(only add a missing link)") == 1
+CAP_STEP2 = step2.replace("(only add a missing link)", "(only add a missing link, and the \"capture:\" line if it has none)")
 CAP_RECON = (
     "STEP 0. OLD ROWS (one-off, every run until none is left; CTO, 1 Nov): before STEP 1, take up to 15 Activities, up to 8 "
     "of each class and the other class filling the rest: rows whose Source ID starts \"allmail:\", and Kind Email in or "
@@ -274,7 +280,7 @@ capture = "\n\n".join([
     take("capture", "RUN RECORD (renamed) + TIME (new) + SELF-CHECK (new)", CAP_RUNREC + "\n" + TIME + "\n" + CAP_SELFCHECK),
     take("capture", "STEP 0 allmail reconciliation (new)", CAP_RECON),
     take("capture", "STEP 1 (STEPS 2 to 7) + skip list", CAP_STEP1 + "\n" + skip),
-    take("capture", "STEP 2 IDENTITY + Gemini notes + edit-notes logging (new, from STEP 3's edit-notes bullet)", step2 + "\n\n" + gemini + "\n" + EDITNOTES),
+    take("capture", "STEP 2 IDENTITY + Gemini notes + edit-notes logging (new, from STEP 3's edit-notes bullet)", CAP_STEP2 + "\n\n" + gemini + "\n" + EDITNOTES),
     take("capture", "MATCHING PEOPLE + FORWARDS", matching + "\n\n" + forwards),
     take("capture", "STEP 3 head (link) + pitch, outbound, different-guest bullets + Stakeholders",
          CAP_STEP3 + "\n" + s3_capture + "\n\n" + also_capture),

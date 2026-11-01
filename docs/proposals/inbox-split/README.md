@@ -8,9 +8,9 @@
 
 | Routine | File | Bytes / sha256 |
 |---|---|---|
-| Inbox capture (the existing trigger, re-pointed) | `capture.txt` | 34,423 / 019b447635d19b44 |
-| Inbox actions, **v2** (recommended) | `actions-v2.txt` | 38,332 / d0a44c4f7de2803f |
-| Inbox actions, v1 (everything in the prompt) | `actions.txt` | 44,914 / 43b6b29264250fad (over 40 KB: not for deploy) |
+| Inbox capture (the existing trigger, re-pointed) | `capture.txt` | 35,029 / 4cbe89dfde09147c |
+| Inbox actions, **v2** (recommended) | `actions-v2.txt` | 38,584 / b6e90754d9823051 |
+| Inbox actions, v1 (everything in the prompt) | `actions.txt` | 45,117 / f404fa8f19d7ef16 (over 40 KB: not for deploy) |
 | Daily sweep (takes STEP 7b and PEOPLE MATCH) | `sweep.txt` | 39,131 / 6783dd01e396e5ab (on the accepted d420 sweep, 35,047 / 06c4120b2cd48ef1) |
 | Text for the Controls page (v2 only) | `yourcall-sections.md` | 7,326 / a28b43da3b0aac36 |
 
@@ -157,3 +157,22 @@ The first replay passed completeness and seven of eight cases. A1 failed. Fixes:
 v1 now has no use, so it isn't for deploy.
 
 **Cutover additions.** The CTO pastes all of `yourcall-sections.md` (sections 6 to 8 and the end line) and reads it back. STEP 0's dates assume the old inbox stays off; if it runs again on or after 2 Nov, move "Captured before 2026-11-02" to the cutover date.
+
+## Rounds 3b to 3d (offline replays `replay3.json`, `replay3b.json`, `replay3c.json`, `replay3d.json`)
+
+The round 3 replay passed every B and S case but found new defects in the joins. Each one was fixed and replayed again:
+
+| Defect | Fix |
+|---|---|
+| D1 SELF-CHECK trashed Gemini notes rows | It checks only Email in, Email out and Draft rows |
+| D2, D2b Zoya's rows worked by actions | Actions works only rows with capture's "capture:" line. STEP 0 checks each old row in ad@ by Message-ID: not there means Zoya's, no line |
+| D3, D3b The first run replayed mail the old inbox had worked | No W means W = 1 Nov 12:00 JST, when the old inbox began skipping steps. Old rows reach actions only once STEP 0 stamps them (created since then, or unlinked since 29 Oct) |
+| D4 A repeat pitch could knock Akshay's "pitched again" ask off | Actions closes that pitch as n/a, and his ask stays |
+| D5 Dead allmail: rows starved the unlinked rows | STEP 0 takes up to 8 rows per class |
+| D6 The WhatsApp was logged twice | One row, logged before the send |
+| D7 The overlap guard sat on the hourly gap | 45 minutes, and the skipped run writes a No-op record |
+| D8 Gemini notes were never worked | Actions takes Gemini notes Meeting rows, which capture stamps. A missing THREAD is never a try |
+| D9, D9b ad@ mail Zoya logged first was never worked | Capture's STEPS 1 and 2 add the "capture:" line to such a row, once. This is new: the old inbox skipped that mail |
+| Stale text | HARD RULES name each routine's own mail actions (Calendar, Blueticks); 7c points to STEP 2; STEP 0's cap wording is fixed |
+
+**Precondition:** deploy capture on or after 2 Nov JST. STEP 0 drops a row from its queue by setting Captured to today, which only works once today is past its "Captured before 2026-11-02" cut.

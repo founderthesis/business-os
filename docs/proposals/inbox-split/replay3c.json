@@ -1,0 +1,51 @@
+{
+ "round": "3c",
+ "inputs": {
+  "capture.txt": "34863/0d7c26f0674dbdc1",
+  "actions-v2.txt": "38584/b6e90754d9823051",
+  "yourcall-sections.md": "7326/a28b43da3b0aac36",
+  "sweep.txt": "39131/6783dd01e396e5ab",
+  "split.py": "28523/dbb19edd1ca429bf"
+ },
+ "cases": {
+  "D3b": "PASS: actions now takes only 'its body has a \"capture:\" line'. Old-inbox rows Captured 31 Oct to 1 Nov morning are neither unlinked nor created since 1 Nov 12:00 JST, so STEP 0 never stamps them and the Captured window skips them. Precondition: STEP 0 ends a row's selection by setting 'Captured before 2026-11-02' to today, so capture must not go live before 2 Nov. On 1 Nov, 'Captured today' is still before the cutoff and the same rows come back every run.",
+  "D9": "FAIL: the preamble says 'every one another routine logged first for a message you read in ad@ (once) ends its page body with the line \"capture: <run id>\"', but no step carries it out. STEP 1 says 'skip any whose msgid: key an Activity already holds', and STEP 2 says 'Any other id that comes back already has its Activity: create nothing ... (only add a missing link)'. A literal model skips Zoya's row in STEP 1 and never stamps it. So actions never works that ad@ mail; see D9b.",
+  "D2b": "PASS: 'msgid: look for its message in ad@ (search text = the Message-ID). Not there: it is Zoya's, add nothing. There: add the \"capture:\" line and, if unlinked, link it'. An ad@ row titled 'Rhea to Zoya:' is found in ad@, then stamped and linked.",
+  "B10": "PASS: the unlinked msgid: rows created since 29 Oct are found in ad@, linked, stamped and given Captured today. Actions takes them through the Captured window ('rows Captured on or after the day before W's date') and 'never one ... Captured before 2026-11-02' no longer bars them. The class gets 8 or more slots a run.",
+  "B1": "PASS: the cursor text is unchanged.",
+  "B1b": "PASS: unchanged.",
+  "B2": "PASS: unchanged. The row is stamped and Captured today.",
+  "B3": "PASS: unchanged.",
+  "B4": "PASS: unchanged. A Meeting row with no THREAD 'is never a try'.",
+  "B5": "PASS: the loop-in is closed n/a.",
+  "B6": "PASS: unchanged.",
+  "B7": "PASS: unchanged.",
+  "B8": "PASS: unchanged.",
+  "B9": "PASS: 8 per class, and the fold clears relations before Trash.",
+  "S1": "PASS: a Zoya inbox row whose message isn't in ad@ never gets a capture: line and is skipped.",
+  "S2": "PASS: unchanged; the 45-minute check writes a No-op record.",
+  "S3": "PASS: unchanged.",
+  "S4": "PASS: unchanged.",
+  "S5": "PASS: unchanged; the check covers only Email and Draft kinds.",
+  "S6": "PASS: the sweep is unchanged.",
+  "S7": "PASS: unchanged.",
+  "S8": "PASS: unchanged.",
+  "S9": "PASS: unchanged.",
+  "D1": "PASS: unchanged.",
+  "D4": "PASS: unchanged.",
+  "D5": "PASS: unchanged.",
+  "D6": "PASS: unchanged.",
+  "D7": "PASS: unchanged.",
+  "D8": "PASS: Meeting rows are taken and stamped, and the missing THREAD is never a try.",
+  "hard_rules": "PASS: 'Mail actions allowed (MCP Emails; cancels by Google Calendar, WhatsApp by Blueticks)'.",
+  "size_emdash": "PASS: capture is 34,863 bytes and actions-v2 38,584 (1,416 bytes to spare). Neither has a U+2014."
+ },
+ "defects": {
+  "D9b_stamp_rule_has_no_step": {
+   "quote": "preamble: 'every one another routine logged first for a message you read in ad@ (once) ends its page body with the line \"capture: <run id>\"' vs STEP 1: 'skip any whose msgid: key an Activity already holds' and STEP 2: 'Any other id that comes back already has its Activity: create nothing, and never change its Kind, Summary or author (only add a missing link)'",
+   "scenario": "A guest replies-all at 10:30. Zoya's run logs it at 10:38. Capture's 11:02 run reads it in ad@, finds the msgid: row, and skips it under STEP 1. Even if it reaches STEP 2, 'only add a missing link' reads as a ban on writing to the body. Nothing gets stamped, so actions never works the mail (Booked, a sponsored no, and so on). The steps never repeat the preamble's rule.",
+   "fix": "In STEP 1 change the skip to 'skip any whose msgid: key an Activity already holds, except: a row without a \"capture:\" line gets that line appended (and any missing link), once'. Mirror it in STEP 2's parenthesis: '(only add a missing link, and the capture: line if it has none)'. A missing capture: line is also how to recognise 'another routine logged first'."
+  }
+ },
+ "verdict": "Not accepted, but one fix away. D3b, D2b and B10 now pass, and every earlier case still passes. D9 fails: the stamp rule is only in the preamble, and STEP 1's skip and STEP 2's 'only add a missing link' contradict it. Put the rule into those two sentences (D9b), then replay D9 once. Precondition: deploy capture on 2 Nov or later, so that STEP 0's 'Captured before 2026-11-02' stops selecting the rows it touches."
+}
