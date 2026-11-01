@@ -34,6 +34,16 @@ rep("A backlog never means working none.",
     "Each gets STEPS 2 to 6e before the next; the cap is the approval: a backlog never means working none, "
     "skipping a step or asking Akshay.")
 
+# Rev 2 (CTO, 1 Nov 13:55): Your call ran behind the mail backlog and nine rows sat. It runs first, every run, uncapped.
+rep("At the start of every run, before STEP 1, take every Engagement whose Your call is not empty.",
+    "At the start of every run, before STEP 1, take every Engagement whose Your call is not empty: every run, first and in "
+    "full; the mail cap and any backlog never delay or shorten it.")
+# Room: three sentences that repeat rules stated just before them (moved here from the next-action patch).
+rep(" The same mail read again, by a later run or from the other inbox, makes zero rows.", "")
+rep(" Kind follows the From header.", "")
+rep("HOURLY (AR-20261019-6): each run takes only new or unfinished work; the look-back windows are catch-up after a missed "
+    "run, and more runs never mean more mails.", "HOURLY (AR-20261019-6): only new or unfinished work; more runs never mean more mails.")
+
 out = s.encode()
 assert s.count(chr(0x2014)) == dashes and len(out) <= 65536 - 200, len(out)
 open(dst, "wb").write(out)

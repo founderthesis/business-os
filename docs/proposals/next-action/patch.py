@@ -1,11 +1,11 @@
 """Tidy Next action (Akshay, 1 Nov, via the CTO): one line per open step, no action keys, history in the Claude note.
 Usage: python3 patch.py <routine> <in.txt> <out.txt>, routine one of inbox, calendar, sweep, hostboards.
-Inputs: inbox = the msgid patch output (65,334 / 2f3250ed1d45e7db); calendar = the B1 build (57,968 / f6d140196f3b75b4);
+Inputs: inbox = the msgid patch rev 2 output (65,233 / debcde463cd9cd0f); calendar = the B1 build (57,968 / f6d140196f3b75b4);
 sweep = the accepted d420 sweep (35,047 / 06c4120b2cd48ef1); hostboards = live (8,474 / 5819ccf7528ca16f).
 Zoya's FAST prompt and SLOW file carry the same rule through routines/zoya/parts (KEYS and NEXT ACTION in actions.txt)."""
 import hashlib, os, sys
 name, src, dst = sys.argv[1], sys.argv[2], sys.argv[3]
-INPUT = {"inbox": "2f3250ed1d45e7db", "calendar": "f6d140196f3b75b4", "sweep": "06c4120b2cd48ef1", "hostboards": "5819ccf7528ca16f"}
+INPUT = {"inbox": "debcde463cd9cd0f", "calendar": "f6d140196f3b75b4", "sweep": "06c4120b2cd48ef1", "hostboards": "5819ccf7528ca16f"}
 s = open(src, encoding="utf-8").read()
 assert hashlib.sha256(s.encode()).hexdigest()[:16] == INPUT[name], name
 dashes = s.count(chr(0x2014))
@@ -19,8 +19,8 @@ RULE = ("NEXT ACTION (Akshay, 1 Nov): one line per open step, \"<owner>: <what>\
         "history, past message dates and reasons go in the Claude note (templates below too), and action keys only in Action "
         "keys. Completing or superseding a step removes it and its Action keys line in the same write; a write that moves Status forward or passes the call date drops the "
         "earlier stage's steps.")
-SHORT = ("NEXT ACTION: one line per open step, \"<owner>: <what>\", about 80 characters, joined by \" | \"; "
-         "history and reasons go in the Claude note (templates too); a step done or superseded leaves, with its key, in one write.")
+SHORT = ("NEXT ACTION: one line per open step, \"<owner>: <what>\", under 80 characters, \" | \" between; history and "
+         "reasons go in the Claude note (templates too); a done or superseded step leaves with its key.")
 
 def after_engagements_line(rule):
     """Insert the rule on its own line right after the NOTION list's Engagements line (and its indented detail line)."""
@@ -33,13 +33,11 @@ def after_engagements_line(rule):
 
 if name == "inbox":
     after_engagements_line(SHORT)
-    # Room: three sentences that repeat rules stated just before them.
-    rep(" The same mail read again, by a later run or from the other inbox, makes zero rows.", "")
-    rep(" Kind follows the From header.", "")
     rep("Earlier: <D Mon> to <first name>, \\\"<that thread's subject without Re:>\\\", <what we said or where it stood>.",
         "Earlier thread and our answer: Claude note.")
-    rep("HOURLY (AR-20261019-6): each run takes only new or unfinished work; the look-back windows are catch-up after a missed "
-        "run, and more runs never mean more mails.", "HOURLY (AR-20261019-6): only new or unfinished work; more runs never mean more mails.")
+    rep("\"Replacement proposal: <PR> offers <new person, role> in place of <original guest> (<original Status, Tier>). Eval "
+        "pending. Write ok, not ok or a change in Your call.\"",
+        "\"Replacement proposal: <PR> offers <new person> for <original guest>. Ok, not ok or a change in Your call.\"")
 elif name == "sweep":
     after_engagements_line(RULE)
     rep("PART A: STEPS 2, 3, 3r, 3a and 3a2.", "PART A: STEPS 2, 3, 3r, 3a, 3a2 and 3t.")

@@ -14,9 +14,9 @@
 
 | Routine | File | Bytes / sha256 | Built on |
 |---|---|---|---|
-| Zoya FAST | `zoya-one.txt` | 43,206 / f35016c5fe448a94 | pinned to SLOW at 39a5cce |
+| Zoya FAST | `zoya-one.txt` | 43,565 / e04512accf236171 | pinned to SLOW at 39a5cce; includes the CTO's 13:55 decision-action fix |
 | Zoya SLOW | `routines/zoya/release/zoya-slow-work.txt` at 39a5cce90dfd468ecd3bdfe413e5ef9981b4313d | 64,714 / 9403ac13d1527139 | f70901f |
-| Inbox | `inbox.txt` | 65,297 / 932472e0a326181e | the msgid patch, 65,334 / 2f3250ed1d45e7db |
+| Inbox | `inbox.txt` | 65,306 / dcd1c44215676619 | the msgid patch rev 2, 65,233 / debcde463cd9cd0f |
 | Calendar | `calendar.txt` | 58,379 / 60535446d9b0d650 | B1, 57,968 / f6d140196f3b75b4 |
 | Daily sweep | `sweep.txt` | 36,093 / 642eb4bd576c1d93 | accepted d420, 35,047 / 06c4120b2cd48ef1 |
 | Host boards | `hostboards.txt` | 8,885 / 8a3fd4b5a3bb6b77 | live, 8,474 / 5819ccf7528ca16f |

@@ -37,3 +37,18 @@ Built twice, byte-identical. 2 bytes under the build limit.
 | M1 | cross-message batching broke "before the next" | "Batch one message's creates" |
 
 **Not covered by the prompt:** most of the 12:12 `allmail:` rows are older than the next window and won't be re-read. `reconcile-allmail.md` covers them.
+
+## Rev 2 (CTO, 1 Nov 13:55)
+
+**Your call first.** Nine rows sat with Akshay's Your call, because runs worked the mail backlog first. The YOUR CALL rule now says it runs "every run, first and in full; the mail cap and any backlog never delay or shorten it".
+
+**Room.** The room came from three sentences that repeat earlier rules (moved here from the next-action patch, which is rebased on this):
+- "zero rows";
+- "Kind follows the From header";
+- HOURLY's look-back explanation.
+
+| File | Bytes / sha256 | Built on |
+|---|---|---|
+| `inbox.txt` | 65,233 / debcde463cd9cd0f | the live inbox, 65,325 / e6cf4db2bc37918b |
+
+Built twice, byte-identical; 103 bytes under the build limit. This replaces round 2's 65,334 / 2f3250ed1d45e7db.
