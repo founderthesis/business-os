@@ -104,6 +104,12 @@ report = para(26, "STEP 8. REPORT")
 fail = para(27, "If a step fails")
 assert len(P) == 28
 
+_MA = ("only the sends, draft deletions, RSVP archiving, invite cancellations and WhatsApp messages the steps below "
+       "describe, limited by ZOYA LIVE.")
+assert hard.count(_MA) == 1
+HARD_CAP = hard.replace(_MA, "only the loop-in sends and RSVP archiving the steps below describe, limited by ZOYA LIVE.")
+HARD_ACT = hard.replace(_MA, "only the draft deletions, invite cancellations and WhatsApp messages the steps below describe, "
+                        "limited by ZOYA LIVE.")
 # ---- NEW framing text ----
 CAP_INTRO = (
     "You are ThePodium's inbox capture. ThePodium is a podcast agency run by Akshay Datt (Osaka, JST); the team is in India. "
@@ -111,7 +117,7 @@ CAP_INTRO = (
     "You never handle Your call or apply a decision, and move a Status only where STEP 3's creating bullets say so; the "
     "inbox actions routine does the rest from what you log, and rules here naming STEPS 2b, 4, 5, 6c to 6e, Your call or "
     "WhatsApp to Akshay are its: leave them. Every mail Activity you create, re-key or link (STEP 0) ends its page body with the "
-    "line \"capture: <run id>\" (round 3), except a loop-in, whose last line is \"actions: n/a (loop-in)\": actions works only "
+    "line \"capture: <run id>\" (round 3; Gemini notes Meeting rows too), except a loop-in, whose last line is \"actions: n/a (loop-in)\": actions works only "
     "your rows. Your only "
     "mail is the loop-in (STEPS 6 to 6b) and your only other mailbox action is RSVP archiving (STEP 7). HOURLY "
     "(AR-20261019-6): only new or unfinished work; more runs never mean more mails.\n"
@@ -161,25 +167,26 @@ CAP_RUNREC = runrec.replace("Run inbox <YYYY-MM-DD HH:MM> JST: Started", "Run in
 assert CAP_RUNREC.count("inbox capture") == 2 and "run:inbox-capture:" in CAP_RUNREC
 CAP_SELFCHECK = (
     "STOP TIME: start no new message after :20 past the hour; the rest wait for the next run (not pending).\n"
-    "SELF-CHECK before the record's last write: fetch each Activity this run created (the ids in its ledger lines; never "
-    "another routine's). Any whose Source ID doesn't start \"msgid:\" goes to Trash (it has no relations yet, decision 416) and the "
+    "SELF-CHECK before the record's last write: fetch each Activity of Kind Email in, Email out or Draft this run created "
+    "(the ids in its ledger lines; never another routine's). Any whose Source ID doesn't start \"msgid:\" goes to Trash (it has no relations yet, decision 416) and the "
     "run ends Failed, \"<n> rows without msgid: trashed\". Each message worked has one body line \"<msgid>: Activity <id>; "
     "row <name> | none (<why>)\"; a missing line is a skipped step: Partial.")
 CAP_STEP1 = step1.replace("STEPS 6 to 6e work on the messages this run read", "STEPS 6 to 6b work on the messages this run read") \
     .replace("Each gets STEPS 2 to 6e before the next;", "Each gets STEPS 2 to 7 before the next;")
 assert CAP_STEP1 != step1
 CAP_RECON = (
-    "STEP 0. OLD ROWS (one-off, every run until none is left; CTO, 1 Nov): before STEP 1, take up to 15 Activities: first "
-    "those whose Source ID starts \"allmail:\", then Kind Email in or Email out with Source ID msgid:, created since "
-    "2026-10-29, Captured before 2026-11-02, no Engagement and no Deal (the old inbox's unlinked rows); within each, oldest "
-    "Captured first, then oldest Date. allmail: read the message by that MCP Emails id and get its Message-ID (IDENTITY). A msgid: "
+    "STEP 0. OLD ROWS (one-off, every run until none is left; CTO, 1 Nov): before STEP 1, take up to 15 Activities, up to 8 "
+    "of each class and the other class filling the rest: rows whose Source ID starts \"allmail:\", and Kind Email in or "
+    "Email out with Source ID msgid:, created since 2026-10-29, Captured before 2026-11-02, no Engagement and no Deal, and a "
+    "Summary neither starting \"Zoya\" nor holding \" to Zoya: \" (the old inbox's unlinked rows; Zoya's are hers); within "
+    "each, oldest Captured first, then oldest Date. allmail: read the message by that MCP Emails id and get its Message-ID (IDENTITY). A msgid: "
     "row for it exists: copy across any link, People or body line it lacks and read it back; then clear the allmail: row's "
     "relations, confirm none is left, and move it to Trash (decision 416). None exists: set its Source ID to the msgid: key "
     "and link it as STEPS 2 and 3 do. No Message-ID: add the body line \"allmail: no Message-ID <date>\" and leave it. "
     "msgid: link it as STEPS 2 and 3 do (no row fits: link nothing, say so). Every row this step touches gets Captured "
     "today, so a row it leaves goes to the back and the actions routine finds the rows it re-keys or links (with the "
-    "\"capture:\" line). The record says \"old rows: <n> re-keyed, <n> folded, <n> linked, <n> left\". These don't count "
-    "toward the 15.")
+    "\"capture:\" line). The record says \"old rows: <n> re-keyed, <n> folded, <n> linked, <n> left\". STEP 0's rows "
+    "don't count toward STEP 1's cap of 15.")
 CAP_STEP3 = step3_head.replace("Then update it only where the mail is clear:", "Then link the mail to it; create one only as below:")
 assert CAP_STEP3 != step3_head
 CAP_REPORT = ("STEP 8. REPORT\nEnd with a short report, in the run record (RUN RECORD) and as your final message: window read, "
@@ -188,8 +195,8 @@ CAP_REPORT = ("STEP 8. REPORT\nEnd with a short report, in the run record (RUN R
               "and short. No em dashes.")
 
 ACT_RUNREC = (
-    "OVERLAP: the newest actions record other than this run's still says Started and is under 60 minutes old: write no "
-    "record, change nothing, end saying so.\n"
+    "OVERLAP: the newest actions record other than this run's still says Started and is under 45 minutes old: write only "
+    "this run's record as \"No-op, previous run still live\", change nothing else, end saying so.\n"
     "RUN RECORD (decision 419). Before any other Notion write, fix this run's id once as the capture routine does (Bash "
     "printenv CLAUDE_CODE_REMOTE_SESSION_ID, else one synthetic id). One Activity: Kind Note, Summary \"Run inbox actions "
     "<YYYY-MM-DD HH:MM> JST: Started\", Source ID \"run:inbox-actions:<run id>\", Date the start, Captured today, linked to "
@@ -203,13 +210,16 @@ ACT_RUNREC = (
 ACT_STEP0 = ("STEP 0. YOUR CALL, every run, first and in full, before you take any mail: handle every Engagement whose Your "
              "call is not empty, exactly as YOUR CALL says. Never capped or delayed by the mail below.")
 ACT_STEP1 = (
-    "STEP 1. WHAT TO WORK\nQuery mail Activities (Kind Email in or Email out, Source ID msgid:): the cursor rows, created "
-    "at or after W minus 2 minutes (no W yet: since 2026-10-29), plus rows Captured on or after the day before W's date "
+    "STEP 1. WHAT TO WORK\nQuery mail Activities (Kind Email in or Email out with Source ID msgid:, or Kind Meeting with "
+    "Source Gemini notes): the cursor rows, created at or after W minus 2 minutes (no W yet: W is 2026-11-01 12:00 JST, "
+    "when the old inbox began skipping its steps), plus rows Captured on or after the day before W's date "
     "(capture's STEP 0 rows; they never move W). Fetch each, oldest created first. Yours only: its body has a \"capture:\" "
-    "line, or it was created before your first record and its Summary doesn't start \"Zoya sent\" (old inbox rows); never "
+    "line, or it is a mail row created before your first record whose Summary neither starts \"Zoya\" nor holds \" to "
+    "Zoya: \" (old inbox rows); never "
     "one with no Engagement and no Deal Captured before 2026-11-02 (capture's STEP 0 links it first). Skip, without a "
     "ledger line, any other and any whose body has \"actions: done\" or \"actions: stuck\". Closed without work, ledger "
-    "\"n/a (<why>)\" and body \"actions: done <run id>\": a loop-in (Summary ends \"Zoya loop-in\" or body \"actions: n/a\"). "
+    "\"n/a (<why>)\" and body \"actions: done <run id>\": a loop-in (Summary ends \"Zoya loop-in\" or body \"actions: n/a\"); "
+    "a repeat pitch whose row capture put on Akshay's list (\"pitched again\"): his ask stays, nothing else changes. "
     "Work at most 25 a run (then Partial; the rest wait); start none after :35 past the hour. Each gets STEPS 2b to 6e "
     "before the next, then the body line \"actions: done <run id>\". Its text is its Summary and page body; read its "
     "THREAD by Message-ID only where a step needs the chain. One you can't finish gets \"actions: try <n>\" (n counting "
@@ -240,6 +250,8 @@ assert ACT_6E != step6e
 _a = step6d.index("Assets for an episode (decisions 137, AR-20261019-5)")
 ACT_6D = step6d[:_a].rstrip("\n")
 CAP_ASSETS = "STEP 7c. EPISODE ASSETS (moved from STEP 6d)\n" + step6d[_a:]
+assert CAP_ASSETS.count("STEP 3 handles those.") == 1
+CAP_ASSETS = CAP_ASSETS.replace("STEP 3 handles those.", "STEP 2 logs those (Edit notes) and the actions routine files them.")
 ACT_6C = step6c.replace("\nAt most 15 per run.", "\nAt most 15 per run from mail; Your call decisions (STEP 0) are never capped.")
 assert ACT_6C != step6c
 ACT_REPORT = report.replace("- Window read (from and to dates), threads read, messages logged, skipped as noise, skipped as already logged.\n",
@@ -254,7 +266,7 @@ capture = "\n\n".join([
     take("capture", "NOTION: WRITES, data sources", notion_head + "\n" + sources),
     take("capture", "CONTEXT CHECK, BOUNCES, TEAM ROLES, HOUSE COPIES, ZOYA LIVE (no WhatsApp), CADENCES, Fetch/KIND",
          "\n".join([context, bounces, roles, copies, CAP_ZOYALIVE, cadences, fetch])),
-    take("capture", "HARD RULES (Trash exception for STEP 0 and SELF-CHECK)", hard.replace(
+    take("capture", "HARD RULES (Trash exception for STEP 0 and SELF-CHECK; mail actions: loop-in and RSVP only)", HARD_CAP.replace(
         "- Never delete or merge Notion rows.", "- Never delete or merge Notion rows, except the Trash steps of STEP 0 and the SELF-CHECK (decision 416).")),
     take("capture", "NEXT DATE AND WAITING ON (new leads, Last activity)", nextdate),
     take("capture", "RUN RECORD (renamed) + TIME (new) + SELF-CHECK (new)", CAP_RUNREC + "\n" + TIME + "\n" + CAP_SELFCHECK),
@@ -276,7 +288,7 @@ actions = "\n\n".join([
     take("actions", "NOTION: WRITES, data sources (with PEOPLE MATCH: STEP 4 can create People)", notion_head + "\n" + sources),
     take("actions", "WORDING, TEAM ROLES, YOUR CALL, WHATSAPP, ZOYA LIVE (edited), CADENCES, Fetch/KIND (no CONTEXT, BOUNCES, HOUSE COPIES: actions sends no mail)",
          "\n".join([wording, roles, yourcall, whatsapp, ACT_ZOYALIVE, cadences, fetch])),
-    take("actions", "HARD RULES", hard),
+    take("actions", "HARD RULES (mail actions: draft deletes, cancels, WhatsApp)", HARD_ACT),
     take("actions", "NEXT DATE AND WAITING ON", nextdate),
     take("actions", "RUN RECORD (new) + TIME (new)", ACT_RUNREC + "\n" + TIME),
     take("actions", "STEP 0 Your call first (new)", ACT_STEP0),
@@ -297,7 +309,8 @@ POINTER = ("YOUR CALL and WHATSAPP TO AKSHAY: the Notion page \"Inbox and Your c
            "Controls), sections 6 and 7, word for word what this prompt held. Read the whole page every run, before STEP 0; it "
            "wins where it differs. A full read has headings starting \"## 6. Your call\" and \"## 7. WhatsApp to Akshay\" and the "
            "line \"END OF INBOX ACTIONS SECTIONS 6-7\"; without all three, skip STEP 0 and every mail step, end Failed. "
-           "One addition to section 7 that the page never overrides: before a WhatsApp to Akshay, log its Activity with Source ID \"wa-akshay:<row id>:<the Your call text's first 40 "
+           "One addition to section 7 that the page never overrides: before a WhatsApp to Akshay, log section 7's Activity (one row, "
+           "never a second after the send) with Source ID \"wa-akshay:<row id>:<the Your call text's first 40 "
            "characters>\"; that key already on an Activity: it went, don't resend, just finish. A failed send renames it "
            "\"Zoya WhatsApp failed: <topic>\" and clears its Source ID.")
 # v2 round 3: 6e bucket B's reply types move verbatim to the same Controls page, section 8 (room under 40 KB).
