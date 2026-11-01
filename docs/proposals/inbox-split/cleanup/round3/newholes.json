@@ -1,0 +1,32 @@
+{
+ "reviewed": {"head": "219d0ee", "round2": "d6243c5", "rebuild": "split.py rebuilt capture/actions-v2/yourcall byte-identical to HEAD"},
+ "blocking": {
+  "X1_D9b_stamps_every_Zoya_send": {
+   "quotes": ["capture STEP 1: 'except that such a row without a \"capture:\" line (another routine logged it first) gets that line and any missing link, once.'",
+              "capture STEP 0: 'msgid: look for its message in ad@ ... Not there: it is Zoya's, add nothing. There: add the \"capture:\" line'",
+              "zoya.md 111: 'a. Log it if Akshay isn't on To or Cc (the inbox routine logs the rest)'",
+              "CLAUDE.md decision 229: Akshay is in Cc on every mail of hers",
+              "actions STEP 5: 'A team member closed Akshay's ask (decision 139): Zoya or anyone tagged Team sent the mail ... take Akshay off Waiting on'",
+              "README S1: 'Actions works only capture's rows ... (not \"Zoya sent\" ones)'"],
+   "scenario": "Zoya's inbound rows are almost never in ad@ (she logs only when Akshay is not on the mail), so D9b fires mainly on her own sends, which all reach ad@ via Akshay's Cc. 10:38 Zoya sends a holding reply (decision 390) on a bucket C thread and logs 'Zoya sent: ...'. 11:02 capture stamps it. 11:25 actions runs STEP 2b/5 on it, reads it as a team member closing Akshay's ask, takes Akshay off his decision; also re-moves Status/Waiting on that Zoya's STEP e/0e already moved (double write). Round 2 S1 reopened.",
+   "fix": "capture STEP 1: 'such a row of Kind Email in without a \"capture:\" line (another routine logged it first; never a \"Zoya sent:\" row)'; STEP 0: 'There, and its Summary does not start \"Zoya sent:\": add the \"capture:\" line'; actions STEP 1: 'Skip ... any whose Summary starts \"Zoya sent:\"'."
+  },
+  "X2_D9b_restamps_old_inbox_rows": {
+   "quotes": ["capture CURSOR: 'from the newest inbox capture run record read only its Summary's \"read to\"'", "STEP 1: 'none yet: 3 days ago'", "actions STEP 1: 'plus rows Captured on or after the day before W's date'"],
+   "scenario": "First capture run finds no 'Run inbox capture' record, so T is 3 days back. Every message there was logged by the old inbox (no capture: line), so D9b stamps them all (stamps are uncapped). Rows Captured 31 Oct to 1 Nov 12:00 fall in actions' Captured window (W date 1 Nov) and are re-worked though the old inbox already worked them. D3/D3b reopened.",
+   "fix": "STEP 1 exception: 'a row created since 2026-11-01 12:00 JST without a \"capture:\" line'; CURSOR: 'none yet: the old inbox's newest record (Source ID run:inbox:)'."
+  }
+ },
+ "should_fix": {
+  "S1_captured_window_fetch_cost": {"quote": "'plus rows Captured on or after the day before W's date ... Fetch each, oldest created first. Yours only: its body has a \"capture:\" line'", "scenario": "Every run body-fetches every Activity captured yesterday and today (done ones included, Zoya's too) inside a :25-:35 window; fetches eat the window, nothing closes, W and the window stay put: starvation.", "fix": "'plus rows created before 2026-11-02 and Captured on or after the day before W's date'."},
+  "S2_STEP0_rewrites_Captured": {"quote": "'Every row this step touches gets Captured today'", "scenario": "Provenance (capture date) overwritten on old-inbox rows; for 'Not there: it is Zoya's, add nothing' rows either Captured is rewritten on Zoya's rows, or, if untouched, up to 8 stay oldest and take the msgid class's 8 slots every run.", "fix": "Exclude in the query: Summary not starting 'Zoya sent:' and not containing ' to Zoya:'; record the original date in the body line ('captured-was <date>')."},
+  "S3_fold_stamps_worked_row": {"quote": "'every one STEP 0 finds in ad@ ... ends its page body with the line \"capture: <run id>\"'", "scenario": "Fold copies links onto an old-inbox msgid row (worked before 1 Nov 12:00), stamps and re-dates it; actions re-works it.", "fix": "'a found msgid row gets the line only if created since 2026-11-01 12:00 JST'."},
+  "S4_whatsapp_logged_before_send": {"quote": "'that key already on an Activity: it went, don't resend, just finish'", "scenario": "Crash between log ('Zoya sent: ...') and send: next run sees the key, never sends, reports done.", "fix": "Log as 'Zoya sending: <topic>', rename to 'Zoya sent:' after the send; a 'sending' row: check Akshay's chat for 'zoya here: <topic>' before resending."},
+  "S5_capture_stop_vs_step0": {"quote": "'STOP TIME: start no new message after :20' / 'STEP 0 ... before STEP 1, take up to 15'", "scenario": "During the ~170-row drain STEP 0 can fill :02-:20; STEP 1 and loop-ins wait hours.", "fix": "'STEP 0 starts no row after :10'."},
+  "S6_dead_allmail_forever": {"quote": "'No Message-ID: add the body line \"allmail: no Message-ID <date>\" and leave it'", "scenario": "Captured today only moves it to the back; once only these remain, every run re-reads up to 8 forever and can spend the 2 heavy RAW reads STEP 1 needs.", "fix": "'a row already marked \"allmail: no Message-ID\" is not taken again; count it as left'."}
+ },
+ "nits": ["section 8 recording logistics is extended (S7), so 'word for word' in actions' YOUR CALL line and the handoff is not literally true", "actions dropped LAST ACTIVITY but still logs the linked WhatsApp Activity", "OVERLAP 45 min never matches an on-time previous hourly run that overran (it is >=60 min old)", "actions' :35 stop leaves a mail started at :34 running into Zoya's :38 run"],
+ "completeness": "35 source units absent from r3 vs 25 in r2; all 10 newly absent are marked rewrites (ZOYA LIVE, HARD RULES, D9b, B8 x3, S3, 7c pointer, section 8 pointer). Bucket B: 5 of 6 bullets byte-exact in section 8; recording logistics extended per S7; 'Then move Status...' correctly stays in actions.",
+ "sizes": {"capture.txt": 35029, "actions-v2.txt": 38584, "yourcall-sections.md": 7326, "sweep.txt": 39131, "emdash": "0 in all new text; sweep has 1 pre-existing (quoted OS Audit heading)"},
+ "replay3d_nits": {"N1": "optional: actions still closes it n/a by Summary 'Zoya loop-in'; costs one wasted write per loop-in", "N2": "not optional while X1 stands: stamps happen nearly every run (every Zoya send), so an unledgered stamp makes most runs Partial, which the good-morning check flags as errors. Optional once X1 narrows D9b"}
+}
