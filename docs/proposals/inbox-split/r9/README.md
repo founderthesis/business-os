@@ -5,7 +5,7 @@
 
 | File | Bytes / sha256 |
 |---|---|
-| `actions.txt` | 41,747 / 187098fb1d86b168 |
+| `actions.txt` | 42,300 / 7994a1502b19626b |
 
 The prompt is over the 40 KB target but well under the 65,536 cap.
 
@@ -51,3 +51,16 @@ Three optional wording items are left for a later round:
 - **R3:** a past date reaches Zoya as "slots for <past date>".
 
 **Status:** written and replayed offline. Ready for Cleanup; then the CTO deploys.
+
+## r9d and r9e: scoped to Akshay's words (relayed by the CTO, 2 Nov)
+
+**443:** a scheduling request is a reply owed now. Its owner answers in the next run: Zoya with slots, or Akshay under decision 425. Next date marks the call window and is never a reason to wait. A recording reaches Booked only on their written confirmation of a time.
+
+**444:**
+- **What triggers it:** only a substantive new pitch or ask. Acknowledgements, thanks, auto-replies, a sponsored no and noise never do.
+- **What it does:** reconcile with the thread and the row's earlier outcome, then put one recommendation on Akshay's list: "Akshay: <who> wrote again about <what>; earlier <how it closed>. Recommend: <re-open as <status>, Zoya: <the reply> | Zoya: reply no>, because <one line>. Write ok, not ok or a change in Your call. (<D Mon>)".
+- **Akshay's ok on a re-open:** may move Status back (a HARD RULES exception).
+- **A later inbound:** updates the item's what, recommendation and date, never adds a second.
+- **The commercial decision** stays his.
+
+Replay: r9d and r9e sections of `replay9.json`.

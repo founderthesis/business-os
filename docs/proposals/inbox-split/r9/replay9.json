@@ -216,5 +216,71 @@
    }
   },
   "verdict": "READY. Cases a, g and the D6 path pass, and there are no new contradictions. R1 to R3 are optional (info or low)."
+ },
+ "r9d": {
+  "inputs": "r9/actions.txt 42,169 / 9c198bca632cb3fe; patch.py rebuilds it byte-identical from r8e 1d483cbd. Against r9c only lines 73 and 74 changed. 0 em dashes, 0 non-ASCII added. YOUR CALL judged from yourcall-sections.md section 6 (the local copy of the Notion page).",
+  "cases": {
+   "a_AISECT": {
+    "result": "PASS",
+    "quote": "A Tier 1 guest or a date today or tomorrow (decision 425): \"Akshay: <who> asks for a call on <date>: pick a slot\", Akshay in Waiting on instead of Zoya.",
+    "replay": "Same result as r9c: Akshay picks a slot, the chase segment leaves, and Next date moves from 4 Nov to 3 Nov. Small ambiguity: the new sentence 'Zoya answers with slots in her next run' comes before the 425 branch, so a literal reader could still expect Zoya to send (S4)."
+   },
+   "c_Commix": {
+    "result": "PASS",
+    "quote": "reconcile it with the thread and the row's earlier outcome, keep Status, add Akshay to Waiting on and put first in Next action one recommendation, never an open question: \"... Recommend: <re-open as <status> | reply no>, because <one line>. Write ok or a change in Your call (<D Mon>)\"",
+    "replay": "Bhoomika's ask: Status stays They declined, Akshay is added, and the item reads e.g. 'Akshay: Bhoomika wrote again about <ask>; earlier they declined <...>. Recommend: re-open as Decision pending, because <...>. Write ok or a change in Your call (28 Oct)'."
+   },
+   "f_Parked_second_inbound": {
+    "result": "PASS",
+    "quote": "one such segment already open on the row: update its what and date, never a second.",
+    "replay": "One segment, updated. Gap: only 'what and date' are updated, not the Recommend line, so a second mail that changes the picture (say they now accept paying) keeps a stale recommendation (S3)."
+   },
+   "g_interactions": {
+    "result": "PASS",
+    "replay": "No change since r9c for STEP 5, 6e, chase, 382, repeat-pitch closure, REPAIR, calendar and host show. 444 still keeps Status."
+   },
+   "thanks_only_closed_row": {
+    "result": "PASS",
+    "quote": "Acknowledgements, thanks, auto-replies, a sponsored no and noise never trigger it.",
+    "replay": "No item. STEP 6e bucket A also skips it ('Never for a mail that is itself only thanks')."
+   },
+   "Booked_interaction": {
+    "result": "PASS with a low",
+    "quote": "the row reaches Booked only on their written confirmation of a time",
+    "replay": "This fits line 65 ('A recording date is agreed: Booked') by narrowing 'agreed' to their written confirmation. But 443 covers any call, including a precall. A literal model can read the sentence as moving a confirmed precall to Booked, when a precall's path is Precall requested, then Precall done (S2)."
+   },
+   "YourCall_ok_on_Recommend": {
+    "result": "FAIL (medium)",
+    "quote": "YOUR CALL: \"ok\" or \"yes\" approves the proposal in Next action as written ... Update Status, Waiting on and Next action as the step implies. HARD RULES line 33: \"Never move Status backward, except to LT chase or a closed outcome.\"",
+    "replay": "'ok' on 'reply no': YOUR CALL hands it to Zoya ('Zoya: send the approved <what> to <who>'), which works. 'ok' on 're-open as <status>': moving They declined or Parked to an open status is a backward move, and line 33 has no Akshay or Your call exception, so a literal model may refuse. Even if it re-opens, the recommendation names only a status, not the reply, so no Zoya step is implied and the person who wrote is left unanswered. Also, the item ends 'Write ok or a change in Your call' instead of YOUR CALL's standard 'Write ok, not ok or a change in Your call.', and 'not ok' on 'reply no' is undefined (YOUR CALL: 'decline politely if that is clearly what is meant, else ask')."
+   }
+  },
+  "new_defects": {
+   "S1": {
+    "quote": "Recommend: <re-open as <status> | reply no>, because <one line>. Write ok or a change in Your call (<D Mon>)",
+    "scenario": "Akshay writes ok on 're-open as Decision pending'. Line 33 forbids the backward move, and no next step or reply is named.",
+    "fix": "Template 'Recommend: <re-open as <status>, Zoya: <the reply> | Zoya: reply no>, because <one line>. Write ok, not ok or a change in Your call. (<D Mon>)'. Add to line 33: 'or Akshay's ok on a decision 444 re-open'.",
+    "severity": "medium"
+   },
+   "S2": {
+    "quote": "the row reaches Booked only on their written confirmation of a time",
+    "scenario": "A precall confirmed in writing could be moved to Booked.",
+    "fix": "'a recording reaches Booked only on their written confirmation of a time (a precall stays Precall requested)'.",
+    "severity": "low"
+   },
+   "S3": {
+    "quote": "update its what and date, never a second",
+    "scenario": "The second inbound changes the facts, but the recommendation stays stale.",
+    "fix": "'update its what, recommendation and date'.",
+    "severity": "low"
+   },
+   "S4": {
+    "quote": "It is a reply owed now: Zoya answers with slots in her next run",
+    "scenario": "In the 425 branch (Tier 1, today or tomorrow) the step is Akshay's, yet this earlier sentence names Zoya.",
+    "fix": "'It is a reply owed now: the owner below answers in the next run ...'.",
+    "severity": "low"
+   }
+  },
+  "verdict": "NOT READY, one medium. Cases a, c, f and g, the thanks-only case and the Booked interaction pass. 'ok' on a 're-open' Recommend fails: line 33 blocks the move and no reply step is named (S1). S2 to S4 are low, one-phrase edits."
  }
 }
