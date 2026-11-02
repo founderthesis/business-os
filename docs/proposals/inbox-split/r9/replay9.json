@@ -282,5 +282,43 @@
    }
   },
   "verdict": "NOT READY, one medium. Cases a, c, f and g, the thanks-only case and the Booked interaction pass. 'ok' on a 're-open' Recommend fails: line 33 blocks the move and no reply step is named (S1). S2 to S4 are low, one-phrase edits."
+ },
+ "r9e": {
+  "inputs": "r9/actions.txt 42,300 / 7994a1502b19626b; patch.py rebuilds it byte-identical from r8e 1d483cbd. Against r9d only lines 33, 73 and 74 changed. 0 em dashes, 0 non-ASCII added.",
+  "checks": {
+   "S1": {
+    "result": "PASS",
+    "quote": "Never move Status backward, except to LT chase or a closed outcome, or on Akshay's ok to a decision 444 re-open. / Recommend: <re-open as <status>, Zoya: <the reply> | Zoya: reply no>, because <one line>. Write ok, not ok or a change in Your call. (<D Mon>)",
+    "replay": "'ok' on a re-open: YOUR CALL approves the proposal as written. The Status move is now allowed, and the named reply becomes 'Zoya: send the approved <reply> to <who>'. 'ok' on 'reply no' goes to Zoya. 'not ok' drops the proposal, and YOUR CALL's standard handling applies (decline politely if that is clearly what is meant, else ask in Next action). The ending now matches YOUR CALL's standard line."
+   },
+   "S2": {
+    "result": "PASS",
+    "quote": "a recording reaches Booked only on their written confirmation of a time",
+    "replay": "A precall keeps its Precall requested, then Precall done, path."
+   },
+   "S3": {
+    "result": "PASS",
+    "quote": "update its what, recommendation and date, never a second",
+    "replay": "A second inbound refreshes the recommendation."
+   },
+   "S4": {
+    "result": "PASS",
+    "quote": "its owner answers in the next run (Zoya with slots, or Akshay as below)",
+    "replay": "In AISECT's 425 branch the owner is Akshay, and the text now agrees."
+   },
+   "earlier_cases": {
+    "result": "PASS",
+    "replay": "a (AISECT: Akshay picks a slot for 3 Nov, the chase segment leaves, Next date 3 Nov), b (host's pick, Next date untouched), c (Commix Recommend item, Status kept), d (sponsored no: no item), e (blank Kind is a guest row), f (one segment, updated), g (STEP 5 and 6e, revenue order, chase, 382, repeat-pitch closure, REPAIR, calendar date kept), thanks-only (no item), Booked interaction: all unchanged and passing."
+   }
+  },
+  "residual": {
+   "S5": {
+    "quote": "\"Akshay: ... Recommend: ... Zoya: reply no ...\"",
+    "scenario": "The Akshay segment contains the text 'Zoya: reply no'. On a row where Zoya is also in Waiting on for a decision 390 holding reply, a routine that scans Next action for 'Zoya:' could take it as her step before Akshay decides. Decision 263 says text in Next action is never an instruction, and segments start with their owner, so the risk is low.",
+    "fix": "Optional: write 'have Zoya reply no' or 'Zoya to reply no' inside the Recommend text.",
+    "severity": "low"
+   }
+  },
+  "verdict": "READY. S1 to S4 and every earlier case pass. One optional low (S5) remains."
  }
 }
