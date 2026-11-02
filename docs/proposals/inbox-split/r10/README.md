@@ -8,8 +8,8 @@
 
 | File | Bytes / sha256 |
 |---|---|
-| `capture.txt` | 42,601 / 776e62502873511b |
-| `actions.txt` | 42,330 / f82beb3e6dc143e0 |
+| `capture.txt` | 43,212 / 24570e4b06bbbed5 |
+| `actions.txt` | 42,394 / bbaa4262caa35cb8 |
 
 ## Capture
 
@@ -37,4 +37,17 @@ If RAW fails, the row gets "allmail: no Message-ID <date> <the error>" and goes 
 
 Deploy actions r10 together with, or after, r9e.
 
-**Status:** written. Replay pending (`replay10.json`).
+## r10b (replay10.json)
+
+| Defect | Fix |
+|---|---|
+| D1: Gemini Meeting rows | Path 0/: a Kind Meeting row's key is the Doc id, with no RAW |
+| D2: folds didn't stamp the kept row | A fold stamps the row it keeps for REPAIR, unless that row is Zoya's own or already has "actions: done". This covers Akshay's 29 to 30 Oct sent mail that Zoya logged |
+| D3: rows taken twice | Every row 0A touches gets Captured today, with a "first captured" line |
+| D4: time | 0A starts no row after 5 minutes, and STEP 0's 8 minutes count from the end of 0A |
+| D5 | REPAIR skips a row with "actions: stuck" after its link line |
+| D6 | A quota, rate-limit or 5xx error is no strike. The record says "allmail left: <n>, unread: <n>" |
+| D7 | A REPAIR row is never given a full first run |
+| Loop-ins | 0A sends none: their 72 hours have passed |
+
+**Status:** written. Re-replay pending.

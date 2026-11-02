@@ -1,0 +1,118 @@
+{
+  "inputs": {
+    "capture_base": "r8h/capture.txt 41,418 / de8465b8 (live)",
+    "capture_new": "r10/capture.txt 42,601 / 776e6250",
+    "actions_base": "r9/actions.txt 42,316 / ac763528 (r9e, pending deploy)",
+    "actions_new": "r10/actions.txt 42,330 / f82beb3e",
+    "build": "r10/patch.py rebuilt offline from both bases: byte-identical to r10/capture.txt and r10/actions.txt",
+    "facts": "90 allmail: rows, all Captured 1 Nov, mail dated 29 to 30 Oct: Email out 55 unlinked + 4 linked, Email in 25 unlinked + 3 linked, Meeting 3 unlinked"
+  },
+  "cases": {
+    "diff": {
+      "result": "PASS",
+      "quote": "capture: only STEP 0A inserted and STEP 0's class text '(allmail: rows are STEP 0A's) Kind Email in'; actions: only 'a \"link:\" line and no \"actions: done\" after it (REPAIR: capture linked or recovered it late)'",
+      "note": "Word diffs hold exactly the three patch.py edits. Em dash count 0 in all four files and in patch.py. Both files under the 65,536 cap."
+    },
+    "a_email_out_zoya_cc_same_minute": {
+      "result": "PASS (capture) with gap D2",
+      "quote": "2/ MSGID FIND by Date within 2 minutes against msgid: rows (Zoya's included), HEADER-confirmed: fold",
+      "note": "Read by MCP Emails id, MSGID FIND hits Zoya's msgid: row, HEADER Message-ID from that row's key returns this UID, so it folds: copies link, People and body lines, clears relations, Trashes the allmail: row. No RAW. But the kept row was created before 2026-11-01 12:00 JST, so it gets no 'capture:' line, no 'link: recovered' and no stamp ('Every row it re-keys or links' does not cover a fold). Actions never sees it, so STEP 2b effects of Akshay's sent mail are never repaired. Most of the 59 Email out rows go this way (Zoya is in Cc on outside mail, decision 225)."
+    },
+    "b_email_in_ad_only": {
+      "result": "PASS",
+      "quote": "3/ ad@-only and not sent from ad@: adid:<UID>, STEP 2's lookup, then fold or re-key",
+      "note": "MSGID FIND runs first (step 2/), then adid:<UID>, no RAW. STEP 2's lookup finds only the row itself ('A lone allmail: row: set its Source ID to its key'), so it re-keys, links as STEPS 2 and 3, gets 'capture:', 'link: <run> recovered' and its page id on 'stamped:'. Outcome line 're-keyed adid:<UID>'. See D3 for Captured."
+    },
+    "c_email_out_no_match_raw_18kb_inline": {
+      "result": "PASS",
+      "quote": "4/ only then RAW (mail sent from ad@, or Zoya on it, with no match), through its file / 'Returned inline: write the data value in Bash, 8000 chars per heredoc ... until a complete id (one ending \">\") shows'",
+      "note": "18 KB is at most 3 heredocs, usually 1 (headers first). HEADER check, key msgid:<id>, lookup, re-key, link, stamp. 'through its file' could read as file-only, but MAILBOX's inline branch covers it. Costs the most time per row (see D4)."
+    },
+    "d_raw_fails_three_runs": {
+      "result": "PASS with note D6",
+      "quote": "RAW fails: \"allmail: no Message-ID <date> <the error>\" as STEP 0 says, and the next row goes on. / STEP 0: 'at its third such line, set its Source ID to \"allmail-unread:<the same id>\" so it is never taken again, and report it once'",
+      "note": "Durable: the body lines persist, the batch continues, and LIKE 'allmail:%' no longer matches 'allmail-unread:'. Weak spots: a quota or 5xx outage counts as a strike, so three bad hours can retire healthy rows; and 'allmail left' then hides the unread ones."
+    },
+    "e_meeting_allmail_row": {
+      "result": "FAIL",
+      "quote": "SELECT ... WHERE \"Source ID\" LIKE 'allmail:%' (no Kind filter) / 3/ ad@-only and not sent from ad@: adid:<UID> / vs 'Gemini meeting notes mails: ... Source ID = the Doc id'",
+      "note": "A Gemini notes mail is from Google to ad@, Zoya not on it, so a literal model takes path 3 and re-keys the Meeting row to adid:<UID>. Gemini rows key on the Doc id, so the lookup misses any Doc-keyed Meeting row (duplicate risk) and the row gets a mail key it should never have. Not right: Meeting rows need their own branch (D1)."
+    },
+    "f_leftover_double_take": {
+      "result": "FAIL",
+      "quote": "STEP 0 msgid: class: 'Source ID msgid:, Captured before 2026-11-02, either unlinked ... and created since 2026-10-29, or created since 2026-11-01 12:00 JST' / STEP 0 only: 'Every row this step touches gets Captured today'",
+      "note": "The allmail class is gone from STEP 0 and nothing else selects allmail: rows (STEP 2's lone-allmail clause needs a new message, and STEP 1 reads from T). But STEP 0A never sets Captured today: that sentence belongs to STEP 0. A row 0A re-keys to msgid: keeps Captured 1 Nov, so STEP 0's msgid: class takes it again (unlinked no-fit rows always; every row if created after 1 Nov 12:00 JST). It gets a second 'capture:' line and a second link attempt in the same or next run. LINK and STEP 0L pass over it (body has 'link:'). 0A's own ORDER BY Captured also assumes Captured moves (D3)."
+    },
+    "g_throughput": {
+      "result": "PASS on count, FAIL on starvation",
+      "quote": "Work all 10 (or all if fewer) before STEP 0, never skipped as too heavy ... STOP TIME holds. / STEP 0: 'Start no row more than 8 minutes after the run's start' / 'a run that works none of it while rows are due is Partial, \"STEP 0 skipped\"'",
+      "note": "90 / 10 = 9 hourly runs if every batch finishes, plus up to 2 retries per failing RAW row. The 8-minute rule does not bind 0A (it is STEP 0's, not part of its allmail rule), and STOP TIME (18 min) does. Starvation is the other way round: 0A runs after STEP 0L and before STEP 0 and STEP 1. A RAW-heavy batch of 10 can take more than 8 minutes, so STEP 0 starts nothing (Partial, 'STEP 0 skipped'). It can also eat most of the 18 minutes, so STEP 1's live mail (and its loop-ins) waits an hour. 'Work all 10' and 'STOP TIME holds' conflict, with no stated outcome when STOP TIME cuts the batch (D4)."
+    },
+    "h_actions_repair": {
+      "result": "PASS with notes D5, D7",
+      "quote": "except a stamped row with a \"link:\" line and no \"actions: done\" after it (REPAIR: capture linked or recovered it late): work it again for effects not yet performed only",
+      "note": "Recovered row: it has 'capture:' (so it is yours), is on 'stamped:', has 'link: <run> recovered' and no done, so it matches and gets REPAIR (thread read first, no resend, no undo). Other stamped rows: STEP 1's late-stamped Zoya-logged rows have no 'link:' line, so they are unchanged. LINK-pass rows already actioned before the link: REPAIR as before. LINK rows linked after an 'actions: done': REPAIR as before. LINK rows never actioned: the old 'after its last actions: done' was vacuous or ambiguous. Now they get REPAIR explicitly, which is benign. New side effect: a row with 'actions: stuck' and a 'link:' line now matches too (D5). REPAIR is phrased as an exception to a skip, so a row that was never going to be skipped could be read as a full first run (D7)."
+    },
+    "i_october_mail_needing_reply": {
+      "result": "PASS with note D8",
+      "quote": "REPAIR: 'First read its thread in ad@ and Zoya's inbox ... never resend what went' / STEP 6e: 'take every thread ... whose latest message is from outside the team and that nobody on our side ... has answered since'",
+      "note": "If our side answered since (Akshay, Zoya or the team), STEP 5 and 6e queue nothing and the ledger says 'nothing left'. If the thread is still unanswered, REPAIR queues 'Zoya: <reply type> to <who>' (bucket A or B) or puts it on Akshay's list (C), four days late. STEP 6d's admin asks drop out at 72 hours. STEP 6e and STEP 5 have no age limit, so a bucket A acknowledgement can go to a 29 Oct mail. A 443 scheduling request for a date now past becomes 'slots for <past date>' (r9 R3). Nothing is resent."
+    },
+    "adversarial_loop_in": {
+      "result": "NOTE",
+      "quote": "STEP 6: 'A pitch logged earlier ... whose row has no loop-in Activity yet is still due here for 72 hours: find those from Notion'",
+      "note": "A 30 Oct evening pitch recovered in the first runs on 2 Nov is still under 72 hours, so STEP 6 can loop Zoya in on it if nobody on our side wrote. That is within the existing rule, but 0A doesn't say 'no loop-in' the way LINK does. Decide one way and state it."
+    }
+  },
+  "defects": {
+    "D1": {
+      "quote": "WHERE \"Source ID\" LIKE 'allmail:%' ... 3/ ad@-only and not sent from ad@: adid:<UID>",
+      "scenario": "The 3 Meeting (Gemini notes) allmail: rows are re-keyed to adid:<UID> instead of the Doc id. The Doc-id lookup is skipped, so a Doc-keyed Meeting row can be duplicated.",
+      "fix": "In STEP 0A: 'A Kind Meeting row: open the Doc from the message HTML; key = the Doc id; look it up; fold into a row holding it, else set Source ID and Link to the Doc and link as STEPS 2 and 3 do. No MSGID FIND, no adid:, no RAW.'",
+      "severity": "medium"
+    },
+    "D2": {
+      "quote": "Every row it re-keys or links gets the \"capture:\" line and the body line \"link: <run id> recovered\", and its own page id goes on your record's \"stamped:\" line.",
+      "scenario": "A fold (case a, most Email out rows) puts nothing on the kept row when it was created before 1 Nov 12:00 JST. Actions never repairs the effects of Akshay's 29 to 30 Oct sent mail (STEP 2b: draft sent, his mail answers his ask), against 'rows recovered this way get REPAIR'.",
+      "fix": "Add: 'A fold whose kept row has no \"actions: done\" line and is not an Email out whose Summary starts \"Zoya\": the kept row also gets the \"capture:\" line, \"link: <run id> recovered\" and its page id on \"stamped:\".' Or state that folds are deliberately left out of REPAIR.",
+      "severity": "medium"
+    },
+    "D3": {
+      "quote": "ORDER BY \"date:Captured:start\", \"date:Date:start\" (0A) vs 'Every row this step touches gets Captured today' (STEP 0 only)",
+      "scenario": "0A never moves Captured. Re-keyed msgid: rows (Captured 1 Nov) fall into STEP 0's msgid: class and are worked twice (duplicate 'capture:' line, second link attempt). A row that keeps failing RAW also stays at the head of the queue.",
+      "fix": "In STEP 0A: 'Every row it touches gets Captured today (first \"first captured <old Captured>\" if missing), as STEP 0 says.' Optionally exclude bodies with \"link:\" from STEP 0's msgid: class.",
+      "severity": "medium"
+    },
+    "D4": {
+      "quote": "Work all 10 (or all if fewer) before STEP 0, never skipped as too heavy ... STOP TIME holds.",
+      "scenario": "A batch of RAW rows runs past minute 8 (STEP 0 does nothing, Partial 'STEP 0 skipped') or near minute 18 (STEP 1's new mail and loop-ins wait an hour). It also says nothing about a batch STOP TIME cuts short.",
+      "fix": "'Start no STEP 0A row more than 6 minutes after the run's start; rows not reached wait for the next run, not Partial. At most 4 RAW downloads a run; a row needing a fifth waits at the front.' Name the outcome when the batch is cut ('allmail: <n> deferred').",
+      "severity": "medium"
+    },
+    "D5": {
+      "quote": "except a stamped row with a \"link:\" line and no \"actions: done\" after it",
+      "scenario": "A stamped row already at 'actions: stuck' (3 tries) with a 'link:' line now matches. For the 24 hours its stamp is read, every actions run re-takes it, writes another 'actions: stuck' and adds another For Akshay line.",
+      "fix": "'... and no \"actions: done\" or \"actions: stuck\" after it'.",
+      "severity": "low"
+    },
+    "D6": {
+      "quote": "RAW fails: \"allmail: no Message-ID <date> <the error>\" ... the next row goes on / 'allmail left: <n>'",
+      "scenario": "A connector outage (quota, 5xx) writes a strike on every row in the batch. Three bad runs retire healthy rows to allmail-unread:, and 'allmail left' then drops them from the count.",
+      "fix": "'A quota, rate-limit or 5xx error is no strike: stop 0A for this run, the row stays as it was.' Record 'allmail left: <n>, unread: <m>' (Source ID LIKE 'allmail-unread:%').",
+      "severity": "low"
+    },
+    "D7": {
+      "quote": "Skip, without a ledger line, any other and any whose body has \"actions: done\" or \"actions: stuck\", except a stamped row ... (REPAIR ...)",
+      "scenario": "REPAIR is phrased as an exception to a skip. A recovered row was never going to be skipped (it has 'capture:' and no done), so a literal model may give it a full first run and redo old-mail effects without REPAIR's read-first guard.",
+      "fix": "Make it a positive rule: 'Any stamped row with a \"link:\" line and no \"actions: done\" after it is REPAIR, whether or not it was worked before.'",
+      "severity": "low"
+    },
+    "D8": {
+      "quote": "STEP 6e: 'take every thread ... nobody on our side ... has answered since' (no age limit)",
+      "scenario": "REPAIR on a 29 Oct mail that is still unanswered queues a bucket A acknowledgement from Zoya four days late, or 'slots for <past date>'.",
+      "fix": "In REPAIR: 'a mail dated over 72 hours before the run gets no acknowledgement (bucket A); a reply still owed goes on Akshay's list as \"late, <D Mon>\"'. Or confirm that a late reply is wanted.",
+      "severity": "low"
+    }
+  },
+  "verdict": "NOT READY. The diffs are clean (only patch.py's three edits, no em dash) and cases b, c, d and h pass on their literal text, with a passing on capture mechanics. Case e fails (D1: Meeting rows get a mail key), f fails (D3: 0A never sets Captured today, so STEP 0's msgid: class re-takes re-keyed rows) and g starves STEP 0 and STEP 1 (D4). D2 leaves most Email out recoveries (the folds) without REPAIR. Fix D1 to D4 in patch.py and re-replay a, e, f and g. D5 to D8 are low and optional (D5 is one phrase)."
+}
