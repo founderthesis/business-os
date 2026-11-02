@@ -43,4 +43,11 @@ The prompt is over the 40 KB target but well under the 65,536 cap.
 
 **For decisions.md (CTO):** decision 425's exceptions still apply under 443. A Tier 1 guest, or a call wanted today or tomorrow, goes on Akshay's list ("pick a slot") rather than Zoya's. So AISECT's 3 Nov ask, read on 2 Nov, would go to Akshay. The replay judged this right, and 443's text names only Zoya, so it's worth one line.
 
-**Status:** written. Final check to follow, then Cleanup, then the CTO deploys.
+**Final check (replay9.json, r9c section):** passed. Cases a and g and the D6 path pass, with no new contradictions.
+
+Three optional wording items are left for a later round:
+- **R1:** STEP 3's 443 bullet still says "a chase Next date".
+- **R2:** on a revenue row where 425 applies, one call can end up with two Akshay asks.
+- **R3:** a past date reaches Zoya as "slots for <past date>".
+
+**Status:** written and replayed offline. Ready for Cleanup; then the CTO deploys.

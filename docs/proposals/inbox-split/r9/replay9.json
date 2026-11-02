@@ -172,5 +172,49 @@
    }
   },
   "verdict": "Nearly ready. a, f, D1, D2, D3, D5, D8 and D9 pass, with no em dash or other contradiction added. One medium remains: STEP 5's 'put first' overrides the D6 fix (N1). Fix it with a one-line edit to line 93. N2 and N3 are optional. On AISECT, the 425 branch reads right; log it as a 443 clarification."
+ },
+ "r9c": {
+  "inputs": "r9/actions.txt 41,747 / 187098fb1d86b168; patch.py rebuilds it byte-identical from r8e 1d483cbd. Against r9b only lines 42, 74 and 93 changed. 0 em dashes, 0 non-ASCII added.",
+  "cases": {
+   "a_AISECT": {
+    "result": "PASS",
+    "quote": "Next date = that date (a window: its first day; a date already past: today, the step keeps the date they asked for), replacing any Next date but a calendar booking's.",
+    "replay": "Same result as r9b. On a 2 Nov run, 3 Nov is tomorrow, so the step is 'Akshay: Dhruvi asks for a call on 3 Nov: pick a slot' with Akshay in Waiting on. The chase segment leaves and Next date moves from 4 Nov to 3 Nov."
+   },
+   "D6_path": {
+    "result": "PASS",
+    "quote": "put first in Next action (after a decision 443 step queued this run) \"Akshay: <the step ...>\"",
+    "replay": "On a sponsored row the guest asks for a call on 6 Nov. STEP 3 puts 'Zoya: reply to <who>: slots for 6 Nov' first. STEP 5 then adds Akshay's 151 item right after it, keeping the others, so Waiting on is Zoya plus Akshay. If 425 also applies (Tier 1, or today or tomorrow), the 443 step and the 151 item are two Akshay asks about the same call (R2, low)."
+   },
+   "g_interactions": {
+    "result": "PASS",
+    "parts": {
+     "closed_row_444": "PASS. 'queue no Zoya reply on that thread but the holding reply (decision 390), and 6e bucket C adds no second Akshay ask there.'",
+     "STEP5_revenue": "PASS. Line 93 now yields to a 443 step.",
+     "hold_and_new_lead_dates": "PASS. 'replacing any Next date but a calendar booking's'. Line 73 still says 'whatever the chase step or a chase Next date said', but it defers to line 42 ('Next date as NEXT DATE's fourth case'), so this is wording only (R1).",
+     "past_date": "PASS. Next date is today and the step keeps their date.",
+     "chase, 382, status, repeat pitch, REPAIR, calendar, host show": "PASS. Unchanged since r9b."
+    }
+   }
+  },
+  "residual": {
+   "R1": {
+    "quote": "whatever the chase step or a chase Next date said",
+    "fix": "Optional: 'whatever the chase step or Next date said (a calendar booking's date stays)', to match line 42.",
+    "severity": "info"
+   },
+   "R2": {
+    "quote": "A Tier 1 guest or a date today or tomorrow (decision 425) ... put first in Next action (after a decision 443 step queued this run)",
+    "scenario": "On a revenue row where 425 also applies, Akshay gets two items about one call.",
+    "fix": "Optional: on a revenue row, STEP 5 adds no 151 item for a call already on his list from 443.",
+    "severity": "low"
+   },
+   "R3": {
+    "quote": "a date already past: today, the step keeps the date they asked for",
+    "scenario": "A date that has already passed is neither today nor tomorrow, so 425 doesn't apply and Zoya's step reads 'slots for <a past date>'. Zoya's rules have to handle offering new slots.",
+    "severity": "low"
+   }
+  },
+  "verdict": "READY. Cases a, g and the D6 path pass, and there are no new contradictions. R1 to R3 are optional (info or low)."
  }
 }
