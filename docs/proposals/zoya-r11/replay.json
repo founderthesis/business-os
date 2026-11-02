@@ -144,5 +144,87 @@
    "fix": "Fast-forward zoya-slow-pin to 05a2c63 before pushing the FAST prompt; verify git show works from a clean clone."
   }
  },
- "verdict": "FAIL, fix then ship. The diffs are clean (no em dash; one extra beneficial SLOW line, the follow-ups page, to be named in the hand-off), the build reproduces both files, and the CTO's required case (a) passes: a 21k-of-62k read sends nothing. Must fix before deploy: D1 (that run reports Completed), D2 (SLOW-only page blocks FAST), D3 and D4 (count rules can block every run or pass a truncated read), D5 (SLOW routine pages outside RULES LOAD). D6 to D9 are low."
+ "verdict": "FAIL, fix then ship. The diffs are clean (no em dash; one extra beneficial SLOW line, the follow-ups page, to be named in the hand-off), the build reproduces both files, and the CTO's required case (a) passes: a 21k-of-62k read sends nothing. Must fix before deploy: D1 (that run reports Completed), D2 (SLOW-only page blocks FAST), D3 and D4 (count rules can block every run or pass a truncated read), D5 (SLOW routine pages outside RULES LOAD). D6 to D9 are low.",
+ "r11b": {
+  "inputs": {
+   "fast": {
+    "path": "docs/proposals/zoya-r11/zoya-one.txt",
+    "bytes": 44839,
+    "sha256_16": "264f69fc3ae384c2",
+    "version": "zoya-one 1631a3d1dc25"
+   },
+   "slow": {
+    "ref": "63fcf669014fe5c4eeff64c7fedbe6d1c85d926c:routines/zoya/release/zoya-slow-work.txt",
+    "bytes": 67837,
+    "sha256_16": "2cf5b7156ce80240"
+   },
+   "build": "The patch on f70901f rebuilds both files byte for byte with `refs/heads/zoya-slow-pin 63fcf66...`.",
+   "diff": "FAST vs r11 (22022da): RULES LOAD sentence, version string, pin and hash only. SLOW vs 05a2c63: the same RULES LOAD sentence, the snooze key, the dropped-key log line only. No em dash in either file.",
+   "pin": "origin/zoya-slow-pin is still at 8bf34eac. Hand-off deploy step 1 moves it (D9 handled in the hand-off)."
+  },
+  "cases": {
+   "a_short_read_62k": {
+    "result": "PASS",
+    "quote": "A page whose read is short of its total is not loaded (PRE-SEND check 1): the run ends Partial \"rules not loaded: <page> <read> of <total>\", whatever RUN RECORD says of blocked actions, and writes nothing for the actions it governs.",
+    "replay": "Wording page in a 62k file, model prints one 20k slice and stops. Logs 'Mail and WhatsApp wording: 20000 of 62000 characters'. Not loaded, so check 1 blocks every send (all use wording or rules). The run records 'rules not loaded: Mail and WhatsApp wording 20000 of 62000' and Partial. It writes nothing to the rows of those actions, so they stay due for the next run. No send and no row write."
+   },
+   "c_inline": {
+    "result": "PASS",
+    "quote": "A fetch shown inline in full is loaded: read = total = its length.",
+    "replay": "Cadences comes back inline: loaded, so the run logs 'Cadences: N of N characters' and nothing blocks. An inline result the server marks truncated is not 'in full', so it is not loaded. That is the right outcome."
+   },
+   "d_followups_fails": {
+    "result": "PASS",
+    "quote": "the follow-ups page and the routine pages it links are SLOW work's only, and FAST sends never wait on them",
+    "replay": "07:38: follow-ups fetch fails. FAST replies and decision mails still send. The page governs only SLOW actions, so 'writes nothing' touches none of them. 10:38: the same failure blocks only SLOW follow-up and nurture items. Team work, payments and snoozes go ahead. Side effect: 'read every page above ... every run' still has FAST-only runs fetch the follow-ups page, so an outage on that page marks every hourly run Partial (N2)."
+   },
+   "f_block_every_run": {
+    "result": "PASS",
+    "quote": "in python, load it as one string (its text field when it is JSON), print it in slices of at most 20,000 characters, in order, to its end ... total = that string's length, read = the end of the last slice shown in full",
+    "replay": "Both counts now come from one decoded string, so bytes against characters and JSON against text can no longer differ. 20,000-character slices stay under Bash's 30,000-character output cap, so a slice is not cut to a preview. Inline pages count as loaded. No path left by which every run blocks on a fully read page. Residual: a JSON result with several text blocks is not covered by 'its text field' (low)."
+   },
+   "D1_run_record": {
+    "result": "PASS",
+    "quote": "the run ends Partial \"rules not loaded: <page> <read> of <total>\", whatever RUN RECORD says of blocked actions",
+    "replay": "Every action is blocked by a short wording page. RUN RECORD alone would say Completed, but the override sets Partial with the reason. The good-morning check now sees it. Small gap: the override names only RUN RECORD. ACTIONS (SLOW 'writes that key onto the row ... the first time it selects it (send, hold or block)') and STEP 2's hold and block row writes are not named, so a literal model may still key or note those rows (N3)."
+   }
+  },
+  "defects_open": {
+   "D5": {
+    "severity": "low (partly fixed)",
+    "quote": "SLOW line 11: RULES LOAD: read every page above in full every run; the follow-ups page and the routine pages it links ... / line 13: - The routine pages: 1 Sponsored offers ...",
+    "scenario": "In SLOW the eight routine pages are still listed below RULES LOAD. 'Every page above' and 'the routine pages it links' (pages the follow-ups page links, not this list) leave it unclear whether they are counted and gated. A routine page read in one slice may go uncounted.",
+    "fix": "Say 'every page this section lists, the routine pages below included', or move RULES LOAD after rules-routines in SLOW."
+   },
+   "N1": {
+    "severity": "low",
+    "quote": "the run ends Partial \"rules not loaded: ...\"",
+    "scenario": "'ends' can be read as stop now, skipping the 24-hour Sent sweep and other work that sends nothing. Elsewhere 'ends Partial' means the final status (caps, 40 minutes), so most models read it that way. It is safe either way.",
+    "fix": "'the run's status is Partial ...'."
+   },
+   "N2": {
+    "severity": "low",
+    "quote": "read every page above in full every run; the follow-ups page ... SLOW work's only",
+    "scenario": "FAST-only runs still read the SLOW-only page. A follow-ups page outage marks 07:38 to 23:38 all Partial although nothing they do needs it. That is noise in the morning check.",
+    "fix": "'the follow-ups page is read only in runs with SLOW work'."
+   },
+   "N3": {
+    "severity": "low",
+    "quote": "whatever RUN RECORD says of blocked actions, and writes nothing for the actions it governs",
+    "scenario": "The override names RUN RECORD only. SLOW's 'writes that key onto the row ... (send, hold or block)' and STEP 2's 'Every due row ends the run sent, held or blocked' (Claude note, dates) may still lead a literal model to write those rows.",
+    "fix": "'... writes nothing for the actions it governs, whatever ACTIONS, RUN RECORD or STEP 2 say'."
+   }
+  },
+  "fixed": [
+   "D1",
+   "D2",
+   "D3",
+   "D4",
+   "D6",
+   "D7",
+   "D8",
+   "D9 (hand-off deploy step 1)"
+  ],
+  "verdict": "PASS, ship after the pin move. The required case (a) gives no send, no row write and Partial. Cases c, d, f and D1 pass. Nothing new is above low. D5 is only partly fixed and is now low. N1 to N3 are wording tidies that can ride the next build."
+ }
 }

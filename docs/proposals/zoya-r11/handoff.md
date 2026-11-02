@@ -53,4 +53,12 @@ The first replay passed the CTO's required case: a 21k-of-62k read blocks every 
 
 **Also in SLOW:** the line listing "Rules for Zoya: follow-ups", which the live SLOW file never had.
 
-**Status:** written. Re-replay pending.
+**Re-replay (replay.json, r11b section): PASS.** Cases a, c, d and f and the run-record case pass. Nothing is above low.
+
+**Queued for the next Zoya build (low):**
+- **D5, partly open:** in SLOW, the routine pages are listed below RULES LOAD's "every page above". Name them in RULES LOAD.
+- **N1:** "the run ends Partial" could be read as "stop now". Say "carries on with work no short page governs, and ends Partial".
+- **N2:** a run without SLOW work still fetches the follow-ups page, so an outage there marks every hourly run Partial. Say "fetch it only in runs with SLOW work".
+- **N3:** the "writes nothing" override names RUN RECORD only. Also name ACTIONS and STEP 2.
+
+**Status:** written and replayed offline, passed. Ready for Cleanup. Deploy step 1, the pin move, comes first.
