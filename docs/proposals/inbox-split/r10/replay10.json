@@ -114,5 +114,65 @@
       "severity": "low"
     }
   },
-  "verdict": "NOT READY. The diffs are clean (only patch.py's three edits, no em dash) and cases b, c, d and h pass on their literal text, with a passing on capture mechanics. Case e fails (D1: Meeting rows get a mail key), f fails (D3: 0A never sets Captured today, so STEP 0's msgid: class re-takes re-keyed rows) and g starves STEP 0 and STEP 1 (D4). D2 leaves most Email out recoveries (the folds) without REPAIR. Fix D1 to D4 in patch.py and re-replay a, e, f and g. D5 to D8 are low and optional (D5 is one phrase)."
+  "verdict": "NOT READY. The diffs are clean (only patch.py's three edits, no em dash) and cases b, c, d and h pass on their literal text, with a passing on capture mechanics. Case e fails (D1: Meeting rows get a mail key), f fails (D3: 0A never sets Captured today, so STEP 0's msgid: class re-takes re-keyed rows) and g starves STEP 0 and STEP 1 (D4). D2 leaves most Email out recoveries (the folds) without REPAIR. Fix D1 to D4 in patch.py and re-replay a, e, f and g. D5 to D8 are low and optional (D5 is one phrase).",
+  "r10b": {
+    "inputs": {
+      "capture": "r10/capture.txt 43,212 / 24570e4b06bbbed5",
+      "actions": "r10/actions.txt 42,394 / bbaa4262caa35cb8",
+      "build": "patch.py rebuilt offline from r8h (de8465b8) and r9e (ac763528): byte-identical; word diffs hold only STEP 0A, STEP 0's class text and the REPAIR clause; em dash 0 in all files"
+    },
+    "cases": {
+      "a": {
+        "result": "PASS",
+        "quote": "a fold does the same for the row it keeps unless its Summary starts \"Zoya\" or its body has \"actions: done\"",
+        "note": "MSGID FIND folds into Zoya's same-minute row with no RAW. The kept row (Akshay's mail, Summary not 'Zoya', no done) gets 'capture:', 'link: <run> recovered', Captured today and a stamp, so actions takes it as REPAIR. 0A's specific text overrides STEP 0's 'capture: line only if that row was created since 2026-11-01 12:00 JST'. Fine, but nothing says so (see N4)."
+      },
+      "e": {
+        "result": "PASS with note N3",
+        "quote": "0/ a Kind Meeting row (Gemini notes): its key is the Doc id, as Gemini notes says, no RAW",
+        "note": "No MSGID FIND, no adid:, no RAW. The Doc id goes through STEP 2's lookup (STEP 0's allmail rule), so it folds into an existing Doc-keyed row or re-keys, then links and stamps. Actions takes it only if Source is 'Gemini notes' and its Link is the Doc, and 0/ doesn't say to set either."
+      },
+      "f": {
+        "result": "PASS",
+        "quote": "Every row 0A touches gets Captured today (first \"first captured <old>\"), so STEP 0 never takes it again.",
+        "note": "Captured today puts it outside STEP 0's msgid: class ('Captured before 2026-11-02'). LINK and STEP 0L pass over its 'link:' line. Nothing else selects allmail: rows. A struck row now goes to the back of the queue, which is fine."
+      },
+      "g": {
+        "result": "PASS on starvation of STEP 0, with notes N1 and N2",
+        "quote": "starting none more than 5 minutes after the run's start (the rest stay first next run) ... STEP 0's 8 minutes count from the end of 0A",
+        "note": "STEP 0 can no longer be skipped by 0A. But the 5-minute window starts at the run's start, after STEP 0L. A heavy 0L can leave 0A no window, and a cheap fold takes roughly 6 to 8 calls, so a run does about 4 to 8 rows, not the stated 10. Drain is about 12 to 20 hourly runs instead of 9, still within a day, with 'allmail left' showing progress. STEP 0's shifted 8 minutes can now reach about minute 13 to 15, leaving STEP 1's live mail a few minutes before STOP TIME (18) when STEP 0 has due rows."
+      },
+      "fixes": {
+        "result": "PASS",
+        "note": "D5: 'and no \"actions: done\" or \"actions: stuck\" after it'. D6: 'a quota, rate-limit or 5xx error is no strike' and 'allmail left: <n>, unread: <n>'. D7: 'such a row is never given a full first run'. All present and consistent."
+      }
+    },
+    "defects": {
+      "N1": {
+        "quote": "STEP 0's 8 minutes count from the end of 0A",
+        "scenario": "0L, then 0A up to minute 5 plus its last row, then STEP 0 for 8 more minutes. STEP 1 (new mail and loop-ins) can be left 2 to 4 minutes of the 18.",
+        "fix": "Add 'but no STEP 0 row starts after minute 12', or give STEP 1 a guaranteed floor.",
+        "severity": "low"
+      },
+      "N2": {
+        "quote": "Work all 10 ... starting none more than 5 minutes after the run's start",
+        "scenario": "Akshay asked for a fixed batch of 10. In practice it is about 4 to 8, and zero when STEP 0L uses the first 5 minutes.",
+        "fix": "Either count the 5 minutes from the end of 0L, or state 'at least 3 rows a run'. Have the CTO confirm in decisions.md that 'up to 10, time-bounded' is acceptable.",
+        "severity": "low (decision item)"
+      },
+      "N3": {
+        "quote": "0/ a Kind Meeting row (Gemini notes): its key is the Doc id, as Gemini notes says",
+        "scenario": "If an allmail: Meeting row carries Source 'Gmail' or a mail Link, actions' query ('Kind Meeting with Source Gemini notes') misses it after the re-key.",
+        "fix": "Append ': set Source Gemini notes and Link the Doc'.",
+        "severity": "low"
+      },
+      "N4": {
+        "quote": "No loop-in from here (their 72 hours have passed).",
+        "scenario": "Mail from late 30 Oct is still inside 72 hours for the first runs after deploy on 2 Nov. STEP 6's Notion catch-up ('pitch Activities of the last 72 hours') can still loop Zoya in on a recovered row in the same run. Separately, STEP 0's fold rule ('capture: line only if ... created since 2026-11-01 12:00 JST') conflicts with 0A's fold stamp without saying 0A wins.",
+        "fix": "'No loop-in for a 0A row, here or in STEP 6's catch-up.' and 'a fold here stamps the kept row whatever its age'.",
+        "severity": "low"
+      }
+    },
+    "verdict": "READY on correctness. Cases a, e and f pass, D1 to D7 are fixed as described, and the diff is clean. g no longer starves STEP 0, but the batch is time-bound (about 4 to 8 rows, about 12 to 20 runs to drain) and STEP 1 can be squeezed. N1 to N4 are low, optional one-phrase fixes; N2 needs the CTO to confirm 'up to 10' against Akshay's 'fixed 10'."
+  }
 }

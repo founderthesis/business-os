@@ -8,7 +8,7 @@
 
 | File | Bytes / sha256 |
 |---|---|
-| `capture.txt` | 43,212 / 24570e4b06bbbed5 |
+| `capture.txt` | 43,349 / 21ef858303692477 |
 | `actions.txt` | 42,394 / bbaa4262caa35cb8 |
 
 ## Capture
@@ -50,4 +50,15 @@ Deploy actions r10 together with, or after, r9e.
 | D7 | A REPAIR row is never given a full first run |
 | Loop-ins | 0A sends none: their 72 hours have passed |
 
-**Status:** written. Re-replay pending.
+## r10c (replay10.json, r10b section: ready on correctness)
+
+The four lows it named are applied:
+
+| Item | Fix |
+|---|---|
+| N1 | STEP 0 starts no row more than 12 minutes after the run's start, so new mail keeps its window before STOP TIME |
+| N2 | 0A's 5 minutes count from the end of STEP 0L, so a heavy link pass can't take 0A's window. 10 a run is the stated batch, and slow RAW rows can make it fewer, carried first to the next run. Raise the window if the drain should be faster: about 9 runs at 10 a run, up to about 15 if RAW-heavy |
+| N3 | A re-keyed Meeting row also gets Source Gemini notes and its Link set to the Doc |
+| N4 | No loop-in for a 0A row, here or in STEP 6's catch-up. The fold stamp applies whatever the kept row's age |
+
+**Status:** written and replayed offline (r10b). These four one-phrase changes weren't replayed again. Ready for Cleanup. Deploy actions r10 with or after r9e.
