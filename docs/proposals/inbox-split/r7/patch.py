@@ -23,13 +23,15 @@ cd, ad = c.count(chr(0x2014)), a.count(chr(0x2014))
 # KEY: ad@-only mail by UID; Zoya-on mail is hers first; RAW only after 2 hours.
 c = R(c, "Wherever this prompt sets an Activity's Source ID to a message id, use \"msgid:<Message-ID without angle brackets>\" "
       "(no Message-ID, no Activity).",
-      "KEY (Akshay, 2 Nov): a mail's Source ID is its key. Ad@-only mail (zoya@myunnati.com not on From, To or Cc): "
-      "\"adid:<UID>\", the number after \"[Gmail]/All Mail:\" in its All Mail search id; no RAW. Mail Zoya is on: her routine "
-      "logs it first. Find her row: Activities with Source ID msgid:, Date within a day of the message, People overlapping its "
-      "From, To and Cc; confirm each with query HEADER Message-ID \"<its id>\", which must return this same UID. Found: it is "
-      "logged (STEP 1's exception stamps it). None and the message is under 2 hours old: leave it for the next run (not "
-      "pending). None and older: its key is \"msgid:<Message-ID without angle brackets>\" from RAW (no Message-ID, no "
-      "Activity). Your loop-ins keep their msgid: key (MAILBOX).")
+      "KEY (Akshay, 2 Nov): a mail Activity's (Email in or out) Source ID is its key. MSGID FIND: Activities with Source ID "
+      "msgid:, Date within a day of the message, People overlapping its From, To and Cc, each confirmed by email_read search, "
+      "include_folders [\"[Gmail]/All Mail\"], query HEADER Message-ID \"<its id>\", which must return [Gmail]/All Mail:<this "
+      "UID>; a confirmed row is the message's row. Mail sent from ad@ (Akshay or a team member in From): RAW now, key "
+      "\"msgid:<Message-ID without angle brackets>\", as your loop-ins. Other ad@-only mail (zoya@myunnati.com not on From, To or "
+      "Cc): \"adid:<UID>\", the number in its [Gmail]/All Mail: id, no RAW; received before 2026-11-03 (older inbox runs may "
+      "have keyed it msgid:): MSGID FIND first. Mail Zoya is on: her routine logs it first; MSGID FIND. Found: logged (STEP "
+      "1's exception stamps it). None, under 2 hours old: leave it for the next run (not pending, not counted toward the cap; "
+      "ledger \"<UID>: waiting (Zoya)\"). None and older: \"msgid:\" from RAW (no Message-ID, no Activity).")
 c = R(c, "email_read read has no Message-ID: get it from RAW", "For a msgid: key, email_read read has no Message-ID: get it from RAW")
 c = R(c, "in every spelling older rows use: Source ID \"allmail:<its MCP Emails id>\",",
       "in every spelling older rows use: Source ID \"adid:<UID>\", \"allmail:<its MCP Emails id>\",")
@@ -38,13 +40,25 @@ c = R(c, "A lone allmail: row: set its Source ID to the msgid: key and work it a
 c = R(c, "- Source: Gmail. Source ID: the msgid: key (MESSAGE IDENTITY). Link: as MAILBOX gives it.",
       "- Source: Gmail. Source ID: its key (KEY). Link: as MAILBOX gives it (adid: rows: none).")
 c = R(c, "One copy per RFC Message-ID;", "One copy per message (KEY);")
+c = R(c, "A new row's Source ID \"gmail:<thread id>\" is \"msgid:<the first message's Message-ID>\"",
+      "A new row's Source ID \"gmail:<thread id>\" is the first message's key (KEY)")
+# D4 capture THREAD
+c = R(c, "every message whose headers hold its Message-ID (search text = it); read each with action read",
+      "every message whose headers hold its Message-ID (search text = it); with no Message-ID known (adid:), the All Mail "
+      "search by its subject (Re: and Fwd: dropped) since its date, kept where they share its People; read each with action read")
+# D5
+c = R(c, "a line \"pending: <Message-ID>, ...\"", "a line \"pending: <Message-ID, adid: key or mcp: id>, ...\"")
+c = R(c, "(query HEADER Message-ID \"<it>\"; mcp: ones by id)", "(query HEADER Message-ID \"<it>\"; mcp: and adid: ones by id)")
+# D8
+c = R(c, "No Message-ID: add the body line", "No key (a Zoya-on row whose RAW gives no Message-ID): add the body line")
 c = R(c, "skip any whose msgid: key an Activity already holds,", "skip any whose key an Activity already holds,")
-c = R(c, "idempotency_key \"loopin:<the pitch message's Message-ID>\"", "idempotency_key \"loopin:<the pitch's key>\"")
+c = R(c, "idempotency_key \"loopin:<the pitch message's Message-ID>\"",
+      "idempotency_key \"loopin:<the pitch message's Message-ID, or adid:<UID> for an adid: pitch>\"")
 c = R(c, "and re-read the pitch by its Message-ID (STEP 6b's vendor loop-ins too).",
       "and re-read the pitch by its key (adid: by UID; STEP 6b's vendor loop-ins too).")
 # STEP 0: allmail rows get KEY too
 c = R(c, "allmail: read the message by that MCP Emails id and get its Message-ID (IDENTITY), then run STEP 2's full lookup",
-      "allmail: read the message by that MCP Emails id and get its key (KEY; a Zoya-on row under 2 hours old waits), then "
+      "allmail: read the message by that MCP Emails id and get its key (KEY; MSGID FIND first for every allmail: row), then "
       "run STEP 2's full lookup")
 c = R(c, "No hit: set its Source ID to the msgid: key", "No hit: set its Source ID to its key")
 c = R(c, "(several: the one whose Source ID is exactly the msgid: key, else the oldest)",
@@ -62,6 +76,11 @@ c = R(c, "the report, the end time, counts,",
       "the report, the end time, \"UIDVALIDITY: not exposed\" (the tool shows none; note it if it ever does), counts,")
 
 # ---- actions (one line, plus the THREAD read for adid: rows) ----
+a = R(a, "A new row's Source ID \"gmail:<thread id>\" is \"msgid:<the first message's Message-ID>\"",
+      "A new row's Source ID \"gmail:<thread id>\" is the first message's key (its Activity's msgid: or adid:)")
+a = R(a, "every message whose headers hold its Message-ID (email_read search, include_folders [\"[Gmail]/All Mail\"], text = it);",
+      "every message whose headers hold its Message-ID (email_read search, include_folders [\"[Gmail]/All Mail\"], text = it; "
+      "an adid: row: the All Mail search by its subject, Re: and Fwd: dropped, since its date, kept where they share its People);")
 a = R(a, "(Kind Email in or Email out, Source ID msgid:, page body", "(Kind Email in or Email out, Source ID msgid: or adid:, page body")
 a = R(a, "Query mail Activities (Kind Email in or Email out with Source ID msgid:,",
       "Query mail Activities (Kind Email in or Email out with Source ID msgid: or adid:,")

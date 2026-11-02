@@ -1,0 +1,97 @@
+{
+  "inputs": {
+    "cleanup/r6/capture.txt": "38121/d0f0e9bb407b7f5a",
+    "r7/capture.txt": "38891/5be8fda7548c7b95",
+    "actions-v2.txt": "39354/19701651a6c0edf3",
+    "r7/actions-v2.txt": "39455/f984dbefc2fcc607",
+    "r7/patch.py": "5516/fa858fc5454aa900"
+  },
+  "build_check": "patch.py re-run from the live inputs reproduces both r7 files byte for byte; word diffs hold only its 16 capture and 3 actions edits; both files under 40,000 bytes; em dashes 0 before and after in all four files.",
+  "cases": {
+    "1_adid_pitch": "FAIL: key, loop-in and actions are right (\"adid:<UID>\", \"no RAW\"; idempotency_key \"loopin:<the pitch's key>\" = loopin:adid:<UID>; the loop-in logged with \"msgid:<the sent loop-in's Message-ID>\"; actions queries \"Source ID msgid: or adid:\"). But a new pitch creates an Engagement and stakeholder People rows with Source ID \"gmail:<thread id>\", and MAILBOX still says that \"is \\\"msgid:<the first message's Message-ID>\\\"\". For a first message that is ad@-only, a literal model either fetches RAW, which KEY forbids, or writes a malformed id (D2).",
+    "2_zoya_row_exists": "PASS: \"Find her row: Activities with Source ID msgid:, Date within a day of the message, People overlapping its From, To and Cc; confirm each with query HEADER Message-ID \\\"<its id>\\\", which must return this same UID. Found: it is logged (STEP 1's exception stamps it).\" The exception writes \"stamped: <ids>\" and the capture: line once, never on a \"Zoya\" Email out, and creates nothing. Caveat D7: the HEADER search names no folder.",
+    "3_zoya_no_row_30min": "PASS: \"None and the message is under 2 hours old: leave it for the next run (not pending).\" read to holds: \"nor past a Zoya-on one left for her under 2 hours (KEY)\", so the next run's T (read to minus 30 minutes) still covers it. Nits D11 (does it count toward the 15, and does it get a ledger line).",
+    "4_zoya_no_row_3h": "PASS: \"None and older: its key is \\\"msgid:<Message-ID without angle brackets>\\\" from RAW (no Message-ID, no Activity).\" Then \"For a msgid: key, email_read read has no Message-ID: get it from RAW\" and STEP 2's LIKE on the part before @ still catches a late row from Zoya.",
+    "5_step0_allmail": "PASS: \"get its key (KEY ...)\"; no hit: \"set its Source ID to its key\" = adid:<UID>; an existing adid: row is found by the IN (\"Source ID \\\"adid:<UID>\\\", \\\"allmail:...\\\"\") and folded: \"several: the one whose Source ID is exactly its key, else the oldest\". Gaps: an ad@-only allmail: row with a msgid: twin can no longer be found, because there is no Message-ID for the LIKE (D1), and \"No Message-ID: add the body line\" reads as applying to adid: rows (D8).",
+    "6_rerun_same_uid": "PASS: \"skip any whose key an Activity already holds\". adid:108971 is already held, and capture's own row has its capture: line, so nothing is created or stamped. A Zoya-on message is found again through the Date and People find plus the HEADER confirm, with no RAW.",
+    "7_akshay_sent_zoya_cc": "FAIL: KEY assumes \"Mail Zoya is on: her routine logs it first\", but Zoya's STEP 1 only takes threads \"whose last real message from outside the team is unanswered\", so she never logs Akshay's own sent mail. Every such mail waits 2 hours (read to held the whole time) and then takes RAW, and Zoya is in Cc on nearly all of it (decision 225). If she ever does log it, her rule writes \"Kind Email in\", capture must \"never change its Kind\", and actions STEP 2b (\"each Email out ... that Akshay sent\") skips it (D3).",
+    "8_zoya_bcc": "FAIL: read returns cc, not bcc, so capture sees \"zoya@myunnati.com not on From, To or Cc\" and writes adid:<UID>. Zoya's copy, inbound or from a team alias, passes her check \"if no Activity has its msgid: Source ID yet (look it up first)\", since an adid: row has no msgid:, so she logs a second row for the same message (D6).",
+    "9_self_check": "PASS: \"Any whose Source ID starts neither \\\"msgid:\\\" nor \\\"adid:\\\" goes to Trash ... the run ends Failed, \\\"<n> rows without a mail key trashed\\\"\". An adid: row survives. A bad key is trashed and ends the run Failed. Nit: a malformed \"adid:[Gmail]/All Mail:1\" also passes the prefix test.",
+    "10_actions_adid": "FAIL: the query picks it up (\"Kind Email in or Email out with Source ID msgid: or adid:\", plus the capture: line). But the THREAD for an adid: row is \"read [Gmail]/All Mail:<UID>, then the messages its References name\", which only looks back. THREAD's third leg, \"every message whose headers hold its Message-ID\", can't run without a Message-ID. So STEP 6e \"nobody on our side has answered since\", STEP 6d \"no reply from our side since\" and STEP 3's repair \"nothing on the thread after that no\" never see later replies (D4)."
+  },
+  "defects": {
+    "D1_cutover_duplicates": {
+      "quote": "Ad@-only mail ...: \"adid:<UID>\" ...; no RAW. / skip any whose key an Activity already holds",
+      "scenario": "The first r7 runs re-read from read to minus 30 minutes. r6c logged 1 to 8 mails a run and its read to was held by pending rows, so ad@-only messages it already logged as msgid: lie inside the window. With no Message-ID, the LIKE leg can't run and the IN holds only adid:/allmail:/provider ids, so each gets a second row keyed adid:. The same miss hits STEP 0's ad@-only allmail: rows that have a msgid: twin, which r6c folded.",
+      "fix": "Before creating an adid: row for a message received before the r7 go-live time, and for every STEP 0 allmail: row, run the same find as Zoya-on mail: msgid: rows with Date within a day, People overlapping, confirmed by a HEADER search that returns this UID. A hit means it's logged (or fold into it).",
+      "severity": "blocking"
+    },
+    "D2_thread_source_id_needs_message_id": {
+      "quote": "A new row's Source ID \"gmail:<thread id>\" is \"msgid:<the first message's Message-ID>\" (older gmail: ids stay as they are).",
+      "scenario": "Every new ad@-only pitch creates an Engagement (STEP 3) and stakeholder People rows (\"Source ID \\\"gmail:<thread id>\\\"\") whose id needs the first message's Message-ID. For a first message that's ad@-only, that's RAW, which KEY forbids. The same line is in actions (STEP 4 Deals).",
+      "fix": "Append to that line in both prompts: \"; when the first message is ad@-only and has no logged msgid:, \\\"adid:<its UID>\\\"; a later message's References give the first Message-ID without RAW\".",
+      "severity": "blocking"
+    },
+    "D3_akshay_sent_zoya_cc": {
+      "quote": "Mail Zoya is on: her routine logs it first.",
+      "scenario": "Zoya's STEP 1 only logs unanswered outside mail, so Akshay's (or a team member's) mail from ad@ with Zoya in Cc is never hers. Each one holds read to for 2 hours, then takes RAW anyway, and STEP 2b runs 2 hours late. If her rule does log it, the row is Kind Email in and STEP 2b never sees it.",
+      "fix": "In KEY: \"Mail from ad@thepodium.in itself (Akshay or Team) is yours even with Zoya on it: key it now, msgid: from RAW, as loop-ins are (MAILBOX).\" Sent volume is small. Zoya's \"look it up first\" then finds that row.",
+      "severity": "should-fix"
+    },
+    "D4_thread_forward_gap_adid": {
+      "quote": "(an adid: row: read [Gmail]/All Mail:<UID>, then the messages its References name)",
+      "scenario": "The THREAD can't find replies after an adid: message. Actions' since-checks (6d, 6e, the sponsored repair \"nothing on the thread after that no\", STEP 3's \"our side already replied\") and capture's CONTEXT CHECK, STEP 6 catch-up and stakeholder chain miss later messages, which risks a Zoya step or a loop-in on a thread already answered. STEP 2b a's \"same thread (Link)\" has no Link on adid: rows and falls back to the subject.",
+      "fix": "Both THREAD definitions: \"an adid: message: also every message an email_read search on its subject (Re:/Fwd: stripped) and its From, include_folders All Mail, since its date, returns whose In-Reply-To or References chain reaches a message of this thread\".",
+      "severity": "should-fix"
+    },
+    "D5_pending_line_message_id_only": {
+      "quote": "then a line \"pending: <Message-ID>, ...\" / First retry each Message-ID on that record's \"pending\" line (query HEADER Message-ID \"<it>\"; mcp: ones by id)",
+      "scenario": "An ad@-only message whose Notion write fails has no Message-ID to pend. A literal model can't write it, the carry-forward drops it, and the retry has no way to read it.",
+      "fix": "\"pending: <key or mcp: id>, ...\" and \"adid: ones by reading [Gmail]/All Mail:<UID>\".",
+      "severity": "should-fix"
+    },
+    "D6_bcc_and_alias_duplicates": {
+      "quote": "Ad@-only mail (zoya@myunnati.com not on From, To or Cc)",
+      "scenario": "Zoya in Bcc, or reached through a team alias: capture writes adid:<UID>. Zoya's \"if no Activity has its msgid: Source ID yet (look it up first)\" misses the adid: row, so she logs a second row and actions works both.",
+      "fix": "In Zoya's lookup (zoya parts/mail.txt): before creating, run a HEADER Message-ID search in ad@ (same key). It returns a UID; an Activity \"adid:<that UID>\" means it's logged, so add only a missing link. Count the alias case in capture too: an alias whose members include Zoya counts as Zoya on.",
+      "severity": "should-fix"
+    },
+    "D7_header_confirm_folder": {
+      "quote": "confirm each with query HEADER Message-ID \"<its id>\", which must return this same UID",
+      "scenario": "The HEADER search names no folder. If it runs on INBOX, it returns the INBOX UID, not the All Mail UID, so every confirm fails and every Zoya-on message falls through to RAW after 2 hours, the cost r7 exists to remove.",
+      "fix": "\"... HEADER Message-ID \\\"<its id>\\\", include_folders [\\\"[Gmail]/All Mail\\\"], which must return [Gmail]/All Mail:<this UID>\".",
+      "severity": "should-fix"
+    },
+    "D8_step0_no_message_id_branch": {
+      "quote": "No Message-ID: add the body line \"allmail: no Message-ID <date>\" and leave it",
+      "scenario": "For an ad@-only allmail: row, read never gives a Message-ID, by design. A literal model can take this branch, never re-key, and after 3 runs park the row as allmail-unread:.",
+      "fix": "\"No key (a Zoya-on row whose RAW gives no Message-ID): add the body line ...\"",
+      "severity": "should-fix"
+    },
+    "D9_key_scope_gemini": {
+      "quote": "KEY (Akshay, 2 Nov): a mail's Source ID is its key.",
+      "scenario": "This replaced the scoped wording \"Wherever this prompt sets an Activity's Source ID to a message id\". It now reads as covering Gemini notes Meeting rows (\"Source ID = the Doc id\") too.",
+      "fix": "\"a mail Activity's (Kind Email in or Email out) Source ID is its key\".",
+      "severity": "nit"
+    },
+    "D10_loopin_key_format_change": {
+      "quote": "idempotency_key \"loopin:<the pitch's key>\"",
+      "scenario": "A msgid: pitch whose loop-in r6c sent as \"loopin:<Message-ID>\" but failed to log is retried in STEP 6 catch-up as \"loopin:msgid:<Message-ID>\". The key differs, so a second loop-in can go out within the 72-hour window around cutover.",
+      "fix": "\"loopin:<the pitch's Message-ID> (adid: pitches: loopin:adid:<UID>)\".",
+      "severity": "nit"
+    },
+    "D11_waiting_message_accounting": {
+      "quote": "at most 15 not yet logged a run / Each message worked has one body line \"<key>: Activity <id>; row <name> | none (<why>)\"",
+      "scenario": "The prompt doesn't say whether a Zoya-on message left for her counts toward the 15, or needs a ledger line. With no line, a literal model may mark the run Partial.",
+      "fix": "\"A Zoya-on message left for her doesn't count toward the cap; ledger it \\\"waiting: [Gmail]/All Mail:<UID> (Zoya, under 2 hours)\\\"\".",
+      "severity": "nit"
+    },
+    "D12_zoya_rows_without_msgid": {
+      "quote": "Find her row: Activities with Source ID msgid:",
+      "scenario": "Zoya's own sends logged without a msgid: Source ID (\"Zoya sent: owner mail\" has none; the scorecard uses scorecard:) aren't found. After 2 hours capture RAWs and logs a second row. r6c had the same gap; also the loop-in row is stamped with a capture: line after its \"actions: n/a (loop-in)\", which is harmless and also in r6c.",
+      "fix": "Have Zoya log every mail she sends with msgid: (her STEP 0f/0g), or let capture skip Zoya-from mail addressed to Akshay alone as internal.",
+      "severity": "nit"
+    }
+  },
+  "verdict": "NOT READY. The build is clean: it reproduces byte for byte, holds only the patch edits, both files are under 40,000 bytes, and no em dash was added. Cases 2, 3, 4, 5, 6 and 9 pass. Cases 1, 7, 8 and 10 fail. Two blocking defects: D1 (ad@-only mail already logged as msgid:, at cutover and in STEP 0 twins, is duplicated as adid:) and D2 (the thread Source ID rule still needs a Message-ID, so every new ad@-only pitch forces RAW or a malformed id). Fix D1 and D2, ideally also D3 to D8, then replay cases 1, 5, 7, 8 and 10."
+}
