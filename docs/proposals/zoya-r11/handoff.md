@@ -2,12 +2,12 @@
 
 | File | Bytes / sha256 | Where |
 |---|---|---|
-| SLOW work file | 67,287 / b7f9f96f96aed90f | `routines/zoya/release/zoya-slow-work.txt` at commit 05a2c63b4ecdcd64ad5b6a7907c03b61659b9cc2 |
-| FAST prompt | 44,354 / 5e958a83d0ab3530 | `zoya-one.txt` here, pinned to 05a2c63 |
+| SLOW work file | 67,837 / 2cf5b7156ce80240 | `routines/zoya/release/zoya-slow-work.txt` at commit 63fcf669014fe5c4eeff64c7fedbe6d1c85d926c |
+| FAST prompt | 44,839 / 264f69fc3ae384c2 | `zoya-one.txt` here, pinned to 63fcf66 |
 
 **How it's built:**
 - On a worktree at f70901f with this folder's `build_one.patch`, which carries everything since the rules-read patch.
-- Command: `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 05a2c63b4ecdcd64ad5b6a7907c03b61659b9cc2`. Built twice, byte-identical.
+- Command: `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 63fcf669014fe5c4eeff64c7fedbe6d1c85d926c`. Built twice, byte-identical.
 - **What changed against the live FAST** (44,075 / a6109709): only the edits below, the pin and hash, and the version string.
 
 ## The bug (Auditor finding 1, CX-20261103T0800)
@@ -32,8 +32,25 @@ The 07:38 run read about 21k of the wording page's 62k characters. It then sent 
 
 ## Deploy (the CTO), in this order
 
-1. Move refs/heads/zoya-slow-pin to 05a2c63b4ecdcd64ad5b6a7907c03b61659b9cc2 and read the file's sha256 back.
+1. Move refs/heads/zoya-slow-pin to 63fcf669014fe5c4eeff64c7fedbe6d1c85d926c and read the file's sha256 back.
 2. Paste `zoya-one.txt` into the Zoya trigger and byte-compare it.
 3. The next run's record has one "<page>: <read> of <total> characters" line per required page. A short page blocks its sends.
 
-**Status:** written. Replay pending (`replay.json`).
+## r11b (replay.json)
+
+The first replay passed the CTO's required case: a 21k-of-62k read blocks every send and nothing goes. It also passed the no-resend case. Fixes for what it found:
+
+| Defect | Fix |
+|---|---|
+| D1, high: a fully blocked run read as Completed | A short page ends the run Partial, "rules not loaded: <page> <read> of <total>", whatever RUN RECORD says of blocked actions. It writes nothing for the actions that page governs |
+| D2, D5: SLOW-only pages | The follow-ups page and the routine pages it links are SLOW work's only. FAST sends never wait on them, and SLOW sends do |
+| D3: inline fetches | A fetch shown inline in full is loaded, with read = total = its length |
+| D4: counts that could never match | A saved file is loaded in python as one string (its text field when it's JSON) and printed in slices of at most 20,000 characters, in order, to the end. Total is the string's length, and read is the end of the last slice shown in full |
+| D6 | Snooze key: "snooze:<row id>:<YYYY-MM-DD>:<the first 20 characters of its ask>" |
+| D7 | A dropped carryover key is logged as "dropped: <key> (not eligible)" |
+| D8 | The page counts go in the run record |
+| D9: pin precondition | The pin is still at 8bf34ea. Move it to 63fcf669014fe5c4eeff64c7fedbe6d1c85d926c before FAST goes live (deploy step 1) |
+
+**Also in SLOW:** the line listing "Rules for Zoya: follow-ups", which the live SLOW file never had.
+
+**Status:** written. Re-replay pending.
