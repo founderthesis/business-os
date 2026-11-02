@@ -164,5 +164,45 @@
    }
   },
   "verdict": "Close, but not yet. D1 to D6 are fixed and (a), (g), D4, D5 and D6 replay as PASS. Fix N1 before deploying: '<id>' must be the numeric UID, or a literal model writes to an impossible path and every inline RAW pends. N2 to N5 are small. The byte budget is 1 byte, so N1 needs a trim."
+ },
+ "r8c": {
+  "inputs": {
+   "capture": "39,999 bytes, sha256 64da655e68a0371e, 0 em dashes, rebuilt byte for byte by patch.py from r7 3f08b76e; word diff = patch.py edits only; 1 byte headroom"
+  },
+  "recheck": {
+   "N1": {
+    "result": "PASS",
+    "quote": "cat > r<UID> <<'X' first, >> after; UID as KEY",
+    "replay": "KEY defines '\"adid:<UID>\", the number in its [Gmail]/All Mail: id', so the name is numeric. Two messages in one run as r4821 and r4822 decoded CAF+real...@mail.gmail.com and SECOND.message.id.77@... after chunk 2 each; the same name reused also works ('>' truncates). Edge: an allmail row with an INBOX id must find its All Mail UID (the STEP 0 clause) before RAW, or the name has no UID."
+   },
+   "N2": {
+    "result": "PASS",
+    "quote": "up to 5 of each class, the others filling the rest",
+    "replay": "3 x 5 = 15, so LINK is guaranteed 5 slots a run while the other classes are busy, and more when they drain. The 14 rows need about 3 runs on 3 Nov, well inside 'through 2026-11-05'."
+   },
+   "N3": {
+    "result": "PASS with N6",
+    "quote": "LINK: link, creating what STEPS 2 and 3 would, no loop-in, read by key (adid: by UID); unsure: say so.",
+    "replay": "Decision 424: STEP 3's own rules come with 'creating what STEP 3 would': 'attach only on evidence naming the guest ... no evidence or two candidates: report it, attach nothing', 'A duplicate row: report both, never retire one', never merge People. 'unsure: say so' matches. No conflict. Repeat pitch: STEP 3's branch says 'the new thread gets the loop-in (LOOP-IN; sent here, so STEP 6 skips it)'. LINK's 'no loop-in' overrides the send, and STEP 6 'Skip repeat pitches', so that thread never gets a loop-in. But the branch still puts the row on Akshay's list with 'Re-engage on the new thread, or have Zoya point them to the earlier answer?', so he decides. Acceptable. New pitches: STEP 6's catch-up ('still due here for 72 hours: find those from Notion') can loop in a 2 Nov pitch once LINK has given it a row (until about 5 Nov 10:03 JST, outside quiet hours). That is a STEP 6 send under its own guards, not LINK's, and is probably wanted, but the CTO should know 'no loop-in' doesn't mean none ever."
+   },
+   "N4": {
+    "result": "PASS",
+    "quote": "LINK, through 2026-11-05",
+    "replay": "Inclusive and unambiguous: tries on 3, 4 and 5 Nov at most."
+   },
+   "N5": {
+    "result": "PASS",
+    "replay": "README change 1 now says it's superseded by r8b and r8c, and 'three edits' is gone."
+   }
+  },
+  "defects": {
+   "N6_stale_overwrite_on_found_row": {
+    "severity": "low-medium",
+    "quote": "If the guest already has an Engagement on that show (any direction), use it: Direction Inbound, add Via and Stakeholders from the thread, Next action \"New pitch from <PR>\"",
+    "scenario": "A 2 Nov 10:03 pitch whose guest row was created or advanced later (a follow-up logged at 11:00, then Zoya replied: Waiting on Zoya, 'Zoya: ...'). On 3 Nov LINK replays STEP 3 and writes Next action 'New pitch from <PR>' over the newer step. Unlike LAST ACTIVITY, Next action has no 'unless newer' guard.",
+    "fix": "'a row it finds keeps its Status, Waiting on and Next action'. Needs about 60 bytes, so trim elsewhere (budget is 1 byte)."
+   }
+  },
+  "verdict": "Deployable: N1 to N4 are fixed, the two-message Bash case decodes both ids, and LINK's creating doesn't conflict with decision 424 or the repeat-pitch rule (Akshay still decides). One low-medium item before or soon after: LINK replaying STEP 3 can overwrite a newer Next action on a row it finds (N6)."
  }
 }

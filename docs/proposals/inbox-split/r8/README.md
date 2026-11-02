@@ -5,7 +5,7 @@
 
 | File | Bytes / sha256 |
 |---|---|
-| `capture.txt` | 39,999 / 64da655e68a0371e |
+| `capture.txt` | 39,998 / 5ef8b9379a1591e4 |
 
 | # | Change | Where |
 |---|---|---|
@@ -39,3 +39,8 @@
 | N5 | This README and patch.py's comments are updated |
 
 **For the CTO:** LINK doesn't use the BACKLOG cap you named. It sits inside STEP 0's 15, so new mail keeps its 15 or 25 slots.
+
+## r8d (replay8.json, r8c section)
+
+- **N6:** a row LINK finds keeps its Status, Waiting on and Next action, so STEP 3's "New pitch" step never overwrites a newer one.
+- **Trims for room:** two clauses of mine were shortened, with no rule changed.
