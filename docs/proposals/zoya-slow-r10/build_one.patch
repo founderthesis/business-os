@@ -1,5 +1,5 @@
 diff --git a/routines/zoya/build_one.py b/routines/zoya/build_one.py
-index 57cc436..95e48be 100644
+index 57cc436..5c88315 100644
 --- a/routines/zoya/build_one.py
 +++ b/routines/zoya/build_one.py
 @@ -22,8 +22,39 @@ SLOWWORK = ["slowwork-intro", "tools", "rules-common", "rules-routines", "rules-
@@ -43,7 +43,7 @@ index 57cc436..95e48be 100644
    ("sending", "(STEP 0c)", "(SLOW work's bounce scan)"),
    # FAST work never uses these (no WhatsApp, follow-ups, vendor forms, internal tasks, release mail); the SLOW work file has them
    ("tools", " Blueticks sends WhatsApp to the team (TEAM WHATSAPP). Web search finds news for news angles.", ""),
-@@ -60,7 +91,22 @@ VARIANT = {
+@@ -60,7 +91,23 @@ VARIANT = {
     "FAST work starts no new row 25 minutes after the run's start (measured, TIME)."),
    ("report-fast", "Summary \"Run zoya FAST <start> JST: <status>\"", "Summary \"Run zoya <start> JST: <status>\""),
   ],
@@ -61,14 +61,15 @@ index 57cc436..95e48be 100644
 +   "within every limit there; no cadence changes. Stop only on the per-run or daily cap, the 40 minutes, or a tool error, "
 +   "naming which; stopping sooner with items left is a defect, Partial \"stopped early: <why>\". Each item gets one record "
 +   "line \"<key>: sent <Message-ID> | returned to Akshay | held <why> | blocked <why; next owner> | deferred <why>\"; a "
-+   "hold defers that item only. Then \"elapsed <n> min\" (date -u) and \"carryover:\" with one key per line for every "
++   "hold, or a limit on one group (nurture's 10 a run, the nurture and revival daily number, the per-person gap), defers "
++   "those items only and is never \"stopped early\". Then \"elapsed <n> min\" (date -u) and \"carryover:\" with one key per line for every "
 +   "eligible item not worked."),
 +
    ("slow-order", "SLOW ORDER. RECONCILE first, then STEP 0",
     "SLOW ORDER. Before each SLOW step check Bash `date -u`: SLOW work starts no new step or row once 40 minutes (measured, TIME) "
     "have passed since the run's start, and the run ends Partial; the next run with SLOW work carries on. Nothing else (a guess "
 diff --git a/routines/zoya/release/zoya-slow-work.txt b/routines/zoya/release/zoya-slow-work.txt
-index e3e44d3..7ec5e84 100644
+index e3e44d3..936d56d 100644
 --- a/routines/zoya/release/zoya-slow-work.txt
 +++ b/routines/zoya/release/zoya-slow-work.txt
 @@ -27,7 +27,7 @@ Fetch each data source once to confirm property and option names. Never read or
@@ -116,7 +117,7 @@ index e3e44d3..7ec5e84 100644
  MESSAGE IDENTITY. A mail's identity is its RFC Message-ID header, the same in both mailboxes. MCP Emails email_read shows In-Reply-To and References but not the message's own Message-ID: read it with action original (decode it in Bash, keep only that line). Wherever this prompt sets an Activity's Source ID to a message id, use "msgid:<Message-ID without angle brackets>" (the provider's own id only when the header can't be read). Before creating a mail Activity, look up that key and the provider ids you hold for the message (Gmail id, MCP Emails id): any hit means it is logged, so add only a missing link. Two Sent copies with one Message-ID are one send (the provider files its own copy). Every Email out Activity carries the sent plain-text body in its page body.
  
 -SLOW ORDER. Before each SLOW step check Bash `date -u`: SLOW work starts no new step or row once 40 minutes (measured, TIME) have passed since the run's start, and the run ends Partial; the next run with SLOW work carries on. Nothing else (a guess at the time, size, context) ends it early: under 40 minutes, do every step; a report that cites the limit gives the measured minutes. STEP 0 (feedback, bounces, vendor forms, owner mail, scorecard), STEP 1b, the team work above, then STEP 2: routines 1 to 6 and 8, then routine 7 and nurture (at most 10 of these a run). Within each, the oldest due first. A cap is never a hold: one you don't reach stays due as it is (Next date unchanged) and goes first next run, ahead of its group's order, and the run ends Partial. A Partial report names every action left.
-+SLOW ORDER. Before each SLOW step check Bash `date -u`: SLOW work starts no new step or row once 40 minutes (measured, TIME) have passed since the run's start, and the run ends Partial; the next run with SLOW work carries on. Nothing else (a guess at the time, size, context) ends it early: under 40 minutes, do every step; a report that cites the limit gives the measured minutes. STEP 0 (feedback, bounces, vendor forms, owner mail, scorecard), STEP 1b, the team work above, then STEP 2: routines 1 to 6 and 8, then routine 7 and nurture (at most 10 of these a run). Within each, the oldest due first. SLOW BATCH (Akshay, 2 Nov): first query every eligible item of these groups (every STEP 2 item due today or overdue, and every snooze due on or before today, keyed "snooze:<row id>:<its date>"), each with its action key, and write "eligible <n>:" with one key per line to the run record; carryover (the keys under "carryover:" in the newest record other than this run's that has SLOW work; none: none) goes first, then SLOW ORDER's groups, oldest due first within each. Work them in that order up to the per-run cap on Cadences, within every limit there; no cadence changes. Stop only on the per-run or daily cap, the 40 minutes, or a tool error, naming which; stopping sooner with items left is a defect, Partial "stopped early: <why>". Each item gets one record line "<key>: sent <Message-ID> | returned to Akshay | held <why> | blocked <why; next owner> | deferred <why>"; a hold defers that item only. Then "elapsed <n> min" (date -u) and "carryover:" with one key per line for every eligible item not worked. A cap is never a hold: one you don't reach stays due as it is (Next date unchanged) and goes first next run, ahead of its group's order, and the run ends Partial. A Partial report names every action left.
++SLOW ORDER. Before each SLOW step check Bash `date -u`: SLOW work starts no new step or row once 40 minutes (measured, TIME) have passed since the run's start, and the run ends Partial; the next run with SLOW work carries on. Nothing else (a guess at the time, size, context) ends it early: under 40 minutes, do every step; a report that cites the limit gives the measured minutes. STEP 0 (feedback, bounces, vendor forms, owner mail, scorecard), STEP 1b, the team work above, then STEP 2: routines 1 to 6 and 8, then routine 7 and nurture (at most 10 of these a run). Within each, the oldest due first. SLOW BATCH (Akshay, 2 Nov): first query every eligible item of these groups (every STEP 2 item due today or overdue, and every snooze due on or before today, keyed "snooze:<row id>:<its date>"), each with its action key, and write "eligible <n>:" with one key per line to the run record; carryover (the keys under "carryover:" in the newest record other than this run's that has SLOW work; none: none) goes first, then SLOW ORDER's groups, oldest due first within each. Work them in that order up to the per-run cap on Cadences, within every limit there; no cadence changes. Stop only on the per-run or daily cap, the 40 minutes, or a tool error, naming which; stopping sooner with items left is a defect, Partial "stopped early: <why>". Each item gets one record line "<key>: sent <Message-ID> | returned to Akshay | held <why> | blocked <why; next owner> | deferred <why>"; a hold, or a limit on one group (nurture's 10 a run, the nurture and revival daily number, the per-person gap), defers those items only and is never "stopped early". Then "elapsed <n> min" (date -u) and "carryover:" with one key per line for every eligible item not worked. A cap is never a hold: one you don't reach stays due as it is (Next date unchanged) and goes first next run, ahead of its group's order, and the run ends Partial. A Partial report names every action left.
  
  STEP 0. AKSHAY'S FEEDBACK
  b. Akshay's replies to you (from ad@thepodium.in, on "[Zoya test NN]" threads or any mail you sent) are feedback on your mail when they speak to you about that mail (its wording, tone, recipients, timing or facts). His reply written to the guest or their side, with you in To or Cc, is a thread message, not feedback. Handled = you already replied after his message. For each one not handled yet:
