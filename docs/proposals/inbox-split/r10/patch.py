@@ -64,6 +64,15 @@ a = R(a, REP,
   "Next action or Next date over a value set after this mail. Ledger \"<id>: repair: "
   "<effect>: applied | handed over | n/a (overtaken: <what>)\", one per effect.")
 
+# r10e lows (C1 to C3): a recovered 443/444 step replaces the chase segment; a past date is not "today" for 425; past-date wording.
+a = R(a, "Next action or Next date over a value set after this mail.",
+         "Next action or Next date over a value set after this mail, except that a 443 or 444 step replaces the chase segment "
+         "for that person, and its Next date, as STEP 3 says.")
+a = R(a, "A Tier 1 guest or a date today or tomorrow (decision 425):",
+         "A Tier 1 guest or a date today or tomorrow (decision 425; a date already past is not today):")
+a = R(a, "\"Zoya: reply to <who>: slots for <date>\"; the row's chase",
+         "\"Zoya: reply to <who>: slots for <date>\" (a date already past: \"offer the next slots (asked for <date>)\"); the row's chase")
+
 for name, s, d in (("capture.txt", c, cd), ("actions.txt", a, ad)):
     b = s.encode()
     assert s.count(chr(0x2014)) == d and len(b) <= 65336, (name, len(b))

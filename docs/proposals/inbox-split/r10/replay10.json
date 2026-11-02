@@ -271,5 +271,60 @@
       }
     },
     "verdict": "Capture r10d: should-fix 1 to 7 are all in and correct, and it is accepted on correctness. Actions r10d: B2 is addressed. j, k, l and n pass and m passes on its literal text, but R1 (medium) lets an unrelated newer item skip a missing effect, which contradicts 'found, not skipped'. R2 to R4 are low. Deploy (o): capture r10d with live actions r8e is UNSAFE, because r8e replays recovered rows in full. Ship actions r10d (with R1 fixed and B3, r9e's 443 and 444, reviewed by Cleanup) before capture r10d."
+  },
+  "r10e": {
+    "inputs": {
+      "actions": "r10/actions.txt 43,413 / e13640e0e8a0d45c",
+      "capture": "r10/capture.txt 43,475 / 82004b7ce0da42d7 (unchanged)",
+      "build": "patch.py rebuilt offline from r8h and r9e: byte-identical. Diff holds only the REPAIR clause. Em dash 0."
+    },
+    "cases": {
+      "j": {
+        "result": "PASS",
+        "quote": "overtaken, which means a newer item (dated after this mail) that settles or replaces that same effect, such as their later reply, our answer to that ask",
+        "note": "Our later reply settles the reply effect and the newer Status covers the status move. One 'n/a (overtaken: <what>)' line per named effect, no writes."
+      },
+      "k": {
+        "result": "PASS",
+        "quote": "hand it over as a visible step with the date it was asked (\"Zoya: reply to <who>: <what> (asked <D Mon>)\" ...), added as a segment with the others kept",
+        "note": "The R2 ambiguity is gone: adding a segment isn't writing over a newer value."
+      },
+      "l": {
+        "result": "PASS with note C1",
+        "quote": "never set a Next date or call date already past (443: Next date today, the step \"offer the next slots (asked for <date>)\")",
+        "note": "No booked call or later answer, so: Next date today and the step 'offer the next slots (asked for 30 Oct)'. A booked call or reply after it makes it n/a (overtaken)."
+      },
+      "m": {
+        "result": "PASS",
+        "quote": "an unrelated newer item (a chase to someone else, an RSVP, a holding reply) never overtakes it",
+        "note": "A newer decision or answer on that ask means n/a. An unrelated newer item keeps the ask, and 444 then adds or updates its one 'Akshay: ... Recommend:' segment, dated."
+      },
+      "n": {
+        "result": "PASS",
+        "quote": "capture fold stamp 'whatever the kept row's age' / actions 'a recovered row is never given a full first run'",
+        "note": "Effects 2b a and b and STEP 5 are each checked and named. Status moves only if the row is still at Send draft, and an ask comes out only if it is still there."
+      }
+    },
+    "defects": {
+      "C1": {
+        "quote": "443 bullet: 'the row's chase or went-quiet segment for them leaves' and 'Next date = that date ... replacing any Next date but a calendar booking's' vs REPAIR: 'never write Waiting on, Next action or Next date over a value set after this mail'",
+        "scenario": "Recovered 443 request, and Zoya chased them on 31 Oct. REPAIR may not remove the newer chase segment or replace the newer chase Next date, so the row holds both a chase and 'offer the next slots'. Next date stays at the chase date. Zoya could chase and offer slots on the same thread.",
+        "fix": "'In REPAIR, a 443 or 444 step still removes that person's chase or went-quiet segment and its chase Next date (they wrote first; the chase is not a newer answer).'",
+        "severity": "low"
+      },
+      "C2": {
+        "quote": "443 'A Tier 1 guest or a date today or tomorrow (decision 425)' vs REPAIR 'Next date today'",
+        "scenario": "A past date asked: does 425 test the asked date (past, so Zoya) or Next date (today, so Akshay)?",
+        "fix": "'decision 425 tests the date asked; a past one is Zoya's unless Tier 1'. Or the reverse, if Akshay wants late requests himself.",
+        "severity": "low"
+      },
+      "C3": {
+        "quote": "STEP 3 443 bullet: 'first in Next action \"Zoya: reply to <who>: slots for <date>\"'",
+        "scenario": "Outside REPAIR, a live row with a past date (r9 R3) still gets 'slots for <past date>'. Only REPAIR got the 'offer the next slots' wording.",
+        "fix": "Use the same wording in the 443 bullet.",
+        "severity": "low"
+      }
+    },
+    "verdict": "Actions r10e: R1 to R4 are fixed and cases j to n pass. No blocking contradiction. C1 to C3 are low one-phrase items (C1 is the only one that can put two Zoya steps on a row). Deploy order is unchanged: after Cleanup reviews r9e's 443 and 444, actions r10e, then capture r10d; never capture first while actions is r8e."
   }
 }

@@ -9,7 +9,7 @@
 | File | Bytes / sha256 |
 |---|---|
 | `capture.txt` | 43,475 / 82004b7ce0da42d7 |
-| `actions.txt` | 43,413 / e13640e0e8a0d45c |
+| `actions.txt` | 43,621 / 97190a21b962a5fc |
 
 ## Capture
 
@@ -101,4 +101,14 @@ The four lows it named are applied:
 2. Actions r10c goes live.
 3. Then capture r10d.
 
-**Status:** capture accepted on correctness; actions r10c quick check pending.
+**Actions r10c quick check (replay10.json, r10e section):** R1 to R4 fixed, cases j to n pass, nothing blocking.
+
+The three one-phrase lows it named are applied in actions r10d, in this patch, so r9e itself stays as Cleanup reviews it:
+- **C1:** a recovered 443 or 444 step replaces the chase segment for that person and its Next date, as STEP 3 says, even when the chase was written after the mail.
+- **C2:** a date already past isn't "today" for decision 425's same-day test. Tier 1 still goes to Akshay.
+- **C3:** the normal 443 bullet also says "offer the next slots (asked for <date>)" for a past date.
+
+**Status:**
+- **Capture r10d:** accepted on correctness.
+- **Actions r10d:** replayed through r10c, plus the three one-phrase lows above, which weren't replayed again.
+- **Next:** ready for Cleanup, with r9e's 443 and 444 (B3), in the deploy order above.
