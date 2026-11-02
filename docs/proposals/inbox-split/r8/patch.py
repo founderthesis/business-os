@@ -11,13 +11,14 @@ def R(a, b):
     assert s.count(a) == 1, (a[:70], s.count(a))
     s = s.replace(a, b)
 
-# 1. Link pass: a third STEP 0 class, unlinked mail rows since 1 Nov 12:00 JST, whatever their Captured; counted in STEP 1's cap.
+# 1. Link pass: a third STEP 0 class (LINK), inside STEP 0's 15, never STEP 1's cap; through 2026-11-05.
+R("up to 8 of each class and the other class filling the rest:", "up to 5 of each class, the others filling the rest:")
 R("or created since 2026-11-01 12:00 JST (rows the old inbox never worked); within each,",
-  "or created since 2026-11-01 12:00 JST (rows the old inbox never worked); and LINK, until 2026-11-06: msgid: or adid: "
+  "or created since 2026-11-01 12:00 JST (rows the old inbox never worked); and LINK, through 2026-11-05: msgid: or adid: "
   "mail, no People and no Engagement, created since 2026-11-01T03:00Z, Captured before today, not "
   "an Email out whose Summary starts \"Zoya\"; within each,")
 R("The record says \"old rows: <n> re-keyed, <n> folded, <n> linked, <n> left\".",
-  "LINK: link only, as STEPS 2 and 3 do (no loop-in), read by its key (adid: by UID); no row fits: say so. The record says "
+  "LINK: link, creating what STEPS 2 and 3 would, no loop-in, read by key (adid: by UID); unsure: say so. The record says "
   "\"old rows: <n> re-keyed, <n> folded, <n> linked, <n> left\".")
 # 2. allmail: ad@-only rows re-key to adid: with no RAW (lookup first, as now).
 R("allmail: read the message by that MCP Emails id and get its key (KEY; MSGID FIND first for every allmail: row)",
@@ -30,9 +31,9 @@ R("No key (a row whose RAW gives no Message-ID):", "No key (a row whose RAW give
 R("Returned inline: copy the data value's first 8000 characters into a file in Bash (a heredoc), then base64 -d <file> "
   "2>/dev/null | grep -aim1 -A1 '^Message-ID:'; no complete id (one ending \">\"), append the next 8000 to the same file "
   "and run it again.",
-  "Returned inline: write the data value in Bash, in order, 8000 characters per heredoc, "
-  "to a new file per message (cat > r<id> <<'X' first, >> after), until a complete id (one ending \">\") "
-  "shows; after each chunk run tr -d '\\n' < r<id> | base64 -d 2>/dev/null | grep -aim1 -A1 '^Message-ID:'.")
+  "Returned inline: write the data value in Bash, 8000 characters per heredoc, "
+  "to a new file per message (cat > r<UID> <<'X' first, >> after; UID as in KEY), until a complete id (one ending \">\") "
+  "shows; after each chunk run tr -d '\\n' < r<UID> | base64 -d 2>/dev/null | grep -aim1 -A1 '^Message-ID:'.")
 
 out = s.encode()
 assert s.count(chr(0x2014)) == dashes and len(out) <= 65336

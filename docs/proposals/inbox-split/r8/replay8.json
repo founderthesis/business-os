@@ -99,5 +99,70 @@
    "fix": "Before deploy, check one real email_read original result. If needed, decode with python base64.b64decode after re.sub(r'\\\\[rn]|\\s','',s) plus altchars '-_'."
   }
  },
- "verdict": "Not ready to deploy. The diff is clean (only the patch.py edits, reproducible, 39,990 bytes, no em dash), and changes 2 and 3's pend-and-continue replay correctly. Fix D1 first: the fixed append file 'f' makes every inline RAW after the first in a run decode the previous message's id and pend. Then remove the cap contradiction (D2) and give LINK an end (D3); all three need byte trims to stay under 40,000. Today's 14 rows link from the first run after 3 Nov 00:00 JST, not today."
+ "verdict": "Not ready to deploy. The diff is clean (only the patch.py edits, reproducible, 39,990 bytes, no em dash), and changes 2 and 3's pend-and-continue replay correctly. Fix D1 first: the fixed append file 'f' makes every inline RAW after the first in a run decode the previous message's id and pend. Then remove the cap contradiction (D2) and give LINK an end (D3); all three need byte trims to stay under 40,000. Today's 14 rows link from the first run after 3 Nov 00:00 JST, not today.",
+ "r8b": {
+  "inputs": {
+   "capture": "r8/capture.txt 39,999 bytes, sha256 e07e2a59d2d934af, 0 em dashes; patch.py rebuilds it byte for byte from r7 3f08b76e; word diff = the 5 R() edits only",
+   "headroom": "1 byte under 40,000"
+  },
+  "recheck": {
+   "a_todays_14_rows": {
+    "result": "PASS",
+    "quote": "and LINK, until 2026-11-06: msgid: or adid: mail, no People and no Engagement, created since 2026-11-01T03:00Z, Captured before today",
+    "replay": "The 14 rows (Captured 2026-11-02) first qualify on the first run after 3 Nov 00:00 JST. A row with no fit comes back at most once a JST day, on 3, 4, 5 (and maybe 6) Nov, then never: no infinite loop. Each return costs one of STEP 0's 15 slots and part of its 8 minutes. Residual risk (N2): with 3 classes in 15 slots, LINK can be starved by allmail and msgid rows."
+   },
+   "e_inline_raw_two_messages": {
+    "result": "PASS with a safe name, FAIL with a literal MCP Emails id (N1)",
+    "quote": "to a new file per message (cat > r<id> <<'X' first, >> after) ... tr -d '\\n' < r<id> | base64 -d",
+    "replay": "Two messages in one run, 8000-character heredoc chunks. With r4821 and r4822: message 1 gave CAF+real...@mail.gmail.com after chunk 2, message 2 gave SECOND.message.id.77@... after chunk 2. Reusing one name also works now, because the first chunk's '>' truncates. D1 is fixed. But '<id>' is never defined, and the prompt's '<its id>' is the MCP Emails id, which in STEP 1 is always '[Gmail]/All Mail:<UID>'. 'cat > r[Gmail]/All Mail:4821' fails in bash ('r[Gmail]/All: No such file or directory'), and quoted it still fails (no r[Gmail] directory). Every inline RAW then gives no id and pends as mcp:. 'rINBOX:4821' works."
+   },
+   "g_cap_backlog_stop_time": {
+    "result": "PASS",
+    "quote": "STEP 0's rows don't count toward STEP 1's cap of 15. / STEP 1: STEP 0 only shares the time window",
+    "replay": "LINK now sits inside STEP 0's 15, so the closing sentence and STEP 1's BACKLOG text are true and STEP 1 keeps 15 (25) slots for new mail. STOP TIME is unchanged: STEP 0 rows start within 8 minutes, messages within 18. This departs from the CTO's 'capped by the BACKLOG cap' wording, as the coordinator says, and the CTO should be told."
+   },
+   "d5_d6_d4": {
+    "result": "PASS",
+    "quote": "No key (a row whose RAW gives no Message-ID; not pended) / LINK: link only, as STEPS 2 and 3 do (no loop-in) / not an Email out whose Summary starts \"Zoya\"",
+    "replay": "A failed STEP 0 RAW gets the body line and no mcp: entry. LINK sends nothing; STEP 6's 72-hour catch-up from Notion can still loop in a pitch once it has a row. Zoya's own Email out rows are excluded."
+   },
+   "d7_d8": {
+    "result": "accepted",
+    "replay": "The 65,336 guard is intended as the cap minus a margin. The 1 Nov sample of the data value was standard, unbroken base64, which my simulation shows both recipes handle."
+   }
+  },
+  "defects": {
+   "N1_file_name_undefined": {
+    "severity": "medium",
+    "quote": "cat > r<id> <<'X' first, >> after",
+    "scenario": "A literal model substitutes the MCP Emails id '[Gmail]/All Mail:4821'. Bash rejects the path (space, slash, brackets), so every inline RAW gives no id and pends. That is the same symptom D1 had, by a different route. Reproduced.",
+    "fix": "'r<UID>' (the number after the last colon). That is +2 bytes, so trim 'in order, ' (10 bytes) to stay under 40,000."
+   },
+   "N2_three_classes_in_15": {
+    "severity": "low",
+    "quote": "take up to 15 Activities, up to 8 of each class and the other class filling the rest",
+    "scenario": "There are now three classes, and the quota sentence still names two. 8+8 fills the 15 before LINK, so while the allmail and msgid classes have 15 or more rows due, LINK can get no slots before it expires on 6 Nov.",
+    "fix": "'up to 5 of each class, the others filling the rest' (similar length)."
+   },
+   "N3_link_only_vs_create": {
+    "severity": "low",
+    "quote": "LINK: link only, as STEPS 2 and 3 do (no loop-in) ... no row fits: say so",
+    "scenario": "STEPS 2 and 3 create People and, for a pitch, an Engagement. 'link only' plus 'no row fits: say so' reads as creating nothing. A 10:03 pitch whose guest has no row stays orphaned, gets no Engagement, eval or catch-up loop-in, and only shows up in the report.",
+    "fix": "Decide which is meant. If creating is allowed: 'link only (People and Engagement created as STEPS 2 and 3 do; no loop-in)'."
+   },
+   "N4_until_inclusive": {
+    "severity": "low",
+    "quote": "until 2026-11-06",
+    "scenario": "It's unclear whether a run on 6 Nov JST takes LINK rows. That's a 3 or 4 day window, harmless either way.",
+    "fix": "Leave it, or write 'before 2026-11-06'."
+   },
+   "N5_stale_docs": {
+    "severity": "low",
+    "quote": "README change 1: 'They count toward STEP 1's cap (15, BACKLOG 25), not STEP 0's 15.' / 'patch.py makes three edits' / patch.py comment '# 1. ... counted in STEP 1's cap.'",
+    "scenario": "The README's top table and patch.py's comments describe r8, not r8b: it is now 5 edits, LINK sits inside STEP 0's 15, and inline RAW uses a new file per message, written until an id shows.",
+    "fix": "Update the README table rows 1 and 3, the edit count, and patch.py comment #1."
+   }
+  },
+  "verdict": "Close, but not yet. D1 to D6 are fixed and (a), (g), D4, D5 and D6 replay as PASS. Fix N1 before deploying: '<id>' must be the numeric UID, or a literal model writes to an impossible path and every inline RAW pends. N2 to N5 are small. The byte budget is 1 byte, so N1 needs a trim."
+ }
 }
