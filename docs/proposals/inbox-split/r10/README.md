@@ -9,7 +9,7 @@
 | File | Bytes / sha256 |
 |---|---|
 | `capture.txt` | 43,475 / 82004b7ce0da42d7 |
-| `actions.txt` | 43,122 / 3e548c47562977b6 |
+| `actions.txt` | 43,413 / e13640e0e8a0d45c |
 
 ## Capture
 
@@ -88,4 +88,17 @@ The four lows it named are applied:
 6. STEP 6 never catches up a recovered row.
 7. A Meeting row reads its mail for the Doc id first.
 
-**Status:** written, replay pending.
+**Replay (replay10.json, r10d section):**
+- **Capture r10d:** accepted on correctness.
+- **Actions:** j, k, l and n pass. The medium (R1) and the lows (R2 to R4) are fixed in actions r10c:
+  - **R1:** "overtaken" means a newer item that settles or replaces that same effect: their later reply, our answer to that ask, a decision on it, a booked call. An unrelated newer item (a chase to someone else, an RSVP, a holding reply) never overtakes it.
+  - **R2:** a handover is added as a segment with the others kept. "Newer" means set after this mail.
+  - **R3:** for a past 443 date, the step reads "offer the next slots (asked for <date>)".
+  - **R4:** each effect is named in the ledger.
+
+**Deploy order** (the replay's case o, stated plainly): capture r10d with live actions r8e is unsafe. The order is:
+1. Cleanup reviews r9e's 443 and 444 (B3) and this actions build.
+2. Actions r10c goes live.
+3. Then capture r10d.
+
+**Status:** capture accepted on correctness; actions r10c quick check pending.

@@ -54,11 +54,14 @@ a = R(a, REP,
   "work it for effects not yet performed only, checked against the row's current state and today's threads: first read "
   "its thread in ad@ and Zoya's inbox, its Engagement's newest Activities, Sent, Action keys, the calendar, and the row's "
   "Status, Waiting on, Next action and Next date. Each effect the mail calls for (STEPS 2b to 6e, decisions 443 and 444 "
-  "included): already done, or overtaken by anything newer (a later mail, call, Your call, decision, Status, step or "
-  "calendar event): ledger \"n/a (overtaken: <what>)\" and write nothing for it. Still missing: apply it, or hand it over "
+  "included; name each in the ledger): already done, or overtaken, which means a newer item (dated after this mail) "
+  "that settles or replaces that same effect, such as their later reply, our answer to that ask, a decision on it, a "
+  "booked call; an unrelated newer item (a chase to someone else, an RSVP, a holding reply) never overtakes it: ledger "
+  "\"n/a (overtaken: <what>)\" and write nothing for it. Still missing: apply it, or hand it over "
   "as a visible step with the date it was asked (\"Zoya: reply to <who>: <what> (asked <D Mon>)\", or Akshay's list under "
-  "decision 325); never resend what went, never set a Next date or call date already past (443: today, the step names "
-  "the date asked), never write Waiting on, Next action or Next date over a newer value. Ledger \"<id>: repair: "
+  "decision 325), added as a segment with the others kept; never resend what went, never set a Next date or call date "
+  "already past (443: Next date today, the step \"offer the next slots (asked for <date>)\"), never write Waiting on, "
+  "Next action or Next date over a value set after this mail. Ledger \"<id>: repair: "
   "<effect>: applied | handed over | n/a (overtaken: <what>)\", one per effect.")
 
 for name, s, d in (("capture.txt", c, cd), ("actions.txt", a, ad)):

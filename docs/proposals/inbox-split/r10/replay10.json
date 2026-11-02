@@ -174,5 +174,102 @@
       }
     },
     "verdict": "READY on correctness. Cases a, e and f pass, D1 to D7 are fixed as described, and the diff is clean. g no longer starves STEP 0, but the batch is time-bound (about 4 to 8 rows, about 12 to 20 runs to drain) and STEP 1 can be squeezed. N1 to N4 are low, optional one-phrase fixes; N2 needs the CTO to confirm 'up to 10' against Akshay's 'fixed 10'."
+  },
+  "r10d": {
+    "inputs": {
+      "capture": "r10/capture.txt 43,475 / 82004b7ce0da42d7",
+      "actions": "r10/actions.txt 43,122 / 3e548c47562977b6",
+      "build": "patch.py rebuilt offline from r8h (de8465b8) and r9e (ac763528): byte-identical. Word diffs hold only the patch.py edits. Em dash 0 in all files. Read first: cleanup/r10/verdict.md (option A rejected by the CTO)."
+    },
+    "should_fix_check": {
+      "1": {
+        "result": "PASS",
+        "quote": "Start no row more than 8 minutes after STEP 0A ends, nor after minute 12 of the run."
+      },
+      "2": {
+        "result": "PASS",
+        "quote": "starting none more than 5 minutes after STEP 0L ends nor after minute 10 of the run"
+      },
+      "3": {
+        "result": "PASS",
+        "quote": "is a strike, at most one per JST day"
+      },
+      "4": {
+        "result": "PASS",
+        "quote": "any other failure, an id that no longer resolves included, is a strike",
+        "note": "So 'allmail left' reaches 0 within 3 JST days of the last failing row."
+      },
+      "5": {
+        "result": "PASS",
+        "quote": "2/ MSGID FIND as KEY defines it (Zoya's rows included)"
+      },
+      "6": {
+        "result": "PASS",
+        "quote": "STEP 6: 'nor is a row with a \"link: <run id> recovered\" line.' / actions: 'a recovered row is never given a full first run'"
+      },
+      "7": {
+        "result": "PASS",
+        "quote": "0/ a Kind Meeting row (Gemini notes): read the mail, take the Doc id from its HTML first; its key is the Doc id, Source Gemini notes and Link the Doc"
+      }
+    },
+    "cases": {
+      "j_moved_on": {
+        "result": "PASS",
+        "quote": "already done, or overtaken by anything newer (a later mail, call, Your call, decision, Status, step or calendar event): ledger \"n/a (overtaken: <what>)\" and write nothing for it",
+        "note": "The later reply overtakes the reply effect and the newer Status overtakes any status move. One ledger line per effect, no writes."
+      },
+      "k_reply_still_owed": {
+        "result": "PASS with note R2",
+        "quote": "Still missing: apply it, or hand it over as a visible step with the date it was asked (\"Zoya: reply to <who>: <what> (asked <D Mon>)\"",
+        "note": "No later answer from our side in either inbox, so the step is handed to Zoya, dated, with nothing resent. Risk: 'never write ... Next action ... over a newer value' could be read as forbidding the step whenever Next action already holds anything newer (R2)."
+      },
+      "l_443_for_30_oct": {
+        "result": "PASS with note R3",
+        "quote": "never set a Next date or call date already past (443: today, the step names the date asked)",
+        "note": "If the calendar or a later mail shows a call was set or held, it is n/a (overtaken). Otherwise Next date is today and 'Zoya: reply to <who>: slots for 30 Oct (asked 29 Oct)'. Decision 425's 'a date today or tomorrow' tests the asked date (past), so it goes to Zoya, not Akshay. Her step names a past date with no 'that day has passed, offer the next slots' (r9 R3 still open)."
+      },
+      "m_444_newer_activity": {
+        "result": "PASS on its literal text, see R1",
+        "quote": "overtaken by anything newer (a later mail, call, Your call, decision, Status, step or calendar event)",
+        "note": "Any newer Activity marks the 444 ask n/a (overtaken), so no stale ask reaches Akshay (decision 325). But 'anything newer' doesn't require the newer item to touch the same ask. An unrelated newer item (a Zoya chase to someone else, an RSVP, a holding reply) also drops a genuinely open 444 ask. That is skipped, not found, which goes against the CTO's 'missing business effects found, not skipped'."
+      },
+      "n_akshay_sent_folded": {
+        "result": "PASS",
+        "quote": "capture: 'a fold does the same for the row it keeps unless its Summary starts \"Zoya\" or its body has \"actions: done\", whatever the kept row's age' / actions: 'a recovered row is never given a full first run'",
+        "note": "The kept Zoya-logged row (Summary 'Akshay to ...') gets 'capture:', 'link: <run> recovered', a stamp and Captured today. Actions takes it as REPAIR. 2b a (draft sent) moves Status only if the row is still at Send draft, else overtaken. 2b b removes Akshay's matching ask only if it is still there. STEP 5 writes no Waiting on over a newer value."
+      },
+      "o_deploy_order": {
+        "result": "UNSAFE",
+        "quote": "live r8e: 'except a stamped row with a \"link:\" line after its last \"actions: done\" (REPAIR: capture linked it late)' and its selector 'rows created before 2026-11-02 and Captured on or after the day before W's date'",
+        "note": "Capture r10d with live actions r8e is still unsafe, plainly. Every recovered row has 'capture:', Captured today and no 'actions: done', so r8e selects it and gives it a full first run (STEPS 2b to 6e) on 29 to 30 Oct mail, without r10's per-effect overtaken checks. At best it reads the vacuous REPAIR with r8e's weak guard. One hourly run is enough to do about 10 such rows. Order: Cleanup reviews r9e's 443 and 444 (B3), then actions r10d goes live, then capture r10d."
+      }
+    },
+    "defects": {
+      "R1": {
+        "quote": "overtaken by anything newer (a later mail, call, Your call, decision, Status, step or calendar event)",
+        "scenario": "An unrelated newer Activity on the Engagement (a chase to another stakeholder, an RSVP, the holding reply) marks a still-open reply, 444 ask or 443 request n/a, so a missing effect is skipped.",
+        "fix": "'overtaken by anything newer that settles or replaces this same effect (on its thread, or with the same person about the same ask)'.",
+        "severity": "medium"
+      },
+      "R2": {
+        "quote": "never write Waiting on, Next action or Next date over a newer value",
+        "scenario": "Notion keeps no per-field date, so a literal model can't tell whether Next action is 'newer'. It may refuse the handover, losing the step, or replace segments.",
+        "fix": "'A handover adds its segment first and keeps every other segment; a value counts as newer only when an Activity, Claude note line or step dated after this mail set it.'",
+        "severity": "low"
+      },
+      "R3": {
+        "quote": "(443: today, the step names the date asked)",
+        "scenario": "Zoya gets 'slots for 30 Oct' on 2 Nov, with no instruction to offer new slots. Decision 425's today-or-tomorrow test on a past date is undefined.",
+        "fix": "'a date already past: \"Zoya: reply to <who>: <date asked> has passed, offer the next slots (asked <D Mon>)\"; decision 425 tests Next date'.",
+        "severity": "low"
+      },
+      "R4": {
+        "quote": "ledger \"<id>: repair: <effect>: applied | handed over | n/a (overtaken: <what>)\", one per effect",
+        "scenario": "The list of effects isn't defined. Is a STEP 5 recompute one effect, or each bullet? The ledger can grow large, and a missing line is ambiguous.",
+        "fix": "Name the effect list: status move, Waiting on and Next action, Next date, Zoya step, Akshay ask, calendar, WhatsApp.",
+        "severity": "low"
+      }
+    },
+    "verdict": "Capture r10d: should-fix 1 to 7 are all in and correct, and it is accepted on correctness. Actions r10d: B2 is addressed. j, k, l and n pass and m passes on its literal text, but R1 (medium) lets an unrelated newer item skip a missing effect, which contradicts 'found, not skipped'. R2 to R4 are low. Deploy (o): capture r10d with live actions r8e is UNSAFE, because r8e replays recovered rows in full. Ship actions r10d (with R1 fixed and B3, r9e's 443 and 444, reviewed by Cleanup) before capture r10d."
   }
 }
