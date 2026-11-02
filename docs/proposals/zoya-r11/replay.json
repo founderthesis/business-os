@@ -1,0 +1,148 @@
+{
+ "inputs": {
+  "fast_live": {
+   "path": "docs/proposals/zoya-slow-r10/zoya-one.txt",
+   "bytes": 44075,
+   "sha256_16": "a61097095c2e3070"
+  },
+  "fast_r11": {
+   "path": "docs/proposals/zoya-r11/zoya-one.txt",
+   "bytes": 44354,
+   "sha256_16": "5e958a83d0ab3530"
+  },
+  "slow_old": {
+   "ref": "8bf34eacda40afc723083d6888e5db1706414762:routines/zoya/release/zoya-slow-work.txt",
+   "bytes": 66441,
+   "sha256_16": "0283994c454d1d42"
+  },
+  "slow_r11": {
+   "ref": "05a2c63b4ecdcd64ad5b6a7907c03b61659b9cc2:routines/zoya/release/zoya-slow-work.txt",
+   "bytes": 67287,
+   "sha256_16": "b7f9f96f96aed90f"
+  },
+  "build": "docs/proposals/zoya-r11/build_one.patch applied cleanly to f70901f routines/zoya/build_one.py; `build_one.py out refs/heads/zoya-slow-pin 05a2c63...` reproduces both files byte for byte (FAST 44,354 / 5e958a83d0ab3530, SLOW 67,287 / b7f9f96f96aed90f). Passing the branch as bare 'zoya-slow-pin' gives a different FAST (44,343), so the build log must record the full ref.",
+  "em_dash": "0 in FAST r11, 0 in SLOW r11 (build also refuses them)",
+  "pin_branch": "origin/zoya-slow-pin is at 8bf34eac; 05a2c63 is a fast-forward descendant (10 commits) but not yet on the pin branch"
+ },
+ "cases": {
+  "diff_fast": {
+   "result": "PASS",
+   "detail": "Word diff vs live FAST holds exactly: RULES LOAD replaces the old 'Read each page in full...' sentence; read-back exclusion 'on un#, Sri, and on Built to Share and Human by Design the host, unless they wrote on the thread themselves'; LIMITS 'Everything FAST work sends'; deployment reference acd1fc6c4ec3 -> babcf43e9b8f; SLOW pin 8bf34eac/0283994c454d1d42 -> 05a2c63/b7f9f96f96aed90f; PRE-SEND check 1. Nothing else. Note: the old sentence's 'the run record names each page read and its size' is dropped and the new 'log' names no destination (D8)."
+  },
+  "diff_slow": {
+   "result": "PASS with one unlisted edit",
+   "detail": "Word diff vs old SLOW holds: RULES LOAD, read-back host exclusion, snooze key, carryover placement and drop, tool-error definition, PRE-SEND check 1. One edit not in the brief: SLOW gains '- SLOW work only: Rules for Zoya: follow-ups 40b19a301a7f81999c1acd8350d59a54'. It comes from the shared rules-common patch and is correct (the live SLOW file never listed the follow-ups page, though FAST did since the 1 Nov split), but it should be named in the hand-off."
+  },
+  "a_short_read_62k": {
+   "result": "PASS",
+   "quote": "1/ the required pages loaded this run (RULES LOAD: each read equals its total); any page short or unread: no send that uses wording or rules, with no \"the part I need was loaded\" exception: each such action is blocked, \"rules not loaded: <page> <read> of <total>\", named in the report, never a send from memory",
+   "replay": "Wording page saved to a 62k file; model prints one 21k slice. RULES LOAD obliges it to continue ('never stopped at the part a step needs'); a literal model that stops anyway must log 'Mail and WhatsApp wording: 21000 of 62000 characters'. The page is then 'not loaded'. Every mail uses Rules for Zoya or wording, so every FAST and SLOW action is blocked 'rules not loaded: Mail and WhatsApp wording 21000 of 62000', named in the report. No send, and the old 'templates were in the first slice' reason is explicitly barred. Gap: the run status this produces is Completed, not Partial (D1), and actions are still collected and SLOW still writes keys onto rows before the per-item block, so it is 'no send' rather than strictly 'no send plan'."
+  },
+  "b_all_full": {
+   "result": "PASS",
+   "quote": "then log \"<page>: <read> of <total> characters\", both counts from the file itself",
+   "replay": "Each file-saved page logs '<page>: N of N characters'; check 1 passes; sends go ahead subject to checks 2 to 6. Where the log goes is unstated (D8); the STEP 3 report line does not ask for it."
+  },
+  "c_inline_page": {
+   "result": "FAIL (ambiguous)",
+   "quote": "A fetch saved to a file is read to its end ... both counts from the file itself",
+   "replay": "Cadences or Client show mails returned inline produce no file, so 'both counts from the file itself' cannot be met and the model cannot count an inline result exactly. Check 1 asks 'each read equals its total'. A literal model either blocks every send ('rules not loaded: Cadences ? of ?') or invents a count; a lenient one treats inline as full. The rule is workable only once inline is defined (D3)."
+  },
+  "d_followups_fails": {
+   "result": "FAIL",
+   "quote": "RULES LOAD: read every page above in full every run ... any page short or unread: no send that uses wording or rules",
+   "replay": "'every page above ... every run' includes the 'SLOW work only' follow-ups page, so a literal 07:38 run fetches it; a fetch error makes it 'unread', and check 1's 'any page' blocks every FAST reply and decision mail. It should not: the page governs only SLOW routines 1 to 8 and nurture. In a 10:38 run the same failure should block only SLOW follow-up and nurture items (D2)."
+  },
+  "e1_carryover": {
+   "result": "PASS",
+   "quote": "carryover (...; none: none; a carried key not in this run's eligible list is dropped) goes first within STEP 2, after STEP 0, 1b and team work",
+   "replay": "16:38 run: carryover holds k1 (still due) and k2 (completed by a reply at 11:00). Eligible list has k1, not k2. Order: STEP 0, 1b, team work, then k1, then SLOW ORDER groups. k2 dropped. Matches SLOW ORDER's own sequence. Minor: the drop is not logged (D7)."
+  },
+  "e2_tool_error": {
+   "result": "PASS",
+   "quote": "a tool error (a call that fails after one retry; it stops only the work that needs that tool, and a failed PRE-SEND check blocks that item only)",
+   "replay": "Blueticks list_messages fails twice: snooze and WhatsApp team items stop with 'blocked', mail follow-ups continue; not 'stopped early'. A bounce check failing on one row blocks that row only. A Notion failure stops everything, correctly."
+  },
+  "e3_host_readback": {
+   "result": "PASS",
+   "quote": "on un#, Sri, and on Built to Share and Human by Design the host, unless they wrote on the thread themselves (Akshay, 2 Nov: then they are added back if missing)",
+   "replay": "BTS thread, Satish in Cc only from the guest's reply-all: read-back fails while he is on it, he is removed. Satish wrote on the thread: he is added back. Consistent with SCOPE ('unless the host wrote on that thread: then they stay in Cc'). 'they' reads as covering Sri and the host, matching SCOPE's Sri line."
+  },
+  "e4_limits": {
+   "result": "PASS",
+   "quote": "Everything FAST work sends answers someone or carries Akshay's own call: the 7-day limit, ONE PERSON, ONE ASK and the hand-written pause don't hold it",
+   "replay": "10:38 run: a SLOW follow-up step 2 to a person mailed 3 days ago is no longer exempt under FAST's LIMITS; SLOW's own LIMITS and the 7-day rule hold it. FAST replies stay exempt."
+  },
+  "e5_snooze_key": {
+   "result": "PASS with a low risk",
+   "quote": "every snooze due on or before today, keyed \"snooze:<row id>:<YYYY-MM-DD>:<segment n>\"",
+   "replay": "Two snoozes on one row for the same date get :1 and :2, so they no longer collide. But <segment n> is undefined and positional, while SNOOZED ASKS says 'Find these by the segment, not by Next date or position'; a WRITE PATH change to another segment renumbers it, the carried key misses the eligible list and is dropped (it is still worked via the eligible list, just not first) (D6)."
+  },
+  "f_block_every_run": {
+   "result": "FAIL (risk)",
+   "replay": "A Notion total is not unknowable: both counts come from the saved file, so markup is the same on both sides if one string is measured. Ways every run can block by accident: (1) an inline page has no file (D3); (2) total and read measured on different things: wc -c bytes vs python characters (the pages carry non-ASCII such as the sparkle), or len() of the raw persisted JSON vs the decoded text (D4); (3) the SLOW-only follow-ups page counted as required in every run (D2). Opposite risk, a false pass: a Bash slice larger than the tool's display limit comes back as a 2KB preview while its offsets say the whole slice was read (D4)."
+  },
+  "g_no_resend": {
+   "result": "PASS",
+   "quote": "The Message-ID on the action's Activity, or one candidate: that is the match: send nothing, log the Activity if it is missing, complete the action. ... Each run also checks its Sent for the last 24 hours",
+   "replay": "07:38 sent 3 mails. 08:38 (r11, all pages full) picks up the same actions: Activity Action key or the Sent candidate on the thread matches, so nothing is sent; an unlogged one is caught by the 24-hour Sent sweep and logged. Same key also goes as idempotency_key. PRE-SEND check 5 repeats the Sent check. RULES LOAD does not touch this path."
+  }
+ },
+ "defects": {
+  "D1": {
+   "severity": "high",
+   "quote": "a held or blocked action is handled, so a run whose due actions were all sent, held or blocked is Completed; Partial: a step failed or was skipped",
+   "scenario": "Case (a) with the gate working: every action blocked 'rules not loaded'. Literal status: Completed. The incomplete read that the auditor flagged now reports better than the 07:38 Partial, and the good-morning check, which keys on Partial/Failed, misses it.",
+   "fix": "RUN RECORD: 'a required page not loaded (RULES LOAD) ends the run Partial \"rules not loaded: <page> <read> of <total>\"; its blocked actions stay due as they are (no row write, no Waiting on change) and go first next run.' Add the same to SLOW."
+  },
+  "D2": {
+   "severity": "medium",
+   "quote": "- SLOW work only: Rules for Zoya: follow-ups ... RULES LOAD: read every page above in full every run",
+   "scenario": "07:38 FAST-only run: follow-ups page fetch fails; 'any page short or unread' blocks every FAST reply and decision mail. 10:38: same failure blocks FAST work it does not govern.",
+   "fix": "RULES LOAD: 'The SLOW-only page is read only in runs with SLOW work; short or unread, it blocks SLOW follow-up and nurture sends only.' Check 1: 'a page that governs the action'."
+  },
+  "D3": {
+   "severity": "medium",
+   "quote": "A fetch saved to a file is read to its end ... both counts from the file itself",
+   "scenario": "Cadences returned inline: no file, no exact count possible; check 1 'each read equals its total' cannot be shown, so a literal run blocks every send or invents numbers.",
+   "fix": "'A fetch returned inline is read in full; log \"<page>: inline\". A result marked truncated is not loaded.'"
+  },
+  "D4": {
+   "severity": "medium",
+   "quote": "slice after slice ... both counts from the file itself",
+   "scenario": "(i) total by wc -c (bytes) and read by python len (characters), or total of the raw JSON file and read of the decoded text: never equal, every run blocks. (ii) a 40k slice printed in Bash comes back as 'Output too large ... Preview (first 2KB)' yet the offsets claim 40k read: false pass.",
+   "fix": "'In python, load the file once into one string s; total = len(s); print s in slices of at most 20,000 characters; read = the end offset of the last slice shown in full. A slice shown as a preview or truncated is not read.'"
+  },
+  "D5": {
+   "severity": "medium",
+   "quote": "SLOW: RULES LOAD: read every page above ... (followed by) - The routine pages: 1 Sponsored offers ... 8 Sponsored revival",
+   "scenario": "In SLOW the eight routine pages are listed after RULES LOAD, so 'every page above' excludes them: a routine page read in one slice is neither counted nor gated, and a follow-up goes out from part of its page.",
+   "fix": "In SLOW, place RULES LOAD after rules-routines (or reword to 'every page this section lists, the routine pages included')."
+  },
+  "D6": {
+   "severity": "low",
+   "quote": "keyed \"snooze:<row id>:<YYYY-MM-DD>:<segment n>\"",
+   "scenario": "segment n is positional and undefined; another segment's write renumbers it, the carried key is dropped and the snooze loses its first-in-line place.",
+   "fix": "'<segment n>: the snooze's order among that row's snoozes returning on that date (1 if only one)'."
+  },
+  "D7": {
+   "severity": "low",
+   "quote": "a carried key not in this run's eligible list is dropped",
+   "scenario": "A carried key silently disappears; no audit trail of why.",
+   "fix": "Add a record line '<key>: dropped (not eligible)'."
+  },
+  "D8": {
+   "severity": "low",
+   "quote": "then log \"<page>: <read> of <total> characters\"",
+   "scenario": "The live text said 'the run record names each page read and its size'; r11 says 'log' with no destination, so the counts may land only in the transcript and an auditor cannot read them from Notion.",
+   "fix": "'... in the run record body, one line per page'."
+  },
+  "D9": {
+   "severity": "low (deploy)",
+   "quote": "git fetch origin refs/heads/zoya-slow-pin, then git show 05a2c63b4ecdcd64ad5b6a7907c03b61659b9cc2:...",
+   "scenario": "origin/zoya-slow-pin is still at 8bf34eac. If FAST r11 goes live first, a fresh checkout may lack 05a2c63 and the 10:38 run ends Partial 'slow work file unavailable' (fails closed, no harm).",
+   "fix": "Fast-forward zoya-slow-pin to 05a2c63 before pushing the FAST prompt; verify git show works from a clean clone."
+  }
+ },
+ "verdict": "FAIL, fix then ship. The diffs are clean (no em dash; one extra beneficial SLOW line, the follow-ups page, to be named in the hand-off), the build reproduces both files, and the CTO's required case (a) passes: a 21k-of-62k read sends nothing. Must fix before deploy: D1 (that run reports Completed), D2 (SLOW-only page blocks FAST), D3 and D4 (count rules can block every run or pass a truncated read), D5 (SLOW routine pages outside RULES LOAD). D6 to D9 are low."
+}
