@@ -8,8 +8,8 @@
 
 | File | Bytes / sha256 |
 |---|---|
-| `capture.txt` | 43,349 / 21ef858303692477 |
-| `actions.txt` | 42,394 / bbaa4262caa35cb8 |
+| `capture.txt` | 43,475 / 82004b7ce0da42d7 |
+| `actions.txt` | 43,122 / 3e548c47562977b6 |
 
 ## Capture
 
@@ -62,3 +62,30 @@ The four lows it named are applied:
 | N4 | No loop-in for a 0A row, here or in STEP 6's catch-up. The fold stamp applies whatever the kept row's age |
 
 **Status:** written and replayed offline (r10b). These four one-phrase changes weren't replayed again. Ready for Cleanup. Deploy actions r10 with or after r9e.
+
+## Capture r10d and actions r10b (Cleanup's verdict, `../cleanup/r10/verdict.md`; CTO 20:48 JST)
+
+**Option A (blanket n/a) is not used.** Akshay wants missing business effects found, not skipped.
+
+**B2, actions REPAIR against current state:**
+- **What it checks:** each effect the recovered mail calls for (STEPS 2b to 6e, 443 and 444 included) is checked against the row's current state and today's threads. That means both inboxes, the newest Activities, Sent, Action keys, the calendar, and the row's Status, Waiting on, Next action and Next date.
+- **Done or overtaken** by anything newer: "n/a (overtaken: <what>)", with no write.
+- **Still missing:** applied, or handed over as a dated visible step ("Zoya: reply to <who>: <what> (asked <D Mon>)", or Akshay's list under 325).
+- **What it never does:** resend, set a past Next date or call date, or write over a newer value.
+- **The ledger:** one line per effect.
+- **First runs:** only a recovered row is never given a full first run (S9).
+
+**B1, deploy order (unchanged):** capture r10d needs this actions build live first or with it. Live r8e would give the recovered rows a full first run.
+
+**B3:** r9e's 443 and 444, scoped to Akshay's words, are in this build and need Cleanup's review with it.
+
+**Capture should-fix 1 to 7:**
+1. STEP 0's own sentence: no row after 8 minutes from the end of 0A, nor after minute 12.
+2. 0A starts no row after minute 10.
+3. A strike counts at most once per JST day.
+4. Any failure other than quota, rate-limit or 5xx is a strike, an id that no longer resolves included.
+5. MSGID FIND as KEY defines it, with the People-overlap branch back.
+6. STEP 6 never catches up a recovered row.
+7. A Meeting row reads its mail for the Doc id first.
+
+**Status:** written, replay pending.
