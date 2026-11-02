@@ -204,5 +204,40 @@
    }
   },
   "verdict": "Deployable: N1 to N4 are fixed, the two-message Bash case decodes both ids, and LINK's creating doesn't conflict with decision 424 or the repeat-pitch rule (Akshay still decides). One low-medium item before or soon after: LINK replaying STEP 3 can overwrite a newer Next action on a row it finds (N6)."
+ },
+ "r8d": {
+  "inputs": {
+   "capture": "39,998 bytes, sha256 5ef8b9379a1591e4, 0 em dashes; patch.py rebuilds it byte for byte from r7 3f08b76e; diff against r8c holds only the N6 sentence and the two trims"
+  },
+  "checks": {
+   "build": {
+    "result": "PASS"
+   },
+   "N6": {
+    "result": "PASS",
+    "quote": "found rows keep Status, Waiting on, Next action",
+    "replay": "A row LINK finds gets links, Via and Stakeholders, but STEP 3's 'Next action \"New pitch from <PR>\"' no longer overwrites a newer step. Side effect (low): for a repeat pitch, the row is kept as is, so STEP 3's 'Add Akshay to Waiting on ... moves to Decision pending' doesn't happen; with no loop-in and STEP 6 skipping repeat pitches, it is only linked and noted. Acceptable for a 3-day backlog pass; the report should name it."
+   },
+   "trim_heredoc": {
+    "result": "PASS",
+    "quote": "8000 chars per heredoc",
+    "replay": "Same meaning; the simulation results stand."
+   },
+   "trim_allmail": {
+    "result": "PASS (low ambiguity)",
+    "quote": "ad@-only, not from ad@: adid:<UID>, no RAW; an id outside All Mail: find it there by from, subject, date",
+    "replay": "Dropping 'for its UID' leaves the purpose implied, but 'UID as KEY' (the number in its [Gmail]/All Mail: id) only works once the message is found there, so a literal model gets there. 'not from ad@' is a shade looser than STEP 2's 'Mail sent from ad@ (Akshay or a team member in From)', but the clause sits inside 'get its key (KEY; ...)', so KEY governs."
+   },
+   "link_by_key": {
+    "result": "PASS (low)",
+    "quote": "by key (adid: UID)",
+    "replay": "Dropping 'read' still reads as finding the message by its key, as r8c meant."
+   },
+   "regressions": {
+    "result": "none",
+    "replay": "Every other byte matches r8c; earlier cases (a), (b), (c), (d), (e), (f) and (g) are unaffected."
+   }
+  },
+  "verdict": "Deployable: reproducible, 39,998 bytes, wording clear enough for a literal model, no regressions. Only low notes remain: a repeat pitch LINK finds is linked but not put on Akshay's list."
  }
 }
