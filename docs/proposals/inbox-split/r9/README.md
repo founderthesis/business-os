@@ -5,7 +5,7 @@
 
 | File | Bytes / sha256 |
 |---|---|
-| `actions.txt` | 41,584 / 9970262507a7141e |
+| `actions.txt` | 41,747 / 187098fb1d86b168 |
 
 The prompt is over the 40 KB target but well under the 65,536 cap.
 
@@ -33,4 +33,14 @@ The prompt is over the 40 KB target but well under the 65,536 cap.
 | D7: decision 425 | A Tier 1 guest, or a date today or tomorrow, gets "Akshay: <who> asks for a call on <date>: pick a slot", with Akshay instead of Zoya |
 | D8, D9 | Next date is untouched on host shows. A window means its first day; a date already past means today |
 
-**Status:** written. Re-replay to follow, then Cleanup, then the CTO deploys.
+## r9c (replay9.json, r9b section)
+
+| Item | Fix |
+|---|---|
+| N1, medium: STEP 5 undid D6 | STEP 5's revenue rule puts Akshay's item first "after a decision 443 step queued this run" |
+| N2 | 443's Next date replaces any Next date except a calendar booking's. A date already past means Next date today, and the step keeps the date they asked for |
+| N3 | On a 444 row, the holding reply (decision 390) is still allowed, and 6e bucket C adds no second Akshay ask |
+
+**For decisions.md (CTO):** decision 425's exceptions still apply under 443. A Tier 1 guest, or a call wanted today or tomorrow, goes on Akshay's list ("pick a slot") rather than Zoya's. So AISECT's 3 Nov ask, read on 2 Nov, would go to Akshay. The replay judged this right, and 443's text names only Zoya, so it's worth one line.
+
+**Status:** written. Final check to follow, then Cleanup, then the CTO deploys.

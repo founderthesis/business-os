@@ -16,8 +16,8 @@ R("You set it in exactly three cases and never otherwise:", "You set it in exact
 R("Next date = the date they give, else 90 days from today.\nNever move, clear or overwrite any other Next date",
   "Next date = the date they give, else 90 days from today.\n"
   "- A scheduling request (decision 443): the guest or their team asks for a call on a date or window (STEP 3). "
-  "Next date = that date (a window: its first day; a date already past: today), replacing a chase date, never a "
-  "calendar booking's date.\n"
+  "Next date = that date (a window: its first day; a date already past: today, the step keeps the date they asked "
+  "for), replacing any Next date but a calendar booking's.\n"
   "Never move, clear or overwrite any other Next date")
 R("Next date only in the three cases above.", "Next date only in the four cases above.")
 R("This never changes Next date.", "This never changes Next date, except decision 443's request below.")
@@ -35,9 +35,13 @@ R("- \"Add to outbound\" (the PR agency drops out):",
   "add Akshay to Waiting on and put first in Next action \"Akshay: <who> wrote again about <what>; earlier <how it "
   "closed>. Re-open, or have Zoya reply? (<D Mon>)\" (other segments kept); one such segment already open on the "
   "row: update its what and date, never a second. A scheduling request there is this too, not 443. Until Akshay "
-  "chooses, STEP 5 and 6e queue no Zoya reply on that thread. A sponsored no or a plain thanks is not a fresh ask.\n"
+  "chooses, STEP 5 and 6e queue no Zoya reply on that thread but the holding reply (decision 390), and 6e bucket C "
+  "adds no second Akshay ask there. A sponsored no or a plain thanks is not a fresh ask.\n"
   "- \"Add to outbound\" (the PR agency drops out):")
 
+# N1: STEP 5's revenue rule keeps a 443 step first.
+R("Then set Waiting on Akshay (keep others) and put first in Next action",
+  "Then set Waiting on Akshay (keep others) and put first in Next action (after a decision 443 step queued this run)")
 out = s.encode()
 assert s.count(chr(0x2014)) == dashes and len(out) <= 65336
 open(dst, "wb").write(out)
