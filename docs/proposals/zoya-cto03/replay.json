@@ -105,5 +105,51 @@
       "severity": "medium"
     }
   },
-  "verdict": "NOT READY. The FAST prompt carries all four asks with a clean diff (no em dash, only intended edits) and passes b, d, e and the FAST sides of a, c, g; f passes with risk. Block on D1 (pinned SLOW file unchanged and wins on SLOW work, so the Sri/host and 'works' fixes and new hard rules don't reach follow-ups, payments or vendor mail) and D8 (pre-send check 5 can block every send after a loop-in). Fix D2, D3, D4, D9 in the same rebuild; D5 to D7 are low."
+  "verdict": "NOT READY. The FAST prompt carries all four asks with a clean diff (no em dash, only intended edits) and passes b, d, e and the FAST sides of a, c, g; f passes with risk. Block on D1 (pinned SLOW file unchanged and wins on SLOW work, so the Sri/host and 'works' fixes and new hard rules don't reach follow-ups, payments or vendor mail) and D8 (pre-send check 5 can block every send after a loop-in). Fix D2, D3, D4, D9 in the same rebuild; D5 to D7 are low.",
+  "b": {
+    "inputs": "zoya-cto03/zoya-one.txt 43,999 bytes, sha256 775b9ed879af33db, version zoya-one 512ccf371522 (self-hash). Word diff vs zoya-rules-read: only the intended edits, 0 em dashes. D1 deferred (SLOW pin unchanged).",
+    "cases": {
+      "a": {
+        "result": "PASS",
+        "quote": "Sri unless he wrote on the thread himself (Akshay, 2 Nov: then he is added back if missing)",
+        "notes": "Kept when on the latest inbound and now re-added when the latest inbound dropped him (D4 fixed for Sri). The add-back covers Sri only; Satish and Arjun are kept but not re-added (SCOPE 'then they stay in Cc'), low."
+      },
+      "d": {
+        "result": "PASS",
+        "quote": "one not loaded: every action it governs is blocked, \"rules not loaded: <page>\", named in the report, never a send from memory",
+        "notes": "Every send is blocked and named. RUN RECORD 'all sent, held or blocked is Completed' now agrees (D6 fixed). Item 1's 'Partial or Blocked, never silently skipped' holds."
+      },
+      "e": {
+        "result": "PASS",
+        "quote": "2/ recipients from the latest inbound's own headers (From, To, Cc) and the row",
+        "notes": "New Cc kept; read-back unchanged."
+      },
+      "g": {
+        "result": "PASS (FAST)",
+        "quote": "\"any open slot here works: podm.in/30min\" (allowed whatever PLAIN ENGLISH says)",
+        "notes": "Hard rule beats the Notion page and VOICE (D2 fixed). SLOW vendor mail still uses the old file's 'works' ban until the D1 pin move."
+      }
+    },
+    "blocking_checks": {
+      "D8_check5": {
+        "result": "PASS",
+        "quote": "5/ ACTIONS' Sent check (your inbox, and ad@ less loop-ins) finds no mail that already did this action",
+        "notes": "Loop-ins are excluded and the match uses ACTIONS' candidate rule, so a post-loop-in send is no longer blocked. A mail of Akshay's that did the action stops a double reply, as intended."
+      },
+      "D9_check2": {
+        "result": "PASS (FAST)",
+        "quote": "(no inbound yet: the row and the thread's last message)",
+        "notes": "FAST mail always has a thread. Residual, low: a brand-new mail with no thread at all (SLOW vendor 'new mail to the form's Email') has no 'thread's last message'. Suggest 'the row, and the thread's last message if any' with the D1 rebuild."
+      }
+    },
+    "new_block_risk": {
+      "result": "none blocking",
+      "notes": "Check 4 ('the row's newest Your call, Next action and Waiting on followed') could be read as barring a holding reply on a row Waiting on Akshay, but YOUR QUEUE and STEP 1c already allow that holding reply; low, watch the first runs. D3's conflict with the feedback rule is gone. D7 narrows client-show examples to the pitch sheet; at worst it names none, which doesn't block a send."
+    },
+    "open": [
+      "D1 high, deferred: on SLOW work the pinned file still drops Sri and the host, bans 'works' and lacks the new hard rules",
+      "D5 low, open: Sri copied by the guest but never wrote is still stripped"
+    ],
+    "verdict": "GO for FAST at 16:38: a, d, e and g pass and both blocking risks are cleared with nothing new that blocks sends. SLOW stays on the old behaviour until the D1 pin move."
+  }
 }

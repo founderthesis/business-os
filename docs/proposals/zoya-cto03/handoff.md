@@ -55,3 +55,15 @@ The first replay passed the diff and most cases. Build b fixes what it found:
 **D1 (high, deferred):** the SLOW file still has the old Sri and "works" text, and it wins on SLOW work. This isn't a regression. The fix is the same edits in the shared parts, a new SLOW file and a pin move by the CTO, as a follow-up after 16:38.
 
 **Status:** written. Not accepted, deployed or observed yet.
+
+## Re-check of build b: go for FAST work at 16:38 (`replay.json`, section b)
+
+Cases a, d, e and g pass. Checks 5 and 2 no longer block sends, and nothing new would block sends.
+
+**Left for the SLOW rebuild (follow-up with the pin move):**
+- **D1:** the SLOW file still drops Sri and the host, bans "works" and lacks the new hard rules on SLOW sends.
+- Satish and Arjun aren't yet added back when the latest inbound dropped them (Sri is).
+- Check 2 needs "if any" for a mail with no thread; only SLOW sends those.
+- **D5 (low):** a host the guest copied but who never wrote is still dropped.
+
+**Status:** written and replayed offline. Not yet accepted by Cleanup, deployed or observed.
