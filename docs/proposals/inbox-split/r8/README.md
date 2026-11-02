@@ -5,7 +5,7 @@
 
 | File | Bytes / sha256 |
 |---|---|
-| `capture.txt` | 39,990 / d6bd4cd861d4d98d |
+| `capture.txt` | 39,999 / e07e2a59d2d934af |
 
 | # | Change | Where |
 |---|---|---|
@@ -14,3 +14,16 @@
 | 3 | **RAW returned inline** is written to a file, the whole value in order, 8,000 characters per appended heredoc. The decode strips newlines, so the chunk boundaries don't matter, and runs after each chunk. It stops once a complete id shows. The existing rule that a failure pends as mcp: and never stops the run is unchanged | MAILBOX RAW |
 
 **Why "Captured before today" and not "regardless of Captured":** Notion can't filter on body text, and STEP 0 marks a row as tried by setting its Captured. Without that cut, a row that can't be linked would come back every run and use cap slots for nothing.
+
+## r8b (replay8.json)
+
+| Defect | Fix |
+|---|---|
+| D1, high: one shared file `f` | Inline RAW goes to a new file per message: `cat > r<id>` for the first chunk, `>>` after. The decode reads `r<id>` |
+| D2: the cap rules contradicted each other | LINK is a third STEP 0 class, inside STEP 0's 15. It never counts toward STEP 1's cap or BACKLOG, so new mail keeps its slots. This departs from the CTO's "BACKLOG cap" wording |
+| D3: the pass never ended | LINK runs until 2026-11-06. Today's 14 rows link from 3 Nov: Captured can't mark them today, and Notion can't filter on body text |
+| D4: Kind filter and Zoya's rows | msgid: or adid: mail only, and never an Email out whose Summary starts "Zoya" |
+| D5: double pending | A STEP 0 row whose RAW fails gets the body line only, never an mcp: pending entry |
+| D6: a loop-in from linking | LINK only links, with no loop-in |
+| D7 | The 65,336 guard is the cap minus a 200-byte margin, on purpose. r8b is 39,999 B |
+| D8: the shape of the data value | A real `original` result fetched on 1 Nov had standard base64 in one unbroken string, which the recipe fits |

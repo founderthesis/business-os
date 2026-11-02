@@ -1,0 +1,103 @@
+{
+ "inputs": {
+  "r7": "docs/proposals/inbox-split/cleanup/r7/capture.txt, 39,522 bytes, sha256 3f08b76e (matches live)",
+  "r8": "docs/proposals/inbox-split/r8/capture.txt, 39,990 bytes, sha256 d6bd4cd861d4d98d, 0 em dashes (r7: 0)",
+  "patch": "docs/proposals/inbox-split/r8/patch.py; re-run on r7 reproduces r8 byte for byte (cmp clean)",
+  "word_diff": "3 hunks, 4 R() edits, nothing else: MAILBOX inline recipe; STEP 0 LINK class; STEP 0 allmail ad@-only/INBOX clause; STEP 0 LINK sentence",
+  "size": "39,990 < 40,000 (10 bytes headroom; patch.py asserts <= 65336, not 40,000, and 65336 looks like a typo of 65536)",
+  "simulation": "synthetic 13,150-byte .eml, Message-ID folded at byte 6,461, 17,536 base64 chars; each chunk written as a real bash heredoc (cat >> f <<'X' ... X, trailing newline included) then tr -d '\\n' < f | base64 -d 2>/dev/null | grep -aim1 -A1 '^Message-ID:' (GNU coreutils 9.4)"
+ },
+ "cases": {
+  "diff_and_size": {
+   "result": "PASS",
+   "quote": "assert s.count(chr(0x2014)) == dashes and len(out) <= 65336",
+   "note": "Diff is only the patch edits; 39,990 bytes; no em dash. The size guard checks 65,336, not the 40,000 target, so it would not catch a later overrun."
+  },
+  "a_todays_14_rows": {
+   "result": "FAIL",
+   "quote": "LINK: mail rows (msgid: or adid:) with no People and no Engagement, created since 2026-11-01T03:00Z, Captured before today",
+   "replay": "The 14 rows are Captured 2026-11-02, which is today (JST), so no run links them today. They first qualify on the first run after 2026-11-03 00:00 JST (2026-11-02T15:00Z), inside the 8-minute STEP 0 window and STEP 1's cap, so 1 or 2 runs. 'Every row this step touches gets Captured today' stops a row looping within a day. A row that never matches has no terminal state, unlike allmail's third-strike allmail-unread: it comes back once per JST day, forever, because the created-since window never closes. Each time it costs a message read, a People/Engagement lookup, a Captured write, one STEP 1 cap slot and part of the 8-minute window, all on the first run of each day. It also gets re-stamped Captured today, which the actions routine keys on. With 15 or more such rows, the first run of every day spends its whole cap on them. This contradicts 'STEP 0. OLD ROWS (one-off, every run until none is left', because LINK never empties. The CTO asked for 'regardless of Captured'; r8 adds 'Captured before today', which is the only property-level dedupe available, but it costs the overnight delay."
+  },
+  "b_allmail_ad_only_pitch": {
+   "result": "PASS",
+   "quote": "get its key (KEY; MSGID FIND first for every allmail: row; ad@-only and not sent from ad@: adid:<UID>, never RAW; ...), then run STEP 2's full lookup",
+   "replay": "Order is MSGID FIND, then key adid:<UID> with no RAW, then STEP 2's IN/LIKE lookup, then a hit means fold, and no hit means re-key and link. MSGID FIND needs no RAW: it confirms each candidate with the candidate's own Message-ID ('must return [Gmail]/All Mail:<this UID>'). Consistent with STEP 2 KEY's 'Other ad@-only mail ... adid:<UID> ... no RAW; received before 2026-11-03 ... MSGID FIND first'."
+  },
+  "c_allmail_id_in_INBOX": {
+   "result": "PASS (minor gap)",
+   "quote": "an id outside [Gmail]/All Mail: find it there by from, subject and date for its UID",
+   "replay": "The row is read by its INBOX id, then searched in All Mail by from, subject and date to get the UID; adid:<UID> uses the All Mail UID as STEP 2 requires. Two gaps: no rule for zero or several matches (a mass pitch sent twice the same day), and the clause comes after 'MSGID FIND first', whose confirmation needs 'this UID' that is not known yet, so a literal model may run MSGID FIND before it has the UID."
+  },
+  "d_allmail_zoya_on": {
+   "result": "PASS (with D5)",
+   "quote": "Mail Zoya is on: her routine logs it first; MSGID FIND. Found: logged ... None and older: \"msgid:\" from RAW",
+   "replay": "Her row exists: MSGID FIND hits ('Zoya's rows included'), so the allmail row folds into hers and goes to Trash. Her row is missing: allmail rows are well over 2 hours old, so the key comes from RAW and the inline chunk recipe applies (case e). If RAW fails, STEP 0's own rule applies ('add the body line \"allmail: no Message-ID <date>\" and leave it'), but MAILBOX says such a message 'is pended as \"mcp:<its id>\"'. A literal model may do both (see D5)."
+  },
+  "e_18kb_inline_raw": {
+   "result": "PASS on decoding, FAIL on the file name (D1)",
+   "quote": "8000 characters per heredoc appended (cat >> f <<'X') ... after each chunk run tr -d '\\n' < f | base64 -d 2>/dev/null | grep -aim1 -A1 '^Message-ID:'",
+   "replay": "Simulated with real heredocs. Exact 8000-character chunks: nothing after chunk 1 (6,000 decoded bytes), the full folded id after chunk 2. Chunks of 7999/8003, 8001 and 7998 (prefix lengths 3, 1 and 2 mod 4) gave the same result. Heredoc newlines are stripped by tr, and GNU base64 -d writes what it decoded before 'invalid input', so a ragged prefix only loses its last partial group. -A1 catches a folded id. The anchored grep ignored decoys (X-Microsoft-Original-Message-ID, quoted '> Message-ID:', DKIM h=). Chunk boundaries are harmless. The real failure: the recipe names a fixed file 'f' and only ever appends. Reusing f for the run's second inline RAW printed the FIRST message's id on chunk 1 ('complete id shows first'), so the run stops writing. The HEADER check then rejects it and the message pends as mcp:. Every inline RAW after the first in a run therefore pends, which is the very failure change 3 was meant to end. Unverified assumptions, shared with the saved-file python recipe: if the data is base64url or wrapped with JSON-escaped \\r\\n, both recipes return nothing (simulated). Real CRLF wrapping works."
+  },
+  "f_raw_failure": {
+   "result": "PASS",
+   "quote": "A message whose Message-ID this does not give is pended as \"mcp:<its id>\" (STEP 2) and the run goes on; it never stops or ends the run",
+   "replay": "STEP 2 agrees ('None after one retry, error or not: create nothing; pend it as \"mcp:<its id>\", not Failed'). STEP 1's generic 'An error: retry the call once ...; fails again: end Failed' still competes on a tool error, but that text predates r8 and the specific rule wins on a literal read. STEP 0 allmail failures follow the body-line rule instead (D5)."
+  },
+  "g_cap_backlog_stop_time": {
+   "result": "FAIL",
+   "quote": "counted toward STEP 1's cap (15, BACKLOG 25), never the 15 here; ... STEP 0's rows don't count toward STEP 1's cap of 15. / STEP 1: (BACKLOG: more than 15 due at the start: 25; STEP 0 only shares the time window)",
+   "replay": "The same paragraph says LINK rows count toward STEP 1's cap and that STEP 0's rows don't, and STEP 1 still says STEP 0 shares only the time window. A literal model can follow either. If LINK does count: STEP 0 runs first, so 14 LINK rows leave 1 slot for new mail (cap 15 unless more than 15 messages are 'due', and nobody says whether LINK rows are 'due' for BACKLOG). The rest wait for the next run, so nothing is lost and the cursor holds, but fresh mail and loop-ins slip an hour. STOP TIME does not conflict: LINK rows start only in the first 8 minutes ('Start no row more than 8 minutes after the run's start'), and new messages run until 18. The 8-minute window, not the cap, is the real per-run bound on LINK. 'up to 8 of each class and the other class filling the rest' still assumes two classes."
+  }
+ },
+ "defects": {
+  "D1_fixed_append_file": {
+   "severity": "high",
+   "quote": "8000 characters per heredoc appended (cat >> f <<'X')",
+   "scenario": "A second inline RAW in the same run appends to f, which still holds the first message. grep -m1 prints the first message's Message-ID on chunk 1, the HEADER check fails, and the message pends as mcp:. Reproduced. Every inline RAW after the first in a run fails.",
+   "fix": "A fresh file per message: 'the first chunk cat > r<UID> <<'X', later chunks cat >> r<UID>' (or rm -f before the first chunk), and run tr/base64/grep on r<UID>."
+  },
+  "D2_cap_contradiction": {
+   "severity": "medium",
+   "quote": "counted toward STEP 1's cap (15, BACKLOG 25), never the 15 here ... STEP 0's rows don't count toward STEP 1's cap of 15. ... STEP 0 only shares the time window",
+   "scenario": "A literal model either works up to 15 LINK rows plus 15 messages, or starves new mail to 1 slot. Whether LINK rows count as 'due' for BACKLOG is undefined.",
+   "fix": "End STEP 0 with 'Only LINK rows count toward STEP 1's cap; they never decide BACKLOG.' and in STEP 1 write 'STEP 0 shares the time window, LINK rows the cap too'."
+  },
+  "D3_link_never_ends": {
+   "severity": "medium",
+   "quote": "created since 2026-11-01T03:00Z, Captured before today",
+   "scenario": "A row with no fit (internal mail, a sender with no Engagement, Zoya's own Email out not in ad@) comes back every JST day forever. Each return costs a read, lookups, a write and a cap slot on the first run of the day, and re-stamps Captured, which the actions routine keys on. STEP 0's 'one-off ... until none is left' never ends.",
+   "fix": "Close the window and add a sunset so it's a true one-off: 'created 2026-11-01T03:00Z to <deploy time>Z, until 2026-11-06' (at most about 3 tries per row); new rows are STEP 2's job. Tell the CTO that today's 14 link from 3 Nov 00:xx JST: a same-day take needs a property marker that Captured cannot give."
+  },
+  "D4_link_zoya_rows": {
+   "severity": "low",
+   "quote": "LINK: link it as STEPS 2 and 3 do, reading the message by its key",
+   "scenario": "LINK has no Kind filter and no Zoya exclusion (the msgid class has 'an Email out whose Summary starts \"Zoya\" is hers'). Zoya's own rows not in ad@ cannot be read by key; the outcome is undefined, then they return daily (D3). Rows in both the msgid class and LINK are counted twice.",
+   "fix": "'LINK: Kind Email in or Email out, never one whose Summary starts \"Zoya\" or one in the classes above'."
+  },
+  "D5_allmail_failure_two_rules": {
+   "severity": "low",
+   "quote": "No key (a row whose RAW gives no Message-ID): add the body line \"allmail: no Message-ID <date>\" and leave it / A message whose Message-ID this does not give is pended as \"mcp:<its id>\"",
+   "scenario": "A failed RAW on an allmail Zoya-on row gets both treatments. The mcp: pending entry is retried by STEP 1 forever ('else it stays pending') and shows up as 'pending since' noise.",
+   "fix": "In STEP 0: 'never pended; the body line only'."
+  },
+  "D6_link_repeat_pitch_send": {
+   "severity": "low",
+   "quote": "LINK: link it as STEPS 2 and 3 do",
+   "scenario": "STEP 3's repeat-pitch branch sends a loop-in ('sent here, so STEP 6 skips it') with no 72-hour or 'nobody on our side replied' guard. A LINK row linked days later can trigger a loop-in on a stale thread.",
+   "fix": "'LINK sends nothing; STEP 6's 72-hour catch-up decides any loop-in'."
+  },
+  "D7_size_guard": {
+   "severity": "low",
+   "quote": "len(out) <= 65336",
+   "scenario": "The target is under 40,000 with 10 bytes of headroom; the guard would pass a 65 KB prompt, and 65336 looks like a typo.",
+   "fix": "assert len(out) < 40000. Fixing D1 to D6 needs trimming elsewhere to stay under it."
+  },
+  "D8_inline_format_assumption": {
+   "severity": "low",
+   "quote": "write the data value to a file in Bash",
+   "scenario": "Not proven by live evidence: if 'data' is base64url or carries JSON-escaped \\r\\n wraps, both recipes give nothing (simulated) and every RAW pends.",
+   "fix": "Before deploy, check one real email_read original result. If needed, decode with python base64.b64decode after re.sub(r'\\\\[rn]|\\s','',s) plus altchars '-_'."
+  }
+ },
+ "verdict": "Not ready to deploy. The diff is clean (only the patch.py edits, reproducible, 39,990 bytes, no em dash), and changes 2 and 3's pend-and-continue replay correctly. Fix D1 first: the fixed append file 'f' makes every inline RAW after the first in a run decode the previous message's id and pend. Then remove the cap contradiction (D2) and give LINK an end (D3); all three need byte trims to stay under 40,000. Today's 14 rows link from the first run after 3 Nov 00:00 JST, not today."
+}
