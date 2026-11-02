@@ -4,7 +4,7 @@
 
 | File | Bytes / sha256 | Reference |
 |---|---|---|
-| `zoya-one.txt` | 43,789 / be442138b8766829 | zoya-one c388cb39e24e |
+| `zoya-one.txt` | 43,999 / 775b9ed879af33db | zoya-one 512ccf371522 |
 
 **How it's built:**
 - The base is the live Zoya, ec22d74d84be (42,109 / 23551dc5bb4a0d12), plus the rules-read patch of 1 Nov (`../zoya-rules-read`, 42,427 / b59636be). That patch was never deployed, and it's item 1's first half.
@@ -40,5 +40,18 @@ These change Notion rows or send mail, which this session doesn't do without Aks
 Rule follow-ups if wanted in the prompts:
 - **Item 4:** an inbound scheduling request should put "Zoya: reply to <who>: slots for <date>" first, whatever the chase Next date. This touches decision 81's three Next date cases, so it needs Akshay's word on whether a requested date may set Next date.
 - **Item 5:** a new inbound on a closed row should go on Akshay's list, never be ignored.
+
+## Replay (`replay.json`) and build b
+
+The first replay passed the diff and most cases. Build b fixes what it found:
+- **D8 (high):** check 5 had no rule for what counts as a match, so the ad@ loop-in could have blocked every mail it loops Zoya in for. It now uses ACTIONS' Sent check: your inbox, and ad@ without loop-ins.
+- **D9:** a first mail or a chase has no latest inbound, so check 2 now uses the row and the thread's last message.
+- **D3:** check 4 is now the row's Your call, Next action and Waiting on, not the Claude note or Akshay's mail.
+- **D6:** a page that doesn't load leaves its actions blocked and named in the report. The run isn't forced to Partial, which the run record would contradict.
+- **D7:** guest examples on a client show stay inside SHOW CHECK.
+- **D2:** the booking phrase holds whatever PLAIN ENGLISH on Notion says.
+- **D4:** Sri is added back if he wrote on the thread but isn't on the latest inbound.
+
+**D1 (high, deferred):** the SLOW file still has the old Sri and "works" text, and it wins on SLOW work. This isn't a regression. The fix is the same edits in the shared parts, a new SLOW file and a pin move by the CTO, as a follow-up after 16:38.
 
 **Status:** written. Not accepted, deployed or observed yet.

@@ -1,0 +1,109 @@
+{
+  "inputs": {
+    "baseline": "docs/proposals/zoya-rules-read/zoya-one.txt (42,427 bytes, sha256 b59636bece095323, version zoya-one c916797a1be9) = live prompt + deployed-pending rules-read patch (2 lines: follow-ups page, read pages in full)",
+    "new_build": "docs/proposals/zoya-cto03/zoya-one.txt (43,789 bytes, sha256 be442138b8766829, version zoya-one c388cb39e24e), 110 lines",
+    "build_patch": "docs/proposals/zoya-cto03/build_one.patch: VARIANT['one'] edits only (sending, scope x2, voice, hard)",
+    "slow_file": "pinned f70901f6:routines/zoya/release/zoya-slow-work.txt, sha256 fae90990931445db (matches the pointer), unchanged; built from parts WITHOUT the VARIANT['one'] edits",
+    "word_diff": "Only intended edits: scope Sri line, scope host line, VOICE 'works' exception, SENDING read-back Sri exception, version string c916797a1be9 -> c388cb39e24e (self-hash, expected), three new HARD RULES lines (PRE-SEND CHECKS, GUEST EXAMPLES, BOOKING LINKS). Em dashes: 0 in both files. Note the deploy also ships the 2 rules-read lines that are not yet live."
+  },
+  "cases": {
+    "a_sri_wrote_un_recording_thread": {
+      "result": "PASS (FAST), FAIL on SLOW work",
+      "quote": "less ... on un#, Sri unless he wrote on the thread himself (Akshay, 2 Nov) ... plus Akshay; and SCOPE: \"Sri is never in Cc on routine mail, unless he wrote on that thread himself: then he stays in Cc\"",
+      "notes": "Sri on the latest inbound is kept in Cc with Akshay. Gap: the read-back's required set is only 'everyone on the latest inbound', so if Sri wrote earlier but the latest inbound dropped him, nothing adds him back (D4). 'Never mail ... Sri' still bars him from To. A SLOW-work send on this thread uses the pinned file: 'on un#, Sri, and anyone who handed over' -> Sri dropped (D1)."
+    },
+    "b_sri_not_on_thread_slot_ask": {
+      "result": "PASS",
+      "quote": "Never mail or WhatsApp Sri, and Sri is never in Cc on routine mail, unless he wrote on that thread himself",
+      "notes": "C7 slot ask goes to the guest side; Sri not added; Waiting on Sri only after windows arrive."
+    },
+    "c_satish_wrote_bts_thread": {
+      "result": "PASS (FAST), FAIL on SLOW work",
+      "quote": "Never mail or WhatsApp the host, and the host is never in Cc on routine mail, unless the host wrote on that thread: then they stay in Cc.",
+      "notes": "SENDING's exclusion list never names Satish, so he stays when on the latest inbound; Chaandini and Akshay in Cc. SLOW file keeps the old 'host is never in Cc on routine mail' (D1)."
+    },
+    "d_rules_for_zoya_fails_to_load": {
+      "result": "PASS",
+      "quote": "1/ the rules pages read in full this run (one not loaded: every action it governs is Blocked, \"rules not loaded: <page>\", the run Partial, never a send from memory)",
+      "notes": "Rules for Zoya governs every send, so all sends are Blocked and reported. Minor clash with RUN RECORD: 'a run whose due actions were all sent, held or blocked is Completed' (D6); hard rule wins, so Partial."
+    },
+    "e_latest_inbound_adds_new_cc": {
+      "result": "PASS",
+      "quote": "2/ recipients from the latest inbound's own headers (From, To, Cc) and the row ... never taken from earlier mail on the thread",
+      "notes": "Read-back also requires 'everyone on the latest inbound, its From, To and Cc'. New Cc kept unless bounced/excluded."
+    },
+    "f_follow_up_naming_past_guests_one_8_months_old": {
+      "result": "PASS with risk",
+      "quote": "never \"recent\" unless it was released in the last 90 days; pick by relevance to the reader, then standing, then recency; none verified: name none.",
+      "notes": "8-month guest can be named (if on Episodes or guest-list) but not as 'recent'. Follow-ups are SLOW work; the pinned SLOW file has no GUEST EXAMPLES rule and 'wins' where it differs, and its peer rule ('peers from the Founder Thesis guests list in the guest's sector') is a different source; a literal model may treat silence as no conflict, but it is not guaranteed (D1). SHOW CHECK also requires past guests word for word from the pitch sheet / wording page (D7)."
+    },
+    "g_makershive_booking_link": {
+      "result": "PASS (FAST), PARTIAL on SLOW / with Notion Plain English",
+      "quote": "a booking link sits inside its sentence, in the same <p> and plain-text line: \"any open slot here works: podm.in/30min\"; never a paragraph or line break of its own.",
+      "notes": "Inline placement holds everywhere. The exact wording 'works' is only excepted in VOICE (not a hard rule): the Rules for Zoya Plain English rule wins over VOICE where they differ ('Where a page and this prompt differ, the page wins, except for the HARD RULES'), and vendor/MakersHive steps are SLOW, whose file still bans 'works' (D2)."
+    },
+    "h_conflicts": {
+      "works_ban": "FAST: VOICE exception covers the exact phrase only; Notion Plain English page (wins over VOICE) and SLOW file still ban 'works' -> D2.",
+      "sri_never_in_cc": "FAST consistent: both SCOPE and SENDING amended. 'Never mail or WhatsApp Sri' stands, so Sri is Cc only, never To; fine. A guest Cc'ing Sri without Sri writing makes the read-back fail until Sri is dropped (D5).",
+      "slow_file_pin": "Unchanged pin fae90990931445db holds old SCOPE ('Sri is never in Cc on routine mail'), old SENDING ('on un#, Sri,'), old VOICE ('works' banned) and old HARD RULES; 'where it and this prompt differ on SLOW work, it wins'. So on SLOW work (follow-ups, nurture, team, vendor, payments) items 2 and 4 do not apply and items 1 and 3 hold only where the file is silent -> D1.",
+      "hard_rules": "PRE-SEND 4/ ('Akshay's latest mail on the thread followed', 'Claude note' as owner instruction) clashes with 'only Akshay's own replies ... are feedback you act on, and only on mail wording' (D3). PRE-SEND 1/ 'run Partial' vs RUN RECORD 'all blocked is Completed' (D6). GUEST EXAMPLES vs SHOW CHECK source (D7)."
+    }
+  },
+  "defects": {
+    "D1": {
+      "quote": "where it and this prompt differ on SLOW work, it wins (pinned file still has: \"on un#, Sri, and anyone who handed over\", \"Sri is never in Cc on routine mail.\", no idioms (\"works\", ...)",
+      "scenario": "Any SLOW send on a thread Sri or Satish wrote on (follow-up, payment, release mail) drops the host again; SLOW vendor mail cannot use 'any open slot here works'; SLOW lacks the new HARD RULES copy.",
+      "fix": "Apply the five edits to the parts (or to a shared variant list used by both builds), rebuild zoya-slow-work.txt, commit it on zoya-slow-pin, and update the pointer's commit and sha256 prefix in the same deploy.",
+      "severity": "high"
+    },
+    "D2": {
+      "quote": "no idioms (\"works\" except in \"any open slot here works: podm.in/30min\", ...) / Where a page and this prompt differ, the page wins, except for the HARD RULES",
+      "scenario": "Rules for Zoya's Plain English rule still lists 'works'; the page beats VOICE, so a literal run avoids 'works' and rewrites the booking line.",
+      "fix": "Add the same exception to the Plain English rule on Rules for Zoya, or move the exception into the BOOKING LINKS hard rule ('the word works is allowed here').",
+      "severity": "medium"
+    },
+    "D3": {
+      "quote": "4/ the newest owner instruction (Your call, Claude note, Akshay's latest mail on the thread) followed",
+      "scenario": "Claude note is agent-written, so an old agent note becomes an 'owner instruction'; and 'Akshay's latest mail' conflicts with the hard rule that his replies are acted on 'only on mail wording'. A literal run may also fail the check whenever it cannot tell what the newest instruction is.",
+      "fix": "Make it 'the newest Your call and Akshay's latest mail on the thread (wording only, per the feedback rule), and no newer step on the row superseding this action'; drop Claude note.",
+      "severity": "medium"
+    },
+    "D4": {
+      "quote": "To and Cc together hold everyone on the latest inbound, its From, To and Cc",
+      "scenario": "Sri (or Satish) wrote earlier on the thread; the guest's latest reply went only to Zoya. The required set no longer has the host, nothing adds him back, and the reply leaves him off: the original bug in a new shape.",
+      "fix": "Add to the required set: 'plus the show's host when he wrote anywhere on the thread'.",
+      "severity": "medium"
+    },
+    "D5": {
+      "quote": "Sri unless he wrote on the thread himself ... the read-back fails if any of those excluded is still on it",
+      "scenario": "The guest Cc's Sri deliberately on the recording thread (an intended participant) but Sri has not written; Zoya strips him.",
+      "fix": "Confirm with Akshay whether 'intended participants' covers a host the guest side copied; if so, widen to 'wrote on or was copied by their side on the thread'.",
+      "severity": "low"
+    },
+    "D6": {
+      "quote": "the run Partial (PRE-SEND 1/) vs \"a run whose due actions were all sent, held or blocked is Completed\" (RUN RECORD)",
+      "scenario": "Rules page fails to load; two rules give different run status.",
+      "fix": "Add to RUN RECORD's Partial definition: 'or a rules page did not load'.",
+      "severity": "low"
+    },
+    "D7": {
+      "quote": "SHOW CHECK: every fact about a show (... past guests ...) comes word for word from that show's pitch sheet ... vs GUEST EXAMPLES: name only guests whose appearance ... is on its Episodes row or podm.in/guest-list",
+      "scenario": "A follow-up wants the most relevant past guest; SHOW CHECK only allows the sheet's fixed names, so the relevance ranking can only choose within the sheet (or name none).",
+      "fix": "In SHOW CHECK, allow past guests verified per GUEST EXAMPLES; keep 'Only on this show' and 'to confirm' bans.",
+      "severity": "low"
+    },
+    "D8": {
+      "quote": "5/ Sent in your inbox and ad@ since the action was raised ... A failed check: send nothing",
+      "scenario": "OVER-STRICT: check 5 gives no match rule. After the loop-in Zoya herself sends from ad@ (or any Akshay mail on the thread), a literal run sees an ad@ Sent message since the action was raised and treats the check as failed, so the mail the loop-in exists for never goes. Could block every post-loop-in send.",
+      "fix": "'5/ Sent in your inbox and ad@ since the action was raised, judged by ACTIONS' candidate rule (a loop-in, holding reply or another action's mail is not a match)'.",
+      "severity": "high"
+    },
+    "D9": {
+      "quote": "2/ recipients from the latest inbound's own headers (From, To, Cc) and the row",
+      "scenario": "OVER-STRICT: a first mail or a chase with no inbound yet (vendor 'new mail to the form's Email', a team mail to Jaya, an outbound follow-up chain) has no latest inbound; a literal run may call the check failed and send nothing.",
+      "fix": "'2/ recipients from the latest inbound's own headers when there is one, else from the row and People'.",
+      "severity": "medium"
+    }
+  },
+  "verdict": "NOT READY. The FAST prompt carries all four asks with a clean diff (no em dash, only intended edits) and passes b, d, e and the FAST sides of a, c, g; f passes with risk. Block on D1 (pinned SLOW file unchanged and wins on SLOW work, so the Sri/host and 'works' fixes and new hard rules don't reach follow-ups, payments or vendor mail) and D8 (pre-send check 5 can block every send after a loop-in). Fix D2, D3, D4, D9 in the same rebuild; D5 to D7 are low."
+}
