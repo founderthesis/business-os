@@ -93,5 +93,77 @@
       "severity": "nit"
     }
   },
-  "verdict": "NOT READY. The build is clean: it reproduces byte for byte, holds only the patch edits, both files are under 40,000 bytes, and no em dash was added. Cases 2, 3, 4, 5, 6 and 9 pass. Cases 1, 7, 8 and 10 fail. Two blocking defects: D1 (ad@-only mail already logged as msgid:, at cutover and in STEP 0 twins, is duplicated as adid:) and D2 (the thread Source ID rule still needs a Message-ID, so every new ad@-only pitch forces RAW or a malformed id). Fix D1 and D2, ideally also D3 to D8, then replay cases 1, 5, 7, 8 and 10."
+  "verdict": "NOT READY. The build is clean: it reproduces byte for byte, holds only the patch edits, both files are under 40,000 bytes, and no em dash was added. Cases 2, 3, 4, 5, 6 and 9 pass. Cases 1, 7, 8 and 10 fail. Two blocking defects: D1 (ad@-only mail already logged as msgid:, at cutover and in STEP 0 twins, is duplicated as adid:) and D2 (the thread Source ID rule still needs a Message-ID, so every new ad@-only pitch forces RAW or a malformed id). Fix D1 and D2, ideally also D3 to D8, then replay cases 1, 5, 7, 8 and 10.",
+  "r7b": {
+    "inputs": {
+      "r7/capture.txt": "39435/66bad277d94155c4",
+      "r7/actions-v2.txt": "39593/f5f31ac135bda7e6",
+      "r7/patch.py": "7435/db16a1ac7772cac9"
+    },
+    "build_check": "Running patch.py on the live r6c (d0f0e9bb) and live actions (19701651) reproduces both files byte for byte. The word diffs hold only the patch.py edits. Both files are under 40,000 bytes and have 0 em dashes.",
+    "cases": {
+      "1_adid_pitch": "PASS: \"Other ad@-only mail ...: \\\"adid:<UID>\\\" ..., no RAW\". The new Engagement and stakeholder rows now take \"the first message's key (KEY)\", which is adid:<UID>, so there's no RAW. The loop-in key is \"loopin:<the pitch's Message-ID, or adid:<UID> for an adid: pitch>\", the loop-in is logged as msgid: from sent, and actions queries \"msgid: or adid:\".",
+      "5_step0_allmail": "PASS: \"get its key (KEY; MSGID FIND first for every allmail: row)\". An ad@-only allmail: row with a msgid: twin now finds the twin and folds into it. An existing adid: row is hit by the IN and folded. With no hit, the row is re-keyed adid:. \"No key (a Zoya-on row whose RAW gives no Message-ID)\" no longer catches adid: rows. Nit N4: say that a MSGID FIND row counts as a \"hit\" for the fold. Nit N5: a row sent from ad@ whose RAW fails is now in no branch.",
+      "7_akshay_sent_zoya_cc": "PASS: \"Mail sent from ad@ (Akshay or a team member in From): RAW now, key \\\"msgid:<...>\\\", as your loop-ins.\" There's no 2-hour wait and read to isn't held. Kind is Email out, so actions STEP 2b works it. If Zoya ever logs it, her \"look it up first\" finds the msgid: row.",
+      "8_zoya_bcc": "PARTIAL, Zoya-side and accepted: Akshay's sent mail with Zoya in Bcc is fixed as a side effect of D3, because it's msgid: now and Zoya's lookup finds it. Inbound or alias mail reaching Zoya by Bcc still gets adid: from capture and a second msgid: row from Zoya. That's D6, in the hand-off note.",
+      "10_actions_adid": "PASS with should-fix S2: the MAILBOX THREAD now adds \"an adid: row: the All Mail search by its subject, Re: and Fwd: dropped, since its date, kept where they share its People\", so later replies are seen. But STEP 1 still says \"(an adid: row: read [Gmail]/All Mail:<UID>, then the messages its References name)\", a backward-only reading that a literal model may follow instead.",
+      "2_regression": "PASS: MSGID FIND \"each confirmed by email_read search, include_folders [\\\"[Gmail]/All Mail\\\"], query HEADER Message-ID ... must return [Gmail]/All Mail:<this UID>\", then \"Found: logged (STEP 1's exception stamps it)\".",
+      "3_regression": "PASS: \"None, under 2 hours old: leave it for the next run (not pending, not counted toward the cap; ledger \\\"<UID>: waiting (Zoya)\\\")\". read to still stops before it.",
+      "4_regression": "PASS: \"None and older: \\\"msgid:\\\" from RAW (no Message-ID, no Activity)\". STEP 2's LIKE still catches a late row from Zoya.",
+      "6_regression": "PASS: \"skip any whose key an Activity already holds\". adid:108971 is skipped. A pre-11-03 ad@-only message repeats its MSGID FIND on every re-read, which costs HEADER calls but makes no duplicate.",
+      "9_regression": "PASS: \"starts neither \\\"msgid:\\\" nor \\\"adid:\\\"\" is still trashed and the run ends Failed. The ledger \"<UID>: waiting (Zoya)\" line isn't a created row, so SELF-CHECK ignores it.",
+      "fixes": "D1, D2, D3, D5, D7, D8, D9, D10 and D11 are applied as described. D4 is applied in MAILBOX but contradicted by actions STEP 1 (S2). The pending retry is \"mcp: and adid: ones by id\". D6 and D12 go in the Zoya hand-off note."
+    },
+    "msgid_find_adversarial": {
+      "S1_cutoff_date": {
+        "quote": "received before 2026-11-03 (older inbox runs may have keyed it msgid:): MSGID FIND first",
+        "scenario": "The cutoff is a fixed date, not the go-live. If r7 deploys on 3 Nov or later, ad@-only mail that r6c logged as msgid: on or after 3 Nov skips the find and gets a duplicate adid: row. The same happens if r6c's last read to lags into 3 Nov.",
+        "fix": "Tie it to the deploy: \"received before <the start of the first run whose prompt has KEY>\", or set the date at deploy as the go-live day plus one, and assert it in patch.py.",
+        "severity": "should-fix"
+      },
+      "S2_actions_step1_thread": {
+        "quote": "(an adid: row: read [Gmail]/All Mail:<UID>, then the messages its References name)",
+        "scenario": "This is still in actions STEP 1. It conflicts with MAILBOX's new forward subject search, and a literal model reads STEP 1 as the complete recipe for an adid: row.",
+        "fix": "\"(an adid: row: THREAD as MAILBOX gives it)\".",
+        "severity": "should-fix"
+      },
+      "N1_people_join_empty": {
+        "quote": "People overlapping its From, To and Cc",
+        "scenario": "The join needs the message's addresses turned into People rows first. An old msgid: row with no People (Akshay, Zoya or a team member only, or a sender never added to People) can't be a candidate. A pre-11-03 ad@-only message then gets a duplicate adid: row. This is rare and limited to the cutover window.",
+        "fix": "When a pre-cutover ad@-only message has no candidate because its addresses map to no People, RAW it once instead of keying it adid:.",
+        "severity": "nit"
+      },
+      "N2_candidate_fanout": {
+        "quote": "each confirmed by email_read search ...",
+        "scenario": "A PR person on several busy threads gives many msgid: rows within a day, and each one costs a HEADER search per message per re-read.",
+        "fix": "Order candidates by subject match, then nearest Date, and stop at the first confirm.",
+        "severity": "nit"
+      },
+      "N3_old_spellings": {
+        "quote": "Activities with Source ID msgid:",
+        "scenario": "\"msgid:gmail:<id>\" candidates have no Message-ID to HEADER-search, so they never confirm. Those are old rows and STEP 2's IN on the Gmail id covers them.",
+        "fix": "Skip candidates that start \"msgid:gmail:\".",
+        "severity": "nit"
+      },
+      "N4_find_hit_is_fold_hit": {
+        "quote": "Any hit other than this row: fold into that row",
+        "scenario": "In STEP 0 the prompt doesn't say that a MSGID FIND row counts as a hit.",
+        "fix": "\"Any hit (MSGID FIND's row included) other than this row\".",
+        "severity": "nit"
+      },
+      "N5_sent_allmail_raw_fail": {
+        "quote": "No key (a Zoya-on row whose RAW gives no Message-ID)",
+        "scenario": "An allmail: row for mail sent from ad@ whose RAW fails falls in no branch.",
+        "fix": "\"No key (a row whose RAW gives no Message-ID)\".",
+        "severity": "nit"
+      },
+      "N6_sent_from_ad_wording": {
+        "quote": "Mail sent from ad@ (Akshay or a team member in From)",
+        "scenario": "The parenthetical also covers a team member writing from their own address. That's harmless (RAW, small volume). Zoya is listed apart from Team elsewhere, so her own sends correctly go to MSGID FIND.",
+        "fix": "Optional: \"From is ad@thepodium.in or a team member's own address (never Zoya's)\".",
+        "severity": "nit"
+      }
+    },
+    "verdict": "READY after two should-fixes, no blocking defects. S1: tie the 2026-11-03 cutoff to the real deploy. S2: change actions STEP 1's adid: THREAD parenthetical to point at MAILBOX. Cases 1, 5, 7 and 10 now pass (10 pending S2). Case 8 is partial: Akshay's sent mail with Zoya in Bcc is fixed, and inbound or alias Bcc is D6 in the Zoya hand-off note. Regressions 2, 3, 4, 6 and 9 pass."
+  }
 }

@@ -4,12 +4,12 @@
 - live capture r6c: `../cleanup/r6/capture.txt`, 38,121 / d0f0e9bb;
 - live actions: `../actions-v2.txt`, 39,354 / 19701651.
 
-**Build:** `patch.py`, every edit asserted once, built twice, byte-identical.
+**Build:** `python3 patch.py <r6c capture> <live actions-v2> <outdir> [<go-live day, JST, YYYY-MM-DD>]`. Every edit is asserted once, and the build was run twice, byte-identical. The go-live day defaults to 2026-11-03; set it to the deploy day, or the day after if r7 goes live late on 2 Nov.
 
 | File | Bytes / sha256 |
 |---|---|
-| `capture.txt` | 39,435 / 66bad277d94155c4 |
-| `actions-v2.txt` | 39,593 / f5f31ac135bda7e6 |
+| `capture.txt` | 39,481 / 4c22ac5037dc8874 |
+| `actions-v2.txt` | 39,553 / c80b1cee0fdecbee |
 
 ## Capture
 
@@ -57,3 +57,18 @@
 **Zoya-side, not built (Zoya stays untouched):**
 - **D6:** mail where Zoya is Bcc'd or on a team alias gets an adid: row from capture, and Zoya then logs it again as msgid:. Fix in Zoya: before creating a row, HEADER-search ad@ for the Message-ID and check adid:<that UID>.
 - **D12:** a Zoya send she logs without a msgid: key gets logged again by capture after 2 hours. Fix in Zoya: log every send with its msgid: key.
+
+## r7c (replay7.json, r7b section)
+
+| Item | Fix |
+|---|---|
+| S1 fixed cutoff | The go-live day is patch.py's 4th argument (default 2026-11-03), asserted |
+| S2 actions STEP 1 | An adid: row's THREAD is "as MAILBOX gives it", which now includes the forward search |
+| N3 | msgid:gmail: rows are never MSGID FIND candidates; STEP 2's Gmail-id lookup covers them |
+| N4 | A MSGID FIND row counts as a hit for STEP 0's fold |
+| N5 | "No key" covers any row whose RAW gives no Message-ID |
+
+**Left as nits:**
+- **N1:** an old msgid: row with no People can't be found by MSGID FIND. It could become a duplicate, which Cleanup's duplicate check would catch.
+- **N2:** HEADER searches are made one per candidate.
+- **N6:** "a team member in From" also matches a team member writing from their own address, which is harmless.

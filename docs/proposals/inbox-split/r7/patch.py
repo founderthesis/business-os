@@ -4,6 +4,8 @@ Inputs: docs/proposals/inbox-split/cleanup/r6/capture.txt 38,121 / d0f0e9bb (liv
         docs/proposals/inbox-split/actions-v2.txt 39,354 / 19701651 (live actions). Every edit asserted once."""
 import hashlib, os, sys
 cap_src, act_src, outdir = sys.argv[1:4]
+CUT = sys.argv[4] if len(sys.argv) > 4 else "2026-11-03"  # go-live day (JST): ad@-only mail before it gets MSGID FIND first
+assert len(CUT) == 10 and CUT[:4] == "2026" and CUT[4] == CUT[7] == "-"
 os.makedirs(outdir, exist_ok=True)
 
 def load(p, h):
@@ -24,11 +26,11 @@ cd, ad = c.count(chr(0x2014)), a.count(chr(0x2014))
 c = R(c, "Wherever this prompt sets an Activity's Source ID to a message id, use \"msgid:<Message-ID without angle brackets>\" "
       "(no Message-ID, no Activity).",
       "KEY (Akshay, 2 Nov): a mail Activity's (Email in or out) Source ID is its key. MSGID FIND: Activities with Source ID "
-      "msgid:, Date within a day of the message, People overlapping its From, To and Cc, each confirmed by email_read search, "
+      "msgid: (never a msgid:gmail: one), Date within a day of the message, People overlapping its From, To and Cc, each confirmed by email_read search, "
       "include_folders [\"[Gmail]/All Mail\"], query HEADER Message-ID \"<its id>\", which must return [Gmail]/All Mail:<this "
       "UID>; a confirmed row is the message's row. Mail sent from ad@ (Akshay or a team member in From): RAW now, key "
       "\"msgid:<Message-ID without angle brackets>\", as your loop-ins. Other ad@-only mail (zoya@myunnati.com not on From, To or "
-      "Cc): \"adid:<UID>\", the number in its [Gmail]/All Mail: id, no RAW; received before 2026-11-03 (older inbox runs may "
+      "Cc): \"adid:<UID>\", the number in its [Gmail]/All Mail: id, no RAW; received before " + CUT + " (older inbox runs may "
       "have keyed it msgid:): MSGID FIND first. Mail Zoya is on: her routine logs it first; MSGID FIND. Found: logged (STEP "
       "1's exception stamps it). None, under 2 hours old: leave it for the next run (not pending, not counted toward the cap; "
       "ledger \"<UID>: waiting (Zoya)\"). None and older: \"msgid:\" from RAW (no Message-ID, no Activity).")
@@ -50,7 +52,7 @@ c = R(c, "every message whose headers hold its Message-ID (search text = it); re
 c = R(c, "a line \"pending: <Message-ID>, ...\"", "a line \"pending: <Message-ID, adid: key or mcp: id>, ...\"")
 c = R(c, "(query HEADER Message-ID \"<it>\"; mcp: ones by id)", "(query HEADER Message-ID \"<it>\"; mcp: and adid: ones by id)")
 # D8
-c = R(c, "No Message-ID: add the body line", "No key (a Zoya-on row whose RAW gives no Message-ID): add the body line")
+c = R(c, "No Message-ID: add the body line", "No key (a row whose RAW gives no Message-ID): add the body line")
 c = R(c, "skip any whose msgid: key an Activity already holds,", "skip any whose key an Activity already holds,")
 c = R(c, "idempotency_key \"loopin:<the pitch message's Message-ID>\"",
       "idempotency_key \"loopin:<the pitch message's Message-ID, or adid:<UID> for an adid: pitch>\"")
@@ -59,7 +61,7 @@ c = R(c, "and re-read the pitch by its Message-ID (STEP 6b's vendor loop-ins too
 # STEP 0: allmail rows get KEY too
 c = R(c, "allmail: read the message by that MCP Emails id and get its Message-ID (IDENTITY), then run STEP 2's full lookup",
       "allmail: read the message by that MCP Emails id and get its key (KEY; MSGID FIND first for every allmail: row), then "
-      "run STEP 2's full lookup")
+      "run STEP 2's full lookup; a MSGID FIND row is a hit")
 c = R(c, "No hit: set its Source ID to the msgid: key", "No hit: set its Source ID to its key")
 c = R(c, "(several: the one whose Source ID is exactly the msgid: key, else the oldest)",
       "(several: the one whose Source ID is exactly its key, else the oldest)")
@@ -85,8 +87,7 @@ a = R(a, "(Kind Email in or Email out, Source ID msgid:, page body", "(Kind Emai
 a = R(a, "Query mail Activities (Kind Email in or Email out with Source ID msgid:,",
       "Query mail Activities (Kind Email in or Email out with Source ID msgid: or adid:,")
 a = R(a, "read its THREAD by Message-ID only where a step needs the chain",
-      "read its THREAD by Message-ID only where a step needs the chain (an adid: row: read [Gmail]/All Mail:<UID>, then "
-      "the messages its References name)")
+      "read its THREAD by Message-ID only where a step needs the chain (an adid: row: THREAD as MAILBOX gives it)")
 
 for name, s, d in (("capture.txt", c, cd), ("actions-v2.txt", a, ad)):
     b = s.encode()
