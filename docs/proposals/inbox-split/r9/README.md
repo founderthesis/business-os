@@ -5,7 +5,7 @@
 
 | File | Bytes / sha256 |
 |---|---|
-| `actions.txt` | 40,922 / 467583c5fc53bf32 |
+| `actions.txt` | 41,584 / 9970262507a7141e |
 
 The prompt is over the 40 KB target but well under the 65,536 cap.
 
@@ -20,4 +20,17 @@ The prompt is over the 40 KB target but well under the 65,536 cap.
 - **The calendar routine** sets Next date only from the calendar, so it doesn't conflict.
 - **Zoya** sets Next date from her own segments' dates (WRITE PATH), so a "slots for <date>" step is consistent with 443.
 
-**Status:** written. Replay to follow, then Cleanup, then the CTO deploys.
+## r9b (replay9.json)
+
+| Defect | Fix |
+|---|---|
+| D1, high: 443 and 444 both fired on a closed row | 443 applies to open rows only. On a closed row the request is a 444 item for Akshay |
+| D2: a calendar date could be overwritten | 443 replaces a chase date, never a calendar booking's date |
+| D3: a stale chase segment survived | The chase or went-quiet segment for that person leaves; the rest are kept |
+| Case f: a second "wrote again" ask | The segment ends "(<D Mon>)" and is kept with the others. If one is already open, it's updated, never added again |
+| D5: Zoya could reply before Akshay chose | Until he chooses, STEP 5 and 6e queue no Zoya reply on that thread |
+| D6: clash with decision 151 | On a revenue row the slots step goes first and his other items stay |
+| D7: decision 425 | A Tier 1 guest, or a date today or tomorrow, gets "Akshay: <who> asks for a call on <date>: pick a slot", with Akshay instead of Zoya |
+| D8, D9 | Next date is untouched on host shows. A window means its first day; a date already past means today |
+
+**Status:** written. Re-replay to follow, then Cleanup, then the CTO deploys.
