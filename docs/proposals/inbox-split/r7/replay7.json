@@ -165,5 +165,22 @@
       }
     },
     "verdict": "READY after two should-fixes, no blocking defects. S1: tie the 2026-11-03 cutoff to the real deploy. S2: change actions STEP 1's adid: THREAD parenthetical to point at MAILBOX. Cases 1, 5, 7 and 10 now pass (10 pending S2). Case 8 is partial: Akshay's sent mail with Zoya in Bcc is fixed, and inbound or alias Bcc is D6 in the Zoya hand-off note. Regressions 2, 3, 4, 6 and 9 pass."
+  },
+  "r7c": {
+    "inputs": {
+      "r7/capture.txt": "39481/4c22ac5037dc8874",
+      "r7/actions-v2.txt": "39553/c80b1cee0fdecbee",
+      "r7/patch.py": "7630/2671430c03b441d5"
+    },
+    "build_check": "patch.py with its default cutoff reproduces both files byte for byte. With a 4th argument of 2026-11-05 it writes \"received before 2026-11-05\" and leaves actions unchanged. A malformed date (11/05) fails the assert. Against r7b, the only changes are the five listed fixes. Both files are under 40,000 bytes with 0 em dashes.",
+    "fixes": {
+      "S1": "PASS: CUT = sys.argv[4], else \"2026-11-03\", asserted as a 10-character 2026-MM-DD, and written into KEY. Nit: the assert checks only the shape, not that the date is a real calendar day.",
+      "S2": "PASS: actions STEP 1 now reads \"an adid: row: THREAD as MAILBOX gives it)\". The backward-only recipe is gone from both prompts, so the MAILBOX forward subject search governs.",
+      "N3": "PASS: \"Activities with Source ID msgid: (never a msgid:gmail: one)\".",
+      "N4": "PASS with a nit: \"then run STEP 2's full lookup; a MSGID FIND row is a hit for it (the IN on its ids and the LIKE ...)\". The fold rule now covers it, but the inserted clause separates \"full lookup\" from the parenthetical that describes it. Fix if touched again: move the clause after the parenthetical.",
+      "N5": "PASS: \"No key (a row whose RAW gives no Message-ID)\". An allmail: row sent from ad@ whose raw fetch fails now has a branch."
+    },
+    "regression": "PASS for cases 1 to 7, 9 and 10. The edits leave KEY's branches, the 2-hour wait, read to, pending, SELF-CHECK, the loop-in key and the actions query as they were in r7b. Case 8 is still partial on the Zoya side (D6, in the hand-off note).",
+    "verdict": "READY. No blocking or should-fix defects left; two nits (S1's assert checks only the date's shape, N4's clause placement). Set the cutoff to the go-live day at deploy."
   }
 }
