@@ -5,7 +5,7 @@
 
 | File | Bytes / sha256 |
 |---|---|
-| `actions.txt` | 42,300 / 7994a1502b19626b |
+| `actions.txt` | 42,316 / ac76352835d8e175 |
 
 The prompt is over the 40 KB target but well under the 65,536 cap.
 
@@ -58,9 +58,13 @@ Three optional wording items are left for a later round:
 
 **444:**
 - **What triggers it:** only a substantive new pitch or ask. Acknowledgements, thanks, auto-replies, a sponsored no and noise never do.
-- **What it does:** reconcile with the thread and the row's earlier outcome, then put one recommendation on Akshay's list: "Akshay: <who> wrote again about <what>; earlier <how it closed>. Recommend: <re-open as <status>, Zoya: <the reply> | Zoya: reply no>, because <one line>. Write ok, not ok or a change in Your call. (<D Mon>)".
+- **What it does:** reconcile with the thread and the row's earlier outcome, then put one recommendation on Akshay's list: "Akshay: <who> wrote again about <what>; earlier <how it closed>. Recommend: <re-open as <status> and have Zoya send <the reply> | have Zoya reply no>, because <one line>. Write ok, not ok or a change in Your call. (<D Mon>)".
 - **Akshay's ok on a re-open:** may move Status back (a HARD RULES exception).
 - **A later inbound:** updates the item's what, recommendation and date, never adds a second.
 - **The commercial decision** stays his.
 
 Replay: r9d and r9e sections of `replay9.json`.
+
+**r9e final check:** passed (replay9.json, r9e section). Its one optional low (S5) is applied: the recommendation says "have Zoya send / reply", never a "Zoya:" step, so no routine reads it as Zoya's before Akshay decides.
+
+**Status:** written and replayed offline. Ready for Cleanup.

@@ -36,7 +36,7 @@ R("- \"Add to outbound\" (the PR agency drops out):",
   "declined, We declined, Parked or Unresponsive (Kind blank is a guest row) is never left: reconcile it with the thread "
   "and the row's earlier outcome, keep Status, add Akshay to Waiting on and put first in Next action one recommendation, "
   "never an open question: \"Akshay: <who> wrote again about <what>; earlier <how it closed>. Recommend: <re-open as "
-  "<status>, Zoya: <the reply> | Zoya: reply no>, because <one line>. Write ok, not ok or a change in Your call. (<D "
+  "<status> and have Zoya send <the reply> | have Zoya reply no>, because <one line>. Write ok, not ok or a change in Your call. (<D "
   "Mon>)\" (other segments kept); the commercial decision stays his; one such segment already open on the "
   "row: update its what, recommendation and date, never a second. A scheduling request there is this too, not 443. Until Akshay "
   "chooses, STEP 5 and 6e queue no Zoya reply on that thread but the holding reply (decision 390), and 6e bucket C "
