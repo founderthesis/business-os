@@ -39,4 +39,14 @@ Item 2 as asked ("ending before minute 18 with 0L or 0A rows due and unworked is
 - **D5:** a run that obeys every measured window can still read Partial ("cut short") under RUN RECORD. The replay suggests stating that rows left only at a measured limit make a run neither Partial nor Failed. That changes existing RUN RECORD text, so it's left out under "no other change".
 - **D6, pre-existing:** RUN RECORD calls an early stop Failed, while STOP TIME calls it Partial. r12 settles this only for 0L and 0A rows. STEP 0 skipped with a time claim is still only Partial.
 
+## Fixture: the CTO's manual 0A batch (3 Nov)
+
+The CTO's hand batch, allmail 108690 to 108716, is the 0A fixture. It ended 10 of 10 re-keyed: REF 7, adid 2, RAW 1 (saved to a file at 337 KB, and the python recipe worked). There were 0 wrong confirms. Under r12b:
+- That run's line is "0A: 10 due, 10 worked (meeting 0, fold 0, adid 2, REF 7, RAW 1, pended 0)". The buckets add up to worked, and nothing is Failed.
+- With 0L clear first, the gate's two lines are "0L: 0 due, 0 worked (0 passed over)" and that 0A line.
+
+**Check that record (CTO):** run:inbox-capture:cto-0a-20261103 has no read-to, so STEP 1's cursor ignores it, as intended. Two things to confirm:
+- Its Summary shouldn't still say "Started". OVERLAP would turn any capture run within 30 minutes of its creation into a No-op.
+- It has no 0L or 0A lines. That's fine: r12b's gate judges only this run's own record.
+
 **Status:** r12b patched twice, byte-identical, no em dashes. Ready for Cleanup. Nothing is deployed.
