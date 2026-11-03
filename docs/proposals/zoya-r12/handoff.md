@@ -13,6 +13,8 @@
 
 ## What changes (FAST only)
 
+This section describes r12 as first written. The r12b section below overrides it where they differ: Founder Thesis only, the done check, and the 24-hour ask.
+
 **STEP 0r. RECORDING LINKS** is new, placed before INVITES. Every run:
 - **Reading:** it reads Mamatha's mails in Zoya's inbox from the last 14 days that carry zencastr.app.link links.
 - **Matching:** each link is matched by the guest and company on its line to one Engagement at Booked with a future recording on Akshay's calendar. No match, or two, means no send, and it's reported.
@@ -47,7 +49,7 @@ Add a toggle on "Mail and WhatsApp wording" (3fa19a301a7f81b6a807d0f01847dae7) w
 
 ## Not in this build
 
-Decision 445 starts with "Zoya asks Mamatha for the room links (as on 1 Nov)". That ask is already a Zoya step from the 1 Nov work, so it isn't added here. If it isn't, it's one more line.
+Decision 445 starts with "Zoya asks Mamatha for the room links (as on 1 Nov)". It isn't added here. The replay found it in neither prompt file (D13 below).
 
 ## r12b: replay fixes (3 Nov)
 
