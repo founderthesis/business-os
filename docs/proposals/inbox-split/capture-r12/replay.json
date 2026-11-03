@@ -1,0 +1,109 @@
+{
+ "inputs": {
+  "build": "docs/proposals/inbox-split/capture-r12/capture.txt",
+  "build_bytes": 45137,
+  "build_sha256_16": "64f8fc5bf40c9ec6",
+  "base": "docs/proposals/inbox-split/r11/capture.txt (43,989 / 043dbe3a)",
+  "patch": "capture-r12/patch.py",
+  "actions": "docs/proposals/inbox-split/r11/actions.txt",
+  "rebuild": "patch.py run twice to scratch: both 45,137 / 64f8fc5bf40c9ec6, byte-identical to the committed capture.txt",
+  "word_diff": "only three changes: RUN RECORD body (0L/0A lines inserted, \"(first line, kept)\" became \"(kept)\"), MEASURED STOP appended to STOP TIME, ORDER GATE paragraph before STEP 0L",
+  "size": "45,137 bytes, under 65,336 (20,199 spare)",
+  "em_dash": "none (no en dash either)",
+  "size_with_all_fixes": 45854
+ },
+ "cases": {
+  "a_incident_1402": {
+   "trace": "Under r12 the gate runs before STEP 1: after the run record and OVERLAP, the first two queries are 0L's and 0A's SQL, both before \"STEP 1's search or any other MCP Emails call\". The 14:02 sequence (record, All Mail search, read_batch, RAW, two creates) searched mail first, so the gate says Failed, \"order gate\". Its record also lacks the two lines with SQL counts. A time claim now has to be read from date -u and written as \"stopped at minute 2 of 18\", which proves no limit was reached. It cannot honestly skip and cite time: with no SQL run there is no due figure to write. Residual: the model could write \"0L: not run, stop time\" and argue the line exists (D2), and a STEP 0 time claim at minute 2 is still only Partial (D6).",
+   "verdict": "Fixed in intent: record Failed, \"order gate\" (plus \"stopped at minute 2 of 18\" if it claims time). Close the line-shape loophole with D2."
+  },
+  "b_normal_3_10": {
+   "trace": "0L SQL 3 rows, 0A SQL 10 rows, both logged as due. 0L works 3 (no window but STOP TIME). Say 0L ends at minute 4: 0A's window is min(4+5, 10) = minute 9, hit after 6 rows; date -u read, record \"stopped at minute 9 of 9\", 4 rows left at a measured limit, so not Failed. STEP 0's window = min(9+8, 12) = minute 12. STEP 1 runs to minute 18, measured. Lines: \"0L: 3 due, 3 worked\", \"0A: 10 due, 6 worked (REF a, RAW b, adid c, fold d)\", then \"stamped:\", then \"pending:\". Status: not Failed; Completed vs Partial (\"cut short\") is not settled (D5). A Meeting row or a strike among the 6 has no bucket, and a strike may read as unworked and fail the run (D1).",
+   "verdict": "Works; status is ambiguous between Completed and Partial (D5); the worked definition needs D1."
+  },
+  "c_zero_zero": {
+   "trace": "Both SQL return 0. Lines \"0L: 0 due, 0 worked\", \"0A: 0 due, 0 worked (REF 0, RAW 0, adid 0, fold 0)\". MEASURED STOP needs unworked batch rows: none. Gate satisfied. 0L's report line \"link: 0 linked, 0 internal, 0 no fit, 0 passed over\" still required (else Partial). 0A's \"allmail left: 0, unread: <n>\" line still written. If STEP 0 and STEP 1 have nothing, No-op.",
+   "verdict": "Pass: nothing Failed."
+  },
+  "d_overlap_and_no_record": {
+   "trace": "OVERLAP: record written as \"No-op, previous run still live\" and the run stops, so no SQL and no 0L/0A line; the gate's \"whose record lacks either line, is Failed\" fires literally. Two rules collide; a model may pick either. No run id: RUN RECORD says write no record and report it; the gate's \"record lacks either line\" has no record to judge and nowhere to log due counts. Same for a record create that fails twice.",
+   "verdict": "Defect: OVERLAP no-op can be wrongly Failed; the no-record case is unspecified. Fix D2."
+  },
+  "e_quota_and_strike": {
+   "trace": "Quota, rate-limit or 5xx on a 0A row: 0A says no strike, the row waits. It is unworked with no limit passed, so MEASURED STOP says Failed \"0A skipped\". RUN RECORD already says a quota that left work undone is Failed, so the status agrees and there is no conflict with RUN RECORD's Failed definition; only the reason label is wrong (D3). A strike (\"allmail: no Message-ID <date> <error>\") or a HEAD pend is settled for the run, but \"worked: rows finished\" does not say so, so a strike can read as unworked and Failed (D1). Same for 0L passed-over rows, which recur every run because the SQL cannot see the body's link: line.",
+   "verdict": "Quota: Failed, correct status, wrong label (D3). Strike, pend, passed-over: risk of false Failed (D1, must fix)."
+  },
+  "f_interplay": {
+   "trace": "RUN RECORD: Started create stays first; the 0L/0A lines are written at the last write, after SELF-CHECK; no ordering clash. SELF-CHECK is unchanged and can still set Failed for rows without a key. STEP 0's own \"STEP 0 skipped\" rule stays Partial; MEASURED STOP only adds that STEP 0's window stop is measured, so no clash. Actions (r11 actions.txt line 53) takes \"every id on the stamped: body line ... (read only that line)\", by name, and capture's CURSOR reads the \"pending:\" line by name; removing \"(first line, kept)\" breaks neither. No new line starts with \"stamped:\" or \"pending:\" (0A's per-row lines say \"pended\"). The handoff's open question (0A window as a measured limit) is answered by the text: the window is a measured limit, so obeying it is not Failed.",
+   "verdict": "Consistent, apart from D2 (OVERLAP), D4 (what counts as a Notion query) and the pre-existing D6."
+  },
+  "g_limit_claims": {
+   "trace": "0A window and STOP TIME are now measured and logged. Remaining loose spots: 0L has no window, so a slow 0L that ends after minute 10 makes 0A's window already passed and 0A works none, legitimately and measured (visible as \"stopped at minute 11 of 10\"). STEP 0's window can be consumed by a long last 0A row and STEP 0 is then Partial \"STEP 0 skipped\" though measured, while a STEP 0 time claim before its window is still only Partial, not Failed (D6). \"the record says stopped at minute <n> of <limit>\" is singular; a run with several stops should log one each. 0L's LIMIT 10 by createdTime can be filled by recurring no-fit rows it passes over, starving new rows until 11-05 (pre-existing, note only).",
+   "verdict": "No path left to claim 0L or 0A time without measuring it. STEP 0 remains Partial-only (D6, optional)."
+  }
+ },
+ "defects": {
+  "D1": {
+   "severity": "must-fix (medium)",
+   "quote": "worked: rows finished this run, by the path that settled them ... Rows of this run's 0L or 0A batch left unworked while no measured limit has passed ... make the run Failed, \"0A skipped at minute <n>\"",
+   "scenario": "0L's SQL selects on People and Engagement only, so a row that already has a \"link: <id> no fit\" line comes back every run and STEP 0L passes it over. Read literally, a passed-over row is not \"finished\", so a normal run with one no-fit row is Failed \"0L skipped\". Same for a 0A row that takes a strike (\"allmail: no Message-ID <date> <error>\", the next row goes on) or is pended: settled for this run but not obviously \"worked\". A Gemini Meeting row (path 0) and pended rows have no bucket in the breakdown, so it cannot sum to worked.",
+   "fix": {
+    "old": "first the lines \"0L: <n> due, <n> worked\" and \"0A: <n> due, <n> worked (REF <n>, RAW <n>, adid <n>, fold <n>)\" (due: the row count each SQL returned; worked: rows finished this run, by the path that settled them)",
+    "new": "first the lines \"0L: <n> due, <n> worked (<n> passed over)\" and \"0A: <n> due, <n> worked (meeting <n>, fold <n>, adid <n>, REF <n>, RAW <n>, pended <n>)\" (due: the row count each SQL returned; worked: rows settled this run, by the path that settled them, a 0L row passed over for its \"link:\" line and a 0A row struck or pended with its record line included; a row left by a quota, rate-limit or 5xx error is not worked)"
+   }
+  },
+  "D2": {
+   "severity": "must-fix (medium)",
+   "quote": "A run that searched mail first, or whose record lacks either line, is Failed, \"order gate\".",
+   "scenario": "OVERLAP: \"write only this run's record as No-op, previous run still live and stop\". That record has no 0L or 0A line, so the gate's literal text makes every overlap no-op Failed. Also: a line like \"0L: not run, stop time\" lets the model argue the record does not lack the line (the 14:02 record already used that shape), and with no run id there is no record to hold the lines.",
+   "fix": {
+    "old": "A run that searched mail first, or whose record lacks either line, is Failed, \"order gate\".",
+    "new": "A run that searched mail first, or whose record lacks either line or gives a due figure no SQL returned (a line like \"0L: not run\" lacks it), is Failed, \"order gate\". OVERLAP's No-op record is exempt; with no record (RUN RECORD's no-id case), the two lines open the final report instead."
+   }
+  },
+  "D3": {
+   "severity": "should-fix (low)",
+   "quote": "\"0A skipped at minute <n>\" (or \"0L skipped at minute <n>\"), never Partial.",
+   "scenario": "A 0A row hits a quota, rate-limit or 5xx error (\"no strike: the row waits for the next run\"). It is unworked with no limit passed, so MEASURED STOP says Failed \"0A skipped\". The status agrees with RUN RECORD (quota leaving work undone is Failed), so no wrong status and no conflict, but the reason is mislabelled as a skip, which hides the connector problem in the morning check.",
+   "fix": {
+    "old": "\"0A skipped at minute <n>\" (or \"0L skipped at minute <n>\"), never Partial.",
+    "new": "\"0A skipped at minute <n>\" (or \"0L skipped at minute <n>\"), never Partial; rows left only by a quota, rate-limit or 5xx error are Failed as RUN RECORD says, naming that error, never \"skipped\"."
+   }
+  },
+  "D4": {
+   "severity": "should-fix (low)",
+   "quote": "your first two Notion queries are STEP 0L's SQL and then STEP 0A's SQL",
+   "scenario": "Before 0L the prompt already makes Notion reads: \"Fetch each data source once at the start\", RUN RECORD's \"unclear create: query that Source ID first\", and OVERLAP's read of the newest record. A strict model either drops the data-source fetches or declares itself Failed for them. Naming SQL removes the doubt.",
+   "fix": {
+    "old": "your first two Notion queries are",
+    "new": "your first two SQL queries (the data-source fetches and the run record's own checks aside) are"
+   }
+  },
+  "D5": {
+   "severity": "optional (low, confirm intent)",
+   "quote": "No-op: nothing was due. Partial: a step failed, was skipped or was cut short.",
+   "scenario": "Case b: 0A stops at its measured window after 6 of 10 and STEP 1 still has mail at minute 18. MEASURED STOP says not Failed, but \"cut short\" reads as Partial, while STOP TIME says the rest simply wait. Runs that obey every window will show Partial every hour, which dilutes Partial as a signal. Pre-existing ambiguity, sharpened by r12.",
+   "fix": {
+    "old": "No-op: nothing was due. Partial: a step failed, was skipped or was cut short.",
+    "new": "No-op: nothing was due. Partial: a step failed, was skipped or was cut short (rows left only at a measured limit, MEASURED STOP, make a run neither Partial nor Failed)."
+   }
+  },
+  "D6": {
+   "severity": "note (low, pre-existing, not r12)",
+   "quote": "Failed: the run stopped early, or a connector error ... / STOP TIME: ending earlier while due messages remain is Partial, \"stopped early\"",
+   "scenario": "RUN RECORD calls an early stop Failed, STOP TIME calls it Partial. r12 resolves it for 0L and 0A rows only (Failed). For STEP 1 and STEP 0 the two definitions still disagree. Also STEP 0's window can expire inside a long 0A row (a row started at minute 9.9 that ends at 13 leaves STEP 0's minute-12 window passed), and STEP 0 then reads as \"STEP 0 skipped\" Partial though it was measured. And the 14:02 run's \"STEP 0: not worked, stop time\" at minute 2 is still only Partial under r12.",
+   "fix": {
+    "old": "Failed: the run stopped early, or a connector error",
+    "new": "Failed: the run stopped early with 0L or 0A rows unworked (MEASURED STOP), or a connector error"
+   }
+  }
+ },
+ "verdict": {
+  "result": "pass with fixes",
+  "must_fix": [
+   "D1",
+   "D2"
+  ],
+  "notes": "r12 closes the 14:02 failure: 0L and 0A SQL must run before any mail call, their counts are on the record, and a time stop must be measured. Two literal-reading traps remain: rows that are settled but not \"finished\" (0L passed over, 0A strike or pend) can fail a healthy run, and OVERLAP's no-op record fails the gate. D3 to D5 are wording; D6 is pre-existing. All fix old strings occur once in capture.txt; with every fix applied the prompt stays well under the cap."
+ }
+}
