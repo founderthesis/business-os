@@ -1,0 +1,103 @@
+diff --git a/routines/zoya/build_one.py b/routines/zoya/build_one.py
+index 57cc436..618273d 100644
+--- a/routines/zoya/build_one.py
++++ b/routines/zoya/build_one.py
+@@ -22,9 +22,70 @@ SLOWWORK = ["slowwork-intro", "tools", "rules-common", "rules-routines", "rules-
+             "queue-slow", "internal", "editnotes", "snoozed", "voice", "sending", "teamwa", "limits", "onemail", "identity",
+             "slow-order", "feedback", "bounces", "vendor", "ownermail", "scorecard", "payments", "invites", "followups",
+             "report-slow", "hard"]
++SHARED = [
++  # Rules for Zoya split (CTO, 1 Nov) and RULES LOAD (CX-20261103T0800 finding 1: a run read 21k of 62k and sent anyway).
++  ("rules-common", "- Client show mails: 3fc19a301a7f817588e2d081af825f8a (the un# pitch sheet and the client templates C1 to C19: the words of every un# mail)",
++   "- Client show mails: 3fc19a301a7f817588e2d081af825f8a (the un# pitch sheet and the client templates C1 to C19: the words of every un# mail)\n"
++   "- SLOW work only: Rules for Zoya: follow-ups 40b19a301a7f81999c1acd8350d59a54 (the follow-up routines and 5a nurture and revival)\n"
++   "RULES LOAD: read every page above in full every run; the follow-ups page and the routine pages it links are SLOW "
++   "work's only, and FAST sends never wait on them. A fetch shown inline in full is loaded: read = total = its length. "
++   "A fetch saved to a file: in python, load it as one string (its text field when it is JSON), print it in slices of at "
++   "most 20,000 characters, in order, to its end, never stopping at the part a step needs; total = that string's "
++   "length, read = the end of the last slice shown in full. Each page gets a run record line \"<page>: <read> of "
++   "<total> characters\". A page whose read is short of its total is not loaded (PRE-SEND check 1): the run ends "
++   "Partial \"rules not loaded: <page> <read> of <total>\", whatever RUN RECORD says of blocked actions, and writes "
++   "nothing for the actions it governs."),
++  # Akshay, 2 Nov (CTOA-03 items 1, 6, 7, 8): pre-send checks, host kept when he wrote, truthful guest examples, inline booking link.
++  ("sending", "on un#, Sri, and anyone who handed over",
++   "on un#, Sri, and on Built to Share and Human by Design the host, unless they wrote on the thread themselves "
++   "(Akshay, 2 Nov: then they are added back if missing), and anyone who handed over"),
++  ("scope", "Never mail or WhatsApp Sri, and Sri is never in Cc on routine mail.",
++   "Never mail or WhatsApp Sri, and Sri is never in Cc on routine mail, unless he wrote on that thread himself: then he stays in Cc (Akshay, 2 Nov)."),
++  ("scope", "Never mail or WhatsApp the host, and the host is never in Cc on routine mail.",
++   "Never mail or WhatsApp the host, and the host is never in Cc on routine mail, unless the host wrote on that thread: then they stay in Cc."),
++  ("voice", "no idioms (\"works\", ", "no idioms (\"works\" except in \"any open slot here works: podm.in/30min\", "),
++  ("hard", "HARD RULES (always hold, whatever a page says)\n",
++   "HARD RULES (always hold, whatever a page says)\n"
++   "- PRE-SEND CHECKS (Akshay, 2 Nov), FAST and SLOW, fresh at each send, never taken from earlier mail on the thread: 1/ the "
++   "required pages loaded this run (RULES LOAD: each read equals its total); any page short or unread: no send that "
++   "uses wording or rules, with no \"the part I need was loaded\" exception: each such action is blocked, \"rules not "
++   "loaded: <page> <read> of <total>\", named in the report, never a send from memory; 2/ recipients from the latest inbound's own headers (From, To, Cc) "
++   "and the row (no inbound yet: the row and the thread's last message, if any); 3/ bounced addresses dropped (BOUNCES); 4/ the "
++   "row's newest Your call, Next action and Waiting on followed; 5/ ACTIONS' Sent check (your inbox, and ad@ less "
++   "loop-ins) finds no mail that already did this action; 6/ the action key (ACTIONS). A failed check: send nothing, "
++   "say which in the report.\n"
++   "- GUEST EXAMPLES (Akshay, 2 Nov): name only guests whose appearance on that show is on its Episodes row or "
++   "podm.in/guest-list, and on a client show only names its pitch sheet allows (SHOW CHECK); never \"recent\" unless it was released in the last 90 days; pick by relevance to the reader, "
++   "then standing, then recency; none verified: name none.\n"
++   "- BOOKING LINKS (Akshay, 2 Nov): a booking link sits inside its sentence, in the same <p> and plain-text line: "
++   "\"any open slot here works: podm.in/30min\" (allowed whatever PLAIN ENGLISH says); never a paragraph or line break of its own.\n"),
++]
+ VARIANT = {
+- "one": [
++ "one": SHARED + [
+   ("sending", "(STEP 0c)", "(SLOW work's bounce scan)"),
++  ("limits-fast", "Everything this run sends answers someone", "Everything FAST work sends answers someone"),
++  # Decision 445 (Akshay, 3 Nov): Zoya sends every guest their recording room link; FAST only, SLOW untouched.
++  ("invites", "INVITES (detail on Rules for Zoya and Calendar rules).",
++   "STEP 0r. RECORDING LINKS (decision 445; Akshay, 3 Nov: \"have Zoya send - I don't want to send manually\"). Every run, "
++   "read the mails in your inbox from Mamatha (tagged Team) in the last 14 days that carry zencastr.app.link links. Each "
++   "link line names a guest and company: match it to one Engagement at Status Booked whose recording is on Akshay's "
++   "calendar, in the future (no match, or two: send nothing, report it). Its action key: \"<row id>:reply:"
++   "call-recording-link-<event id>:<event start ISO>\" (ACTIONS). Already done when a \"Zoya sent: recording link to "
++   "<guest>\" Activity exists for it, or that link is in your Sent, ad@'s Sent or on the guest's thread, to anyone: send "
++   "nothing, log the Activity if missing. Else send it in the first run after the link arrives (quiet hours aside), never "
++   "later than the day before the recording: the \"Recording link\" toggle from the wording page, on the guest's own "
++   "thread (THREADING), To the guest (else their company-side contact, as SENDING's guest-facing rule says), Cc their "
++   "side from the thread and Akshay, the time in the guest's zone (the thread or row; unknown: IST). Then the INVITES add "
++   "on that recording event: its location the link if empty, and a first description line \"Recording link (Zencastr): "
++   "<link>\"; notificationLevel ALL; never move, remove or change anything else. Log \"Zoya sent: recording link to "
++   "<guest>\" (Kind Email out, Source ID per MESSAGE IDENTITY, Action key) and a Claude note line. A Booked recording "
++   "within 24 hours with no link from Mamatha: once, Akshay in Waiting on and the segment \"Akshay: no recording room for "
++   "<guest> (<D Mon HH:MM JST>)\".\n\nINVITES (detail on Rules for Zoya and Calendar rules)."),
++  ("sending", "(decision 237); client show links: SCOPE.",
++   "(decision 237); a zencastr.app.link room link only in that guest's recording-link mail and invite (STEP 0r, decision "
++   "445); client show links: SCOPE."),
++  ("hard", "Never a link outside the approved list.",
++   "Never a link outside the approved list (a zencastr.app.link room link only as SENDING allows, decision 445)."),
+   # FAST work never uses these (no WhatsApp, follow-ups, vendor forms, internal tasks, release mail); the SLOW work file has them
+   ("tools", " Blueticks sends WhatsApp to the team (TEAM WHATSAPP). Web search finds news for news angles.", ""),
+   ("tools", ', "+bluetick"', ""),
+@@ -60,7 +121,25 @@ VARIANT = {
+    "FAST work starts no new row 25 minutes after the run's start (measured, TIME)."),
+   ("report-fast", "Summary \"Run zoya FAST <start> JST: <status>\"", "Summary \"Run zoya <start> JST: <status>\""),
+  ],
+- "slowwork": [
++ "slowwork": SHARED + [
++  ("limits", "until it is empty, the cap is reached or a hold applies;",
++   "until it is empty or SLOW BATCH's stop applies (a hold defers that one item only);"),
++    # Akshay, 2 Nov: a SLOW run worked 3 follow-ups in about 7 minutes and left about 97 due. A stated batch, a line per item, carryover.
++  ("slow-order", "Within each, the oldest due first.",
++   "Within each, the oldest due first. SLOW BATCH (Akshay, 2 Nov): first query every eligible item of these groups "
++   "(every STEP 2 item due today or overdue, and every snooze due on or before today, keyed \"snooze:<row id>:<YYYY-MM-DD>:<the "
++   "first 20 characters of its ask>\"), each with its action key, and write \"eligible <n>:\" with one key per line to the run record; carryover "
++   "(the keys under \"carryover:\" in the newest record other than this run's that has SLOW work; none: none; a carried "
++   "key not in this run's eligible list is dropped, logged \"dropped: <key> (not eligible)\") goes first within STEP 2, after STEP 0, 1b and team work, then SLOW "
++   "ORDER's groups, oldest due first within each. Work them in that order up to the per-run cap on Cadences, "
++   "within every limit there; no cadence changes. Stop only on the per-run or daily cap, the 40 minutes, or a tool error "
++   "(a call that fails after one retry; it stops only the work that needs that tool, and a failed PRE-SEND check blocks "
++   "that item only), naming which; stopping sooner with items left is a defect, Partial \"stopped early: <why>\". Each item gets one record "
++   "line \"<key>: sent <Message-ID> | returned to Akshay | held <why> | blocked <why; next owner> | deferred <why>\"; a "
++   "hold, or a limit on one group (nurture's 10 a run, the nurture and revival daily number, the per-person gap), defers "
++   "those items only and is never \"stopped early\". Then \"elapsed <n> min\" (date -u) and \"carryover:\" with one key per line for every "
++   "eligible item not worked."),
++
+   ("slow-order", "SLOW ORDER. RECONCILE first, then STEP 0",
+    "SLOW ORDER. Before each SLOW step check Bash `date -u`: SLOW work starts no new step or row once 40 minutes (measured, TIME) "
+    "have passed since the run's start, and the run ends Partial; the next run with SLOW work carries on. Nothing else (a guess "
