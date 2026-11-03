@@ -17,6 +17,9 @@ EDITS = [
  # 1/ order gate: 0L's SQL and 0A's SQL are the first two Notion queries after the run record.
  ('STEP 0L. LINK FIRST (through 2026-11-05; CTOA-03): right after the run record, before anything else, run this SQL on Activities:',
   'ORDER GATE (CTO, 3 Nov): after the run record (and OVERLAP\'s check), your first two SQL queries (the data-source fetches and the run record\'s own checks aside) are STEP 0L\'s SQL and then STEP 0A\'s SQL, both run before STEP 1\'s search or any other MCP Emails call, each one\'s row count logged in the record as the "due" figure of its 0L or 0A line (RUN RECORD); then work 0L\'s rows, then 0A\'s. A run that searched mail first, or whose record lacks either line or gives a due figure no SQL returned (a line like "0L: not run" lacks it), is Failed, "order gate". OVERLAP\'s No-op record is exempt; with no record (RUN RECORD\'s no-id case), the two lines open the final report instead.\n\nSTEP 0L. LINK FIRST (through 2026-11-05; CTOA-03): right after the run record, before anything else, run this SQL on Activities:'),
+ # r12c, decision 452: Gmail shows the HTML, so the loop-in's html_body carries the quoted chain.
+ ('the loop-in (LOOP-IN) as body and html_body (<p>...</p>), no link,',
+  'the loop-in (LOOP-IN) as body and html_body (<p>...</p>, then, decision 452, <div class="gmail_quote">On <date>, <name> &lt;<address>&gt; wrote:<br><blockquote style="margin:0 0 0 .8ex;border-left:1px solid #ccc;padding-left:1ex"><the pitch message, as its HTML when it has one, else its text HTML-escaped with line breaks as <br></blockquote></div>, its date, name and address from that message\'s own headers; the plain-text body keeps MCP Emails\' own quote; a draft or send whose html lacks the blockquote is fixed before it goes), no link,'),
 ]
 for a, c in EDITS:
     assert s.count(a) == 1, (a[:60], s.count(a))
