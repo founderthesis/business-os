@@ -1,0 +1,46 @@
+{
+  "review": "inbox capture r12d + inbox actions r11b, read-only, repo f0a7255, 2026-11-03",
+  "live": {
+    "capture trig_0189eZvAD8x4357cfevgZ3No": {"bytes": 43989, "sha256_16": "043dbe3ad8d0a858", "equals": "docs/proposals/inbox-split/r11/capture.txt (r11 + Cleanup should-fix, commit 47d0ba6)", "note": "not 45d23795 (that is r11 before the should-fix, 6d041a5); r12d's patch asserts 043dbe3a, so it builds on what is live"},
+    "actions trig_012HbtmVKHUDeFZnFyooSgL3": {"bytes": 43955, "sha256_16": "4ac5406dd5d25bbf", "equals": "docs/proposals/inbox-split/cleanup/r10/actions-r10d-cleanup.txt"},
+    "zoya trig_01UPT8LDrBDL5JQqW91Awgbo": "zoya-one 1631a3d1dc25: no 446/448/452; un# C7/C8 slot flow without Akshay"
+  },
+  "rebuild": {
+    "capture r12d": "patch.py on repo r11 and on live prompt: both 46,594 / 3d38d6f3b93860f8, cmp identical to capture-r12/capture.txt",
+    "actions r11b": "r11/patch.py on Cleanup 4ac5406d and on live prompt: both 46,112 / 07832eb60827d287, cmp identical to r11/actions.txt. Built on 4ac5406d, not Main's r10d 97190a21 (patch asserts 4ac5406d)"
+  },
+  "diff_capture_vs_live": [
+    {"edit": "RUN RECORD body: 0L/0A count lines first; 'stamped:' no longer '(first line, kept)'", "trace": "CTO 3 Nov (r12/r12b, CTOA-03); no decisions.md row"},
+    {"edit": "MEASURED STOP appended to STOP TIME", "trace": "CTO 3 Nov; no decisions.md row"},
+    {"edit": "ORDER GATE paragraph before STEP 0L", "trace": "CTO 3 Nov; no decisions.md row"},
+    {"edit": "loop-in html_body gets gmail_quote of the pitch; forward quotes only the inner original", "trace": "452 (+ Zoya r15 replay D7). 452's row is scoped 'Zoya's replies'; loop-in extension is only in handoffs"},
+    {"edit": "include_html allowed for the loop-in quote", "trace": "452 (replay D8)"}
+  ],
+  "diff_actions_vs_live": [
+    {"edit": "STEP 3 slots bullet: client-show scheduling to Akshay first with one recommendation; host step only on his ok; Akshay instruction mail = ok", "trace": "446 (replaces 114 here)"},
+    {"edit": "STEP 3 443 bullet last sentence: host-show recording goes to Akshay first, Next date untouched", "trace": "446"},
+    {"edit": "STEP 5 new first bullet: reply to Akshay's own mail -> Akshay + recommendation, wins over Zoya/ack/ball bullets", "trace": "448"},
+    {"edit": "STEP 5 151 'wins over every other bullet below but decision 448's'", "trace": "448 (r11b replay D4)"},
+    {"edit": "STEP 6e: 448 reply is in no bucket", "trace": "448"}
+  ],
+  "guards_in_r11b": {
+    "Never change Status, Tier or Your call, or undo a decision, set after this mail": 1,
+    "A value whose set date can't be shown older than this mail counts as newer": 1,
+    "Never cancel an invite or delete a draft from a recovered mail": 1
+  },
+  "checks_actions": "No new send path (only WhatsApp to Akshay, cancels, draft deletes as before), no cursor or W change, no new Next date case (446/448 set none; 443 untouched), 325 narrowed only as 448 says, Zoya scope only reduced (host-show scheduling waits on Akshay).",
+  "defects": [
+    {"id": 1, "severity": "blocker (cheap)", "file": "capture r12d", "what": "Nested forward can quote internal notes. Text: 'for a pitch that reached us through a forward (Saurabh's, or Akshay's other address), only the original message inside the forward'. Saurabh -> Akshay's other address -> ad@ has two layers; 'the original message inside the forward' of Akshay's forward is Saurabh's forward, note included. Same when Saurabh's forward holds his own reply to the PR.", "scenario": "Saurabh writes 'pushy agency, your call' above a PR pitch, sends to Akshay's Gmail, Akshay forwards to ad@; the loop-in to the PR quotes Saurabh's note.", "fix": "'only the innermost message from outside the team, every forward layer and every note by Akshay, Saurabh or anyone tagged Team removed; unsure which: no quote, plain loop-in'"},
+    {"id": 2, "severity": "should-fix (deploy gate)", "file": "capture r12d", "what": "'the plain-text body keeps MCP Emails' own quote' and the html are unverified for email_compose reply; capture sends directly with no read-back, so the first live loop-in to a PR is the test. On 6a's reply on the original pitch sitting in the same Gmail thread as Saurabh's forward, if MCP's text quote covers the thread, Saurabh's forward reaches the PR.", "fix": "Run the one-draft test (or one reply to an internal address) for email_compose reply + html_body; confirm the text quote is only the replied message and the html isn't double-quoted before enabling 452 in capture"},
+    {"id": 3, "severity": "should-fix", "file": "capture r12d", "what": "Parity with Zoya r15 D4 missing: the name is not HTML-escaped ('<name> &lt;<address>&gt;'), and there is no 'that quote is the only <br> block' line", "scenario": "Display name 'R&D PR <Team>' breaks the HTML", "fix": "add 'the name HTML-escaped; the loop-in itself one <p>, the quote the only <br> block'"},
+    {"id": 4, "severity": "should-fix (log)", "file": "docs/decisions.md", "what": "452 reads 'Zoya's replies show the thread'. The ad@ loop-in (capture, Zoya D5) is covered only in handoffs. ORDER GATE / MEASURED STOP / count lines have no row", "fix": "amend 452: 'and the ad@ loop-in'; one row for capture r12 order gate (CTO, 3 Nov)"},
+    {"id": 5, "severity": "should-fix", "file": "actions r11b", "what": "448's 'Zoya gets only the holding reply' clashes with STEP 3 steps on the same mail: 443 'Zoya: reply to <who>: slots' (both 'first in Next action'), 379 'Zoya: send the sponsored close note', and 6e's plain-cancel ('in no bucket' skips the cancel). Zoya r15 says 'Don't answer it' but will also see a queued 443 step", "scenario": "FT Tier 2 guest replies to Akshay's own mail 'can we talk Thu?': row gets both Akshay recommend and Zoya slots step; Zoya may send slots before Akshay answers", "fix": "one sentence: on a 448 mail, STEP 3's Zoya steps (443 slots, 379 close note) and 6e's cancel are not queued; the recommendation names them"},
+    {"id": 6, "severity": "minor", "file": "actions r11b", "what": "'his own, not ... an agent's send': chat-session sends from ad@ via Gmail (decision 435) log as 'Akshay to X' and can't be told apart", "fix": "none needed (fails toward Akshay's list); or define 'his own' as an Email out not a loop-in, not billing forward, not a Draft Activity's agent send"}
+  ],
+  "deploy_order": [
+    "capture r12d: independent of actions r11b and Zoya r15. Actions finds 'stamped:' by name ('read only that line'); no consumer reads it as the first line. Gate its 452 part on defect 2's test; fix defect 1 first.",
+    "actions r11b and Zoya r15: deploy in one window, actions first (it only adds Akshay asks). Live Zoya 1631a3d1 still runs un# 'Once Sri picks, confirm it on the thread (C8) and create the invite' and has no 448 rule, so either half alone leaves 446/448 half-enforced. Zoya r15 alone, with actions r10d still queueing '<host>: pick a slot', bypasses 446.",
+    "No hard dependency of Zoya r15 on capture r12d."
+  ],
+  "verdict": {"capture r12d": "not accepted until defect 1 is fixed (one clause) and defect 2's test passes; the r12/r12b parts are fine", "actions r11b": "accepted; defect 5 as a should-fix"}
+}
