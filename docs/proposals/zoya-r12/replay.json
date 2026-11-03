@@ -1,0 +1,188 @@
+{
+ "inputs": {
+  "live_fast": {
+   "path": "docs/proposals/zoya-r11/zoya-one.txt",
+   "bytes": 44839,
+   "sha256": "264f69fc3ae384c23a7ed6fe0656f7429faa1c7bd6396c0f7e2e14db01127837",
+   "version": "zoya-one 1631a3d1dc25"
+  },
+  "new_fast": {
+   "path": "docs/proposals/zoya-r12/zoya-one.txt",
+   "bytes": 46635,
+   "sha256": "41c6854a3f0164ca5b1395d07bef55cea7fbe01504bb39649a68e1995f67da52",
+   "version": "zoya-one 2a73725431a2",
+   "cap": 65336,
+   "headroom": 18701
+  },
+  "build": "docs/proposals/zoya-r12/build_one.patch applied to f70901f; build_one.py <out> refs/heads/zoya-slow-pin 63fcf669014fe5c4eeff64c7fedbe6d1c85d926c in a scratch worktree reproduced zoya-one.txt byte-identical (41c6854a3f0164ca) and zoya-slow-work.txt 67,837 / 2cf5b7156ce80240 (pin unchanged). Note: the ref name is baked into the prompt; building with any other ref name changes the bytes.",
+  "decision": "docs/decisions.md line 394 (decision 445)",
+  "word_diff": "Exactly 4 changes vs live: SENDING approved-links clause (+zencastr.app.link only in that guest's recording-link mail and invite), RUN RECORD version 1631a3d1dc25 -> 2a73725431a2, new STEP 0r paragraph (before INVITES), HARD RULES link clause (+ '(a zencastr.app.link room link only as SENDING allows, decision 445)'). Nothing else. PASS.",
+  "em_dash": "0 em dashes and 0 en dashes in the new FAST; handoff toggle text has none. PASS.",
+  "slow_pin": "Unchanged: 63fcf66, 2cf5b7156ce80240. PASS.",
+  "unverifiable_offline": [
+   "Mamatha's 2 Nov 07:56Z mail format (assumed one line per guest naming guest and company)",
+   "whether the CTO's hand sends went from ad@ (Gmail) or Zoya's inbox",
+   "whether Mitali is on Col. Sai's side (Stakeholders/Via) or a PR",
+   "the Notion wording page toggle and Rules for Zoya's own approved-links list",
+   "the handoff's claim that 'Zoya asks Mamatha for the room links' is already a step: it is in neither the FAST nor the pinned SLOW file (grep 'room link' finds nothing), so if it exists it is only on a Notion page"
+  ]
+ },
+ "cases": {
+  "a_sameet_sent_by_cto": {
+   "result": "PASS (with a timing caveat)",
+   "quote": "Already done when a \"Zoya sent: recording link to <guest>\" Activity exists for it, or that link is in your Sent, ad@'s Sent or on the guest's thread, to anyone: send nothing, log the Activity if missing.",
+   "trace": "The CTO's mail holds the link in ad@'s Sent or Zoya's Sent, so a literal run sends nothing and logs \"Zoya sent: recording link to Sameet\". Caveat: the match needs a recording 'in the future'. Sameet recorded this evening; once that passes, the line has 'no match ... report it', so the Activity is never logged and every hourly run for 14 days reports a no-match (defect D9). The logged Activity also counts toward today's daily cap as a Zoya send (D12)."
+  },
+  "b_col_sai_via_mitali": {
+   "result": "PASS (matches the CTO's 'treat them as done')",
+   "quote": "that link is in your Sent, ad@'s Sent or on the guest's thread, to anyone: send nothing",
+   "trace": "'to anyone' covers the mail to Mitali only, so it counts as done and Zoya doesn't send the guest a second copy. That's what the CTO asked for. The guest himself never got the link from us, and nothing flags that; if Mitali is his EA that's fine. But 'to anyone' is too broad going forward: a quoted copy in a team-only mail also counts (D4). The fix keeps Col. Sai done (Mitali is on his side) while closing that hole."
+  },
+  "c_new_link_5_days_out": {
+   "result": "PASS",
+   "quote": "Else send it in the first run after the link arrives (quiet hours aside), never later than the day before the recording",
+   "trace": "It sends in the next :38 run outside 00:30-07:30 JST, five days early. The spec said 'by the day before, or at once within 48 hours', so the build always sends at once. That's stricter and still fits decision 445. One risk is ordering: the key's 'raised' time is the event start, so if FAST ORDER sorts these by raised time they land last among replies and a full per-run cap can defer them (D6)."
+  },
+  "d_within_24h_no_link": {
+   "result": "FAIL",
+   "quote": "A Booked recording within 24 hours with no link from Mamatha: once, Akshay in Waiting on and the segment \"Akshay: no recording room for <guest> (<D Mon HH:MM JST>)\".",
+   "trace": "1/ It isn't limited to Founder Thesis or to Zencastr. Every un#, Built to Share and Human by Design recording has no link from Mamatha (they use Riverside or built2share.in/studio), so each one adds a false Akshay ask. The same goes for an FT invite that already has a zencastr.com room. That breaks decision 325. 2/ 'once' has no marker, so after Akshay clears it a literal run adds it again. 3/ When the link arrives, nothing removes this segment, and the Waiting on Akshay it set then blocks the send (case i, D1). 4/ It duplicates calendar audit rule 4's 'Akshay: no Zencastr link yet for <guest>' (D8)."
+  },
+  "e_two_booked_rows_two_shows": {
+   "result": "PASS (safe), with noise",
+   "quote": "match it to one Engagement at Status Booked whose recording is on Akshay's calendar, in the future (no match, or two: send nothing, report it)",
+   "trace": "If only one row has a future recording, it matches and sends. If both do, nothing sends and it's reported, again every hour for 14 days (no 'once'). Nobody gets the link. If that recording comes within 24 hours, it's unclear whether 'no link from Mamatha' fires, because a link exists but wasn't matched. Fix: break the tie on the date, show or Zencastr room name ('ft-podcast-recording-<guest>-<company>'), else report it once."
+  },
+  "f_invite_add_vs_hard_rules": {
+   "result": "FAIL (conflict a literal model can resolve either way)",
+   "quote": "HARD RULES: \"Never move, cancel or edit a calendar event with guests on it beyond INVITES' adds\" vs STEP 0r: \"Then the INVITES add on that recording event: its location the link if empty, and a first description line ...\"; INVITES' own text: \"Their side asks to add someone to a booked call: add them as attendees ... never move the time or remove anyone.\"",
+   "trace": "INVITES lists two adds only: creating the invite and adding attendees. A link in the location and description is an edit made by STEP 0r, which only calls it 'the INVITES add'. HARD RULES 'always hold, whatever a page says', so a strict run may refuse the calendar write and still log success, or do it. Fix: name STEP 0r's link add in HARD RULES (or in INVITES' text). Also, an event Zoya can't edit (organised by the guest's side) has no fallback."
+  },
+  "g_interplay": {
+   "result": "FAIL on several counts",
+   "quote": "FAST ORDER: \"Collect your actions of type reply, decision and hold on in-scope rows ... plus the reply actions STEP 1 finds ... within a type, the oldest raised first.\" ACTIONS: \"messages from us in your Sent to that recipient on the action's thread ... since the action was raised\". Check 1: \"any page short or unread: no send that uses wording or rules\". UN#: \"Links on un#: unhashed.co/sponsored and unhashed.co/precall only.\" SHOW CHECK: \"every fact about a show (... links) comes word for word from that show's pitch sheet\".",
+   "trace": "FAST ORDER: STEP 0r's actions are neither Next action segments nor STEP 1 replies, so it's unclear whether they're collected or capped, and in what order. If they are, raised = event start (the future) sorts them last (D6). PRE-SEND check 5 (ACTIONS 'since raised'): raised is in the future, so the generic Sent check never finds a candidate and only STEP 0r's own link check guards (D6). Check 1 tests only whether the page loaded, not whether the toggle exists. A missing toggle passes check 1, and STEP 0r has no fallback (D3). LEAK CHECK: the toggle text is clean. SHOW CHECK and SCOPE: on un#, Built to Share and Human by Design the link lists are exclusive ('only'), and the zencastr link is on no pitch sheet. So a client-show send either fails SHOW CHECK (Akshay ask) or breaks SCOPE (D7). 'At most one link': the toggle has one {link}, PASS. Per-run and daily cap: sends count, and logged hand sends count too (D12). Quiet hours: honoured. Page-wins: 'Where a page and this prompt differ, the page wins, except for the HARD RULES'. If Rules for Zoya keeps its own approved-links list without zencastr.app.link, the page's narrower list governs. That list is what blocked the link on 2 Nov (D10)."
+  },
+  "h_toggle_missing_at_deploy": {
+   "result": "FAIL (undefined)",
+   "quote": "the \"Recording link\" toggle from the wording page",
+   "trace": "The wording page loads in full, so check 1 passes, but the toggle isn't there. The prompt has no 'no template: don't send' rule for FT (un# has one), so a literal run might compose the mail itself from SENDING's guest-facing rule and VOICE, block, or skip without saying. Today's three are already done, so the exposure is new links only. Fix: fail closed. Send nothing and report 'wording missing: Recording link'. A recording within 48 hours goes on Akshay's list. Also deploy only after the CTO adds the toggle (the handoff says so)."
+  },
+  "i_rows_waiting_on_akshay": {
+   "result": "FAIL",
+   "quote": "YOUR QUEUE: \"Rows waiting on Akshay are never yours to mail.\" + PRE-SEND check 4: \"the row's newest Your call, Next action and Waiting on followed\"",
+   "trace": "The deadlock: a recording is within 24 hours with no link, so STEP 0r puts Akshay in Waiting on. Mamatha's link then arrives, but the row now waits on Akshay, so a literal run won't mail it, and STEP 0r never removes its own segment. The guest gets no link. The same block hits any Booked row with an unrelated 'Ask Akshay' segment open. Compare STEP 0e2, which only holds for 'a hold on this recording (no-show, cancellation or reschedule question)'. Fix: STEP 0r sends unless the Akshay hold is on this recording, and removes its 'no recording room' segment and his Waiting on entry when the link is sent or found done (OWNERS)."
+  },
+  "j_client_shows": {
+   "result": "FAIL (scope not limited)",
+   "quote": "read the mails in your inbox from Mamatha (tagged Team) ... that carry zencastr.app.link links ... match it to one Engagement at Status Booked",
+   "trace": "Sending is limited to Mamatha's zencastr.app.link links, but not to a show. Mamatha is off un#, Built to Share has its fixed built2share.in/studio and un# uses Sri's room. So a client-show send is unlikely, but if one happens it conflicts with SCOPE's 'only' link lists and SHOW CHECK (D7). The 24-hour Akshay ask has no Zencastr or show limit at all and fires on every client-show recording (D2). Recommendation: Founder Thesis only (CTO to confirm), and the 24-hour ask only when no room link exists anywhere."
+  }
+ },
+ "defects": {
+  "D1_akshay_waiting_deadlock": {
+   "severity": "high",
+   "quote": "Rows waiting on Akshay are never yours to mail. / A Booked recording within 24 hours with no link from Mamatha: once, Akshay in Waiting on",
+   "scenario": "STEP 0r's own 24-hour ask (or any unrelated Ask Akshay segment) makes the row wait on Akshay, and the link that arrives later is never mailed. The ask is never cleared, so it stays on his list.",
+   "fix": "In STEP 0r: \"A row waiting on Akshay for another ask still gets it; only an Akshay hold on this recording (no-show, cancellation, reschedule question) holds it. When the link is sent or found done, remove any 'Akshay: no recording room for <guest>' segment and his Waiting on entry (OWNERS).\""
+  },
+  "D2_24h_ask_scope": {
+   "severity": "high",
+   "quote": "A Booked recording within 24 hours with no link from Mamatha",
+   "scenario": "Every un#, Built to Share and Human by Design recording, and any FT recording whose invite already holds a zencastr.com or other room, goes on Akshay's decision inbox the day before. That breaks decision 325. 'once' has no marker, so it can repeat.",
+   "fix": "\"A Founder Thesis Booked recording within 24 hours with no room link anywhere (Mamatha's mails, the invite's location or description: zencastr, riverside or studio, the row's Call link): once (Claude note 'recording room asked <event id>'), Akshay in Waiting on ...\""
+  },
+  "D3_toggle_missing": {
+   "severity": "medium",
+   "quote": "the \"Recording link\" toggle from the wording page",
+   "scenario": "If the build deploys before the CTO adds the toggle, the wording page still loads (check 1 passes), so the run may write the mail from memory or skip it without reporting.",
+   "fix": "\"No 'Recording link' toggle on the wording page: send nothing, report 'wording missing: Recording link'; a recording within 48 hours goes on Akshay's list.\" Also add the toggle before deploying."
+  },
+  "D4_quoted_link_false_done": {
+   "severity": "medium",
+   "quote": "that link is in your Sent, ad@'s Sent or on the guest's thread, to anyone",
+   "scenario": "A reply from Zoya or Akshay to Mamatha's link mail (or any forward) quotes the links (MCP Emails quotes the thread itself). Every link quoted that way, including unmatched or deferred ones, then reads as done, and those guests never get theirs.",
+   "fix": "\"or a mail from us (your Sent or ad@'s Sent) carries that link in its own text, not a quote, to the guest or anyone on their side (the thread, Stakeholders, Via or the invite)\". Col. Sai via Mitali still counts as done."
+  },
+  "D5_invite_add_vs_hard_rules": {
+   "severity": "medium",
+   "quote": "Never move, cancel or edit a calendar event with guests on it beyond INVITES' adds",
+   "scenario": "INVITES' text defines no link add, so a strict run reads STEP 0r's location and description edit as a HARD RULES breach and refuses it, or does it inconsistently.",
+   "fix": "In HARD RULES: \"... beyond INVITES' adds and STEP 0r's link add (location if empty, one first description line)\". In STEP 0r, call it 'the link add' and add: \"an event you can't edit: report it\"."
+  },
+  "D6_key_raised_is_event_start": {
+   "severity": "medium",
+   "quote": "\"<row id>:reply:call-recording-link-<event id>:<event start ISO>\" (ACTIONS) / ACTIONS: \"since the action was raised\" / FAST ORDER: \"the oldest raised first\"",
+   "scenario": "The raised time is in the future, so ACTIONS' Sent check (PRE-SEND check 5) can never find a match. FAST ORDER sorts these after every other reply, and a full per-run cap defers them toward the deadline. It's also unclear whether FAST ORDER collects STEP 0r's actions at all. The key itself is the CTO's spec, so keep it.",
+   "fix": "\"(ACTIONS; its Sent check runs from the arrival of Mamatha's mail, not the key's time). These are reply actions in FAST ORDER and go first among replies, soonest recording first.\""
+  },
+  "D7_client_show_links": {
+   "severity": "medium",
+   "quote": "Links on un#: unhashed.co/sponsored and unhashed.co/precall only. / SHOW CHECK ... (... links) comes word for word from that show's pitch sheet",
+   "scenario": "A Mamatha link matched to a un#, Built to Share or Human by Design row fails SHOW CHECK (Akshay ask) or breaks SCOPE's exclusive link lists. On Built to Share it could also contradict the fixed built2share.in/studio room.",
+   "fix": "Limit STEP 0r to Founder Thesis Engagements (CTO to confirm). A link for a client-show row: report it, send nothing."
+  },
+  "D8_calendar_routine_blind_to_app_link": {
+   "severity": "medium",
+   "quote": "routines/calendar.md STEP 1b rule 4: \"a recording 14 days or less away whose invite has no zencastr.com, riverside.fm or studio link ... If there is no link anywhere: 'Akshay: no Zencastr link yet for <guest>, recording <D Mon>'\"; STEP 1: \"Call link: the zencastr.com or riverside.fm URL\"",
+   "scenario": "After Zoya adds a zencastr.app.link link, the calendar audit still sees no studio link. It raises a second Akshay ask, or appends a second 'Recording link:' line if the row has a Call link. STEP 0r never sets the row's Call link or Recording link, so inbox recording-logistics replies ('the recording link from the Engagement') find none either.",
+   "fix": "STEP 0r: \"set the row's Call link to the link if empty\". Calendar routine (a separate deploy): treat zencastr.app.link as a Zencastr link in STEP 1 classification, Call link and rule 4. Until then, expect duplicate Akshay asks."
+  },
+  "D9_past_or_unmatched_noise": {
+   "severity": "low",
+   "quote": "in the last 14 days ... in the future (no match, or two: send nothing, report it)",
+   "scenario": "Once a recording passes (Sameet tonight), its line has no match: the hand send is never logged, and 16 runs a day report the no-match for up to 14 days.",
+   "fix": "\"a line whose recording has passed: skip it silently; a no-match or tie is reported once (Claude note or report line keyed by link)\"."
+  },
+  "D10_page_wins_link_list": {
+   "severity": "medium",
+   "quote": "Where a page and this prompt differ, the page wins, except for the HARD RULES at the end",
+   "scenario": "If Rules for Zoya or the wording page carries its own approved-links list without zencastr.app.link (the list that blocked it on 2 Nov), the page wins over SENDING. The HARD RULES addition only narrows ('Never a link outside ...'), so the link can still be blocked.",
+   "fix": "The CTO adds the same zencastr.app.link clause to the approved-links list on Rules for Zoya (and Calendar rules if it lists links) in the same change as the toggle."
+  },
+  "D11_host_vs_guest_link": {
+   "severity": "medium",
+   "quote": "read the mails ... that carry zencastr.app.link links. Each link line names a guest and company",
+   "scenario": "routines/mac/zencastr-mac.md separates the guest invite link from 'Akshay's host link'. If Mamatha's line carries both, or a host link, Zoya could send the host link to a guest. A guest link in the zencastr.com/z/ form is ignored, so the 24-hour ask fires falsely.",
+   "fix": "\"Send only the guest link; a line with two links or one marked host: send nothing, report it\". Decide whether zencastr.com/z/ guest links count too."
+  },
+  "D12_hand_sends_logged_as_zoya": {
+   "severity": "low",
+   "quote": "send nothing, log the Activity if missing ... Log \"Zoya sent: recording link to <guest>\"",
+   "scenario": "Today's three hand sends get logged as 'Zoya sent' and count toward today's daily cap (LIMITS counts Summaries starting 'Zoya sent'). That's the same behaviour as ACTIONS' existing match-logging, so it's acceptable, but it misattributes the sender.",
+   "fix": "Optional: note the real sender in the Activity body. No change needed for the deploy."
+  },
+  "D13_mamatha_ask_not_in_prompts": {
+   "severity": "low",
+   "quote": "handoff: \"That ask is already a Zoya step from the 1 Nov work, so it isn't added here.\"",
+   "scenario": "Neither the FAST nor the pinned SLOW file has a step asking Mamatha for room links. If it lives only on a Notion page, fine. If not, links arrive only when Mamatha sends them unprompted, and the 24-hour ask becomes the only trigger.",
+   "fix": "The CTO confirms where the ask lives (Rules for Zoya). If it's nowhere, add one line to SLOW team work later. It doesn't block this deploy."
+  }
+ },
+ "verdict": {
+  "result": "FAIL as built: fix before deploy (all are prompt-text edits, roughly +900 bytes, well under the 65,336 cap; SLOW pin untouched)",
+  "passes": [
+   "word diff limited to the 4 stated edits plus version",
+   "no em dash",
+   "build reproduces byte-identical",
+   "SLOW pin unchanged",
+   "cases a, b, c, e behave as the CTO wants"
+  ],
+  "must_fix": [
+   "D1 Akshay Waiting-on deadlock",
+   "D2 24-hour ask scope and repeat",
+   "D3 missing-toggle fail-closed",
+   "D4 quoted-link false 'done'",
+   "D5 HARD RULES vs link add",
+   "D6 Sent-check window and order",
+   "D7/j Founder Thesis only"
+  ],
+  "outside_this_build": [
+   "D8 calendar.md: recognise zencastr.app.link (separate routine deploy); until then expect duplicate 'no Zencastr link' asks",
+   "D10 add the zencastr clause to the Rules for Zoya approved-links list with the toggle",
+   "D13 confirm where the Mamatha room-link ask lives"
+  ],
+  "suggested_step_0r": "STEP 0r. RECORDING LINKS (decision 445; Akshay, 3 Nov: \"have Zoya send - I don't want to send manually\"). Founder Thesis only (client shows use their own rooms; a link for a client-show row: report it). Every run, read the mails in your inbox from Mamatha (tagged Team) in the last 14 days that carry zencastr.app.link guest links (a line with two links or one marked host: send nothing, report it). Each link line names a guest and company: match it to one Founder Thesis Engagement at Status Booked whose recording is on Akshay's calendar, in the future (a recording already past: skip it; no match, or two the line's date can't separate: send nothing, report it once). Its action key: \"<row id>:reply:call-recording-link-<event id>:<event start ISO>\" (ACTIONS; a reply action that goes first among replies, soonest recording first; its Sent check runs from the arrival of Mamatha's mail). Already done when a \"Zoya sent: recording link to <guest>\" Activity exists for it, or a mail from us (your Sent or ad@'s Sent) carries that link in its own text, not a quote, to the guest or anyone on their side: send nothing, log the Activity if missing. Else send it in the first run after the link arrives (quiet hours aside), never later than the day before the recording: the \"Recording link\" toggle from the wording page (no such toggle: send nothing, report \"wording missing: Recording link\"; a recording within 48 hours goes on Akshay's list), on the guest's own thread (THREADING), To the guest (else their company-side contact, as SENDING's guest-facing rule says), Cc their side from the thread and Akshay, the time in the guest's zone (the thread or row; unknown: IST). A row waiting on Akshay for another ask still gets it; an Akshay hold on this recording (no-show, cancellation, reschedule) holds it. Then the link add on that recording event: its location the link if empty, and a first description line \"Recording link (Zencastr): <link>\"; notificationLevel ALL; never move, remove or change anything else (an event you can't edit: report it). Set the row's Call link to the link if empty. Log \"Zoya sent: recording link to <guest>\" (Kind Email out, Source ID per MESSAGE IDENTITY, Action key) and a Claude note line; remove any \"Akshay: no recording room\" segment for it and his Waiting on entry (OWNERS). A Founder Thesis Booked recording within 24 hours with no room link anywhere (Mamatha's mails, the invite's location or description, the row's Call link): once (Claude note \"recording room asked <event id>\"), Akshay in Waiting on and the segment \"Akshay: no recording room for <guest> (<D Mon HH:MM JST>)\".",
+  "suggested_hard_rule": "- Never move, cancel or edit a calendar event with guests on it beyond INVITES' adds and STEP 0r's link add (a call their side cancelled in writing is the calendar run's, decision 398)."
+ }
+}

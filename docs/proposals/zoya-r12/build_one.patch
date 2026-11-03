@@ -1,8 +1,8 @@
 diff --git a/routines/zoya/build_one.py b/routines/zoya/build_one.py
-index 57cc436..618273d 100644
+index 57cc436..16283ae 100644
 --- a/routines/zoya/build_one.py
 +++ b/routines/zoya/build_one.py
-@@ -22,9 +22,70 @@ SLOWWORK = ["slowwork-intro", "tools", "rules-common", "rules-routines", "rules-
+@@ -22,9 +22,59 @@ SLOWWORK = ["slowwork-intro", "tools", "rules-common", "rules-routines", "rules-
              "queue-slow", "internal", "editnotes", "snoozed", "voice", "sending", "teamwa", "limits", "onemail", "identity",
              "slow-order", "feedback", "bounces", "vendor", "ownermail", "scorecard", "payments", "invites", "followups",
              "report-slow", "hard"]
@@ -51,30 +51,19 @@ index 57cc436..618273d 100644
 +  ("limits-fast", "Everything this run sends answers someone", "Everything FAST work sends answers someone"),
 +  # Decision 445 (Akshay, 3 Nov): Zoya sends every guest their recording room link; FAST only, SLOW untouched.
 +  ("invites", "INVITES (detail on Rules for Zoya and Calendar rules).",
-+   "STEP 0r. RECORDING LINKS (decision 445; Akshay, 3 Nov: \"have Zoya send - I don't want to send manually\"). Every run, "
-+   "read the mails in your inbox from Mamatha (tagged Team) in the last 14 days that carry zencastr.app.link links. Each "
-+   "link line names a guest and company: match it to one Engagement at Status Booked whose recording is on Akshay's "
-+   "calendar, in the future (no match, or two: send nothing, report it). Its action key: \"<row id>:reply:"
-+   "call-recording-link-<event id>:<event start ISO>\" (ACTIONS). Already done when a \"Zoya sent: recording link to "
-+   "<guest>\" Activity exists for it, or that link is in your Sent, ad@'s Sent or on the guest's thread, to anyone: send "
-+   "nothing, log the Activity if missing. Else send it in the first run after the link arrives (quiet hours aside), never "
-+   "later than the day before the recording: the \"Recording link\" toggle from the wording page, on the guest's own "
-+   "thread (THREADING), To the guest (else their company-side contact, as SENDING's guest-facing rule says), Cc their "
-+   "side from the thread and Akshay, the time in the guest's zone (the thread or row; unknown: IST). Then the INVITES add "
-+   "on that recording event: its location the link if empty, and a first description line \"Recording link (Zencastr): "
-+   "<link>\"; notificationLevel ALL; never move, remove or change anything else. Log \"Zoya sent: recording link to "
-+   "<guest>\" (Kind Email out, Source ID per MESSAGE IDENTITY, Action key) and a Claude note line. A Booked recording "
-+   "within 24 hours with no link from Mamatha: once, Akshay in Waiting on and the segment \"Akshay: no recording room for "
-+   "<guest> (<D Mon HH:MM JST>)\".\n\nINVITES (detail on Rules for Zoya and Calendar rules)."),
++   "STEP 0r. RECORDING LINKS (decision 445; Akshay, 3 Nov: \"have Zoya send - I don't want to send manually\"). Founder Thesis only (a link for a client-show row: send nothing, report it). Every run, read the mails in your inbox from Mamatha (tagged Team) in the last 14 days that carry zencastr.app.link guest links (a line with two links, or one marked host: send nothing, report it). Each link line names a guest and company: match it to one Founder Thesis Engagement at Status Booked whose recording is on Akshay's calendar. A recording already past: skip it silently. No match, or two the line's date can't separate: send nothing, report it once (an earlier run record of yours names that link: don't repeat). Its action key: \"<row id>:reply:call-recording-link-<event id>:<event start ISO>\" (ACTIONS; its Sent check runs from the arrival of Mamatha's mail, not the key's time; in FAST ORDER these are replies and go first among replies, soonest recording first). Already done when a \"Zoya sent: recording link to <guest>\" Activity exists for it, or a mail from us (your Sent or ad@'s Sent) carries that link in its own text, not a quote, to the guest or anyone on their side (the thread, Stakeholders, Via or the invite): send nothing, log the Activity if missing, naming the real sender in its body. Else send it in the first run after the link arrives (quiet hours aside), never later than the day before the recording: the \"Recording link\" toggle from the wording page (no such toggle: send nothing, report \"wording missing: Recording link\"; a recording within 48 hours goes on Akshay's list), on the guest's own thread (THREADING), To the guest (else their company-side contact, as SENDING's guest-facing rule says), Cc their side from the thread and Akshay, the time in the guest's zone (the thread or row; unknown: IST). A row waiting on Akshay for another ask still gets it; an Akshay hold on this recording (no-show, cancellation, reschedule) holds it. Then the link add on that recording event: its location the link if empty, and a first description line \"Recording link (Zencastr): <link>\"; notificationLevel ALL; never move, remove or change anything else (an event you can't edit: report it). Set the row's Call link to the link if empty. Log \"Zoya sent: recording link to <guest>\" (Kind Email out, Source ID per MESSAGE IDENTITY, Action key) and a Claude note line; remove any \"Akshay: no recording room\" segment for it and his Waiting on entry (OWNERS). A Founder Thesis Booked recording within 24 hours with no room link anywhere (Mamatha's mails, the invite's location or description, the row's Call link): once (Claude note \"recording room asked <event id>\"), Akshay in Waiting on and the segment \"Akshay: no recording room for <guest> (<D Mon HH:MM JST>)\".\n\nINVITES (detail on Rules for Zoya and Calendar rules)."),
 +  ("sending", "(decision 237); client show links: SCOPE.",
 +   "(decision 237); a zencastr.app.link room link only in that guest's recording-link mail and invite (STEP 0r, decision "
 +   "445); client show links: SCOPE."),
++  ("queue-fast", "Rows waiting on Akshay are never yours to mail.",
++   "Rows waiting on Akshay are never yours to mail (STEP 0r's recording link aside)."),
++  ("hard", "beyond INVITES' adds (a call", "beyond INVITES' adds and STEP 0r's link add (a call"),
 +  ("hard", "Never a link outside the approved list.",
 +   "Never a link outside the approved list (a zencastr.app.link room link only as SENDING allows, decision 445)."),
    # FAST work never uses these (no WhatsApp, follow-ups, vendor forms, internal tasks, release mail); the SLOW work file has them
    ("tools", " Blueticks sends WhatsApp to the team (TEAM WHATSAPP). Web search finds news for news angles.", ""),
    ("tools", ', "+bluetick"', ""),
-@@ -60,7 +121,25 @@ VARIANT = {
+@@ -60,7 +110,25 @@ VARIANT = {
     "FAST work starts no new row 25 minutes after the run's start (measured, TIME)."),
    ("report-fast", "Summary \"Run zoya FAST <start> JST: <status>\"", "Summary \"Run zoya <start> JST: <status>\""),
   ],
