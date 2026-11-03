@@ -2,9 +2,10 @@
 
 | File | Bytes / sha256 |
 |---|---|
-| `zoya-one.txt` (FAST, r12c) | 50,160 / 079b081a704907ef, pinned to cd9000f |
-| `zoya-slow-work.txt` (SLOW, r12c) | 69,409 / 9ccf22ad32f4fa1e, at cd9000f |
-| Actions r11 (`../inbox-split/r11/actions.txt`) | 45,775 / 794328afdc81758e, on the live 43,955 / 4ac5406d |
+| `zoya-one.txt` (FAST, r12d) | 51,023 / d50765c6b907862e, pinned to d3a48f5 |
+| `zoya-slow-work.txt` (SLOW, r12d) | 69,949 / b26300e771fab7db, at d3a48f5715d937e8dc3bbec6be2f2ce0a6134568 |
+| Actions r11b (`../inbox-split/r11/actions.txt`) | 46,112 / 07832eb60827d287, on the live 43,955 / 4ac5406d |
+| r12c (replaced, replay-r12c.json) | FAST 50,160 / 079b081a at cd9000f; SLOW 69,409 / 9ccf22ad; actions r11 45,775 / 794328af |
 | `zoya-one-r12b.txt` (replaced) | 47,848 / 78e746d22d25bb4f |
 | r12 (replaced, failed replay) | 46,635 / 41c6854a3f0164ca |
 
@@ -107,4 +108,45 @@ The r12 replay failed, with 2 high and 5 medium must-fixes (`replay.json`). r12b
 
 **Cases to replay:** Ryan Louvar (un#, booked for 16 Nov though Sri gave the 17th and 18th, and "block 17th as well" was never done); Commix on the Livlong 365 thread; Mike Cagney (Richard's "will revert" on Akshay's 1 Nov mail).
 
-**Status:** r12c is built twice and byte-identical, and actions r11 is patched twice and byte-identical. The replay is running. Nothing is deployed, and the pin ref hasn't moved.
+## r12d and actions r11b: replay fixes (`replay-r12c.json`)
+
+The r12c replay failed, with 2 high and 4 medium must-fixes. All are exact text swaps:
+
+| Defect | What it was | The fix |
+|---|---|---|
+| D1 (high) | A Notion page that disagrees overrides 446, because the page wins | A shared HARD RULE, "CLIENT-SHOW SCHEDULING (decision 446)": no client-show time without Akshay's ok, whatever a page says. A reply to his own mail goes to him and gets at most the holding reply (448) |
+| D2 (high) | Akshay's "block 17th as well" mail couldn't trigger the hold | C7, C8, INVITES and the HARD feedback rule now accept his ok in Your call or in his instruction mail on the thread |
+| D7 | "Rows waiting on Akshay are never yours to mail" blocked the holding reply | The exception now reads "STEP 0r's recording link and the holding reply, decision 390, aside" |
+| D9 | His instruction could be queued twice, once by actions with no key and once by FAST | FAST keys the inbox-queued "Zoya: <his step>" as the same action, never a second |
+| D3 (should-fix) | Akshay's handover mail, auto-replies, out-of-office and bounces counted under 448 | Excluded, in FAST and in actions |
+| D5 | One mail made two Akshay items | A 446 or 444 segment takes the mail; 448 adds no second item (FAST and actions) |
+| D4 | The revenue rule (151) "wins over every other bullet", so 448 never fired on revenue rows | Actions: 151 wins over every bullet but 448's |
+| D6, FAST part | FAST's cancel branch asked for a fresh slot on client shows | No slot ask on a client show: the 446 segment goes to Akshay instead |
+
+The pin moves again: SLOW is at d3a48f5715d937e8dc3bbec6be2f2ce0a6134568. Build command: `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin d3a48f5715d937e8dc3bbec6be2f2ce0a6134568`. Built twice, byte-identical. Actions r11b came out byte-identical on both runs of `patch.py`.
+
+**The CTO's Notion edits before deploy** (the replay couldn't read the live pages, so confirm against them first):
+- **Rules for Zoya:** decision 425's "Client shows keep host-picked slots", and the un# slot flow, now go through Akshay's ok (446).
+- **Client show mails:** the notes for C7 and C8 match 446.
+- **Controls page section 8** (D6, which wins over actions STEP 3):
+  - "(podm.in/book on Founder Thesis; on the other shows the host picks the slots)" becomes "(podm.in/book on Founder Thesis; on un#, Built to Share and Human by Design no rebook step: STEP 3's decision 446 segment to Akshay, Zoya only the holding reply)".
+  - "or say the guest can't make it (decision 165)" becomes "or say the guest can't make it (decision 165; on a client show only an outright cancel, never a move or a "can't do" on a slot, decision 446)".
+- **The Your call page** (D10, low): it names the 446 item.
+- Plus the r12b items above: the "Recording link" toggle, and the zencastr.app.link clause on the approved-links list.
+
+**Separate deploys, not this build:**
+- `routines/host-boards.md` (D8): it still follows 114, putting slots on the board and handing the host's pick to Zoya. It needs Akshay's 446 step at both points.
+- calendar.md: recognise zencastr.app.link links (from r12b).
+
+**Lows left open** (D11 to D13, see the JSON):
+- If Akshay's mail isn't in Zoya's inbox, the 448 lookup can fall back to her own earlier mail.
+- 447: nobody has checked that MCP Emails keeps In-Reply-To when the subject changes. Gmail on ad@ will show it as a new conversation; that's expected.
+- No urgency marker yet for a reschedule inside 24 hours.
+
+**Deploy order:**
+1. The Notion edits above.
+2. Move the pin to d3a48f5 and read the sha256 back.
+3. Paste FAST.
+4. Paste actions r11b.
+
+**Status:** r12d and r11b are built and byte-identical. Not re-replayed: the fixes are the replay's own exact swaps. Ready for Cleanup. Nothing is deployed, and the pin ref hasn't moved.
