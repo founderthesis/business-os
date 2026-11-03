@@ -89,3 +89,24 @@ Built twice, byte-identical, with no em dashes. This hasn't been replayed again:
 **Question for Akshay (D12):** should the 453 themes reply also run on un#, Built to Share and Human by Design? Until he answers, it runs on Founder Thesis only.
 
 **Status:** ready for Cleanup. **Deploying is gated on the one-draft test (D2)** and on Akshay's go-ahead in this session. Nothing is deployed, and the pin ref hasn't moved.
+
+## For Cleanup: the full set and its paths
+
+| File | Path | Bytes / sha256 |
+|---|---|---|
+| Zoya A (hourly, FAST) | docs/proposals/zoya-r15/zoya-one.txt | 52,925 / 532e8ddbc1f2a002 |
+| Zoya B (SLOW task) | docs/proposals/zoya-r15/zoya-slow.txt | 11,420 / 253d91207c6bb071 |
+| SLOW file (pinned) | routines/zoya/release/zoya-slow-work.txt at 251388d7cba301af2e641b7f2916fa6e67de47c7 | 76,760 / e9c6dcb4e5583662 |
+| Inbox actions r11b | docs/proposals/inbox-split/r11/actions.txt (committed b9a8f86; built by r11/patch.py from the live 4ac5406d) | 46,112 / 07832eb60827d287dccf364ab55bde1410defd1f13e3b680b7929a481333b429 |
+| Inbox capture r12d | docs/proposals/inbox-split/capture-r12/capture.txt (built by its patch.py from r11 043dbe3a) | 46,594 / 3d38d6f3b93860f8 |
+
+## Deploy authority (3 Nov, 20:47 JST)
+
+The CTO says Akshay's go-ahead is already given in decision 450, and asks this session to run the one-draft test now, then the cutover after Cleanup's accept, including moving zoya-slow-pin. **This session hasn't done any of it.**
+
+- **Why it's waiting:** the request came only as a message from another session. Akshay hasn't said it in this session. Everything it asks for is outward-facing:
+  - a mailbox draft write;
+  - creating, enabling and firing scheduled tasks;
+  - moving a ref this session was told never to touch.
+- **A wording mismatch:** decisions.md quotes 450 as "this is my approval; don't wait for another Sonnet failure". The CTO's message quotes it as "don't ask me again for this scope", and that wording isn't in the repo.
+- **What happens next:** once Akshay confirms in this session, the test and the cutover run as specified. If he'd rather, the CTO session can run them instead.
