@@ -2,13 +2,14 @@
 
 This replaces r13b. It's the r13b structure, with SLOW BATCH rewritten to the decision 450 spec. Apply `build_one.patch` to `routines/zoya/build_one.py` at f70901f, which adds two new parts, slowtask-intro and slowtask-load.
 
-**Command:** `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 9d1bda1e84b57cbb6372c33664179fdebaff740f`. Built twice, byte-identical, no em dashes.
+**Command:** `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 2f607f0b30dbc0688feef8f16e4859c9796a8f23`. Built twice, byte-identical, no em dashes.
 
 | File | Task | Bytes / sha256 |
 |---|---|---|
 | `zoya-one.txt` | A: hourly Zoya (trig_01UPT8LDrBDL5JQqW91Awgbo), FAST only, Sonnet | 50,822 / 677aa3473026e9ef |
-| `zoya-slow.txt` | B: **new** "Zoya SLOW", `CRON_TZ=Asia/Tokyo 8 8,11,17 * * 1-5`, Opus | 11,276 / 054661701f27651a |
-| `zoya-slow-work.txt` | The pinned SLOW file B loads | 73,243 / 26b60e7c6b8eca39 (73,239 characters), at 9d1bda1 |
+| `zoya-slow.txt` | B: **new** "Zoya SLOW", `CRON_TZ=Asia/Tokyo 8 8,11,17 * * 1-5`, Opus | 11,238 / 20cce0904095ec86 |
+| `zoya-slow-work.txt` | The pinned SLOW file B loads | 74,785 / 68ec0805f5393c2d (74,781 characters), at 2f607f0 |
+| r14 (replaced, `replay.json`) | | B 11,276 / 05466170; file 73,243 / 26b60e7c at 9d1bda1; A unchanged |
 
 ## What 450 changes from r13b
 
@@ -45,8 +46,8 @@ This replaces r13b. It's the r13b structure, with SLOW BATCH rewritten to the de
 
 ## Cutover (after Cleanup accepts; see the open question below)
 
-1. Move the pin to 9d1bda1e84b57cbb6372c33664179fdebaff740f and read the file's sha256 back (26b60e7c).
-2. Create B **disabled**: same environment and repo as the hourly task, connectors MCPEmail, Notion, Gmail, Google-Calendar and bluetick. Then update_trigger with the model claude-opus-5-5. Read back the model, cron, connectors and prompt sha (054661701f27651a).
+1. Move the pin to 2f607f0b30dbc0688feef8f16e4859c9796a8f23 and read the file's sha256 back (68ec0805).
+2. Create B **disabled**: same environment and repo as the hourly task, connectors MCPEmail, Notion, Gmail, Google-Calendar and bluetick. Then update_trigger with the model claude-opus-5-5. Read back the model, cron, connectors and prompt sha (20cce0904095ec86).
 3. Fire B by hand once, in a window clear of :38: a dry check that the repo clones, the lock is taken and released, and the connectors load. It does real work within every limit.
 4. Paste A into trig_01UPT8LDrBDL5JQqW91Awgbo, and byte-compare it (677aa3473026e9ef).
 5. Enable B, then read both back. Record any slot where neither task does SLOW, or both do.
@@ -54,4 +55,18 @@ This replaces r13b. It's the r13b structure, with SLOW BATCH rewritten to the de
 
 **Handover gap to watch:** today's 16:38 hourly run (r12d) still does SLOW, so 17:08 under B would double up only if B is enabled before then. B's first natural run is Wed 08:08. The 07:38 FAST run can hold the lock at 08:08, which would make B skip that slot.
 
-**Status:** built. Replay pending. Nothing is deployed, and the pin ref hasn't moved.
+## r14b: replay fixes (`replay.json`: not ready, D1, D2, D3 and D5 must-fix)
+
+| Defect | What it was | The fix |
+|---|---|---|
+| D1 (high) | The code check split lines on ", " and "=", but outcomes contain ", " and Message-IDs contain "=" | One "S<nn> <key>" line per selected item. Each chunk is a "chunk <n>:" line followed by "S<nn> <outcome>" lines, numbers only. Python reads the record body verbatim through a quoted heredoc. Carryover lines are "S<nn> <key>" |
+| D2 (high) | B's RUN RECORD statuses contradicted SLOW BATCH 4/: a stop at minute 22 or a cap read as Failed, and a RULES LOAD failure as Completed | B's status is the one the code check prints. Also Failed: a SLOW FILE failure, or a stop before SLOW BATCH selects |
+| D3 | 450 says the daily cap keeps room for FAST, but nothing did | SLOW stops at the daily cap less the FAST reserve on Cadences. With no reserve on Cadences, it stops 30 short and the report says "FAST reserve missing on Cadences". **Akshay or the CTO sets the reserve on Cadences** |
+| D4 | The counts and the status were still the model's own words | The same python computes the counts, the first line and the status from `date -u`. "unfinished (minute 22)" under 22 measured minutes, or a tool error with no error text, counts as no reason. Output is copied, never rewritten |
+| D5 (dated: the pause starts Fri 6 Nov) | The Diwali hold caught every follow-up, including release mails | Only chases are held (routines 1 to 5, 7 and 8, nurture, revival, PR coordination), recheck the first weekday after. Release mails, invite confirmations, payments, billing, team steps, owner mail and the scorecard go on their dates unless Cadences names them. **Check this against the Cadences Diwali line** |
+| D6 | Payment reminders had no key form, so reminder 2 could match reminder 1 | Payment reminders get their own key, "<row>:team:seq-pay<n>-<reminder n>:<due>". Owner-mail items sent on their own get "ownermail:<date>:<row>" |
+| D7 | 449 wording was left in the report and AFTER SEND | Both now use the 450 outcome words |
+
+A is unchanged (677aa347). B and the file changed, so the pin is now 2f607f0. Built twice, byte-identical, no em dashes. A short re-replay of the fixes is running (`replay-b.json`).
+
+**Status:** waiting on the re-replay, then Cleanup. Nothing is deployed, and the pin ref hasn't moved.
