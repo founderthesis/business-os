@@ -66,4 +66,12 @@ The replay confirmed every audited failure now ends Partial with a named skip. I
 - The good-morning check searches "Run <routine>", which doesn't match the sweep's "Sweep <A|B>" summary. Update CLAUDE.md's check, or search both.
 - The "from what I know" tag is caught only if the run admits the 3g check wasn't made.
 
-**Status:** written and replayed. Quick check of r1b pending. Nothing is deployed; the CTO deploys after Cleanup.
+**Quick check of r1b (replay.json, r1b section):** all five fixes hold, with no regression and no other change. It's ready for Cleanup.
+
+The one open item is the CTO's call on sweep 3h b: add Live date to Mail issues, or accept Part B as a standing Partial.
+
+Two notes the check judged need no change:
+- **A second calendar marker:** the window audited this morning under a blank marker gets audited again once, which writes a second marker.
+- **WhatsApp's "its own timing":** the wording is broad.
+
+**Status:** written and replayed, passed. Nothing is deployed; the CTO deploys after Cleanup.

@@ -253,5 +253,59 @@
    "severity": "info"
   }
  },
- "verdict": "Not ready to deploy as built: scope, size, dashes and stamps are clean, and every audited failure replays to Partial with a named skip. Fix before deploy: cal-4b-missing and wa-quiet-hours, each a one-line edit to the mandatory list. CTO decision: sweep-3hb-forever (recommend adding Live date to Mail issues in the same deploy). Recommended in the same rebuild: cal-legacy-marker and sweep-same-day-reuse. The rest are low-severity wording fixes."
+ "verdict": "Not ready to deploy as built: scope, size, dashes and stamps are clean, and every audited failure replays to Partial with a named skip. Fix before deploy: cal-4b-missing and wa-quiet-hours, each a one-line edit to the mandatory list. CTO decision: sweep-3hb-forever (recommend adding Live date to Mail issues in the same deploy). Recommended in the same rebuild: cal-legacy-marker and sweep-same-day-reuse. The rest are low-severity wording fixes.",
+ "r1b": {
+  "inputs": {
+   "calendar": "60052 / b1080b69814d8566",
+   "evals": "16531 / cf15ed48886e8710 (identical to r1)",
+   "whatsapp": "28430 / afcac744347f02f9",
+   "sweep": "40914 / e5d2f31ba96fd37b",
+   "method": "word diff r1 build -> r1b build; stamps recomputed; em-dash counts; sizes"
+  },
+  "diff_vs_r1": {
+   "calendar": [
+    "'4b,' added to the mandatory list",
+    "1b skip test: '... whose page body has a \"run <run id>\" line; a marker without one doesn't count.'",
+    "stamp dd645eed692e"
+   ],
+   "whatsapp": [
+    "'A post the prompt holds for quiet hours or its own timing is n/a, never a skip.'",
+    "stamp 7409dd7ef56f"
+   ],
+   "sweep": [
+    "'(reusing today's: keep its earlier lines and add this run's below \"rerun <run id>\")'",
+    "'or \"Sweep <A|B> <D Mon>: Failed: <why>\"'",
+    "stamp c1f618bc2a9f"
+   ],
+   "evals": []
+  },
+  "checks": {
+   "cal-4b-missing": "fixed",
+   "cal-legacy-marker": "fixed: the blank 3 Nov 08 marker and any pre-deploy marker no longer suppress the audit",
+   "wa-quiet-hours": "fixed",
+   "sweep-same-day-reuse": "fixed: earlier body lines kept. The Summary still resets to Started, but TWO PARTS can read the kept STEP lines",
+   "sweep-failed-format": "fixed",
+   "sweep-3hb-forever": "open, by design, for the CTO (B stays Partial until Live date exists)",
+   "scope": "pass: only the stated edits plus stamps changed; no other words",
+   "em_dash": "pass (0/0/0, sweep 1 pre-existing)",
+   "size": "pass (all under 65,336)",
+   "stamps": "pass (all four recompute)"
+  },
+  "notes": {
+   "cal-second-marker": {
+    "severity": "low",
+    "quote": "a marker without one doesn't count",
+    "scenario": "A window holding a legacy blank marker gets re-audited, and the run writes a second 'Calendar audit done' Activity for that window. That's harmless, since findings dedupe on the Claude note and the skip test now picks the valid marker. It's a one-time leftover.",
+    "fix": "optional: update the blank marker in place instead of creating a second one"
+   },
+   "wa-own-timing-broad": {
+    "severity": "low",
+    "quote": "holds for quiet hours or its own timing is n/a",
+    "scenario": "'its own timing' could be stretched to cover a missed morning brief. The prompt's timing rule (first run at or after 08:00) makes a missed brief an actual skip, so the literal reading still catches it.",
+    "fix": "none needed; optionally 'its own timing (a brief not yet due)'"
+   }
+  },
+  "regressions": "none found",
+  "verdict": "r1b fixes all five targeted defects with no regression and no behaviour change beyond receipts. Deployable once the CTO accepts 3h b as a standing Partial or adds Live date to Mail issues."
+ }
 }
