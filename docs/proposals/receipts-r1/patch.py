@@ -51,9 +51,12 @@ dash = {n: t.count(chr(0x2014)) for n, t in src.items()}
 # calendar: record, mandatory steps, and the audit marker carries the run id and its findings or isn't written
 c = src["calendar"]
 c = R(c, "\n\nSTEP 1. READ THE CALENDAR\n", "\n\n" + block("calendar", std_record("calendar"),
-    "Mandatory every run: STEPS 1, 1a, 2, 3, 3b, 4a, 4, 4f, 4e, 4c, 4d and 5, each with its per-item Notion and Drive "
+    "Mandatory every run: STEPS 1, 1a, 2, 3, 3b, 4a, 4, 4b, 4f, 4e, 4c, 4d and 5, each with its per-item Notion and Drive "
     "checks; STEP 1b once per window (a window already audited: \"STEP 1b: n/a (window <08|16|22> audited by <run id>)\").") +
     "\n\nSTEP 1. READ THE CALENDAR\n")
+c = R(c, "(Kind Note, Source Calendar, the window's start date).",
+         "(Kind Note, Source Calendar, the window's start date) whose page body has a \"run <run id>\" line; a marker "
+         "without one doesn't count.")
 c = R(c, "Write that Activity only after the whole audit finished and every finding is written;",
          "Write that Activity only after the whole audit finished and every finding is written, with the page body \"run <run "
          "id>\" and one line per finding (or \"no findings\"); a marker without them is never written;")
@@ -67,7 +70,8 @@ e = R(e, "\n\nSTEP 1. FIND THE WORK\n", "\n\n" + block("evals", std_record("eval
 w = src["whatsapp"]
 w = R(w, "\n\nSTEP 0. ZOYA GROUP", "\n\n" + block("whatsapp", std_record("whatsapp"),
     "Mandatory every run: STEP 0 with 0a2, 0b, 0c and 0d, STEPS 1, 2, 2b, 3d, 4 and 5; STEP 3 on the first run of the JST "
-    "day (other runs: \"STEP 3: n/a (not the day's first run)\").",
+    "day (other runs: \"STEP 3: n/a (not the day's first run)\"). A post the prompt holds for quiet hours or its own "
+    "timing is n/a, never a skip.",
     "Every create names its parent data source and is fetched back; the record has \"creates: <n> confirmed in their data "
     "source, <n> not\", and one not confirmed is a failed write: Partial. ") + "\n\nSTEP 0. ZOYA GROUP")
 
@@ -75,7 +79,9 @@ w = R(w, "\n\nSTEP 0. ZOYA GROUP", "\n\n" + block("whatsapp", std_record("whatsa
 sw = src["sweep"]
 sw = R(sw, "\n\nSTEP 2. DECISIONS\n", "\n\n" + block("sweep",
     "Your report Activity (TWO PARTS: Source ID \"sweep:<A|B>:<today>\") is the run record: create it, or reuse today's, "
-    "before any other write, with Summary \"Sweep <A|B> <D Mon>: Started\"; its final Summary is STEP 7's first line.",
+    "before any other write, with Summary \"Sweep <A|B> <D Mon>: Started\" (reusing today's: keep its earlier lines and "
+    "add this run's below \"rerun <run id>\"); its final Summary is STEP 7's first line, or \"Sweep <A|B> <D Mon>: "
+    "Failed: <why>\".",
     "Mandatory: every step of your part (TWO PARTS), STEP 4 row by row, each check on each row; a check that cannot run "
     "(a missing field or page) is \"skipped (<what is missing>)\".") + "\n\nSTEP 2. DECISIONS\n")
 

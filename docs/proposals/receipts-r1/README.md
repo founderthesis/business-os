@@ -6,10 +6,10 @@
 
 | Routine | Trigger | Live | New |
 |---|---|---|---|
-| Calendar sync | trig_01Voiz5YsK2SnVf2STF8PoSH | 57,968 / f6d140196f3b75b4 | 59,970 / 8503ea145e702df9 |
+| Calendar sync | trig_01Voiz5YsK2SnVf2STF8PoSH | 57,968 / f6d140196f3b75b4 | 60,052 / b1080b69814d8566 |
 | Founder Thesis guest evals | trig_01R1yHgEztVEo832zMwUugBr | 14,795 / 1d87f124107a06c6 | 16,531 / cf15ed48886e8710 |
-| WhatsApp to Business OS | trig_01MnmJYorWrd61K7b5BCqXr1 | 26,336 / ca8009c24aaeda15 | 28,350 / c5bb8b95d5ffc5e3 |
-| Daily sweep | trig_01MdfUFg2qrebDWgiHwncgnd | 39,131 / 6783dd01e396e5ab | 40,789 / 31f1f5a025e17513 |
+| WhatsApp to Business OS | trig_01MnmJYorWrd61K7b5BCqXr1 | 26,336 / ca8009c24aaeda15 | 28,430 / afcac744347f02f9 |
+| Daily sweep | trig_01MdfUFg2qrebDWgiHwncgnd | 39,131 / 6783dd01e396e5ab | 40,914 / e5d2f31ba96fd37b |
 
 All four are under the cap.
 
@@ -45,4 +45,25 @@ All four are under the cap.
 
 - **The sweep's verify-or-blank rule:** it tagged a guest "from what I know". That's a behaviour rule, not a receipt. Flagged for the next sweep change.
 
-**Status:** written. Replay pending (`replay.json`). Nothing is deployed; the CTO deploys after Cleanup.
+## r1b (replay.json)
+
+The replay confirmed every audited failure now ends Partial with a named skip. It also confirmed the diffs, sizes and deployment stamps, and found no behaviour change beyond receipts. Fixes:
+
+| Item | Fix |
+|---|---|
+| Calendar: STEP 4b missing from the list | Added |
+| Calendar: blank old markers still counted | STEP 1b's skip test counts a marker only when its page body has a "run <run id>" line. The blank 3 Nov 08 marker no longer counts, so that window is audited again |
+| WhatsApp: overnight runs ending Partial | A post the prompt holds for quiet hours or its own timing is n/a, never a skip |
+| Sweep: a same-day rerun lost the earlier lines | Reusing today's record keeps its earlier lines and adds this run's below "rerun <run id>" |
+| Sweep: no Failed wording | The final Summary is STEP 7's first line, or "Sweep <A|B> <D Mon>: Failed: <why>" |
+
+**For the CTO, sweep 3h b:** Mail issues has no Live date, so 3h b can't run and every Part B run will be Partial, naming it. Recommendation: add a Live date (date) field to Mail issues in the same deploy, rather than relabelling the step n/a, so Partial keeps its meaning.
+
+**Lows left as listed in replay.json:**
+- Failed and Partial overlap in wording.
+- Step caps can read as "a sample".
+- No-op is undefined.
+- The good-morning check searches "Run <routine>", which doesn't match the sweep's "Sweep <A|B>" summary. Update CLAUDE.md's check, or search both.
+- The "from what I know" tag is caught only if the run admits the 3g check wasn't made.
+
+**Status:** written and replayed. Quick check of r1b pending. Nothing is deployed; the CTO deploys after Cleanup.

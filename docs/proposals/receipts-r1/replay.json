@@ -1,0 +1,257 @@
+{
+ "inputs": {
+  "patch": "patch.py",
+  "rebuilt_identical": true,
+  "files": {
+   "calendar": {
+    "live": "live/calendar.txt",
+    "live_sha16": "f6d140196f3b75b4",
+    "build": "build/calendar.txt",
+    "build_sha16": "8503ea145e702df9",
+    "build_bytes": 59970
+   },
+   "evals": {
+    "live": "live/evals.txt",
+    "live_sha16": "1d87f124107a06c6",
+    "build": "build/evals.txt",
+    "build_sha16": "cf15ed48886e8710",
+    "build_bytes": 16531
+   },
+   "whatsapp": {
+    "live": "live/whatsapp.txt",
+    "live_sha16": "ca8009c24aaeda15",
+    "build": "build/whatsapp.txt",
+    "build_sha16": "c5bb8b95d5ffc5e3",
+    "build_bytes": 28350
+   },
+   "sweep": {
+    "live": "live/sweep.txt",
+    "live_sha16": "6783dd01e396e5ab",
+    "build": "build/sweep.txt",
+    "build_sha16": "31f1f5a025e17513",
+    "build_bytes": 40789
+   }
+  },
+  "deployment_refs": {
+   "calendar": "calendar 1e6625dc36c9",
+   "evals": "evals b4c754ce513f",
+   "whatsapp": "whatsapp 3cd2564f6475",
+   "sweep": "sweep ce75179ee379"
+  },
+  "method": "patch.py re-run into scratch (byte-identical to build/); git diff --word-diff per file; em/en dash counts; stamps recomputed by writing the ref back as @@VERSION@@; each audited failure replayed literally against the new text; mandatory lists checked against every STEP header in each prompt."
+ },
+ "cases": [
+  {
+   "id": "diff-scope",
+   "check": "Word diff holds only the RUN RECORD block (+ calendar marker sentence)",
+   "result": "pass",
+   "evidence": "calendar 2 hunks (block before STEP 1; 1b marker sentence), evals/whatsapp/sweep 1 hunk each (block only). No other words changed."
+  },
+  {
+   "id": "em-dash",
+   "check": "No em dash added",
+   "result": "pass",
+   "evidence": "U+2014 counts live/build: calendar 0/0, evals 0/0, whatsapp 0/0, sweep 1/1 (the pre-existing 'Independent review — latest checkpoint' page title). No en dashes."
+  },
+  {
+   "id": "size",
+   "check": "Each build under 65,336 bytes",
+   "result": "pass",
+   "evidence": "calendar 59970, evals 16531, whatsapp 28350, sweep 40789."
+  },
+  {
+   "id": "stamp",
+   "check": "Deployment reference reproducible",
+   "result": "pass",
+   "evidence": "sha256 of each build with the ref written back as @@VERSION@@ matches the 12-hex stamp; same convention as routines/zoya/build.py."
+  },
+  {
+   "id": "replay-calendar-light-pass",
+   "audit": "10:35 report: 'light pass, did not run the per-step Notion and Drive checks'",
+   "result": "pass",
+   "evidence": "'one skipped, cut short or run as a lighter pass (a sample, \"a light pass\", checks not made) is Partial' plus mandatory '... each with its per-item Notion and Drive checks' and 'a check you didn't make is never written as done' force Partial with 'STEP n: skipped (<reason>)'."
+  },
+  {
+   "id": "replay-calendar-blank-marker",
+   "audit": "3 Nov 08 marker blank, no run id, no findings",
+   "result": "pass for new markers; see defect cal-legacy-marker",
+   "evidence": "'with the page body \"run <run id>\" and one line per finding (or \"no findings\"); a marker without them is never written'. But the 1b skip test is unchanged, so the existing blank 08 marker (and any pre-deploy marker) still counts as the window audited."
+  },
+  {
+   "id": "replay-calendar-missing-marker",
+   "audit": "2 Nov 08 marker missing",
+   "result": "pass",
+   "evidence": "STEP 1b is mandatory once per window; a run in the window that did not audit cannot write n/a (no marker to cite) so writes skipped -> Partial; a run that stopped part way writes no marker and is cut short -> Partial."
+  },
+  {
+   "id": "replay-evals-2b-2c",
+   "audit": "skipped STEP 2b backfill and 2c reruns with no reason",
+   "result": "pass",
+   "evidence": "'Mandatory every run: STEPS 1, 2, 2b, 2c and 3 (2b and 2c run even when STEP 1 finds nothing)' -> 'STEP 2b: skipped (<reason>)' and Partial."
+  },
+  {
+   "id": "replay-whatsapp-skips",
+   "audit": "skipped 3d, 4 and 0a2",
+   "result": "pass (except overnight, see wa-quiet-hours)",
+   "evidence": "all three are in the mandatory list -> skipped lines -> Partial."
+  },
+  {
+   "id": "replay-whatsapp-creates",
+   "audit": "did not confirm creates landed in their parent data sources",
+   "result": "pass",
+   "evidence": "'the record has \"creates: <n> confirmed in their data source, <n> not\", and one not confirmed is a failed write: Partial'. Workable: WRITES already requires the parent and a fetch-back, so the line is a count of checks the run already makes. Minor ambiguity on retried creates, see wa-creates-count."
+  },
+  {
+   "id": "replay-sweep-2nov-B",
+   "audit": "2 Nov B Partial; STEP 4 not done row by row",
+   "result": "pass",
+   "evidence": "'STEP 4 row by row, each check on each row' + 'a check you didn't make is never written as done' -> Partial with the reason."
+  },
+  {
+   "id": "replay-sweep-3hb",
+   "audit": "3h b could not run (Mail issues has no Live date)",
+   "result": "Partial with 'skipped (Live date missing)' -- on every B run, forever",
+   "evidence": "'a check that cannot run (a missing field or page) is \"skipped (<what is missing>)\"' + 'one skipped ... is Partial, whatever the reason'. See defect sweep-3hb-forever."
+  },
+  {
+   "id": "replay-sweep-memory-tag",
+   "audit": "tagged a guest 'from what I know'",
+   "result": "weak",
+   "evidence": "Only caught if the run itself admits the 3g dated-news check was not made. No new rule targets memory-based tags (out of scope for receipts; 3g already says unverified values stay empty)."
+  },
+  {
+   "id": "mandatory-calendar",
+   "check": "List vs prompt steps 1,1a,1b,2,3,3b,4a,4,4b,4f,4e,4c,4d,5",
+   "result": "fail",
+   "evidence": "STEP 4b (FT Community record, runs every run for Recorded/Form filled rows in 14 days) is missing. 1b once-per-window handled correctly. No once-a-day step wrongly listed."
+  },
+  {
+   "id": "mandatory-evals",
+   "check": "List vs steps 1,2,2b,2c,3",
+   "result": "pass"
+  },
+  {
+   "id": "mandatory-whatsapp",
+   "check": "List vs steps 0(0a,0a2,0b,0c,0d),1,2,2b,3,3d,4,5",
+   "result": "pass with notes",
+   "evidence": "STEP 3 correctly limited to the day's first run. 0a not named (covered by 'STEP 0'). Quiet hours make 0a2/0b/0c posts unavailable 23:00-07:00, see wa-quiet-hours."
+  },
+  {
+   "id": "mandatory-sweep",
+   "check": "'every step of your part (TWO PARTS)'",
+   "result": "pass",
+   "evidence": "Delegates to TWO PARTS (A: 2,3,3r,3a,3a2; B: 4b,3i,3h,3g,3b,3d,4,5,6c,7b), so no once-a-day or other-part step is wrongly mandatory. 7b is once a day and B-only, consistent."
+  },
+  {
+   "id": "calendar-no-findings",
+   "check": "Can a no-findings window write its marker?",
+   "result": "pass",
+   "evidence": "'one line per finding (or \"no findings\")'."
+  },
+  {
+   "id": "calendar-na-window",
+   "check": "Does 'n/a (window <08|16|22> audited by <run id>)' work?",
+   "result": "works for markers written by this build; not for pre-deploy markers",
+   "evidence": "The run id comes from the marker's 'run <run id>' body line; a legacy marker has none, so the line cannot be filled and the blank 3 Nov 08 marker still suppresses the audit."
+  },
+  {
+   "id": "sweep-two-parts",
+   "check": "Report Activity as run record vs TWO PARTS 'read the previous run of the same part' and STEP 7 first line",
+   "result": "mostly compatible",
+   "evidence": "Previous run's record is a different day's Source ID, and its STEP lines make 'a step it skipped runs first' easier. STEP 7's first line is the final Summary, consistent. Clash only on a same-day rerun (reuse resets today's row to Started) and STEP 7 has no Failed form; see sweep-same-day-reuse, sweep-failed-format."
+  },
+  {
+   "id": "behaviour-beyond-receipts",
+   "check": "Adversarial: other behaviour changes",
+   "result": "none material",
+   "evidence": "New rows are Kind Note, Source empty, linked to nothing: no hit on daily cap ('Zoya sent'), WhatsApp window (Source WhatsApp), 1b marker search, sweep 3b stray mail (Source Gmail), sweep 4b(c)/(d) (Email out / unique Source IDs), STEP 4 Quiet (Engagement-linked). Status-only effects: calendar Drive-missing and WhatsApp 0d missing-connector degradations now end Partial (intended)."
+  }
+ ],
+ "defects": {
+  "cal-4b-missing": {
+   "quote": "Mandatory every run: STEPS 1, 1a, 2, 3, 3b, 4a, 4, 4f, 4e, 4c, 4d and 5",
+   "scenario": "A run skips STEP 4b (FT Community record and LinkedIn for Recorded/Form filled guests in the last 14 days), which runs every run. Nothing makes that Partial, so the run reports Completed.",
+   "fix": "Add 4b: 'STEPS 1, 1a, 2, 3, 3b, 4a, 4, 4b, 4f, 4e, 4c, 4d and 5'.",
+   "severity": "medium"
+  },
+  "sweep-3hb-forever": {
+   "quote": "a check that cannot run (a missing field or page) is \"skipped (<what is missing>)\"",
+   "scenario": "Mail issues has no Live date, so 3h b cannot run on any B run. Every B run is Partial from deploy onward, and the good-morning check flags it daily until Partial stops meaning anything. It's correct to the letter (the check really isn't made), so it's not a wording bug, but it is an operational defect.",
+   "fix": "CTO decision. Recommended: add the Live date property to Mail issues (or point 3h b at the field that exists) in the same deploy. Don't relabel it n/a, because that would mark an unmade check as fine. If the schema can't change now, accept a known Partial and have the good-morning check name it, with a Builder Task row.",
+   "severity": "medium"
+  },
+  "wa-quiet-hours": {
+   "quote": "Mandatory every run: STEP 0 with 0a2, 0b, 0c and 0d ... one skipped ... is Partial, whatever the reason",
+   "scenario": "Between 23:00 and 07:00 JST STEP 0 says 'post only replies to his own messages'. A pending 0a2 done report or a 0b promises post is held by that rule, so it's written as skipped (quiet hours), and every overnight run with pending items ends Partial although it followed the prompt.",
+   "fix": "Add: 'a post held by quiet hours is \"n/a (quiet hours, posts next run after 07:00)\"'.",
+   "severity": "medium"
+  },
+  "cal-legacy-marker": {
+   "quote": "Skip it when the window already has the Activity \"Calendar audit done: <YYYY-MM-DD> <08|16|22> JST\" ... \"STEP 1b: n/a (window <08|16|22> audited by <run id>)\"",
+   "scenario": "The blank 3 Nov 08 marker, or any marker written before deploy, still satisfies the unchanged skip test. Later runs write n/a with no run id to cite, so a window that was never properly audited reads as audited.",
+   "fix": "In the skip test, count a marker only if its page body holds 'run <run id>'. A marker without it is treated as missing, and the audit runs.",
+   "severity": "low-medium"
+  },
+  "sweep-same-day-reuse": {
+   "quote": "create it, or reuse today's, before any other write, with Summary \"Sweep <A|B> <D Mon>: Started\"",
+   "scenario": "On a same-day rerun of a part (a retry after a failure), the new run resets today's row to Started before or instead of reading it, which loses the earlier run's 'Partial: skipped <STEP>' line. TWO PARTS' 'a step it skipped runs first' then has nothing to read, and the earlier run's id and times are overwritten.",
+   "fix": "Add: 'reusing today's row: first read its Summary and STEP lines for TWO PARTS, then keep the earlier run's lines under \"earlier run <run id>\" in the body.'",
+   "severity": "low-medium"
+  },
+  "sweep-failed-format": {
+   "quote": "its final Summary is STEP 7's first line",
+   "scenario": "The RUN RECORD defines Failed, but STEP 7's first line only has Completed or Partial forms, so a failed sweep has no defined Summary.",
+   "fix": "Add 'Failed: <why>' as a STEP 7 first-line form, or have Failed runs write 'Sweep <A|B> <D Mon>: Failed: <error>'.",
+   "severity": "low"
+  },
+  "failed-vs-partial": {
+   "quote": "Failed: stopped early, or a connector error, quota or rate limit left work undone",
+   "scenario": "Calendar's HARD RULES say a blocked or refused tool call skips one item and the run goes on. One 504 on one item now reads as both Partial (an item not done) and Failed (a connector error left work undone), so models will split on it. Zoya's record counts a blocked item that's in the report as handled.",
+   "fix": "Failed only when a connector or quota stopped a whole step or the run. One item blocked and reported: Partial, with the error line.",
+   "severity": "low"
+  },
+  "caps-and-rule-skips": {
+   "quote": "one skipped, cut short or run as a lighter pass (a sample, ...) is Partial",
+   "scenario": "Capped steps (sweep 3 and 3a 60 rows, 3a2 20, 3i 10; evals 2 5, 2b 8, 2c 5; calendar 4f 5; WhatsApp 3d 3) and the prompt's own instructed skips (sweep 3d 'No approved toggle for the show: skip and say so'; 'skip if the Claude note already has it') can be read as 'a sample' or 'skipped', which would make runs with a backlog Partial forever.",
+   "fix": "Add: 'a step that stops at its own cap, oldest first, is done (report the remainder); an item a step's own rule says to skip is not a skip.'",
+   "severity": "low"
+  },
+  "wa-step3-na-masks-miss": {
+   "quote": "STEP 3 on the first run of the JST day (other runs: \"STEP 3: n/a (not the day's first run)\")",
+   "scenario": "The day's first run fails or is missed. Every later run writes n/a, so a day with no FT Community sync looks clean.",
+   "fix": "'n/a (done today by <run id>)'; if no run today did it, run it.",
+   "severity": "low"
+  },
+  "noop-skipped-undefined": {
+   "quote": "<Completed|No-op|Partial|Failed>",
+   "scenario": "No-op is never defined, so an all-n/a run could be Completed or No-op. Decision 419 also lists Skipped, which the block doesn't carry.",
+   "fix": "'No-op: every mandatory step n/a.' Either add Skipped or note why it's left out.",
+   "severity": "low"
+  },
+  "record-date-wording": {
+   "quote": "The record never sets Last activity, Waiting on or a date on any row.",
+   "scenario": "Read literally, this contradicts 'Date the start' on the record's own row.",
+   "fix": "'... on any other row.'",
+   "severity": "low"
+  },
+  "wa-creates-count": {
+   "quote": "\"creates: <n> confirmed in their data source, <n> not\"",
+   "scenario": "It's unclear whether a create confirmed after the WRITES retry counts as 'not', and whether the run record and STEP 4 batch creates (up to 100 a call) are counted per page.",
+   "fix": "'count each page; one confirmed after its retry is confirmed; the run record is not counted.'",
+   "severity": "low"
+  },
+  "sweep-goodmorning-pattern": {
+   "quote": "Summary \"Sweep <A|B> <D Mon>: Started\"",
+   "scenario": "CLAUDE.md's good-morning check looks for run records by Summary 'Run <routine> ...'. The sweep's records won't match, so they look missing.",
+   "fix": "Outside this patch: have the good-morning check also match Source ID 'sweep:'. Keeping the sweep's own key is right, because it avoids the TWO PARTS clash.",
+   "severity": "low"
+  },
+  "patch-noop-assert": {
+   "quote": "assert chr(0x2014) not in s.replace(chr(0x2014), \"\", 0) or True",
+   "scenario": "The em-dash assert in finish() can never fail. The per-file count check at the end does the real work.",
+   "fix": "Delete the line.",
+   "severity": "info"
+  }
+ },
+ "verdict": "Not ready to deploy as built: scope, size, dashes and stamps are clean, and every audited failure replays to Partial with a named skip. Fix before deploy: cal-4b-missing and wa-quiet-hours, each a one-line edit to the mandatory list. CTO decision: sweep-3hb-forever (recommend adding Live date to Mail issues in the same deploy). Recommended in the same rebuild: cal-legacy-marker and sweep-same-day-reuse. The rest are low-severity wording fixes."
+}
