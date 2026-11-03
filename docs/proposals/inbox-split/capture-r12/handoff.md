@@ -2,7 +2,8 @@
 
 | File | Bytes / sha256 |
 |---|---|
-| `capture.txt` (r12c) | 46,195 / 44b14c3e0d3a7826 |
+| `capture.txt` (r12d) | 46,594 / 3d38d6f3b93860f8 |
+| r12c (replaced) | 46,195 / 44b14c3e0d3a7826 |
 | r12b (replaced) | 45,719 / 9800a28138445dd0 |
 | r12 (replaced, see `replay.json`) | 45,137 / 64f8fc5bf40c9ec6 |
 | Input: `../r11/capture.txt` (r11, should-fix included, assumed live) | 43,989 / 043dbe3ad8d0a858 |
@@ -57,3 +58,7 @@ The CTO's hand batch, allmail 108690 to 108716, is the 0A fixture. It ended 10 o
 The loop-in's html_body now ends with a gmail_quote blockquote of the pitch message: "On <date>, <name> <address> wrote:", then the message as HTML, or as escaped text. Gmail shows the HTML body, so without it Akshay saw no chain. The plain-text body keeps MCP Emails' own quote. That one edit is all r12c changes. Patched twice, byte-identical.
 
 **Not done here:** the CTO's one-draft test (create, draft_read, delete) is a write to a mailbox. This session needs Akshay's go-ahead before running it.
+
+## r12d: Zoya r15 replay D7, D8
+
+A pitch that came through a forward (Saurabh's, or Akshay's other address) quotes only the original message inside it, with that message's own Date and From. MAILBOX allows include_html for the loop-in quote. Patched twice, byte-identical.
