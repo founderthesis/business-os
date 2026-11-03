@@ -2,7 +2,8 @@
 
 | File | Bytes / sha256 |
 |---|---|
-| `capture.txt` (r12d) | 46,594 / 3d38d6f3b93860f8 |
+| `capture.txt` (r12e) | 46,565 / 9caf2cdba8a63698 |
+| r12d (replaced) | 46,594 / 3d38d6f3b93860f8 |
 | r12c (replaced) | 46,195 / 44b14c3e0d3a7826 |
 | r12b (replaced) | 45,719 / 9800a28138445dd0 |
 | r12 (replaced, see `replay.json`) | 45,137 / 64f8fc5bf40c9ec6 |
@@ -62,3 +63,7 @@ The loop-in's html_body now ends with a gmail_quote blockquote of the pitch mess
 ## r12d: Zoya r15 replay D7, D8
 
 A pitch that came through a forward (Saurabh's, or Akshay's other address) quotes only the original message inside it, with that message's own Date and From. MAILBOX allows include_html for the loop-in quote. Patched twice, byte-identical.
+
+## r12e: Cleanup C1
+
+The quote is only the innermost message from outside the team. Every forward layer, and every note by Akshay, Saurabh or anyone tagged Team, is removed. If unsure, there's no quote. Patched twice, byte-identical.

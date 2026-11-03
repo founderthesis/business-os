@@ -110,3 +110,39 @@ The CTO says Akshay's go-ahead is already given in decision 450, and asks this s
   - moving a ref this session was told never to touch.
 - **A wording mismatch:** decisions.md quotes 450 as "this is my approval; don't wait for another Sonnet failure". The CTO's message quotes it as "don't ask me again for this scope", and that wording isn't in the repo.
 - **What happens next:** once Akshay confirms in this session, the test and the cutover run as specified. If he'd rather, the CTO session can run them instead.
+
+## r15c and capture r12e: Cleanup's verdict (4f38458) and Akshay's clarifications
+
+| File | Bytes / sha256 |
+|---|---|
+| `zoya-one.txt` (A, hourly FAST) | 53,152 / e2a016c50140abc4 |
+| `zoya-slow.txt` (B, Zoya SLOW task) | 12,515 / ce54c367b7c72390 |
+| `zoya-slow-work.txt` (pinned SLOW file) | 77,925 / d2955ae3ba0e2e0d (77,921 characters), at b732cb3c663681cb80736d696de2201bf8ce5e38 |
+| Capture r12e (`../inbox-split/capture-r12/capture.txt`) | 46,565 / 9caf2cdba8a63698 |
+| Actions r11b (accepted, unchanged) | 46,112 / 07832eb6 |
+| r15b (replaced) | A 52,925 / 532e8ddb; B 11,420 / 253d9120; file 76,760 / e9c6dcb4 at 251388d; capture r12d 46,594 / 3d38d6f3 |
+
+**Command:** `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin b732cb3c663681cb80736d696de2201bf8ce5e38`. Built twice, byte-identical, no em dashes. Capture patched twice, byte-identical. **The pin moves to b732cb3, not 251388d.**
+
+**Cleanup's blockers:**
+- **Z1, shared HARD (A line 105):** LEAK CHECK now covers the text you write, and also the gmail_quote and MCP's plain-text quote with every nested part. The quote is skipped only when every recipient outside the team was on the quoted message's own From, To or Cc. A quote that fails goes, with the mail, to Akshay's list unsent. This is Cleanup's exact text.
+- **Z2, shared HARD:** "Never a link (the gmail_quote and MCP's plain-text quote aside) outside the approved list" and "SHOW CHECK (decision 306) before every send (the gmail_quote and MCP's plain-text quote aside)" (A line 106). FAST's zencastr clause still follows the link rule.
+- **C1, capture:** the quote is only the innermost message from outside the team. Every forward layer, and every note by Akshay, Saurabh or anyone tagged Team, is removed. If unsure, there's no quote. Date and From come from that innermost message.
+- **(b), SLOW file line 66 and LIMITS:** team WhatsApp goes only in a team hour on Cadences. With none set there, never before 09:00 or after 20:00 IST, so the 08:08 JST run (04:38 IST) sends none; an item that needs one is held "team hours". **Check:** that fallback also means the 11:08 JST run (07:38 IST) sends no team WhatsApp, so only the 17:08 run does unless Cadences names team hours.
+
+**Akshay's clarifications:**
+1. **PREFLIGHT (B line 1, new).** When the run's message is exactly "PREFLIGHT", the run:
+   - takes the lock;
+   - loads the tools, with one read-only call per connector and no business row (MCP Emails folder_list on each inbox, the Notion Activities data source fetch, Calendar list_calendars, a Blueticks chats call);
+   - checks the repo origin, the SLOW FILE fetch and its sha256 (no load past that), and the model as the run sees it;
+   - writes one record, "Run zoya-slow <t> JST: Preflight", in place of Started, with one line per check;
+   - releases the lock and stops. It does no RULES LOAD and no selection, reads no business data and sends nothing.
+2. **Metadata first (SLOW file line 82, new).** The eligible list comes from metadata only: SQL on Engagements (Waiting on, Next action, Next date, Status, Show) and Activities (Action keys, Summaries, dates). Threads, pages and Activities are read only for the selected items, one at a time, and each outcome is saved in its chunk.
+3. **Crash recovery (SLOW file line 83, new).** Before a carried key is redone, it goes through ACTIONS' Sent check: Zoya's Sent and ad@'s Sent since the earlier run's start, plus an Activity holding that Action key. A match becomes "completed match <Message-ID>", logged "recovered: S<nn> <key>", and is never sent again. With no match, it's worked as carryover. Carryover from a record left at Started was already in SLOW BATCH 2/.
+4. **Lock (B line 1, plus LOCK step 3 on line 8).** A held lock means an immediate Skipped record and stop: no wait, no retry, no takeover. LOCK step 3 already did this, and the intro now says so outright.
+
+**D2** is settled read-only by the CTO: Drafts:322 went through draft update to Drafts:323, and html_body survived (Sent Mail:849). The draft test is dropped.
+
+**Should-fix items** from the verdict aren't done in this round (asked: "nothing more"). They're listed in `cleanup-verdict.md` for the next build.
+
+**Status:** ready for Cleanup's diff check. Nothing is deployed by this session, and the pin ref hasn't moved. The CTO deploys.
