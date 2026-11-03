@@ -2,7 +2,10 @@
 
 | File | Bytes / sha256 |
 |---|---|
-| `zoya-one.txt` (FAST, r12b) | 47,848 / 78e746d22d25bb4f |
+| `zoya-one.txt` (FAST, r12c) | 50,160 / 079b081a704907ef, pinned to cd9000f |
+| `zoya-slow-work.txt` (SLOW, r12c) | 69,409 / 9ccf22ad32f4fa1e, at cd9000f |
+| Actions r11 (`../inbox-split/r11/actions.txt`) | 45,775 / 794328afdc81758e, on the live 43,955 / 4ac5406d |
+| `zoya-one-r12b.txt` (replaced) | 47,848 / 78e746d22d25bb4f |
 | r12 (replaced, failed replay) | 46,635 / 41c6854a3f0164ca |
 
 **How it's built:**
@@ -75,4 +78,33 @@ The r12 replay failed, with 2 high and 5 medium must-fixes (`replay.json`). r12b
 - **The ask to Mamatha (D13):** it's in neither the FAST nor the pinned SLOW file. The CTO confirms whether it lives on Rules for Zoya; if not, it's one line in SLOW's team work later.
 - **zencastr.com/z/ guest links (D11):** STEP 0r reads only zencastr.app.link. Say if the other form should count.
 
-**Status:** r12b built twice, byte-identical. SLOW is unchanged (2cf5b715 at 63fcf66), so no pin move. No em dashes, and it's under the cap with 17.7k to spare. Ready for Cleanup. Nothing is deployed.
+**r12b status:** r12b built twice, byte-identical. SLOW is unchanged (2cf5b715 at 63fcf66), so no pin move. No em dashes, and it's under the cap with 17.7k to spare. Ready for Cleanup. Nothing is deployed.
+
+## r12c: decisions 446, 447 and 448 (3 Nov, the CTO's ask)
+
+**The pin moves this time.** 446 and 447 edit parts FAST and SLOW share (SCOPE, INVITES, SENDING), so SLOW changes. The new SLOW is committed at cd9000f1773adc139a077c69edc7dcfb2e305422 (`routines/zoya/release/zoya-slow-work.txt`), and FAST is built against it: `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin cd9000f1773adc139a077c69edc7dcfb2e305422`. Built twice, byte-identical. Deploy step 1 is the pin move, then a sha256 read-back, then the FAST paste.
+
+**446, client-show scheduling (shared; SCOPE's UN# section and INVITES):**
+- On un#, Built to Share and Human by Design, Zoya never proposes, creates, moves or confirms a recording time on her own. C7, C8 and INVITES go only on Akshay's ok in Your call.
+- Each scheduling turn (their windows or slots, a "can't do", a reschedule, the host's pick) becomes one Akshay segment: "Akshay: <guest> (<show>) scheduling: <what came in>. Recommend: <one step>, because <one line>. Write ok, not ok or a change in Your call. (<D Mon>)". There's only ever one per row, and a new turn updates it.
+- Zoya sends only the holding reply. On Akshay's ok, she does the step; for un#, slots go to Sri's board as before.
+- An instruction mail from Akshay ("block the 17th as well") is his ok: it's queued as a Zoya decision step, and she does it.
+- B2S and HBD hosts pick slots only after Akshay's ok. INVITES on a client show needs his ok for that time.
+
+**447, the subject follows the org (shared; SENDING's THREADING):**
+- When the org a mail is about differs from the org in the thread's subject, the reply stays on the thread with In-Reply-To and References kept. Its subject becomes "<Org> <> Founder Thesis Podcast" (on a client show, the show's name from its pitch sheet), set with draft update's subject before the read-back.
+- A Claude note line "subject: <it>" carries it, so later mails on the row, SLOW follow-ups included, keep it. The read-back checks the subject.
+
+**448, replies on Akshay's own threads (FAST STEP 1 b; actions STEP 5 and 6e):**
+- A reply to a mail Akshay wrote himself goes on his list with one recommendation, even a "will revert". Not a loop-in, the billing forward, an agent's send or a team mail.
+- Zoya doesn't answer it. There's a holding reply only when it asks something.
+
+**Actions r11** (`docs/proposals/inbox-split/r11/patch.py`, asserting the live 4ac5406d input):
+- STEP 3's host-show slot bullet goes to Akshay first, with one recommendation (446, replacing decision 114 there). On his ok, the host-board step is as before.
+- The decision 443 line now points to it.
+- STEP 5 gets the 448 bullet, which wins over the Zoya, acknowledgement and ball-in-their-court bullets. 6e leaves those mails out of its buckets.
+- It's 45,775 bytes, well under the cap, so no split was needed.
+
+**Cases to replay:** Ryan Louvar (un#, booked for 16 Nov though Sri gave the 17th and 18th, and "block 17th as well" was never done); Commix on the Livlong 365 thread; Mike Cagney (Richard's "will revert" on Akshay's 1 Nov mail).
+
+**Status:** r12c is built twice and byte-identical, and actions r11 is patched twice and byte-identical. The replay is running. Nothing is deployed, and the pin ref hasn't moved.
