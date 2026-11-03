@@ -1,0 +1,57 @@
+# Zoya r14: decision 450, Zoya SLOW on Opus with durable outcomes (3 Nov)
+
+This replaces r13b. It's the r13b structure, with SLOW BATCH rewritten to the decision 450 spec. Apply `build_one.patch` to `routines/zoya/build_one.py` at f70901f, which adds two new parts, slowtask-intro and slowtask-load.
+
+**Command:** `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 9d1bda1e84b57cbb6372c33664179fdebaff740f`. Built twice, byte-identical, no em dashes.
+
+| File | Task | Bytes / sha256 |
+|---|---|---|
+| `zoya-one.txt` | A: hourly Zoya (trig_01UPT8LDrBDL5JQqW91Awgbo), FAST only, Sonnet | 50,822 / 677aa3473026e9ef |
+| `zoya-slow.txt` | B: **new** "Zoya SLOW", `CRON_TZ=Asia/Tokyo 8 8,11,17 * * 1-5`, Opus | 11,276 / 054661701f27651a |
+| `zoya-slow-work.txt` | The pinned SLOW file B loads | 73,243 / 26b60e7c6b8eca39 (73,239 characters), at 9d1bda1 |
+
+## What 450 changes from r13b
+
+- **Runs:** three a day on weekdays, 08:08, 11:08 and 17:08 JST.
+- **SELECT FIRST:**
+  - Every SLOW obligation due today or overdue is its own item, keyed as ACTIONS says. Two obligations on one row are two items and two outcomes.
+  - The bounce scan runs first, outside the batch.
+  - The run selects up to 30 items, in order: (1) recording logistics within 7 days, (2) payments, invoices and billing, (3) dated commitments, plus today's owner mail and the Monday scorecard, (4) the oldest eligible follow-ups, then anything else.
+  - Carryover goes first within its class.
+  - "eligible <n>, oldest <key> due <date>" and "selected: <key>, ..." are saved to the record before any send.
+- **Chunks of 10:** after each chunk, the run appends "chunk <n>: <key>=<outcome>, ...". Each outcome is one of:
+  - completed <msgid or match>
+  - overtaken <what>
+  - held <rule> (<what>), recheck <D Mon>
+  - blocked <the missing fact or the decision someone else holds>; <next owner>
+  - unfinished (<cap | minute 22 | tool error>)
+  
+  Time, size or the number due is never a hold, a block or a reason. A follow-up inside the Diwali pause is held "Diwali". The caps stay on Cadences (40 a run, and 150 a day shared with FAST, counted from today's Activities).
+- **Timing:** no new chunk starts after minute 22 (`date -u`). A run still holding the lock at :38 is fine: FAST skips, as LOCK says. The lock is never taken over.
+- **OUTCOME CHECK IN CODE:** a Bash python step diffs the selected keys against the chunk-line outcome keys. Any key with no outcome becomes unfinished and goes to "carryover: ...".
+- **Status:**
+  - Completed: every key ended completed, overtaken, held or blocked.
+  - Partial: some keys are unfinished, all from a cap, minute 22 or a tool error; the reason is named. A RULES LOAD failure is also Partial.
+  - Failed: any key is unfinished with none of those reasons, "early exit at minute <n>, <k> of <selected> unfinished". It's never Completed.
+  - No-op: eligible is 0.
+- **First record lines:** "eligible <n>, oldest <key> due <date>, selected <n>, completed <n>, overtaken <n>, held <n>, blocked <n>, unfinished <n>, remaining eligible <n>, elapsed <n> min". Then a usage line (input, cache read, cache write, output, cost), or "usage: unknown".
+- **Kept from r13b:**
+  - B loads the file in full, one slice per Bash call with END lines, against a known total.
+  - Class 1 never sends FAST's prep note, recording link or day-before note.
+  - Carryover comes from the newest record with "selected:".
+  - Owner mail and scorecard keys, and the batch-over-due-list fixes.
+  - A is FAST-only, with every r12d behaviour.
+- **Naming:** the spec's "RECONCILE IN CODE" is named "OUTCOME CHECK IN CODE", because the build refuses the old RECONCILE word (it belonged to the retired lease design).
+
+## Cutover (after Cleanup accepts; see the open question below)
+
+1. Move the pin to 9d1bda1e84b57cbb6372c33664179fdebaff740f and read the file's sha256 back (26b60e7c).
+2. Create B **disabled**: same environment and repo as the hourly task, connectors MCPEmail, Notion, Gmail, Google-Calendar and bluetick. Then update_trigger with the model claude-opus-5-5. Read back the model, cron, connectors and prompt sha (054661701f27651a).
+3. Fire B by hand once, in a window clear of :38: a dry check that the repo clones, the lock is taken and released, and the connectors load. It does real work within every limit.
+4. Paste A into trig_01UPT8LDrBDL5JQqW91Awgbo, and byte-compare it (677aa3473026e9ef).
+5. Enable B, then read both back. Record any slot where neither task does SLOW, or both do.
+6. The r12d set (actions r11b, capture r12b, and the Notion edits) goes with this window.
+
+**Handover gap to watch:** today's 16:38 hourly run (r12d) still does SLOW, so 17:08 under B would double up only if B is enabled before then. B's first natural run is Wed 08:08. The 07:38 FAST run can hold the lock at 08:08, which would make B skip that slot.
+
+**Status:** built. Replay pending. Nothing is deployed, and the pin ref hasn't moved.
