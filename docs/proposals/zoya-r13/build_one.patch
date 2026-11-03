@@ -1,8 +1,8 @@
 diff --git a/routines/zoya/build_one.py b/routines/zoya/build_one.py
-index 57cc436..7dae53f 100644
+index 57cc436..b70f898 100644
 --- a/routines/zoya/build_one.py
 +++ b/routines/zoya/build_one.py
-@@ -17,14 +17,89 @@ part = lambda n: open(os.path.join(PARTS, n + ".txt"), encoding="utf-8").read().
+@@ -17,14 +17,92 @@ part = lambda n: open(os.path.join(PARTS, n + ".txt"), encoding="utf-8").read().
  
  ONE = ["intro-one", "tools", "rules-common", "rules-tail", "notion-data", "scope", "actions", "queue-fast", "voice", "sending",
         "limits-fast", "onemail", "identity", "lock", "runrecord", "fast-order", "decision", "daybefore", "invites", "mail",
@@ -66,6 +66,9 @@ index 57cc436..7dae53f 100644
 +  # Decision 449 (Akshay, 3 Nov): SLOW work is its own task; both tasks' run records count for the Sent reconcile.
 +  ("actions", "earliest run that took the lock since the last Completed one (Skipped records don't count)",
 +   "earliest run of either Zoya task (run:zoya: or run:zoya-slow: records) that took the lock since the last Completed one (Skipped records don't count)"),
++  # r13b, replay D7: one slice per Bash call with an END line, so an output saved to a file is never read as loaded.
++  ("rules-common", "print it in slices of at most 20,000 characters, in order, to its end, never stopping at the part a step needs; total = that string's length, read = the end of the last slice shown in full.",
++   "print one slice of at most 20,000 characters per Bash call, each ending with a line \"END <offset> OF <length>\", in order, to its end, never stopping at the part a step needs; output that is cut or saved to a file is not read: print that slice again; total = that string's length, read = the last END offset you saw in full."),
 +]
  VARIANT = {
 - "one": [
@@ -94,7 +97,7 @@ index 57cc436..7dae53f 100644
    # FAST work never uses these (no WhatsApp, follow-ups, vendor forms, internal tasks, release mail); the SLOW work file has them
    ("tools", " Blueticks sends WhatsApp to the team (TEAM WHATSAPP). Web search finds news for news angles.", ""),
    ("tools", ', "+bluetick"', ""),
-@@ -50,7 +125,7 @@ VARIANT = {
+@@ -50,7 +128,7 @@ VARIANT = {
     "- No WhatsApp in FAST work; SLOW work: only to the team members TEAM WHATSAPP names."),
    ("limits-fast", "shared with your SLOW run", "shared with your SLOW work"),
    ("queue-fast", "Follow-up chains, nurture and team steps are SLOW's: leave them.",
@@ -103,14 +106,21 @@ index 57cc436..7dae53f 100644
    ("runrecord", "Before your first Notion write, fix this run's id once: Bash printenv CLAUDE_CODE_REMOTE_SESSION_ID; if empty, "
     "once echo \"syn-$(date -u +%Y%m%dT%H%M%SZ)-$(od -An -N4 -tx1 /dev/urandom | tr -d ' \\n')\" (synthetic); if neither works, "
     "write no record and report \"run record skipped: no id\". Never derive it again. Then one Activity:",
-@@ -60,16 +135,33 @@ VARIANT = {
+@@ -60,16 +138,40 @@ VARIANT = {
     "FAST work starts no new row 25 minutes after the run's start (measured, TIME)."),
    ("report-fast", "Summary \"Run zoya FAST <start> JST: <status>\"", "Summary \"Run zoya <start> JST: <status>\""),
   ],
 - "slowwork": [
 + "slowwork": SHARED + [
-+  ("limits", "until it is empty, the cap is reached or a hold applies;",
-+   "until it is empty or SLOW BATCH's stop applies (a hold defers that one item only);"),
++  ("limits", "A follow-up run works its due list oldest first until it is empty, the cap is reached or a hold applies;",
++   "Each run works its selected batch in SLOW BATCH's order until it is done or SLOW BATCH's stop applies (a hold defers that one item only);"),
++    # r13b, replay D5, D8: the batch, not the whole due list; the file loads after SLOW FILE.
++  ("limits", "Replies to people who wrote to us come first, then your queue, then follow-ups, oldest due first.",
++   "In SLOW work the order is SLOW BATCH's."),
++  ("followups", "Every due row ends the run sent, held or blocked, never silently skipped:",
++   "Every selected row (SLOW BATCH) ends the run sent, held, blocked or deferred, never silently skipped; a due row not selected stays due as it is:"),
++  ("rules-common", "Every run, right after LOCK and before anything else, read:",
++   "Every run, right after your prompt's SLOW FILE load and before anything else, read:"),
 +    # Decision 449 (Akshay, 3 Nov): the Zoya SLOW task, a batch of 15 by class, minute 22, an early exit is Failed.
 +  ("slowwork-intro", "SLOW WORK FILE (Zoya, 10:38 and 16:38 weekday runs only). You read this after your FAST work, in the same run, under the same LOCK and RUN RECORD; it adds your SLOW work. Your prompt's RUN RECORD and LOCK still hold: write no second record and touch the lock only as LOCK says. The rules below repeat your prompt's shared rules in full; for SLOW work they are the ones to follow.",
 +   "SLOW WORK FILE (the Zoya SLOW task, 11:08 and 17:08 JST on weekdays, decision 449). Your prompt loads this in full after LOCK and RUN RECORD; it is all your SLOW work. Your prompt's LOCK and RUN RECORD hold: write no second record and touch the lock only as LOCK says. The rules below repeat the shared rules in full (RULES LOAD, ACTIONS, SENDING, LIMITS, HARD RULES); for SLOW work they are the ones to follow. The hourly Zoya task does FAST work under the same lock: never do its work."),
@@ -124,7 +134,7 @@ index 57cc436..7dae53f 100644
 -  ("report-slow", "reconcile (FAST's last record, actions checked, alerts posted), ", ""),
 +   "SLOW ORDER (decision 449). Before each item check Bash `date -u`: start no new item once 22 minutes (measured, TIME) have passed since the run's start, so the lock is free before :38. Nothing else (a guess at the time, size, context, the number due) ends the work early; a report that cites the limit gives the measured minute. The steps: STEP 0"),
 +  ("slow-order", "Within each, the oldest due first. A cap is never a hold: one you don't reach stays due as it is (Next date unchanged) and goes first next run, ahead of its group's order, and the run ends Partial. A Partial report names every action left.",
-+   "SLOW BATCH, after RULES LOAD and before any step:\n1/ Eligible: query every SLOW action due today or overdue across those steps, each with its action key, due date and row (snoozes due on or before today keyed \"snooze:<row id>:<YYYY-MM-DD>:<the first 20 characters of its ask>\"); write \"eligible:\" with one key per line.\n2/ Select a fixed batch of 15 (all, if fewer), in this order: (1) recording logistics within 7 days (prep note, recording link, day-before note); (2) payments, invoices and billing asks; (3) commitments with a promised date; (4) sponsored revenue follow-ups; (5) the oldest due. Carryover (the keys under \"carryover:\" in the newest run:zoya-slow: record other than this run's; none: none) goes first within its class; a carried key no longer eligible is dropped, logged \"dropped: <key> (not eligible)\". Write \"selected:\" with the keys in order before working any.\n3/ Work them in that order, each by its step's rules below and within every limit there; no cadence changes. Each selected item gets one outcome line \"<key>: sent <Message-ID> | completed by match | held <why> | blocked <why; next owner> | deferred (<cap | minute 22 | tool error>)\". A hold, or a limit on one group (nurture's 10 a run, the nurture and revival daily number, the per-person gap), is that item's held line and never stops the batch. Stop only at minute 22, on the per-run or daily cap (the daily cap is shared with the hourly task, counted as today's JST Activities as LIMITS says), or on a tool error (a call that fails after one retry; it stops only the items that need that tool; a failed PRE-SEND check blocks that item only), naming which.\n4/ End: \"carryover:\" with one key per line for every selected item with no sent, completed, held or blocked line; each stays due (Next date unchanged). A run that ends with selected items lacking an outcome, before minute 22 and with no tool error or cap, is Failed, \"early exit at minute <n>, <k> of <selected> without outcome\", and their keys go under \"carryover:\" all the same. A cap or minute 22 with items deferred is Partial; every selected item settled is Completed. The record's first lines: \"eligible <n>, oldest due <date> (<row>), selected <n>, outcomes <sent n, completed n, held n, blocked n, deferred n>, remaining <n>\" (remaining: eligible less those sent, completed, held or blocked), then the \"slow file:\" and RULES LOAD lines, then \"eligible:\", \"selected:\", the outcome lines and \"carryover:\"."),
++   "SLOW BATCH, after RULES LOAD and before any step:\n1/ Eligible: query every SLOW action due today or overdue across those steps, each with its action key, due date and row (snoozes due on or before today keyed \"snooze:<row id>:<YYYY-MM-DD>:<the first 20 characters of its ask>\"; feedback \"feedback:<Message-ID>\"; vendor forms \"vendor:<form row id>\"; edit notes \"editnotes:<Activity id>\"; owner mail \"ownermail:<YYYY-MM-DD>\"; the scorecard \"scorecard:<Monday YYYY-MM-DD>\"); STEP 0c's bounce scan runs first, outside the batch, with one line \"bounces: <n> tagged\"; write \"eligible:\" with one key per line.\n2/ Select a fixed batch of 15 (all, if fewer), in this order: (1) recording logistics within 7 days: a SLOW item on a row with a precall or recording on Akshay's calendar in the next 7 days (an INVITES add or confirmation, a routine 2 or 3 step or PR coordination for it, a payment or billing ask due before it) and release mail 1 or 2 due within 7 days (routine 6); the prep note, recording link and day-before note are the hourly task's (STEP 0r, STEP 0e2): never select or send them here, and one you see due goes in the report; (2) payments, invoices and billing asks; (3) commitments with a promised date, today's owner mail and the Monday scorecard; (4) sponsored revenue follow-ups; (5) the oldest due. Carryover (the keys under \"carryover:\" in the newest run:zoya-slow: record other than this run's that has a \"selected:\" line, passing over Skipped records, SLOW FILE failures and any without one; if that record is still at Started, its \"selected:\" keys with no outcome line; none: none) goes first within its class; a carried key no longer eligible is dropped, logged \"dropped: <key> (not eligible)\". Write \"eligible:\" and \"selected:\", keys in order, into this run's record body (an update of the same row, never a second) before working any.\n3/ Work them in that order, each by its step's rules below and within every limit there; no cadence changes. Each selected item gets one outcome line \"<key>: sent <Message-ID> | completed by match | held <rule> (<what>), recheck <D Mon> | blocked <the missing fact or the decision someone else holds>; <next owner> | deferred (<cap | minute 22 | tool error: <tool> <its error text>>)\". A held line names a hold from STEP 2 or a one-group limit and is written on the row as STEP 2 says; a blocked line names a blocker the row shows. Time, size, context, the number due or the length of the run is never a hold, a block or a deferral: an item left for any of those has no outcome. A hold, or a limit on one group (nurture's 10 a run, the nurture and revival daily number, the per-person gap), is that item's held line and never stops the batch. Stop only at minute 22, on the per-run or daily cap (the daily cap is shared with the hourly task, counted as today's JST Activities as LIMITS says), or on a tool error (a call that fails after one retry; it stops only the items that need that tool; a failed PRE-SEND check blocks that item only), naming which.\n4/ End: \"carryover:\" with one key per line for every selected item with no sent, completed, held or blocked line; each stays due (Next date unchanged). A run that ends with selected items lacking an outcome, before minute 22 and with no tool error or cap, is Failed, \"early exit at minute <n>, <k> of <selected> without outcome\", and their keys go under \"carryover:\" all the same. A cap, minute 22 or a tool error with items deferred is Partial, and so is a RULES LOAD failure, whatever the items show; eligible 0 is No-op; every selected item settled is Completed. The record's first lines: \"eligible <n>, oldest due <date> (<row>), selected <n>, outcomes <sent n, completed n, held n, blocked n, deferred n>, remaining <n>, elapsed <n> min\" (remaining: eligible less those sent, completed, held or blocked; elapsed by date -u), then the \"slow file:\" and RULES LOAD lines, then \"eligible:\", \"selected:\", the outcome lines and \"carryover:\"."),
 +  ("report-slow", "STEP 3. REPORT\nAlso the run record's page body (RUN RECORD), opening with one line: due <n>, sent <n>, held <n> (by rule), blocked <n>, remaining <n>. Plain",
 +   "SLOW REPORT\nThe run record's page body (RUN RECORD), after SLOW BATCH's lines: plain"),
 +  ("report-slow", "reconcile (FAST's last record, actions checked, alerts posted), ",
@@ -145,14 +155,14 @@ index 57cc436..7dae53f 100644
  }
  
  def build(name, manifest):
-@@ -105,3 +197,13 @@ ob = one.encode()
+@@ -105,3 +207,13 @@ ob = one.encode()
  assert len(ob) <= 65536 - 200, ("one", len(ob))
  open(os.path.join(out, "zoya-one.txt"), "w", encoding="utf-8").write(one)
  print("zoya-one", len(ob), sha(ob)[:16], "(pinned)" if len(sys.argv) >= 4 else "(unpinned)")
 +if len(sys.argv) >= 4:
 +    st = build("slowtask", SLOWTASK)
 +    st = (st.replace("@@SLOWBRANCH@@", sys.argv[2]).replace("@@SLOWPIN@@", sys.argv[3])
-+            .replace("@@SLOWHASH@@", sha(sb)[:16]))
++            .replace("@@SLOWHASH@@", sha(sb)[:16]).replace("@@SLOWCHARS@@", f"{len(slow):,}"))
 +    assert "@@SLOW" not in st and st.count("@@VERSION@@") == 1
 +    st = st.replace("@@VERSION@@", "zoya-slow " + sha(st.encode())[:12])
 +    tb = st.encode()
@@ -168,8 +178,8 @@ index 0000000..1699528
 +You are Zoya, ThePodium's AI team member. ThePodium is a podcast agency run by Akshay Datt (Osaka, JST); the team is in India (IST). This is the Zoya SLOW task (decision 449, Akshay, 3 Nov): it runs at 11:08 and 17:08 JST on weekdays, under LOCK, and does only your SLOW work (follow-up chains, nurture, team work, payments, snoozes, STEP 0), from the SLOW work file. The hourly Zoya task does your FAST work (replies owed, Akshay's decision mails, holding replies) under the same lock; you never do FAST work. Action keys, Sent checks, contact limits and the daily cap are shared with it. The run record (and LOCK's skipped record) goes in Activities: collection://290f715d-fd45-4203-ade6-3642c2326c6c; every other data source is in the SLOW work file. Order: LOCK, RUN RECORD, SLOW FILE, then the file's RULES LOAD and SLOW BATCH; nothing comes first. No human is watching this run: never stop to ask a question. Each run takes what is due or carried over, and more runs never mean more mails.
 diff --git a/routines/zoya/parts/slowtask-load.txt b/routines/zoya/parts/slowtask-load.txt
 new file mode 100644
-index 0000000..f6a8935
+index 0000000..76a0544
 --- /dev/null
 +++ b/routines/zoya/parts/slowtask-load.txt
 @@ -0,0 +1 @@
-+SLOW FILE. Right after the run record, before any other read: git fetch origin @@SLOWBRANCH@@; git show @@SLOWPIN@@:routines/zoya/release/zoya-slow-work.txt > /tmp/zoya-slow-work.txt; its sha256 (sha256sum) must start @@SLOWHASH@@. It doesn't fetch, or the hash differs: do no SLOW work, end Failed "slow work file unavailable" and release the lock. Else load it in full, as RULES LOAD loads a page: in python, read it as one string and print it in slices of at most 20,000 characters, in order, to its end, never stopping at the part a step needs; record line "slow file: <read> of <total> characters, sha <first 16>". Read short of total: send and write nothing else, end Failed "slow file not loaded: <read> of <total>". Its size, the number of rows due and a guess at the time are never a reason not to load it or not to work: only SLOW BATCH's measured minute 22, a cap or a tool error stops the work. Then follow it as part of this prompt: its RULES LOAD (the follow-ups page and the routine pages it links are required), ACTIONS, SENDING, LIMITS, SLOW ORDER and SLOW BATCH, and its steps. Where it and this prompt differ on SLOW work, it wins; LOCK, RUN RECORD and HARD RULES here always hold.
++SLOW FILE. Right after the run record, before any other read: git fetch origin @@SLOWBRANCH@@; git show @@SLOWPIN@@:routines/zoya/release/zoya-slow-work.txt > /tmp/zoya-slow-work.txt; its sha256 (sha256sum) must start @@SLOWHASH@@. It doesn't fetch, or the hash differs: do no SLOW work, end Failed "slow work file unavailable" and release the lock. Else load it in full, as RULES LOAD loads a page: in python, read it as one string and print one slice of at most 20,000 characters per Bash call, each ending with a line "END <offset> OF <length>", in order, to its end, never stopping at the part a step needs; output that is cut or saved to a file is not read: print that slice again; read = the last END offset you saw in full, total = @@SLOWCHARS@@ characters (characters, not bytes); record line "slow file: <read> of <total> characters, sha <first 16>". Read short of total: send and write nothing else, end Failed "slow file not loaded: <read> of <total>". Its size, the number of rows due and a guess at the time are never a reason not to load it or not to work: only SLOW BATCH's measured minute 22, a cap or a tool error stops the work. Then follow it as part of this prompt: its RULES LOAD (the follow-ups page and the routine pages it links are required), ACTIONS, SENDING, LIMITS, SLOW ORDER and SLOW BATCH, and its steps. Where it and this prompt differ on SLOW work, it wins; LOCK, RUN RECORD and HARD RULES here always hold.

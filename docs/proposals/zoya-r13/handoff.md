@@ -2,23 +2,24 @@
 
 Built on r12d (recording links, 445 to 448 included) with `build_one.patch`, applied to `routines/zoya/build_one.py` at f70901f in a worktree, plus two new parts: slowtask-intro and slowtask-load.
 
-**Command:** `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin ab107654e5af4db90c085f3545fe3d5cbfa891ae`. Built twice, byte-identical, no em dashes.
+**Command:** `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin ba3e8aa2a637bc56737fe6c4b875521f54fd2c4e`. Built twice, byte-identical, no em dashes.
 
 | File | Task | Bytes / sha256 |
 |---|---|---|
-| `zoya-one.txt` | A: Zoya, hourly :38 (the current trigger) | 50,675 / 99b244b6569a40b8 |
-| `zoya-slow.txt` | B: **new** Zoya SLOW task, 11:08 and 17:08 JST, Mon to Fri | 11,027 / 42863ae7f3f52237 |
-| `zoya-slow-work.txt` | The pinned SLOW file B loads | 70,737 / aa59b79a1784f959, at ab10765 |
+| `zoya-one.txt` | A: Zoya, hourly :38 (the current trigger) | 50,809 / ca541881f4a059ea |
+| `zoya-slow.txt` | B: **new** Zoya SLOW task, 11:08 and 17:08 JST, Mon to Fri | 11,260 / 3f9f2e22ee7ce129 |
+| `zoya-slow-work.txt` | The pinned SLOW file B loads | 72,411 / 3a612b90498c8e81 (72,407 characters), at ba3e8aa |
+| r13 (replaced, `replay.json`) | | A 50,675 / 99b244b6; B 11,027 / 42863ae7; file 70,737 / aa59b79a at ab10765 |
 
 ## Why B loads a pinned file
 
-The SLOW file alone is 70.7k, over the 65,536-byte cap, so it can't be inlined. It stays pinned, and B is small: intro, TOOLS, LOCK, RUN RECORD, SLOW FILE and HARD RULES. The shared text the CTO listed (RULES LOAD with the follow-ups page and its routine pages required, ACTIONS, SENDING, LIMITS) is in the file, from the same `build_one.py` parts, so there's still one source. B's prompt can't skip the file:
+The SLOW file alone is 72.4k, over the 65,536-byte cap, so it can't be inlined. It stays pinned, and B is small: intro, TOOLS, LOCK, RUN RECORD, SLOW FILE and HARD RULES. The shared text the CTO listed (RULES LOAD with the follow-ups page and its routine pages required, ACTIONS, SENDING, LIMITS) is in the file, from the same `build_one.py` parts, so there's still one source. B's prompt can't skip the file:
 - **Order:** it loads it right after the run record, before any other read.
 - **Check:** the sha must match; then it reads it in python, in 20,000-character slices, to the end, and logs "slow file: <read> of <total> characters, sha <16>".
 - **Fails closed:** a short read sends nothing and ends Failed, "slow file not loaded".
 - **Excuses:** size, row counts and a guessed time never count as reasons to stop. Only the measured minute 22, a cap or a tool error does. The 16:38 run's excuse ("not enough of the run to read the slow-work file... 100+ rows") is named in that rule.
 
-B's HARD RULES and LOCK are the same text as FAST's. Its run records are "Run zoya-slow ...", Source ID run:zoya-slow:<run id>, and its LOCK-skip record is "Run zoya-slow <start> JST: Skipped: lock held by ...". The Activities data source id is in B, because the run record is written before the file is loaded.
+B's LOCK is FAST's (only the Skipped summary differs), and its HARD RULES are the SLOW file's. Its run records are "Run zoya-slow ...", Source ID run:zoya-slow:<run id>, and its LOCK-skip record is "Run zoya-slow <start> JST: Skipped: lock held by ...". The Activities data source id is in B, because the run record is written before the file is loaded.
 
 ## A: FAST-only
 
@@ -49,7 +50,7 @@ B's HARD RULES and LOCK are the same text as FAST's. Its run records are "Run zo
 
 ## Deploy (CTO; atomic, A first)
 
-1. **Move the pin** to ab107654e5af4db90c085f3545fe3d5cbfa891ae and read the file's sha256 back (aa59b79a).
+1. **Move the pin** to ba3e8aa2a637bc56737fe6c4b875521f54fd2c4e and read the file's sha256 back (3a612b90).
 2. **Notion edits:** the r12d list (Rules for Zoya, Client show mails, Controls section 8, the Recording link toggle, the zencastr link clause).
 3. **Paste A** into the hourly Zoya trigger and byte-compare.
 4. **Create B:** cron `CRON_TZ=Asia/Tokyo 8 11,17 * * 1-5`, on the same environment, repo and model as the Zoya task (Sonnet, per 449). Byte-compare its prompt.
@@ -61,4 +62,28 @@ B's HARD RULES and LOCK are the same text as FAST's. Its run records are "Run zo
 - **STEP 0 items are in the batch.** Feedback, bounces, vendor forms, owner mail and the scorecard now count toward the 15 by age, class 5. Fixed-date ones (the Monday scorecard, owner mail) aren't a class of their own. Say if they should run outside the batch.
 - **Deferred outcomes.** The CTO listed only "deferred (cap)". r13 adds "minute 22" and "tool error" as reasons, so every stop has an outcome.
 
-**Status:** built. Replay pending. Nothing is deployed, and the pin ref hasn't moved.
+## r13b: replay fixes (`replay.json`)
+
+The r13 replay failed. Its 6 must-fixes and 4 minor fixes are all applied, using its exact old and new text:
+
+| Defect | What it was | The fix |
+|---|---|---|
+| D1 (high) | Batch class 1 named the prep note, recording link and day-before note, but those are FAST-only mails | Class 1 is now SLOW items for a precall or recording in the next 7 days, plus release mails 1 and 2. The FAST-only mails are never selected here; one that's due goes in the report |
+| D2 (high) | Carryover came from the newest SLOW record, even a Skipped one, a file failure or a crash | Carryover now comes from the newest record that has a "selected:" line. A record stuck at Started gives its selected keys that have no outcome. "eligible:" and "selected:" are written to this run's record before any item is worked |
+| D4 (high) | "held <why>" and "blocked <why>" took any text, so a run could quit early and still end Completed | A held line names a real hold and a recheck date. A blocked line names a missing fact or someone else's decision, plus the next owner. A deferral names the cap, minute 22, or the tool and its error. Time, size, context or the number due never counts as an outcome |
+| D5 | STEP 2 ("every due row ends the run...") and LIMITS (the due list until empty, its own order) contradicted the batch | Both now point to the selected batch and SLOW BATCH's order. An unselected row just stays due |
+| D6 | STEP 0 items had no keys, so carryover couldn't match them, and owner mail and the scorecard could starve | Keys are defined for feedback, vendor forms, edit notes, owner mail and the scorecard. Today's owner mail and the Monday scorecard are class 3. The bounce scan runs first, outside the batch |
+| D7 | A model could print all the slices in one call, get output saved to a file, and still log a full read | One slice per Bash call, each ending with an "END <offset> OF <length>" line; a cut or saved output gets printed again. B states the total, 72,407 characters. **The same per-call rule is now in the shared RULES LOAD, so A changes too** |
+| D3 | r12d's elapsed line had been dropped | "elapsed <n> min" is back in the first line |
+| D8 | The file said it's read "right after LOCK" | It's read right after the prompt's SLOW FILE load |
+| D9 | The end status was undefined for some cases | Eligible 0 is No-op. A cap, minute 22, a tool error or a RULES LOAD failure is Partial |
+| D10 | This hand-off misdescribed B's HARD RULES | Corrected above |
+
+Built twice, byte-identical, with no em dashes. All three files changed, and the pin is now ba3e8aa. These fixes haven't been replayed again, because they're the replay's own exact text.
+
+**Risks no text fixes:**
+- A FAST run still going at :08 makes B skip that slot.
+- A run that dies holding the lock blocks both tasks until the runbook frees it.
+- Sonnet's context load (the 72k file plus every rules page) hasn't been measured. Record tokens on the first runs, as decision 449 asks.
+
+**Status:** ready for Cleanup with the r12d set. Ship A and B together, A first. Nothing is deployed, and the pin ref hasn't moved.
