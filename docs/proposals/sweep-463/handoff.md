@@ -2,7 +2,7 @@
 
 | File | Bytes / sha256 |
 |---|---|
-| `sweep.txt` (463c) | 42,324 / dabcaae17bc41cb7 |
+| `sweep.txt` (463c) | 42,406 / 76b49956eea00a03 |
 | 463b (replaced) | 41,598 / 3af292b4c9b196ba |
 | 463 (replaced) | 40,253 / f2a2b752d6a13d82 |
 | Live input: Daily sweep, trig_01MdfUFg2qrebDWgiHwncgnd, read back 4 Nov (equals `../inbox-split/sweep.txt`) | 39,131 / 6783dd01 |
@@ -85,3 +85,31 @@ Item 1's "here" is the FT Community list (collection://aefa65ce, view "WhatsApp:
 **The backfill (465.3)** is these steps' first runs, at most 15 Community creates a run. A read-only gap audit with "before" counts runs separately. The CTO verifies the "after" counts once this is live.
 
 **Status:** built, not replayed. Ready for Cleanup. Nothing is deployed and nothing is written.
+
+## The decision 465 backfill: "before" counts (read-only audit, 4 Nov ~15:50 JST)
+
+The full audit is `audit465-before.json`: names, companies, statuses and Notion ids, with no contact details. It covers Founder Thesis episodes recorded from 1 Sep to 4 Nov: 29 episodes and 30 guests. Entrust has two guests.
+
+**Excluded (2), both at Not releasing:**
+- Karmendra Kohli (SecurEyes).
+- Matthew Spacie (Magic Bus). Magic Bus is Not releasing, not Hold, so the rules' Not releasing exclusion already covers it.
+
+| Gap | Before | Who | What fixes it |
+|---|---|---|---|
+| (a) Guest list missing | 1 | Sameet Gupte (EvoluteIQ) | 3g, now from Episodes |
+| (b) Community row missing | 1 | Saket Saurabh (Nexla). The "Saket Saurav" row is Refit Global, a different person | 3k creates it, matched by Person |
+| (c) Added but still asked | 0 | none | WhatsApp b2 |
+| (d) Invited, but Akshay says added | 1 | Sankalp Arora (Gather AI): Your call 25 Oct "added to whatsapp group, remove from my queue" | WhatsApp 3a (3), from the Claude note copy |
+| (e) Blurb due (transcript in) | 5 | Bhanu Pratap Singh Tanwar, Ashish Goel, Saravana Maruthamuthu, Srinivas Choudhary, Raunak Bhinge | 3k reports them for the blurb chat |
+| (f) No invite ask while To invite or Invited | 1 | Sankalp Arora: clears once (d) sets him to Added | WhatsApp |
+
+**Two more** had an empty Blurb with a transcript but are excluded from (e): Anmol Madan (Unresponsive) and Ramki Gaddipati (Declined). 3k now flags a blurb only while Membership is To invite, Invited or Added. That's sweep 42,406 / 76b49956.
+
+**Expected "after" counts:** (a) 0, (b) 0, (c) 0, (d) 0 and (f) 0 after the first sweep run on 463c and the next WhatsApp run. (e) stays at 5 until the blurb chat writes them.
+
+**Not gaps, but worth a look:**
+- **Matched on name plus company, because People has no LinkedIn:** Gautam Rege, Anuj Tandon, Abhinav Parashar, Ankit Mehra and Sreepriya NS.
+- **Matched with no Organisation either:** Amit Patni, Rohan Ganapathy, Rajmohan Krishnan and Saket Saurabh. Amit Patni's Community row says "Raay Neo Pharma", while the guest list says "RAAY Global".
+- **Jayasimha Nuggehalli** is Published, but his guest-list row has no Episode link or Released date. 3g's "Episode now Published" rule should fill them.
+- **Stale statuses:** several October recordings are still Episode Status Scheduled (Ankit Mehra, Raunak Bhinge, Amit Das).
+- **The People "In WhatsApp group" checkbox** disagrees with Membership Added for many people. No routine owns that checkbox, so it's a candidate to retire or derive.
