@@ -62,3 +62,7 @@ Three changes have no decision behind them:
 - The zencastr link appears only in that guest's mail and invite.
 
 Nothing deployed by Cleanup.
+
+## Addendum: decision 460
+
+The rebuild after the blockers should also replace the 2 occurrences of "AD Personal" in the SLOW file with "AD Tasks": the scope line, and the routine 4 line. It's wording only, with the same page id. FAST and the SLOW task have none.
