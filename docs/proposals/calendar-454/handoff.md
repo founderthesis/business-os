@@ -2,7 +2,8 @@
 
 | File | Bytes / sha256 |
 |---|---|
-| `calendar.txt` (new) | 58,676 / a06a8b37924c60ad |
+| `calendar.txt` (454b) | 59,755 / 675f34934269a171 |
+| 454 (replaced) | 58,676 / a06a8b37924c60ad |
 | Live input (trig_01Voiz5YsK2SnVf2STF8PoSH, read back ~01:30 JST 4 Nov; not committed, because it carries the house mail addresses) | 57,968 / f6d140196f3b75b4 |
 
 **Build:** `python3 patch.py <live calendar prompt> <out>` asserts the live hash f6d14019 and each of 7 edits exactly once. Patched twice, byte-identical, no em dashes.
@@ -22,5 +23,16 @@
    - **Rule 4's no-link case:** it's now a Claude note only. Zoya's STEP 0r asks Mamatha, and puts it on Akshay's list within 24 hours, so this no longer raises a duplicate "Akshay: no Zencastr link" ask.
 
 Nothing else changed.
+
+4. **Decision 462: Zoya sends the day-before mail (STEP 3b; it's this routine's step, not Zoya's prompt's).**
+   - **Who gets a send:** on Founder Thesis, un# and Built to Share, it goes from Zoya's inbox, on the guest's own thread (a reply on its latest outside-the-team message; no thread, a new mail).
+     - To the guest.
+     - Cc Via, the other Stakeholders and the house copies: Akshay, plus Chaandini on Built to Share.
+     - Never the host, unless they wrote on the thread.
+     - Zoya's voice, and the host and Akshay are in the third person.
+   - **Checks:** SHOW CHECK runs on client shows, and a LEAK CHECK runs before every send. A note that fails goes to Akshay's list unsent. The existing send conditions (still on, 3 hours or more away, no hold, not already sent) apply to all three shows.
+   - **The recording link:** Founder Thesis uses the guest's Zencastr room (the Call link or the invite). un# uses unhashed.co/studio, approved for un# recordings only. Built to Share uses built2share.in/studio. With no link yet, the sentence is dropped (453).
+   - **Human by Design stays a draft** in Akshay's account (decision 313), because 462 names no HBD recording link. **To confirm with Akshay:** should HBD's go from Zoya too, and with which link?
+   - **Wording (CTO, Notion):** add a toggle "Recording tomorrow (client show)" to the wording page, in Zoya's voice and with her sign-off, using {show name} and "your conversation with {host first name}". Until it's there, the FT toggle is used with the client-show fill.
 
 **Status:** built, not replayed. Ready for Cleanup. Nothing is deployed. The CTO deploys.
