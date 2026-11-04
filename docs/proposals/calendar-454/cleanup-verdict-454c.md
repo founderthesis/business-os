@@ -11,7 +11,7 @@ Base: the live prompt, which get_trigger saved to a file. It hashes to 57,968 / 
 - 462: Zoya sends the day-before mail on FT, un# and Built to Share; Human by Design stays a draft.
 - 454c: transcript rows name Mamatha.
 
-This supersedes my earlier 454 acceptance (a06a8b37). Note that 454c doesn't carry the decision 460 AD Tasks rename I gave for 454 (a2ea9c6d). If the live prompt still says "AD Personal", re-apply `s.replace("AD Personal","AD Tasks")` after the patch and re-hash.
+This supersedes my earlier 454 acceptance (a06a8b37). Note that 454c doesn't carry the decision 460 AD Tasks rename I gave for 454 (a2ea9c6d). calendar.txt still says "AD Personal" twice. Deploy the renamed build: `s.replace("AD Personal","AD Tasks")` on calendar.txt gives 59,758 / e4b39d67eaab1cac, reproduced twice. That is the build to paste and read back.
 
 ## Deploy condition
 
