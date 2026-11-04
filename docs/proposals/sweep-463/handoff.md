@@ -2,7 +2,8 @@
 
 | File | Bytes / sha256 |
 |---|---|
-| `sweep.txt` (463b) | 41,598 / 3af292b4c9b196ba |
+| `sweep.txt` (463c) | 42,324 / dabcaae17bc41cb7 |
+| 463b (replaced) | 41,598 / 3af292b4c9b196ba |
 | 463 (replaced) | 40,253 / f2a2b752d6a13d82 |
 | Live input: Daily sweep, trig_01MdfUFg2qrebDWgiHwncgnd, read back 4 Nov (equals `../inbox-split/sweep.txt`) | 39,131 / 6783dd01 |
 
@@ -70,5 +71,17 @@ Item 1's "here" is the FT Community list (collection://aefa65ce, view "WhatsApp:
 - **Sameet:** his row already exists (Invited, no Blurb). 3k leaves Membership as it is and lists him as "blurb due" once his transcript is in.
 
 **Also (Cleanup should-fix 5):** STEP 3i's transcript-row Next action and the decision 376 line now name Mamatha (decision 456), not Ranjita. The calendar routine got the same change in 454c.
+
+## 463c: decision 465 (one after-recording process)
+
+**Scope (3g's Episode trigger and 3k):** Founder Thesis Episodes recorded from 2026-09-01 to today, with a usable recording: not Not releasing, Hold or corrupted, so Magic Bus stays out. The cutoff keeps 600+ older episodes out. 3g's Engagement-based trigger (Recorded or Form filled) is unchanged.
+
+**Matching, never by name prefix:**
+- **The guest list (3g):** by the People row's LinkedIn, else exact full name plus company. Case and spacing are ignored, so "SREEPRIYA N S" matches "Sreepriya NS". Saket Saurabh at Nexla isn't Saket Saurav at Refit Global.
+- **FT Community (3k):** by the Person relation to the guest's People row only. A name-only hit is reported, never linked.
+
+**The invite ask (3k):** while Membership is To invite or Invited, the guest's Founder Thesis Engagement carries one "Akshay: invite <first name> to the FT Community" segment, with Akshay in Waiting on. It's added once, and never if "WhatsApp addition pending" is already there. Once Membership is Added, the WhatsApp routine's b2 clears it.
+
+**The backfill (465.3)** is these steps' first runs, at most 15 Community creates a run. A read-only gap audit with "before" counts runs separately. The CTO verifies the "after" counts once this is live.
 
 **Status:** built, not replayed. Ready for Cleanup. Nothing is deployed and nothing is written.
