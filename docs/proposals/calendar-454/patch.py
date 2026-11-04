@@ -34,6 +34,11 @@ EDITS = [
   "{call link} (the recording link: Founder Thesis, the guest's Zencastr room, zencastr.app.link, from the row's Call link or the invite; un#, unhashed.co/studio; Built to Share, built2share.in/studio; Human by Design, the row's Call link; none yet:"),
  ('The client-show draft is signed Akshay (Akshay, 12 Oct),',
   'The Human by Design draft is signed Akshay (Akshay, 12 Oct),'),
+ # 454c, decision 456 (Cleanup should-fix 5): the transcript request goes to Mamatha.
+ ('Next action "Zoya: ask Ranjita for the transcript (decision 376)"',
+  'Next action "Zoya: ask Mamatha for the transcript (decision 456)"'),
+ ('decision 376: transcripts to Ranjita,',
+  'decision 376: transcripts to Mamatha (decision 456),'),
 ]
 for a, c in EDITS:
     assert s.count(a) == 1, (a[:60], s.count(a))

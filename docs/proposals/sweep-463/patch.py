@@ -16,6 +16,18 @@ EDITS = [
   "Flag (skip if Next action already says the same thing):\n- No owner (decision 463, Akshay, 4 Nov): an open guest Engagement (Kind empty; Status not They declined, We declined, Parked, Unresponsive or Published) whose Waiting on is empty, except an Outbound row at New (decision 167) and a Cold outreach Deal: fix it from the row and its thread when the owner is plain (OWNERS: a booked recording with nothing else open is Guest or PR; an unanswered mail from their side is Zoya's), with a Claude note line \"YYYY-MM-DD: Waiting on was empty, set <who> (daily sweep)\"; not plain: a report line \"no owner: <name> (<Status>)\" under For Akshay, nothing changed. Count both in the report.\n"),
  ("Founder Thesis guests list rows added and links filled;",
   "Founder Thesis guests list rows added and links filled (and recorded FT guests still missing, by name); open Guest rows with no owner (fixed, flagged);"),
+ # 463 as corrected (CTO, 4 Nov 15:14): recorded FT guests get an FT Community row; blurbs flagged, never written.
+ ('At most 10 a run, oldest Recording date first. Report the rows created.\n\n',
+  'At most 10 a run, oldest Recording date first. Report the rows created.\n\nSTEP 3k. FT COMMUNITY FOR RECORDED GUESTS (decision 463, Akshay, 4 Nov, Tab 15 item 1: the FT Community list, view "WhatsApp: to add"; calendar STEP 4b covers the last 14 days, this is the backstop). FT Community: collection://aefa65ce-8b38-40cb-8ef2-19d167adeea0. For every Founder Thesis Episode whose Recording date is today or earlier, except one at Not releasing or Hold (Magic Bus stays out, a corrupted recording), each of its guests (Episode Guests) has one FT Community row (by Person, else exact name plus company). None: create it with Name, Company, Person, Source FT guest, Type Founder or Investor, Membership To invite, Captured today. Found: link Person if empty; set Membership To invite only if it is empty, never another change. Blurb empty: the Episode has a transcript (Transcript file or Transcript link): a report line under For the blurb chat, "<name>: blurb due, transcript in (<Episode>)"; no transcript yet: a report line "<name>: blurb waits for the transcript". Never write Blurb, Blurb link or a "Blurb, <date>" section, and never run the founder-thesis-blurb skill (Akshay, 25 Oct: the Codex blurb chat writes blurbs). At most 15 creates a run, oldest recording first; one you can\'t settle goes in the report.\n\n'),
+ ('A run at or after 14:00 JST is PART B, in this order: STEP 4b, 3i, 3h, 3g, 3b, 3d, 4, 5, 6c, 7b.',
+  'A run at or after 14:00 JST is PART B, in this order: STEP 4b, 3i, 3h, 3g, 3k, 3b, 3d, 4, 5, 6c, 7b.'),
+ ('open Guest rows with no owner (fixed, flagged);',
+  'open Guest rows with no owner (fixed, flagged); FT Community rows created for recorded guests, and blurbs due or waiting (STEP 3k);'),
+ # decision 456 (Cleanup should-fix 5): transcript requests name Mamatha.
+ ('decision 376: transcripts to Ranjita,',
+  'decision 376: transcripts to Mamatha (decision 456),'),
+ ('Next action "Zoya: ask Ranjita for the transcript (decision 376)"',
+  'Next action "Zoya: ask Mamatha for the transcript (decision 456)"'),
 ]
 for a, c in EDITS:
     assert s.count(a) == 1, (a[:60], s.count(a))

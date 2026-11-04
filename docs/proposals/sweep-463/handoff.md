@@ -2,7 +2,8 @@
 
 | File | Bytes / sha256 |
 |---|---|
-| `sweep.txt` (new) | 40,253 / f2a2b752d6a13d82 |
+| `sweep.txt` (463b) | 41,598 / 3af292b4c9b196ba |
+| 463 (replaced) | 40,253 / f2a2b752d6a13d82 |
 | Live input: Daily sweep, trig_01MdfUFg2qrebDWgiHwncgnd, read back 4 Nov (equals `../inbox-split/sweep.txt`) | 39,131 / 6783dd01 |
 
 **Build:** `python3 patch.py <live sweep> <out>` asserts the live hash, each of 3 edits once, and no new em dash. Patched twice, byte-identical.
@@ -54,5 +55,20 @@ Checked read-only in the guests database (collection://b460a8fa) on 4 Nov ~14:20
 The new 3g would also add them at its first run.
 
 **Co-guest:** Rajmohan Krishnan (Entrust, with Sreepriya) has no row of his own. 3g's co-guest rule adds him.
+
+## 463b: the CTO's correction to 463.1 (4 Nov 15:14)
+
+Item 1's "here" is the FT Community list (collection://aefa65ce, view "WhatsApp: to add"), not the guest list. The guest-list sync above stays.
+
+**A new STEP 3k**, in PART B after 3g, applies the same rules as calendar STEP 4b, which covers only the last 14 days:
+- **Who:** the guests of every Founder Thesis Episode whose Recording date has passed, except Not releasing and Hold. Magic Bus stays out.
+- **Each guest has one FT Community row,** found by Person, else exact name plus company. A missing row is created with Name, Company, Person, Source FT guest, Type Founder or Investor, Membership To invite, and Captured today.
+- **A row that's found** gets Person linked if it's empty. Membership is set to To invite only if it's empty, and nothing else changes.
+- **An empty Blurb with the transcript in:** a report line under "For the blurb chat". With no transcript, a report line only.
+- **Never:** writing Blurb, Blurb link or a "Blurb, <date>" section, or running founder-thesis-blurb (Akshay, 25 Oct: the Codex blurb chat writes blurbs). The CTO's "hand it to the blurb process" is therefore a report line for that chat, not a write.
+- **At most 15 creates a run.**
+- **Sameet:** his row already exists (Invited, no Blurb). 3k leaves Membership as it is and lists him as "blurb due" once his transcript is in.
+
+**Also (Cleanup should-fix 5):** STEP 3i's transcript-row Next action and the decision 376 line now name Mamatha (decision 456), not Ranjita. The calendar routine got the same change in 454c.
 
 **Status:** built, not replayed. Ready for Cleanup. Nothing is deployed and nothing is written.

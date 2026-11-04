@@ -2,7 +2,8 @@
 
 | File | Bytes / sha256 |
 |---|---|
-| `calendar.txt` (454b) | 59,755 / 675f34934269a171 |
+| `calendar.txt` (454c) | 59,770 / e99618ff24e85247 |
+| 454b (replaced) | 59,755 / 675f34934269a171 |
 | 454 (replaced) | 58,676 / a06a8b37924c60ad |
 | Live input (trig_01Voiz5YsK2SnVf2STF8PoSH, read back ~01:30 JST 4 Nov; not committed, because it carries the house mail addresses) | 57,968 / f6d140196f3b75b4 |
 
@@ -34,5 +35,7 @@ Nothing else changed.
    - **The recording link:** Founder Thesis uses the guest's Zencastr room (the Call link or the invite). un# uses unhashed.co/studio, approved for un# recordings only. Built to Share uses built2share.in/studio. With no link yet, the sentence is dropped (453).
    - **Human by Design stays a draft** in Akshay's account (decision 313), because 462 names no HBD recording link. **To confirm with Akshay:** should HBD's go from Zoya too, and with which link?
    - **Wording (CTO, Notion):** add a toggle "Recording tomorrow (client show)" to the wording page, in Zoya's voice and with her sign-off, using {show name} and "your conversation with {host first name}". Until it's there, the FT toggle is used with the client-show fill.
+
+5. **454c (Cleanup should-fix 5):** STEP 4f's transcript-row Next action and the decision 376 line name Mamatha (decision 456), not Ranjita.
 
 **Status:** built, not replayed. Ready for Cleanup. Nothing is deployed. The CTO deploys.
