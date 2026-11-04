@@ -1,4 +1,6 @@
-# Pending on Akshay
+# Pending on Akshay (retired 4 Nov, decision 459)
+
+Retired: Akshay's queue is Engagements, Kind Task rows, Waiting on Akshay. On 4 Nov the remaining items here moved there as rows: the un# dossier folder, the Calendar rules questions, Apify (now the skills upload row), and the release-date question (now part of the episodes proposal row). New handovers follow decision 459. The text below is history.
 
 When Akshay asks what's pending on him, read this list, check each item is still open, and give him the open ones. Remove an item once it's done. The 21 Oct list before pruning is in docs/archive/akshay-pending-2026-10-21.md.
 
