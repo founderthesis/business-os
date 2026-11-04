@@ -66,3 +66,41 @@ Nothing deployed by Cleanup.
 ## Addendum: decision 460
 
 The rebuild after the blockers should also replace the 2 occurrences of "AD Personal" in the SLOW file with "AD Tasks": the scope line, and the routine 4 line. It's wording only, with the same page id. FAST and the SLOW task have none.
+
+## Addendum: the first live SLOW run, 4 Nov 14:01 JST
+
+The record is 40e19a301a7f817bbf32d3db8cb7a599. All five defects are present in the live r15c SLOW file (b732cb3), and r16 doesn't fix any of them. Fold them into Main's r16 rebuild, alongside B1 to B3.
+
+**1. The loop-in reply went to ad@ alone (Taj Agra). Main's fix.**
+- **The text:** the loop-in path says "email_compose action reply on the latest message from the person you address (a reply goes to its sender)". On a thread where Akshay wrote last, the model picked his message, so reply's default put ad@ in To.
+- **Fix:** every loop-in goes the draft way the other branch already uses: draft action reply, draft update to set To and Cc from the PRE-SEND recipients, read back, draft send. Never send through email_compose reply's own default. Shared text: FAST and SLOW.
+
+**2. The batch skipped STEP 0, payments, edit notes and internal tasks. Main's fix.**
+- **The text:** line 83's classes are "(1) imminent recording logistics; (2) payments ...; (3) commitments with a promised date, today's owner mail and the Monday scorecard; (4) the oldest eligible follow-ups, then any other item".
+- Feedback (0b), vendor forms (0d), edit notes and internal tasks sit in "any other", behind every follow-up. That's the starvation I flagged as L1 on r15b. Payments were class 2 but still weren't reached, so check how they were selected: a 1b payment item may not be keyed as eligible at all.
+- **Fix:** make class 3 "STEP 0 (owner mail, feedback, vendor forms), STEP 1b payments not yet in (2), edit notes, internal team tasks, promised dates, the scorecard", before (4) follow-ups.
+
+**3. The outcome check passed with writes missing. Main's fix.**
+- 4 completed rows had no Claude note line, and two loop-ins used non-standard idempotency keys. The python counts outcome lines but can't see Notion.
+- **Fix:**
+  - A "completed" line must carry `act:<Activity id>` and `note:<row id> <YYYY-MM-DD>` from a read-back of the row (its top Claude note line dated today).
+  - A send's `key:` must be printed on the line, and the python checks it against `^loopin:<Message-ID>$`, or the action-key form for Zoya mail.
+  - A completed line missing any of these counts as unfinished.
+
+**4. "FAST reserve missing on Cadences".** Not a file defect.
+- Line 84 already defaults: "no reserve on Cadences: SLOW stops 30 short of the daily cap and the report says 'FAST reserve missing on Cadences'". So 150 less 30 is 120, exactly as built.
+- **Fix:** add the reserve line to Cadences (the CTO). The file needs no change.
+
+**5. The loop-in carried a sponsored chase from ad@. I agree with the CTO's reading.**
+- Decision 421's "Optionally the ask in a few words" means restating their open ask. It never means a chase of our own offer from Akshay's address, which breaks the 15 Oct rule ("I need to protect my dignity": Zoya sends every follow-up).
+- **Fix, in the shared LOOP-IN text** (FAST, SLOW and capture's loop-in):
+
+  > Optionally their open ask in a few words; never our chase, offer or reminder: a chase goes from your own inbox after the loop-in, as its own action
+
+- Log it as a one-line clarification of 421 in decisions.md.
+
+**Minor: the ✨ in Cremica's plain text came out as mojibake. Main's fix.**
+- Likely the plain-text body went through a Bash heredoc or echo.
+- **Fix:** pass both bodies straight in the tool arguments as UTF-8, never through Bash. The read-back checks that the plain text ends "best,\nZoya ✨".
+
+Nothing deployed by Cleanup.
