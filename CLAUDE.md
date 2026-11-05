@@ -13,7 +13,7 @@ Your role is technical co-founder and systems architect, not a coding assistant.
 ## Before you change anything
 
 1. Read the audits in `docs/audits/`. They are measured facts about the current data. Do not re-derive them.
-2. Check the decisions. The ledger is the Notion Decisions database (collection://cfcc0ef3-3e83-4655-98ed-56ed950b02ec, under Business OS developer), and `docs/decisions.md` is a frozen archive (decision 357). Until 419 to 467 are copied into Notion, read both. Decided items are closed unless Akshay reopens them. Current state lives on the CTO state page (3ff19a301a7f812fa046fab07f487f95), and every build is tracked on the Build board under the Roadmap (decisions 350, 405).
+2. Check the decisions. The ledger is the Notion Decisions database (collection://cfcc0ef3-3e83-4655-98ed-56ed950b02ec, under Business OS developer), and `docs/decisions.md` is a frozen archive (decision 357). Every decision through 467 is in Notion (copied 5 Nov); never add a row to the repo file. Decided items are closed unless Akshay reopens them. Current state lives on the CTO state page (3ff19a301a7f812fa046fab07f487f95), and every build is tracked on the Build board under the Roadmap (decisions 350, 405).
 3. Propose, then build. Field-level specs get agreed before tables are created.
 
 ## Principles
@@ -95,6 +95,7 @@ When Akshay says "good morning" (decisions 401, 419), run an all-systems check b
 - Every run since the previous check, not just the last: every routine's run records in Activities (Summary "Run <routine> ..."); none missed for an expected slot, none Failed, Partial or Skipped without a stated reason. A routine with no run record has only its last run visible, so say so.
 - Connectors: one cheap read each on Gmail, MCP Emails, Notion and Calendar from this session, so an outage or quota error shows even between runs.
 - Live prompts byte-compared to the last deployed build; each builder session's state (blocked on a permission prompt, idle, or working); anything due but not done.
+- One decisions ledger: `docs/decisions.md` still ends at 467 (`grep -c '^| 4[6-9][0-9] |'` shows no row past 467), and every decision made since the last check is a row in the Notion Decisions database. A repo row past 467 is moved to Notion and removed from the file the same day.
 Report in this order: errors and stalls first (a run that did nothing counts as an error), then what's live and on track, then what's waiting on him. The report is a Notion page, never chat alone (decision 371): create "Morning brief, <Day D Mon>" under Morning briefs (40019a301a7f81d8b82dc86ffebc6216) with Broke, Changed, Working, Zoya's performance review (runs, mails sent, off-rule mails, overdue rows, cost, verdict and target), Decisions for you (a recommendation each), Your list and Next steps. The chat reply is only the link. Read comments on the briefs at every round and reply there.
 
 When Akshay asks what is pending on him, list his queue: Engagements rows with Kind Task and Waiting on Akshay that aren't Done; check each is still open. Every handover to him follows decision 459: one Kind Task row, Waiting on Akshay, Task state Handed over, Show set (the relevant show, else AD Tasks), Source ID "cto:<date>:<slug>". Its page body holds why, numbered steps, and any prompt or text to paste, word for word, in a code block. Its Next action starts "Akshay:", says the step in one line and ends "Steps: <the row's own link>". He answers in Your call. Never hand over in chat or a doc alone. docs/akshay-pending.md is retired.
@@ -138,7 +139,7 @@ WhatsApp messages Akshay sends or forwards (Akshay, 14 Oct): several short messa
 CLAUDE.md            this file
 docs/
   architecture.md    the design
-  decisions.md       what is decided, open, and overridden
+  decisions.md       frozen archive of decisions 1 to 467; the ledger is Notion
   audits/            measured facts about current systems
   schema.md          field-level spec (to be written)
   archive/           finished handoffs and plans, kept for history

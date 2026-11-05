@@ -1,6 +1,8 @@
-# Decisions
+# Decisions (frozen archive)
 
-Closed items stay closed unless Akshay reopens them. Add overrides at the bottom with a date.
+**Frozen on 5 Nov 2026 at decision 467. Do not add or edit rows here.** The only decisions ledger is the Notion Decisions database (collection://cfcc0ef3-3e83-4655-98ed-56ed950b02ec, under Business OS developer), per decision 357. Every row below, 1 to 467, is also in Notion; new decisions and overrides go there only. The good-morning check fails if this file grows past 467.
+
+Closed items stay closed unless Akshay reopens them.
 
 ## Decided (30 Sep 2026)
 
