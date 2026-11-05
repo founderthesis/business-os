@@ -4,18 +4,9 @@ Usage: python3 patch_skills.py <synced skills dir> <out dir>. Copies each dossie
 import sys, os, shutil, zipfile
 src, out = sys.argv[1], sys.argv[2]
 NEVER = "Never mention edit rights, review or approval, in any form (Akshay, 5 Nov)."
-OUTLINE_OLD_HEAD = "Built from the dossier's own themes, in the order the dossier puts them, then stripped of everything rehearsable. Six to eight lines, one line each, as a timeline with phase markers."
+_UNUSED = "Built from the dossier's own themes, in the order the dossier puts them, then stripped of everything rehearsable. Six to eight lines, one line each, as a timeline with phase markers."
 EDITS = {
- "un-dossier": [("SKILL.md", [
-  ("- No edit rights and no review before publishing. One sentence, stated plainly. Do not justify it, do not explain what it protects, do not apologise\n", ""),
-  (OUTLINE_OLD_HEAD, "Broad strokes only (Akshay, 5 Nov): 3 to 5 broad themes, one short line each, no running order, no sequence notes, no questions. Draw them from the dossier's themes, then strip out everything rehearsable."),
-  ("- **Say that it opens for listeners from traditional finance**: the guest explains their job in the terms that audience already uses, before DeFi vocabulary. Then the present. Their career comes later\n", ""),
-  ("- **Say that their own story comes later**, past the middle. Guests arrive ready to lead with the origin story and are thrown when it does not come\n", ""),
-  ("- **Say that Sri will restate things in plainer terms as they go**, because the audience runs wider than DeFi, and that it is there to help the listener keep up. Never phrase it as \"not a challenge\"\n", ""),
-  ("- **Say that it closes on a forward view with numbers attached**, so they can decide in advance whether they want to commit to one on tape\n", ""),
-  ("- If the guest or their team asked for a topic, it appears in the outline so they can see it is covered\n",
-   "- If the guest or their team asked for a topic, it appears in the outline so they can see it is covered\n- " + NEVER + "\n"),
- ])],
+ # un-dossier: none (CTO, 5 Nov: Akshay updated it himself on claude.ai and closed item 1; never overwrite it).
  "ft-host-dossier": [("SKILL.md", [
   ("- [ ] Guest note 350-450 words, first-person Akshay, no edit or approval promise",
    "- [ ] Guest note 350-450 words, first-person Akshay, never a mention of edit rights, review or approval"),

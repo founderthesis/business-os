@@ -13,6 +13,7 @@ s = b.decode("utf-8")
 Q = chr(34)
 
 EDITS = {"cal": [
+ ("Guests = the guest and every co-guest who recorded (People rows)", "Guests = the guest and every co-guest who recorded (People rows; never a person People tags PR contact or the row has as Via or Stakeholder, whatever an event or episode title says (Akshay, 5 Nov: Mitali Ahuja is Col. Sai Shankar's PR))"),
  # B2: no email_compose reply (calendar sends the day-before note from Zoya's inbox, STEP 3b).
  ("A reply goes on the thread's latest message (action reply, reply_all false, To and Cc set explicitly); never pass include_attachments on a reply (MCP Emails rejects it; replies carry no attachments).",
   "A reply goes on the thread's latest message, never through email_compose action reply (Akshay, 5 Nov, item 2: a compose reply took the thread's last sender and went to ad@ alone): in Zoya's inbox (inbox_id c786413a-f604-4661-9312-e7226917028a; the one kind of draft you send), draft action reply, draft update with To and Cc set explicitly (reply_all false), draft_read, then a Bash python assert on draft_read's actual To and Cc (To not empty; no ad@thepodium.in or team address in To; everyone the step names in To or Cc; a failure: delete the draft, send nothing, report it), then draft send with the draft_id the update returned; never pass include_attachments on a reply (MCP Emails rejects it; replies carry no attachments)."),
@@ -43,6 +44,9 @@ EDITS = {"cal": [
   "Next action \"Zoya: ask Mamatha for the transcript (decision 456)\" (Founder Thesis: \"Zoya: ask Mamatha for the transcript, then send it to <guest> on the thank-you thread\", Akshay, 5 Nov, item 14),"),
 ],
 "sweep": [
+ # PR guard (CTO, 5 Nov): a name in an event or episode title is never the guest when People says PR.
+ ("the thank-you thread; PR, EAs and comms people never get a row)", "the thank-you thread; PR, EAs and comms people never get a row: never a person People tags PR contact or the row has as Via or Stakeholder, whatever an event or episode title says (Akshay, 5 Nov: Mitali Ahuja is Col. Sai Shankar's PR))"),
+ ("each of its guests (Episode Guests, a People row)", "each of its guests (Episode Guests, a People row; never a person People tags PR contact or the row has as Via or Stakeholder, whatever an event or episode title says (Akshay, 5 Nov: Mitali Ahuja is Col. Sai Shankar's PR): report it)"),
  ("no proposal ending \"Write ok, not ok or a change in Your call\", ", "no proposal awaiting him in the page body, "),
  # B14: no community segment; one-time cleanup of the old ones.
  ("While its Membership is To invite or Invited, the guest's Founder Thesis Engagement carries one \"Akshay: invite <first name> to the FT Community\" segment with Akshay in Waiting on (add it once if neither it nor \"Akshay: WhatsApp addition pending\" is there; other segments kept); Added: none (the WhatsApp routine's b2 clears it).",
@@ -106,7 +110,7 @@ EDITS = {"cal": [
  ("whose Claude note has no line \"prep note v2\": rewrite", "whose Claude note has no line \"prep note v3\": rewrite"),
  ("\"YYYY-MM-DD: prep note v2\"", "\"YYYY-MM-DD: prep note v3\""),
  ("Soonest recording first, at most 3 per run;",
-  "Also, first of all, any Engagement whose Next action has a Zoya step \"send <guest> the themes once the prep note is in\" (with or without an action key) and whose Prep note link is empty, whatever its Next date or dossier state (item 10): build its prep note (and the dossier if none). Then soonest recording first, at most 3 per run;"),
+  "Also, first of all, any Engagement whose Next action has a Zoya step \"send <guest> the themes once the prep note is in\" (with or without an action key) and whose Prep note link is empty, whatever its Next date or dossier state (item 10): build its prep note (and the dossier if none). Then soonest recording first, at most 5 per run (Akshay, 5 Nov: \"make it upto 5 dossiers a run\");"),
 ],
 }
 
