@@ -76,6 +76,8 @@ EDITS = {
  ("PART A: STEPS 2, 3, 3r, 3a and 3a2.", "PART A: STEPS 2, 3, 3r, 3a, 3a2, 3a3 and 3a4."),
  ("Claude note and Claude updated.", "Claude note and Claude updated, and, in STEP 3a4 b only, a Task row's Task state, For engagement and Activities links, and its move to Trash (decision 416)."),
  ("transcript task rows created (STEP 3i)", "transcript asks added (STEP 3i)"),
+ # Cleanup C2 (r22 verdict): the relink keeps the Activity's other links.
+ ("Then relink each of the Task row's Activities to the guest row", "Then relink each of the Task row's Activities to the guest row (fetch its Engagement relation and write back every link it had, plus the guest row, less the Task row; read it back)"),
  ("Next action segments trimmed (STEP 3a3);", "Next action segments trimmed (STEP 3a3); one-time moves (STEP 3a4: steps moved to Zoya, transcript asks folded, by name);"),
 ],
 "cap": [
@@ -98,6 +100,9 @@ EDITS = {
 ],
 "wa": [
  EX,
+ # Cleanup C1 (r22 verdict): never a guessed country code.
+ ("chat id = its digits with the country code, an Indian 10-digit number with 91 in front, then \"@c.us\".",
+  "chat id = its digits with the country code, then \"@c.us\"; a People Phone stored without a country code (no leading + or 00): send nothing, replace the segment with \"Akshay: <name>'s WhatsApp number has no country code\", Akshay in Waiting on (never guess one)."),
  # 491: WhatsApp 0b shows the owner as the row has it.
  ("then one \"- <owner>: <promise>\" line each", "then one \"- <owner>: <promise>\" line each (the owner as the row has it: a promise to send an approved link or template is Zoya's, decision 491)"),
 ],
