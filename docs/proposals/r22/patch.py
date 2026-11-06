@@ -33,6 +33,7 @@ EDITS = {
  # 488: a blocked delete goes to the CTO round, not to Akshay.
  ("put \"Akshay: delete the <D Mon> <precall|recording> invite for <guest> (blocked: <error>)\" on the row with Akshay in Waiting on,",
   "put \"Builder: delete the <D Mon> <precall|recording> invite for <guest> (blocked: <error>)\" on the row with Builder in Waiting on (decision 488: the CTO round at 08:45 and 20:45 JST re-checks the written cancel and deletes it; an unclear case goes to Akshay in one line),"),
+ ("Akshay, Zoya, Sarika, Sri,", "Akshay, Zoya, Sarika, Sri, Builder (the CTO round, decision 488),"),
  ("Nothing else goes on his list (a blocked delete, above, is the one step that does).",
   "Nothing goes on his list (a blocked delete goes to the CTO round, decision 488)."),
  # 493: the transcript ask is a segment on the guest row.
@@ -47,14 +48,17 @@ EDITS = {
   "- A route Akshay already settled (his Your call, his mail, or a decision line in the Claude note on this eval) is never re-opened by a re-run eval: no new approval ask (decision 492). An eval route \"ask for X first, Y as fallback\" is Zoya's: \"Zoya: ask <PR or guest> for X (Y as fallback)\", Waiting on Zoya; Akshay only once their side declines X.\n- Eval verdict Book immediately and no contrary word from Akshay:"),
  # 493: 3i adds the ask on the guest row.
  (("Each needs one open Kind Task row asking for its transcript:", "else \"transcript:episode:<Episode page id>\", Captured today)."),
-  "Each needs one open ask for its transcript, on its guest's row (decision 493): skip it if the Episode's Engagement has a segment \"Zoya [team transcript:<the recording key, else episode:<Episode page id>>]\", or any Engagement has Source ID \"transcript:\" plus that key or \"transcript:episode:<Episode page id>\" (an older Task row, which STEP 3a4 folds). Else add on the Episode's Engagement the segment \"Zoya [team transcript:<that key>]: ask Mamatha for the transcript\" (Founder Thesis: \"..., then send it to <guest> on the thank-you thread\"), Zoya in Waiting on, Claude note line \"YYYY-MM-DD: transcript ask added (<that key>)\". An Episode with no Engagement: a Task row as the calendar's STEP 4f gives for a recording with no guest row."),
+  "Each needs one open ask for its transcript, on its guest's row (decision 493): skip it if the Episode's Engagement has a segment \"Zoya [team transcript:<the Episode's recording key (its Source ID or \"Recording key:\" line, cal:<event id>, without the start time), else episode:<Episode page id>>]\", or any Engagement has Source ID \"transcript:\" plus that key or \"transcript:episode:<Episode page id>\" (an older Task row, which STEP 3a4 folds). Else add on the Episode's Engagement the segment \"Zoya [team transcript:<that key>]: ask Mamatha for the transcript\" (Founder Thesis: \"Zoya [team transcript:<that key>]: ask Mamatha for the transcript, then send it to <guest> on the thank-you thread\"), Zoya in Waiting on, Claude note line \"YYYY-MM-DD: transcript ask added (<that key>)\". An Episode with no Engagement only: a Task row, Name \"Transcript: <company or title> (<show>, <D Mon> recording)\", Kind Task, Show Internal (40019a301a7f81d1a33fd4fba7cd920c), Task state Handed over, Waiting on Zoya, Next action \"Zoya: ask Mamatha for the transcript\", Next date today, Source Agent, Source ID \"transcript:\" plus that key, Captured today."),
  ("At most 10 a run, oldest Recording date first. Report the rows created.\n\nSTEP 3k.", "At most 10 a run, oldest Recording date first. Report the asks added.\n\nSTEP 3k."),
  # 491 and 493: one-time moves.
  ("\nSTEP 3b. LINK STRAY MAIL",
   "\nSTEP 3a4. ONE-TIME MOVES (every run until none is left; at most 20 rows a run for each of a and b).\n"
   "a. Owner moves (decision 491): an open \"Akshay:\" segment that is a promise to send an approved link or template (" + LINKS + ") or an ask a later decision gave Zoya (decision 464: Spotlight and sponsored-vs-Spotlight answers; 237: a Founder Thesis discount ask at our terms) becomes \"Zoya: <the same step>\", Zoya in Waiting on, Akshay off unless another of his segments stays (STEP 3a2's OWNERS), Claude note \"YYYY-MM-DD: step moved to Zoya (decision 491)\". Unsure: leave it, report it.\n"
-  "b. Transcript Task rows (decision 493): each open Kind Task row with Source ID starting \"transcript:\" whose For engagement is a guest row. Its transcript already on the Episode: Task state Done, no segment. Else carry its ask onto that guest row as \"Zoya [team transcript:<its Source ID after transcript:>]: ask Mamatha for the transcript\" (its own Next action's words where they differ, and its date in the text when later than today; never twice for one key), Zoya in Waiting on, one Claude note line \"YYYY-MM-DD: transcript ask folded in from <the Task row's link>: <its newest note line>\"; read the guest row back. Then the Task row: Task state Done, Claude note \"folded into <guest row link> (decision 493)\", clear For engagement, confirm no relation is left, move it to Trash (decision 416). Report each fold.\n"
+  "b. Transcript Task rows (decision 493): each open Kind Task row with Source ID starting \"transcript:\" whose For engagement is a guest row. Its transcript already on the Episode: Task state Done, no segment. Else carry its ask onto that guest row as \"Zoya [team transcript:<its Source ID after transcript:>]: ask Mamatha for the transcript\" (its own Next action's words where they differ, and its date in the text when later than today; never twice for one key), Zoya in Waiting on, one Claude note line \"YYYY-MM-DD: transcript ask folded in from <the Task row's link>: <its newest note line>\"; read the guest row back. Then relink each of the Task row's Activities to the guest row (the transcript request mail above all, so the SLOW run never re-asks), and the Task row: Task state Done, Claude note \"folded into <guest row link> (decision 493)\", clear For engagement, confirm no relation is left, move it to Trash (decision 416). Report each fold.\n"
   "\nSTEP 3b. LINK STRAY MAIL"),
+ ("PART A: STEPS 2, 3, 3r, 3a and 3a2.", "PART A: STEPS 2, 3, 3r, 3a, 3a2, 3a3 and 3a4."),
+ ("Claude note and Claude updated.", "Claude note and Claude updated, and, in STEP 3a4 b only, a Task row's Task state, For engagement and Activities links, and its move to Trash (decision 416)."),
+ ("transcript task rows created (STEP 3i)", "transcript asks added (STEP 3i)"),
  ("Next action segments trimmed (STEP 3a3);", "Next action segments trimmed (STEP 3a3); one-time moves (STEP 3a4: steps moved to Zoya, transcript asks folded, by name);"),
 ],
 "cap": [
@@ -64,12 +68,14 @@ EDITS = {
 ],
 "act": [
  EX,
+ ("it keeps STEP 5's decision 448 segment.", "it keeps STEP 5's decision 448 segment, or none (decision 490). Each segment a bucket writes also removes the \"Waiting on <same person>\" segment it answers (STEP 5)."),
+ ("(a reply to his own mail still comes to him in that bullet's form)", "(a reply to his own mail follows that bullet, decision 490 included)"),
  # 490: a reply that needs nothing never reaches Akshay's list.
  ("Even a \"will revert\" or a mail with no ask: add Akshay",
   "A reply that needs nothing of him (thanks, an acknowledgement, a \"will revert\", agreeing to what was asked; decision 490, amending 448): Last activity and a Claude note line only, never his list. Anything that asks or needs something of him: add Akshay"),
  # Stale segments (the Dinesh and George case).
  ("After STEPS 3 and 4, set Waiting on and Next action on every Engagement or Deal you touched:",
-  "After STEPS 3 and 4, set Waiting on and Next action on every Engagement or Deal you touched (a segment you write for someone's reply, an answer to it or a decision on it removes, in the same write, the \"Waiting on <same person>\" segment that reply answers and any follow-up or chase segment it settles; 6 Nov, Dinesh and George):"),
+  "After STEPS 3 and 4, set Waiting on and Next action on every Engagement or Deal you touched (a segment you write for someone's reply, an answer to it or a decision on it removes, in the same write, the \"Waiting on <same person>\" segment that reply answers and any follow-up or chase segment it settles; 6 Nov, Dinesh and George; a reply that declines X on a row whose Next action carries \"Zoya: ask <who> for X (Y as fallback)\", decision 492, goes on Akshay's list as \"Akshay: <who> declined X: go to Y? (<D Mon>)\"):"),
 ],
 "wa": [
  EX,

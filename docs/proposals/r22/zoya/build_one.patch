@@ -423,10 +423,10 @@ index 0000000..57edfb3
 +]
 diff --git a/routines/zoya/r22_edits.py b/routines/zoya/r22_edits.py
 new file mode 100644
-index 0000000..9839eee
+index 0000000..fc688eb
 --- /dev/null
 +++ b/routines/zoya/r22_edits.py
-@@ -0,0 +1,140 @@
+@@ -0,0 +1,157 @@
 +# r22 (6 Nov), replay fixes folded in (replay22/zoya22.md D1 to D18). Applied after R21. Each entry: (variants, old,
 +# new). It applies in exactly the listed variants, must be found there in exactly one part, exactly once, and is never
 +# applied anywhere else.
@@ -566,4 +566,21 @@ index 0000000..9839eee
 +  "the row's first PaaS send removes it, OWNERS), plus rows due under COMMUNITY INVITE CHASE,"),
 + (("slowwork",), "and counts in \"nurture\" and toward nurture's limits.\n",
 +  "and counts in \"nurture\" and toward nurture's limits.\n" + COMM),
++]
++# r22 replay b fixes (replay22b/r22b.md D2 to D4, D9 to D11).
++R22 += [
++ (ALLV, "plus the themes answer when it asks for themes or questions before a recording (decision 453, item 10).",
++  "plus the themes answer when it asks for themes or questions before a recording (decision 453, item 10), unless it needs nothing of him (thanks, an acknowledgement, a \"will revert\", agreement: Last activity and a Claude note line only, decision 490)."),
++ (("one",), "Last activity and a Claude note line only, never his list. Anything that asks",
++  "Last activity and the Claude note line \"thread <Message-ID>: no reply needed (reply to Akshay's mail, decision 490)\" only, never his list, so no later pass picks the thread up again. Anything that asks"),
++ (ALLV, "(6 Nov, the Dinesh case).",
++  "(6 Nov, the Dinesh case). A reply that declines X on a row whose Next action carries \"Zoya: ask <who> for X (Y as fallback)\" (decision 492): Akshay's list, \"Akshay: <who> declined X: go to Y? (<D Mon>)\", never the fallback ask from you."),
++ (A3, "or \"seq-<routine>-<step n>\" (a follow-up step);",
++  "or \"seq-<routine>-<step n>\" (a follow-up step), or \"transcript:<recording key>\" (a guest row's transcript ask, decision 493, raised at its segment's write date T00:00:00+09:00);"),
++ (("slowwork",), "close the row, send nothing", "close it as (5) says, send nothing"),
++ (("slowwork",), "Next action \"Zoya: transcript from Mamatha for <guest>'s <D Mon> recording (asked <D Mon>)\", Next date 2 working days after the send",
++  "Next action \"Zoya: transcript from Mamatha for <guest>'s <D Mon> recording (asked <D Mon>)\", Next date 2 working days after the send (on a guest row: rewrite only its transcript segment, \"Zoya [team transcript:<key>]: transcript from Mamatha for <guest>'s <D Mon> recording (asked <D Mon>) on <D Mon, 2 working days on>\", never the row's Next date or another segment)"),
++ (("slowwork",), "row On hold.", "row On hold (a guest-row segment: replaced by that Akshay segment)."),
++ (("slowwork",), "Key \"<row id>:followup:seq-community-1:",
++  "The row is the Engagement linked to his mail's Activity (none: send nothing, report it). Key \"<row id>:followup:seq-community-1:"),
 +]
