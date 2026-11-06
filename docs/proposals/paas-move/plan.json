@@ -1,0 +1,1269 @@
+{
+ "count": 33,
+ "ops": [
+  {
+   "activities_add_engagement": [],
+   "company": "Decimal Point Analytics",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Contacted -> Status Contacted); Deal next action: Chase after their episode goes live",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f8123ae8dd5f79506248d"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Shailesh Dhuri @ Decimal Point Analytics, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Organisation": [
+     "3ed19a301a7f8102a773dc51b476af78"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f81b18df2ff87becdcdbd",
+    "Stakeholders": [
+     "3ed19a301a7f818da691f5edfb9ef2c1"
+    ],
+    "Status": "Contacted",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f81b18df2ff87becdcdbd",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f81b18df2ff87becdcdbd (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f81b18df2ff87becdcdbd\n- Stage: Contacted (Warm), Heat Warm, Result none\n- Proposal link: none\n- Pitch note: none\n- Budget read: none\n- Last activity on the Deal: none\n- Deal Next action at the move: Chase after their episode goes live\n- Deal Source ID: FT Pipeline/PAAS - FT/4\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [
+    "3f519a301a7f81c1aaccfab2240724cc"
+   ],
+   "company": "Alligator Automations",
+   "create_engagement": {
+    "Amount": 1260000,
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage In conversation -> Status Interested); Deal next action: Akshay: share the pitch page with Srinivas with a covering email, ask for the intro to Vijay",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3f019a301a7f81249b80ef653e7dbdb9"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Srinivas Choudhary @ Alligator Automations, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-10-27",
+    "Organisation": [
+     "3f019a301a7f81e4940df3d5a4131809"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f219a301a7f81cd880ee5af4fb7e322",
+    "Stakeholders": [],
+    "Status": "Interested",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f219a301a7f81cd880ee5af4fb7e322",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f219a301a7f81cd880ee5af4fb7e322 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f219a301a7f81cd880ee5af4fb7e322\n- Stage: In conversation (Warm), Heat Warm, Result none\n- Proposal link: https://claude.ai/artifact/Y6bcvDbhihNJLhHvVpzzXD\n- Pitch note: https://claude.ai/artifact/Y6bcvDbhihNJLhHvVpzzXD\n- Budget read: Not discussed. ₹12.6L run by Unnati at the 6-month default (12 episodes, 3 introduced), plus ₹1.3L third party\n- Last activity on the Deal: 25 Oct, Akshay to Nivedita (PRtainment): FT release calendar not final, will mail the date. No PaaS pitch sent to Srinivas yet\n- Deal Next action at the move: Akshay: share the pitch page with Srinivas with a covering email, ask for the intro to Vijay\n- Deal Source ID: none\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [],
+   "company": "CapConnect",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage In conversation -> Status Interested); Deal next action: Akshay: In conversation, untouched 116 days (follow-up was due 18 Jun). Follow up or close | Followup",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f8139a794fe8cd2e6992a"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Shauraya Bhutani @ CapConnect, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2027-01-04",
+    "Organisation": [
+     "3ed19a301a7f81d995baddac4626704c"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f81e79b85e65ff631e958",
+    "Stakeholders": [
+     "3f019a301a7f81ac9870f6b8535df850",
+     "3f019a301a7f81ce8714ceab55fbdca5"
+    ],
+    "Status": "Interested",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f81e79b85e65ff631e958",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f81e79b85e65ff631e958 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f81e79b85e65ff631e958\n- Stage: In conversation (Slow), Heat Cold, Result none\n- Proposal link: none\n- Pitch note: none\n- Budget read: none\n- Last activity on the Deal: none\n- Deal Next action at the move: Akshay: In conversation, untouched 116 days (follow-up was due 18 Jun). Follow up or close | Followup\n- Deal Source ID: FT Pipeline/PAAS - FT/5\n- Chase step: 1"
+  },
+  {
+   "activities_add_engagement": [
+    "40819a301a7f811b9e52ff15f17e1d8d"
+   ],
+   "company": "CodeVyasa",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage In conversation -> Status Interested); Deal next action: Waiting on Shubham: a time for the follow-up call. Akshay offered a proposal with pricing break-up before it (19 Oct); no formal proposal sent. If still quiet on 2 Nov, Akshay nudges on WhatsApp or sends the proposal unasked",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f81099deefbd6d1d8a48f"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Shubham Garg @ CodeVyasa, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-11-02",
+    "Organisation": [
+     "3ed19a301a7f81b0bd34c9ae71832d94"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:40819a301a7f81ab85dfeba96b817b2c",
+    "Stakeholders": [],
+    "Status": "Interested",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "40819a301a7f81ab85dfeba96b817b2c",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:40819a301a7f81ab85dfeba96b817b2c (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/40819a301a7f81ab85dfeba96b817b2c\n- Stage: In conversation (Warm), Heat none, Result none\n- Proposal link: none\n- Pitch note: none\n- Budget read: none\n- Last activity on the Deal: 21 Oct, Akshay to Shubham (WhatsApp): nudge after the 19 Oct note; no reply since\n- Deal Next action at the move: Waiting on Shubham: a time for the follow-up call. Akshay offered a proposal with pricing break-up before it (19 Oct); no formal proposal sent. If still quiet on 2 Nov, Akshay nudges on WhatsApp or sends the proposal unasked\n- Deal Source ID: WhatsApp chat \"Shubham Garg Codevyasa\" (Akshay's phone), relayed by Akshay in the deal-chasing chat 29 Oct 2026\n- Chase step: 1"
+  },
+  {
+   "activities_add_engagement": [
+    "40e19a301a7f81fba951e43a3888bd80",
+    "40e19a301a7f81e792a7fa11bce10be0"
+   ],
+   "company": "CoreStack",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage In conversation -> Status Interested); Deal next action: Akshay: review the pitch page, send it to Rob Ford with the covering email and re-add Ez on cc (promised by 6 Nov). Ask Rob for the Blackstone and Taylor Farms contacts; confirm Anirudh Joshi (Virtusa) on LinkedIn.",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "40219a301a7f8170982ececd1a3af198"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Robert Ford @ CoreStack, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-11-06",
+    "Organisation": [
+     "3ed19a301a7f8103b36bdf49d6df9eb8"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:40e19a301a7f81599577f1f29c8eea3a",
+    "Stakeholders": [],
+    "Status": "Interested",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "40e19a301a7f81599577f1f29c8eea3a",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:40e19a301a7f81599577f1f29c8eea3a (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/40e19a301a7f81599577f1f29c8eea3a\n- Stage: In conversation (Warm), Heat none, Result none\n- Proposal link: none\n- Pitch note: https://claude.ai/artifact/SbjK61anjKqidUSap4wGmq\n- Budget read: USD. Core $2,000/mo at 2 eps a month ($1,000/ep = $700 post + $300 amplification) + $1,000 setup. With Recommended lines (sourcing, Akshay on recording, first 3 free) $2,500/mo. Third party $1,600 one-time (studio consult $600, Google Ads $1,000). CoreStack: walking toward $100M ARR, ~$85M raised, cash positive (Ez on FT).\n- Last activity on the Deal: 4 Nov, Akshay to Rob Ford (CoreStack), Cc Zoya: says it was great speaking today and he will come back with the outline\n- Deal Next action at the move: Akshay: review the pitch page, send it to Rob Ford with the covering email and re-add Ez on cc (promised by 6 Nov). Ask Rob for the Blackstone and Taylor Farms contacts; confirm Anirudh Joshi (Virtusa) on LinkedIn.\n- Deal Source ID: meeting:1mQVVqGxmOe9PHC88hPrhOu4Bi8vriGJxBdHQSlmzOR8\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [
+    "40619a301a7f816b9fddc8b2ddcdc369",
+    "40b19a301a7f81ddab18c31c92ee7480",
+    "40419a301a7f8191bff6d36853091068"
+   ],
+   "company": "DotKonnekt",
+   "create_engagement": {
+    "Amount": 1155000,
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage In conversation -> Status Interested); Deal next action: Jam call with Dhiraj on how Leapfrog ties the brands together, then send the pitch link and covering email",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f8106b4c1c9a1619927d7"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Dhiraj Jain @ DotKonnekt, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-11-02",
+    "Organisation": [
+     "3ed19a301a7f8168837cd67fc9038472"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:40b19a301a7f8128aa74c0482214f818",
+    "Stakeholders": [],
+    "Status": "Interested",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "40b19a301a7f8128aa74c0482214f818",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:40b19a301a7f8128aa74c0482214f818 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/40b19a301a7f8128aa74c0482214f818\n- Stage: In conversation (Warm), Heat none, Result none\n- Proposal link: none\n- Pitch note: https://claude.ai/artifact/XmR2xVZSdcbdDAbmvbdfKJ\n- Budget read: ₹11,55,000 run by us for 12 episodes over 6 months: setup, post-production and amplification on all 12, guest sourcing on 8 (Dhiraj introduces 4). Plus ₹1,30,000 third party paid directly (studio consult, Google Ads). Excludes GST, optional lines and travel. Funding undisclosed; 25+ enterprise clients, offices in Singapore, Bengaluru, New York, Dubai.\n- Last activity on the Deal: 1 Nov 2026: WhatsApp and a call with Dhiraj about the GolfKonnekt Diwali mixer; podcast jam set for 2 Nov\n- Deal Next action at the move: Jam call with Dhiraj on how Leapfrog ties the brands together, then send the pitch link and covering email\n- Deal Source ID: none\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [
+    "40e19a301a7f8153ae44c814c50cbda5",
+    "40e19a301a7f8122b8ecf035777e8c3a",
+    "40e19a301a7f8144a101ec571ea83343",
+    "40f19a301a7f81cf900cea09c494498d",
+    "40f19a301a7f812e987ad9068ba73aae",
+    "40f19a301a7f8123a096e329961eba84"
+   ],
+   "company": "Entrust Family Office",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage In conversation -> Status Interested); Deal next action: Background brief received 5 Nov (Santhosh Anand, to Saurabh Garg and Akshay). Waiting on Rajmohan's side: group follow-up call next week. He wants a video podcast series in place of a book plus help sourcing guests",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "40319a301a7f81b09c88c03f94409570"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Rajmohan Krishnan @ Entrust Family Office, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-11-05",
+    "Organisation": [
+     "3f019a301a7f815cafbdcb516fb3697e"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:40e19a301a7f81d388bac772da72e3fb",
+    "Stakeholders": [],
+    "Status": "Interested",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "40e19a301a7f81d388bac772da72e3fb",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:40e19a301a7f81d388bac772da72e3fb (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/40e19a301a7f81d388bac772da72e3fb\n- Stage: In conversation (Warm), Heat none, Result none\n- Proposal link: none\n- Pitch note: none\n- Budget read: none\n- Last activity on the Deal: 5 Nov, Akshay to Saurabh: forwards the Gemini notes of the 4 Nov call with Rajmohan (Entrust), next steps and who does what\n- Deal Next action at the move: Background brief received 5 Nov (Santhosh Anand, to Saurabh Garg and Akshay). Waiting on Rajmohan's side: group follow-up call next week. He wants a video podcast series in place of a book plus help sourcing guests\n- Deal Source ID: msgid:CAPzDPD_-iKLBU+YiLUtevdypgOQs4matGibqvazT4xvhXZMrxw@mail.gmail.com\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [],
+   "company": "Gyandhan",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage In conversation -> Status Interested); Deal next action: Akshay: pitch PaaS to Ankit Mehra (no pitch sent yet)",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f817a89e3ce3108a0f85b"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Ankit Mehra @ Gyandhan, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-10-30",
+    "Organisation": [
+     "3ed19a301a7f8104b968f9db7ba774c3"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f81f7a584f78d2314d8c6",
+    "Stakeholders": [],
+    "Status": "Interested",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f81f7a584f78d2314d8c6",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f81f7a584f78d2314d8c6 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f81f7a584f78d2314d8c6\n- Stage: In conversation (Warm), Heat Warm, Result none\n- Proposal link: none\n- Pitch note: none\n- Budget read: none\n- Last activity on the Deal: 5 Oct, Sowmya (GyanDhan PR) to Akshay: will do the post-recording asks. FT episode recorded 1 Oct\n- Deal Next action at the move: Akshay: pitch PaaS to Ankit Mehra (no pitch sent yet)\n- Deal Source ID: Engagement 3f019a301a7f80a19eb4f0fd29684dc8\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [
+    "3ed19a301a7f819cb2a4cb0b90ffec01",
+    "3ee19a301a7f8132821bdcfa7215d3c4"
+   ],
+   "company": "Drizz",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage New -> Status New); Deal next action: Akshay: New, untouched 14+ days (daily sweep 26 Oct). Follow up or close | was: Send covering email with pitch link to Yash. Host still open (Yash or Asad).",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f81a4a51ac6f40d3c2d0d"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Yash Varyani @ Drizz, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-10-06",
+    "Organisation": [
+     "3ed19a301a7f8135b984d3146c458dc4"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f8163926bf3f5883e04d5",
+    "Stakeholders": [],
+    "Status": "New",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f8163926bf3f5883e04d5",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f8163926bf3f5883e04d5 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f8163926bf3f5883e04d5\n- Stage: New (Warm), Heat Warm, Result none\n- Proposal link: https://claude.ai/artifact/SC3zpm9DkPVMQg8yLSryCJ\n- Pitch note: https://claude.ai/artifact/SC3zpm9DkPVMQg8yLSryCJ\n- Budget read: none\n- Last activity on the Deal: 1 Oct, Gemini notes: call with Yash Varyani (Drizz) on an in-house podcast; next step Akshay sends the pitch\n- Deal Next action at the move: Akshay: New, untouched 14+ days (daily sweep 26 Oct). Follow up or close | was: Send covering email with pitch link to Yash. Host still open (Yash or Asad).\n- Deal Source ID: Podcast-as-a-Service Leads 3ec19a30-1a7f-813b-81d8-f5abdf6c30d4\n- Chase step: 0"
+  },
+  {
+   "activities_add_engagement": [],
+   "company": "EvoluteIQ",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage New -> Status New); Deal next action: Pitch PaaS to Sameet Gupte (FT guest, recorded 3 Nov). Added to Deals by Akshay's call 5 Nov",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3f019a301a7f81459960ce7b86a33782"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Sameet Gupte @ EvoluteIQ, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-11-06",
+    "Organisation": [
+     "3f019a301a7f819a9feff762c7aeadc1"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:40f19a301a7f812e9636d2863da283d7",
+    "Stakeholders": [],
+    "Status": "New",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "40f19a301a7f812e9636d2863da283d7",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:40f19a301a7f812e9636d2863da283d7 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/40f19a301a7f812e9636d2863da283d7\n- Stage: New (Warm), Heat none, Result none\n- Proposal link: none\n- Pitch note: none\n- Budget read: none\n- Last activity on the Deal: none\n- Deal Next action at the move: Pitch PaaS to Sameet Gupte (FT guest, recorded 3 Nov). Added to Deals by Akshay's call 5 Nov\n- Deal Source ID: yourcall:3f019a301a7f81b68a3ccac523059a12:2026-11-05\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [],
+   "company": "Gather AI",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage New -> Status New); Deal next action: Pitch PaaS to Sankalp Arora (FT guest, recorded 15 Oct, assets in). Added to Deals by Akshay's call 5 Nov",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3f019a301a7f8111bd64d8b97e77fc7b"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Sankalp Arora @ Gather AI, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-11-06",
+    "Organisation": [
+     "3f019a301a7f81a8abcbf6a01a370d7d"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:40f19a301a7f81769a35d2821d80e4c9",
+    "Stakeholders": [],
+    "Status": "New",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "40f19a301a7f81769a35d2821d80e4c9",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:40f19a301a7f81769a35d2821d80e4c9 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/40f19a301a7f81769a35d2821d80e4c9\n- Stage: New (Warm), Heat none, Result none\n- Proposal link: none\n- Pitch note: none\n- Budget read: none\n- Last activity on the Deal: none\n- Deal Next action at the move: Pitch PaaS to Sankalp Arora (FT guest, recorded 15 Oct, assets in). Added to Deals by Akshay's call 5 Nov\n- Deal Source ID: yourcall:3f019a301a7f81578ca5d53b1f398ca4:2026-11-05\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [],
+   "company": "SquadStack",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage New -> Status New); Deal next action: Akshay: New, untouched 14+ days (daily sweep 26 Oct). Follow up or close",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f81c2a60afe9ec29ac7c2"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Apurv Agrawal @ SquadStack, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Organisation": [
+     "3ed19a301a7f81839726ca0be2d90027"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f81bcbcd7f864a4de7c99",
+    "Stakeholders": [],
+    "Status": "New",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f81bcbcd7f864a4de7c99",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f81bcbcd7f864a4de7c99 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f81bcbcd7f864a4de7c99\n- Stage: New (Warm), Heat Warm, Result none\n- Proposal link: none\n- Pitch note: none\n- Budget read: none\n- Last activity on the Deal: none\n- Deal Next action at the move: Akshay: New, untouched 14+ days (daily sweep 26 Oct). Follow up or close\n- Deal Source ID: FT Pipeline/PAAS - FT/11\n- Chase step: 1"
+  },
+  {
+   "activities_add_engagement": [],
+   "company": "Acadly",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Parked -> Status Parked); Deal next action: none",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3f019a301a7f81988de3d1f8c3257886"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Vaibhav Vashisht @ Acadly, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Organisation": [
+     "3f019a301a7f815299c4d4f9e4f89aa4"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f8102be87f94c8618b8ed",
+    "Stakeholders": [],
+    "Status": "Parked",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f8102be87f94c8618b8ed",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f8102be87f94c8618b8ed (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f8102be87f94c8618b8ed\n- Stage: Parked (Warm), Heat Warm, Result none\n- Proposal link: none\n- Pitch note: none\n- Budget read: none\n- Last activity on the Deal: none\n- Deal Next action at the move: none\n- Deal Source ID: FT Pipeline/PAAS - FT/18\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [],
+   "company": "Coditation",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Parked -> Status Parked); Deal next action: Parked by Akshay 2026-10-06",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3f019a301a7f81a2a740fc9b076dd086"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Chetan Saundankar @ Coditation, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Organisation": [
+     "3f019a301a7f81468b68cbf9294c6417"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f8148ad44ed40f1857419",
+    "Stakeholders": [
+     "3f019a301a7f81089dabc7331ab0b0a5"
+    ],
+    "Status": "Parked",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f8148ad44ed40f1857419",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f8148ad44ed40f1857419 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f8148ad44ed40f1857419\n- Stage: Parked (Warm), Heat Warm, Result none\n- Proposal link: none\n- Pitch note: none\n- Budget read: none\n- Last activity on the Deal: none\n- Deal Next action at the move: Parked by Akshay 2026-10-06\n- Deal Source ID: FT Pipeline/PAAS - FT/6\n- Chase step: 2"
+  },
+  {
+   "activities_add_engagement": [],
+   "company": "Dview",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Parked -> Status Parked); Deal next action: sent via mail, set up recording",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f81e5b615f175294eed74"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Supratik Shankar @ Dview, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Organisation": [
+     "3ed19a301a7f81fc982fd7fe484243e2"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f81d1bdeaebb7964e19b3",
+    "Stakeholders": [],
+    "Status": "Parked",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f81d1bdeaebb7964e19b3",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f81d1bdeaebb7964e19b3 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f81d1bdeaebb7964e19b3\n- Stage: Parked (Warm), Heat Warm, Result none\n- Proposal link: https://podm.in/dview-pitch\n- Pitch note: https://claude.ai/artifact/KwNnm97fz9Uq3xwCfddHaT\n- Budget read: none\n- Last activity on the Deal: none\n- Deal Next action at the move: sent via mail, set up recording\n- Deal Source ID: Podcast-as-a-Service Leads 3dd19a30-1a7f-80a5-86b3-e9bc9bc50e8a\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [
+    "3ed19a301a7f81c5baf6d38aadbc1fc9"
+   ],
+   "company": "IXR Labs",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Parked -> Status Parked); Deal next action: Akshay: call Gautam Arjun to finalise podm.in/IXRlabs-pitch (nothing logged since 2 Oct call)",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3f019a301a7f81ad801ee0995d4df1cc"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Gautam Arjun @ IXR Labs, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-10-27",
+    "Organisation": [
+     "3ed19a301a7f8104816fe12d0ea9e948"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f8164839acd2e7ef4d2eb",
+    "Stakeholders": [],
+    "Status": "Parked",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f8164839acd2e7ef4d2eb",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f8164839acd2e7ef4d2eb (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f8164839acd2e7ef4d2eb\n- Stage: Parked (Warm), Heat Warm, Result none\n- Proposal link: https://podm.in/IXRlabs-pitch\n- Pitch note: https://claude.ai/artifact/4r7gb5ewaTawB89XQKkVit\n- Budget read: none\n- Last activity on the Deal: 2 Oct, Call with Gautam Arjun (IXR Labs, PaaS)\n- Deal Next action at the move: Akshay: call Gautam Arjun to finalise podm.in/IXRlabs-pitch (nothing logged since 2 Oct call)\n- Deal Source ID: Podcast-as-a-Service Leads 3db19a30-1a7f-81c1-a3b5-cf07e0dae43d; FT Pipeline/PAAS - FT/3\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [],
+   "company": "Proshort",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Parked -> Status Parked); Deal next action: Pre call scheduled",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f8114875ef975519f6a8e"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Gaurav Mishra @ Proshort, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-12-17",
+    "Organisation": [
+     "3ed19a301a7f81b88bffc6874671e158"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f81ada1b2f1a72ac73b1d",
+    "Stakeholders": [
+     "3ed19a301a7f817588dce10ccaad1301"
+    ],
+    "Status": "Parked",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f81ada1b2f1a72ac73b1d",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f81ada1b2f1a72ac73b1d (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f81ada1b2f1a72ac73b1d\n- Stage: Parked (Warm), Heat Warm, Result none\n- Proposal link: none\n- Pitch note: none\n- Budget read: none\n- Last activity on the Deal: none\n- Deal Next action at the move: Pre call scheduled\n- Deal Source ID: FT Pipeline/PAAS - FT/8\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [
+    "3ed19a301a7f81178306e469e8ea575b"
+   ],
+   "company": "SecurEyes",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Parked -> Status Parked); Deal next action: Akshay: follow up with Karmendra or close (no reply to 21 Sep pitch)",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f81da93ceea6397df4761"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Karmendra Kohli @ SecurEyes, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-10-27",
+    "Organisation": [
+     "3ed19a301a7f81b794f1da6a0b9e569c"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f81adb689c2b376ec5990",
+    "Stakeholders": [],
+    "Status": "Parked",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f81adb689c2b376ec5990",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f81adb689c2b376ec5990 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f81adb689c2b376ec5990\n- Stage: Parked (Warm), Heat Warm, Result none\n- Proposal link: https://podm.in/secureyes\n- Pitch note: https://claude.ai/artifact/VT9s6QNQYiZjofQeySyfaR\n- Budget read: none\n- Last activity on the Deal: 21 Sep, Akshay to Karmendra (email): sent the SecurEyes podcast pitch, podm.in/secureyes. No reply since\n- Deal Next action at the move: Akshay: follow up with Karmendra or close (no reply to 21 Sep pitch)\n- Deal Source ID: Podcast-as-a-Service Leads 3db19a30-1a7f-81c1-ba91-caf7c451be85\n- Chase step: 1"
+  },
+  {
+   "activities_add_engagement": [],
+   "company": "finezza.in",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Parked -> Status Parked); Deal next action: Akshay: follow up with Pooja on podm.in/finezza-pitch (no reply logged)",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f81cb8799e53de9b6af20"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Krishnan Iyer @ finezza.in, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-10-27",
+    "Organisation": [
+     "3ed19a301a7f8126a48af01c8ea6c9a3"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f81349791fac90565217d",
+    "Stakeholders": [],
+    "Status": "Parked",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f81349791fac90565217d",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f81349791fac90565217d (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f81349791fac90565217d\n- Stage: Parked (Warm), Heat Warm, Result none\n- Proposal link: https://podm.in/finezza-pitch\n- Pitch note: https://claude.ai/artifact/EQ76LiZ3ogTkAzptgRari2\n- Budget read: none\n- Last activity on the Deal: none\n- Deal Next action at the move: Akshay: follow up with Pooja on podm.in/finezza-pitch (no reply logged)\n- Deal Source ID: Podcast-as-a-Service Leads 3e319a30-1a7f-80d2-a456-ea2b88f64f7c\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [
+    "3ed19a301a7f819e9734ddc189f8ba94"
+   ],
+   "company": "Assiduus Global",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Proposal sent -> Status Decision pending); Deal next action: Akshay: ask Somdutta for a call on podm.in/assiduus-pitch (nothing logged since 2 Oct call)",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f8185ba41d4c0a85ad834"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Dr. Somdutta Singh @ Assiduus Global, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-10-31",
+    "Organisation": [
+     "3ed19a301a7f8113ad5ec17387c02afc"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f8118a6c7fafd70408202",
+    "Stakeholders": [],
+    "Status": "Decision pending",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f8118a6c7fafd70408202",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f8118a6c7fafd70408202 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f8118a6c7fafd70408202\n- Stage: Proposal sent (Slow), Heat Warm, Result none\n- Proposal link: https://podm.in/assiduus-pitch\n- Pitch note: https://claude.ai/artifact/BWuQYG28qucg36w3mLpfW1\n- Budget read: none\n- Last activity on the Deal: 2 Oct, Call with Somdutta Singh (Assiduus Global, PaaS)\n- Deal Next action at the move: Akshay: ask Somdutta for a call on podm.in/assiduus-pitch (nothing logged since 2 Oct call)\n- Deal Source ID: Podcast-as-a-Service Leads 3db19a30-1a7f-81ef-a315-fe08d51f8d1e\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [
+    "3ed19a301a7f8113971dd0e82528666e"
+   ],
+   "company": "Bicycle AI",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Proposal sent -> Status Decision pending); Deal next action: Akshay: follow up with Bhaskar on podm.in/bicycleai-pitch (quiet since 20 Sep)",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f81548d77f3f52e7f96a0"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Bhaskar Sunkara @ Bicycle AI, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-10-31",
+    "Organisation": [
+     "3ed19a301a7f81378854d3e9d88dc88e"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f8133aad3d794ad8fa8b0",
+    "Stakeholders": [],
+    "Status": "Decision pending",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f8133aad3d794ad8fa8b0",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f8133aad3d794ad8fa8b0 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f8133aad3d794ad8fa8b0\n- Stage: Proposal sent (Slow), Heat Cold, Result none\n- Proposal link: https://podm.in/bicycleai-pitch\n- Pitch note: https://claude.ai/artifact/8zu649biki6xJTv3jC4fti\n- Budget read: none\n- Last activity on the Deal: 20 Sep, Bhaskar to Akshay (email): likes the pitch, wants time to think it over; Akshay replied. No word since\n- Deal Next action at the move: Akshay: follow up with Bhaskar on podm.in/bicycleai-pitch (quiet since 20 Sep)\n- Deal Source ID: Podcast-as-a-Service Leads 3db19a30-1a7f-8189-ac98-c8b19128cf3e\n- Chase step: 0"
+  },
+  {
+   "activities_add_engagement": [
+    "3ed19a301a7f81858ba0c918830c43c7",
+    "3f619a301a7f816ba562d551825121c0"
+   ],
+   "company": "Bluehill",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Proposal sent -> Status Decision pending); Deal next action: Waiting on Manu: go/no-go and commercial option on the Bluehill-X podcast. Akshay to chase again if still quiet",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f81b98bf8fb4d3aecef50"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Manu Iyer @ Bluehill, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-10-30",
+    "Organisation": [
+     "3ed19a301a7f81af91cee7ba1e40e217"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f818bbc5fd7a14f9aee2d",
+    "Stakeholders": [],
+    "Status": "Decision pending",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f818bbc5fd7a14f9aee2d",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f818bbc5fd7a14f9aee2d (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f818bbc5fd7a14f9aee2d\n- Stage: Proposal sent (Warm), Heat Hot, Result none\n- Proposal link: https://podm.in/bluehill-pitch\n- Pitch note: https://claude.ai/artifact/VTJNiCSGhWSCHb7fZRJcA2\n- Budget read: none\n- Last activity on the Deal: 19 Oct, Akshay to Manu on WhatsApp: nudged him to say whether he's going ahead with the Bluehill-X podcast, since he wanted to look at the commercials\n- Deal Next action at the move: Waiting on Manu: go/no-go and commercial option on the Bluehill-X podcast. Akshay to chase again if still quiet\n- Deal Source ID: Podcast-as-a-Service Leads 3db19a30-1a7f-816f-8441-ccdf78003c5d; FT Pipeline/PAAS - FT/14\n- Chase step: 2"
+  },
+  {
+   "activities_add_engagement": [
+    "3ff19a301a7f811da5baf096e117537b",
+    "40019a301a7f81a38575d7c21748067b",
+    "40619a301a7f816e9669c9a3af499756",
+    "40719a301a7f81dba007eaff47027423"
+   ],
+   "company": "Codewave",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Proposal sent -> Status Decision pending); Deal next action: Waiting on Abhijith and Vidhya: reply to the proposal podm.in/codewave-pitch (sent 27 Oct)",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3fd19a301a7f813fb380ea4596fce6f4"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Abhijith H K @ Codewave, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-10-27",
+    "Organisation": [],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3ff19a301a7f8136b34bf535bda5c3f0",
+    "Stakeholders": [
+     "3fd19a301a7f8120810be4d695bd3671"
+    ],
+    "Status": "Decision pending",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3ff19a301a7f8136b34bf535bda5c3f0",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3ff19a301a7f8136b34bf535bda5c3f0 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3ff19a301a7f8136b34bf535bda5c3f0\n- Stage: Proposal sent (Warm), Heat none, Result none\n- Proposal link: https://podm.in/codewave-pitch\n- Pitch note: none\n- Budget read: none\n- Last activity on the Deal: 27 Oct, Akshay to Vidhya and Abhijith (Codewave): sends the proposal for two YouTube series, offers a call\n- Deal Next action at the move: Waiting on Abhijith and Vidhya: reply to the proposal podm.in/codewave-pitch (sent 27 Oct)\n- Deal Source ID: gmail:1a158eee7a5c6d00\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [
+    "3ed19a301a7f81df825ec9284a79478b",
+    "3f119a301a7f81f8a64ad1fde39af4c4",
+    "3f119a301a7f81eba4d6e52b79e97b33"
+   ],
+   "company": "Cygnet.One",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Proposal sent -> Status Decision pending); Deal next action: Akshay: chase Kesha (Cygnet One) on podm.in/cygnet-pitch and the target databases (no reply since 5 Oct)",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f81ed8d2eda9582bab030"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Niraj Hutheesing @ Cygnet.One, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-10-27",
+    "Organisation": [
+     "3ed19a301a7f8105af86f63cb119285d"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f81039fe7e21022373587",
+    "Stakeholders": [],
+    "Status": "Decision pending",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f81039fe7e21022373587",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f81039fe7e21022373587 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f81039fe7e21022373587\n- Stage: Proposal sent (Slow), Heat Warm, Result none\n- Proposal link: https://podm.in/cygnet-pitch\n- Pitch note: https://claude.ai/artifact/NBRTWLGD3siZgeEFtYSJzS\n- Budget read: none\n- Last activity on the Deal: 5 Oct, Akshay to Kesha Shah: Akshay sends Kesha (Cygnet One) a broad approach note on running a branded podcast (pre-launch to go-live, target guests, scope of work, estimated cost) at podm.in/cygnet-pitch after today's call; offers a walkthrough call. Production-service proposal.\n- Deal Next action at the move: Akshay: chase Kesha (Cygnet One) on podm.in/cygnet-pitch and the target databases (no reply since 5 Oct)\n- Deal Source ID: Podcast-as-a-Service Leads 3db19a30-1a7f-8160-9c49-d7af9b8550eb\n- Chase step: 0"
+  },
+  {
+   "activities_add_engagement": [
+    "3fe19a301a7f81b59a72cecd220f882e",
+    "3fe19a301a7f81689264db5a269dbba2",
+    "3ff19a301a7f81f0a089f3cffb4713d8",
+    "40b19a301a7f81bc8229f324f31dfd08"
+   ],
+   "company": "Damsun Group",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Proposal sent -> Status Decision pending); Deal next action: Call with Puneet Tue 27 Oct, 2:00 pm IST, to walk through podm.in/Damsun-pitch. Setup is now Rs 75k vs the Rs 50k he heard on the precall",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3f019a301a7f817d8ef8e1b55345103a"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Puneet Garg @ Damsun Group, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-10-27",
+    "Organisation": [
+     "3f019a301a7f815ab31cc46a67122390"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3fc19a301a7f813a898fd2673d2b0502",
+    "Stakeholders": [],
+    "Status": "Decision pending",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3fc19a301a7f813a898fd2673d2b0502",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3fc19a301a7f813a898fd2673d2b0502 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3fc19a301a7f813a898fd2673d2b0502\n- Stage: Proposal sent (Warm), Heat none, Result none\n- Proposal link: https://claude.ai/artifact/4X9XW53ximZrHiL1ywKD6g\n- Pitch note: https://claude.ai/artifact/4X9XW53ximZrHiL1ywKD6g\n- Budget read: 16 Oct precall: Akshay quoted about 50k for the first feature and 80-90k per episode, 2 a month for 3 months; promotional content plan, YouTube about 60%, newsletter, blog\n- Last activity on the Deal: 23 Oct, Puneet on WhatsApp: travelling, suggested Tuesday. Pitch podm.in/Damsun-pitch sent on WhatsApp 19 Oct, he said he'd get back\n- Deal Next action at the move: Call with Puneet Tue 27 Oct, 2:00 pm IST, to walk through podm.in/Damsun-pitch. Setup is now Rs 75k vs the Rs 50k he heard on the precall\n- Deal Source ID: whatsapp:2026-10-18 Akshay\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [],
+   "company": "Josh Software",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Proposal sent -> Status Decision pending); Deal next action: Akshay: follow up with Gautam on the 23 Sep pitch",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f8168941cfac3963702eb"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Gautam Rege @ Josh Software, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-10-31",
+    "Organisation": [
+     "3ed19a301a7f81baa4c3e5331bc22b31"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f8123bc1ec5d49cdb12cf",
+    "Stakeholders": [],
+    "Status": "Decision pending",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f8123bc1ec5d49cdb12cf",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f8123bc1ec5d49cdb12cf (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f8123bc1ec5d49cdb12cf\n- Stage: Proposal sent (Slow), Heat Hot, Result none\n- Proposal link: https://podm.in/josh-pitch\n- Pitch note: https://claude.ai/artifact/7w1mP27m9vXAejNhMWgHC5\n- Budget read: none\n- Last activity on the Deal: 23 Sep, Akshay to Gautam Rege (email): sent the Josh Software podcast pitch, podm.in/josh-pitch. No reply since\n- Deal Next action at the move: Akshay: follow up with Gautam on the 23 Sep pitch\n- Deal Source ID: Podcast-as-a-Service Leads 3dd19a30-1a7f-804d-9a74-ce7a7ee6e95d\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [
+    "3fe19a301a7f8183920accaa5fa6039e",
+    "3ff19a301a7f817eafdec73b24d60f61",
+    "40119a301a7f8142bd04d1e7c56fbca5",
+    "40219a301a7f81e880ddf263a87bd445",
+    "40719a301a7f81d49910fb08911132fe"
+   ],
+   "company": "QubeHealth-Pay",
+   "create_engagement": {
+    "Amount": 1155000,
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Proposal sent -> Status Decision pending); Deal next action: Waiting on Chris: reviewing the proposal, will revert next week (said 28 Oct)",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f81b6a3cbcf5c698a688d"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Chris George @ QubeHealth-Pay, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-10-27",
+    "Organisation": [
+     "3ed19a301a7f81e39ac9c25dd3211598"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:40519a301a7f814783bfcdb7dfe6f6a4",
+    "Stakeholders": [],
+    "Status": "Decision pending",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "40519a301a7f814783bfcdb7dfe6f6a4",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:40519a301a7f814783bfcdb7dfe6f6a4 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/40519a301a7f814783bfcdb7dfe6f6a4\n- Stage: Proposal sent (Warm), Heat none, Result none\n- Proposal link: https://podm.in/QubeHealth-Pitch\n- Pitch note: none\n- Budget read: Pitch total ₹11,55,000 for 12 episodes (Qube introduces 4 guests), before ads, optional lines, travel and taxes. Series A at Rs 416 Cr valuation, Jun 2026; FY25 operating income ~Rs 16 Cr.\n- Last activity on the Deal: 28 Oct, Chris George (QubeHealth) to Akshay: will review the podcast proposal and revert next week\n- Deal Next action at the move: Waiting on Chris: reviewing the proposal, will revert next week (said 28 Oct)\n- Deal Source ID: none\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [],
+   "company": "SilverX",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Proposal sent -> Status Decision pending); Deal next action: Akshay: October check-in with Ajay Jain on podm.in/silverx-pitch",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f8199b00cedcf17b881c7"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Ajay Jain @ SilverX, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-10-31",
+    "Organisation": [
+     "3ed19a301a7f8143bbdbcfc71be5af44"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f812f892af347ddf68443",
+    "Stakeholders": [
+     "3f019a301a7f81299296e087364140a5"
+    ],
+    "Status": "Decision pending",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f812f892af347ddf68443",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f812f892af347ddf68443 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f812f892af347ddf68443\n- Stage: Proposal sent (Slow), Heat Warm, Result none\n- Proposal link: https://podm.in/silverx-pitch\n- Pitch note: https://claude.ai/artifact/LPfdKeg9wKpBiBo4L1rv4p\n- Budget read: none\n- Last activity on the Deal: none\n- Deal Next action at the move: Akshay: October check-in with Ajay Jain on podm.in/silverx-pitch\n- Deal Source ID: Podcast-as-a-Service Leads 3db19a30-1a7f-8077-87da-dce37e506079; FT Pipeline/PAAS - FT/10; FT Pipeline/PAAS - FT/16\n- Chase step: 1"
+  },
+  {
+   "activities_add_engagement": [],
+   "company": "Wissen",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Proposal sent -> Status Decision pending); Deal next action: Akshay: follow up with Raghu on WhatsApp on podm.in/wissentech-pitch",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f818a800afc7a7f5eb2b3"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Raghu Pareddy @ Wissen, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-10-31",
+    "Organisation": [
+     "3ed19a301a7f811d9925eff4b26eabea"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f81f1a10de89912924d3b",
+    "Stakeholders": [],
+    "Status": "Decision pending",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f81f1a10de89912924d3b",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f81f1a10de89912924d3b (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f81f1a10de89912924d3b\n- Stage: Proposal sent (Slow), Heat Warm, Result none\n- Proposal link: https://podm.in/wissentech-pitch\n- Pitch note: https://claude.ai/artifact/FpuhDc6Tzd8CFbgGa3KwVE\n- Budget read: none\n- Last activity on the Deal: 25 Oct, Akshay to Neha (Kaizzen, Wissen PR): FT release date to follow, asked her to review the transcript. Nothing logged on the PaaS pitch since it went on WhatsApp\n- Deal Next action at the move: Akshay: follow up with Raghu on WhatsApp on podm.in/wissentech-pitch\n- Deal Source ID: Podcast-as-a-Service Leads 3e319a30-1a7f-80f6-8f2e-d2c94e3b7233\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [],
+   "company": "GyanMatrix Technologies",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Unresponsive -> Status Unresponsive); Deal next action: Stopped chasing on 29 Apr 2026 (Akshay)",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3f019a301a7f815686a9eb2277c88fd5"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Jasintha Mary @ GyanMatrix Technologies, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Organisation": [
+     "3f019a301a7f81448079dfc163063a55"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f81d0815ce2ced33e1440",
+    "Stakeholders": [],
+    "Status": "Unresponsive",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f81d0815ce2ced33e1440",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f81d0815ce2ced33e1440 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f81d0815ce2ced33e1440\n- Stage: Unresponsive (Warm), Heat none, Result none\n- Proposal link: none\n- Pitch note: none\n- Budget read: none\n- Last activity on the Deal: none\n- Deal Next action at the move: Stopped chasing on 29 Apr 2026 (Akshay)\n- Deal Source ID: FT Pipeline/Inbound/83\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [
+    "3f619a301a7f8107b8e4d798a82c0c37"
+   ],
+   "company": "Meanwhile",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Unresponsive -> Status Unresponsive); Deal next action: Akshay: Contacted, untouched 14+ days (daily sweep 26 Oct). Follow up or close | was: Waiting on Zac: reply to Akshay's pitch to start his own podcast (sent 10 Oct)",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3f619a301a7f8148a5b1f5950b1574d5"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Zac Townsend @ Meanwhile, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-10-12",
+    "Organisation": [],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f619a301a7f81fbaaf8d49948ed768f",
+    "Stakeholders": [],
+    "Status": "Unresponsive",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f619a301a7f81fbaaf8d49948ed768f",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f619a301a7f81fbaaf8d49948ed768f (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f619a301a7f81fbaaf8d49948ed768f\n- Stage: Unresponsive (Warm), Heat none, Result none\n- Proposal link: none\n- Pitch note: none\n- Budget read: none\n- Last activity on the Deal: 10 Oct, Akshay to Zac (Meanwhile): congratulates on the round, pitches him on starting his own podcast\n- Deal Next action at the move: Akshay: Contacted, untouched 14+ days (daily sweep 26 Oct). Follow up or close | was: Waiting on Zac: reply to Akshay's pitch to start his own podcast (sent 10 Oct)\n- Deal Source ID: gmail:1a11c8bf0434044a\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [
+    "3f119a301a7f815e9263e1dbd9025f30",
+    "3f119a301a7f81358892d888c6bbc9bc"
+   ],
+   "company": "Clairva.ai (content licensing)",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Won -> Status Booked); Deal next action: Wait for Clairva to report back on the buyer",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ee19a301a7f81a8bef4d215a1c1b4b7"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Anand Nair @ Clairva.ai (content licensing), PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Organisation": [
+     "3ed19a301a7f81a8a0aad95de1fa60bb"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f81dc9245dd734d1a2207",
+    "Stakeholders": [
+     "3ed19a301a7f811787bfdfb37f2cb30b"
+    ],
+    "Status": "Booked",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f81dc9245dd734d1a2207",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f81dc9245dd734d1a2207 (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f81dc9245dd734d1a2207\n- Stage: Won (Warm), Heat none, Result none\n- Proposal link: none\n- Pitch note: none\n- Budget read: none\n- Last activity on the Deal: none\n- Deal Next action at the move: Wait for Clairva to report back on the buyer\n- Deal Source ID: gmail:1a08e5d6c1b7cd7c\n- Chase step: "
+  },
+  {
+   "activities_add_engagement": [
+    "3ed19a301a7f81579adbd66aba625c79",
+    "3f219a301a7f814e9e4de0111e3c21d0",
+    "3f319a301a7f819e9618e7c78d58f0aa",
+    "3f719a301a7f81949f75fc250b5e3f5a",
+    "3f719a301a7f81bc8363e5aee172019e",
+    "3fe19a301a7f8179a5aff46bb7e8c6ca",
+    "3fe19a301a7f8199a2cfde87da261477",
+    "3fe19a301a7f81588dbdff74c26c431e",
+    "3fe19a301a7f81349749fb270768cfc1",
+    "3fe19a301a7f81bea8c2e2dcb4b54476",
+    "3fe19a301a7f819a959aecfb82c168da",
+    "3ff19a301a7f81a6bb10eb29dc305662",
+    "3ff19a301a7f818c8971e305f9f09f3d",
+    "3ff19a301a7f8183be0ff5e3a247c11a",
+    "40119a301a7f81a190f6e8743b6afa91",
+    "40119a301a7f81e28de2c79bda14f0d7",
+    "40119a301a7f81c2ad4dca71c9e5e890",
+    "40119a301a7f81689771e1a2380cbbf1",
+    "40119a301a7f8127b61fc22a92bf92aa",
+    "40119a301a7f81cb80dacf46713597b5",
+    "40419a301a7f8171903cfd60570c3304",
+    "40819a301a7f818ab9e8fcb25f7dfb69",
+    "40c19a301a7f81cf86b1ee1f5fc8ef6f",
+    "40d19a301a7f8136ab73c87fe36f38b5",
+    "40b19a301a7f8149b435e05399116b52",
+    "40e19a301a7f8175bb08eafb922f855e",
+    "40f19a301a7f810b8ac0fa0ca01819ad"
+   ],
+   "company": "Field Assist",
+   "create_engagement": {
+    "Captured": "2026-11-06",
+    "Claude note": "2026-11-06: moved from Deals (Stage Won -> Status Booked); Deal next action: Waiting on Divir (FieldAssist): connect us to someone on his team for podcast design language, branding and launch (Akshay asked 4 Nov) | Waiting on Ashmita (FieldAssist): expected payment date for the invoice Jaya re-sent on 3 Nov | Waiting on Uday and Ashmita (FieldAssist): OK to invoice the one-t",
+    "Claude updated": "2026-11-06",
+    "Guest": [
+     "3ed19a301a7f8188a09bee6776c8c20d"
+    ],
+    "Migration batch": "paas-move-2026-11-06",
+    "Name": "Divir Tiwari @ Field Assist, PaaS",
+    "Next action": "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)",
+    "Next date": "2026-09-23",
+    "Organisation": [
+     "3ed19a301a7f81b59987d1b0a093c45c"
+    ],
+    "Show": [
+     "00000000000000000000000000000000"
+    ],
+    "Source": "Agent",
+    "Source ID": "deal:3f019a301a7f81acb440e5be211230bc",
+    "Stakeholders": [],
+    "Status": "Booked",
+    "Waiting on": [
+     "Akshay"
+    ]
+   },
+   "deal_id": "3f019a301a7f81acb440e5be211230bc",
+   "deal_update": {
+    "Next action": "Moved to Engagements {engagement_url}"
+   },
+   "find_first": "Engagement with Source ID deal:3f019a301a7f81acb440e5be211230bc (exists: skip the create, reuse it)",
+   "page_body": "## PaaS deal (moved 2026-11-06)\n- Deal: https://app.notion.com/p/3f019a301a7f81acb440e5be211230bc\n- Stage: Won (Warm), Heat Hot, Result none\n- Proposal link: https://podm.in/fieldassist-pitch\n- Pitch note: https://claude.ai/artifact/CD7jB5bsMuVnvf6fN9XriP\n- Budget read: none\n- Last activity on the Deal: 5 Nov, Akshay to Jaya and FieldAssist team: asks if the Pathfinders Podcast invoice can be cleared this week\n- Deal Next action at the move: Waiting on Divir (FieldAssist): connect us to someone on his team for podcast design language, branding and launch (Akshay asked 4 Nov) | Waiting on Ashmita (FieldAssist): expected payment date for the invoice Jaya re-sent on 3 Nov | Waiting on Uday and Ashmita (FieldAssist): OK to invoice the one-time set-up fee, plus their GST certificate (Akshay asked 25 Oct) | Jaya sent the duly signed Pathfinders agreement back on 2 Nov; waiting on FieldAssist to confirm receipt\n- Deal Source ID: Podcast-as-a-Service Leads 3db19a30-1a7f-808a-b989-eba6302f0127; FT Pipeline/PAAS - FT/17\n- Chase step: "
+  }
+ ],
+ "problems": [
+  "Codewave: no Organisation on the Deal",
+  "Meanwhile: no Organisation on the Deal"
+ ],
+ "show_id": "00000000000000000000000000000000",
+ "status_map": {
+  "Contacted": "Contacted",
+  "Declined": "They declined",
+  "In conversation": "Interested",
+  "Interested": "Interested",
+  "New": "New",
+  "Parked": "Parked",
+  "Proposal sent": "Decision pending",
+  "Unresponsive": "Unresponsive",
+  "Won": "Booked"
+ },
+ "today": "2026-11-06"
+}
