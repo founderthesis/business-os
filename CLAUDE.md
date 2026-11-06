@@ -78,6 +78,7 @@ Short links (decision 168). Use only these, for these jobs, and never copy a lin
 - Client shows (decisions 306, 307): unhashed.co/sponsored and unhashed.co/precall (un#), built2share.in/note (Built to Share), fscd.ai/note (Human by Design), each only on its own show.
 - unhashed.co/studio: the fixed un# recording link, for un# recordings only: the day-before mail and the recording invite (decision 462, Akshay, 4 Nov).
 - built2share.in/studio: the fixed Built to Share recording link, for recordings only, never a precall (Akshay, 21 Oct).
+- fscd.ai/studio: the fixed Human by Design recording link, for HBD recordings only: the day-before mail and the recording invite (decision 497, Akshay, 6 Nov).
 - youtube.com/@founderthesis: the Founder Thesis YouTube channel, in the "where it's published" answer (Akshay, 21 Oct).
 - founderthesis.com: the show site and guests' written profiles (decision 332, Akshay, 18 Oct: "founderthesis.com is an approved link").
 - zencastr.app.link/<room>: a guest's Zencastr recording room, created by Mamatha. Only in that guest's recording-link mail and on their recording invite (decision 445).
