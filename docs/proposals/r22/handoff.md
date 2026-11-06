@@ -23,21 +23,28 @@ Main, 6 Nov. Nothing is deployed, the pin ref isn't moved, and nothing was writt
 
 Every prompt edit applies on every exemption line too. A Task row stays only for an internal ask with no guest row.
 
-## PaaS follow-ups go as Akshay (his 6 Nov call, CTO 6 Nov)
+## PaaS: reminders only (decision 496), and Human by Design day-before (decision 497)
 
-Akshay rejected the Zoya-voice templates: "Send follow up as Akshay - very short one liners, not pushy, not asking for a call" (Your call on task row 41019a301a7f810da25cc4145a7de33d). r22's PaaS rules now read:
+This supersedes the as-Akshay version. Decision 496 (Akshay, 6 Nov): "actually don't automate the follow ups - I will do manually for now. Just surface them into my queue when a follow up is due."
 
-- **Sender:** PaaS follow-ups go from ad@thepodium.in as Akshay, on the company's existing thread with him, the draft way. This is a new exception to decision 420, PaaS rows only. The SLOW file's HARD "never pose as Akshay" line names it. **It needs a Decisions row** (CTO).
-- **Recipients:** To the person his last mail there went to, Cc as that mail had it (Zoya included, decision 225).
-- **Text:** the toggle's text exactly, with its "Akshay" sign-off. No Zoya name, signature, "best," or emoji. No call ask, no price, no link (PaaS 4's one episode link aside). "hi Sir" in place of the first name wherever Akshay wrote "Sir" to that person.
-- **Schedule:**
-  - New or Contacted: PaaS 1 at day 4 and day 10 after his first mail or intro.
-  - Decision pending (proposal sent): PaaS 2 at day 3, PaaS 3 at day 10, then back to Akshay ("close or nurture?").
-  - Nurture, only on his word: PaaS 4 monthly; 3 unanswered and the row goes Unresponsive.
-  - Interested, Parked, Booked, They declined and Unresponsive rows: no mail.
-- **Replies:** the hourly sends nothing on PaaS rows. Every inbound from their side goes to Akshay's list once, with no holding reply, and ends the chain.
-- **Gate:** the wording page's four toggles, named exactly "PaaS 1: no reply", "PaaS 2: after the proposal", "PaaS 3: second proposal nudge" and "PaaS 4: monthly check-in", each with Status approved. Until all four are approved, nothing sends.
-- **Removed:** the earlier proposal-link exception and the Zoya-voice templates. docs/proposals/paas-move/templates.md is superseded by the task row's one-liners.
+**PaaS:**
+- **No PaaS mail from any inbox.** The PaaS templates and their gate are gone, and so is the as-Akshay exception.
+- **Hourly:** every inbound on a PaaS row goes to Akshay's list once, with no holding reply.
+- **SLOW PAAS REMINDERS** (metadata only) write one segment, "Akshay: follow up <first name> (<no reply since D Mon | proposal sent D Mon | nurture>) (<D Mon>)", with Akshay in Waiting on. They fall due:
+  - day 4 and day 10 after his first mail with no reply;
+  - day 3 and day 10 after the proposal;
+  - monthly on rows he puts in nurture.
+  There's never a second while one is open. Each carries a key on a Claude note line and gets a "blocked" outcome line, so 4/'s check passes.
+- **Inbox actions 2b:** his own mail to that person on that thread clears the reminder, and the next one counts from his mail.
+- **Move plan** (docs/proposals/paas-move/plan.json, regenerated, 721dc6f2b9eac806 with the placeholder Show id): each moved row starts with the Deal's own Next action and its Waiting on (Mamatha dropped). An open row with neither gets "Akshay: next step for <company>? (moved from Deals 6 Nov)" and Akshay. There's no "waits for the templates" segment.
+- docs/proposals/paas-move/templates.md and the one-liners on task row 41019a301a7f810da25cc4145a7de33d are no longer used.
+
+**Human by Design (497):**
+- Calendar 3b sends the day-before note from Zoya, as on FT, un# and Built to Share: no Akshay draft, with Chaandini in the house copies.
+- {call link} is fscd.ai/studio.
+- fscd.ai/studio is recognised as a recording link in 4e and is the studio line on the host prep invite.
+- Zoya's Human by Design links list allows fscd.ai/studio for recording mails and the recording invite only.
+- **CLAUDE.md's short links list needs fscd.ai/studio added** (CTO).
 
 ## Prep entry lines (6/nov item 12, CTO 6 Nov)
 
@@ -65,26 +72,26 @@ Each built twice, byte-identical, with no new em dash.
 
 | Routine | Base (live) | Build | Bytes / sha256 |
 |---|---|---|---|
-| Calendar sync | 9dc4babe | r22/calendar.txt | 62,711 / b57aae215fe9115d |
+| Calendar sync | 9dc4babe | r22/calendar.txt | 62,470 / fb003b475adbd402 |
 | Daily sweep | 6e3d6606 (sweep 468) | r22/sweep.txt | 46,451 / ba5cedefb895dd32 |
 | Inbox capture | 72c4d81a | r22/capture.txt | 49,350 / bf80bfe26d78c331 |
-| Inbox actions | 459e4041, then wa-chase-486 (6a97144a) | r22/actions.txt | 47,496 / f7e380b94fa984d5 |
+| Inbox actions | 459e4041, then wa-chase-486 (6a97144a) | r22/actions.txt | 47,673 / 7597b95f766b12b9 |
 | WhatsApp | 174d9317, then wa-chase-486 (9ef13725) | r22/whatsapp.txt | 30,220 / aa845019f55fcaa5 |
-| Zoya hourly | r21 + C1 (187b4f54) | r22/zoya/zoya-one.txt | 62,875 / 88f802fd7df9fe7c |
-| Zoya SLOW task | r21 (a81e3bc6) | r22/zoya/zoya-slow.txt (pin 2cf95bb) | 15,813 / b240d5f2dc630467 |
-| Zoya SLOW file | 9d74718b | routines/zoya/release/zoya-slow-work.txt at 2cf95bb | 92,221 / efe54d1939348aa8 |
-| Zoya episodes (not live) | r21 | r22/zoya/zoya-episodes.txt | 50,090 / 1a00663ee9b62574 |
+| Zoya hourly | r21 + C1 (187b4f54) | r22/zoya/zoya-one.txt | 62,955 / f366f769a799e92d |
+| Zoya SLOW task | r21 (a81e3bc6) | r22/zoya/zoya-slow.txt (pin 8ffa546) | 15,813 / 8d44d20383c7725c |
+| Zoya SLOW file | 9d74718b | routines/zoya/release/zoya-slow-work.txt at 8ffa546 | 91,041 / c3ef581ab3972bad |
+| Zoya episodes (not live) | r21 | r22/zoya/zoya-episodes.txt | 50,171 / aaf08db2321ca288 |
 
 ### How to build
 
 - **Non-Zoya:**
   1. Run `python3 docs/proposals/wa-chase-486/patch.py <act|wa> <live> <tmp>`.
   2. Run `python3 docs/proposals/r22/patch.py <cal|sweep|cap|act|wa> <live or tmp> <out>`.
-- **Zoya:** apply `r22/zoya/build_one.patch` at f70901f. It holds r21_edits.py (with C1) and r22_edits.py. Then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 2cf95bb36ce7468148b2747e54ee13d6d63dbf15`.
+- **Zoya:** apply `r22/zoya/build_one.patch` at f70901f. It holds r21_edits.py (with C1) and r22_edits.py. Then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 8ffa5464e64992bfe7ce4386a3601e783a2066fd`.
 
 The zoya-r22/ folder (pin 79bc21a) is superseded by this one.
 
-**The hourly is 62,875 bytes, about 2,460 under the cap.** The next Zoya round has to cut before it adds.
+**The hourly is 62,955 bytes, about 2,380 under the cap.** The next Zoya round has to cut before it adds.
 
 ## Replays (offline, read-only)
 

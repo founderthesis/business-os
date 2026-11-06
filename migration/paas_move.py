@@ -24,7 +24,8 @@ STATUS = {  # Deal Stage -> Engagement Status (Engagements has no deal ladder; t
     "Declined": "They declined",
 }
 INCLUDE = {"Warm", "Slow"}
-SEGMENT = "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates ({d})"
+OPEN = {"New", "Contacted", "Interested", "Decision pending", "Booked"}
+TEAM_OK = {"Akshay", "Guest or PR", "Sarika", "Jaya"}  # Waiting on values carried; Mamatha never (decision 352)
 BATCH = "paas-move-2026-11-06"
 
 
@@ -77,6 +78,14 @@ def plan(deals_p, people_p, show_id, today, out):
         if not jl(d["Organisation"]):
             problems.append("%s: no Organisation on the Deal" % d["Company"])
         name = ("%s @ %s, PaaS" % (gname, d["Company"])) if gname else ("%s, PaaS" % d["Company"])
+        # Decision 496: no templates to wait for; each row starts with its real next step from the Deal.
+        nxt = (d["Next action"] or "").strip()
+        wait = [w for w in jl(d["Waiting on"]) if w in TEAM_OK]
+        if status in OPEN:
+            if not nxt:
+                nxt = "Akshay: next step for %s? (moved from Deals %s)" % (d["Company"], short_date(today))
+            if not wait:
+                wait = ["Akshay"]
         body = ["## PaaS deal (moved %s)" % today,
                 "- Deal: https://app.notion.com/p/%s" % did,
                 "- Stage: %s (%s), Heat %s, Result %s" % (d["Stage"], d["Warm or cold"], d["Heat"] or "none", d["Result"] or "none"),
@@ -88,8 +97,8 @@ def plan(deals_p, people_p, show_id, today, out):
                 "- Deal Source ID: %s" % (d["Source ID"] or "none"),
                 "- Chase step: %s" % ("" if d["Chase step"] is None else int(d["Chase step"]))]
         props = {
-            "Name": name, "Show": [show_id], "Status": status, "Waiting on": ["Akshay"],
-            "Next action": SEGMENT.format(d=short_date(today)),
+            "Name": name, "Show": [show_id], "Status": status, "Waiting on": wait,
+            "Next action": nxt,
             "Guest": [guest] if guest else [], "Stakeholders": stake,
             "Organisation": [pid(u) for u in jl(d["Organisation"])],
             "Source": "Agent", "Source ID": "deal:%s" % did, "Captured": today, "Migration batch": BATCH,

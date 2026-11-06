@@ -22,6 +22,16 @@ LINKS = "podm.in/book, /30min, /thank-you, /guest-list, /community or /note"
 EDITS = {
 "cal": [
  EX,
+ # 497: Zoya sends the Human by Design day-before note; its recording link is fscd.ai/studio.
+ ("on Founder Thesis, un# and Built to Share: from Zoya's inbox", "on Founder Thesis, un#, Built to Share and Human by Design (decision 497): from Zoya's inbox"),
+ ("house copies (Akshay; Chaandini on Built to Share)", "house copies (Akshay; Chaandini on Built to Share and Human by Design)"),
+ ("Human by Design stays a draft in Akshay's account (decision 313) until Akshay names its recording link. ", ""),
+ ("Human by Design: a draft in Akshay's account, new mail, To the guest, Cc the main PR contact (Via), every other Stakeholder on the Engagement and the house copies, never Saurabh Garg and never a team member who has left. ", ""),
+ ("Human by Design, the row's Call link;", "Human by Design, fscd.ai/studio (decision 497);"),
+ ("on un# and Built to Share its \"Recording tomorrow (client show)\" toggle", "on un#, Built to Share and Human by Design its \"Recording tomorrow (client show)\" toggle"),
+ ("The Human by Design draft is signed Akshay (Akshay, 12 Oct), {guest full name}, {company}.", "{guest full name}, {company}."),
+ ("built2share.in/studio or unhashed.co/studio link", "built2share.in/studio, unhashed.co/studio or fscd.ai/studio link"),
+ ("Studio: Built to Share is always built2share.in/studio; un# is unhashed.co/studio;", "Studio: Built to Share is always built2share.in/studio; un# is unhashed.co/studio; Human by Design is fscd.ai/studio (decision 497);"),
  # Prep entry lines (6/nov item 12: Ramakant Yadav's 6 Nov precall entry, created 5 Nov 22:38 JST without its Eval line and never updated).
  ("then the bos-key line last. Leave out lines with no value.",
   "then the bos-key line last. Take every value from a fresh fetch of the row (Guest LinkedIn from the guest's People row, which SQL can't read) and leave out only lines whose value is empty on the row."),
@@ -75,6 +85,8 @@ EDITS = {
 ],
 "act": [
  EX,
+ # 496: Akshay's own mail clears a PaaS follow-up reminder.
+ ("An item his mail does not settle stays.", "A PaaS reminder \"Akshay: follow up <name> ...\" (decision 496) is settled by any mail of his to that person on that thread: take it out (the next reminder counts from his mail). An item his mail does not settle stays."),
  ("it keeps STEP 5's decision 448 segment.", "it keeps STEP 5's decision 448 segment, or none (decision 490). Each segment a bucket writes also removes the \"Waiting on <same person>\" segment it answers (STEP 5)."),
  ("(a reply to his own mail still comes to him in that bullet's form)", "(a reply to his own mail follows that bullet, decision 490 included)"),
  # 490: a reply that needs nothing never reaches Akshay's list.

@@ -59,3 +59,6 @@ Day 14 is a last nudge using "PaaS chase", with the ask "should we keep this ope
 > Zoya ✨
 
 [Never a bare "checking in". The useful line has to be real: an FT episode in their sector (verified per GUEST EXAMPLES), or a client result Akshay has made public. No verified item: skip that month and say so in the report.]
+
+
+**Superseded (6 Nov):** Akshay rejected these, then decided no automated PaaS follow-ups at all (decision 496). Kept for history.

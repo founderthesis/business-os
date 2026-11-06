@@ -8,7 +8,7 @@ This is read-only. Nothing was written to Notion. The CTO runs the write after C
 
 - `migration/paas_move.py`: the re-runnable script. `plan` builds the CSV and the plan from snapshots; `verify` checks a read-back.
 - `dry-run.md` (and `dry-run.csv` locally; .gitignore keeps CSVs out): all 35 Deals with Warm or Slow, or Stage Parked, each with its mapping and include flag.
-- `plan.json`: one op per moved row: the Engagement to create, its page body, the Activities to relink, and the Deal's Next action. Run with a placeholder Show id (all zeros), it comes out at sha256 8d4f2e5458f84a14. Built twice, byte-identical.
+- `plan.json`: one op per moved row: the Engagement to create, its page body, the Activities to relink, and the Deal's Next action. Run with a placeholder Show id (all zeros), it comes out at sha256 721dc6f2b9eac806. Built twice, byte-identical.
 - The snapshots are under `data/paas/` (git-ignored, since they hold people's names and Notion ids):
   1. **Deals:** `SELECT url, Company, Stage, "Warm or cold", Heat, Result, "Waiting on", "Next action", "date:Next date:start" AS next_date, "Proposal link", "Pitch note", Amount, "Budget read", "Last activity", Contacts, Organisation, Activities, "From engagement", "Source ID", Tags, "Chase step" FROM <Deals> WHERE "Warm or cold" IN ('Warm','Slow') OR Stage='Parked'`, saved as JSON.
   2. **People:** `SELECT url, Name, Tags FROM <People> WHERE url IN (<every Contacts url>)`.
@@ -49,7 +49,7 @@ The Deal Stage is kept in the page body, so nothing is lost.
 - **Name:** "<main contact> @ <Company>, PaaS".
 - **Show:** PaaS. **Kind:** empty. **Direction:** empty, since "Outbound at New" would take Akshay off the row.
 - **Status:** as mapped above.
-- **Waiting on:** Akshay. **Next action:** the one segment "Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates (6 Nov)".
+- **Waiting on and Next action:** the Deal's own Next action and Waiting on (Mamatha dropped). An open row with neither gets "Akshay: next step for <company>? (moved from Deals 6 Nov)" and Akshay. Decision 496: there are no PaaS templates to wait for, and follow-ups surface as reminders on Akshay's list.
 - **Next date:** the Deal's own.
 - **Guest:** the first Contact who isn't tagged PR contact. **Stakeholders:** the other Contacts.
 - **Organisation** and **Amount:** carried from the Deal.
