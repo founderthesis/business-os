@@ -7,7 +7,7 @@ This is read-only. Nothing was written to Notion. The CTO runs the write after C
 ## Files
 
 - `migration/paas_move.py`: the re-runnable script. `plan` builds the CSV and the plan from snapshots; `verify` checks a read-back.
-- `dry-run.csv`: all 35 Deals with Warm or Slow, or Stage Parked, each with its mapping and include flag.
+- `dry-run.md` (and `dry-run.csv` locally; .gitignore keeps CSVs out): all 35 Deals with Warm or Slow, or Stage Parked, each with its mapping and include flag.
 - `plan.json`: one op per moved row: the Engagement to create, its page body, the Activities to relink, and the Deal's Next action. Run with a placeholder Show id (all zeros), it comes out at sha256 8d4f2e5458f84a14. Built twice, byte-identical.
 - The snapshots are under `data/paas/` (git-ignored, since they hold people's names and Notion ids):
   1. **Deals:** `SELECT url, Company, Stage, "Warm or cold", Heat, Result, "Waiting on", "Next action", "date:Next date:start" AS next_date, "Proposal link", "Pitch note", Amount, "Budget read", "Last activity", Contacts, Organisation, Activities, "From engagement", "Source ID", Tags, "Chase step" FROM <Deals> WHERE "Warm or cold" IN ('Warm','Slow') OR Stage='Parked'`, saved as JSON.
