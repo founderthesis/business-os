@@ -423,10 +423,10 @@ index 0000000..57edfb3
 +]
 diff --git a/routines/zoya/r22_edits.py b/routines/zoya/r22_edits.py
 new file mode 100644
-index 0000000..fc688eb
+index 0000000..7997d38
 --- /dev/null
 +++ b/routines/zoya/r22_edits.py
-@@ -0,0 +1,157 @@
+@@ -0,0 +1,156 @@
 +# r22 (6 Nov), replay fixes folded in (replay22/zoya22.md D1 to D18). Applied after R21. Each entry: (variants, old,
 +# new). It applies in exactly the listed variants, must be found there in exactly one part, exactly once, and is never
 +# applied anywhere else.
@@ -434,42 +434,37 @@ index 0000000..fc688eb
 +# Message-ID) and the PaaS rules (Akshay, 6 Nov, 5/nov page item 7), gated on the four PaaS toggles being approved.
 +ALLV = ("one", "slowwork", "episodes", "slowtask")
 +LOCKV = ("one", "episodes", "slowtask")
-+PAAS_HEAD = ("PAAS (Akshay, 6 Nov; the Notion page \"PaaS follow-up rules for Zoya\", 40f19a301a7f81f2a5c0dba97ed29d14). "
-+ "Engagements whose Show is the page named PaaS are production-service rows, never guests: no guest, eval, booking, "
-+ "sponsored or chase rule applies to them. GATE: the wording page's four PaaS toggles (\"PaaS chase (no reply)\", "
-+ "\"Proposal questions\", \"Proposal call offer\", \"Monthly nurture\") must each read Status approved; until all four do, "
-+ "send nothing on a PaaS row (no reply, no holding reply, no follow-up) and write only one Claude note line per inbound "
-+ "from their side (\"PaaS gated: <Message-ID> unanswered (<D Mon>)\", never twice for one Message-ID, and never a mark "
-+ "that settles it, so the thread stays owed), and report \"PaaS gated: templates not approved, <n> replies waiting: "
-+ "<companies>\" once a run. Once approved: these always go to Akshay's list as one segment (\"Akshay: <who> at "
-+ "<company>: <what> (<D Mon>)\"), with at most the holding reply from you (decision 390): any reply about price, scope, "
-+ "terms, a discount or a custom package; any ask for a meeting, a reference, or a call with anyone but Akshay; a no, or "
-+ "a \"not now\" without a date; a yes (onboarding goes to Jaya and Sarika on his word); anything you're unsure of. ")
-+PAAS_ONE = ("Yours: a reply that only books a call with Akshay (podm.in/30min) or re-sends the row's own proposal link "
-+ "(the podm.in Proposal link in its \"## PaaS deal\" page-body section, approved for that row's PaaS mail only; any "
-+ "other link, or none: Akshay's list); follow-ups on PaaS rows are the SLOW task's, never yours. ")
-+PAAS_SLOW = ("Yours: a reply that only books a call with Akshay (podm.in/30min) or re-sends the row's own proposal link "
-+ "(the podm.in Proposal link in its \"## PaaS deal\" page-body section, approved for that row's PaaS mail only; any "
-+ "other link, or none: Akshay's list), and PAAS FOLLOW-UPS below. ")
-+PAAS_TAIL = ("Every PaaS mail goes from your inbox on the company's existing thread (THREADING; never a fresh mail where "
-+ "one exists; a thread with no message in your inbox gets SENDING's ad@ loop-in first, and your mail waits for a later "
-+ "run), Akshay in Cc, one ask, no price, approved links only; it counts toward the caps and keeps quiet hours.")
-+PAASF = ("PAAS FOLLOW-UPS (gated as PAAS says, so none while any of the four toggles isn't approved). Built from metadata "
-+ "only (SLOW BATCH 1/): each due day counts from an anchor mail's Activity Date on the row: the proposal mail for "
-+ "Decision pending; Akshay's own first mail or intro for New or Contacted (none logged: nothing due); our last mail "
-+ "before the row went Interested for Interested. The due rung is the lowest n not yet sent (its key's Activity), one "
-+ "rung a run, at least 3 days after the previous rung. A reply from their side since the anchor is the hourly's under "
-+ "PAAS: SLOW sends nothing on that row. By Status: New or Contacted: \"PaaS chase (no reply)\" at 4 and 10 days. "
-+ "Interested (a call done, the ball with them): \"PaaS chase (no reply)\" at 3, 7 and 14 days. Decision pending "
-+ "(proposal sent): day 3 \"Proposal questions\", day 7 \"Proposal call offer\", day 14 \"PaaS chase (no reply)\" with "
-+ "the ask \"should we keep this open?\", then Akshay's list \"Akshay: <company> quiet 14 days after the proposal: "
-+ "close or nurture? (<D Mon>)\". Nurture (only on Akshay's word: a Next action segment \"Zoya: PaaS nurture monthly "
-+ "(<D Mon>)\" with its Next date, so selection sees it, and the Claude note line \"PaaS nurture\"): \"Monthly nurture\" "
-+ "once a month; 3 with no reply: Status Unresponsive. Parked: \"Monthly nurture\" once a quarter, only when the row "
-+ "names a reason to revisit. Booked, They declined, Unresponsive: no sales mail. Key: \"<row id>:followup:seq-paas-"
-+ "<status, lowercase, hyphens for spaces>-<n>:<the anchor mail's ISO time>\", counted in the category line \"STEP 2 "
-+ "follow-ups\"; a \"Monthly nurture\" is keyed \"<row id>:nurture:seq-paas-<status>-<n>:<the anchor mail's ISO time>\" "
-+ "and counts in \"nurture\" and toward nurture's limits.\n")
++PAAS_HEAD = ("PAAS (Akshay, 6 Nov; the Notion page \"PaaS follow-up rules for Zoya\", 40f19a301a7f81f2a5c0dba97ed29d14, and "
++ "his 6 Nov call: \"Send follow up as Akshay - very short one liners, not pushy, not asking for a call\"). Engagements "
++ "whose Show is the page named PaaS are production-service rows, never guests: no guest, eval, booking, sponsored or "
++ "chase rule applies to them, and Akshay owns the relationship. ")
++PAAS_ONE = ("FAST work sends nothing on a PaaS row: each inbound from their side goes to Akshay's list as one segment "
++ "(\"Akshay: <who> at <company>: <what> (<D Mon>)\"), once per Message-ID, with no holding reply; follow-ups are the "
++ "SLOW task's.")
++PAAS_SLOW = ("The only PaaS mail is PAAS FOLLOW-UPS below; an inbound from their side is the hourly's (Akshay's list), and "
++ "nothing goes on that row after it.")
++PAAS_TAIL = ""
++PAASF = ("PAAS FOLLOW-UPS (as Akshay, from ad@thepodium.in: with the loop-in, the one exception to decision 420, PaaS rows "
++ "only). GATE: the wording page's four toggles \"PaaS 1: no reply\", \"PaaS 2: after the proposal\", \"PaaS 3: second "
++ "proposal nudge\" and \"PaaS 4: monthly check-in\" (the one-liners on task row 41019a301a7f810da25cc4145a7de33d) must "
++ "each read Status approved; until all four do, send nothing and report \"PaaS gated: one-liners not approved\" once a "
++ "run. Built from metadata only (SLOW BATCH 1/): each due day counts from an anchor mail's Activity Date on the row: "
++ "Akshay's own first mail or intro for New or Contacted (none logged: nothing due); the proposal mail for Decision "
++ "pending. The due rung is the lowest not yet sent (its key's Activity), one rung a run; any mail from their side "
++ "since the anchor ends the chain. By Status: New or Contacted: \"PaaS 1\" at 4 and 10 days. Decision pending "
++ "(proposal sent): \"PaaS 2\" at day 3, \"PaaS 3\" at day 10, then Akshay's list \"Akshay: <company> quiet 10 days "
++ "after the proposal: close or nurture? (<D Mon>)\". Nurture (only on Akshay's word: a segment \"Zoya: PaaS nurture "
++ "monthly (<D Mon>)\" with its Next date, and the Claude note line \"PaaS nurture\"): \"PaaS 4\" once a month; 3 with "
++ "no reply: Status Unresponsive. Interested, Parked, Booked, They declined and Unresponsive rows: no mail. Each goes "
++ "from ad@thepodium.in (inbox_id cd37e47e-89d8-4259-b907-9a243baf7048) on the company's existing thread with Akshay, "
++ "the draft way (NO COMPOSE REPLY), To the person his last mail there went to, Cc as that mail had it (you included, "
++ "decision 225), the toggle's text exactly with its \"Akshay\" sign-off: never your name, signature, \"best,\" or "
++ "emoji, never a call ask, a price or a link (PaaS 4's one episode link aside, approved links only); \"hi Sir\" in place "
++ "of the first name wherever Akshay wrote \"Sir\" to that person on the thread. No thread with that person: send "
++ "nothing, Akshay's list. Quiet hours and the caps hold. Log \"Akshay to <name>: PaaS <n> (sent by Zoya)\" (Kind "
++ "Email out, Source ID per MESSAGE IDENTITY). Key \"<row id>:followup:seq-paas-<status, lowercase, hyphens for "
++ "spaces>-<n>:<the anchor mail's ISO time>\", counted in \"STEP 2 follow-ups\"; a \"PaaS 4\" is keyed \"<row "
++ "id>:nurture:seq-paas-nurture-<n>:<the anchor ISO>\" and counts in \"nurture\" and toward nurture's limits.\n")
 +STATUS = ("STATUS IN CODE: before the record's last write, a Bash python step is given the record body verbatim (quoted "
 + "heredoc), parses the step lines, the \"sends\" and \"stop:\" lines and the start and end times, and prints the status: "
 + "every step not due: No-op; a RULES LOAD line with read short of total: Partial \"rules not loaded: <page> <read> of "
@@ -523,11 +518,10 @@ index 0000000..fc688eb
 +  "Engagements on the Show named PaaS: only as PAAS below says. Anything else, or an Engagement with no Show: do nothing.\n" + PAAS_HEAD + PAAS_ONE + PAAS_TAIL),
 + (("slowwork",), "Anything else, or an Engagement with no Show: do nothing.",
 +  "Engagements on the Show named PaaS: only as PAAS below says. Anything else, or an Engagement with no Show: do nothing.\n" + PAAS_HEAD + PAAS_SLOW + PAAS_TAIL),
-+ (("one",), "outside the approved list (a zencastr.app.link room link only as SENDING allows, decision 445)",
-+  "outside the approved list (a zencastr.app.link room link only as SENDING allows, decision 445; a PaaS row's own podm.in proposal link only as PAAS allows)"),
-+ (("slowwork",), "quote aside) outside the approved list.\n", "quote aside) outside the approved list (a PaaS row's own podm.in proposal link only as PAAS allows).\n"),
++
++
 + (("slowwork",), "plus routine 4, 6 and 8 rows,",
-+  "plus routine 4, 6 and 8 rows, plus PaaS rows due under PAAS FOLLOW-UPS (gated; the closed-row skip below never drops a Parked row PAAS FOLLOW-UPS names, and the migration segment \"Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates\" is no hold: the row's first PaaS send removes it, OWNERS),"),
++  "plus routine 4, 6 and 8 rows, plus PaaS rows due under PAAS FOLLOW-UPS (gated; the migration segment \"Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates\" is no hold: the row's first PaaS send removes it, OWNERS),"),
 + (("slowwork",), "STEP 2. FOLLOW-UPS DUE\n", "STEP 2. FOLLOW-UPS DUE\n" + PAASF),
 +]
 +# Decisions 489 to 495 (Akshay's 6/nov feedback page 41019a301a7f807791dccfe91a0e0d4c, CTO 6 Nov ~11:30 JST).
@@ -583,4 +577,9 @@ index 0000000..fc688eb
 + (("slowwork",), "row On hold.", "row On hold (a guest-row segment: replaced by that Akshay segment)."),
 + (("slowwork",), "Key \"<row id>:followup:seq-community-1:",
 +  "The row is the Engagement linked to his mail's Activity (none: send nothing, report it). Key \"<row id>:followup:seq-community-1:"),
++]
++R22 += [
++ # PaaS follow-ups go as Akshay (his 6 Nov call; an exception to decision 420 for PaaS rows only).
++ (("slowwork",), "Never pose as Akshay: from ad@thepodium.in you send only the loop-in in SENDING (decision 420).",
++  "Never pose as Akshay: from ad@thepodium.in you send only the loop-in in SENDING (decision 420) and the approved PaaS one-liners as PAAS FOLLOW-UPS says (Akshay, 6 Nov)."),
 +]
