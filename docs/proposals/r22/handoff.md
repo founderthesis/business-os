@@ -23,13 +23,33 @@ Main, 6 Nov. Nothing is deployed, the pin ref isn't moved, and nothing was writt
 
 Every prompt edit applies on every exemption line too. A Task row stays only for an internal ask with no guest row.
 
+## Prep entry lines (6/nov item 12, CTO 6 Nov)
+
+**What happened.** The private entry "Prep: Ramakant Yadav @ Scalar Field (FT precall)" (event a7qe1ct0k0evapoeeqabelsl9g, 6 Nov 16:30 JST):
+- It was created at 22:38 JST on 5 Nov, by the 22:35 calendar run, with Join, Engagement, Next action, Stakeholders and bos-key lines, but no Eval line and no LinkedIn line.
+- The row (3f819a301a7f8182b7aafacb6430deb6) has carried Eval link https://claude.ai/artifact/UTmkMD5vRtrnKSkQX2BG17 since 13 Oct.
+- The entry's updated time equals its created time, so the 07:35, 10:35 and 13:35 JST runs on 6 Nov read it and changed nothing.
+
+**Why.** Nothing was skipped. The step ran on a matched row, and the entry was created after the match, since its bos-key carries the row id.
+- The create left out a line the row had.
+- Each later run then decided "nothing changed".
+
+Both point at the same weak spot. The rule asks the model to "compare the lines with the row", which it can do by eye or from an incomplete read. I can't read the run transcripts from this session (no session-events tool), so the exact read it used isn't confirmed.
+
+**Fix (calendar STEP 3).**
+- The create takes every value from a fresh fetch of the row, with LinkedIn from the guest's People row, which SQL can't read. It leaves out only lines that are empty on the row.
+- Every run, for each existing entry, a Bash python step builds the Eval, Dossier, Prep note and LinkedIn lines from a fresh fetch and compares them with the description line by line. Any missing or different line updates the description.
+- Each update adds the report line "prep entry updated: <guest> <D Mon> (<lines>)", and STEP 5 lists them.
+
+**This entry.** The 6 Nov 16:30 precall is past by the time this deploys, so no fix is needed for it.
+
 ## Builds
 
 Each built twice, byte-identical, with no new em dash.
 
 | Routine | Base (live) | Build | Bytes / sha256 |
 |---|---|---|---|
-| Calendar sync | 9dc4babe | r22/calendar.txt | 62,305 / 32a0e32e8489175a |
+| Calendar sync | 9dc4babe | r22/calendar.txt | 62,711 / b57aae215fe9115d |
 | Daily sweep | 6e3d6606 (sweep 468) | r22/sweep.txt | 46,451 / ba5cedefb895dd32 |
 | Inbox capture | 72c4d81a | r22/capture.txt | 49,350 / bf80bfe26d78c331 |
 | Inbox actions | 459e4041, then wa-chase-486 (6a97144a) | r22/actions.txt | 47,496 / f7e380b94fa984d5 |

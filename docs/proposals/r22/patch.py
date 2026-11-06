@@ -22,6 +22,13 @@ LINKS = "podm.in/book, /30min, /thank-you, /guest-list, /community or /note"
 EDITS = {
 "cal": [
  EX,
+ # Prep entry lines (6/nov item 12: Ramakant Yadav's 6 Nov precall entry, created 5 Nov 22:38 JST without its Eval line and never updated).
+ ("then the bos-key line last. Leave out lines with no value.",
+  "then the bos-key line last. Take every value from a fresh fetch of the row (Guest LinkedIn from the guest's People row, which SQL can't read) and leave out only lines whose value is empty on the row."),
+ ("- One exists but its description lacks a line for an Eval, Dossier, Prep note or LinkedIn link the Engagement now has, or shows a different one (compare the lines with the row every run, never a memory of an earlier run; the dossiers routine rebuilds dossiers, decision 127): update the description only,",
+  "- One exists: every run, fetch the row fresh and, in a Bash python step, build the Eval, Dossier, Prep note and LinkedIn lines it should carry and compare them with the entry's description line by line (never by eye or from an earlier run; the dossiers routine rebuilds dossiers, decision 127). Any line the row has that the entry lacks, or shows differently: update the description only,"),
+ ("- One exists and nothing changed: leave it.", "- One exists and that python check finds nothing to add or change: leave it. Each update adds a report line \"prep entry updated: <guest> <D Mon> (<lines added or changed>)\"."),
+ ("STEP 5. REPORT\nShort and plain, no em dashes: ", "STEP 5. REPORT\nShort and plain, no em dashes: prep entries updated (STEP 3: guest, date, lines); "),
  # 495: un# has its own thank-you, C13u.
  ("Subject exactly \"Thank You <guest first name>!\" (the first name tells the team who the chain is about). Wording: C13 on Client show mails, its theme from the show's pitch sheet (SHOW CHECK), plain text plus html_body, one <p> per paragraph, no attachment, the transcript line kept so Akshay attaches it.",
   "Subject exactly \"Thank You <guest first name>!\" (the first name tells the team who the chain is about); on un# \"un# >> thank You <guest first name>!\". Wording: C13 on Client show mails, its theme from the show's pitch sheet (SHOW CHECK), plain text plus html_body, one <p> per paragraph, no attachment, the transcript line kept so Akshay attaches it. un# (decision 495, Akshay, 6 Nov): the toggle \"C13u Thank-you after recording (un#)\" instead, as written there (no transcript line, nothing attached), Sri always in Cc whatever the host line below says; no C13u toggle on the page yet: draft nothing for un#, report \"wording missing: C13u\"."),
