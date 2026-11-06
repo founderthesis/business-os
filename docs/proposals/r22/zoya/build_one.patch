@@ -423,10 +423,10 @@ index 0000000..57edfb3
 +]
 diff --git a/routines/zoya/r22_edits.py b/routines/zoya/r22_edits.py
 new file mode 100644
-index 0000000..9ca0f9c
+index 0000000..11e402d
 --- /dev/null
 +++ b/routines/zoya/r22_edits.py
-@@ -0,0 +1,149 @@
+@@ -0,0 +1,158 @@
 +# r22 (6 Nov), replay fixes folded in (replay22/zoya22.md D1 to D18). Applied after R21. Each entry: (variants, old,
 +# new). It applies in exactly the listed variants, must be found there in exactly one part, exactly once, and is never
 +# applied anywhere else.
@@ -575,4 +575,13 @@ index 0000000..9ca0f9c
 +R22 += [
 + # 497: Human by Design recordings use fscd.ai/studio.
 + (A3, "fscd.ai/note on Human by Design,", "fscd.ai/note and fscd.ai/studio (recording mails and the recording invite only, decision 497) on Human by Design,"),
++]
++# Decisions 514 (release dates are Sarika's) and 499 (post-production tasks live in Team tasks).
++R22 += [
++ (("slowwork",), "A release date is confirmed once Akshay states it in writing or the episode link exists; Planned release alone is not.",
++  "A release date is confirmed once Sarika (decision 514) or Akshay states it in writing, or the episode link exists; Planned release alone is not."),
++ (("slowwork",), "from then on put \"Akshay: <what's missing> for <guest>'s release mail\" on his list, once per row.",
++  "from then on, once per row: a missing date is Sarika's, \"Sarika: release date for <guest>'s release mail\" with Sarika in Waiting on (decision 514, never Akshay's list); anything else missing, \"Akshay: <what's missing> for <guest>'s release mail\" on his list."),
++ (("slowwork",), "INTERNAL TASKS (Rules for Zoya, \"Internal ad-hoc tasks\" and \"Transcript requests\", has the wording).",
++  "INTERNAL TASKS (Rules for Zoya, \"Internal ad-hoc tasks\" and \"Transcript requests\", has the wording). Post-production work (editing, intros, thumbnails, copy) lives in the Team tasks database (decision 499): never create, chase or close it as an Engagements Task row."),
 +]

@@ -4,7 +4,7 @@ CSV plus a write plan the CTO executes with the Notion connector (one writer), t
 
 Usage:
   python3 migration/paas_move.py plan <deals snapshot.json> <people snapshot.json> <PaaS show page id> <YYYY-MM-DD> <out dir>
-  python3 migration/paas_move.py verify <out dir>/plan.json <read-back.json>
+  python3 migration/paas_move.py verify <out dir>/plan.json <read-back.json> data/paas/activities-before.json
 
 Snapshots: the SQL results of docs/proposals/paas-move/README.md's two queries, saved under data/paas/ (git-ignored).
 Selection: Warm or cold is Warm or Slow, any Stage (33 rows on 6 Nov). Cold outreach rows stay in Deals, Parked ones
@@ -43,6 +43,35 @@ def short_date(iso):
     return "%d %s" % (int(d), ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][int(m) - 1])
 
 
+PREFIXES = ("Akshay:", "Ask Akshay", "Zoya:", "Waiting on ", "Closed:", "Fix:", "Jaya:", "Sarika:")
+STALE = re.compile(r"^Akshay: (New|Contacted|In conversation),? untouched[^|]*(\|\s*(was: )?(.*))?$", re.S)
+
+
+def next_step(d, status, gname, today):
+    """C3 (Cleanup, 6 Nov): owner first, about 120 characters, no stale "untouched 14+ days" flags, and Waiting on
+    empty on Parked and Unresponsive rows. The Deal's whole Next action stays in the Claude note and the page body."""
+    raw = (d["Next action"] or "").strip()
+    m = STALE.match(raw)
+    if m:  # a stale sweep flag: keep only the step it replaced ("was: ..."), else nothing
+        raw = (m.group(4) or "").strip() if m.group(3) else ""
+    wait = [w for w in jl(d["Waiting on"]) if w in TEAM_OK]
+    if status not in OPEN:
+        wait = []
+    elif not wait:
+        wait = ["Akshay"]
+    if not raw and status in OPEN:
+        raw = "Akshay: next step for %s? (moved from Deals %s)" % (d["Company"], short_date(today))
+    if raw and status not in OPEN:  # Parked, Unresponsive: nobody's step, so no owner in front
+        raw = raw[len("Akshay: "):] if raw.startswith("Akshay: ") else raw
+        raw = raw if raw.startswith("Closed:") else "Closed: " + raw[0].lower() + raw[1:]
+    elif raw and not raw.startswith(PREFIXES):
+        first = (gname or "them").split()[0]
+        raw = ("Akshay: " if "Akshay" in wait or not wait else "Waiting on %s: " % first) + raw[0].lower() + raw[1:]
+    if len(raw) > 120:
+        raw = raw[:117].rsplit(" ", 1)[0].rstrip(" ,;:(") + "..."
+    return raw, wait
+
+
 def plan(deals_p, people_p, show_id, today, out):
     deals = json.load(open(deals_p))
     people = {pid(p["url"]): p for p in json.load(open(people_p))}
@@ -79,13 +108,7 @@ def plan(deals_p, people_p, show_id, today, out):
             problems.append("%s: no Organisation on the Deal" % d["Company"])
         name = ("%s @ %s, PaaS" % (gname, d["Company"])) if gname else ("%s, PaaS" % d["Company"])
         # Decision 496: no templates to wait for; each row starts with its real next step from the Deal.
-        nxt = (d["Next action"] or "").strip()
-        wait = [w for w in jl(d["Waiting on"]) if w in TEAM_OK]
-        if status in OPEN:
-            if not nxt:
-                nxt = "Akshay: next step for %s? (moved from Deals %s)" % (d["Company"], short_date(today))
-            if not wait:
-                wait = ["Akshay"]
+        nxt, wait = next_step(d, status, gname, today)
         body = ["## PaaS deal (moved %s)" % today,
                 "- Deal: https://app.notion.com/p/%s" % did,
                 "- Stage: %s (%s), Heat %s, Result %s" % (d["Stage"], d["Warm or cold"], d["Heat"] or "none", d["Result"] or "none"),
@@ -114,6 +137,7 @@ def plan(deals_p, people_p, show_id, today, out):
                     "find_first": "Engagement with Source ID deal:%s (exists: skip the create, reuse it)" % did,
                     "create_engagement": props, "page_body": "\n".join(body),
                     "activities_add_engagement": [pid(u) for u in jl(d["Activities"])],
+                    "activities_relink": "C2: before any write, snapshot each listed Activity's Engagement relation into data/paas/activities-before.json ({activity id: [engagement ids]}); then write back the old links plus this Engagement (an append, never a replace) and read it back",
                     "deal_update": {"Next action": "Moved to Engagements {engagement_url}"}})
         rows.append(row)
     os.makedirs(out, exist_ok=True)
@@ -131,10 +155,12 @@ def plan(deals_p, people_p, show_id, today, out):
         print("  problem:", x)
 
 
-def verify(plan_p, back_p):
+def verify(plan_p, back_p, before_p=None):
     """read-back.json: list of {"source_id", "url", "Name", "Status", "Show", "Waiting on", "Next action", "Guest",
-    "Stakeholders", "Organisation", "activities": [ids linked to it], "deal_next_action"}."""
+    "Stakeholders", "Organisation", "activities": [ids linked to it], "activity_engagements": {activity id: [its
+    Engagement ids after the write]}, "deal_next_action"}. With the snapshot, every old link must still be there."""
     p = json.load(open(plan_p)); back = {r["source_id"]: r for r in json.load(open(back_p))}
+    before = json.load(open(before_p)) if before_p else None  # C2: the relations snapshot taken before the write
     bad = 0
     for o in p["ops"]:
         sid = o["create_engagement"]["Source ID"]; r = back.get(sid)
@@ -149,6 +175,14 @@ def verify(plan_p, back_p):
                 print("DIFF", o["company"], k); bad += 1
         if sorted(set(o["activities_add_engagement"]) - set(r.get("activities") or [])):
             print("ACTIVITY NOT LINKED", o["company"]); bad += 1
+        if before is not None:
+            after = r.get("activity_engagements") or {}
+            for a in o["activities_add_engagement"]:
+                lost = set(before.get(a, [])) - set(after.get(a, []))
+                if lost:
+                    print("OLD LINK LOST", o["company"], a, sorted(lost)); bad += 1
+                if a not in after:
+                    print("ACTIVITY NOT READ BACK", o["company"], a); bad += 1
         if not (r.get("deal_next_action") or "").startswith("Moved to Engagements "):
             print("DEAL NOT MARKED", o["company"]); bad += 1
     extra = set(back) - {o["create_engagement"]["Source ID"] for o in p["ops"]}
@@ -160,4 +194,4 @@ if __name__ == "__main__":
     if sys.argv[1] == "plan":
         plan(*sys.argv[2:7])
     elif sys.argv[1] == "verify":
-        sys.exit(1 if verify(sys.argv[2], sys.argv[3]) else 0)
+        sys.exit(1 if verify(sys.argv[2], sys.argv[3], sys.argv[4] if len(sys.argv) > 4 else None) else 0)

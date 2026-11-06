@@ -17,11 +17,14 @@ EX = ("(Show Internal, decision 376: transcripts to Mamatha (decision 456), anyt
       "(Show Internal, decision 376: anything to Jaya or Sarika, and a transcript for a recording with no guest row) stay "
       "Kind Task rows; a guest's transcript ask and precall promises go on the guest's own row as segments (decisions 409, "
       "493), and nothing mirrors a Task row's ask onto a guest row.")
+GUARD = ("and nothing mirrors a Task row's ask onto a guest row.",
+         "and nothing mirrors a Task row's ask onto a guest row. PAAS (Akshay, 6 Nov; decision 496): Engagements on Show PaaS are production-service rows: no guest step, eval, chase, status change or flag by guest rules; mail on them is logged and anything it asks goes to Akshay's list. A Deal whose Next action starts \"Moved to Engagements\" is retired: never flag, update or link to it; use its Engagement.")
 LINKS = "podm.in/book, /30min, /thank-you, /guest-list, /community or /note"
 
 EDITS = {
 "cal": [
  EX,
+ GUARD,
  # 497: Zoya sends the Human by Design day-before note; its recording link is fscd.ai/studio.
  ("on Founder Thesis, un# and Built to Share: from Zoya's inbox", "on Founder Thesis, un#, Built to Share and Human by Design (decision 497): from Zoya's inbox"),
  ("house copies (Akshay; Chaandini on Built to Share)", "house copies (Akshay; Chaandini on Built to Share and Human by Design)"),
@@ -60,6 +63,7 @@ EDITS = {
 ],
 "sweep": [
  EX,
+ GUARD,
  # 492: a settled route stays settled; a conditional route is Zoya's ask.
  ("- Eval verdict Book immediately and no contrary word from Akshay:",
   "- A route Akshay already settled (his Your call, his mail, or a decision line in the Claude note on this eval) is never re-opened by a re-run eval: no new approval ask (decision 492). An eval route \"ask for X first, Y as fallback\" is Zoya's: \"Zoya: ask <PR or guest> for X (Y as fallback)\", Waiting on Zoya; Akshay only once their side declines X.\n- Eval verdict Book immediately and no contrary word from Akshay:"),
@@ -82,11 +86,13 @@ EDITS = {
 ],
 "cap": [
  EX,
+ GUARD,
  # 489: Mamatha stays in Cc when she is on the message.
  ("Never Mamatha.", "Never add Mamatha; when she is on the From, To or Cc of the message you loop in on, she stays in Cc (decision 489)."),
 ],
 "act": [
  EX,
+ GUARD,
  # 496: Akshay's own mail clears a PaaS follow-up reminder.
  ("An item his mail does not settle stays.", "A PaaS reminder \"Akshay: follow up <name> ...\" (decision 496) is settled by any mail of his to that person on that thread: take it out (the next reminder counts from his mail). An item his mail does not settle stays."),
  ("it keeps STEP 5's decision 448 segment.", "it keeps STEP 5's decision 448 segment, or none (decision 490). Each segment a bucket writes also removes the \"Waiting on <same person>\" segment it answers (STEP 5)."),
@@ -100,6 +106,7 @@ EDITS = {
 ],
 "wa": [
  EX,
+ GUARD,
  # Cleanup C1 (r22 verdict): never a guessed country code.
  ("chat id = its digits with the country code, an Indian 10-digit number with 91 in front, then \"@c.us\".",
   "chat id = its digits with the country code, then \"@c.us\"; a People Phone stored without a country code (no leading + or 00): send nothing, replace the segment with \"Akshay: <name>'s WhatsApp number has no country code\", Akshay in Waiting on (never guess one)."),

@@ -23,6 +23,37 @@ Main, 6 Nov. Nothing is deployed, the pin ref isn't moved, and nothing was writt
 
 Every prompt edit applies on every exemption line too. A Task row stays only for an internal ask with no guest row.
 
+## 7 Nov round (CTO 08:50 JST): Cleanup's conditions, the PaaS guard, 499 and 514
+
+1. **Cleanup's C1 and C2 are in patch.py.**
+   - C1 (WhatsApp 0w): no guessed country code.
+   - C2 (sweep 3a4 b): the relink keeps the Activity's other links.
+   - On their own they reproduce Cleanup's accepted 30,378 / f93f47f9 and 46,569 / 513e1a2a; commit 1958305 holds exactly those builds. The hashes in the table add item 2 on top.
+2. **PaaS guard, both lines,** on the shared exemption line in calendar, sweep, inbox actions, inbox capture and WhatsApp:
+   - "Engagements on Show PaaS are production-service rows: no guest step, eval, chase, status change or flag by guest rules; mail on them is logged and anything it asks goes to Akshay's list."
+   - "A Deal whose Next action starts "Moved to Engagements" is retired: never flag, update or link to it; use its Engagement."
+3. **paas-move (plan 5d5f02cd0d57931a, placeholder Show id), C2 and C3:**
+   - Snapshot every listed Activity's Engagement relation first.
+   - Append, never replace: old links plus the new Engagement, then read back.
+   - `verify` takes the snapshot and fails on any lost link.
+   - Every open step has its owner in front and runs to about 120 characters (the longest is 118). The two stale "untouched 14+ days" flags are dropped. Parked and Unresponsive rows have Waiting on empty and a "Closed: ..." line.
+4. **Decisions 499 to 515.** Two touch a routine, both in Zoya SLOW:
+   - **514:** a release date counts as confirmed when Sarika (or Akshay) states it. A missing date is "Sarika: release date for <guest>'s release mail" with Sarika in Waiting on, never Akshay's list. The decision 427 hold on sharing dates stays as it is.
+   - **499:** INTERNAL TASKS says post-production work lives in the Team tasks database and is never created, chased or closed as an Engagements Task row.
+
+   No routine creates post-production Task rows, and no other routine puts a release-date ask on Akshay's list (checked by search). The other decisions in that range cover the episode editor and copywriter chats, not these routines.
+
+The Zoya hourly is unchanged (62,955 / f366f769).
+
+Deploy order, with the move in the same window:
+1. calendar
+2. capture
+3. inbox actions with section 6
+4. WhatsApp
+5. Zoya: pin 8faf930, then the hourly and the SLOW task
+6. the sweep
+7. the PaaS move (create the Show, re-run plan, snapshot, write, verify)
+
 ## PaaS: reminders only (decision 496), and Human by Design day-before (decision 497)
 
 This supersedes the as-Akshay version. Decision 496 (Akshay, 6 Nov): "actually don't automate the follow ups - I will do manually for now. Just surface them into my queue when a follow up is due."
@@ -72,14 +103,14 @@ Each built twice, byte-identical, with no new em dash.
 
 | Routine | Base (live) | Build | Bytes / sha256 |
 |---|---|---|---|
-| Calendar sync | 9dc4babe | r22/calendar.txt | 62,470 / fb003b475adbd402 |
-| Daily sweep | 6e3d6606 (sweep 468) | r22/sweep.txt | 46,451 / ba5cedefb895dd32 |
-| Inbox capture | 72c4d81a | r22/capture.txt | 49,350 / bf80bfe26d78c331 |
-| Inbox actions | 459e4041, then wa-chase-486 (6a97144a) | r22/actions.txt | 47,673 / 7597b95f766b12b9 |
-| WhatsApp | 174d9317, then wa-chase-486 (9ef13725) | r22/whatsapp.txt | 30,220 / aa845019f55fcaa5 |
+| Calendar sync | 9dc4babe | r22/calendar.txt | 62,814 / 0e755649ab95d9ba |
+| Daily sweep | 6e3d6606 (sweep 468) | r22/sweep.txt | 46,913 / b7e69dbc6def649c |
+| Inbox capture | 72c4d81a | r22/capture.txt | 49,694 / a4ac5ae216da6103 |
+| Inbox actions | 459e4041, then wa-chase-486 (6a97144a) | r22/actions.txt | 48,017 / c17734c21ca88163 |
+| WhatsApp | 174d9317, then wa-chase-486 (9ef13725) | r22/whatsapp.txt | 30,722 / 4ce4920ddd88bffa |
 | Zoya hourly | r21 + C1 (187b4f54) | r22/zoya/zoya-one.txt | 62,955 / f366f769a799e92d |
-| Zoya SLOW task | r21 (a81e3bc6) | r22/zoya/zoya-slow.txt (pin 8ffa546) | 15,813 / 8d44d20383c7725c |
-| Zoya SLOW file | 9d74718b | routines/zoya/release/zoya-slow-work.txt at 8ffa546 | 91,041 / c3ef581ab3972bad |
+| Zoya SLOW task | r21 (a81e3bc6) | r22/zoya/zoya-slow.txt (pin 8faf930) | 15,813 / d2253a1923da5de1 |
+| Zoya SLOW file | 9d74718b | routines/zoya/release/zoya-slow-work.txt at 8faf930 | 91,394 / d8ffcafefbb11e7c |
 | Zoya episodes (not live) | r21 | r22/zoya/zoya-episodes.txt | 50,171 / aaf08db2321ca288 |
 
 ### How to build
@@ -87,7 +118,7 @@ Each built twice, byte-identical, with no new em dash.
 - **Non-Zoya:**
   1. Run `python3 docs/proposals/wa-chase-486/patch.py <act|wa> <live> <tmp>`.
   2. Run `python3 docs/proposals/r22/patch.py <cal|sweep|cap|act|wa> <live or tmp> <out>`.
-- **Zoya:** apply `r22/zoya/build_one.patch` at f70901f. It holds r21_edits.py (with C1) and r22_edits.py. Then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 8ffa5464e64992bfe7ce4386a3601e783a2066fd`.
+- **Zoya:** apply `r22/zoya/build_one.patch` at f70901f. It holds r21_edits.py (with C1) and r22_edits.py. Then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 8faf93058516e43a35cd534c4a4d8cb8f61b6177`.
 
 The zoya-r22/ folder (pin 79bc21a) is superseded by this one.
 

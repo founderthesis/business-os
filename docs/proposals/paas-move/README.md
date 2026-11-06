@@ -8,7 +8,7 @@ This is read-only. Nothing was written to Notion. The CTO runs the write after C
 
 - `migration/paas_move.py`: the re-runnable script. `plan` builds the CSV and the plan from snapshots; `verify` checks a read-back.
 - `dry-run.md` (and `dry-run.csv` locally; .gitignore keeps CSVs out): all 35 Deals with Warm or Slow, or Stage Parked, each with its mapping and include flag.
-- `plan.json`: one op per moved row: the Engagement to create, its page body, the Activities to relink, and the Deal's Next action. Run with a placeholder Show id (all zeros), it comes out at sha256 721dc6f2b9eac806. Built twice, byte-identical.
+- `plan.json`: one op per moved row: the Engagement to create, its page body, the Activities to relink, and the Deal's Next action. Run with a placeholder Show id (all zeros), it comes out at sha256 5d5f02cd0d57931a. Built twice, byte-identical.
 - The snapshots are under `data/paas/` (git-ignored, since they hold people's names and Notion ids):
   1. **Deals:** `SELECT url, Company, Stage, "Warm or cold", Heat, Result, "Waiting on", "Next action", "date:Next date:start" AS next_date, "Proposal link", "Pitch note", Amount, "Budget read", "Last activity", Contacts, Organisation, Activities, "From engagement", "Source ID", Tags, "Chase step" FROM <Deals> WHERE "Warm or cold" IN ('Warm','Slow') OR Stage='Parked'`, saved as JSON.
   2. **People:** `SELECT url, Name, Tags FROM <People> WHERE url IN (<every Contacts url>)`.
@@ -61,23 +61,28 @@ The Deal Stage is kept in the page body, so nothing is lost.
 ## Write steps for the CTO (one writer)
 
 1. Create the Show "PaaS" (like AD Tasks), then re-run `plan` with its page id. Only `show_id` changes.
-2. Per op:
+2. **Snapshot first (Cleanup C2).** Read the Engagement relation of every Activity listed in the plan (67) and save it as data/paas/activities-before.json, shaped `{activity id: [engagement ids]}`.
+3. Per op:
    - First look for an Engagement with that Source ID. If one exists, reuse it; never create a second.
    - Create the row, then write its page body.
-   - Add the Engagement to each listed Activity.
+   - For each listed Activity, fetch its Engagement relation and write back **the old links plus this Engagement**. It's an append, never a replace. Read it back.
    - Set the Deal's Next action with the new row's link.
-3. Read every row back into the JSON shape `verify` documents, then run `python3 migration/paas_move.py verify plan.json readback.json`. It must report 0 problems.
-4. Reconcile: Engagements on Show PaaS = 33, and Deals whose Next action starts "Moved to Engagements" = 33.
+4. Read every row back into the JSON shape `verify` documents, including "activity_engagements". Then run `python3 migration/paas_move.py verify plan.json readback.json data/paas/activities-before.json`. It must report 0 problems; it fails on any old link lost.
+5. Reconcile: Engagements on Show PaaS = 33, and Deals whose Next action starts "Moved to Engagements" = 33.
 
-## Before the write: a PaaS guard in the other routines
+## Before the write: the PaaS guard is in r22
 
-Every guest routine reads Engagements and will treat these 33 as podcast guests, for example:
-- the sweep's Decision pending step (STEP 2) and its gone-quiet flags;
-- inbox actions' chase and close rules;
-- calendar's booking steps;
-- capture linking mail to them as pitches.
+Calendar, sweep, inbox actions, inbox capture and WhatsApp in docs/proposals/r22 now carry both of Cleanup's lines:
+- Engagements on Show PaaS get no guest step, eval, chase, status change or flag, and their mail goes to Akshay's list.
+- A Deal whose Next action starts "Moved to Engagements" is retired.
 
-Zoya is gated in r22. Nothing stops the others. I recommend one line in each, deployed before the move: "Rows on Show PaaS are production-service rows: no guest step, no eval, no chase, no status change by guest rules; mail on them is logged and anything it asks goes to Akshay's list." I haven't built it, because it's outside the ask. I can do it in one round on request.
+Zoya has her own PAAS rules. **Deploy r22 before the write.**
+
+## Next action and Waiting on (Cleanup C3)
+
+- **The step:** the Deal's own Next action, with its owner in front ("Akshay: ...", "Waiting on <first name>: ...") and cut to about 120 characters. Its whole text stays in the Claude note and the page body.
+- **Stale flags:** a stale sweep flag ("New, untouched 14+ days ...") is dropped in favour of its "was:" step, or "Akshay: next step for <company>?" when there's none.
+- **Closed rows:** Parked and Unresponsive rows get Waiting on empty and a "Closed: ..." line.
 
 ## Rows to look at (none block the move)
 
