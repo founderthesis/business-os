@@ -423,71 +423,110 @@ index 0000000..57edfb3
 +]
 diff --git a/routines/zoya/r22_edits.py b/routines/zoya/r22_edits.py
 new file mode 100644
-index 0000000..e073c74
+index 0000000..d09c064
 --- /dev/null
 +++ b/routines/zoya/r22_edits.py
-@@ -0,0 +1,64 @@
-+# r22 (6 Nov). Applied after R21. Each entry: (variants, old, new). It applies in exactly the listed variants,
-+# must be found there in exactly one part, exactly once, and is never applied anywhere else.
+@@ -0,0 +1,103 @@
++# r22 (6 Nov), replay fixes folded in (replay22/zoya22.md D1 to D18). Applied after R21. Each entry: (variants, old,
++# new). It applies in exactly the listed variants, must be found there in exactly one part, exactly once, and is never
++# applied anywhere else.
 +# Items: Cleanup's r22 list (b-round verdict: L1, L2, note checks a to c, the hourly's status in code, sends counted by
 +# Message-ID) and the PaaS rules (Akshay, 6 Nov, 5/nov page item 7), gated on the four PaaS toggles being approved.
 +ALLV = ("one", "slowwork", "episodes", "slowtask")
-+SENDV = ("one", "slowwork", "episodes")
 +LOCKV = ("one", "episodes", "slowtask")
-+PAAS = ("PAAS (Akshay, 6 Nov; the Notion page \"PaaS follow-up rules for Zoya\", 40f19a301a7f81f2a5c0dba97ed29d14). "
++PAAS_HEAD = ("PAAS (Akshay, 6 Nov; the Notion page \"PaaS follow-up rules for Zoya\", 40f19a301a7f81f2a5c0dba97ed29d14). "
 + "Engagements whose Show is the page named PaaS are production-service rows, never guests: no guest, eval, booking, "
 + "sponsored or chase rule applies to them. GATE: the wording page's four PaaS toggles (\"PaaS chase (no reply)\", "
 + "\"Proposal questions\", \"Proposal call offer\", \"Monthly nurture\") must each read Status approved; until all four do, "
-+ "send nothing on a PaaS row (no reply, no holding reply, no follow-up), write only a Claude note line, and report "
-+ "\"PaaS gated: templates not approved\" once a run. Once approved: these always go to Akshay's list as one segment "
-+ "(\"Akshay: <who> at <company>: <what> (<D Mon>)\"), with at most the holding reply from you (decision 390): any reply "
-+ "about price, scope, terms, a discount or a custom package; any ask for a call, a meeting or a reference; a no, or a "
-+ "\"not now\" without a date; a yes (onboarding goes to Jaya and Sarika on his word); anything you're unsure of. Yours: "
-+ "a reply that only books a call with Akshay (podm.in/30min) or re-sends the proposal's podm.in link, and in SLOW work "
-+ "PAAS FOLLOW-UPS. Every PaaS mail goes from your inbox on the company's existing thread (THREADING; never a fresh mail "
-+ "where one exists), Akshay in Cc, one ask, no price that isn't in their proposal, approved links only; it counts toward "
-+ "the caps and keeps quiet hours.\n")
-+PAASF = ("PAAS FOLLOW-UPS (SLOW work only; gated as PAAS says, so none while any of the four toggles isn't approved). "
-+ "Candidates: PaaS rows whose due date below is today or earlier, counted from our side's last mail on the company's "
-+ "thread (by Message-ID, SENDS ARE MESSAGE-IDS); any reply from their side since stops the chain and is handled as PAAS "
-+ "says. By Status: New or Contacted: nothing until Akshay's own first mail or intro is on the thread, then \"PaaS chase "
-+ "(no reply)\" at 4 and 10 days. Interested (a call done, the ball with them): \"PaaS chase (no reply)\" at 3, 7 and 14 "
-+ "days. Decision pending (proposal sent): day 3 \"Proposal questions\", day 7 \"Proposal call offer\", day 14 \"PaaS "
-+ "chase (no reply)\" as a last nudge, then Akshay's list \"Akshay: <company> quiet 14 days after the proposal: close or "
-+ "nurture? (<D Mon>)\". Nurture (only on Akshay's word, Claude note line \"PaaS nurture\"): \"Monthly nurture\" once a "
-+ "month; 3 with no reply: Status Unresponsive. Parked: \"Monthly nurture\" once a quarter, only when the row names a "
-+ "reason to revisit. Booked, They declined, Unresponsive: no sales mail. Key: \"<row id>:followup:seq-paas-<status>-<n>:"
-+ "<our last mail's ISO time>\"; the work category is followup.\n")
++ "send nothing on a PaaS row (no reply, no holding reply, no follow-up) and write only one Claude note line per inbound "
++ "from their side (\"PaaS gated: <Message-ID> unanswered (<D Mon>)\", never twice for one Message-ID, and never a mark "
++ "that settles it, so the thread stays owed), and report \"PaaS gated: templates not approved, <n> replies waiting: "
++ "<companies>\" once a run. Once approved: these always go to Akshay's list as one segment (\"Akshay: <who> at "
++ "<company>: <what> (<D Mon>)\"), with at most the holding reply from you (decision 390): any reply about price, scope, "
++ "terms, a discount or a custom package; any ask for a meeting, a reference, or a call with anyone but Akshay; a no, or "
++ "a \"not now\" without a date; a yes (onboarding goes to Jaya and Sarika on his word); anything you're unsure of. ")
++PAAS_ONE = ("Yours: a reply that only books a call with Akshay (podm.in/30min) or re-sends the row's own proposal link "
++ "(the podm.in Proposal link in its \"## PaaS deal\" page-body section, approved for that row's PaaS mail only; any "
++ "other link, or none: Akshay's list); follow-ups on PaaS rows are the SLOW task's, never yours. ")
++PAAS_SLOW = ("Yours: a reply that only books a call with Akshay (podm.in/30min) or re-sends the row's own proposal link "
++ "(the podm.in Proposal link in its \"## PaaS deal\" page-body section, approved for that row's PaaS mail only; any "
++ "other link, or none: Akshay's list), and PAAS FOLLOW-UPS below. ")
++PAAS_TAIL = ("Every PaaS mail goes from your inbox on the company's existing thread (THREADING; never a fresh mail where "
++ "one exists; a thread with no message in your inbox gets SENDING's ad@ loop-in first, and your mail waits for a later "
++ "run), Akshay in Cc, one ask, no price, approved links only; it counts toward the caps and keeps quiet hours.")
++PAASF = ("PAAS FOLLOW-UPS (gated as PAAS says, so none while any of the four toggles isn't approved). Built from metadata "
++ "only (SLOW BATCH 1/): each due day counts from an anchor mail's Activity Date on the row: the proposal mail for "
++ "Decision pending; Akshay's own first mail or intro for New or Contacted (none logged: nothing due); our last mail "
++ "before the row went Interested for Interested. The due rung is the lowest n not yet sent (its key's Activity), one "
++ "rung a run, at least 3 days after the previous rung. A reply from their side since the anchor is the hourly's under "
++ "PAAS: SLOW sends nothing on that row. By Status: New or Contacted: \"PaaS chase (no reply)\" at 4 and 10 days. "
++ "Interested (a call done, the ball with them): \"PaaS chase (no reply)\" at 3, 7 and 14 days. Decision pending "
++ "(proposal sent): day 3 \"Proposal questions\", day 7 \"Proposal call offer\", day 14 \"PaaS chase (no reply)\" with "
++ "the ask \"should we keep this open?\", then Akshay's list \"Akshay: <company> quiet 14 days after the proposal: "
++ "close or nurture? (<D Mon>)\". Nurture (only on Akshay's word: a Next action segment \"Zoya: PaaS nurture monthly "
++ "(<D Mon>)\" with its Next date, so selection sees it, and the Claude note line \"PaaS nurture\"): \"Monthly nurture\" "
++ "once a month; 3 with no reply: Status Unresponsive. Parked: \"Monthly nurture\" once a quarter, only when the row "
++ "names a reason to revisit. Booked, They declined, Unresponsive: no sales mail. Key: \"<row id>:followup:seq-paas-"
++ "<status, lowercase, hyphens for spaces>-<n>:<the anchor mail's ISO time>\", counted in the category line \"STEP 2 "
++ "follow-ups\"; a \"Monthly nurture\" is keyed \"<row id>:nurture:seq-paas-<status>-<n>:<the anchor mail's ISO time>\" "
++ "and counts in \"nurture\" and toward nurture's limits.\n")
++STATUS = ("STATUS IN CODE: before the record's last write, a Bash python step is given the record body verbatim (quoted "
++ "heredoc), parses the step lines, the \"sends\" and \"stop:\" lines and the start and end times, and prints the status: "
++ "every step not due: No-op; a RULES LOAD line with read short of total: Partial \"rules not loaded: <page> <read> of "
++ "<total>\", whatever the steps show; Completed only if every step is done or not due; Partial only when each "
++ "unfinished step is a cap (a body line \"sends <n> of <per-run cap>, today <n> of <daily cap>\", from LIMITS' count, "
++ "shows one reached), a tool error with its tool and error text, or minute 25 (a body line \"stop: minute 25 at "
++ "<date -u time>\", 25 or more minutes after the start); anything else, or a FAST step with no line, is Failed \"early "
++ "exit at minute <n>\". The record's status is copied from that output, never rewritten.")
++def L2(src):
++    return ("RELEASE, the very last step, after the run record's last write and its check (L2, Cleanup: re-fetch the "
++            "record and assert in a Bash python step that its Summary no longer ends \"Started\" and starts with the "
++            "status " + src + " printed; a miss: retry the Summary write once and re-fetch; still a miss: add \"record "
++            "status write failed\" to its body):")
++SENDS = ("- SENDS ARE MESSAGE-IDS (Cleanup, 5 Nov): wherever a rule counts or compares sent mail (ACTIONS' Sent check, "
++ "PRE-SEND CHECKS 5/, {cr}the caps, any duplicate check), the unit is the Message-ID, never the Sent item: two Sent items "
++ "with one Message-ID are one send; only two Message-IDs to the same recipient for the same action are a double send.\n"
++ "- NO COMPOSE REPLY (")
++RL = "RELEASE, the very last step, after the run record's last write:"
 +R22 = [
 + # L1: a no-repo run still leaves a record.
 + (LOCKV, "none: end at once and report \"no repo, lock not checked\")",
 +  "none: write the run record anyway, created once and never Started first, Summary \"Run <this routine, as RUN RECORD names it> <start> JST: Failed: no repo, lock not checked\", Source ID as RUN RECORD forms it with the run id from 1. below, then end at once (L1, Cleanup))"),
-+ # L2: the record's status is read back before RELEASE.
-+ (LOCKV, "RELEASE, the very last step, after the run record's last write:",
-+  "RELEASE, the very last step, after the run record's last write and its check (L2, Cleanup: re-fetch the record and assert in a Bash python step that its Summary no longer ends \"Started\" and starts with the status line you wrote; a miss: retry the Summary write once, then add \"record status write failed\" to its body):"),
++ # L2, per variant: the status source differs.
++ (("one",), RL, L2("STATUS IN CODE")),
++ (("episodes",), RL, L2("line you wrote")),
++ (("slowtask",), RL, L2("4/'s OUTCOME CHECK IN CODE")),
 + # Note checks (a) and (b).
 + (ALLV, "(a page fetch or rows mode, never an SQL value, a preview or any slice)",
 +  "(a notion-fetch of that row, its note pasted verbatim into python in a quoted heredoc (<<'EOF'); SQL results, a full column included, rows mode, a preview or any slice are never a read of the note)"),
 + (ALLV, "check in a Bash python step that the new note's length is at least the old length plus the new line's;",
-+  "check in a Bash python step that new == line + \"<br />\" + old exactly (N1), and after the write re-fetch the row and assert that the stored note, backslash escapes normalised, ends with the old note normalised the same way (N2);"),
++  "check in a Bash python step that new == line + \"<br />\" + old exactly, or new == line when old is empty (N1), printing the three lengths, and after the write re-fetch the row and assert that the stored note, backslash escapes normalised, ends with the old note normalised the same way (N2);"),
 + # Note check (c): every note: carries its sums, checked in 4/.
 + (("slowwork",), "each from a read-back (the Activity, and the row's top Claude note line dated today);",
-+  "each from a read-back (the Activity, and the row's top Claude note line dated today), the note: followed by \"chk:<old length>+<line length>=<new length> fetch\" from N1 and N2;"),
++  "each from a read-back (the Activity, and the row's top Claude note line dated today), the note: followed by \"chk:<old length>+<line length>+<6, or 0 when the old note was empty>=<new length> fetch\", the lengths N1's python printed, written only after N2 passed;"),
++ (("slowwork",), "a held, blocked or overtaken line carries \"note:<row id> <YYYY-MM-DD>\" the same way",
++  "a held, blocked or overtaken line carries \"note:<row id> <YYYY-MM-DD>\" and its chk: the same way"),
 + (("slowwork",), "the python also checks each line's note: (completed, held, blocked and overtaken)",
 +  "the python also checks each line's note: (completed, held, blocked and overtaken) and that it carries a chk: whose sum adds up (none, or a wrong sum: that item is unfinished, no reason; \"by construction\" never passes)"),
 + # The hourly's status in code (Cleanup 5 Nov run review, item 3).
 + (("one",), "Partial: a step failed or was skipped; Failed: stopped early",
-+  "Partial: only as STATUS IN CODE allows; Failed: stopped early, or any other early exit"),
++  "No-op and Partial: only as STATUS IN CODE allows; Failed: stopped early, or any other early exit"),
 + (("one",), "body = the report plus end time,",
-+  "body = one line per FAST step (\"step <name>: done <n> | not due | unfinished (minute 25 | cap | tool error: <tool> <error>)\"), the report, the end time and elapsed minutes from `date -u`,"),
++  "body = one line per FAST step, these names in this order: 0e, 0e2, 0r, 1 (new mail), 1-72h (threads over 72 hours), order (FAST ORDER's actions) (\"step <name>: done <n> | not due | unfinished (minute 25 | cap | tool error: <tool> <error>)\"), a line \"sends <n> of <per-run cap>, today <n> of <daily cap>\", a \"stop: minute 25 at <time>\" line if that stop applied, the report, the end time and elapsed minutes from `date -u`,"),
 + (("one",), "and size or context never ends a run early.",
-+  "and size or context never ends a run early; rules loading, thread length or cost is never a reason to leave a step. STATUS IN CODE: before the record's last write, a Bash python step is given the record body verbatim (quoted heredoc), parses the step lines and the start and end times, and prints the status: Completed only if every step is done or not due; Partial only when each unfinished step is a cap (this run's sends or today's count reaching it), a tool error with its tool and error text, or minute 25 with the measured elapsed at 25 or more; anything else, or a FAST step with no line, is Failed \"early exit at minute <n>\". The record's status is copied from that output, never rewritten."),
++  "and size or context never ends a run early; rules loading, thread length or cost is never a reason to leave a step. " + STATUS),
 + # Sends are counted by Message-ID.
-+ (SENDV, "- NO COMPOSE REPLY (",
-+  "- SENDS ARE MESSAGE-IDS (Cleanup, 5 Nov): wherever a rule counts or compares sent mail (ACTIONS' Sent check, PRE-SEND CHECKS 5/, CRASH RECOVERY, the caps, any duplicate check), the unit is the Message-ID, never the Sent item: two Sent items with one Message-ID are one send; only two Message-IDs to the same recipient for the same action are a double send.\n- NO COMPOSE REPLY ("),
-+ # PaaS: scope, gate and SLOW follow-ups.
-+ (("one", "slowwork"), "Anything else, or an Engagement with no Show: do nothing.",
-+  "Engagements on the Show named PaaS: only as PAAS below says. Anything else, or an Engagement with no Show: do nothing.\n" + PAAS.rstrip("\n")),
-+ (("slowwork",), "plus routine 4, 6 and 8 rows,", "plus routine 4, 6 and 8 rows, plus PaaS rows due under PAAS FOLLOW-UPS (gated),"),
++ (("one", "episodes"), "- NO COMPOSE REPLY (", SENDS.format(cr="")),
++ (("slowwork",), "- NO COMPOSE REPLY (", SENDS.format(cr="CRASH RECOVERY, ")),
++ # PaaS: scope, gate, the proposal-link exception, SLOW follow-ups.
++ (("one",), "Anything else, or an Engagement with no Show: do nothing.",
++  "Engagements on the Show named PaaS: only as PAAS below says. Anything else, or an Engagement with no Show: do nothing.\n" + PAAS_HEAD + PAAS_ONE + PAAS_TAIL),
++ (("slowwork",), "Anything else, or an Engagement with no Show: do nothing.",
++  "Engagements on the Show named PaaS: only as PAAS below says. Anything else, or an Engagement with no Show: do nothing.\n" + PAAS_HEAD + PAAS_SLOW + PAAS_TAIL),
++ (("one",), "outside the approved list (a zencastr.app.link room link only as SENDING allows, decision 445)",
++  "outside the approved list (a zencastr.app.link room link only as SENDING allows, decision 445; a PaaS row's own podm.in proposal link only as PAAS allows)"),
++ (("slowwork",), "quote aside) outside the approved list.\n", "quote aside) outside the approved list (a PaaS row's own podm.in proposal link only as PAAS allows).\n"),
++ (("slowwork",), "plus routine 4, 6 and 8 rows,",
++  "plus routine 4, 6 and 8 rows, plus PaaS rows due under PAAS FOLLOW-UPS (gated; the closed-row skip below never drops a Parked row PAAS FOLLOW-UPS names, and the migration segment \"Akshay: PaaS row moved from Deals, Zoya waits for the PaaS templates\" is no hold: the row's first PaaS send removes it, OWNERS),"),
 + (("slowwork",), "STEP 2. FOLLOW-UPS DUE\n", "STEP 2. FOLLOW-UPS DUE\n" + PAASF),
 +]
