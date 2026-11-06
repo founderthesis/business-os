@@ -23,6 +23,22 @@ Main, 6 Nov. Nothing is deployed, the pin ref isn't moved, and nothing was writt
 
 Every prompt edit applies on every exemption line too. A Task row stays only for an internal ask with no guest row.
 
+## PaaS follow-ups go as Akshay (his 6 Nov call, CTO 6 Nov)
+
+Akshay rejected the Zoya-voice templates: "Send follow up as Akshay - very short one liners, not pushy, not asking for a call" (Your call on task row 41019a301a7f810da25cc4145a7de33d). r22's PaaS rules now read:
+
+- **Sender:** PaaS follow-ups go from ad@thepodium.in as Akshay, on the company's existing thread with him, the draft way. This is a new exception to decision 420, PaaS rows only. The SLOW file's HARD "never pose as Akshay" line names it. **It needs a Decisions row** (CTO).
+- **Recipients:** To the person his last mail there went to, Cc as that mail had it (Zoya included, decision 225).
+- **Text:** the toggle's text exactly, with its "Akshay" sign-off. No Zoya name, signature, "best," or emoji. No call ask, no price, no link (PaaS 4's one episode link aside). "hi Sir" in place of the first name wherever Akshay wrote "Sir" to that person.
+- **Schedule:**
+  - New or Contacted: PaaS 1 at day 4 and day 10 after his first mail or intro.
+  - Decision pending (proposal sent): PaaS 2 at day 3, PaaS 3 at day 10, then back to Akshay ("close or nurture?").
+  - Nurture, only on his word: PaaS 4 monthly; 3 unanswered and the row goes Unresponsive.
+  - Interested, Parked, Booked, They declined and Unresponsive rows: no mail.
+- **Replies:** the hourly sends nothing on PaaS rows. Every inbound from their side goes to Akshay's list once, with no holding reply, and ends the chain.
+- **Gate:** the wording page's four toggles, named exactly "PaaS 1: no reply", "PaaS 2: after the proposal", "PaaS 3: second proposal nudge" and "PaaS 4: monthly check-in", each with Status approved. Until all four are approved, nothing sends.
+- **Removed:** the earlier proposal-link exception and the Zoya-voice templates. docs/proposals/paas-move/templates.md is superseded by the task row's one-liners.
+
 ## Prep entry lines (6/nov item 12, CTO 6 Nov)
 
 **What happened.** The private entry "Prep: Ramakant Yadav @ Scalar Field (FT precall)" (event a7qe1ct0k0evapoeeqabelsl9g, 6 Nov 16:30 JST):
@@ -54,9 +70,9 @@ Each built twice, byte-identical, with no new em dash.
 | Inbox capture | 72c4d81a | r22/capture.txt | 49,350 / bf80bfe26d78c331 |
 | Inbox actions | 459e4041, then wa-chase-486 (6a97144a) | r22/actions.txt | 47,496 / f7e380b94fa984d5 |
 | WhatsApp | 174d9317, then wa-chase-486 (9ef13725) | r22/whatsapp.txt | 30,220 / aa845019f55fcaa5 |
-| Zoya hourly | r21 + C1 (187b4f54) | r22/zoya/zoya-one.txt | 64,193 / 479487163c2ab637 |
-| Zoya SLOW task | r21 (a81e3bc6) | r22/zoya/zoya-slow.txt (pin 45dee11) | 15,813 / 4faf2d1f8acd7962 |
-| Zoya SLOW file | 9d74718b | routines/zoya/release/zoya-slow-work.txt at 45dee11 | 93,001 / b8f7c5e7a71cf8b2 |
+| Zoya hourly | r21 + C1 (187b4f54) | r22/zoya/zoya-one.txt | 62,875 / 88f802fd7df9fe7c |
+| Zoya SLOW task | r21 (a81e3bc6) | r22/zoya/zoya-slow.txt (pin 2cf95bb) | 15,813 / b240d5f2dc630467 |
+| Zoya SLOW file | 9d74718b | routines/zoya/release/zoya-slow-work.txt at 2cf95bb | 92,221 / efe54d1939348aa8 |
 | Zoya episodes (not live) | r21 | r22/zoya/zoya-episodes.txt | 50,090 / 1a00663ee9b62574 |
 
 ### How to build
@@ -64,11 +80,11 @@ Each built twice, byte-identical, with no new em dash.
 - **Non-Zoya:**
   1. Run `python3 docs/proposals/wa-chase-486/patch.py <act|wa> <live> <tmp>`.
   2. Run `python3 docs/proposals/r22/patch.py <cal|sweep|cap|act|wa> <live or tmp> <out>`.
-- **Zoya:** apply `r22/zoya/build_one.patch` at f70901f. It holds r21_edits.py (with C1) and r22_edits.py. Then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 45dee1150586e595e97b000ef7692e3759e3f3fb`.
+- **Zoya:** apply `r22/zoya/build_one.patch` at f70901f. It holds r21_edits.py (with C1) and r22_edits.py. Then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 2cf95bb36ce7468148b2747e54ee13d6d63dbf15`.
 
 The zoya-r22/ folder (pin 79bc21a) is superseded by this one.
 
-**The hourly is 64,193 bytes, about 1,140 under the cap.** The next Zoya round has to cut before it adds.
+**The hourly is 62,875 bytes, about 2,460 under the cap.** The next Zoya round has to cut before it adds.
 
 ## Replays (offline, read-only)
 
