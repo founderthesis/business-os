@@ -37,7 +37,25 @@ SOURCES      Gmail · Calendar · Gemini notes · Zencastr · Guest form · What
              team "my work today" · episode working doc · host portal · client portal
 ```
 
-## Tables (10)
+## Where work lives (current, 8 Nov 2026)
+
+This map follows the decisions in force on 8 Nov. The sections after it describe the 30 Sep design and are history where they differ.
+
+| Work | Lives in | Who acts | Decisions |
+|---|---|---|---|
+| Guest pursuits on the four shows, sponsored guests (Tier Sponsored) and brand asks included | Engagements on that show (Kind empty) | Zoya runs the follow-ups; Akshay decides | 329, 156 |
+| Production-service sales (PaaS): leads and clients | Engagements on Show PaaS | Akshay; follow-ups surface as reminders on his list, never as automatic mail | 518, 496 |
+| Internal tasks, reminders, vendor and builder actions, handovers to Akshay | Engagements, Kind Task (own owner in Waiting on, Task state) | the row's owner; a handover to Akshay follows 459 | 329, 459 |
+| Post-production for an Episode (video, intro, thumbnail, copy) | Team tasks database, linked to the Episode | allocated by the Episode editor or copywriter chat; owned by team members | 499 |
+| Production state after Booked | Episodes | Sarika | |
+| Deals | retired 7 Nov: nothing is created or updated there. The 33 moved Deals point to their Engagement ("Moved to Engagements <link>"), and the cold outreach target list stays there, read only | nobody writes to it | 518, 89 |
+| Tasks (the old board) | retired 18 Oct, history only | nobody writes to it | 329 |
+
+Still open:
+- **Clairva.ai:** decision 518 puts it on Show PaaS. Whether it belongs there as Booked (content licensing, not production) is Akshay's call.
+- **The cold outreach target list:** where it lives once Deals is archived isn't decided yet.
+
+## Tables (as designed, 30 Sep 2026: history; the current map is above)
 
 | Table | One row is | Key contents |
 |---|---|---|
@@ -52,19 +70,19 @@ SOURCES      Gmail · Calendar · Gemini notes · Zencastr · Guest form · What
 | Templates | an email that can be sent | show, purpose, body, version, approved (a template edit resets approval) |
 | Credentials | a login | walled off; no routine reads it |
 
-Engagements carry one Status ladder for the guest journey (New to Form filled, plus LT chase, Parked, They declined, We declined, Unresponsive); see docs/statuses.md. After Booked, production state lives on the Episode. Commercial pursuits (PaaS, sponsors, partners) live in Deals with their own Stage.
+Engagements carry one Status ladder for the guest journey (New to Form filled, plus LT chase, Parked, They declined, We declined, Unresponsive); see docs/statuses.md. After Booked, production state lives on the Episode. Commercial pursuits are Engagements too: sponsored guests and brand asks on their own show (decision 156), production-service sales on Show PaaS (decision 518). Deals is retired.
 
 Field-by-field spec: `docs/schema.md`.
 
 ## The inbox
 
-Dropped for now (decisions 61, 62): the sorting dashboard and the Decision Desk. Akshay reads all his own mail. The inbox agent only records: one Activity per email, and the Engagement or Deal moved to match. Decision surfaces get another try later with a different approach.
+Dropped for now (decisions 61, 62): the sorting dashboard and the Decision Desk. Akshay reads all his own mail. The inbox agent only records: one Activity per email, and the Engagement moved to match (Deals is retired, decision 518). Decision surfaces get another try later with a different approach.
 
 ## Triggers
 
 | When | What happens | Human part |
 |---|---|---|
-| Any email arrives | Logged as an Activity; Engagement or Deal updated | None |
+| Any email arrives | Logged as an Activity; Engagement updated | None |
 | Pitch arrives | Eval skill runs; research saved on the Person; decision card | Tap an answer |
 | Precall booked | Prep entry on private calendar with eval link and a reminder to switch on the Meet transcript | One click in the call |
 | Precall ends | Gemini notes read, eval re-runs, recommendation card | Record / Don't / Another call |
