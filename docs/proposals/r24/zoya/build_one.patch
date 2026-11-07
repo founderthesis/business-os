@@ -602,11 +602,11 @@ index 0000000..5259eef
 +]
 diff --git a/routines/zoya/r24_edits.py b/routines/zoya/r24_edits.py
 new file mode 100644
-index 0000000..9393a0f
+index 0000000..a3dc641
 --- /dev/null
 +++ b/routines/zoya/r24_edits.py
-@@ -0,0 +1,18 @@
-+# r24 (CTO, 7 Nov 20:55 JST). Applied after R23, never in the SLOW file (the pin stays 8faf930).
+@@ -0,0 +1,28 @@
++# r24 (CTO, 7 Nov 20:55 and 23:15 JST). Applied after R23. Decision 517 also changes the SLOW file, so the pin moves.
 +# 1/ A row Zoya creates from a pitch (the Sung Hong un# row) waits on no one at Status New, so the evals routine takes it.
 +# 2/ Cleanup's r23 S2: wait 5 seconds before each lock re-push. S4: cut before adding (hourly under 63,000).
 +R22 += [
@@ -617,10 +617,20 @@ index 0000000..9393a0f
 +  "L is $H: sleep 5, push the same $R with the same --force-with-lease, re-read;"),
 + (LOCKV, "(Akshay, 27 Oct: one Zoya run at a time, fail-closed)", "(decision 415: one Zoya run at a time, fail-closed)"),
 + # Cuts: a superseded PaaS citation (decision 496 replaced the as-Akshay call), an incident story, a rationale.
-+ (("one",), "PAAS (Akshay, 6 Nov; the Notion page \"PaaS follow-up rules for Zoya\", 40f19a301a7f81f2a5c0dba97ed29d14, and his 6 Nov call: \"Send follow up as Akshay - very short one liners, not pushy, not asking for a call\").",
++ (("one", "slowwork"), "PAAS (Akshay, 6 Nov; the Notion page \"PaaS follow-up rules for Zoya\", 40f19a301a7f81f2a5c0dba97ed29d14, and his 6 Nov call: \"Send follow up as Akshay - very short one liners, not pushy, not asking for a call\").",
 +  "PAAS (decision 496)."),
 + (LOCKV, "(Akshay, 5 Nov, item 2: one run sent Samiksha's chase twice; its email_compose reply took the thread's last sender and went to ad@ alone)", "(Akshay, 5 Nov, item 2)"),
 + (LOCKV, " (either disables the check: each lock commit's parent is the sha you read, so a plain push lands only as a fast-forward from exactly that sha)", ""),
-+ (("one", "episodes"), "(decision 446, Akshay, 3 Nov: \"For client podcasts, best to ask me for next action first\")", "(decision 446, Akshay, 3 Nov)"),
++ (("one", "episodes", "slowwork"), "(decision 446, Akshay, 3 Nov: \"For client podcasts, best to ask me for next action first\")", "(decision 446, Akshay, 3 Nov)"),
 + (("one",), "(decision 445; Akshay, 3 Nov: \"have Zoya send - I don't want to send manually\")", "(decision 445, Akshay, 3 Nov)"),
++ (("slowwork",), "(Akshay, 5 Nov, item 2: one run sent Samiksha's chase twice; its email_compose reply took the thread's last sender and went to ad@ alone)", "(Akshay, 5 Nov, item 2)"),
++ # Decision 517 (Akshay, 7 Nov): on a pitch Saurabh forwarded, he stays in Cc.
++ (("one", "slowwork"), "Saurabh Garg never.",
++  "Saurabh Garg never, except decision 517: on a pitch he forwarded (Claude note \"forwarded by Saurabh\"), reply on his chain To the pitcher (from inside his forward), Cc him and Akshay, and keep him in Cc on every mail there."),
++ # S4 cuts in SENDING (incident notes and examples; every rule stays).
++ (("one", "slowwork", "episodes"), " (4 Nov: a heredoc broke the sign-off's emoji)", ""),
++ (("one", "slowwork", "episodes"), " (a new conversation in an old chain, such as Commix on a Livlong 365 thread)", " (a new conversation in an old chain)"),
++ (("one", "slowwork", "episodes"), " (4 Nov: a compose reply on Akshay's own last message went to ad@ alone)", ""),
++ (("one", "slowwork", "episodes"), " (replies never carry the thread's old attachments)", ""),
++ (("one", "slowwork", "episodes"), ", such as Akshay's feedback to you or a team note,", ""),
 +]
