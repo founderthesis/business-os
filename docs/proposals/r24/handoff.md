@@ -128,7 +128,7 @@ The Notion property is **not** renamed; the CTO does that in stage 2. Every live
 - **Host boards never copied the Dossier link to a board** (STEP 3 copies the eval, pitch, Eval link, availability, date and LinkedIn). I described where the board field's value comes from and added no new copying. If boards should show the dossier, that's a separate change.
 - **Of the four dossier skills, only ft-host-dossier writes the field**; the other three leave it to the dossiers routine. Separately, pitch-builder's closing step wrote every pitch to Deals, so under decision 518 it now logs on the PaaS Engagement and writes its link to the Prep doc link. The upload set is docs/proposals/skills-521 (handoff and hashes there).
 
-**Check for Cleanup:** no live build in r24 (or the SLOW file at e93bd71) names "Dossier link" outside the dual wording or the board's own field. I checked with a script over every r24 build, and every build is under 65,536.
+**Check for Cleanup:** no live build in r24 (or the SLOW file at 9a79960) names "Dossier link" outside the dual wording or the board's own field. I checked with a script over every r24 build, and every build is under 65,536.
 
 ## 9. Decision 522: WhatsApp chasers read the chat first (refines 486's draft only)
 
@@ -153,6 +153,18 @@ Akshay, 7 Nov 23:34 JST (intake 41119a301a7f81d29ae6e81035ab952b). The draft is 
 - What we decided: "Before drafting a decision 486 chaser, Zoya reads the person's WhatsApp chat with Akshay (and the row's Activities and mail), skips the draft if it's already answered, mirrors his salutation, name form, language, case and length, writes 1 or 2 short messages with one ask and at most one true, verified detail, and notes what she read on a context line that is never sent. Refines 486's draft only; 519's number lookup and the exact-draft ok are unchanged."
 - Why: his 7 Nov 23:34 JST words, quoted.
 
+## Cleanup's r24 verdict (246a0d3): C1 and S1 to S4 folded in
+
+- **C1 (before the Zoya pin):** the decision 517 sentence in the hourly and the SLOW file now ends "and quote only the pitcher's own forwarded mail, never his note or the loop-in". The pin moves to **9a79960** (SLOW file 91,039 / d953cd1c). Two citation cuts pay for it: "(decision 453; ...)" and "(decision 421)". The hourly is 62,974, still under 63,000.
+- **S1 (sweep 3p):** the pitch link uses the dual wording, so it's found under either name.
+- **S2 (sweep 3p):**
+  - The PaaS row is matched by Guest or Stakeholders; a match by Organisation alone is reported and nothing is created (decision 424).
+  - The segment is added only when the row doesn't already have it.
+- **S3 (capture):** "Built to Share and Human by Design: inbox actions STEP 5", as Cleanup traced it.
+- **S4 (WhatsApp 0w):** the report names where a looked-up number came from ("number from FT Community" or "number from saved contact").
+
+The non-Zoya builds that changed are capture, WhatsApp and the sweep. Calendar, inbox actions, host boards and dossiers are as Cleanup accepted them, apart from inbox actions' decision 522 line (item 9).
+
 ## Builds
 
 Each was built twice, byte-identical. The Zoya builds were also rebuilt from a fresh worktree at f70901f with build_one.patch applied. No new em dash.
@@ -160,27 +172,27 @@ Each was built twice, byte-identical. The Zoya builds were also rebuilt from a f
 | Routine | Base (live) | Build | Bytes / sha256 |
 |---|---|---|---|
 | Calendar sync | r22 0e755649 | r24/calendar.txt | 62,916 / c613af00ddf02c8c |
-| Inbox capture | r23 c31d1295 | r24/capture.txt | 50,417 / e60b51056027141e |
+| Inbox capture | r23 c31d1295 | r24/capture.txt | 50,431 / f64eb54edabe7326 |
 | Inbox actions | r22 c17734c2 | r24/actions.txt | 47,204 / 829a8cc8fb21251f |
-| WhatsApp | r22 eb41ecdd | r24/whatsapp.txt | 32,720 / 46545ea347702e55 |
-| Daily sweep | r22 51412bd9 | r24/sweep.txt | 49,792 / dadce5178987afa7 |
+| WhatsApp | r22 eb41ecdd | r24/whatsapp.txt | 32,813 / bec8c1e1acb97e08 |
+| Daily sweep | r22 51412bd9 | r24/sweep.txt | 50,017 / 9eca3bd65011a45c |
 | Host boards | live 5819ccf7 (r24/live/host-boards.txt) | r24/host-boards.txt | 8,733 / 7f5c87ab1b7883c4 |
 | Host dossiers and prep notes | live 28a2d9b7 (b-round-5nov/dossiers.txt) | r24/dossiers.txt | 6,503 / 67e07a00a19e3c60 |
-| Zoya hourly | r23 8b0165ba | r24/zoya/zoya-one.txt | 62,943 / d2875ffdfd3b2f99 |
-| Zoya SLOW task | r23 988433fa | r24/zoya/zoya-slow.txt (pin e93bd71) | 15,949 / 92090193c020b148 |
-| Zoya SLOW file | 8faf930 (d8ffcafe) | routines/zoya/release/zoya-slow-work.txt at **e93bd71** | 90,973 / 99825b35df05874c |
-| Zoya episodes (not live) | r23 cd422006 | r24/zoya/zoya-episodes.txt | 49,987 / d516c14021568d4f |
+| Zoya hourly | r23 8b0165ba | r24/zoya/zoya-one.txt | 62,974 / e959b0476d892c12 |
+| Zoya SLOW task | r23 988433fa | r24/zoya/zoya-slow.txt (pin 9a79960) | 15,949 / 2efa79c08ac2bd41 |
+| Zoya SLOW file | 8faf930 (d8ffcafe) | routines/zoya/release/zoya-slow-work.txt at **9a79960** | 91,039 / d953cd1c3206a951 |
+| Zoya episodes (not live) | r23 cd422006 | r24/zoya/zoya-episodes.txt | 49,964 / 1d23893375fe9dd2 |
 
 The earlier r24 hashes (capture 179034c5, hourly 6a8ae791, SLOW task 93b32d68) are superseded by these.
 
-**The pin moves:** decision 517 changes the SLOW file, so the proposed pin is e93bd715bd442594f281bafa43ba2d624efb1d81. The ref isn't moved; the CTO moves refs/heads/zoya-slow-pin at deploy.
+**The pin moves:** decision 517 changes the SLOW file, so the proposed pin is 9a799603826c768b72dd71e09d65003317093e01. The ref isn't moved; the CTO moves refs/heads/zoya-slow-pin at deploy.
 
 The SLOW file loses the stale PaaS citation, the Samiksha story and the SENDING incident notes, the same cuts as the hourly. The hourly also loses SENDING's incident notes and examples: the heredoc emoji note, the Commix example, the 4 Nov compose note, the attachments rationale and the team-note examples.
 
 **How to build:**
 - Non-Zoya: `python3 docs/proposals/r24/patch.py <cal|sweep|cap|act|wa|hb|dos> <live input> <out>`, with these inputs: cal r22/calendar.txt, sweep r22/sweep.txt, cap r23/capture.txt, act r22/actions.txt, wa r22/whatsapp.txt, hb r24/live/host-boards.txt, dos b-round-5nov/dossiers.txt.
-- Zoya: apply `r24/zoya/build_one.patch` at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin e93bd715bd442594f281bafa43ba2d624efb1d81`.
+- Zoya: apply `r24/zoya/build_one.patch` at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 9a799603826c768b72dd71e09d65003317093e01`.
 
 No replay was run on r24.
 
-Deploy order: calendar, capture, inbox actions (with the section6-522.md paste, which supersedes section6-519.md), WhatsApp, then the Zoya pin (e93bd71), the hourly and the SLOW task, then the sweep, host boards and host dossiers. Akshay uploads skills-521, and then the CTO renames the property (stage 2). Read each back byte for byte.
+Deploy order: calendar, capture, inbox actions (with the section6-522.md paste, which supersedes section6-519.md), WhatsApp, then the Zoya pin (9a79960), the hourly and the SLOW task, then the sweep, host boards and host dossiers. Akshay uploads skills-521, and then the CTO renames the property (stage 2). Read each back byte for byte.

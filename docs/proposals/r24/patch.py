@@ -34,6 +34,8 @@ EDITS = {
  ("linked to an Engagement or Deal: add this Activity's", "linked to an Engagement: add this Activity's"),
  ("- Engagement, Deal, Episode: the ones this mail is about.", "- Engagement, Episode: the ones this mail is about."),
  ("- Then set Last activity on the linked Engagement or Deal (see LAST ACTIVITY).", "- Then set Last activity on the linked Engagement (see LAST ACTIVITY)."),
+ # Cleanup r24 S3: the dangling pointer is inbox actions STEP 5.
+ ("Built to Share and Human by Design: STEP 5)", "Built to Share and Human by Design: inbox actions STEP 5)"),
  # Decision 517: Saurabh's forwards.
  ("A pitch that reached us only through Saurabh or Akshay's other address:", "A pitch Saurabh forwarded goes by STEP 6a; one that reached us only through Akshay's other address:"),
  (("STEP 6a. GUEST PITCHES FORWARDED BY SAURABH GARG (decision 107)", "send a NEW mail to the original sender and the people on the original mail."),
@@ -71,7 +73,7 @@ EDITS = {
  ("PART B, in this order: STEP 4b, 3i, 3h,", "PART B, in this order: STEP 4b, 3i, 3p, 3h,"),
  ("and its move to Trash (decision 416).", "and its move to Trash (decision 416); in STEP 3p only, creating a PaaS Engagement."),
  ("\nSTEP 3h. AUDIT HANDOFFS AND FIX CHECKS",
-  "\nSTEP 3p. BD PROSPECT EPISODES (decision 520; no mail; PAAS allows it). Each Episode tagged \"BD prospect\" that went live in the last 7 days (Status Published, or Actual release set) with no Activity whose Source ID is \"bd:<episode id>\": for each of its Guests, the Engagement on Show PaaS (" + PAAS_SHOW + ") whose Guest is that People row; none: create it (Name \"<Guest> @ <Company>, PaaS\", Company from the guest's Organisation, Status New, Guest, Source Agent, Source ID \"bd:<episode id>\", Captured today). A row at New or Contacted gets the segment \"Akshay: pitch PaaS to <first name> (<company>), episode out <D Mon>\" (plus \" (pitch: <Prep doc link>)\" when the row has one, decision 521), Akshay in Waiting on, one Claude note line; any other status: skip it. Then one Activity, Kind Note, Source ID \"bd:<episode id>\", linked to the Episode and the rows, once per episode, skipped rows included.\n\nSTEP 3h. AUDIT HANDOFFS AND FIX CHECKS"),
+  "\nSTEP 3p. BD PROSPECT EPISODES (decision 520; no mail; PAAS allows it). Each Episode tagged \"BD prospect\" that went live in the last 7 days (Status Published, or Actual release set) with no Activity whose Source ID is \"bd:<episode id>\": for each of its Guests, the Engagement on Show PaaS (" + PAAS_SHOW + ") whose Guest or Stakeholders holds that People row (a match by Organisation alone: report it, create nothing, decision 424); none: create it (Name \"<Guest> @ <Company>, PaaS\", Company from the guest's Organisation, Status New, Guest, Source Agent, Source ID \"bd:<episode id>\", Captured today). A row at New or Contacted gets the segment \"Akshay: pitch PaaS to <first name> (<company>), episode out <D Mon>\", unless the row already has it (plus \" (pitch: <link>)\" from its " + DUAL + ", when filled, decision 521), Akshay in Waiting on, one Claude note line; any other status: skip it. Then one Activity, Kind Note, Source ID \"bd:<episode id>\", linked to the Episode and the rows, once per episode, skipped rows included.\n\nSTEP 3h. AUDIT HANDOFFS AND FIX CHECKS"),
  ("TWO PARTS (CTO, 24 Oct: the 23 Oct run skipped STEPS 3b to 5 and still reported success).", "TWO PARTS (CTO, 24 Oct)."),
  ("MAILBOX (decision 420, Akshay, 28 Oct, after the Gmail connector's quota ran out)", "MAILBOX (decision 420)"),
  ("(decision 463, Akshay, 4 Nov, Tab 15 item 1: the FT Community list, view \"WhatsApp: to add\"; calendar STEP 4b covers the last 14 days, this is the backstop).",
@@ -90,7 +92,10 @@ EDITS = {
  ("only the text he approved, to that person's People Phone (decision 486).", "only the text he approved, to that person's number (decisions 486, 519)."),
  ("the number is the People Phone of the person the section names, who is the row's Guest, Via or a Stakeholder (never a number from a thread, a signature, a form, a chat or memory):",
   "the number (decision 519) is the People Phone of the person the section names, who is the row's Guest, Via or a Stakeholder; empty: the WhatsApp ID on their FT Community row (Person = that People row); still none: chats search on their full name, and the one saved one-to-one chat whose saved name is that full name (with their company where the saved name has one): its digits. A number found so is written to People Phone first, with its country code, then used. Never a number from a thread, a signature, a form or memory:"),
- ("No People Phone: send nothing, replace the segment", "None of the three (or two chats match): send nothing, replace the segment"), # Decision 522: a chaser is one or two short messages.
+ ("No People Phone: send nothing, replace the segment", "None of the three (or two chats match): send nothing, replace the segment"), # Cleanup r24 S4: say where the number came from.
+ ("A number found so is written to People Phone first, with its country code, then used.",
+  "A number found so is written to People Phone first, with its country code, then used, and the report names its source (\"number from FT Community\" or \"number from saved contact\")."),
+ # Decision 522: a chaser is one or two short messages.
  ("Then send one message, chats send_message_text, the approved text exactly as written: no signature, no Zoya, nothing added.",
   "Then send it with chats send_message_text exactly as written: one message, or two when the text holds \" || \" (decision 522), each part its own send in order, the second only after the first went; no signature, no Zoya, nothing added, and the draft's \"context:\" line is never sent."),
  ("read that chat's recent messages (list_messages) for the text before any resend; found: finish 5/ and 6/ without sending.",
