@@ -26,7 +26,7 @@ STATUS = {  # Deal Stage -> Engagement Status (Engagements has no deal ladder; t
 INCLUDE = {"Warm", "Slow"}
 OPEN = {"New", "Contacted", "Interested", "Decision pending", "Booked"}
 TEAM_OK = {"Akshay", "Guest or PR", "Sarika", "Jaya"}  # Waiting on values carried; Mamatha never (decision 352)
-BATCH = "paas-move-2026-11-06"
+BATCH = "paas-move-%s"  # filled with the plan's date argument (CTO, 7 Nov)
 
 
 def pid(url):
@@ -124,7 +124,7 @@ def plan(deals_p, people_p, show_id, today, out):
             "Next action": nxt,
             "Guest": [guest] if guest else [], "Stakeholders": stake,
             "Organisation": [pid(u) for u in jl(d["Organisation"])],
-            "Source": "Agent", "Source ID": "deal:%s" % did, "Captured": today, "Migration batch": BATCH,
+            "Source": "Agent", "Source ID": "deal:%s" % did, "Captured": today, "Migration batch": BATCH % today,
             "Claude note": "%s: moved from Deals (Stage %s -> Status %s); Deal next action: %s"
                            % (today, d["Stage"], status, (d["Next action"] or "none")[:300]),
             "Claude updated": today,
