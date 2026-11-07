@@ -55,7 +55,7 @@ The sponsored path in order: Sponsored offered, Booking (agreed), Precall done (
 | Next date | date | Mamatha, agent | When. Drives chasers, reminders and the recording |
 | Chase step | 0 to 5 | Agent | Where on the follow-up ladder |
 | Eval verdict | Book immediately, Strong consider, Evaluate after call, Decline | Agent | Hidden by default; the eval is a link away |
-| Eval link, Dossier link | url | Agent | |
+| Eval link, Prep doc link (was Dossier link, decision 521) | url | Agent | |
 | Guest, Stakeholders, Via, Organisation, Episode | relations | Agent | Who, the PR people, who brought it, the company, the episode |
 
 Removed from Engagements: Stage, Outcome, Whose move, Heat, Pitch link, Rank, Host verdict for FT (kept for un#, B2S, HBD where the host is not Akshay). Type collapses into Direction once PaaS moves to Deals; Sponsor, Partner, Vendor rows go to Deals too.
@@ -74,7 +74,7 @@ Open means Status is not They declined, We declined, Unresponsive or Form filled
 
 Each tab shows Name, Status, Eval verdict, Tier, Next action, Next date, Eval link, Guest, Stakeholders, and nothing else unless the tab needs it.
 
-un# has the same set (6 Oct): **un#: Pipeline** (open rows, with Host verdict, Eval verdict and Dossier link, quick filters on Status, Direction and Host verdict), **un#: Sponsored** and **un#: Closed**. Since 13 Oct also **un#: Needs action**: open rows where our side has a move (due or overdue, no Next date, or waiting on the team or host), grouped by Status. un#: Today only catches dated rows, so undated Contacted, Interested and LT chase rows never surfaced there.
+un# has the same set (6 Oct): **un#: Pipeline** (open rows, with Host verdict, Eval verdict and Prep doc link, quick filters on Status, Direction and Host verdict), **un#: Sponsored** and **un#: Closed**. Since 13 Oct also **un#: Needs action**: open rows where our side has a move (due or overdue, no Next date, or waiting on the team or host), grouped by Status. un#: Today only catches dated rows, so undated Contacted, Interested and LT chase rows never surfaced there.
 
 ## Deals: the sales table (new)
 

@@ -1,7 +1,8 @@
 """r24 for the non-Zoya routines (CTO, 7 Nov 20:55 and 23:15 JST).
-Usage: python3 patch.py <cal|sweep|cap|act|wa> <live input> <out>
+Usage: python3 patch.py <cal|sweep|cap|act|wa|hb|dos> <live input> <out>
 Inputs are the live builds: cal r22/calendar.txt (0e755649), sweep r22/sweep.txt (51412bd9), cap r23/capture.txt
-(c31d1295), act r22/actions.txt (c17734c2), wa r22/whatsapp.txt (eb41ecdd).
+(c31d1295), act r22/actions.txt (c17734c2), wa r22/whatsapp.txt (eb41ecdd), hb r24/live/host-boards.txt (the
+live Host boards prompt, 5819ccf7), dos b-round-5nov/dossiers.txt (the live dossiers prompt, 28a2d9b7).
 - Cleanup's r23 S1 (cap): RAWID counts a result with no sha256 as NONE.
 - Decision 517 (cap): a pitch Saurabh forwards gets the loop-in as a reply on his forward, To him, Cc Zoya.
 - Decision 518 (all five): Deals is retired. The Deal paragraphs are cut, not amended: no routine creates, updates,
@@ -10,10 +11,13 @@ Each edit is asserted exactly once (a span edit: each marker once, end after sta
 import sys, hashlib
 which, src, out = sys.argv[1], sys.argv[2], sys.argv[3]
 b = open(src, "rb").read()
-BASE = {"cal": "0e755649", "sweep": "51412bd9", "cap": "c31d1295", "act": "c17734c2", "wa": "eb41ecdd"}
+BASE = {"cal": "0e755649", "sweep": "51412bd9", "cap": "c31d1295", "act": "c17734c2", "wa": "eb41ecdd",
+        "hb": "5819ccf7", "dos": "28a2d9b7"}
 assert hashlib.sha256(b).hexdigest().startswith(BASE[which]), "not the live %s" % which
 s = b.decode("utf-8")
 PAAS_SHOW = "41119a301a7f81ba9373d86fa6f4fea1"
+# Decision 521, stage 1: the field is "Prep doc link" in every prompt; until the Notion rename, either name works.
+DUAL = "Prep doc link (named \"Dossier link\" until the rename; use whichever the row has, never create a new property)"
 RETIRED = ("A Deal whose Next action starts \"Moved to Engagements\" is retired: never flag, update or link to it; use its Engagement.",
            "DEALS IS RETIRED (decision 518): never create, update, flag or link a Deal; a moved Deal's Engagement is on Show PaaS (its Next action \"Moved to Engagements <link>\"), and a new production-sales conversation is an Engagement on Show PaaS (" + PAAS_SHOW + ").")
 ACT_SCHEMA = ("Engagement, Deal, Episode, Template", "Engagement, Episode, Template")
@@ -64,7 +68,7 @@ EDITS = {
  ("PART B, in this order: STEP 4b, 3i, 3h,", "PART B, in this order: STEP 4b, 3i, 3p, 3h,"),
  ("and its move to Trash (decision 416).", "and its move to Trash (decision 416); in STEP 3p only, creating a PaaS Engagement."),
  ("\nSTEP 3h. AUDIT HANDOFFS AND FIX CHECKS",
-  "\nSTEP 3p. BD PROSPECT EPISODES (decision 520; no mail; PAAS allows it). Each Episode tagged \"BD prospect\" that went live in the last 7 days (Status Published, or Actual release set) with no Activity whose Source ID is \"bd:<episode id>\": for each of its Guests, the Engagement on Show PaaS (" + PAAS_SHOW + ") whose Guest is that People row; none: create it (Name \"<Guest> @ <Company>, PaaS\", Company from the guest's Organisation, Status New, Guest, Source Agent, Source ID \"bd:<episode id>\", Captured today). A row at New or Contacted gets the segment \"Akshay: pitch PaaS to <first name> (<company>), episode out <D Mon>\", Akshay in Waiting on, one Claude note line; any other status: skip it. Then one Activity, Kind Note, Source ID \"bd:<episode id>\", linked to the Episode and the rows, once per episode, skipped rows included.\n\nSTEP 3h. AUDIT HANDOFFS AND FIX CHECKS"),
+  "\nSTEP 3p. BD PROSPECT EPISODES (decision 520; no mail; PAAS allows it). Each Episode tagged \"BD prospect\" that went live in the last 7 days (Status Published, or Actual release set) with no Activity whose Source ID is \"bd:<episode id>\": for each of its Guests, the Engagement on Show PaaS (" + PAAS_SHOW + ") whose Guest is that People row; none: create it (Name \"<Guest> @ <Company>, PaaS\", Company from the guest's Organisation, Status New, Guest, Source Agent, Source ID \"bd:<episode id>\", Captured today). A row at New or Contacted gets the segment \"Akshay: pitch PaaS to <first name> (<company>), episode out <D Mon>\" (plus \" (pitch: <Prep doc link>)\" when the row has one, decision 521), Akshay in Waiting on, one Claude note line; any other status: skip it. Then one Activity, Kind Note, Source ID \"bd:<episode id>\", linked to the Episode and the rows, once per episode, skipped rows included.\n\nSTEP 3h. AUDIT HANDOFFS AND FIX CHECKS"),
  ("TWO PARTS (CTO, 24 Oct: the 23 Oct run skipped STEPS 3b to 5 and still reported success).", "TWO PARTS (CTO, 24 Oct)."),
  ("MAILBOX (decision 420, Akshay, 28 Oct, after the Gmail connector's quota ran out)", "MAILBOX (decision 420)"),
  ("(decision 463, Akshay, 4 Nov, Tab 15 item 1: the FT Community list, view \"WhatsApp: to add\"; calendar STEP 4b covers the last 14 days, this is the backstop).",
@@ -85,8 +89,27 @@ EDITS = {
   "the number (decision 519) is the People Phone of the person the section names, who is the row's Guest, Via or a Stakeholder; empty: the WhatsApp ID on their FT Community row (Person = that People row); still none: chats search on their full name, and the one saved one-to-one chat whose saved name is that full name (with their company where the saved name has one): its digits. A number found so is written to People Phone first, with its country code, then used. Never a number from a thread, a signature, a form or memory:"),
  ("No People Phone: send nothing, replace the segment", "None of the three (or two chats match): send nothing, replace the segment"),
 ],
+"hb": [
+ ("Eval verdict, Eval link, Dossier link, Host board", "Eval verdict, Eval link, " + DUAL + ", Host board"),
+ ("Short pitch, Eval link, Dossier link, Guest availability", "Short pitch, Eval link, Dossier link (the board's own field keeps its name; its value is the Engagement's Prep doc link, and a board only ever takes guest rows, so a PaaS pitch never reaches a host), Guest availability"),
+],
+"dos": [
+ ("Eval link, Dossier link, Prep note link", "Eval link, " + DUAL + ", Prep note link"),
+ ("where Dossier link or Prep note link is empty", "where Prep doc link or Prep note link is empty"),
+ ("republish it to the SAME Dossier link (publish with url = the current Dossier link)", "republish it to the SAME Prep doc link (publish with url = the current Prep doc link)"),
+ ("publish a new page and set Dossier link.", "publish a new page and set Prep doc link."),
+ ("c. Dossier link: always", "c. Prep doc link: always"),
+],
 "cal": [
  RETIRED,
+ # Decision 521: Dossier link is the Prep doc link (host dossier on a guest row, PaaS pitch on a PaaS row).
+ ("Call link, Eval link, Dossier link, Tier", "Call link, Eval link, " + DUAL + ", Tier"),
+ ('"Dossier: <Dossier link>", "Prep note', '"Dossier: <Prep doc link>" (on a PaaS row "Pitch: <Prep doc link>"), "Prep note'),
+ ("whose Engagement has a Dossier link, a third event", "whose Engagement has a Prep doc link, a third event"),
+ ('"Dossier: <Dossier link>" (the Claude artifact link)', '"Dossier: <Prep doc link>" (the Claude artifact link)'),
+ ("(if the Dossier link is not a claude.ai link", "(if the Prep doc link is not a claude.ai link"),
+ ("when the Dossier or Prep note link changes", "when the Prep doc or Prep note link changes"),
+ ("and the Call, Eval and Dossier links to the kept row", "and the Call, Eval and Prep doc links to the kept row"),
  ("- Deals: collection://1a981c5a-912a-4972-b3fc-8c9f2abb329a\n", ""),
  (" A call whose attendee is a Deal contact also sets that Deal's Next date and Next action (\"Call on <date>\") if they are empty or older.", ""),
 ],

@@ -84,7 +84,7 @@ One row per guest pursuit: a person and a show. Replaces every guest pipeline ta
 | Call type | select | Auto | Precall, Recording, Planning call. What Next date is when it is a call |
 | Call link | url | Auto | Zencastr, Riverside or Meet link of the next call, from the calendar |
 | Eval verdict | select | Auto | Book immediately, Strong consider, Pre-call needed, Evaluate after call, Decline. Hidden by default |
-| Eval link, Dossier link | url | Auto | |
+| Eval link, Prep doc link (was Dossier link, decision 521) | url | Auto | |
 | Host verdict | select | Auto / Human | Yes, No, Maybe, Not asked. un#, B2S and HBD only |
 | Next action | text | Human / Auto | One line |
 | Next date | date | Human / Auto | When someone next acts. Today or earlier = on the team's list (FT: Today). A booked call's date when nothing else is due (decision 79) |

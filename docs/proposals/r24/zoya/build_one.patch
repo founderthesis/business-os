@@ -602,10 +602,10 @@ index 0000000..5259eef
 +]
 diff --git a/routines/zoya/r24_edits.py b/routines/zoya/r24_edits.py
 new file mode 100644
-index 0000000..a3dc641
+index 0000000..3d3daf6
 --- /dev/null
 +++ b/routines/zoya/r24_edits.py
-@@ -0,0 +1,28 @@
+@@ -0,0 +1,31 @@
 +# r24 (CTO, 7 Nov 20:55 and 23:15 JST). Applied after R23. Decision 517 also changes the SLOW file, so the pin moves.
 +# 1/ A row Zoya creates from a pitch (the Sung Hong un# row) waits on no one at Status New, so the evals routine takes it.
 +# 2/ Cleanup's r23 S2: wait 5 seconds before each lock re-push. S4: cut before adding (hourly under 63,000).
@@ -633,4 +633,7 @@ index 0000000..a3dc641
 + (("one", "slowwork", "episodes"), " (4 Nov: a compose reply on Akshay's own last message went to ad@ alone)", ""),
 + (("one", "slowwork", "episodes"), " (replies never carry the thread's old attachments)", ""),
 + (("one", "slowwork", "episodes"), ", such as Akshay's feedback to you or a team note,", ""),
++ # Decision 521 (stage 1): the fold carries the Prep doc link under either name.
++ (("one",), "and the Call, Eval and Dossier links (two Eval links",
++  "and the Call, Eval and Prep doc links (Prep doc link is named \"Dossier link\" until the rename; use whichever the row has, never create a new property; two Eval links"),
 +]

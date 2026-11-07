@@ -1,4 +1,4 @@
-# r24: Zoya's new rows go to evals, r23 should-fixes, the PaaS batch, Saurabh's forwards (517), Deals retired (518), chase numbers (519), BD prospect episodes (520)
+# r24: Zoya's new rows go to evals, r23 should-fixes, the PaaS batch, Saurabh's forwards (517), Deals retired (518), chase numbers (519), BD prospect episodes (520), Prep doc link stage 1 (521)
 
 Main, 7 Nov. This is the CTO's 20:55 JST list (items 1 to 3) and 23:15 JST list (items 4 and 5, decisions 517 and 518, both In force in the Notion ledger). It's built on the live r23 builds (deploy log docs/deploys/2026-11-07-r23.md). Nothing is deployed, no ref is moved, and nothing was written to Notion. The "caught via Saurabh" WhatsApp line isn't in r24; it waits on Akshay's yes.
 
@@ -109,18 +109,41 @@ I checked the fields read-only: Episodes have Tags (with "BD prospect"), Guests,
 
 The sweep is 49,722 bytes, 143 more than the live 49,579.
 
+## 8. Decision 521, stage 1: Dossier link becomes Prep doc link, under either name
+
+The Notion property is **not** renamed; the CTO does that in stage 2. Every live prompt that names the Engagements field now uses one wording, once, where the field is first listed: Prep doc link (named "Dossier link" until the rename; use whichever the row has, never create a new property). After that, each prompt says Prep doc link.
+
+**Where it changed** (the live prompts, not the repo's older copies):
+- **Calendar:** the field list; the prep entry's line is "Dossier: <Prep doc link>" on a guest row and "Pitch: <Prep doc link>" on a PaaS row; the host prep invite ("has a Prep doc link", its "Dossier:" line, the not-a-claude.ai-link check, the move-on-change rule); and the fold.
+- **Host boards:** a new r24 build from the live prompt (8,474 / 5819ccf7). It has the dual wording in the Engagements field list. The board's own field is still named "Dossier link", with one line saying its value is the Engagement's Prep doc link and that boards only take guest rows, so a PaaS pitch never reaches a host.
+- **Host dossiers and prep notes:** a new r24 build from the live prompt (6,401 / 28a2d9b7). The field list carries the dual wording; the find rule, the republish-to-the-same-link rule and step c say Prep doc link.
+- **Zoya hourly:** the fold rule ("the Call, Eval and Prep doc links", with the dual wording). It's 62,943 bytes, still under 63,000. The SLOW file and episodes never named the field, so the pin stays e93bd71.
+- **Sweep 3p (decision 520):** the segment gets " (pitch: <Prep doc link>)" when the PaaS row has one.
+
+**Unchanged:** capture, inbox actions and WhatsApp, because none of them names the field. Also untouched, as the CTO asked: migration/*.py and Episodes' own Dossier link.
+
+**Repo copies:** routines/calendar.md, host-boards.md and cowork-dossiers.md get the same wording. They're descriptions; calendar.md is older than the live calendar prompt. docs/schema.md and docs/statuses.md have the row renamed, "(was Dossier link, decision 521)".
+
+**Two things the CTO's list assumed that the live prompts don't do:**
+- **Host boards never copied the Dossier link to a board** (STEP 3 copies the eval, pitch, Eval link, availability, date and LinkedIn). I described where the board field's value comes from and added no new copying. If boards should show the dossier, that's a separate change.
+- **Of the four dossier skills, only ft-host-dossier writes the field**; the other three leave it to the dossiers routine. Separately, pitch-builder's closing step wrote every pitch to Deals, so under decision 518 it now logs on the PaaS Engagement and writes its link to the Prep doc link. The upload set is docs/proposals/skills-521 (handoff and hashes there).
+
+**Check for Cleanup:** no live build in r24 (or the SLOW file at e93bd71) names "Dossier link" outside the dual wording or the board's own field. I checked with a script over every r24 build, and every build is under 65,536.
+
 ## Builds
 
 Each was built twice, byte-identical. The Zoya builds were also rebuilt from a fresh worktree at f70901f with build_one.patch applied. No new em dash.
 
 | Routine | Base (live) | Build | Bytes / sha256 |
 |---|---|---|---|
-| Calendar sync | r22 0e755649 | r24/calendar.txt | 62,772 / 45f6ea7d192728db |
+| Calendar sync | r22 0e755649 | r24/calendar.txt | 62,916 / c613af00ddf02c8c |
 | Inbox capture | r23 c31d1295 | r24/capture.txt | 50,417 / e60b51056027141e |
 | Inbox actions | r22 c17734c2 | r24/actions.txt | 47,104 / 5e8aab462e207834 |
 | WhatsApp | r22 eb41ecdd | r24/whatsapp.txt | 32,512 / bf5d360b63103215 |
-| Daily sweep | r22 51412bd9 | r24/sweep.txt | 49,722 / 612673a50738928a |
-| Zoya hourly | r23 8b0165ba | r24/zoya/zoya-one.txt | 62,830 / 5cd5c5390be8d9a4 |
+| Daily sweep | r22 51412bd9 | r24/sweep.txt | 49,792 / dadce5178987afa7 |
+| Host boards | live 5819ccf7 (r24/live/host-boards.txt) | r24/host-boards.txt | 8,733 / 7f5c87ab1b7883c4 |
+| Host dossiers and prep notes | live 28a2d9b7 (b-round-5nov/dossiers.txt) | r24/dossiers.txt | 6,503 / 67e07a00a19e3c60 |
+| Zoya hourly | r23 8b0165ba | r24/zoya/zoya-one.txt | 62,943 / d2875ffdfd3b2f99 |
 | Zoya SLOW task | r23 988433fa | r24/zoya/zoya-slow.txt (pin e93bd71) | 15,949 / 92090193c020b148 |
 | Zoya SLOW file | 8faf930 (d8ffcafe) | routines/zoya/release/zoya-slow-work.txt at **e93bd71** | 90,973 / 99825b35df05874c |
 | Zoya episodes (not live) | r23 cd422006 | r24/zoya/zoya-episodes.txt | 49,987 / d516c14021568d4f |
@@ -132,9 +155,9 @@ The earlier r24 hashes (capture 179034c5, hourly 6a8ae791, SLOW task 93b32d68) a
 The SLOW file loses the stale PaaS citation, the Samiksha story and the SENDING incident notes, the same cuts as the hourly. The hourly also loses SENDING's incident notes and examples: the heredoc emoji note, the Commix example, the 4 Nov compose note, the attachments rationale and the team-note examples.
 
 **How to build:**
-- Non-Zoya: `python3 docs/proposals/r24/patch.py <cal|sweep|cap|act|wa> <live input> <out>`, with these inputs: cal r22/calendar.txt, sweep r22/sweep.txt, cap r23/capture.txt, act r22/actions.txt, wa r22/whatsapp.txt.
+- Non-Zoya: `python3 docs/proposals/r24/patch.py <cal|sweep|cap|act|wa|hb|dos> <live input> <out>`, with these inputs: cal r22/calendar.txt, sweep r22/sweep.txt, cap r23/capture.txt, act r22/actions.txt, wa r22/whatsapp.txt, hb r24/live/host-boards.txt, dos b-round-5nov/dossiers.txt.
 - Zoya: apply `r24/zoya/build_one.patch` at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin e93bd715bd442594f281bafa43ba2d624efb1d81`.
 
 No replay was run on r24.
 
-Deploy order: calendar, capture, inbox actions (with the section6-519.md paste), WhatsApp, then the Zoya pin (e93bd71), the hourly and the SLOW task, then the sweep. Read each back byte for byte.
+Deploy order: calendar, capture, inbox actions (with the section6-519.md paste), WhatsApp, then the Zoya pin (e93bd71), the hourly and the SLOW task, then the sweep, host boards and host dossiers. Akshay uploads skills-521, and then the CTO renames the property (stage 2). Read each back byte for byte.
