@@ -45,6 +45,22 @@ Every prompt edit applies on every exemption line too. A Task row stays only for
 
 The Zoya hourly is unchanged (62,955 / f366f769).
 
+## 7 Nov round 2 (CTO 10:20 JST): the sweep and WhatsApp stop skipping steps
+
+**Sweep** (Sweep B 6 Nov, Activity 41019a301a7f814b95bfe89c6b6d4d7c, skipped STEP 4's Gmail checks as "about 80 Sponsored rows", skipped 3b, did 3g and 3k as counts only):
+- **Status in code (STEP 7).** The report body starts with one line per step of the part. A Bash python step reads those lines and prints the status, and the Summary is copied from it. Completed needs every step done. Partial is allowed only for minute 40 (a measured `date -u` stop line), a cap the prompt sets, or a tool error with its text. Anything else, or a missing step line, is Failed "early exit: <step>". Counting rows without handling them is not done.
+- **TWO PARTS** says every step runs in full; row counts, effort, context or cost never skip one. The Summary allows Failed.
+- **STEP 4 Gmail cap.** The revenue safety net, quiet and promise-lapsed checks read at most 40 rows a run: last run's carry-over first, then oldest Last activity. The rest goes on a "step 4 carry-over:" line for the next Part B. The field-only checks run on every row.
+- **3h b** reads the Live date from the "Live" line in the Mail issues page body, where Zoya's SLOW 0e already writes it. No new field. A row with no dated Live line is reported, not guessed.
+- **Mamatha (STEP 3a2).** Every open row with Mamatha in Waiting on or a "Mamatha:" segment moves, touched or not: routine steps to Zoya, decisions to Akshay. At most 30 a run, oldest first. This covers the five un# LT chase rows (Carlos Domingo, Jonathan Levin, Sandeep Nailwal, Katie Haun, Stani Kulechov).
+
+**WhatsApp** (09:45 7 Nov left STEP 3, 3d and 4, "ran out of effort"):
+- STEP 5's first line is the status from the same kind of python check: step lines 0, 0d, 0w, 1, 2, 2b, 3, 3d, 4, with Partial only for minute 25, a cap or a tool error.
+- STEP 3d and 4 run every run, whatever else the run did.
+- STEP 3 stays due after the first run of the JST day until a run reports "step 3: done".
+
+Calendar, capture, inbox actions and every Zoya build are unchanged by this round.
+
 Deploy order, with the move in the same window:
 1. calendar
 2. capture
@@ -104,10 +120,10 @@ Each built twice, byte-identical, with no new em dash.
 | Routine | Base (live) | Build | Bytes / sha256 |
 |---|---|---|---|
 | Calendar sync | 9dc4babe | r22/calendar.txt | 62,814 / 0e755649ab95d9ba |
-| Daily sweep | 6e3d6606 (sweep 468) | r22/sweep.txt | 46,913 / b7e69dbc6def649c |
+| Daily sweep | 6e3d6606 (sweep 468) | r22/sweep.txt | 49,579 / 51412bd9ce7385df |
 | Inbox capture | 72c4d81a | r22/capture.txt | 49,694 / a4ac5ae216da6103 |
 | Inbox actions | 459e4041, then wa-chase-486 (6a97144a) | r22/actions.txt | 48,017 / c17734c21ca88163 |
-| WhatsApp | 174d9317, then wa-chase-486 (9ef13725) | r22/whatsapp.txt | 30,722 / 4ce4920ddd88bffa |
+| WhatsApp | 174d9317, then wa-chase-486 (9ef13725) | r22/whatsapp.txt | 32,054 / eb41ecdd81c92edb |
 | Zoya hourly | r21 + C1 (187b4f54) | r22/zoya/zoya-one.txt | 62,955 / f366f769a799e92d |
 | Zoya SLOW task | r21 (a81e3bc6) | r22/zoya/zoya-slow.txt (pin 8faf930) | 15,813 / d2253a1923da5de1 |
 | Zoya SLOW file | 9d74718b | routines/zoya/release/zoya-slow-work.txt at 8faf930 | 91,394 / d8ffcafefbb11e7c |
