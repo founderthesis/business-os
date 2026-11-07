@@ -1,4 +1,4 @@
-# r24: Zoya's new rows go to evals, r23 should-fixes, the PaaS batch, Saurabh's forwards (517), Deals retired (518), chase numbers (519)
+# r24: Zoya's new rows go to evals, r23 should-fixes, the PaaS batch, Saurabh's forwards (517), Deals retired (518), chase numbers (519), BD prospect episodes (520)
 
 Main, 7 Nov. This is the CTO's 20:55 JST list (items 1 to 3) and 23:15 JST list (items 4 and 5, decisions 517 and 518, both In force in the Notion ledger). It's built on the live r23 builds (deploy log docs/deploys/2026-11-07-r23.md). Nothing is deployed, no ref is moved, and nothing was written to Notion. The "caught via Saurabh" WhatsApp line isn't in r24; it waits on Akshay's yes.
 
@@ -89,6 +89,26 @@ A number found in 2 or 3 is written to People Phone first, with its country code
 
 The inbox actions prompt only points to section 6, so it isn't changed.
 
+## 7. Decision 520: BD prospect episodes get a PaaS pitch reminder
+
+The new **sweep STEP 3p** is in Part B, after 3i. It sends no mail. The guard's PaaS line allows it, and HARD allows creating a PaaS Engagement in this step only.
+
+- **Which episodes:** each Episode tagged "BD prospect" that went live in the last 7 days (Status Published, or Actual release set) and has no Activity with Source ID "bd:<episode id>".
+- **Which row:** for each of its Guests, the Engagement on Show PaaS whose Guest is that People row. With none, it creates one: Name "<Guest> @ <Company>, PaaS", company from the guest's Organisation, Status New, Guest, Source Agent, Source ID "bd:<episode id>", Captured today.
+- **What it writes:** a row at New or Contacted gets "Akshay: pitch PaaS to <first name> (<company>), episode out <D Mon>", Akshay in Waiting on, and one Claude note line. Any other status (Interested or beyond, or closed) is skipped.
+- **Once per episode:** one Note Activity "bd:<episode id>" per episode, linked to the Episode and the rows, skipped rows included.
+- **In the report:** the step line comes from STATUS IN CODE, like every Part B step.
+
+I checked the fields read-only: Episodes have Tags (with "BD prospect"), Guests, Status and Actual release.
+
+**Cuts to pay for it**, all history, no rules:
+- the TWO PARTS incident note;
+- MAILBOX's quota story;
+- 3k's heading detail;
+- the decision 325 quote.
+
+The sweep is 49,722 bytes, 143 more than the live 49,579.
+
 ## Builds
 
 Each was built twice, byte-identical. The Zoya builds were also rebuilt from a fresh worktree at f70901f with build_one.patch applied. No new em dash.
@@ -99,7 +119,7 @@ Each was built twice, byte-identical. The Zoya builds were also rebuilt from a f
 | Inbox capture | r23 c31d1295 | r24/capture.txt | 50,417 / e60b51056027141e |
 | Inbox actions | r22 c17734c2 | r24/actions.txt | 47,104 / 5e8aab462e207834 |
 | WhatsApp | r22 eb41ecdd | r24/whatsapp.txt | 32,512 / bf5d360b63103215 |
-| Daily sweep | r22 51412bd9 | r24/sweep.txt | 49,133 / c61acd3682101155 |
+| Daily sweep | r22 51412bd9 | r24/sweep.txt | 49,722 / 612673a50738928a |
 | Zoya hourly | r23 8b0165ba | r24/zoya/zoya-one.txt | 62,830 / 5cd5c5390be8d9a4 |
 | Zoya SLOW task | r23 988433fa | r24/zoya/zoya-slow.txt (pin e93bd71) | 15,949 / 92090193c020b148 |
 | Zoya SLOW file | 8faf930 (d8ffcafe) | routines/zoya/release/zoya-slow-work.txt at **e93bd71** | 90,973 / 99825b35df05874c |

@@ -60,6 +60,16 @@ EDITS = {
  ("except an Outbound row at New (decision 167) and a Cold outreach Deal:", "except an Outbound row at New (decision 167):"),
  ("or Status Sponsored offered, and every Deal, whose Waiting on", "or Status Sponsored offered whose Waiting on"),
  (("\n- Deals: a Deal at Interested, In conversation or Proposal sent", "Cold Deals at New or Contacted are the outreach list: never flag them."), ""),
+ # Decision 520: BD prospect episodes get a PaaS pitch reminder on release (Part B, after 3i). Cuts pay for it.
+ ("PART B, in this order: STEP 4b, 3i, 3h,", "PART B, in this order: STEP 4b, 3i, 3p, 3h,"),
+ ("and its move to Trash (decision 416).", "and its move to Trash (decision 416); in STEP 3p only, creating a PaaS Engagement."),
+ ("\nSTEP 3h. AUDIT HANDOFFS AND FIX CHECKS",
+  "\nSTEP 3p. BD PROSPECT EPISODES (decision 520; no mail; PAAS allows it). Each Episode tagged \"BD prospect\" that went live in the last 7 days (Status Published, or Actual release set) with no Activity whose Source ID is \"bd:<episode id>\": for each of its Guests, the Engagement on Show PaaS (" + PAAS_SHOW + ") whose Guest is that People row; none: create it (Name \"<Guest> @ <Company>, PaaS\", Company from the guest's Organisation, Status New, Guest, Source Agent, Source ID \"bd:<episode id>\", Captured today). A row at New or Contacted gets the segment \"Akshay: pitch PaaS to <first name> (<company>), episode out <D Mon>\", Akshay in Waiting on, one Claude note line; any other status: skip it. Then one Activity, Kind Note, Source ID \"bd:<episode id>\", linked to the Episode and the rows, once per episode, skipped rows included.\n\nSTEP 3h. AUDIT HANDOFFS AND FIX CHECKS"),
+ ("TWO PARTS (CTO, 24 Oct: the 23 Oct run skipped STEPS 3b to 5 and still reported success).", "TWO PARTS (CTO, 24 Oct)."),
+ ("MAILBOX (decision 420, Akshay, 28 Oct, after the Gmail connector's quota ran out)", "MAILBOX (decision 420)"),
+ ("(decision 463, Akshay, 4 Nov, Tab 15 item 1: the FT Community list, view \"WhatsApp: to add\"; calendar STEP 4b covers the last 14 days, this is the backstop).",
+  "(decision 463; the backstop to calendar STEP 4b)."),
+ ("(decision 325, Akshay, 18 Oct: \"My queue is a decision inbox, not a notification inbox\")", "(decision 325)"),
 ],
 "wa": [
  RETIRED,
