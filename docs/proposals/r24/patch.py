@@ -69,6 +69,11 @@ EDITS = {
  ("any company with an open Deal)", "any company with an open Engagement on Show PaaS)"),
  ("- Engagement, Deal, Episode: the ones the messages are about", "- Engagement, Episode: the ones the messages are about"),
  ("On each linked Engagement or Deal:", "On each linked Engagement:"),
+ # Decision 519 (amends 486): find the chase number before "no number".
+ ("only the text he approved, to that person's People Phone (decision 486).", "only the text he approved, to that person's number (decisions 486, 519)."),
+ ("the number is the People Phone of the person the section names, who is the row's Guest, Via or a Stakeholder (never a number from a thread, a signature, a form, a chat or memory):",
+  "the number (decision 519) is the People Phone of the person the section names, who is the row's Guest, Via or a Stakeholder; empty: the WhatsApp ID on their FT Community row (Person = that People row); still none: chats search on their full name, and the one saved one-to-one chat whose saved name is that full name (with their company where the saved name has one): its digits. A number found so is written to People Phone first, with its country code, then used. Never a number from a thread, a signature, a form or memory:"),
+ ("No People Phone: send nothing, replace the segment", "None of the three (or two chats match): send nothing, replace the segment"),
 ],
 "cal": [
  RETIRED,

@@ -1,4 +1,4 @@
-# r24: Zoya's new rows go to evals, r23 should-fixes, the PaaS batch, Saurabh's forwards (517), Deals retired (518)
+# r24: Zoya's new rows go to evals, r23 should-fixes, the PaaS batch, Saurabh's forwards (517), Deals retired (518), chase numbers (519)
 
 Main, 7 Nov. This is the CTO's 20:55 JST list (items 1 to 3) and 23:15 JST list (items 4 and 5, decisions 517 and 518, both In force in the Notion ledger). It's built on the live r23 builds (deploy log docs/deploys/2026-11-07-r23.md). Nothing is deployed, no ref is moved, and nothing was written to Notion. The "caught via Saurabh" WhatsApp line isn't in r24; it waits on Akshay's yes.
 
@@ -76,6 +76,19 @@ No routine prompt now writes to Deals.
 
 **CTO, Notion:** move Deals to "Dead databases" on the home page (decision 518), and archive the database whenever you choose.
 
+## 6. Decision 519: the WhatsApp chase finds the number (amends 486)
+
+WhatsApp STEP 0w 3/ looks for the number in this order:
+1. People Phone.
+2. The WhatsApp ID on the person's FT Community row, matched by Person.
+3. Chats search on their full name, using the one saved one-to-one chat whose saved name is that full name (with their company where the saved name has one).
+
+A number found in 2 or 3 is written to People Phone first, with its country code, and then used. If none of the three gives one, or two chats match, the row gets "Akshay: no WhatsApp number for <name>". Never a number from a thread, signature, form or memory. The no-country-code guard (Cleanup's C1) stays.
+
+**Section 6 on the Controls page** is a Notion paste at deploy. The exact old and new text for step 1/ is in r24/section6-519.md. Step 1/ no longer stops on an empty People Phone; it leaves the lookup to STEP 0w.
+
+The inbox actions prompt only points to section 6, so it isn't changed.
+
 ## Builds
 
 Each was built twice, byte-identical. The Zoya builds were also rebuilt from a fresh worktree at f70901f with build_one.patch applied. No new em dash.
@@ -85,7 +98,7 @@ Each was built twice, byte-identical. The Zoya builds were also rebuilt from a f
 | Calendar sync | r22 0e755649 | r24/calendar.txt | 62,772 / 45f6ea7d192728db |
 | Inbox capture | r23 c31d1295 | r24/capture.txt | 50,417 / e60b51056027141e |
 | Inbox actions | r22 c17734c2 | r24/actions.txt | 47,104 / 5e8aab462e207834 |
-| WhatsApp | r22 eb41ecdd | r24/whatsapp.txt | 32,143 / 4ec4215994e3539f |
+| WhatsApp | r22 eb41ecdd | r24/whatsapp.txt | 32,512 / bf5d360b63103215 |
 | Daily sweep | r22 51412bd9 | r24/sweep.txt | 49,133 / c61acd3682101155 |
 | Zoya hourly | r23 8b0165ba | r24/zoya/zoya-one.txt | 62,830 / 5cd5c5390be8d9a4 |
 | Zoya SLOW task | r23 988433fa | r24/zoya/zoya-slow.txt (pin e93bd71) | 15,949 / 92090193c020b148 |
@@ -104,4 +117,4 @@ The SLOW file loses the stale PaaS citation, the Samiksha story and the SENDING 
 
 No replay was run on r24.
 
-Deploy order: calendar, capture, inbox actions, WhatsApp, then the Zoya pin (e93bd71), the hourly and the SLOW task, then the sweep. Read each back byte for byte.
+Deploy order: calendar, capture, inbox actions (with the section6-519.md paste), WhatsApp, then the Zoya pin (e93bd71), the hourly and the SLOW task, then the sweep. Read each back byte for byte.
