@@ -54,6 +54,9 @@ EDITS = {
  ("- A Cold outreach Deal still at Stage New is the target list (decision 89): leave Waiting on blank.\n", ""),
  ("On the Engagement or Deal (or, if there is none,", "On the Engagement (or, if there is none,"),
  (" Deals created and moved.", ""),
+ # Decision 522 (Akshay, 7 Nov): the chase draft reads the person's chat first (section 6 has the rules).
+ ("A Your call starting \"whatsapp chase:\" follows section 6's WHATSAPP CHASE (decision 486):",
+  "A Your call starting \"whatsapp chase:\" follows section 6's WHATSAPP CHASE (decisions 486, 522: before drafting, read that person's one-to-one chat with Akshay through Blueticks, read only):"),
 ],
 "sweep": [
  RETIRED,
@@ -87,7 +90,11 @@ EDITS = {
  ("only the text he approved, to that person's People Phone (decision 486).", "only the text he approved, to that person's number (decisions 486, 519)."),
  ("the number is the People Phone of the person the section names, who is the row's Guest, Via or a Stakeholder (never a number from a thread, a signature, a form, a chat or memory):",
   "the number (decision 519) is the People Phone of the person the section names, who is the row's Guest, Via or a Stakeholder; empty: the WhatsApp ID on their FT Community row (Person = that People row); still none: chats search on their full name, and the one saved one-to-one chat whose saved name is that full name (with their company where the saved name has one): its digits. A number found so is written to People Phone first, with its country code, then used. Never a number from a thread, a signature, a form or memory:"),
- ("No People Phone: send nothing, replace the segment", "None of the three (or two chats match): send nothing, replace the segment"),
+ ("No People Phone: send nothing, replace the segment", "None of the three (or two chats match): send nothing, replace the segment"), # Decision 522: a chaser is one or two short messages.
+ ("Then send one message, chats send_message_text, the approved text exactly as written: no signature, no Zoya, nothing added.",
+  "Then send it with chats send_message_text exactly as written: one message, or two when the text holds \" || \" (decision 522), each part its own send in order, the second only after the first went; no signature, no Zoya, nothing added, and the draft's \"context:\" line is never sent."),
+ ("read that chat's recent messages (list_messages) for the text before any resend; found: finish 5/ and 6/ without sending.",
+  "read that chat's recent messages (list_messages) for each part of the text before any resend; a part found is never sent again; all found: finish 5/ and 6/ without sending."),
 ],
 "hb": [
  ("Eval verdict, Eval link, Dossier link, Host board", "Eval verdict, Eval link, " + DUAL + ", Host board"),

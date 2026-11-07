@@ -1,4 +1,4 @@
-# r24: Zoya's new rows go to evals, r23 should-fixes, the PaaS batch, Saurabh's forwards (517), Deals retired (518), chase numbers (519), BD prospect episodes (520), Prep doc link stage 1 (521)
+# r24: Zoya's new rows go to evals, r23 should-fixes, the PaaS batch, Saurabh's forwards (517), Deals retired (518), chase numbers (519), BD prospect episodes (520), Prep doc link stage 1 (521), context-aware chasers (522)
 
 Main, 7 Nov. This is the CTO's 20:55 JST list (items 1 to 3) and 23:15 JST list (items 4 and 5, decisions 517 and 518, both In force in the Notion ledger). It's built on the live r23 builds (deploy log docs/deploys/2026-11-07-r23.md). Nothing is deployed, no ref is moved, and nothing was written to Notion. The "caught via Saurabh" WhatsApp line isn't in r24; it waits on Akshay's yes.
 
@@ -130,6 +130,29 @@ The Notion property is **not** renamed; the CTO does that in stage 2. Every live
 
 **Check for Cleanup:** no live build in r24 (or the SLOW file at e93bd71) names "Dossier link" outside the dual wording or the board's own field. I checked with a script over every r24 build, and every build is under 65,536.
 
+## 9. Decision 522: WhatsApp chasers read the chat first (refines 486's draft only)
+
+Akshay, 7 Nov 23:34 JST (intake 41119a301a7f81d29ae6e81035ab952b). The draft is written by inbox actions under section 6. STEP 0w only sends approved text, so the rules sit in section 6, and the prompts change only where they have to. Contact matching (519), cadence, holds, the exact-draft ok and the send-as-Akshay rule are unchanged. There's no new sender and no new routine.
+
+- **Section 6 (Controls page; the CTO pastes it):** r24/section6-522.md replaces the whole WHATSAPP CHASE block and supersedes section6-519.md.
+  - **Read first:** before drafting, it reads the person's one-to-one chat with Akshay (read only), plus the newest Activities and mail where useful. Already answered: no draft, just a note line.
+  - **Style:** it mirrors Akshay's greeting, name form, language, case and length in that chat.
+  - **Shape:** 1 or 2 short messages joined by " || ", with one ask.
+  - **One true detail:** from their own chat, or recent news it verifies, never on every draft. Nothing invented and no implied sightings.
+  - **Context line:** a "context:" line sits under the draft and is never sent. It names the chat's date range, the detail used and any news URL, or says the chat wasn't found or the person isn't certain.
+- **Inbox actions:** the section 6 pointer now says to read that person's chat through Blueticks, read only, before drafting. Size +100.
+- **WhatsApp STEP 0w:** sends one message, or two in order when the approved text holds " || ". It never sends the context line, and its crash check looks for each part so nothing goes twice. Size +208.
+
+**Decision 522 isn't in Notion yet.** This session doesn't write to Notion on a relayed ask. The row for the CTO to create:
+- No. 522
+- Decision: "WhatsApp chasers read the chat first, mirror Akshay's style, 1 or 2 short messages"
+- Area: WhatsApp and community
+- Who: Akshay
+- Date: 2026-11-07
+- Status: In force
+- What we decided: "Before drafting a decision 486 chaser, Zoya reads the person's WhatsApp chat with Akshay (and the row's Activities and mail), skips the draft if it's already answered, mirrors his salutation, name form, language, case and length, writes 1 or 2 short messages with one ask and at most one true, verified detail, and notes what she read on a context line that is never sent. Refines 486's draft only; 519's number lookup and the exact-draft ok are unchanged."
+- Why: his 7 Nov 23:34 JST words, quoted.
+
 ## Builds
 
 Each was built twice, byte-identical. The Zoya builds were also rebuilt from a fresh worktree at f70901f with build_one.patch applied. No new em dash.
@@ -138,8 +161,8 @@ Each was built twice, byte-identical. The Zoya builds were also rebuilt from a f
 |---|---|---|---|
 | Calendar sync | r22 0e755649 | r24/calendar.txt | 62,916 / c613af00ddf02c8c |
 | Inbox capture | r23 c31d1295 | r24/capture.txt | 50,417 / e60b51056027141e |
-| Inbox actions | r22 c17734c2 | r24/actions.txt | 47,104 / 5e8aab462e207834 |
-| WhatsApp | r22 eb41ecdd | r24/whatsapp.txt | 32,512 / bf5d360b63103215 |
+| Inbox actions | r22 c17734c2 | r24/actions.txt | 47,204 / 829a8cc8fb21251f |
+| WhatsApp | r22 eb41ecdd | r24/whatsapp.txt | 32,720 / 46545ea347702e55 |
 | Daily sweep | r22 51412bd9 | r24/sweep.txt | 49,792 / dadce5178987afa7 |
 | Host boards | live 5819ccf7 (r24/live/host-boards.txt) | r24/host-boards.txt | 8,733 / 7f5c87ab1b7883c4 |
 | Host dossiers and prep notes | live 28a2d9b7 (b-round-5nov/dossiers.txt) | r24/dossiers.txt | 6,503 / 67e07a00a19e3c60 |
@@ -160,4 +183,4 @@ The SLOW file loses the stale PaaS citation, the Samiksha story and the SENDING 
 
 No replay was run on r24.
 
-Deploy order: calendar, capture, inbox actions (with the section6-519.md paste), WhatsApp, then the Zoya pin (e93bd71), the hourly and the SLOW task, then the sweep, host boards and host dossiers. Akshay uploads skills-521, and then the CTO renames the property (stage 2). Read each back byte for byte.
+Deploy order: calendar, capture, inbox actions (with the section6-522.md paste, which supersedes section6-519.md), WhatsApp, then the Zoya pin (e93bd71), the hourly and the SLOW task, then the sweep, host boards and host dossiers. Akshay uploads skills-521, and then the CTO renames the property (stage 2). Read each back byte for byte.
