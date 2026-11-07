@@ -1,0 +1,259 @@
+{
+  "inputs": {
+    "reviewed": "SLOW r10b (replaces r10 at 53e1653, which was checked first and is superseded)",
+    "old_slow": {
+      "ref": "f70901f6f07d4a6610fda60132b4cdbb5ac43979:routines/zoya/release/zoya-slow-work.txt",
+      "bytes": 63617,
+      "sha256_16": "fae90990931445db",
+      "verified": true
+    },
+    "new_slow": {
+      "ref": "45b074eb7c735c357bcfbce3f4fe5497d7f926f1:routines/zoya/release/zoya-slow-work.txt",
+      "bytes": 66019,
+      "sha256_16": "2deb7574cf503547",
+      "verified": true
+    },
+    "new_fast": {
+      "path": "docs/proposals/zoya-slow-r10/zoya-one.txt",
+      "bytes": 44075,
+      "sha256_16": "bb5cdcd9bd760e3a",
+      "version": "zoya-one 968747b92137",
+      "pin": "45b074e / 2deb7574cf503547",
+      "verified": true,
+      "note": "working tree; the copy committed at 45b074e still pins 53e1653 / 1a7504e3 (3 tokens differ). Commit the working copy."
+    },
+    "build_b": {
+      "path": "docs/proposals/zoya-cto03/zoya-one.txt",
+      "bytes": 43999,
+      "version": "zoya-one 512ccf371522"
+    },
+    "patch": "45b074e:docs/proposals/zoya-slow-r10/build_one.patch on f70901f routines/",
+    "rebuild": "git archive f70901f routines + git apply patch + python3 build_one.py <out> refs/heads/zoya-slow-pin 45b074e: SLOW and FAST byte-identical to both reviewed files; built twice, identical",
+    "word_diff_slow_old_to_new": "PASS. Only: un# scope Sri stays in Cc when he wrote; BTS/HBD scope host stays in Cc when he wrote; VOICE 'works' exception for 'any open slot here works: podm.in/30min'; SENDING read-back exclusion 'Sri unless he wrote ... (then he, or on BTS and HBD the host who wrote there, is added back if missing)'; SLOW ORDER gains SLOW BATCH; HARD RULES gain PRE-SEND CHECKS (check 2 with 'if any'), GUEST EXAMPLES, BOOKING LINKS. Nothing else moved.",
+    "word_diff_fast_buildb_to_new": "PASS. Only: SENDING parenthetical gains ', or on Built to Share and Human by Design the host who wrote there,'; version 512ccf371522 -> 968747b92137; pin f70901f -> 45b074e; hash fae90990931445db -> 2deb7574cf503547; check 2 'message);' -> 'message, if any);'.",
+    "r10_to_r10b_diff": "Only the SLOW BATCH sentence changed (eligible list, cap instead of 25, closed stop reasons, 'newest SLOW record')."
+  },
+  "cases": {
+    "a_un_sri_wrote": {
+      "result": "PASS",
+      "quote": "Sri is never in Cc on routine mail, unless he wrote on that thread himself: then he stays in Cc (Akshay, 2 Nov).",
+      "also": "SENDING read-back: 'on un#, Sri unless he wrote on the thread himself (Akshay, 2 Nov: then he ... is added back if missing)'. SLOW text now carries it, so the old 'never in Cc' no longer wins on SLOW work."
+    },
+    "b_bts_satish_wrote_earlier_not_on_latest": {
+      "result": "PASS (with D5)",
+      "quote": "then he, or on Built to Share and Human by Design the host who wrote there, is added back if missing",
+      "also": "Scope line says 'stay in Cc', which alone would not add him back; SENDING's parenthetical does. PRE-SEND check 2 lists recipient sources without the add-back (D5)."
+    },
+    "c_slow_chase_no_inbound": {
+      "result": "PASS",
+      "quote": "2/ recipients from the latest inbound's own headers (From, To, Cc) and the row (no inbound yet: the row and the thread's last message, if any)"
+    },
+    "d_first_mail_no_thread": {
+      "result": "PASS",
+      "quote": "the thread's last message, if any",
+      "also": "ACTIONS Sent check: '(a first mail with no thread: any thread)'. 'if any' is now in both FAST and SLOW."
+    },
+    "e_100_eligible": {
+      "result": "PASS with defects D1, D2, D3, D4, D7",
+      "quote": "first query every eligible STEP 2 item ... carryover first (the newest SLOW record's \"carryover:\" line), then oldest due first, and write \"eligible <n>: <keys>\" to the run record; then work them in that order up to the per-run cap on Cadences",
+      "replay": "Literal model: keys all 100, writes 'eligible 100: <100 keys>' (about 8 KB in one line, D7), works carryover then oldest due, each item one line sent/held/blocked/deferred. Holds and deferrals don't count toward the cap, so it keeps going until 40 sends in the run (FAST's sends included: LIMITS 'this run's own sends ... shared with your SLOW work'), 40 measured minutes or a tool error. Realistically about 15 to 30 items fit after FAST work; the rest go on 'carryover: <keys>' and are first next run. Risks: LIMITS still says stop when 'a hold applies' (D1); group order vs global oldest (D2); daily cap is not a named stop reason (D3); 'due today' may drop overdue items (D4)."
+    },
+    "f_stop_after_3_sends_at_7_min": {
+      "result": "PASS (with D6)",
+      "quote": "Stop only on that cap, the 40 minutes, or a tool error, naming which; stopping sooner with items left is a defect, Partial \"stopped early: <why>\".",
+      "replay": "'I stopped after 3 sends' names none of the three reasons, so it must be recorded Partial 'stopped early'. The 'eligible 100' line, 3 item lines, 'elapsed 7 min' and 'carryover: 97 keys' make the shortfall visible to the good-morning check. Nothing forces a self-check before the last write (D6), and RUN RECORD in FAST still says 'Failed: stopped early' (D8)."
+    },
+    "g1_40_minutes_and_nurture_10": {
+      "result": "PASS",
+      "quote": "routine 7 and nurture (at most 10 of these a run)",
+      "also": "The 40-minute stop is one of the three allowed reasons. The nurture limit of 10 stays in the same SLOW ORDER paragraph; it limits which items send, not when the run stops."
+    },
+    "g2_per_run_40_and_daily_150": {
+      "result": "PARTIAL (D3)",
+      "quote": "work them in that order up to the per-run cap on Cadences, within every limit there",
+      "also": "Per-run cap counts this run's own sends, FAST's included, so a FAST that sent 15 leaves 25 for SLOW: consistent. The daily cap is 'within every limit there' but not a named stop reason, so hitting 150 first reads as 'stopped early'."
+    },
+    "g3_7_day_and_diwali": {
+      "result": "PASS",
+      "quote": "Each item gets one record line \"<action key>: sent <Message-ID> | held <why> | blocked <why; next owner> | deferred <why>\"",
+      "also": "7-day and ONE PERSON holds and the 'never Diwali week' weekday rule produce held/deferred lines that move Next date; none sends, none counts to the cap, the run goes on. No cadence number changed."
+    },
+    "g4_snooze_returns_and_step0_order": {
+      "result": "FAIL (D4)",
+      "quote": "first query every eligible STEP 2 item (follow-ups, nurture, snooze returns due today), each with its action key",
+      "also": "SNOOZED ASKS returns a snooze 'On or after it' and finds it 'by the segment, not by Next date'; ACTIONS says 'Snooze segments (\"Zoya: back to Akshay on\") keep their form' (no key). The batch asks for a key and 'due today' only, so a Saturday snooze returning Monday or after a missed run can be left out, and its outcome (rewritten to Akshay) fits none of sent/held/blocked/deferred. It also now sits in STEP 2 while SLOW ORDER runs the team work and SNOOZED before STEP 2."
+    },
+    "h_carryover_record": {
+      "result": "PASS (with D9)",
+      "quote": "carryover first (the newest SLOW record's \"carryover:\" line)",
+      "also": "'SLOW' now excludes the hourly FAST-only records. But this run's own record (created at start) is the newest record of a SLOW run and has no carryover yet; no fallback when the last SLOW run left none (Skipped, 'slow work file unavailable', crash)."
+    }
+  },
+  "defects": {
+    "D1": {
+      "severity": "medium",
+      "quote": "A follow-up run works its due list oldest first until it is empty, the cap is reached or a hold applies",
+      "scenario": "LIMITS still lets a literal model stop at the first held item, the opposite of SLOW BATCH's closed stop list; a plausible cause of the 2 Nov stop after 3 sends.",
+      "fix": "LIMITS: 'A follow-up run works its eligible list as SLOW BATCH says; a hold moves that item on, never stops the run.'"
+    },
+    "D2": {
+      "severity": "medium",
+      "quote": "then STEP 2: routines 1 to 6 and 8, then routine 7 and nurture ... Within each, the oldest due first. ... carryover first ..., then oldest due first ... work them in that order",
+      "scenario": "Two orders: group order (1-6, 8 before 7 and nurture) and global oldest due. A model may send old nurture before a due sponsored step.",
+      "fix": "'carryover first, then by SLOW ORDER's groups, oldest due first within each'."
+    },
+    "D3": {
+      "severity": "low",
+      "quote": "Stop only on that cap, the 40 minutes, or a tool error",
+      "scenario": "The daily cap (150, shared with every run) is reached first: the model must stop but that reads as a defect.",
+      "fix": "'Stop only on the per-run or daily cap, the 40 minutes, or a tool error'."
+    },
+    "D4": {
+      "severity": "medium",
+      "quote": "(follow-ups, nurture, snooze returns due today), each with its action key",
+      "scenario": "'due today' can be read across all three, dropping overdue follow-ups (the 97 backlog), and for snoozes contradicts SNOOZED's 'On or after it'; snoozes have no action key and no fitting outcome.",
+      "fix": "'(follow-ups and nurture due today or earlier, each with its action key; snooze returns on or after their date, keyed \"snooze:<row>:<D Mon>\", outcome \"returned to Akshay\")', or drop snoozes from the batch since SLOW ORDER already runs them before STEP 2."
+    },
+    "D5": {
+      "severity": "low",
+      "quote": "2/ recipients from the latest inbound's own headers (From, To, Cc) and the row",
+      "scenario": "Satish or Sri wrote earlier but isn't on the latest inbound: check 2's sources don't include him, SENDING says add him back.",
+      "fix": "Check 2: '... and the row, plus a host SENDING adds back'."
+    },
+    "D6": {
+      "severity": "medium",
+      "quote": "stopping sooner with items left is a defect, Partial \"stopped early: <why>\"",
+      "scenario": "The model that stops early is also the one recording it; nothing makes it check before finishing.",
+      "fix": "Add: 'Before the last write, run date -u: under 40 minutes, under the caps, no tool error and carryover not empty: go back to the next item.'"
+    },
+    "D7": {
+      "severity": "medium",
+      "quote": "write \"eligible <n>: <keys>\" to the run record ... \"carryover: <keys>\"",
+      "scenario": "100 keys of about 85 characters each is about 8.5 KB in one line; Notion rich text is limited to 2,000 characters per text object, so the write can fail or truncate, and the next run reads a cut carryover.",
+      "fix": "One key per line under 'eligible <n>:' and 'carryover:' headings, or a short form '<row id> seq-<r>-<n>'."
+    },
+    "D8": {
+      "severity": "low",
+      "quote": "FAST RUN RECORD: \"Failed: stopped early\" vs SLOW: Partial \"stopped early: <why>\"",
+      "scenario": "Two statuses for one event; SLOW wins on SLOW work, but the good-morning check may count it differently.",
+      "fix": "FAST RUN RECORD: 'Failed: stopped early (SLOW work: Partial, SLOW BATCH)'."
+    },
+    "D9": {
+      "severity": "low",
+      "quote": "the newest SLOW record's \"carryover:\" line",
+      "scenario": "Reads this run's own record (newest, no carryover yet) or a Skipped SLOW-slot record; no fallback.",
+      "fix": "'the carryover: line of the newest earlier run:zoya record with a SLOW report; none: oldest due first. Carried keys no longer eligible are dropped.'"
+    },
+    "D10": {
+      "severity": "high (deploy precondition)",
+      "quote": "git fetch origin refs/heads/zoya-slow-pin, then git show 45b074eb7c735c357bcfbce3f4fe5497d7f926f1:...",
+      "scenario": "Locally origin/zoya-slow-pin is at f70901f and doesn't contain 45b074e. If the pin branch isn't moved before FAST is deployed, every SLOW run ends Partial 'slow work file unavailable'.",
+      "fix": "Push 45b074e to zoya-slow-pin, verify with git show and sha256 from a fresh clone, then deploy FAST and byte-compare the live prompt."
+    },
+    "D11": {
+      "severity": "low",
+      "quote": "build_one.patch applied on f70901f's routines/zoya/build_one.py",
+      "scenario": "The patch isn't committed to routines/zoya/build_one.py, and the branch's parts have moved on since f70901f (Action keys / NEXT ACTION in actions.txt, notion-data, decision, queue-fast: undeployed). Rebuilding from branch head gives SLOW 67,031 / 2cecd0f6, not the pinned file.",
+      "fix": "Write down in the handoff that the build base is f70901f, or commit the patch with the parts it was built from."
+    },
+    "D12": {
+      "severity": "low",
+      "quote": "BOOKING LINKS ... \"any open slot here works: podm.in/30min\"; PLAIN ENGLISH exception is that exact string",
+      "scenario": "On un# (unhashed.co/precall) the same phrase with another link is not covered by the exception, and the example is FT-only.",
+      "fix": "'any open slot here works: <the show's booking link>'."
+    },
+    "D13": {
+      "severity": "low",
+      "quote": "SLOW file's THE RULES list (no 'Rules for Zoya: follow-ups' 40b19a301a7f81999c1acd8350d59a54)",
+      "scenario": "Only the FAST prompt lists the follow-ups child page (SLOW work only). It's read at run start, so this isn't a blocker, but PRE-SEND check 1 in SLOW relies on it.",
+      "fix": "Add the page to the SLOW file's list at the next rebuild."
+    }
+  },
+  "verdict": "Go after D10 (move the pin branch before deploying FAST), with D1, D2, D4 and D7 fixed in a quick r10c if possible. Both files rebuild byte-identical and the diffs hold only the intended edits. FAST rules now apply in SLOW text: cases a to d pass. The batch is bounded and recorded, but LIMITS' 'or a hold applies', the group order, 'snooze returns due today' and one-line key lists can still stop it early or lose carryover.",
+  "r10c": {
+    "inputs": {
+      "slow": {
+        "ref": "0ba169369480144c63e22e1114485551b6a9ece4:routines/zoya/release/zoya-slow-work.txt",
+        "bytes": 66305,
+        "sha256_16": "a081b882f1ea108b",
+        "verified": true
+      },
+      "fast": {
+        "path": "docs/proposals/zoya-slow-r10/zoya-one.txt",
+        "bytes": 44075,
+        "sha256_16": "c17029efa4ab2fb2",
+        "version": "zoya-one e20fd4878b7a",
+        "pin": "0ba1693 / a081b882f1ea108b",
+        "committed": "yes (bacc3d4)",
+        "verified": true
+      },
+      "rebuild": "f70901f routines + 0ba1693's build_one.patch, branch refs/heads/zoya-slow-pin: SLOW and FAST byte-identical",
+      "diff_r10b_to_r10c": "Only LIMITS' follow-up-run sentence and the SLOW BATCH sentence changed.",
+      "diff_fast_buildb_to_r10c": "PASS: only the host wording, 'if any', the version and the pin and hash."
+    },
+    "fixes": {
+      "D1": {
+        "result": "FIXED",
+        "quote": "until it is empty or SLOW BATCH's stop applies (a hold defers that one item only)"
+      },
+      "D2": {
+        "result": "FIXED",
+        "quote": "carryover ... goes first, then SLOW ORDER's groups, oldest due first within each"
+      },
+      "D3": {
+        "result": "FIXED",
+        "quote": "Stop only on the per-run or daily cap, the 40 minutes, or a tool error, naming which"
+      },
+      "D4": {
+        "result": "FIXED",
+        "quote": "every STEP 2 item due today or overdue, and every snooze due on or before today, keyed \"snooze:<row id>:<its date>\" ... | returned to Akshay |"
+      },
+      "D7": {
+        "result": "FIXED",
+        "quote": "write \"eligible <n>:\" with one key per line ... \"carryover:\" with one key per line"
+      },
+      "D9": {
+        "result": "FIXED",
+        "quote": "the keys under \"carryover:\" in the newest record other than this run's that has SLOW work; none: none"
+      },
+      "D5": {
+        "result": "open, low"
+      },
+      "D6": {
+        "result": "open, low as accepted; f still passes on the closed stop list"
+      },
+      "D11": {
+        "result": "open, low"
+      },
+      "D10": {
+        "result": "open, deploy precondition (high if skipped)",
+        "note": "0ba1693 isn't in this clone's origin/zoya-slow-pin (could be stale). Push the pin, verify with git show and sha256, then deploy FAST."
+      }
+    },
+    "cases_rerun": {
+      "a": "PASS",
+      "b": "PASS (D5 low)",
+      "c": "PASS",
+      "d": "PASS",
+      "e": "PASS: 100 eligible listed one per line, carryover first, then groups 1-6 and 8, then 7 and nurture, oldest within each; works until a cap (per-run counts FAST sends too), 40 minutes or a tool error; holds defer one item only; the rest go on carryover one per line. See D14.",
+      "f": "PASS: 3 sends at 7 minutes names no allowed stop, so it is Partial 'stopped early: <why>'.",
+      "g": "PASS except D14 (per-group limits are not named as non-stops).",
+      "h": "PASS"
+    },
+    "new_defects": {
+      "D14": {
+        "severity": "low-medium",
+        "quote": "Stop only on the per-run or daily cap, the 40 minutes, or a tool error ... stopping sooner with items left is a defect",
+        "scenario": "Nurture items past 'at most 10 of these a run', or past Cadences' nurture or revival daily number, or nurture moves past 20 a day, stay unworked at the end of the list. A literal model ends with items left and no allowed reason, so it marks a good run 'stopped early', or works past the limit to avoid the defect.",
+        "fix": "Add: 'an item a group or daily limit bars (nurture 10 a run, Cadences' nurture or revival number) goes on carryover; that isn't stopping early.'"
+      },
+      "D15": {
+        "severity": "low",
+        "quote": "every eligible item of these groups (... every snooze due on or before today ...) ... then SLOW ORDER's groups",
+        "scenario": "Snoozes belong to no group, so their place in the order is undefined; SNOOZED may also run them in the team work before STEP 2. It's harmless, because 'A segment already rewritten is done: a retry changes nothing'.",
+        "fix": "'snoozes first, before group 1' or leave them in the team work and list them as already handled."
+      }
+    },
+    "verdict": "Go after the pin move (D10). D1 to D4, D7 and D9 are fixed and both files rebuild byte-identical. D14 is the only new finding worth a one-line fix; it can ride with the next change."
+  }
+}

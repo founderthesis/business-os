@@ -1,0 +1,61 @@
+{
+ "hash_check": {
+  "zoya-one.txt": "5ffcec2b6c1baf54 OK",
+  "zoya-slow-work.txt": "85d532e8d94c3c6a OK",
+  "scenarios.json": "ded3600de71d3292 OK"
+ },
+ "SKIP": {
+  "canon": {
+   "sends": 0,
+   "scan_reaches_back_to": null,
+   "activities_for_presend": 0,
+   "record_writes_per_skipped_run": 1,
+   "run_records": {
+    "2026-10-27 11:38": "Started (holder, out of this run's view)",
+    "2026-10-27 12:38": "Skipped"
+   }
+  },
+  "verdict": "PASS",
+  "findings": "Deciding lines: LOCK 'Before ANY other read or action, Bash in the attached business-os checkout'; step 3 'M not starting \"free:\": the lock is held. Write only the run record, created once (never Started first) with Summary \"Run zoya <start> JST: Skipped: lock held by <M after \"held: \">\", and stop: no other read, send or write (only the Activities data source may be fetched for that write; it fails twice: stop anyway)'; 'never release a lock you don't hold'. Ambiguities (all resolved by step 3, none changes the outcome): (1) THE RULES 'Every run, right after LOCK and before anything else, read' the four Notion pages, and RUN RECORD 'Right after LOCK (and in its step 3), one Activity ... Summary \"...: Started\"' both read as if they apply to a skipped run; step 3's 'never Started first' and 'no other read' override. (2) RUN RECORD's 'Last write: the same row ... body = the report plus end time, deployment reference, counts, usage' could tempt a second (update) write on the Skipped row; step 3's 'created once ... and stop' means the body goes into the single create. Suggest saying so explicitly: 'a Skipped record is one create carrying its body; no later write'. (3) 'Unclear create response: query that Source ID first' is a read of the Activities data source; allowed under step 3's carve-out, but 'fetched' vs 'queried' could be tightened. (4) ToolSearch to load the Notion tool is a tool load, not a data read; not addressed.",
+  "notes": "Reads/writes in order: printenv CLAUDE_CODE_REMOTE_SESSION_ID (run id); git remote get-url origin (ends founderthesis/business-os); git fetch origin refs/heads/zoya-lock; git rev-parse FETCH_HEAD; git log -1 --format=%s FETCH_HEAD -> 'held: <session X> 2026-10-27T03:38Z'; ToolSearch +Notion; optional fetch of the Activities data source (collection://290f715d-...) to confirm property names; ONE create in Activities: Kind Note, Source empty, Source ID 'run:zoya:<run id>', Date 2026-10-27 12:38 JST, Captured 2026-10-27, linked to nothing, Summary 'Run zoya 2026-10-27 12:38 JST: Skipped: lock held by <session X> 2026-10-27T03:38Z', body with end time and deployment reference zoya-one 4b5eb438d46d. Then stop: no rules pages, no inbox, no Engagement, no lock push, no release. G inbound (HYP-G-0955, 27 Oct 09:55) afterwards: untouched by this run. Not logged, no reply segment written, nothing sent; its reply action (key would be 3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00) stays due for the lock-holding 11:38 run or the next run that takes the lock."
+ },
+ "I3": {
+  "canon": {
+   "sends": 0,
+   "scan_reaches_back_to": "2026-10-26T10:38:00+09:00",
+   "activities_for_presend": 1,
+   "record_writes_per_skipped_run": 1,
+   "run_records": {
+    "2026-10-26 09:38": "Completed",
+    "2026-10-26 10:38": "Started (crashed; never updated)",
+    "2026-10-26 11:38": "Skipped",
+    "2026-10-26 12:38": "Skipped",
+    "2026-10-26 13:38": "Skipped",
+    "2026-10-26 14:38": "Skipped",
+    "2026-10-26 15:38": "Skipped",
+    "2026-10-26 16:38": "Skipped",
+    "2026-10-26 17:38": "Skipped",
+    "2026-10-26 18:38": "Skipped",
+    "2026-10-26 19:38": "Skipped",
+    "2026-10-26 20:38": "Skipped",
+    "2026-10-26 21:38": "Skipped",
+    "2026-10-26 22:38": "Skipped",
+    "2026-10-26 23:38": "Skipped",
+    "2026-10-27 07:38": "Skipped",
+    "2026-10-27 08:38": "Skipped",
+    "2026-10-27 09:38": "Skipped",
+    "2026-10-27 10:38": "Skipped",
+    "2026-10-27 11:38": "Skipped",
+    "2026-10-27 12:38": "Skipped",
+    "2026-10-27 13:38": "Skipped",
+    "2026-10-27 14:38": "Skipped",
+    "2026-10-27 15:38": "Skipped",
+    "2026-10-27 16:38": "Skipped",
+    "2026-10-27 17:38": "Completed"
+   }
+  },
+  "verdict": "PASS",
+  "findings": "Deciding line (ACTIONS, Before sending): 'Each run also checks its Sent for the last 24 hours, or, if earlier, back to the start of the earliest run that took the lock since the last Completed one (Skipped records don't count): a message from us no Activity holds goes through this check for its thread's row (log the inbound it answers too); none it completes: log it there and report it'. Last Completed = 26 Oct 09:38; runs that took the lock since = 26 Oct 10:38 (record Started) and 27 Oct 17:38; the 23 Skipped records don't count. Window start 2026-10-26T10:38+09:00 is earlier than the 24h start (2026-10-26T17:38+09:00), so the 10:41 send is in scope. Then 'look for the action key on an Activity' (none), candidates = 'messages from us in your Sent to that recipient on the action's thread ... since the action was raised, whose Message-ID no Activity holds' = exactly HYP-I3-SENT (its two MCP Emails Sent copies are one send: 'Two Sent copies with one Message-ID are one send'); 'one candidate: that is the match: send nothing, log the Activity if it is missing, complete the action'; 'a send found by the thread check gets its Action key too'. Issues: (1) DATA: scenarios.json gives the inbound date 2026-10-27T09:55 and the sent date 2026-10-27T10:41, while the run text says 26 Oct (and no run took the lock on 27 Oct before 17:38, so a 27 Oct 10:41 send is impossible). I followed the run text. Danger case: if the inbound's Date header really read 27 Oct 09:55 while the send was 26 Oct 10:41, 'since the action was raised' would exclude the send, candidates = none, 'it is due' -> RESEND (only the provider's idempotency_key dedupe would stop it). Consistent dates either way pass. Suggest the candidate window also accept a message that is In-Reply-To the action's origin message regardless of time. (2) The Sent scan needs to know which runs took the lock: it must read run records (Summary not Skipped) by Source ID 'run:zoya:'; the prompt doesn't say how. If the crashed run had died before creating its Started record, the window would fall back to 24 h and miss a >24 h send: RUN RECORD is created 'Right after LOCK', so the gap is small but real. (3) 'since the last Completed one': a No-op or Partial run after the crash doesn't reset the window (wider scan, safe), but the wording only names Completed. (4) The action is not on the row (inbound unlogged, crash before write); the scan derives it from the inbound via '(log the inbound it answers too)'; implied, not stated. (5) Position of the scan in the run isn't fixed; harmless here because STEP 1 won't pick the thread (last message is ours) and any send passes Before sending first. (6) The crashed send had only Akshay in Cc; 'Sponsored yes: next steps' is revenue mail that needs Jaya and Sarika in Cc. No rule covers a correcting mail; report it, don't resend. (7) The 26 Oct 10:38 record stays Started forever; nothing closes it. (8) Run status for a run whose only action completed by match: RUN RECORD defines Completed as due actions 'sent, held or blocked' and No-op as 'nothing was due'; matched isn't listed. Took Completed.",
+  "notes": "17:38 run (FAST only): LOCK steps 1-4, takes the lock; Started record; reads rules pages; Sent scan from 2026-10-26T10:38+09:00 finds HYP-I3-SENT (26 Oct 10:41) unlogged. Logs inbound HYP-G-0955 (Email in, 'Jheel to Zoya: Akshat is fine with INR 50,000 + GST, asks next steps', Source ID msgid:HYP-G-0955@impactkey.in). Action key 3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-26T09:55:00+09:00. No Activity holds it; one candidate -> match. Logs ONE Email out Activity 'Zoya sent: reply to Jheel: Sponsored yes: next steps' Source ID msgid:HYP-I3-SENT@mcpemails.example, Action key = the key, sent body in page body. Not resent (sends 0). Row via WRITE PATH: Jheel's 'Waiting on Jheel: reply to the sponsored commercials' segment completed naming the inbound Activity, next owner Guest or PR (billing details, precall booking); Akshay's India travel segment and his Waiting on entry untouched; Chase step 0; Claude note '2026-10-27: Zoya replied (sponsored yes: next steps, found unlogged by Sent scan, sent 26 Oct 10:41)'. Report names the unlogged send and the missing Jaya/Sarika Cc. Final Activity count for HYP-I3-SENT: 1. Record ends Completed, then RELEASE."
+ }
+}

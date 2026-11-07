@@ -1,0 +1,324 @@
+{
+ "inputs": {
+  "base": "r8e/actions.txt 39,935 bytes, sha256 1d483cbd (verified)",
+  "candidate": "r9/actions.txt 40,922 bytes, sha256 467583c5fc53bf32; patch.py rebuilt it byte-identical from r8e",
+  "decisions": "docs/decisions.md lines 392 (443) and 393 (444); also read 81, 382, 390, 425",
+  "also_read": [
+   "r8e/capture.txt line 83 (repeat pitch on a closed row)",
+   "yourcall-sections.md section 8 (move/cancel reply type)",
+   "r9/README.md"
+  ],
+  "diff_check": "PASS. Word diff holds only the 6 patch.py edits: 'three'->'four' twice, the fourth Next date case (line 42), the Slots bullet exception (line 66), and the two new STEP 3 bullets (lines 73, 74). 9 changed diff lines, no em dash in either file (0 and 0), no non-ASCII added. Size 40,922 under the 65,536 cap."
+ },
+ "cases": {
+  "a_AISECT": {
+   "result": "PASS",
+   "quote": "A scheduling request (decision 443): the guest or their team asks for a call on a date or window: at once, whatever the chase step or Next date said, Zoya added to Waiting on, first in Next action \"Zoya: reply to <who>: slots for <date>\" (other segments kept), Next date = that date.",
+   "replay": "Dhruvi's 30 Oct ask: Next date 4 Nov -> 3 Nov, Waiting on + Zoya, first segment 'Zoya: reply to Dhruvi: slots for 3 Nov'; Chase step reset to 0 (line 81 'Any reply from their side resets it to 0'). Notes: the stale September chase segment survives because of '(other segments kept)' (D3); at a 2 Nov run 3 Nov is tomorrow, which decision 425 sends to Akshay, and the prompt does not say so (D7)."
+  },
+  "b_unhash_recording_windows": {
+   "result": "PASS",
+   "quote": "A recording on a host show stays the host's pick (above).",
+   "replay": "Windows go on Scheduling, Waiting on Sri, 'Sri: pick a slot for <guest> ...' (line 66). The carve-out keeps Zoya from offering slots. Ambiguity: it does not say whether the 443 Next date half still applies, and line 42's fourth case has no host-show carve-out (D8)."
+  },
+  "c_Commix": {
+   "result": "PASS",
+   "quote": "a fresh pitch or ask from their side on a row at They declined, We declined, Parked or Unresponsive (Kind blank is a guest row) is never left: read the earlier history, keep Status, add Akshay to Waiting on and put first in Next action \"Akshay: <who> wrote again about <what>; earlier <how it closed>. Re-open, or have Zoya reply?\"",
+   "replay": "Bhoomika's ask: Status stays They declined, Akshay added, 'Akshay: Bhoomika wrote again about <ask>; earlier they declined <...>. Re-open, or have Zoya reply?'. Risk: STEP 5 line 94 and STEP 6e buckets A/B can still queue a Zoya reply on the same thread before Akshay chooses (D5)."
+  },
+  "d_sponsored_no_on_declined": {
+   "result": "PASS",
+   "quote": "A sponsored no or a plain thanks is not a fresh ask.",
+   "replay": "No 444 item. (Pre-existing, unchanged: line 71's main branch says 'whatever its Status short of Booked', so a close-note step may still be queued; its repair branch excludes They declined.)"
+  },
+  "e_blank_Kind_closed_row": {
+   "result": "PASS",
+   "quote": "(Kind blank is a guest row)",
+   "replay": "Treated as a guest row, 444 item raised. Kind Task rows stay excluded by the KIND rule (line 26)."
+  },
+  "f_Parked_second_inbound": {
+   "result": "FAIL",
+   "quote": "put first in Next action \"Akshay: <who> wrote again about <what>; earlier <how it closed>. Re-open, or have Zoya reply?\", once per inbound.",
+   "replay": "'once per inbound' tells a literal model to add a second 'wrote again' item for the second mail. Nothing says replace or merge the open one, and unlike 443 the bullet does not say '(other segments kept)', so a model may also overwrite the whole Next action. The item carries no date or message key, so REPAIR ('effects not yet performed only') cannot tell which inbound already has its item (D4)."
+  },
+  "g_interactions": {
+   "result": "FAIL",
+   "parts": {
+    "STEP5": "FAIL. Line 94 'A guest, PR person or stakeholder wrote and the thread now waits on us: Zoya' re-queues a Zoya reply on a 444 row (D5). Line 93 'This rule wins over every other bullet below' puts 'a call or meeting ... they asked for' on a sponsored row on Akshay's list, while 443 has already queued Zoya's slots reply; no precedence between them (D6).",
+    "chase_branch": "PASS. 443 runs 'whatever the chase step ... said', and their reply resets Chase step to 0. Branch (a) to (d) only fires on a third unanswered chase, and an inbound request is an answer.",
+    "status_backward": "PASS. Neither bullet moves Status ('keep Status'; 443 sets no Status). But 443 has no open-row condition, so on a closed row it fires together with 444: 'at once ... Zoya ... slots' and 'Akshay: ... Re-open, or have Zoya reply?' both go 'first' (D1).",
+    "decision_382": "PARTIAL. A went-quiet founder who writes back asking for a call on a date gets Zoya's slots step, but '(other segments kept)' leaves 'Akshay: <guest> went quiet ... nurture, park or decline?' on his list (D3).",
+    "repeat_pitch_closure": "PASS. Capture puts closed-row repeat pitches on Akshay's list as 'pitched again' and moves them to Decision pending; STEP 1 closes those n/a ('his ask stays, nothing else changes'), so 444 never doubles them. Handling differs (capture moves to Decision pending, 444 keeps Status), which is a consistency note only (D10).",
+    "REPAIR": "PARTIAL. A late-linked old request reruns 443: 'Next date = that date' can set a past date (D9), and the 444 item has no key to prove 'not yet performed' (D4)."
+   }
+  },
+  "h_leftover_three_cases": {
+   "result": "PASS within actions, one conflict outside",
+   "quote": "Section 8 (yourcall-sections.md, Controls, 'it wins where it differs'): Guest cancels or asks to move a recording ... leave Next date",
+   "replay": "Lines 38, 66 and 80 are updated; lines 43 ('Never move ... any other Next date'), 86 (Deals) and 102 (STEP 5 'Never touch Next date here') still hold. Line 73's 'whatever ... Next date said' is broader than line 42's 'replacing any chase date' and decision 443's 'replacing any chase date': a move request naming a date on a Booked row overwrites the calendar routine's date and collides with section 8's 'leave Next date' (D2). Capture r8h still says 'three cases', which README already flags as intentional."
+  }
+ },
+ "defects": {
+  "D1": {
+   "quote": "- A scheduling request (decision 443): ... at once, whatever the chase step or Next date said, Zoya added to Waiting on, first in Next action \"Zoya: reply to <who>: slots for <date>\"",
+   "scenario": "A They declined, Parked or Unresponsive row gets 'can we talk on 10 Nov?'. 443 and 444 both fire: Zoya is queued to offer slots, and Akshay is asked 'Re-open, or have Zoya reply?'. Zoya's step is live before he decides.",
+   "fix": "In the 443 bullet add: 'on an open row; on a closed row decision 444 alone applies (Next date untouched)'. Mirror it in line 42.",
+   "severity": "high"
+  },
+  "D2": {
+   "quote": "whatever the chase step or Next date said ... Next date = that date",
+   "scenario": "A Booked row with a precall on the calendar for 5 Nov; the guest asks to move to 7 Nov. 443 overwrites the calendar date the calendar routine owns. It also contradicts section 8's move/cancel reply, which says 'leave Next date' and wins as Controls. Line 42 and decision 443 only allow replacing a chase date.",
+   "fix": "Line 73: 'replacing a chase or hold date only; a date set from a precall or recording on the calendar stays (a move request is section 8's rebook)'.",
+   "severity": "medium"
+  },
+  "D3": {
+   "quote": "first in Next action \"Zoya: reply to <who>: slots for <date>\" (other segments kept)",
+   "scenario": "AISECT keeps its stale September chase segment next to the slots step, so Zoya may chase and reply. A decision 382 'went quiet ... nurture, park or decline?' item stays on Akshay's list after the founder wrote back.",
+   "fix": "'(other segments kept, except the chase segment and any \"went quiet\" item this mail answers)'.",
+   "severity": "medium"
+  },
+  "D4": {
+   "quote": "Re-open, or have Zoya reply?\", once per inbound.",
+   "scenario": "A Parked row already has an open 'wrote again' ask and a second mail arrives. A literal model adds a second item, or replaces the whole Next action because the bullet does not say other segments are kept. REPAIR cannot check 'once per inbound' because the item has no date or key.",
+   "fix": "Template 'Akshay: <who> wrote again about <what> (<D Mon>); earlier <how it closed>. Re-open, or have Zoya reply?' (other segments kept). If an open 'wrote again' item exists, rewrite that one with the newest mail instead of adding another.",
+   "severity": "medium"
+  },
+  "D5": {
+   "quote": "STEP 5: \"A guest, PR person or stakeholder wrote and the thread now waits on us: Zoya, \\\"Zoya: reply to <who>: <what they want>\\\"\"",
+   "scenario": "After 444 puts Bhoomika's ask on Akshay's list, STEP 5 (or STEP 6e bucket A or B) also queues a Zoya reply or acknowledgement, which pre-empts his 'Re-open, or have Zoya reply?'.",
+   "fix": "In 444 add: 'this is the thread's answer for STEP 5 and 6e: no other Zoya step, except a decision 390 holding reply'.",
+   "severity": "medium"
+  },
+  "D6": {
+   "quote": "REVENUE THAT NEEDS AKSHAY (decision 151). This rule wins over every other bullet below. ... a call or meeting he offered or they asked for",
+   "scenario": "On a sponsored row or paid thread they ask for a call on a date. 443 queues 'Zoya: reply ... slots', then STEP 5 puts 'Akshay: call ...' first. Zoya may offer slots for a call Akshay hasn't agreed to.",
+   "fix": "In 443: 'on a sponsored or paid row, decision 151 applies instead (Akshay's step; Next date still = that date)'. Or state the precedence explicitly.",
+   "severity": "medium"
+  },
+  "D7": {
+   "quote": "(no mention of decision 425's exceptions in r9)",
+   "scenario": "Decision 425 sends a Tier 1 guest or a slot needed today or tomorrow to Akshay. AISECT's 3 Nov ask, worked on 2 Nov, is 'tomorrow', yet 443 queues only Zoya. Zoya's own rules may catch it, but the actions row never shows Akshay.",
+   "fix": "Add to 443: 'a Tier 1 guest or a date today or tomorrow also adds Akshay (decision 425)'. Or confirm Rules for Zoya covers it.",
+   "severity": "low"
+  },
+  "D8": {
+   "quote": "A recording on a host show stays the host's pick (above).",
+   "scenario": "A un# guest offers windows. The carve-out names only the picker; a literal model may still add Zoya or set Next date from the window. Line 42's case list has no host-show carve-out.",
+   "fix": "'A recording on a host show is not a 443 request: the Slots bullet alone applies, Next date untouched'.",
+   "severity": "low"
+  },
+  "D9": {
+   "quote": "Next date = that date",
+   "scenario": "A window ('next week', 'first half') or a date already past when the run (or a REPAIR rerun) works the mail: start date, end date or a past date is undefined.",
+   "fix": "'Next date = the first day of the date or window, if still ahead; else leave Next date and put the date in Next action'.",
+   "severity": "low"
+  },
+  "D10": {
+   "quote": "capture line 83: \"A closed row (They declined, We declined, Parked, Unresponsive) moves to Decision pending so it shows on his list\"",
+   "scenario": "The same situation is handled two ways: capture's repeat pitch moves a closed row to Decision pending, while 444 keeps Status. No double item results, because STEP 1 closes 'pitched again' rows n/a. patch.py also asserts len <= 65336, not 65536, which is stricter and harmless.",
+   "fix": "Optional: align capture with 'keep Status' at its next rebuild, and fix the 65336 typo.",
+   "severity": "info"
+  }
+ },
+ "verdict": "NOT READY. The diff is clean (only patch.py's edits, no em dash) and cases a, b, c, d and e pass on their literal text. Case f fails (D4), and g fails on the 443 and 444 overlap on closed rows (D1, high), STEP 5 and 6e re-queueing Zoya on a 444 row (D5) and the revenue precedence (D6). Fix D1 to D6 in patch.py (r9b) and re-replay f and g. D7 to D10 are optional.",
+ "r9b": {
+  "inputs": "r9/actions.txt 41,584 / 9970262507a7141e; patch.py rebuilds it byte-identical from r8e 1d483cbd. Diff: same 6 edit sites, 0 em dashes, 0 non-ASCII added.",
+  "cases": {
+   "a_AISECT": {
+    "result": "PASS",
+    "quote": "A Tier 1 guest or a date today or tomorrow (decision 425): \"Akshay: <who> asks for a call on <date>: pick a slot\", Akshay in Waiting on instead of Zoya.",
+    "replay": "On a 2 Nov run, 3 Nov is tomorrow, so the first segment is 'Akshay: Dhruvi asks for a call on 3 Nov: pick a slot' with Akshay in Waiting on. The stale September chase segment leaves ('the row's chase or went-quiet segment for them leaves'). Next date 4 Nov -> 3 Nov, because a chase date is replaced and this is not a calendar booking.",
+    "425_reading": "Reads right. Decision 425 names 'a slot needed today or tomorrow' as one of the three cases that go to Akshay, and 443 doesn't revoke it. Had the mail been worked on 30 Oct, 3 Nov was 4 days out and the step would have been Zoya's, which is the case 443 was written for. Because 443's own text names only Zoya, log one line in decisions.md saying 425's exceptions still hold under 443."
+   },
+   "f_Parked_second_inbound": {
+    "result": "PASS",
+    "quote": "one such segment already open on the row: update its what and date, never a second.",
+    "replay": "The second inbound rewrites the open 'wrote again' segment with the new <what> and (<D Mon>). Other segments are kept, and REPAIR can match the inbound by its date."
+   },
+   "g_interactions": {
+    "result": "PASS with one medium",
+    "parts": {
+     "closed_row_overlap_D1": "PASS. The 443 bullet now says 'on an open row', and the 444 bullet says 'A scheduling request there is this too, not 443.'",
+     "STEP5_6e_D5": "PASS. 'Until Akshay chooses, STEP 5 and 6e queue no Zoya reply on that thread.' Side effect: this also blocks decision 390's holding reply, and 6e bucket C can still add a second 'Ask Akshay' item for the same mail (N3).",
+     "revenue_D6": "FAIL (medium). STEP 3 says 'On a revenue row (decision 151) this goes first', but STEP 5 runs later and its line 93 still says 'This rule wins over every other bullet below ... put first in Next action \"Akshay: <the step>\"'. A literal model puts Akshay's 151 item first, which reverses the D6 fix (N1).",
+     "chase_branch": "PASS. Their reply resets Chase step to 0 and removes the chase segment.",
+     "decision_382": "PASS. The went-quiet segment for them leaves.",
+     "status_backward": "PASS. No Status change in either bullet.",
+     "repeat_pitch_closure": "PASS. Unchanged; STEP 1 closes 'pitched again' rows n/a.",
+     "REPAIR": "PASS. A past date becomes today, and the 444 segment carries its date.",
+     "calendar_D2": "PASS. Line 42 says 'never a calendar booking's date'; a move request on a Booked row gets Zoya's slots step and Next date stays.",
+     "host_D8": "PASS. 'Next date untouched' on a host show."
+    }
+   }
+  },
+  "new_defects": {
+   "N1": {
+    "quote": "STEP 5: \"REVENUE THAT NEEDS AKSHAY (decision 151). This rule wins over every other bullet below. ... put first in Next action\"",
+    "scenario": "On a sponsored row, the guest asks for a call on 5 Nov. STEP 3 puts the 443 step first, then STEP 5 moves 'Akshay: call <name>' ahead of it.",
+    "fix": "STEP 5 line 93: 'put first in Next action (after a decision 443 step queued this run)'.",
+    "severity": "medium"
+   },
+   "N2": {
+    "quote": "Next date = that date (a window: its first day; a date already past: today), replacing a chase date, never a calendar booking's date.",
+    "scenario": "The row's Next date is a hold date (LT chase) or a new lead's next-working-day date, which is neither a chase date nor a calendar date. Combined with line 43 'Never move ... any other Next date', the request date may not be set. Separately, a past date becomes today, which triggers 425's 'today' branch, so the step reads 'asks for a call on <today>' for a date that has already passed.",
+    "fix": "'replacing any Next date except a calendar booking's'. For a past date: 'Akshay: <who> asked for a call on <their date> (passed): pick a slot'.",
+    "severity": "low"
+   },
+   "N3": {
+    "quote": "Until Akshay chooses, STEP 5 and 6e queue no Zoya reply on that thread.",
+    "scenario": "On a 444 row, 6e bucket C can still add a second 'Ask Akshay: <who> asks <what>' for the same mail, and decision 390's holding reply is now blocked.",
+    "fix": "'STEP 5 and 6e leave that thread (a decision 390 holding reply only if they chase again)'. Or accept as is.",
+    "severity": "low"
+   }
+  },
+  "verdict": "Nearly ready. a, f, D1, D2, D3, D5, D8 and D9 pass, with no em dash or other contradiction added. One medium remains: STEP 5's 'put first' overrides the D6 fix (N1). Fix it with a one-line edit to line 93. N2 and N3 are optional. On AISECT, the 425 branch reads right; log it as a 443 clarification."
+ },
+ "r9c": {
+  "inputs": "r9/actions.txt 41,747 / 187098fb1d86b168; patch.py rebuilds it byte-identical from r8e 1d483cbd. Against r9b only lines 42, 74 and 93 changed. 0 em dashes, 0 non-ASCII added.",
+  "cases": {
+   "a_AISECT": {
+    "result": "PASS",
+    "quote": "Next date = that date (a window: its first day; a date already past: today, the step keeps the date they asked for), replacing any Next date but a calendar booking's.",
+    "replay": "Same result as r9b. On a 2 Nov run, 3 Nov is tomorrow, so the step is 'Akshay: Dhruvi asks for a call on 3 Nov: pick a slot' with Akshay in Waiting on. The chase segment leaves and Next date moves from 4 Nov to 3 Nov."
+   },
+   "D6_path": {
+    "result": "PASS",
+    "quote": "put first in Next action (after a decision 443 step queued this run) \"Akshay: <the step ...>\"",
+    "replay": "On a sponsored row the guest asks for a call on 6 Nov. STEP 3 puts 'Zoya: reply to <who>: slots for 6 Nov' first. STEP 5 then adds Akshay's 151 item right after it, keeping the others, so Waiting on is Zoya plus Akshay. If 425 also applies (Tier 1, or today or tomorrow), the 443 step and the 151 item are two Akshay asks about the same call (R2, low)."
+   },
+   "g_interactions": {
+    "result": "PASS",
+    "parts": {
+     "closed_row_444": "PASS. 'queue no Zoya reply on that thread but the holding reply (decision 390), and 6e bucket C adds no second Akshay ask there.'",
+     "STEP5_revenue": "PASS. Line 93 now yields to a 443 step.",
+     "hold_and_new_lead_dates": "PASS. 'replacing any Next date but a calendar booking's'. Line 73 still says 'whatever the chase step or a chase Next date said', but it defers to line 42 ('Next date as NEXT DATE's fourth case'), so this is wording only (R1).",
+     "past_date": "PASS. Next date is today and the step keeps their date.",
+     "chase, 382, status, repeat pitch, REPAIR, calendar, host show": "PASS. Unchanged since r9b."
+    }
+   }
+  },
+  "residual": {
+   "R1": {
+    "quote": "whatever the chase step or a chase Next date said",
+    "fix": "Optional: 'whatever the chase step or Next date said (a calendar booking's date stays)', to match line 42.",
+    "severity": "info"
+   },
+   "R2": {
+    "quote": "A Tier 1 guest or a date today or tomorrow (decision 425) ... put first in Next action (after a decision 443 step queued this run)",
+    "scenario": "On a revenue row where 425 also applies, Akshay gets two items about one call.",
+    "fix": "Optional: on a revenue row, STEP 5 adds no 151 item for a call already on his list from 443.",
+    "severity": "low"
+   },
+   "R3": {
+    "quote": "a date already past: today, the step keeps the date they asked for",
+    "scenario": "A date that has already passed is neither today nor tomorrow, so 425 doesn't apply and Zoya's step reads 'slots for <a past date>'. Zoya's rules have to handle offering new slots.",
+    "severity": "low"
+   }
+  },
+  "verdict": "READY. Cases a, g and the D6 path pass, and there are no new contradictions. R1 to R3 are optional (info or low)."
+ },
+ "r9d": {
+  "inputs": "r9/actions.txt 42,169 / 9c198bca632cb3fe; patch.py rebuilds it byte-identical from r8e 1d483cbd. Against r9c only lines 73 and 74 changed. 0 em dashes, 0 non-ASCII added. YOUR CALL judged from yourcall-sections.md section 6 (the local copy of the Notion page).",
+  "cases": {
+   "a_AISECT": {
+    "result": "PASS",
+    "quote": "A Tier 1 guest or a date today or tomorrow (decision 425): \"Akshay: <who> asks for a call on <date>: pick a slot\", Akshay in Waiting on instead of Zoya.",
+    "replay": "Same result as r9c: Akshay picks a slot, the chase segment leaves, and Next date moves from 4 Nov to 3 Nov. Small ambiguity: the new sentence 'Zoya answers with slots in her next run' comes before the 425 branch, so a literal reader could still expect Zoya to send (S4)."
+   },
+   "c_Commix": {
+    "result": "PASS",
+    "quote": "reconcile it with the thread and the row's earlier outcome, keep Status, add Akshay to Waiting on and put first in Next action one recommendation, never an open question: \"... Recommend: <re-open as <status> | reply no>, because <one line>. Write ok or a change in Your call (<D Mon>)\"",
+    "replay": "Bhoomika's ask: Status stays They declined, Akshay is added, and the item reads e.g. 'Akshay: Bhoomika wrote again about <ask>; earlier they declined <...>. Recommend: re-open as Decision pending, because <...>. Write ok or a change in Your call (28 Oct)'."
+   },
+   "f_Parked_second_inbound": {
+    "result": "PASS",
+    "quote": "one such segment already open on the row: update its what and date, never a second.",
+    "replay": "One segment, updated. Gap: only 'what and date' are updated, not the Recommend line, so a second mail that changes the picture (say they now accept paying) keeps a stale recommendation (S3)."
+   },
+   "g_interactions": {
+    "result": "PASS",
+    "replay": "No change since r9c for STEP 5, 6e, chase, 382, repeat-pitch closure, REPAIR, calendar and host show. 444 still keeps Status."
+   },
+   "thanks_only_closed_row": {
+    "result": "PASS",
+    "quote": "Acknowledgements, thanks, auto-replies, a sponsored no and noise never trigger it.",
+    "replay": "No item. STEP 6e bucket A also skips it ('Never for a mail that is itself only thanks')."
+   },
+   "Booked_interaction": {
+    "result": "PASS with a low",
+    "quote": "the row reaches Booked only on their written confirmation of a time",
+    "replay": "This fits line 65 ('A recording date is agreed: Booked') by narrowing 'agreed' to their written confirmation. But 443 covers any call, including a precall. A literal model can read the sentence as moving a confirmed precall to Booked, when a precall's path is Precall requested, then Precall done (S2)."
+   },
+   "YourCall_ok_on_Recommend": {
+    "result": "FAIL (medium)",
+    "quote": "YOUR CALL: \"ok\" or \"yes\" approves the proposal in Next action as written ... Update Status, Waiting on and Next action as the step implies. HARD RULES line 33: \"Never move Status backward, except to LT chase or a closed outcome.\"",
+    "replay": "'ok' on 'reply no': YOUR CALL hands it to Zoya ('Zoya: send the approved <what> to <who>'), which works. 'ok' on 're-open as <status>': moving They declined or Parked to an open status is a backward move, and line 33 has no Akshay or Your call exception, so a literal model may refuse. Even if it re-opens, the recommendation names only a status, not the reply, so no Zoya step is implied and the person who wrote is left unanswered. Also, the item ends 'Write ok or a change in Your call' instead of YOUR CALL's standard 'Write ok, not ok or a change in Your call.', and 'not ok' on 'reply no' is undefined (YOUR CALL: 'decline politely if that is clearly what is meant, else ask')."
+   }
+  },
+  "new_defects": {
+   "S1": {
+    "quote": "Recommend: <re-open as <status> | reply no>, because <one line>. Write ok or a change in Your call (<D Mon>)",
+    "scenario": "Akshay writes ok on 're-open as Decision pending'. Line 33 forbids the backward move, and no next step or reply is named.",
+    "fix": "Template 'Recommend: <re-open as <status>, Zoya: <the reply> | Zoya: reply no>, because <one line>. Write ok, not ok or a change in Your call. (<D Mon>)'. Add to line 33: 'or Akshay's ok on a decision 444 re-open'.",
+    "severity": "medium"
+   },
+   "S2": {
+    "quote": "the row reaches Booked only on their written confirmation of a time",
+    "scenario": "A precall confirmed in writing could be moved to Booked.",
+    "fix": "'a recording reaches Booked only on their written confirmation of a time (a precall stays Precall requested)'.",
+    "severity": "low"
+   },
+   "S3": {
+    "quote": "update its what and date, never a second",
+    "scenario": "The second inbound changes the facts, but the recommendation stays stale.",
+    "fix": "'update its what, recommendation and date'.",
+    "severity": "low"
+   },
+   "S4": {
+    "quote": "It is a reply owed now: Zoya answers with slots in her next run",
+    "scenario": "In the 425 branch (Tier 1, today or tomorrow) the step is Akshay's, yet this earlier sentence names Zoya.",
+    "fix": "'It is a reply owed now: the owner below answers in the next run ...'.",
+    "severity": "low"
+   }
+  },
+  "verdict": "NOT READY, one medium. Cases a, c, f and g, the thanks-only case and the Booked interaction pass. 'ok' on a 're-open' Recommend fails: line 33 blocks the move and no reply step is named (S1). S2 to S4 are low, one-phrase edits."
+ },
+ "r9e": {
+  "inputs": "r9/actions.txt 42,300 / 7994a1502b19626b; patch.py rebuilds it byte-identical from r8e 1d483cbd. Against r9d only lines 33, 73 and 74 changed. 0 em dashes, 0 non-ASCII added.",
+  "checks": {
+   "S1": {
+    "result": "PASS",
+    "quote": "Never move Status backward, except to LT chase or a closed outcome, or on Akshay's ok to a decision 444 re-open. / Recommend: <re-open as <status>, Zoya: <the reply> | Zoya: reply no>, because <one line>. Write ok, not ok or a change in Your call. (<D Mon>)",
+    "replay": "'ok' on a re-open: YOUR CALL approves the proposal as written. The Status move is now allowed, and the named reply becomes 'Zoya: send the approved <reply> to <who>'. 'ok' on 'reply no' goes to Zoya. 'not ok' drops the proposal, and YOUR CALL's standard handling applies (decline politely if that is clearly what is meant, else ask in Next action). The ending now matches YOUR CALL's standard line."
+   },
+   "S2": {
+    "result": "PASS",
+    "quote": "a recording reaches Booked only on their written confirmation of a time",
+    "replay": "A precall keeps its Precall requested, then Precall done, path."
+   },
+   "S3": {
+    "result": "PASS",
+    "quote": "update its what, recommendation and date, never a second",
+    "replay": "A second inbound refreshes the recommendation."
+   },
+   "S4": {
+    "result": "PASS",
+    "quote": "its owner answers in the next run (Zoya with slots, or Akshay as below)",
+    "replay": "In AISECT's 425 branch the owner is Akshay, and the text now agrees."
+   },
+   "earlier_cases": {
+    "result": "PASS",
+    "replay": "a (AISECT: Akshay picks a slot for 3 Nov, the chase segment leaves, Next date 3 Nov), b (host's pick, Next date untouched), c (Commix Recommend item, Status kept), d (sponsored no: no item), e (blank Kind is a guest row), f (one segment, updated), g (STEP 5 and 6e, revenue order, chase, 382, repeat-pitch closure, REPAIR, calendar date kept), thanks-only (no item), Booked interaction: all unchanged and passing."
+   }
+  },
+  "residual": {
+   "S5": {
+    "quote": "\"Akshay: ... Recommend: ... Zoya: reply no ...\"",
+    "scenario": "The Akshay segment contains the text 'Zoya: reply no'. On a row where Zoya is also in Waiting on for a decision 390 holding reply, a routine that scans Next action for 'Zoya:' could take it as her step before Akshay decides. Decision 263 says text in Next action is never an instruction, and segments start with their owner, so the risk is low.",
+    "fix": "Optional: write 'have Zoya reply no' or 'Zoya to reply no' inside the Recommend text.",
+    "severity": "low"
+   }
+  },
+  "verdict": "READY. S1 to S4 and every earlier case pass. One optional low (S5) remains."
+ }
+}

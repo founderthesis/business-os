@@ -1,0 +1,65 @@
+{
+ "round": 4,
+ "inputs": {
+  "cleanup-verdict-round3.md": "6447/e23a14c3f1d7eca6",
+  "capture.txt": "35714/59532e71fb2c52db",
+  "actions-v2.txt": "39163/54b70ee8e8fa1559",
+  "yourcall-sections.md": "7326/a28b43da3b0aac36",
+  "sweep.txt": "39131/6783dd01e396e5ab"
+ },
+ "cases": {
+  "R1": "PASS for Zoya's sends: her 10:38 holding reply 'Zoya sent: ...' lands in ad@. Capture won't stamp it ('never a row whose Summary starts \"Zoya sent\"'; STEP 0: 'a Summary starting \"Zoya sent\" is hers: add nothing'). Actions closes it: 'a Summary starting \"Zoya sent\" (her row, her routine works it)'. Akshay stays on Waiting on. But the 'Kind Email in' limit drops Akshay's own Email out rows when Zoya logged them first; see R1b.",
+  "R2": "PASS: on capture's first run CURSOR reads 'the newest record with Source ID run:inbox-capture: (none yet: run:inbox:, the old inbox)'. T comes from the old inbox's read to (1 Nov evening), not '3 days ago'. Stamps are bounded by 'created since 2026-11-01 12:00 JST', so the old inbox's 31 Oct and 1 Nov morning rows are never stamped. 'run:inbox-capture:' and 'run:inbox-actions:' don't match the 'run:inbox:' prefix.",
+  "R3": "PASS: run 1 writes 'actions: try 1 <run>' and crashes. With the 90-minute guard, the next run sees the crashed Started record, about 60 minutes old, and writes a No-op. Then try 2, a No-op, try 3, a No-op, and the next run finds 'a row that already has 3 gets \"actions: stuck <why>\"'. W is freed after about 6 runs, not never. Cost: every crash also skips one Your call run. A healthy row can also be marked stuck during an outage; see R3b.",
+  "R4": "PASS: both prompts' TIME says '\"Today\" and every date you write or compare (Captured too) are the JST date, Bash `TZ=Asia/Tokyo date +%F`'. Enabling capture at 00:30 JST on 2 Nov stamps 2026-11-02, so touched rows leave STEP 0. Precondition: never enable capture on 1 Nov JST.",
+  "addition_2h_hold": "PASS in steady state: Zoya logs at 10:38, capture stamps at 11:02, and actions at 11:25 still has the row inside the window, because the unstamped row held W ('a mail row without one, created under 2 hours ago and not \"Zoya sent\", still holds W'). FAIL when capture lags: if capture is down or capped for more than 2 hours (a quota outage, a burst over 15), the hold expires and W passes the row. The late stamp then has no route back, because the Captured branch now covers only 'rows created before 2026-11-02'. See A1.",
+  "B1": "PASS: unchanged.",
+  "B2": "PASS: the re-keyed allmail: row was created 30 Oct, before 2 Nov, and gets Captured today with a 'first captured' line, so the Captured branch takes it.",
+  "B3": "PASS: unchanged.",
+  "B5": "PASS: loop-in Activities are closed n/a, and 'In a THREAD, a loop-in (\"adding @Zoya\") is never our side replying'.",
+  "B6": "PASS: the three headings and the exact end line are present in yourcall-sections.md.",
+  "B7": "PASS: unchanged.",
+  "B8": "PASS: unchanged.",
+  "B10": "PASS: STEP 0's unlinked class is stamped, linked and given Captured today. Rows created before 2 Nov fall in the Captured branch.",
+  "S3": "PASS: unchanged.",
+  "S5": "PASS: unchanged.",
+  "S6": "PASS: the sweep is unchanged.",
+  "S7": "PASS: unchanged.",
+  "S8": "PASS: unchanged.",
+  "S9": "PASS: unchanged.",
+  "D1": "PASS: unchanged.",
+  "D2": "PASS: unchanged.",
+  "D3": "PASS: the first-run cursor and the 1 Nov 12:00 JST bound together keep old-inbox work out.",
+  "D4": "PASS: unchanged.",
+  "D5": "PASS: 8 per class. At the third 'no Message-ID' line the row becomes 'allmail-unread:', which no longer matches 'allmail:', and it's reported once.",
+  "D6": "PASS: the WhatsApp row is 'Zoya sending:' first and renamed after the send, and a 'Zoya sending' row is checked in Blueticks before any resend.",
+  "D7": "PASS: the 90-minute guard now catches a run still live from the previous hour. A crashed run costs one No-op hour.",
+  "D8": "PASS: Meeting rows are taken, and '(a Meeting row has none)' THREAD.",
+  "D9": "PASS for inbound mail. Email out is not covered; see R1b.",
+  "should_fix_1_to_8": "PASS: the 90-minute guard, the :35 stop with Your call in full, 'Zoya sending', allmail-unread:, 'first captured <its old Captured>', STEP 0 'Start no row after :10', the Captured branch limited to 'created before 2026-11-02', folded rows stamped only 'if that row was created since 2026-11-01 12:00 JST', and loop-ins never counted as a reply.",
+  "size_emdash": "PASS: capture is 35,714 bytes and actions-v2 39,163 (837 bytes to spare). Neither has a U+2014."
+ },
+ "defects": {
+  "R1b_akshay_mail_logged_by_zoya": {
+   "quote": "capture STEP 1: 'except that such a row of Kind Email in, created since 2026-11-01 12:00 JST, without a \"capture:\" line ... gets that line'",
+   "scenario": "PLAUSIBLE: it depends on whether Zoya's routine logs mail it's Cc'd on. Zoya is in Cc on every ad@ mail to outsiders (decision 225). Akshay replies to a PR from ad@ at 10:10: 'go ahead, record'. If Zoya's 10:38 run logs that message first (Kind Email out, not 'Zoya sent'), capture at 11:02 finds the key and doesn't stamp it, because it isn't Email in. Actions holds W for 2 hours, then passes it unworked. STEP 2b (Send draft moves, his answer taking him off his list) and STEP 3's 'Akshay decides' never fire. STEP 0 class 2 does stamp Email out, so the two steps disagree.",
+   "fix": "Make the STEP 1 exception 'a row of Kind Email in, or Email out sent by Akshay or a Team member other than Zoya, ... never a row whose Summary starts \"Zoya sent\"'. Before cutover, check one row on Notion to see whether Zoya's routine logs Cc'd mail at all."
+  },
+  "A1_late_stamp_lost": {
+   "quote": "actions STEP 1: 'plus rows created before 2026-11-02 and Captured on or after the day before W's date' + 'created under 2 hours ago ... still holds W'",
+   "scenario": "MCP Emails hits quota from 10:00 to 14:00, so capture's runs end Failed and stamp nothing. Zoya, on her own connector, logs 'Priya to Zoya: confirms 14 Nov' (in ad@ too) at 10:38. Actions' hold expires at 12:38 and W moves past the row. At 15:02 capture stamps it, but the row is older than W minus 2 minutes and was created after 2 Nov, so no branch selects it. It's never worked.",
+   "fix": "When capture's STEP 1 stamps a row, it also sets Captured today (with a 'first captured' line), and actions' Captured branch becomes 'created before 2026-11-02, or Captured on or after the day before W's date and created before W'. Another option is to make the hold 'until capture's newest record that has a read to has a read to past the row's created time' instead of 2 hours. Actions has only 837 bytes left, so keep it to one clause."
+  },
+  "R3b_outage_marks_healthy_rows_stuck": {
+   "quote": "'Before starting a row, add the body line \"actions: try <n> <run id>\" ...; a row that already has 3 gets \"actions: stuck <why>\"'",
+   "scenario": "A 3-hour MCP Emails outage: each run writes a try line on the oldest row, fails its THREAD read and ends Failed. After 3 runs a healthy row is stuck, is never worked again, and lands on For Akshay. Being stuck is permanent.",
+   "fix": "Count a try only from a run that didn't end Failed, or tell runs to remove their try line when they end Failed on a connector error ('a connector error is never a try')."
+  },
+  "N_cursor_wording": {
+   "quote": "CURSOR: 'the newest record with Source ID run:inbox-capture: (none yet: run:inbox:...)' vs STEP 1: '...run:inbox-capture: that has one, else run:inbox:'",
+   "scenario": "Minor. Suppose capture records exist but none has a read to, because every run failed in STEP 1. CURSOR picks the newest capture record, which has no read to, while STEP 1 falls back to the old inbox. The re-read that follows is bounded and safe.",
+   "fix": "Make CURSOR say 'that has a read to' too."
+  }
+ },
+ "verdict": "Close, but not accepted. R1 (for Zoya's sends), R2, R3, R4 and should-fix items 1 to 8 pass, and every earlier closed item (B1 to B10, S3, S5 to S9, D1 to D9) still passes. Two new holes come from the round 4 joins. A1 (blocking): a stamp capture writes more than 2 hours late, during an outage or a backlog, has no route back into actions, because the Captured branch now covers only rows created before 2 Nov. R1b (blocking if Zoya logs mail she's Cc'd on): the 'Kind Email in' limit leaves Akshay's own sent mail unworked when her run logs it first. R3b should be fixed too, since an outage can mark healthy rows stuck for good. Each fix is one clause; actions has 837 bytes left. Replay A1, R1b and R3b after the fix."
+}

@@ -1,0 +1,215 @@
+{
+ "inputs": {
+  "zoya_fast": {
+   "path": "docs/proposals/zoya-r12/zoya-one.txt",
+   "bytes": 50160,
+   "sha256_16": "079b081a704907ef",
+   "matches_stated": true,
+   "under_65336": true,
+   "em_dashes": 0,
+   "version_string": "zoya-one 78fcd585337b, recomputed (sha256 of the text with @@VERSION@@ restored) and it matches",
+   "slow_pin": "cd9000f1773adc139a077c69edc7dcfb2e305422, exists locally (on claude/business-os-structure-k3sqo5), its routines/zoya/release/zoya-slow-work.txt hashes 9ccf22ad32f4fa1e..., equal to the pin line in FAST. The remote ref zoya-slow-pin still points at 63fcf66, as the hand-off says (the pin move is deploy step 1)."
+  },
+  "zoya_fast_previous": {
+   "path": "docs/proposals/zoya-r12/zoya-one-r12b.txt",
+   "bytes": 47848,
+   "sha256_16": "78e746d22d25bb4f",
+   "matches_stated": true
+  },
+  "zoya_slow": {
+   "path": "docs/proposals/zoya-r12/zoya-slow-work.txt",
+   "bytes": 69409,
+   "sha256_16": "9ccf22ad32f4fa1e",
+   "matches_stated": true,
+   "em_dashes": 0,
+   "note": "SLOW is a file read by commit and hash, not a pasted prompt, so the 65,536 cap does not apply (it was 67,837 before)"
+  },
+  "zoya_slow_previous": {
+   "source": "git show 63fcf66:routines/zoya/release/zoya-slow-work.txt",
+   "bytes": 67837,
+   "sha256_16": "2cf5b7156ce80240",
+   "matches_stated": true
+  },
+  "actions_r11": {
+   "path": "docs/proposals/inbox-split/r11/actions.txt",
+   "bytes": 45775,
+   "sha256_16": "794328afdc81758e",
+   "matches_stated": true,
+   "under_65336": true,
+   "em_dashes": 0,
+   "regenerated": "python3 patch.py on the live r10d-cleanup file (43,955 / 4ac5406d) gives 45,775 / 794328afdc81758e, byte-identical (cmp)"
+  },
+  "word_diffs": {
+   "fast_r12b_to_r12c": "Only these change: UN# 'Slots on un# (C7)' bullet replaced by the 446 'Scheduling on client shows' bullet; B2S/HBD 'pick slots' gains ', after Akshay's ok (decision 446, above)'; SENDING gains the 447 subject clause and 'with the subject decision 447 sets' in the read-back; INVITES gains '; on a client show, also Akshay's ok in Your call for that time, decision 446'; STEP 1 b gains the 448 clause before 'Anything else: answer it'; version string 12114d49485d -> 78fcd585337b; SLOW pin 63fcf66/2cf5b715 -> cd9000f/9ccf22ad. Nothing else.",
+   "slow_63fcf66_to_r12c": "Only the same three shared edits (446 UN# bullet and B2S/HBD clause, 447 SENDING clause, 446 INVITES clause). No 448 text in SLOW (448 is FAST STEP 1 b only), as the hand-off says.",
+   "actions_r10d_to_r11": "Only the four patch.py edits: STEP 3 slot bullet (446, replacing 114 there), the 443 line's last sentence, the new STEP 5 448 bullet, and 6e's 'A reply to a mail Akshay wrote himself is in no bucket' plus 'Put each other one'.",
+   "build_patch": "build_one.patch carries exactly these edits as SHARED (446, 447) and FAST-only (448, plus the earlier 445 STEP 0r items) replacements; it matches the outputs."
+  }
+ },
+ "cases": {
+  "a_ryan_louvar_un": {
+   "trace": [
+    "Guest side's windows mail (ad@ copy, captured): actions STEP 3 'Slots, availability or logistics' bullet writes the dated Scheduling line and, under 446, adds Akshay to Waiting on with 'Akshay: Ryan Louvar (un#) scheduling: <windows>. Recommend: <put the slots on Sri's board | confirm <slot> and create the invite | ask for new windows>, because ... Write ok, not ok or a change in Your call. (<D Mon>)'. Until he answers, STEP 5/6e queue only the holding reply; 6e bucket C adds no second ask.",
+    "Zoya FAST (same mail, Zoya in Cc): STEP 1 takes the thread; SCOPE's UN# 446 bullet says the scheduling turn goes to Akshay as one recommendation (one already open: update it), and 'When their side wrote, the holding reply (decision 390) is all you send'. STEP 1 c's holding reply rules apply (one per thread per 7 days). No C7, C8 or invite.",
+    "Zoya SLOW: routine 3 (Recording slot, un# every 2 working days) does not mail the row while Akshay is in Waiting on ('Rows waiting on Akshay are never yours to mail'). After Akshay's ok moves it to Sri's board (Waiting on Sri), routine 3 may chase the guest side every 2 working days though the guest already gave windows and the row waits on Sri: pre-existing, not 446.",
+    "Akshay's ok in Your call: the handler exists. actions STEP 0 runs 'YOUR CALL' from the Controls page 'Inbox and Your call rules' sections 6 to 8 (yourcall-sections.md is the copy): 'ok approves the proposal in Next action as written', any mail it approves becomes 'Zoya: send the approved <what> to <who>', Status/Waiting on/Next action 'as the step implies', Claude note line, Your call cleared. STEP 3's 446 text supplies the step on an ok: the host-board step, else 'any other step is Zoya's'. Section 6 itself does not name the 446 segment (low, D10).",
+    "Akshay's mail 'block 17th as well': actions STEP 3 (446): 'A mail from Akshay on the thread with an instruction ... is his ok: Waiting on Zoya, \"Zoya: <his step>\"' (old-format, unkeyed); STEP 2b b takes his open 446 item off. FAST: the step is a decision action, but (1) it is old-format and must be keyed by the developer page's fixed keying rules, 'one those rules can't type is reported and left alone'; (2) INVITES requires 'on a client show, also Akshay's ok in Your call for that time', and a mail is not Your call; (3) HARD RULES (which beat the SCOPE text and pages): 'only Akshay's own replies ... are feedback you act on, and only on mail wording'. Any of these can stop the hold again, which is the failure that raised 446.",
+    "Is any time proposed, created or confirmed without his ok? In FAST, SLOW and actions: no, provided the Notion pages do not say otherwise. Two leaks remain outside the prompt text: the page-wins rule (D1) and the host boards routine still running decision 114 (D8), which puts the guest's slots on Sri's board and hands Sri's pick to Zoya without the 446 step. Neither confirms a time to the guest on its own."
+   ],
+   "verdict": "partial: the windows mail and the ok path work; Akshay's instruction mail can still stall (D2, D9), and the page-wins rule can undo 446 (D1)."
+  },
+  "b_bts_cant_do_and_hbd_24h": {
+   "trace": [
+    "B2S 'can't do' Satish's slot: actions STEP 3 446 bullet ('a \"can't do\"') makes the Akshay recommendation; FAST SCOPE (B2S/HBD inherit UN#) does the same, holding reply only. But the Controls page section 8 (bucket B), which 'wins where it differs', still says for a move with no new time: 'Zoya: rebook <guest> after their cancel' ('on the other shows the host picks the slots'), and if they 'say the guest can't make it (decision 165), first cancel that recording ... delete_event'. So the inbox may delete a client-show recording invite on a 'can't do' with no go-ahead from Akshay, and queue a rebook step that contradicts STEP 3's hold. FAST STEP 1 b's cancel branch also says 'reply that you're taking it off the calendar and ask for a fresh slot', which is a C7-type ask without his ok.",
+    "HBD reschedule inside 24 hours: STEP 3 446 bullet ('a reschedule') goes to Akshay; the 443 line: 'A recording on a host show goes to Akshay first (above, decision 446), Next date untouched', so 425's today/tomorrow branch ('Akshay: <who> asks for a call on <date>: pick a slot') does not add a second item for a recording. A precall on a client show still follows 443/425. Nothing marks the 446 item as urgent when the recording is within 24 hours (low, D13); the invite stays on the calendar until Akshay answers, which is what 446 asks, unless section 8's cancel fires (D6).",
+    "443 interplay: a client-show recording request does not get the 443 'Zoya: reply to <who>: slots for <date>' step (the last sentence carves it out) and Next date is untouched. Consistent."
+   ],
+   "verdict": "partial: prompt text is consistent; the Controls page section 8 and FAST STEP 1 b's cancel branch contradict 446 (D6)."
+  },
+  "c_founder_thesis_scheduling": {
+   "trace": [
+    "All 446 text is scoped 'on un#, Built to Share and Human by Design' or 'on a client show'. FT INVITES, 425 self-service (on Rules for Zoya), 443 and STEP 0r are byte-unchanged.",
+    "The only FT change is intended: 448 sends a reply to Akshay's own FT mail (slots included) to his list instead of Zoya's self-service answer; 447 can change an FT reply's subject."
+   ],
+   "verdict": "pass: no regression."
+  },
+  "d_447_commix_on_livlong": {
+   "trace": [
+    "FAST/SLOW SENDING THREADING: the reply is a draft action reply on the Livlong thread's latest message (In-Reply-To, References kept); 'when the org the mail is about differs from the org in the thread's subject ... set it with draft update's subject to \"<Org> <> Founder Thesis Podcast\"', Claude note line 'subject: <it>', read-back checks 'with the subject decision 447 sets'.",
+    "Commix's row was closed (They declined) so 444 puts it on Akshay's list and the holding reply is the only mail; 447 applies to that holding reply too.",
+    "SLOW follow-ups: SENDING is shared, so 'every later mail on that row's thread uses the subject in that line' holds in SLOW.",
+    "No conflict with 'Never action send with a \"Re:\" subject' (that forbids a fresh send faking a thread; this is a draft reply) or 'never pick a thread by subject' (the thread is still picked by Message-ID). Untested: whether MCP Emails draft update keeps In-Reply-To/References when the subject changes; Gmail on ad@ will show the reply as a new conversation (it threads by subject too). Later replies will carry 'Re: Commix <> ...'; the rule does not say whether 'Re: ' is kept (low, D12).",
+    "un#: '(on a client show, the show's name as its pitch sheet gives it)', so '<Org> <> <name on the un# pitch sheet>', which SHOW CHECK also requires word for word."
+   ],
+   "verdict": "pass with low notes (D12)."
+  },
+  "e_448_mike_cagney": {
+   "trace": [
+    "Mike Cagney is a un# guest row (Figure); Richard is the coordinator. Richard's 'will revert' answers Akshay's own 1 Nov mail.",
+    "actions STEP 5: new 448 bullet: Akshay in Waiting on, 'Akshay: Richard replied on your 1 Nov mail: will revert. Recommend: ...' ; 'wins over the Zoya, acknowledgement and ball-in-their-court bullets'; 6e: 'in no bucket'. Not a revenue row, so 151 does not apply here.",
+    "Zoya FAST STEP 1 b (Zoya in Cc on ad@ mail to outsiders): same segment, 'one already open for that thread: update it'; no holding reply (no ask); thread settled 'on Akshay's list'.",
+    "Exclusions: a loop-in from ad@ ('not a loop-in'), a Zoya reply (not from ad@), a Mamatha mail ('a team member's mail'), the billing forward: all excluded by text. Akshay's mail in Zoya's inbox only via Cc: still from ad@ and his own, so it counts. If Zoya was not on his mail, FAST's In-Reply-To lookup in her own inbox fails and the fallback 'our side's last message' can pick her earlier mail and answer it (low, D11).",
+    "Gaps: Akshay's own handover mail ('@Zoya will take you through the next steps', actions line 24 hands those to Zoya) is 'his own' and not an agent loop-in, so a reply to it bounces back to his list; auto-replies and out-of-office are not excluded (D3). On a sponsored or Deal row, STEP 5's 151 bullet 'wins over every other bullet below', and a 'will revert' is routine there, so 448 never fires (D4). A reply that is also a client-show scheduling turn (STEP 3, 446) or new inbound on a closed row (444) gets two Akshay segments for one mail (D5).",
+    "Same hour: actions and FAST each check 'one already open', so a second segment should not appear if the runs do not overlap; FAST's WRITE PATH ('only this action's own segment') conflicts with 448's 'update it' for a segment the inbox wrote (low)."
+   ],
+   "verdict": "pass for Mike Cagney himself; medium gaps (D3, D4, D5)."
+  },
+  "f_holding_replies": {
+   "trace": [
+    "446: 'When their side wrote, the holding reply (decision 390) is all you send'; 448: 'the holding reply (decision 390) only when it asks something'. Both point at 390, and STEP 1 c's 'unless one went on it in the last 7 days' keeps the one-per-7-days limit; 418's no-date line holds.",
+    "Conflict: YOUR QUEUE says 'Rows waiting on Akshay are never yours to mail (STEP 0r's recording link aside)'. 446 and 448 put Akshay in Waiting on first, and the only listed exception is STEP 0r, so a strict read blocks the holding reply both rules call for (D7). SLOW has the plain line and sends no holding replies, so it is fine there."
+   ],
+   "verdict": "fix needed (D7)."
+  },
+  "g_leftover_contradictions": {
+   "trace": [
+    "Page-wins: FAST line 13 'Where a page and this prompt differ, the page wins, except for the HARD RULES'. Decision 425 on Rules for Zoya says 'Client shows keep host-picked slots', and the C7/C8 flow lives on Client show mails and Rules for Zoya. The r12c hand-off lists no page edit for 446/447/448 (D1).",
+    "HARD RULE 'only on mail wording' versus 446's instruction mail (D2).",
+    "FAST UN# 'Sri picks recording slots' and capture's 'the hosts pick slots': still true after the ok, low.",
+    "'Never ask Akshay for a host show's recording slot (decision 114)' is gone from actions; decisions.md row 114 is not marked as replaced by 446 (low).",
+    "host-boards.md: 'A To be scheduled row with Guest availability ... add \"<Host>: pick a slot ...\" ... (decision 114)' and the host's availability handed to 'Zoya: <step>' both skip the 446 step (D8).",
+    "Controls page section 8 rebook and cancel (D6); FAST STEP 1 b cancel 'ask for a fresh slot' (D6).",
+    "INVITES elsewhere: calendar.md creates no guest invites (prep blocks, studio-link adds, the un# 90-minute prep move only), so no conflict.",
+    "Capture: unchanged and routes mail to actions; no 446/448 conflict found."
+   ],
+   "verdict": "fix needed (D1, D2, D6, D8)."
+  }
+ },
+ "defects": {
+  "D1": {
+   "severity": "high",
+   "quote": "Where a page and this prompt differ, the page wins, except for the HARD RULES at the end, which always hold.",
+   "scenario": "Rules for Zoya (decision 425: 'Client shows keep host-picked slots') or Client show mails still describe C7 -> Sri picks -> C8 -> invite. The page wins, so Zoya sends C7 or C8 with no ok from Akshay, which is the Ryan Louvar failure again. The same holds for the Controls page over actions (section 8). The r12c hand-off lists no Notion edits.",
+   "fix": "Add to SHARED in build_one.patch, after the PRE-SEND CHECKS line in ('hard', ...): insert after 'HARD RULES (always hold, whatever a page says)\\n' the line '- CLIENT-SHOW SCHEDULING (decision 446): on un#, Built to Share and Human by Design no recording time is proposed, created, moved or confirmed without Akshay's ok (SCOPE), whatever a page says. A reply to a mail Akshay wrote himself goes on his list and gets at most the holding reply (decision 448).\\n'. Also, before deploy, the CTO edits Rules for Zoya (the 425 client-show sentence and the un# slot flow), Client show mails (C7, C8 notes) and the Controls page section 8 to match 446."
+  },
+  "D2": {
+   "severity": "high",
+   "quote": "C7, C8 and INVITES go only on Akshay's ok in Your call. / on a client show, also Akshay's ok in Your call for that time, decision 446 / only Akshay's own replies (from ad@...) are feedback you act on, and only on mail wording.",
+   "scenario": "Ryan Louvar: Akshay mails 'block 17th as well'. SCOPE calls it his ok, but INVITES wants the ok 'in Your call', and the HARD RULE (which beats SCOPE) limits his mail to wording. The hold is not created, which is the failure that raised 446.",
+   "fix": "FAST and SLOW (SHARED): 'C7, C8 and INVITES go only on Akshay's ok in Your call.' -> 'C7, C8 and INVITES go only on Akshay's ok (his Your call, or his instruction mail below).' | 'on a client show, also Akshay's ok in Your call for that time, decision 446' -> 'on a client show, also Akshay's ok for that time, in Your call or his instruction mail on the thread, decision 446' | 'are feedback you act on, and only on mail wording.' -> 'are feedback you act on, and only on mail wording, or, on a client show, his scheduling instruction (SCOPE, decision 446).'"
+  },
+  "D3": {
+   "severity": "medium",
+   "quote": "and is his own, not a loop-in, the billing forward, an agent's send or a team member's mail.",
+   "scenario": "Akshay writes by hand '@Zoya will take you through the next steps' (actions line 24 hands those threads to Zoya). The guest replies, 448 sees a reply to his own mail and puts it back on his list. Also an out-of-office to any of his mails becomes a decision item.",
+   "fix": "FAST STEP 1 b and actions STEP 5 (same old text in both): -> 'and is his own, not a loop-in or a mail of his handing the thread to Zoya, the billing forward, an agent's send or a team member's mail; an auto-reply, out-of-office or bounce is no reply.'"
+  },
+  "D4": {
+   "severity": "medium",
+   "quote": "REVENUE THAT NEEDS AKSHAY (decision 151). This rule wins over every other bullet below.",
+   "scenario": "A sponsored or Deal contact replies 'will revert' to Akshay's own mail. 151 wins, treats it as routine and keeps it off his list, so 448 never fires on revenue rows.",
+   "fix": "actions: 'This rule wins over every other bullet below.' -> 'This rule wins over every other bullet below but decision 448's (a reply to his own mail still comes to him in that bullet's form).'"
+  },
+  "D5": {
+   "severity": "medium",
+   "quote": "(one already open for that thread: update it, never a second)",
+   "scenario": "Richard replies to Akshay's mail with new windows (un#), or Commix answers Akshay's old mail on a closed row. STEP 3 writes the 446 or 444 segment and STEP 5 (and FAST STEP 1 b) writes a 448 segment: two Akshay asks for one mail, against decision 325.",
+   "fix": "actions STEP 5 448 bullet, after 'never a second).' insert ' A scheduling turn on a client show (STEP 3, decision 446) or new inbound on a closed row (decision 444) keeps that STEP 3 segment instead, never a second.' FAST STEP 1 b, after 'update it, never a second);' insert ' a client-show scheduling turn (SCOPE, decision 446) or new inbound on a closed row (decision 444) takes that segment instead;'"
+  },
+  "D6": {
+   "severity": "medium",
+   "quote": "Controls page section 8: '(podm.in/book on Founder Thesis; on the other shows the host picks the slots)' and 'or say the guest can't make it (decision 165), first cancel that recording or precall event'; FAST STEP 1 b: 'reply that you're taking it off the calendar and ask for a fresh slot:'",
+   "scenario": "B2S guest 'can't do' Satish's slot, or HBD asks to move within 24 hours: the inbox deletes the recording invite and queues 'Zoya: rebook', and Zoya asks for a fresh slot, all before Akshay's ok. The page wins over STEP 3's 446 hold.",
+   "fix": "Controls page section 8 (and yourcall-sections.md): '(podm.in/book on Founder Thesis; on the other shows the host picks the slots)' -> '(podm.in/book on Founder Thesis; on un#, Built to Share and Human by Design no rebook step: STEP 3's decision 446 segment to Akshay, Zoya only the holding reply)'; 'or say the guest can't make it (decision 165)' -> 'or say the guest can't make it (decision 165; on a client show only an outright cancel, never a move or a \"can't do\" on a slot, decision 446)'. FAST STEP 1 b: 'reply that you're taking it off the calendar and ask for a fresh slot:' -> 'reply that you're taking it off the calendar and ask for a fresh slot (on a client show no slot ask: the decision 446 segment, SCOPE):'"
+  },
+  "D7": {
+   "severity": "medium",
+   "quote": "Rows waiting on Akshay are never yours to mail (STEP 0r's recording link aside).",
+   "scenario": "446 and 448 put Akshay in Waiting on and then call for the holding reply. The only named exception is STEP 0r, so a strict run sends nothing, and the guest or PR side hears nothing.",
+   "fix": "FAST ('queue-fast' in build_one.patch): -> 'Rows waiting on Akshay are never yours to mail (STEP 0r's recording link and the holding reply, decision 390, aside).'"
+  },
+  "D8": {
+   "severity": "medium",
+   "quote": "host-boards.md: 'add \"<Host>: pick a slot for <guest> on your board (<the slots>)\" to Next action after any open ask (\" | \"), unless it already says so (decision 114).'",
+   "scenario": "actions writes the guest's windows into Scheduling, and host boards copies them to the board and sets Waiting on the host before Akshay's ok. His 'put the slots on <host>'s board' option is then moot. The host's pick goes to 'Zoya: <step>', and only FAST's SCOPE turns it back into an Akshay item.",
+   "fix": "host-boards.md (separate deploy): '... unless it already says so (decision 114).' -> '... unless it already says so or the row has an open \"Akshay: <guest> (<show>) scheduling:\" segment (decision 446: his ok first).'; and 'that team member is Zoya (\"Zoya: <step>\", never Mamatha)' -> 'that team member is Zoya (\"Zoya: take <Host>'s pick to Akshay (decision 446): <text>\", never Mamatha)'."
+  },
+  "D9": {
+   "severity": "medium",
+   "quote": "actions: 'is his ok: Waiting on Zoya, \"Zoya: <his step>\".' / FAST: 'is his ok: queue it as \"Zoya [decision call-<its Activity id> <ts>]: <step>\" and do it.' / ACTIONS: 'one those rules can't type is reported and left alone.'",
+   "scenario": "The inbox writes an unkeyed 'Zoya: block the 17th as well'. FAST can key it only by the developer page's fixed rules, which may not type it, so it is reported and left alone. If FAST also queues its own keyed copy, there are two segments for one step.",
+   "fix": "FAST and SLOW (SHARED scope): 'is his ok: queue it as \"Zoya [decision call-<its Activity id> <ts>]: <step>\" and do it.' -> 'is his ok: queue it as \"Zoya [decision call-<its Activity id> <ts>]: <step>\" (an inbox-queued \"Zoya: <his step>\" from that mail is this action: key it so, never a second) and do it.'"
+  },
+  "D10": {
+   "severity": "low",
+   "quote": "Controls page section 6: '\"ok\" or \"yes\" approves the proposal in Next action as written'",
+   "scenario": "The ok handler exists (actions STEP 0), but section 6 never names the 446 segment, so the step to take on an ok comes only from STEP 3's text. A run could read an ok on a un# scheduling item as a 6c guest decision.",
+   "fix": "Controls page section 6, after 'P2r);' add ' an ok on an \"Akshay: <guest> (<show>) scheduling:\" item (decision 446): the step STEP 3 names for it (the host-board step, else \"Zoya: <the approved step>\"), never STEP 6c;'"
+  },
+  "D11": {
+   "severity": "low",
+   "quote": "the message it answers (its In-Reply-To, else our side's last message on the thread) is from ad@...",
+   "scenario": "Akshay's mail was not in Zoya's inbox. The In-Reply-To lookup in her inbox finds nothing, and the fallback picks her own earlier mail, so she answers it.",
+   "fix": "FAST STEP 1 b: '(its In-Reply-To, else our side's last message on the thread)' -> '(its In-Reply-To, looked up in both inboxes, MESSAGE IDENTITY; else our side's last message on the thread)'"
+  },
+  "D12": {
+   "severity": "low",
+   "quote": "every later mail on that row's thread uses the subject in that line",
+   "scenario": "Later replies come back as 'Re: Commix <> Founder Thesis Podcast', and the rule does not say whether 'Re: ' is kept. The Claude note line 'subject: <it>' has no date, unlike every other line. Nobody has checked that draft update keeps In-Reply-To/References when the subject changes, and Gmail on ad@ will split the conversation.",
+   "fix": "SENDING: 'add the Claude note line \"subject: <it>\"' -> 'add the Claude note line \"YYYY-MM-DD: subject: <it>\"' and 'uses the subject in that line' -> 'uses the subject in that line (a \"Re: \" before it is fine)'. On first live use, read the sent message's In-Reply-To and References back."
+  },
+  "D13": {
+   "severity": "low",
+   "quote": "\"Akshay: <guest> (<show>) scheduling: <what came in>. ...\"",
+   "scenario": "An HBD reschedule inside 24 hours looks the same as any other scheduling item. Decision 114 in decisions.md is not marked as replaced by 446. 'Sri picks recording slots' (UN#) omits 'after Akshay's ok'.",
+   "fix": "Optional: in the 446 segment add '(recording <D Mon HH:MM>, within 24 hours)' when it applies; mark decision 114 'replaced on client shows by 446'; UN# 'Sri picks recording slots.' -> 'Sri picks recording slots, after Akshay's ok (decision 446).'"
+  }
+ },
+ "verdict": {
+  "result": "fail, fixable in one more round (r12d / actions r11b). Sizes, hashes, word diffs, version string, pin and the actions regeneration all check out; the edits are exactly the stated ones and FT is unaffected. The rules as written still leave the motivating Ryan Louvar step blocked, and pages can override 446.",
+  "must_fix": [
+   "D1",
+   "D2",
+   "D4",
+   "D5",
+   "D6",
+   "D7"
+  ],
+  "should_fix": [
+   "D3",
+   "D8",
+   "D9"
+  ],
+  "notes": "All fixes are short text swaps. D1, D2, D7 and D9 are SHARED or FAST edits in build_one.patch (SLOW changes, so the pin moves again). D3, D4 and D5 go in patch.py. D6 and D10 are Controls page edits plus one FAST line. D8 is a host-boards.md deploy. FAST at 50,160 bytes has room for all of them under 65,336. Nothing here was checked against live Notion pages, which a replay can't read; D1 assumes the pages still describe the old flow, and the CTO should confirm."
+ }
+}

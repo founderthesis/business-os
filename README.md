@@ -1,9 +1,5 @@
-# Business OS
+# ThePodium Business OS
 
-A relationship intelligence and operating system for Founder Thesis.
+The operating memory of ThePodium: people, engagements, episodes and decisions in one Notion system, run by agents.
 
-This repository contains:
-- CRM architecture
-- Notion integrations
-- automation agents
-- migration scripts
+Start with `CLAUDE.md`, then `docs/architecture.md` and `docs/decisions.md`. Measured facts about the current systems are in `docs/audits/`.

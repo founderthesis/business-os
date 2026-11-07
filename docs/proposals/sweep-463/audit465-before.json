@@ -1,0 +1,980 @@
+{
+ "audit": "465 before",
+ "date": "2026-11-04",
+ "scope": "Founder Thesis Episodes, Recording date 2026-09-01..2026-11-04, excluding Not releasing and Hold",
+ "excluded": [
+  {
+   "episode": "Karmendra Kohli @ SecurEyes",
+   "id": "3ed19a301a7f81e4abf6d17bda86d3c2",
+   "status": "Not releasing"
+  },
+  {
+   "episode": "Matthew Spacie @ Magic Bus India Foundation",
+   "id": "40019a301a7f81ee8e1ec1ee412d7016",
+   "status": "Not releasing (not Hold as briefed)"
+  }
+ ],
+ "counts": {
+  "episodes_in_scope": 29,
+  "guests_in_scope": 30,
+  "a": 1,
+  "b": 1,
+  "c": 0,
+  "d": 1,
+  "e": 7,
+  "f": 1
+ },
+ "gap_classes": {
+  "a_guest_list_missing": [
+   "Sameet Gupte"
+  ],
+  "b_community_row_missing": [
+   "Saket Saurabh"
+  ],
+  "c_added_but_still_asked": [],
+  "d_invited_but_akshay_says_added": [
+   "Sankalp Arora"
+  ],
+  "e_blurb_due": [
+   "Ramki Gaddipati",
+   "Bhanu Pratap Singh Tanwar",
+   "Ashish Goel",
+   "Anmol Madan",
+   "Saravana Maruthamuthu",
+   "Srinivas Choudhary",
+   "Raunak Bhinge"
+  ],
+  "f_no_invite_ask_while_invited": [
+   "Sankalp Arora"
+  ]
+ },
+ "guests": [
+  {
+   "name": "Ramki Gaddipati",
+   "people_id": "3ed19a301a7f81e8aaa2f04244dfed48",
+   "company": "Zeta",
+   "episode": "Ramki Gaddipati @ Zeta",
+   "episode_id": "3ed19a301a7f8128bfa2fbdebde5f28a",
+   "episode_status": "Work started",
+   "recording_date": "2026-09-02",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f81f78832f1d99c6568cc",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f81d28d45f328c705c5a3",
+    "membership": "Declined",
+    "blurb_empty": true,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3ed19a301a7f8140bbb6f52a26e3f74c",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [
+    "e"
+   ],
+   "notes": "Blurb due only technically: Membership Declined"
+  },
+  {
+   "name": "Vineet Agarwal",
+   "people_id": "3ed19a301a7f8147b452f37c10f72190",
+   "company": "TCIL / Transport Corporation of India",
+   "episode": "Vineet Agarwal @ Transport Corporation of India",
+   "episode_id": "3ed19a301a7f81568494c6ce42504109",
+   "episode_status": "Work started",
+   "recording_date": "2026-09-03",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f8143aac1eb75d120d100",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f81fcb062d8592eecdb7a",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3ed19a301a7f81ad9d12dff4c0145076",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [],
+   "notes": ""
+  },
+  {
+   "name": "Ankit Anand",
+   "people_id": "3ed19a301a7f81f38d0ad2f6661829c9",
+   "company": "Riceberg Ventures",
+   "episode": "Ankit Anand @ Riceberg Ventures",
+   "episode_id": "3ed19a301a7f81e1a220f0f2f1266782",
+   "episode_status": "Work started",
+   "recording_date": "2026-09-03",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f81e0b77de75a06cb48aa",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f81b9b737fee259be928f",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3ed19a301a7f81da89c4c6a09f040240",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [],
+   "notes": ""
+  },
+  {
+   "name": "Hari Kiran Chereddi",
+   "people_id": "3ed19a301a7f816998b3f3a1d143467d",
+   "company": "HRV Pharma",
+   "episode": "Hari Kiran Chereddi @ HRV Pharma",
+   "episode_id": "3ed19a301a7f81518bf6db99d52267ba",
+   "episode_status": "Work started",
+   "recording_date": "2026-09-04",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f81c08d4ae66a6531a276",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f81ccb5abfbdbb4de28b9",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3ed19a301a7f810f9c50e3b2d2d38e24",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [],
+   "notes": ""
+  },
+  {
+   "name": "Niraj Hutheesing",
+   "people_id": "3ed19a301a7f81ed8d2eda9582bab030",
+   "company": "Cygnet.One",
+   "episode": "Niraj Hutheesing @ Cygnet.one",
+   "episode_id": "3ed19a301a7f815492f0e96309beac60",
+   "episode_status": "Work started",
+   "recording_date": "2026-09-08",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f81de887ae923839d2851",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f819d9202fe9232530052",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3ed19a301a7f81319cb3c258f8a2509f",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [],
+   "notes": ""
+  },
+  {
+   "name": "Bhaskar Sunkara",
+   "people_id": "3ed19a301a7f81548d77f3f52e7f96a0",
+   "company": "Bicycle AI",
+   "episode": "Bhaskar Sunkara @ Bicycle AI",
+   "episode_id": "3ed19a301a7f81ba8582f59b4f42082c",
+   "episode_status": "Work started",
+   "recording_date": "2026-09-09",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f8187b464ff45bba20dd6",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f815bbfafeb40b084d5a3",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3ed19a301a7f813eb189e8903df98c47",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [],
+   "notes": ""
+  },
+  {
+   "name": "Mayank Kumar",
+   "people_id": "3ed19a301a7f811bb767e370e3388f8f",
+   "company": "BorderPlus (People Organisation empty)",
+   "episode": "Mayank Kumar @ BorderPlus",
+   "episode_id": "3ed19a301a7f819d8fe9cfe5a15719af",
+   "episode_status": "Work started",
+   "recording_date": "2026-09-12",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f819a8cd6f8853b2942d0",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f81958471f27677abe2d4",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3ed19a301a7f8118914ce4b1ea3effab",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [],
+   "notes": ""
+  },
+  {
+   "name": "Gautam Rege",
+   "people_id": "3ed19a301a7f8168941cfac3963702eb",
+   "company": "Josh Software",
+   "episode": "Gautam Rege @ Josh Software",
+   "episode_id": "3ed19a301a7f819e85f7d7977cbfca7e",
+   "episode_status": "Work started",
+   "recording_date": "2026-09-16",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f81c3a1b3d2881c7273e6",
+    "matched_by": "name+company (People LinkedIn empty)"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f81d9a683c4cf6b1b1199",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3ed19a301a7f8121b6d9e36e33e5c8e0",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [],
+   "notes": ""
+  },
+  {
+   "name": "Anuj Tandon",
+   "people_id": "3ed19a301a7f81f7a04bc506a61e603e",
+   "company": "BITKRAFT Ventures",
+   "episode": "Anuj Tandon @ BITKRAFT Ventures",
+   "episode_id": "3ed19a301a7f8143876fda7cbbea8b14",
+   "episode_status": "Work started",
+   "recording_date": "2026-09-17",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f81eaa8ece941c9059e83",
+    "matched_by": "name+company (People LinkedIn empty)"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f8120a96cd46a1b3b30e2",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3ed19a301a7f8198b94ad8c8eaab7800",
+    "status": "Parked",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [],
+   "notes": "Engagement Status Parked"
+  },
+  {
+   "name": "Abhinav Parashar",
+   "people_id": "3ed19a301a7f814db24bf17f67d3634b",
+   "company": "Digio",
+   "episode": "Abhinav Parashar @ Digio",
+   "episode_id": "3ed19a301a7f81f28439f1cc896928fd",
+   "episode_status": "Work started",
+   "recording_date": "2026-09-24",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f813e8cdbfbb4a9aca6be",
+    "matched_by": "name+company (People LinkedIn empty)"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f81cf9224e0c862a18671",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3ed19a301a7f812cadd2d8083a0d0eb3",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [],
+   "notes": ""
+  },
+  {
+   "name": "Manjunath Jyothinagara",
+   "people_id": "3ed19a301a7f81fbaf8fd2cb39c07ef5",
+   "company": "KAS Group (People Organisation empty)",
+   "episode": "Manjunath Jyothinagara @ KAS Group",
+   "episode_id": "3ed19a301a7f81578619d36a89cbe859",
+   "episode_status": "Work started",
+   "recording_date": "2026-09-25",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f81979fe3c55c0b183d08",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f8119b082f1b1b5811e30",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3ed19a301a7f81efa370dc2d057dc495",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [],
+   "notes": ""
+  },
+  {
+   "name": "Jayasimha Nuggehalli",
+   "people_id": "3ed19a301a7f818ab8fef0d098b749a4",
+   "company": "Global Food Partners (People Organisation empty)",
+   "episode": "Jayasimha Nuggehalli @ Global Food Partners",
+   "episode_id": "3ed19a301a7f81b4924bf06976f5d7fd",
+   "episode_status": "Published",
+   "recording_date": "2026-09-28",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f81eeab1df17ed7cd2056",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f814c909dfb83a8c33dea",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3ed19a301a7f81d2a52cfd6f226b898b",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [],
+   "notes": "Guest list row has no Episode link or Released date though the episode is Published"
+  },
+  {
+   "name": "Arun Asaithambi",
+   "people_id": "3ed19a301a7f8104aaacea1361bdeaee",
+   "company": "Katamaran Industries (People Organisation empty)",
+   "episode": "Arun Asaithambi @ Katamaran Industries",
+   "episode_id": "3ed19a301a7f819aae68c2028b61e7cc",
+   "episode_status": "Work started",
+   "recording_date": "2026-09-29",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f813c8678c69d83032abb",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f81ffbdcdcf812451fe7d",
+    "membership": "Left",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3ed19a301a7f817293e3fddd1181eb1b",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [],
+   "notes": "Membership Left"
+  },
+  {
+   "name": "Bhanu Pratap Singh Tanwar",
+   "people_id": "3ed19a301a7f819d93fbec9f8a718864",
+   "company": "FRND (People Organisation empty)",
+   "episode": "Bhanu Pratap Singh Tanwar @ FRND",
+   "episode_id": "3ed19a301a7f817fa492fd5fc11f3bdf",
+   "episode_status": "Work started",
+   "recording_date": "2026-09-30",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f81a09d51e7c90dd4bc14",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f8153a64aea07a0880d53",
+    "membership": "Added",
+    "blurb_empty": true,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3ed19a301a7f815e9cc0c7dacf9d6c7c",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [
+    "e"
+   ],
+   "notes": ""
+  },
+  {
+   "name": "Raghu Pareddy",
+   "people_id": "3ed19a301a7f818a800afc7a7f5eb2b3",
+   "company": "Wissen",
+   "episode": "Raghu Pareddy @ Wissen Technology",
+   "episode_id": "3ed19a301a7f81d8a6d6e33bb382e22f",
+   "episode_status": "Work started",
+   "recording_date": "2026-10-01",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f81268458ce10383b6f72",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f811eb7e9c32178585555",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3ed19a301a7f819284e7e17d698e55f2",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [],
+   "notes": ""
+  },
+  {
+   "name": "Ankit Mehra",
+   "people_id": "3ed19a301a7f817a89e3ce3108a0f85b",
+   "company": "Gyandhan",
+   "episode": "Ankit Mehra @ GyanDhan",
+   "episode_id": "3fc19a301a7f8114991ece1e48fe517e",
+   "episode_status": "Scheduled",
+   "recording_date": "2026-10-01",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f81c0acdcc56fc0df12fe",
+    "matched_by": "name+company (People LinkedIn empty)"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f81c8bc97ea0b421e3ef2",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3f019a301a7f817caccbced016c15f9b",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [],
+   "notes": "Episode Status Scheduled though recorded 1 Oct"
+  },
+  {
+   "name": "Ashish Goel",
+   "people_id": "3f019a301a7f810ea71fe555335c5b1c",
+   "company": "Optimist",
+   "episode": "Ashish Goel @ Optimist",
+   "episode_id": "3fc19a301a7f81b2ba32c67fb7c54553",
+   "episode_status": "Scheduled",
+   "recording_date": "2026-10-06",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f814e8144c022b3a4d969",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f814ea7f7d95a79682b8d",
+    "membership": "Added",
+    "blurb_empty": true,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3f019a301a7f8109ac58c79744e84b29",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [
+    "e"
+   ],
+   "notes": ""
+  },
+  {
+   "name": "Anmol Madan",
+   "people_id": "3ee19a301a7f8149b033d787e8447a13",
+   "company": "RadiantGraph (People Organisation empty)",
+   "episode": "Anmol Madan @ RadiantGraph",
+   "episode_id": "3fc19a301a7f81fd98ebdf089a97b584",
+   "episode_status": "Scheduled",
+   "recording_date": "2026-10-06",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f813fbee0fa2de39b1e0a",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f816f8fd5c932a1bc30f7",
+    "membership": "Unresponsive",
+    "blurb_empty": true,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3f019a301a7f8136b0bef362b06d0f8c",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [
+    "e"
+   ],
+   "notes": "Membership Unresponsive, so blurb only due if he is to be added"
+  },
+  {
+   "name": "Saravana Maruthamuthu",
+   "people_id": "3f019a301a7f81568ebeec46fc68c974",
+   "company": "opto-ml / optoML",
+   "episode": "Saravana Maruthamuthu @ opto-ml",
+   "episode_id": "3f519a301a7f813bac9de10c80b88869",
+   "episode_status": "Work started",
+   "recording_date": "2026-10-07",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f8138bceaf5d4d883444f",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f814294aff92ef44b3a2a",
+    "membership": "Added",
+    "blurb_empty": true,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3f019a301a7f814c94b7f12040f713b0",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [
+    "e"
+   ],
+   "notes": ""
+  },
+  {
+   "name": "Srinivas Choudhary",
+   "people_id": "3f019a301a7f81249b80ef653e7dbdb9",
+   "company": "Alligator Automations",
+   "episode": "Srinivas Choudhary @ Alligator Automations",
+   "episode_id": "3f519a301a7f81b8aa90c217e0e1b985",
+   "episode_status": "Work started",
+   "recording_date": "2026-10-07",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f814698f2d3ca0a96274b",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f8107843afd15c2b7811d",
+    "membership": "Added",
+    "blurb_empty": true,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3f019a301a7f8166bed5e8a0c985c035",
+    "status": "Recorded",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [
+    "e"
+   ],
+   "notes": ""
+  },
+  {
+   "name": "Raunak Bhinge",
+   "people_id": "3f019a301a7f81279788c422cf002084",
+   "company": "Infinite Uptime",
+   "episode": "Raunak Bhinge @ Infinite Uptime",
+   "episode_id": "3fc19a301a7f8113937ccc46df02d62e",
+   "episode_status": "Scheduled",
+   "recording_date": "2026-10-09",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f81c79ac1d67196bd2629",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "b2fd890a0cd34a95858092a3fea9d7c8",
+    "membership": "Added",
+    "blurb_empty": true,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3f019a301a7f81cbbfbeeeedf10fc451",
+    "status": "Recorded",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [
+    "e"
+   ],
+   "notes": ""
+  },
+  {
+   "name": "Amit Das",
+   "people_id": "3f019a301a7f8177b98acb85f235dc07",
+   "company": "Think360.ai",
+   "episode": "Amit Das @ Think360.ai",
+   "episode_id": "3fc19a301a7f8193b976df2cfa4459e5",
+   "episode_status": "Scheduled",
+   "recording_date": "2026-10-13",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f81fc9c6bc126f7ca3dda",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3f819a301a7f81638fd2c9d181927e3c",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3f019a301a7f812ea2a8d1e74b88113c",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [],
+   "notes": ""
+  },
+  {
+   "name": "Amit Patni",
+   "people_id": "3ee19a301a7f81ed9b74d7f7c0dd7680",
+   "company": "RAAY Global (from episode title; People Organisation empty; community row says Raay Neo Pharma)",
+   "episode": "Amit Patni @ RAAY Global",
+   "episode_id": "3fc19a301a7f81b68bf5cdfe536bb645",
+   "episode_status": "Scheduled",
+   "recording_date": "2026-10-14",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f81cfb63aedfb4a6dd145",
+    "matched_by": "name + episode-title company (People LinkedIn and Organisation empty)"
+   },
+   "ft_community": {
+    "row_id": "3f919a301a7f81bc9f2fe40e9120ec1b",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3f019a301a7f8137871efc1e8cb64837",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": true
+   },
+   "transcript_present": true,
+   "gaps": [],
+   "notes": "Akshay 25 Oct 'added to whatsapp group' matches Membership Added"
+  },
+  {
+   "name": "Vicky Dodani",
+   "people_id": "3f019a301a7f8125af4bcb5d6ea885ed",
+   "company": "Agrizy",
+   "episode": "Vicky Dodani @ Agrizy",
+   "episode_id": "3fc19a301a7f81cfa0aee39bdbb7e7fb",
+   "episode_status": "Scheduled",
+   "recording_date": "2026-10-14",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fa19a301a7f813fa7e5c7768b0d67a4",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f8103b0adefb01e6a4e3a",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3f019a301a7f81a0b000ff015c89749f",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [],
+   "notes": ""
+  },
+  {
+   "name": "Sankalp Arora",
+   "people_id": "3f019a301a7f8111bd64d8b97e77fc7b",
+   "company": "Gather AI",
+   "episode": "Sankalp Arora @ Gather AI",
+   "episode_id": "3fc19a301a7f812e8eeeda028d0ec883",
+   "episode_status": "Work started",
+   "recording_date": "2026-10-15",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "3fd19a301a7f81aaa37ae5a51fa3473a",
+    "matched_by": "linkedin"
+   },
+   "ft_community": {
+    "row_id": "3fa19a301a7f81da9234cdd9f609a3a9",
+    "membership": "Invited",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3f019a301a7f81578ca5d53b1f398ca4",
+    "status": "Form filled",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": true
+   },
+   "transcript_present": true,
+   "gaps": [
+    "d",
+    "f"
+   ],
+   "notes": "Akshay's call 25 Oct: 'added to whatsapp group, remove from my queue'; Claude note 29 Oct: FT Community add done 25 Oct. Membership still Invited"
+  },
+  {
+   "name": "Rohan Ganapathy",
+   "people_id": "3ee19a301a7f81fa92f3f2bdeda2a7a6",
+   "company": "Bellatrix Aerospace (from episode title; People Organisation empty)",
+   "episode": "Rohan Ganapathy @ Bellatrix Aerospace",
+   "episode_id": "40119a301a7f814e8125fd90e96a09e2",
+   "episode_status": "Scheduled",
+   "recording_date": "2026-10-22",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "40519a301a7f819ab96fce15efe63336",
+    "matched_by": "name + episode-title company (People LinkedIn and Organisation empty)"
+   },
+   "ft_community": {
+    "row_id": "40119a301a7f814ab89ec4de461324af",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3f019a301a7f81b68cdcd52ae33e1e90",
+    "status": "Recorded",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": false,
+   "gaps": [],
+   "notes": "No transcript on Episode"
+  },
+  {
+   "name": "Sreepriya NS",
+   "people_id": "3f019a301a7f81dcb866eab44df19cab",
+   "company": "Entrust Family Office",
+   "episode": "Sreepriya NS and Rajmohan Krishnan @ Entrust Family Office",
+   "episode_id": "40519a301a7f81ef90a9d3a821986fd8",
+   "episode_status": "Scheduled",
+   "recording_date": "2026-10-23",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "40619a301a7f81279c9eea443388ddab",
+    "matched_by": "name (dots/spaces ignored: 'Sreepriya N S') + company; People LinkedIn empty"
+   },
+   "ft_community": {
+    "row_id": "3f319a301a7f81d6a7f6c64cad0df0f6",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3f019a301a7f8178a813c5ef91b8a76f",
+    "status": "Recorded",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": false,
+   "gaps": [],
+   "notes": "People Name is all caps 'SREEPRIYA NS'. No transcript on Episode"
+  },
+  {
+   "name": "Rajmohan Krishnan",
+   "people_id": "40319a301a7f81b09c88c03f94409570",
+   "company": "Entrust Family Office (from episode title; People Organisation empty)",
+   "episode": "Sreepriya NS and Rajmohan Krishnan @ Entrust Family Office",
+   "episode_id": "40519a301a7f81ef90a9d3a821986fd8",
+   "episode_status": "Scheduled",
+   "recording_date": "2026-10-23",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "40619a301a7f812894b2db2c83e1cb7c",
+    "matched_by": "name + episode-title company (People LinkedIn and Organisation empty)"
+   },
+   "ft_community": {
+    "row_id": "40319a301a7f810f933bc374f04bafb7",
+    "membership": "Added",
+    "blurb_empty": false,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "40319a301a7f8167b454fe08697b3214",
+    "status": "Precall requested",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": false,
+   "gaps": [],
+   "notes": "His only FT Engagement is a separate precall row (Precall requested, precall 4 Nov), not the Episode's Engagement, which is Sreepriya's. No transcript on Episode"
+  },
+  {
+   "name": "Saket Saurabh",
+   "people_id": "3ee19a301a7f81ee9a48ea84aecb8ca3",
+   "company": "Nexla (from episode title; People Organisation empty)",
+   "episode": "Saket Saurabh @ Nexla",
+   "episode_id": "40b19a301a7f819f8ef9cfa7cd7b211d",
+   "episode_status": "Recorded",
+   "recording_date": "2026-10-30",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "present",
+    "row_id": "40c19a301a7f813b8dd6dda9677587e4",
+    "matched_by": "name + episode-title company (People LinkedIn and Organisation empty)"
+   },
+   "ft_community": {
+    "row_id": null,
+    "membership": null,
+    "name_only_hits": [
+     {
+      "name": "Saket Saurav",
+      "company": "Refit Global",
+      "row_id": "3f319a301a7f81159c2dfacf0961211a",
+      "verdict": "different person (linked to another People row)"
+     }
+    ]
+   },
+   "engagement": {
+    "id": "3f019a301a7f81f4a8caebe78460100d",
+    "status": "Recorded",
+    "invite_ask_in_next_action": false,
+    "akshay_says_added": false
+   },
+   "transcript_present": true,
+   "gaps": [
+    "b"
+   ],
+   "notes": "No FT Community row linked. Name-only near hit 'Saket Saurav' (Refit Global, row 3f319a301a7f81159c2dfacf0961211a) is linked to a different People row: a different person, not a match"
+  },
+  {
+   "name": "Sameet Gupte",
+   "people_id": "3f019a301a7f81459960ce7b86a33782",
+   "company": "EvoluteIQ",
+   "episode": "Sameet Gupte @ EvoluteIQ",
+   "episode_id": "40d19a301a7f8104b2d4d1322f8323d9",
+   "episode_status": "Recorded",
+   "recording_date": "2026-11-03",
+   "guest_source": "Episode Guests",
+   "guest_list": {
+    "result": "missing",
+    "row_id": null,
+    "matched_by": "no LinkedIn or name hit"
+   },
+   "ft_community": {
+    "row_id": "40d19a301a7f8154a10fda2596cae0a7",
+    "membership": "Invited",
+    "blurb_empty": true,
+    "linked_by": "Person relation"
+   },
+   "engagement": {
+    "id": "3f019a301a7f81b68a3ccac523059a12",
+    "status": "Recorded",
+    "invite_ask_in_next_action": true,
+    "akshay_says_added": false
+   },
+   "transcript_present": false,
+   "gaps": [
+    "a"
+   ],
+   "notes": "Next action has 'WhatsApp addition pending: add Sameet to the FT Community' (Akshay). Blurb empty but no transcript yet, so not (e)"
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+# R-runrec offline scenarios (placeholders only). Clock: Wed 28 Oct 2026, JST. Session id env var set to "cse_TEST" unless stated.
+
+R1 inbox, 13:02 run. Previous inbox run record: "Run inbox 2026-10-28 12:02 JST: Failed" (Gmail exhausted); before it "Run inbox 2026-10-28 11:02 JST: Completed". Newest Gmail Activity: a Zoya send at 12:40. First Gmail search fails with "Resource has been exhausted", the retry after 30 s fails, the retry after 60 s succeeds. Expected: record created Started before any other Notion write; window start = 10:32 JST as after:<unix seconds>; run continues; ends Completed if everything else ran (the error is named in the body).
+R2 inbox, same, but all three Gmail attempts fail. Expected: no more Gmail calls; steps needing no Gmail (Your call rows not needing Gmail, STEP 7b if no Gmail) may run; ends Failed naming the error; never Completed.
+R3 inbox, first run after deploy: no inbox run record exists. Newest Gmail Activity 27 Oct 23:55 JST. Expected: window after:2026/10/26 (one day before).
+R4 calendar 13:35 run: Google Calendar list_events returns 504 once mid-run; the run carries on with the rest. Expected: Partial or Failed (work left undone), never Completed; error text in body.
+R5 daily sweep, 13:10 (part A). Previous part-A record: none with the new Summary; an Activity Source ID "sweep:A:2026-10-27" exists whose report says STEP 3a skipped. Expected: reads that old record, runs 3a first; writes ONE Activity: Summary "Run sweep A 2026-10-28 13:10 JST: Started" then "...: Completed|Partial", Source ID "run:sweep:cse_TEST"; no "sweep:A:2026-10-28" Activity.
+R6 evals 09:25: STEP 1 finds nothing, 2b nothing, 2c nothing. Expected: "Run evals ... : No-op".
+R7 dossiers 06:50: the Artifact tool is missing. Expected: stops as its TOOLS rule says; still writes its record as Failed (Notion works).
+R8 host boards: CLAUDE_CODE_REMOTE_SESSION_ID empty and the synthetic echo fails. Expected: no record; report says "run record skipped: no id"; the board work still runs.
+R9 whatsapp: the create call for the record returns an unclear response (timeout). Expected: query Source ID "run:whatsapp:cse_TEST" first; reuse the row if found, else create once; never two records.
+R10 whatsapp: Blueticks says not_connected. Expected: stops as STEP rules say; record Failed.
+R11 any routine: the record's last write fails twice. Expected: no business action repeated; the failure is said in the report.
+Also check, for every one of the seven prompts: (a) the only changes against its input are the ones listed in build.py; (b) nothing in the new text contradicts an existing rule (e.g. "nothing else written anywhere", the sweep's STEP 7 first line, Zoya's run records, "No partial work"); (c) the record never touches Last activity, Waiting on or any date on a row.

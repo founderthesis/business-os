@@ -1,0 +1,40 @@
+start: free: created for test
+PASS T1 round 1: one winner of 5 concurrent acquires
+PASS T1 round 1: winner releases
+PASS T1 round 2: one winner of 5 concurrent acquires
+PASS T1 round 2: winner releases
+PASS T1 round 3: one winner of 5 concurrent acquires
+PASS T1 round 3: winner releases
+PASS T1 round 4: one winner of 5 concurrent acquires
+PASS T1 round 4: winner releases
+PASS T1 round 5: one winner of 5 concurrent acquires
+PASS T1 round 5: winner releases
+PASS T1 round 6: one winner of 5 concurrent acquires
+PASS T1 round 6: winner releases
+PASS T1 round 7: one winner of 5 concurrent acquires
+PASS T1 round 7: winner releases
+PASS T1 round 8: one winner of 5 concurrent acquires
+PASS T1 round 8: winner releases
+PASS T1 round 9: one winner of 5 concurrent acquires
+PASS T1 round 9: winner releases
+PASS T1 round 10: one winner of 5 concurrent acquires
+PASS T1 round 10: winner releases
+PASS T2: a manual start skips while held
+PASS T2: a retry skips while held
+PASS T2: holder releases
+PASS T3: run 1 after the crash skips (no expiry, no takeover)
+PASS T3: run 2 after the crash skips (no expiry, no takeover)
+PASS T3: run 3 after the crash skips (no expiry, no takeover)
+PASS T3: the lock still shows held by the crashed run
+PASS T4: release by a non-holder is rejected
+PASS T4: the lock is still held after the rejected release
+PASS T5: guarded release by the CTO with the held sha
+PASS T5: the next run acquires after recovery
+PASS T6: the resumed old holder's release is rejected
+PASS T6: the current holder releases normally
+PASS T7: release racing acquire leaves the lock free or held by one run (free: released by T7-a 2026-10-26T15:33:35Z)
+PASS T8: a push on a stale free read is rejected after another run acquired
+PASS T8: the winner still holds
+PASS T8: winner releases
+end: free: released by T8-winner 2026-10-26T15:33:36Z
+passed 37, failed 0

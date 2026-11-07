@@ -1,0 +1,40 @@
+{
+  "hash_check": {"zoya-one.txt": "9dcc16aca3660687 ok", "zoya-slow-work.txt": "dedea9f8eb7af561 ok", "scenarios.json": "ba74c4ab1b372120 ok"},
+  "deciding_lines": {
+    "threading_readback": "read the draft back (that it is a reply on that thread, and that To and Cc together hold everyone on the latest inbound, its From, To and Cc, less your own address, bounced addresses, Akshay's other addresses, Mamatha, on un#, Sri, and anyone the mail itself says has handed over to a new contact (the new contact is on it), plus Akshay), then send it; any edit is read back again",
+    "quote_what_you_answer": "QUOTE WHAT YOU ANSWER: every reply carries, below the sign-off, the latest inbound message it answers as \"On <date>, <name> wrote:\" plus that message's own text, never the older chain, so Akshay in Cc sees what was asked (the quote is theirs: VOICE's and the link rules cover your text, not it). MCP Emails puts its quote of that message in the plain body itself: never paste one there; if html_body has none at the read-back, add it there as <p>On <date>, <name> wrote:</p><blockquote>its text</blockquote>, then read back again. In-Reply-To and References stay from that message.",
+    "guest_facing_to": "Guest-facing mail (day-before note, prep note, recording link, reschedule, thank-you) reaches the guest's side directly: To the guest ... PR goes in Cc.",
+    "invites": "Clear and agreed in writing (outside quiet hours unless Akshay named it): create the invite, then confirm it on the thread in the same run"
+  },
+  "R3": {
+    "canon": {
+      "sends": 1,
+      "to": ["Sreya"],
+      "cc": ["Akshay", "Mala", "Rajmohan", "Santhosh"],
+      "quotes_in_plain": 1,
+      "quotes_in_html": 1,
+      "html_quote_by": "zoya",
+      "readback_passes": true,
+      "in_reply_to": "HYP-R3-IN@hypopr.example"
+    },
+    "verdict": "PASS",
+    "findings": "STEP 1: inbound HYP-R3-IN has no Activity (logged_by_inbox false) so log it (Email in, Source ID msgid:HYP-R3-IN@hypopr.example). Ask is a routine booking agreed in writing; calendar free, 11:38 JST outside quiet hours, so INVITES: create the recording invite (Thu 29 Oct 15:00 IST = 18:30 JST, zoya-key in description) and confirm on the thread this run: one send, a draft action reply on HYP-R3-IN in Zoya's inbox, reply_all false. To Sreya (guest-facing recording mail goes To the guest; she is also the last sender), Cc Akshay, Rajmohan, Santhosh, Mala; Mamatha dropped (read-back exclusion and 'never Mamatha'). Read-back set = From Sreya + To (Zoya, removed as own address) + Cc (Akshay, Rajmohan, Santhosh, Mala; Mamatha removed) + Akshay = {Sreya, Akshay, Rajmohan, Santhosh, Mala} = To+Cc: passes. Plain quote (server-added, Zoya pastes none): 'On <date>, Sreya Pal wrote:' then '> Thursday 29 Oct 3pm IST works for the recording, can you send the invite?'. html quote (Zoya adds at read-back since server adds none, then reads back again): <p>On <date>, Sreya Pal wrote:</p><blockquote>Thursday 29 Oct 3pm IST works for the recording, can you send the invite?</blockquote>. In-Reply-To and References = <HYP-R3-IN@hypopr.example>. Then log 'Zoya created: invite' and 'Zoya sent: reply to Sreya: recording invite confirmed', set Next date etc.",
+    "notes": "Ambiguities: (1) '<date>' format and zone are unspecified (e.g. 'Tue, 27 Oct 2026 at 10:12' JST as the header carries +09:00); server's plain-quote date format may differ from Zoya's html one. (2) 'if html_body has none at the read-back, add it' implies the first draft goes without it and is edited; equivalent outcome if added up front, still exactly one. (3) MCP Emails docs say 'never paste the signature or quoted original; the server adds them', which is true only for the plain body; the prompt's explicit html rule governs and does not conflict with the plain-body ban. (4) Invite addresses come from the real thread headers (scenario gives none; not invented here)."
+  },
+  "R3H": {
+    "canon": {
+      "sends": 1,
+      "to": ["Sreya"],
+      "cc": ["Akshay", "Mala", "Santhosh"],
+      "quotes_in_plain": 1,
+      "quotes_in_html": 1,
+      "html_quote_by": "zoya",
+      "readback_passes": true,
+      "in_reply_to": "HYP-R3H-IN@hypopr.example"
+    },
+    "verdict": "PASS",
+    "findings": "Same flow: log HYP-R3H-IN, create the invite, one confirming reply as draft action reply on HYP-R3H-IN. Rajmohan's own mail says 'Santhosh is taking over from me for Sreya' and Santhosh is on it, so he falls under 'anyone the mail itself says has handed over to a new contact (the new contact is on it)'. Read-back set = From Rajmohan (excluded, handover) + To Zoya (own) + Cc Akshay, Santhosh, Mala, Sreya + Akshay = {Sreya, Akshay, Santhosh, Mala} = To+Cc: passes with Rajmohan off. To Sreya (guest-facing; MCP's default To would be Rajmohan as last sender, overridden by explicit To), Cc Akshay, Santhosh, Mala. Mamatha not on this inbound and never added. Plain quote (server): 'On <date>, Rajmohan wrote:' + '> I'm moving on from the agency this week, Santhosh is taking over from me for Sreya. Thursday 29 Oct 3pm IST works for the recording, can you send the invite?'. html quote (Zoya): <p>On <date>, Rajmohan wrote:</p><blockquote>I'm moving on from the agency this week, Santhosh is taking over from me for Sreya. Thursday 29 Oct 3pm IST works for the recording, can you send the invite?</blockquote>. Quoting Rajmohan's text in a mail he is no longer on is correct per the rule (the quote is the answered message). In-Reply-To/References = <HYP-R3H-IN@hypopr.example>.",
+    "notes": "Ambiguity: the read-back only says the handed-over person need not be held; it does not by itself order him dropped (keeping Rajmohan would also pass the read-back). The explicit 'a PR who left is replaced by whoever took over' sits only in the ad@thepodium.in loop-in path. A literal run reaches the intended To/Cc via the exclusion plus 'To and Cc set explicitly from the thread', but a one-clause 'drop them from To and Cc' would remove the doubt. Row hygiene (Via Rajmohan -> Santhosh) is not specified by the prompt."
+  },
+  "slow_file_check": "zoya-slow-work.txt's SENDING paragraph is the prompt's SENDING minus the whole QUOTE WHAT YOU ANSWER block (4 sentences) and with 'STEP 0c' for the bounce scan. Nothing in it contradicts quoting for these 11:38 FAST replies (it is not read at 11:38, and it states no anti-quote rule). Latent gap: its header says it repeats the shared rules 'in full' and 'for SLOW work they are the ones to follow', and the prompt says it wins on SLOW work, so SLOW-work replies that answer an inbound (e.g. decision 404 emoji reply to a payment notice) would go without the html quote. Recommend adding the identical QUOTE WHAT YOU ANSWER sentences to the SLOW file's SENDING."
+}
