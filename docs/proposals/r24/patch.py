@@ -56,6 +56,8 @@ EDITS = {
  ("- A Cold outreach Deal still at Stage New is the target list (decision 89): leave Waiting on blank.\n", ""),
  ("On the Engagement or Deal (or, if there is none,", "On the Engagement (or, if there is none,"),
  (" Deals created and moved.", ""),
+ # Decision 523: routine 5 replaced 386's five chasers.
+ ("(decision 386: Zoya's routine 5 ends it)", "(decision 523: Zoya's routine 5 ends it)"),
  # r24 item 11 (CTO, 8 Nov: three FT guests got no form chaser after Akshay sent the thank-you himself).
  ("An item his mail does not settle stays.\n\nSTEP 3. ENGAGEMENTS",
   "An item his mail does not settle stays.\nc. His thank-you (routine 5): a mail of his carrying podm.in/thank-you, or asking for the guest form, to a Founder Thesis guest whose row is at Recorded with no guest form linked and no \"seq-5\" segment: add \"Zoya [followup seq-5-1 <D>T00:00:00+09:00]: form chaser 1 on <D Mon>\", where D is his mail's date plus routine 5's first chaser gap as the Cadences page gives it (3ff19a301a7f8143aa95cd89bd6519ec, fetched once in a run that needs it; never a number from memory; unreadable: write no segment and report it), in place of any \"Waiting on <guest>: ...\" segment about the thank-you or the form; Zoya in Waiting on; Claude note line \"YYYY-MM-DD: form chasers start <D Mon> (thank-you sent by Akshay <D Mon>)\". Routine 5 and Cadences do the rest.\n\nSTEP 3. ENGAGEMENTS"),
