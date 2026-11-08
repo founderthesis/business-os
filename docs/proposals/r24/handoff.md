@@ -199,6 +199,17 @@ These were Saket Saurabh, Srinivas Choudhary and Sameet Gupte. The CTO already f
 - **Saket, Srinivas and Sameet** keep the seq-5-1 for 9 Nov that the CTO set. That's Diwali week, so per Cadences nothing goes before 16 Nov.
 - **The pin moves to 7358ad9** (SLOW file 92,791 / b5b7da4f).
 
+**Cleanup's item 11 should-fixes (verdict 1d9a212):**
+- **S1, Next date:**
+  - Inbox actions 2b c now sets Next date to the earliest open segment date. Its NEXT DATE list has a fifth case, "A routine 5 start".
+  - The sweep's HARD rule allows a second Next date exception, for the Form backstop only.
+- **S2, no catch-up bursts:**
+  - Routine 5 dates each mail from the day the previous one actually went (its Email out Activity), never from its due date, and sends at most one routine 5 mail per row per run.
+  - In 2b c, a first-chaser date that's already past moves to the next working day.
+  - The pin moves to **cd8bf35** (SLOW file 92,960 / bbc5adae). The hourly is unchanged at 62,978.
+
+That replaces the earlier line below: inbox actions and the sweep now do set Next date, for this case only.
+
 So inbox actions and the sweep only write the segment, never Next date, and SLOW finds it on the day it's due.
 
 ## Builds
@@ -209,26 +220,26 @@ Each was built twice, byte-identical. The Zoya builds were also rebuilt from a f
 |---|---|---|---|
 | Calendar sync | r22 0e755649 | r24/calendar.txt | 62,916 / c613af00ddf02c8c |
 | Inbox capture | r23 c31d1295 | r24/capture.txt | 50,431 / f64eb54edabe7326 |
-| Inbox actions | r22 c17734c2 | r24/actions.txt | 47,952 / 980fe680470dfd64 |
+| Inbox actions | r22 c17734c2 | r24/actions.txt | 48,143 / 2ff16c2f28ed6d38 |
 | WhatsApp | r22 eb41ecdd | r24/whatsapp.txt | 32,813 / bec8c1e1acb97e08 |
-| Daily sweep | r22 51412bd9 | r24/sweep.txt | 50,314 / afb7a2b426779bc6 |
+| Daily sweep | r22 51412bd9 | r24/sweep.txt | 50,499 / 68588845fe2e0250 |
 | Host boards | live 5819ccf7 (r24/live/host-boards.txt) | r24/host-boards.txt | 8,733 / 7f5c87ab1b7883c4 |
 | Host dossiers and prep notes | live 28a2d9b7 (b-round-5nov/dossiers.txt) | r24/dossiers.txt | 6,503 / 67e07a00a19e3c60 |
 | Zoya hourly | r23 8b0165ba | r24/zoya/zoya-one.txt | 62,978 / 459d1dd19f1b4d8a |
-| Zoya SLOW task | r23 988433fa | r24/zoya/zoya-slow.txt (pin 7358ad9) | 15,949 / 3ff0271b93ff5e8d |
-| Zoya SLOW file | 8faf930 (d8ffcafe) | routines/zoya/release/zoya-slow-work.txt at **7358ad9** | 92,791 / b5b7da4fe144640a |
+| Zoya SLOW task | r23 988433fa | r24/zoya/zoya-slow.txt (pin cd8bf35) | 15,949 / 5c8b6ff4de3011b2 |
+| Zoya SLOW file | 8faf930 (d8ffcafe) | routines/zoya/release/zoya-slow-work.txt at **cd8bf35** | 92,960 / bbc5adaeb0837fe9 |
 | Zoya episodes (not live) | r23 cd422006 | r24/zoya/zoya-episodes.txt | 49,964 / 1d23893375fe9dd2 |
 
 The earlier r24 hashes (capture 179034c5, hourly 6a8ae791, SLOW task 93b32d68) are superseded by these.
 
-**The pin moves:** decision 517 changes the SLOW file, so the proposed pin is 7358ad95d163a0855654be74fe77669af4bd0420. The ref isn't moved; the CTO moves refs/heads/zoya-slow-pin at deploy.
+**The pin moves:** decision 517 changes the SLOW file, so the proposed pin is cd8bf3594c194a672fe36359d9d1136f95e2e25d. The ref isn't moved; the CTO moves refs/heads/zoya-slow-pin at deploy.
 
 The SLOW file loses the stale PaaS citation, the Samiksha story and the SENDING incident notes, the same cuts as the hourly. The hourly also loses SENDING's incident notes and examples: the heredoc emoji note, the Commix example, the 4 Nov compose note, the attachments rationale and the team-note examples.
 
 **How to build:**
 - Non-Zoya: `python3 docs/proposals/r24/patch.py <cal|sweep|cap|act|wa|hb|dos> <live input> <out>`, with these inputs: cal r22/calendar.txt, sweep r22/sweep.txt, cap r23/capture.txt, act r22/actions.txt, wa r22/whatsapp.txt, hb r24/live/host-boards.txt, dos b-round-5nov/dossiers.txt.
-- Zoya: apply `r24/zoya/build_one.patch` at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 7358ad95d163a0855654be74fe77669af4bd0420`.
+- Zoya: apply `r24/zoya/build_one.patch` at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin cd8bf3594c194a672fe36359d9d1136f95e2e25d`.
 
 No replay was run on r24.
 
-Deploy order: calendar, capture, inbox actions (with the section6-522.md paste, which supersedes section6-519.md), WhatsApp, then the Zoya pin (7358ad9), the hourly and the SLOW task, then the sweep, host boards and host dossiers. Akshay uploads skills-521, and then the CTO renames the property (stage 2). Read each back byte for byte.
+Deploy order: calendar, capture, inbox actions (with the section6-522.md paste, which supersedes section6-519.md), WhatsApp, then the Zoya pin (cd8bf35), the hourly and the SLOW task, then the sweep, host boards and host dossiers. Akshay uploads skills-521, and then the CTO renames the property (stage 2). Read each back byte for byte.
