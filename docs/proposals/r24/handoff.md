@@ -165,6 +165,42 @@ Akshay, 7 Nov 23:34 JST (intake 41119a301a7f81d29ae6e81035ab952b). The draft is 
 
 The non-Zoya builds that changed are capture, WhatsApp and the sweep. Calendar, inbox actions, host boards and dossiers are as Cleanup accepted them, apart from inbox actions' decision 522 line (item 9).
 
+## 11. The missed thank-you form chasers (CTO, 8 Nov 11:50 JST)
+
+These were Saket Saurabh, Srinivas Choudhary and Sameet Gupte. The CTO already fixed their rows by hand (seq-5-1 on 9 Nov). These edits stop it happening again. There's no new sender and no new wording: routine 5 and Cadences are unchanged.
+
+1. **Inbox actions STEP 2b c (fix a):** Akshay's own mail carrying podm.in/thank-you, or asking for the guest form, to an FT guest at Recorded with no form and no "seq-5" segment, now writes:
+   - "Zoya [followup seq-5-1 <his mail + routine 5's first gap from the Cadences page>T00:00:00+09:00]: form chaser 1 on <D Mon>", in place of the "Waiting on <guest>: ..." thank-you or form segment;
+   - Zoya in Waiting on, and a Claude note line.
+2. **SLOW STEP 2 (in place of fix b):** STEP 2 now selects every in-scope row with a keyed Zoya segment dated today or earlier, whatever its Next date says.
+   - **The problem:** SLOW picked rows only by Next date, so a later date on the row (a community invite, a release recheck) hid a due chaser. That was cause 2.
+   - **Why this instead of (b):** Zoya's own writes already set Next date to the earliest segment (SLOW file, ACTIONS). Making every routine do the same would cut across the Next date ownership in inbox actions ("exactly four cases") and the sweep ("you never change Next date", decision 81). Selecting on the due segment fixes the cause in one place.
+   - This moves the pin to **83b49a4** (SLOW file 91,217 / abf90f51). The hourly is unchanged.
+3. **Sweep STEP 4 (fix c, the backstop):** the old "Form" flag becomes the routine 5 start.
+   - An FT row at Recorded with a thank-you Activity, no Guest form and no seq-5 segment gets seq-5-1 for the next working day, with Zoya in Waiting on, listed in the report by name.
+   - Other shows keep the old "send the form reminder" flag.
+
+**Timing is read, not written (CTO, 8 Nov 11:50 JST):** Akshay is approving a new guest form sequence (weeks 1 to 4, then every other week, with a fill-it-for-you offer from chaser 3). So 2b c takes the first chaser's offset from the Cadences page (3ff19a301a7f8143aa95cd89bd6519ec), fetched in the run that needs it. No number is in the prompt; if the page can't be read, no segment is written and it's reported. The sweep backstop's "next working day" doesn't depend on the sequence. The new sequence and the fill-on-behalf step come in a later round, once he signs off.
+
+**Decision 523: routine 5 reworked (CTO, 8 Nov 12:05 JST; in force in the ledger; it replaces decision 386).** The wording lives on the routine 5 page and the timing on Cadences, and both are read at RULES LOAD, so none of it is copied into a prompt.
+
+- **SLOW file, routine 5 bullet (rewritten):**
+  - **Timing:** mail n goes on its Cadences day (7, 14, 21, 28, then every 14 days). There is no last mail: the seq-5 counter has no end, and mail 6's wording repeats from 6 on. The "after five chasers, ask Akshay" rule is gone; no prompt still names 386.
+  - **Which version:** the team version, To the outside marketing, comms or PR person on the thread (Via, Stakeholders, To or Cc), with the guest in Cc. Otherwise the founder version, To the guest. Akshay is in Cc either way.
+  - **When it stops:** at Form filled, or once a photo is filed. Two weeks before the Episode's Actual or Planned release with neither, it sends no more chasers and writes one "Ask Akshay: no info and assets from <guest> after <n> chasers, release <D Mon>. Hold the release or chase another way?". With no release date, it keeps chasing.
+- **FORM PHOTO (new SLOW item):**
+  - **Which mail:** an Email in from their side on an open seq-5 row, newer than the last routine 5 mail. Its key is "formphoto:<Message-ID>".
+  - **The check:** an image attachment, decoded and checked to be at least 1000 px wide in a Bash python step.
+  - **Wide enough:** Zoya creates a Guest forms row: name, designation, company and both LinkedIns from People, the Engagement and public pages; Filled by "Zoya"; the Photo uploaded; Engagement linked; Merge status New, so the inbox merge does the rest. She then removes the seq-5 segment and writes a note line.
+  - **Too small or unclear:** one short reply asking for a hi-res photo.
+  - **Never:** a LinkedIn or web photo, or a mail saying the form was filled in.
+- **Zoya hourly:** an image from their side on an open seq-5 row is SLOW's, so the hourly doesn't reply to it. Three citation cuts pay for the line. The hourly is 62,978 bytes, under 63,000.
+- **Inbox actions:** the routine 5 citation now reads 523. Its 2b c already takes the first chaser's offset from Cadences, which now gives 7 days.
+- **Saket, Srinivas and Sameet** keep the seq-5-1 for 9 Nov that the CTO set. That's Diwali week, so per Cadences nothing goes before 16 Nov.
+- **The pin moves to 7358ad9** (SLOW file 92,791 / b5b7da4f).
+
+So inbox actions and the sweep only write the segment, never Next date, and SLOW finds it on the day it's due.
+
 ## Builds
 
 Each was built twice, byte-identical. The Zoya builds were also rebuilt from a fresh worktree at f70901f with build_one.patch applied. No new em dash.
@@ -173,26 +209,26 @@ Each was built twice, byte-identical. The Zoya builds were also rebuilt from a f
 |---|---|---|---|
 | Calendar sync | r22 0e755649 | r24/calendar.txt | 62,916 / c613af00ddf02c8c |
 | Inbox capture | r23 c31d1295 | r24/capture.txt | 50,431 / f64eb54edabe7326 |
-| Inbox actions | r22 c17734c2 | r24/actions.txt | 47,204 / 829a8cc8fb21251f |
+| Inbox actions | r22 c17734c2 | r24/actions.txt | 47,952 / 980fe680470dfd64 |
 | WhatsApp | r22 eb41ecdd | r24/whatsapp.txt | 32,813 / bec8c1e1acb97e08 |
-| Daily sweep | r22 51412bd9 | r24/sweep.txt | 50,017 / 9eca3bd65011a45c |
+| Daily sweep | r22 51412bd9 | r24/sweep.txt | 50,314 / afb7a2b426779bc6 |
 | Host boards | live 5819ccf7 (r24/live/host-boards.txt) | r24/host-boards.txt | 8,733 / 7f5c87ab1b7883c4 |
 | Host dossiers and prep notes | live 28a2d9b7 (b-round-5nov/dossiers.txt) | r24/dossiers.txt | 6,503 / 67e07a00a19e3c60 |
-| Zoya hourly | r23 8b0165ba | r24/zoya/zoya-one.txt | 62,974 / e959b0476d892c12 |
-| Zoya SLOW task | r23 988433fa | r24/zoya/zoya-slow.txt (pin 9a79960) | 15,949 / 2efa79c08ac2bd41 |
-| Zoya SLOW file | 8faf930 (d8ffcafe) | routines/zoya/release/zoya-slow-work.txt at **9a79960** | 91,039 / d953cd1c3206a951 |
+| Zoya hourly | r23 8b0165ba | r24/zoya/zoya-one.txt | 62,978 / 459d1dd19f1b4d8a |
+| Zoya SLOW task | r23 988433fa | r24/zoya/zoya-slow.txt (pin 7358ad9) | 15,949 / 3ff0271b93ff5e8d |
+| Zoya SLOW file | 8faf930 (d8ffcafe) | routines/zoya/release/zoya-slow-work.txt at **7358ad9** | 92,791 / b5b7da4fe144640a |
 | Zoya episodes (not live) | r23 cd422006 | r24/zoya/zoya-episodes.txt | 49,964 / 1d23893375fe9dd2 |
 
 The earlier r24 hashes (capture 179034c5, hourly 6a8ae791, SLOW task 93b32d68) are superseded by these.
 
-**The pin moves:** decision 517 changes the SLOW file, so the proposed pin is 9a799603826c768b72dd71e09d65003317093e01. The ref isn't moved; the CTO moves refs/heads/zoya-slow-pin at deploy.
+**The pin moves:** decision 517 changes the SLOW file, so the proposed pin is 7358ad95d163a0855654be74fe77669af4bd0420. The ref isn't moved; the CTO moves refs/heads/zoya-slow-pin at deploy.
 
 The SLOW file loses the stale PaaS citation, the Samiksha story and the SENDING incident notes, the same cuts as the hourly. The hourly also loses SENDING's incident notes and examples: the heredoc emoji note, the Commix example, the 4 Nov compose note, the attachments rationale and the team-note examples.
 
 **How to build:**
 - Non-Zoya: `python3 docs/proposals/r24/patch.py <cal|sweep|cap|act|wa|hb|dos> <live input> <out>`, with these inputs: cal r22/calendar.txt, sweep r22/sweep.txt, cap r23/capture.txt, act r22/actions.txt, wa r22/whatsapp.txt, hb r24/live/host-boards.txt, dos b-round-5nov/dossiers.txt.
-- Zoya: apply `r24/zoya/build_one.patch` at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 9a799603826c768b72dd71e09d65003317093e01`.
+- Zoya: apply `r24/zoya/build_one.patch` at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 7358ad95d163a0855654be74fe77669af4bd0420`.
 
 No replay was run on r24.
 
-Deploy order: calendar, capture, inbox actions (with the section6-522.md paste, which supersedes section6-519.md), WhatsApp, then the Zoya pin (9a79960), the hourly and the SLOW task, then the sweep, host boards and host dossiers. Akshay uploads skills-521, and then the CTO renames the property (stage 2). Read each back byte for byte.
+Deploy order: calendar, capture, inbox actions (with the section6-522.md paste, which supersedes section6-519.md), WhatsApp, then the Zoya pin (7358ad9), the hourly and the SLOW task, then the sweep, host boards and host dossiers. Akshay uploads skills-521, and then the CTO renames the property (stage 2). Read each back byte for byte.
