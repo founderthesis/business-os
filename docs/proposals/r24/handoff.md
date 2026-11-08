@@ -170,7 +170,7 @@ The non-Zoya builds that changed are capture, WhatsApp and the sweep. Calendar, 
 These were Saket Saurabh, Srinivas Choudhary and Sameet Gupte. The CTO already fixed their rows by hand (seq-5-1 on 9 Nov). These edits stop it happening again. There's no new sender and no new wording: routine 5 and Cadences are unchanged.
 
 1. **Inbox actions STEP 2b c (fix a):** Akshay's own mail carrying podm.in/thank-you, or asking for the guest form, to an FT guest at Recorded with no form and no "seq-5" segment, now writes:
-   - "Zoya [followup seq-5-1 <his mail + 5 days>T00:00:00+09:00]: form chaser 1 on <D Mon>", in place of the "Waiting on <guest>: ..." thank-you or form segment;
+   - "Zoya [followup seq-5-1 <his mail + routine 5's first gap from the Cadences page>T00:00:00+09:00]: form chaser 1 on <D Mon>", in place of the "Waiting on <guest>: ..." thank-you or form segment;
    - Zoya in Waiting on, and a Claude note line.
 2. **SLOW STEP 2 (in place of fix b):** STEP 2 now selects every in-scope row with a keyed Zoya segment dated today or earlier, whatever its Next date says.
    - **The problem:** SLOW picked rows only by Next date, so a later date on the row (a community invite, a release recheck) hid a due chaser. That was cause 2.
@@ -179,6 +179,8 @@ These were Saket Saurabh, Srinivas Choudhary and Sameet Gupte. The CTO already f
 3. **Sweep STEP 4 (fix c, the backstop):** the old "Form" flag becomes the routine 5 start.
    - An FT row at Recorded with a thank-you Activity, no Guest form and no seq-5 segment gets seq-5-1 for the next working day, with Zoya in Waiting on, listed in the report by name.
    - Other shows keep the old "send the form reminder" flag.
+
+**Timing is read, not written (CTO, 8 Nov 11:50 JST):** Akshay is approving a new guest form sequence (weeks 1 to 4, then every other week, with a fill-it-for-you offer from chaser 3). So 2b c takes the first chaser's offset from the Cadences page (3ff19a301a7f8143aa95cd89bd6519ec), fetched in the run that needs it. No number is in the prompt; if the page can't be read, no segment is written and it's reported. The sweep backstop's "next working day" doesn't depend on the sequence. The new sequence and the fill-on-behalf step come in a later round, once he signs off.
 
 So inbox actions and the sweep only write the segment, never Next date, and SLOW finds it on the day it's due.
 
@@ -190,7 +192,7 @@ Each was built twice, byte-identical. The Zoya builds were also rebuilt from a f
 |---|---|---|---|
 | Calendar sync | r22 0e755649 | r24/calendar.txt | 62,916 / c613af00ddf02c8c |
 | Inbox capture | r23 c31d1295 | r24/capture.txt | 50,431 / f64eb54edabe7326 |
-| Inbox actions | r22 c17734c2 | r24/actions.txt | 47,788 / d973af199fb56066 |
+| Inbox actions | r22 c17734c2 | r24/actions.txt | 47,952 / 96f0592910bf9719 |
 | WhatsApp | r22 eb41ecdd | r24/whatsapp.txt | 32,813 / bec8c1e1acb97e08 |
 | Daily sweep | r22 51412bd9 | r24/sweep.txt | 50,314 / afb7a2b426779bc6 |
 | Host boards | live 5819ccf7 (r24/live/host-boards.txt) | r24/host-boards.txt | 8,733 / 7f5c87ab1b7883c4 |
