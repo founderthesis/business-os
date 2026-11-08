@@ -56,11 +56,14 @@ EDITS = {
  ("- A Cold outreach Deal still at Stage New is the target list (decision 89): leave Waiting on blank.\n", ""),
  ("On the Engagement or Deal (or, if there is none,", "On the Engagement (or, if there is none,"),
  (" Deals created and moved.", ""),
+ # Cleanup item 11 S1: a routine 5 start sets Next date to the earliest open segment.
+ ("You set it in exactly four cases and never otherwise:", "You set it in exactly five cases and never otherwise:"),
+ ("- A scheduling request (decision 443):", "- A routine 5 start (STEP 2b c): Next date = the earliest open segment date on the row.\n- A scheduling request (decision 443):"),
  # Decision 523: routine 5 replaced 386's five chasers.
  ("(decision 386: Zoya's routine 5 ends it)", "(decision 523: Zoya's routine 5 ends it)"),
  # r24 item 11 (CTO, 8 Nov: three FT guests got no form chaser after Akshay sent the thank-you himself).
  ("An item his mail does not settle stays.\n\nSTEP 3. ENGAGEMENTS",
-  "An item his mail does not settle stays.\nc. His thank-you (routine 5): a mail of his carrying podm.in/thank-you, or asking for the guest form, to a Founder Thesis guest whose row is at Recorded with no guest form linked and no \"seq-5\" segment: add \"Zoya [followup seq-5-1 <D>T00:00:00+09:00]: form chaser 1 on <D Mon>\", where D is his mail's date plus routine 5's first chaser gap as the Cadences page gives it (3ff19a301a7f8143aa95cd89bd6519ec, fetched once in a run that needs it; never a number from memory; unreadable: write no segment and report it), in place of any \"Waiting on <guest>: ...\" segment about the thank-you or the form; Zoya in Waiting on; Claude note line \"YYYY-MM-DD: form chasers start <D Mon> (thank-you sent by Akshay <D Mon>)\". Routine 5 and Cadences do the rest.\n\nSTEP 3. ENGAGEMENTS"),
+  "An item his mail does not settle stays.\nc. His thank-you (routine 5): a mail of his carrying podm.in/thank-you, or asking for the guest form, to a Founder Thesis guest whose row is at Recorded with no guest form linked and no \"seq-5\" segment: add \"Zoya [followup seq-5-1 <D>T00:00:00+09:00]: form chaser 1 on <D Mon>\", where D is his mail's date plus routine 5's first chaser gap as the Cadences page gives it (3ff19a301a7f8143aa95cd89bd6519ec, fetched once in a run that needs it; never a number from memory; unreadable: write no segment and report it; a D already past becomes the next working day), in place of any \"Waiting on <guest>: ...\" segment about the thank-you or the form; Zoya in Waiting on; Next date = the earliest open segment date (NEXT DATE); Claude note line \"YYYY-MM-DD: form chasers start <D Mon> (thank-you sent by Akshay <D Mon>)\". Routine 5 and Cadences do the rest.\n\nSTEP 3. ENGAGEMENTS"),
  # Decision 522 (Akshay, 7 Nov): the chase draft reads the person's chat first (section 6 has the rules).
  ("A Your call starting \"whatsapp chase:\" follows section 6's WHATSAPP CHASE (decision 486):",
   "A Your call starting \"whatsapp chase:\" follows section 6's WHATSAPP CHASE (decisions 486, 522: before drafting, read that person's one-to-one chat with Akshay through Blueticks, read only):"),
@@ -76,7 +79,8 @@ EDITS = {
  (("\n- Deals: a Deal at Interested, In conversation or Proposal sent", "Cold Deals at New or Contacted are the outreach list: never flag them."), ""),
  # r24 item 11, the backstop: the old Form flag becomes the routine 5 start.
  ("- Form: Status Recorded for more than 5 days, no guest form linked: \"Zoya: recorded <date>, send the form reminder\" with Waiting on Zoya.",
-  "- Form (routine 5 backstop): a Founder Thesis row at Recorded with a thank-you mail Activity, no Guest form linked and no \"seq-5\" segment: add \"Zoya [followup seq-5-1 <the next working day>T00:00:00+09:00]: form chaser 1 on <D Mon>\" with Zoya in Waiting on, and list it in the report by name. Another show's row at Recorded for more than 5 days with no guest form: \"Zoya: recorded <date>, send the form reminder\" with Waiting on Zoya."),
+  "- Form (routine 5 backstop): a Founder Thesis row at Recorded with a thank-you mail Activity, no Guest form linked and no \"seq-5\" segment: add \"Zoya [followup seq-5-1 <the next working day>T00:00:00+09:00]: form chaser 1 on <D Mon>\" with Zoya in Waiting on and Next date = the earliest open segment date (the second Next date exception), and list it in the report by name. Another show's row at Recorded for more than 5 days with no guest form: \"Zoya: recorded <date>, send the form reminder\" with Waiting on Zoya."),
+ ("You never change Next date, with one exception, the hold below.", "You never change Next date, with two exceptions: the hold below, and STEP 4's Form backstop (Next date = the earliest open segment date when you add the seq-5 segment)."),
  # Decision 520: BD prospect episodes get a PaaS pitch reminder on release (Part B, after 3i). Cuts pay for it.
  ("PART B, in this order: STEP 4b, 3i, 3h,", "PART B, in this order: STEP 4b, 3i, 3p, 3h,"),
  ("and its move to Trash (decision 416).", "and its move to Trash (decision 416); in STEP 3p only, creating a PaaS Engagement."),
