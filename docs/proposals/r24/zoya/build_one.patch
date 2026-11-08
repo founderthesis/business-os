@@ -602,10 +602,10 @@ index 0000000..5259eef
 +]
 diff --git a/routines/zoya/r24_edits.py b/routines/zoya/r24_edits.py
 new file mode 100644
-index 0000000..2a03594
+index 0000000..c056c4f
 --- /dev/null
 +++ b/routines/zoya/r24_edits.py
-@@ -0,0 +1,34 @@
+@@ -0,0 +1,38 @@
 +# r24 (CTO, 7 Nov 20:55 and 23:15 JST). Applied after R23. Decision 517 also changes the SLOW file, so the pin moves.
 +# 1/ A row Zoya creates from a pitch (the Sung Hong un# row) waits on no one at Status New, so the evals routine takes it.
 +# 2/ Cleanup's r23 S2: wait 5 seconds before each lock re-push. S4: cut before adding (hourly under 63,000).
@@ -639,4 +639,8 @@ index 0000000..2a03594
 + # Cuts paying for C1.
 + (("one",), "(decision 453, widened by Akshay, 5 Nov, item 10;", "(decision 453;"),
 + (("one", "slowwork", "episodes"), "(CTO, 4 Nov, clarifying decision 421)", "(decision 421)"),
++ # r24 item 11: a due keyed segment is selected whatever the row's Next date says (a later community or release
++ # recheck date hid due form chasers on Saket Saurabh's and Srinivas Choudhary's rows).
++ (("slowwork",), "Recorded or LT chase with Next date today or earlier, plus routine 4, 6 and 8 rows,",
++  "Recorded or LT chase with Next date today or earlier, plus every in-scope row with a keyed Zoya segment (\"Zoya [<type> <origin> <ISO>]: ...\") dated today or earlier, whatever its Next date says (a later date never hides a due one), plus routine 4, 6 and 8 rows,"),
 +]

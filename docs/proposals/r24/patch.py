@@ -56,6 +56,9 @@ EDITS = {
  ("- A Cold outreach Deal still at Stage New is the target list (decision 89): leave Waiting on blank.\n", ""),
  ("On the Engagement or Deal (or, if there is none,", "On the Engagement (or, if there is none,"),
  (" Deals created and moved.", ""),
+ # r24 item 11 (CTO, 8 Nov: three FT guests got no form chaser after Akshay sent the thank-you himself).
+ ("An item his mail does not settle stays.\n\nSTEP 3. ENGAGEMENTS",
+  "An item his mail does not settle stays.\nc. His thank-you (routine 5): a mail of his carrying podm.in/thank-you, or asking for the guest form, to a Founder Thesis guest whose row is at Recorded with no guest form linked and no \"seq-5\" segment: add \"Zoya [followup seq-5-1 <D>T00:00:00+09:00]: form chaser 1 on <D Mon>\", where D is his mail's date plus 5 days (Cadences' first routine 5 day), in place of any \"Waiting on <guest>: ...\" segment about the thank-you or the form; Zoya in Waiting on; Claude note line \"YYYY-MM-DD: form chasers start <D Mon> (thank-you sent by Akshay <D Mon>)\". Routine 5 and Cadences do the rest.\n\nSTEP 3. ENGAGEMENTS"),
  # Decision 522 (Akshay, 7 Nov): the chase draft reads the person's chat first (section 6 has the rules).
  ("A Your call starting \"whatsapp chase:\" follows section 6's WHATSAPP CHASE (decision 486):",
   "A Your call starting \"whatsapp chase:\" follows section 6's WHATSAPP CHASE (decisions 486, 522: before drafting, read that person's one-to-one chat with Akshay through Blueticks, read only):"),
@@ -69,6 +72,9 @@ EDITS = {
  ("except an Outbound row at New (decision 167) and a Cold outreach Deal:", "except an Outbound row at New (decision 167):"),
  ("or Status Sponsored offered, and every Deal, whose Waiting on", "or Status Sponsored offered whose Waiting on"),
  (("\n- Deals: a Deal at Interested, In conversation or Proposal sent", "Cold Deals at New or Contacted are the outreach list: never flag them."), ""),
+ # r24 item 11, the backstop: the old Form flag becomes the routine 5 start.
+ ("- Form: Status Recorded for more than 5 days, no guest form linked: \"Zoya: recorded <date>, send the form reminder\" with Waiting on Zoya.",
+  "- Form (routine 5 backstop): a Founder Thesis row at Recorded with a thank-you mail Activity, no Guest form linked and no \"seq-5\" segment: add \"Zoya [followup seq-5-1 <the next working day>T00:00:00+09:00]: form chaser 1 on <D Mon>\" with Zoya in Waiting on, and list it in the report by name. Another show's row at Recorded for more than 5 days with no guest form: \"Zoya: recorded <date>, send the form reminder\" with Waiting on Zoya."),
  # Decision 520: BD prospect episodes get a PaaS pitch reminder on release (Part B, after 3i). Cuts pay for it.
  ("PART B, in this order: STEP 4b, 3i, 3h,", "PART B, in this order: STEP 4b, 3i, 3p, 3h,"),
  ("and its move to Trash (decision 416).", "and its move to Trash (decision 416); in STEP 3p only, creating a PaaS Engagement."),
