@@ -15,3 +15,7 @@
   - neither forbids search-result titles or memory.
 
   Proposed skill edit, built and uploaded like skills-521: every figure comes from a page opened in this run (Tracxn, a filing, the company's own site, a news article) and names it; a search-result title or snippet isn't a source, and memory never is; with no opened page, write "Not disclosed", never a recalled number marked "(uncertain)". Check un-guest-eval, bts-guest-eval and hbd-guest-eval for the same gap, and give the Cowork task a report line listing any figure left without a source.
+
+## Added 9 Nov 21:30 JST (CTO; r24 deployed and byte-verified, docs/deploys/2026-11-09-r24.md, pin 1556243)
+
+- **Rules for Zoya, section 3, Saurabh's forwards.** Two lines there are older than decision 517: "Thanks for sharing, SG", and Cc everyone except Saurabh. They contradict section 2's decision 517 exception, which keeps him in Cc on his own chain. In r25, write the replacement wording for section 3 so it matches: on a pitch Saurabh forwarded, the loop-in is "thanks SG, looping in Zoya" on his forward, and Zoya replies on his chain To the pitcher, with Saurabh and Akshay in Cc. On any other thread he's never copied. It's a Controls page edit for the CTO to paste, so no build.
