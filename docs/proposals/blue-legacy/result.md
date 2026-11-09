@@ -38,11 +38,18 @@ Episodes cells by column: Amazon Music 458, Copywriting doc 177, LinkedIn 140, S
 
 - Files: photos, logos, transcripts and PDFs (about 1,300) wait for the file route; 153 videos (20.4 GB) stay in Blue, listed in data/blue_video_manifest.csv.
 - 94 conflicts: Notion kept its value (data/blue_conflicts.csv).
-- Held for a yes: Source ID appends on 9 exact same-show name matches (05b), and a second Arpit Chhabra Episode (04b), since one already exists.
+- 04b, a second Arpit Chhabra Episode: not created (CTO, 9 Nov). One already exists: "Arpit Chhabra @ IoTfy - Founder Thesis".
 - Blue due date: not mapped to any field.
+
+## After the run (9 Nov, CTO answers)
+
+- 05b applied: "; Blue <id>" appended to Source ID on 11 rows that are exact same-show name matches (9 Episodes and the 2 Engagements linked to them), read back.
+- Credential check: none of the 17 docs, 4 archive pages, guest forms, Activities or body lines carries a password, login, key or phone number; the only hits are the notes saying Blue holds them and they were not copied. The git-ignored extract has none either.
+- Two wrong Amazon Music fills found and cleared: Blue's Episodes Inventory cards for Twid (Amit Koshal) and Xpressbees (Amitava Saha) held the Imarticus and CleverTap episodes' links. Both cells were empty before this run, so they are empty again, with a note in each page body. A URL-vs-name check over all 458 Amazon Music fills found no others.
+- The "probable duplicate" Imarticus Episode was not a duplicate: it was the Twid row with the wrong link. Nothing was folded or trashed.
 
 ## Follow-ups
 
 - Blue Home docs hold plaintext passwords and a phone number; none were copied. They should be rotated before Blue is switched off.
-- Two Episode rows for Nikhil Barshikar (Imarticus) now share one Amazon Music link: likely a duplicate Episode.
+- Twid and Xpressbees Episodes have no Amazon Music link; the right ones still need finding. The Xpressbees Copywriting doc came from the same card and is worth a glance.
 - Private Drive backup of the git-ignored extract is waiting for Akshay's own ok.
