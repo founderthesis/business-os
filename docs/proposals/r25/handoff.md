@@ -8,6 +8,12 @@ Main, 10 Nov. CTO ask of 17:55 JST, built on the live r24 prompts (deploy 311e60
 - **WhatsApp STEP 0w accepts only two standing templates:** community-invite and release-day. A "[standing: paas-...]" line would fail its check and go to Akshay.
 - **Below:** wherever this hand-off says "paas-1 or paas-2" is standing, read it as approve-each.
 
+## Change, 10 Nov (CTO's answers)
+
+- **One WhatsApp set per person per 7 days** (spec section 4) is now in STEP 0w 3/. It counts only sets this routine sent from Akshay's number (Activities "Akshay to <name> on WhatsApp", keys wa-send: or wa-chase:); his own typed replies never count. A draft that would break it waits untouched until the day it may go. Group news posts are exempt; they keep their one-per-member-a-quarter rule.
+- **SLOW is unblocked:** billing was fixed, and SLOW ran on r24 at 14:56 JST. So the PaaS drafts will be written once this deploys.
+- **Release day:** the CTO gives the Episode copywriter chat the marker line at deploy.
+
 ## What's in it
 
 **1. WhatsApp routine: one SEND step (STEP 0w, rewritten).** It sends from Akshay's number only:
@@ -55,7 +61,7 @@ Each was built twice, byte-identical. The Zoya builds were also rebuilt from a f
 
 | Routine | Base (live) | Build | Bytes / sha256 |
 |---|---|---|---|
-| WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 35,841 / 6cfe881a09d57625 |
+| WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 36,107 / c3cc25dbf19ad48a |
 | Inbox actions | r24 845d0a41 | r25/actions.txt | 48,332 / b9101c39987ca605 |
 | Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin f6793c2) | 15,949 / b13ee043dfc8ce2f |
 | Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **f6793c2** | 94,554 / 76080f19ee5675fd |
@@ -77,8 +83,8 @@ Unchanged: calendar, capture, sweep, host boards and dossiers.
 ## For the CTO: unclear or needing a call
 
 1. **PaaS timing replaces decision 496's reminders.** The old reminders were day 4 and 10 (New or Contacted) and day 3 and 10 (after a proposal). Under 535 and 537 they become the WhatsApp follow-ups at 7 and 14 quiet days, and the mail-only reminder stays only where there's no number. Confirm that's the intent.
-2. **Spec section 4's "one WhatsApp per person per 7 days, apart from replies"** isn't in "Your comments, applied", so I didn't build it. Say if it stands.
+2. **One WhatsApp per person per 7 days:** confirmed by the CTO and built (see the change above).
 3. **The release-day writer is the Episode copywriter chat,** whose instructions aren't in this repo. For STEP 0w to accept a release-day draft, that chat has to write the draft starting "[standing: release-day]", with the Episode's Short link and Ranjita's post link, plus the Claude note line "YYYY-MM-DD: release-day WhatsApp drafted (Episode copywriter chat)" on the guest's row. Without the line, the draft goes to Akshay for a tick. The template's "PR in a separate message only if they handled the booking" isn't automated; it's a ticked draft.
 4. **Numbers:** dropping 519's lookup means more "no WhatsApp number" asks until the CTO's enrichment writes land. Best if they land before this deploys.
-5. **SLOW is still blocked** (Opus access, 10 Nov), so no PaaS drafts get written until it runs again, on Sonnet or Opus.
+5. **SLOW is unblocked** (billing fixed; it ran on r24 at 14:56 JST, 10 Nov).
 6. **Standing lines rest on note markers.** A standing draft is trusted because of its "[standing: ...]" line plus the matching Claude note line that only the authorised writer adds. Anyone on the team with Notion edit access could still forge one; I judged that acceptable inside the team.
