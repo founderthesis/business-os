@@ -1,6 +1,6 @@
 ---
 name: "un-guest-eval"
-description: "Evaluate inbound guest pitches for un# (Unhashed), Sri Misra's crypto podcast. Pulls precall notes from Drive, scores Fit and Partnership independently, routes through three tracks, publishes a page, and returns a 40 to 50 word short pitch with a bio link for the pipeline sheet."
+description: "Evaluate inbound guest pitches for un# (Unhashed), Sri Misra's crypto podcast. Pulls precall notes from Drive, scores Fit, Partnership and Discovery (will this guest get the show found?) independently, books household-name guests on Discovery alone, pulls funding, team and news from Tracxn, routes through three tracks, publishes a page, and returns two blurbs: a 40 to 50 word short pitch with a bio link for the pipeline sheet, and a longer blurb for Sri with the angle of the episode and further-reading links, which also sits ready to copy (with a Copy button) near the top of the published page."
 ---
 
 # un-guest-eval
@@ -9,13 +9,15 @@ Inbound triage for un#, hosted by Sri Misra. Akshay produces the show. PR agenci
 
 ## Why the show exists, and why that changes the scoring
 
-Sri runs un# for two reasons, and a guest can serve either one.
+Sri runs un# for three reasons, and a guest can serve any one of them.
 
 **Credibility and thought leadership.** He wants to be a recognised voice in tokenization and onchain asset management. That is served by institutionally legible guests a finance audience already respects.
 
 **Relationships that become commercial for aarnâ.** Investors, GTM and distribution partners, liquidity. An hour on tape is the warmest introduction available, and the past-guest list is already his relationship map: Henry Zhang at DigiFT, Jim Hiltner at Superstate, Jake Brukhman at CoinFund, Julian Sawyer at Zodia, Pritam Dutta at Zoth.
 
-So this skill scores **two independent axes**. A guest who fails the credibility bar but owns a distribution channel aarnâ needs is still worth an hour. A guest who clears the bar and offers nothing commercially is still a good episode. Score them separately and let Akshay see both.
+**Growth: getting the show discovered.** At roughly 65k YouTube subscribers, most of un#'s new audience arrives through search and suggested videos for a guest's name. A celebrity guest puts Unhashed in front of people who were searching for *them*, and the episode keeps pulling viewers for years. That's an outcome no amount of editorial fit produces. Akshay, 19 Oct 2026, on Raj Gokal (co-founder of Solana, scored Pre-call needed under the old rules): "someone like Raj should have been booked asap because he is a celebrity, leads to podcast growth."
+
+So this skill scores **three independent axes**: Fit, Partnership and Discovery. A guest who fails the credibility bar but owns a distribution channel aarnâ needs is still worth an hour. A guest who clears the bar and offers nothing commercially is still a good episode. A household name in a category Sri usually caps is still a booking, because the episode grows the show. Score them separately and let Akshay see all three.
 
 ## Sri's bar (Fit axis)
 
@@ -125,13 +127,34 @@ Also accept these as direct input when Akshay pastes them: a Gemini notes export
 
 ## Step 2: research
 
-Six to ten targeted searches, at least three of them on the numbers. Stop when both axes can be scored and the numbers table is filled. If a precall or a backgrounder exists, use it as the source of truth and verify only what it does not cover.
+Tracxn first, then eight to twelve targeted web searches, at least three of them on the numbers Tracxn doesn't carry. Stop when all three axes can be scored and the numbers table is filled. If a precall or a backgrounder exists, use it as the source of truth and verify only what it does not cover.
+
+### Step 2a: Tracxn, before the web
+
+Tracxn is the fastest clean source for funding, backers, team size and dated company news. Run it on every guest whose company is a venture, before any web search. Load the tools in one ToolSearch call: `mcp__Tracxn__load_prompt`, `resolve_entities`, `search_companies`, `search_funding_rounds`, `search_news_events`.
+
+1. **`load_prompt` once per conversation.** It returns a `promptAckToken`. Pass it, the same `conversationId` and the same `userMessageId` on every later Tracxn call in that turn.
+2. **`resolve_entities`** with the company domain (most reliable), the company name and the guest's name, `entityType` COMPANY and PEOPLE. Take the match with `curated: "Yes"`. A domain match scores 1; a fuzzy name match is often the wrong company (M0 Labs resolved to "Ma Labs"), so check the website before using it.
+3. **`search_companies`** filtered on `companyId`, with a `responseTemplate` of: name, foundedYear, shortDescription, stage, keyPeople, latestFundingRound, totalEquityFunding, investors, latestEmployeeCount, latestRevenue, latestValuation, latestEstimatedRevenue, editorRating, founderHighlights, socialMediaProfiles, tracxnScore, tracxnPlatformUrl, locations.
+4. **`search_funding_rounds`** filtered on `companyId`, sorted by `fundingRoundDate` DESC, with name, date, amount, investors (the `isLead` flag names the leads), valuation.
+5. **`search_news_events`** filtered on `companyId` and `newsDate` for the last 18 months (dates as DD/MM/YYYY), sorted by `newsDate` DESC, with title, date, type, url, publisherCompany. Partnerships, customer wins and regulatory news here feed the "last 12 months of substance" check and usually supply the strongest further-reading link.
+
+**What Tracxn is good for:** every round with its date, size, leads and participants; total equity raised; headcount with an as-of date; co-founders and titles; serial-founder flags; the editor note, which often names customers; dated partnership and product news with source URLs. Fill those rows of the numbers table from it and tag each one as Tracxn on the page.
+
+**What it isn't good for:** TVL, onchain supply, AUM, volume, token market cap and fees. Those still come from DefiLlama, rwa.xyz, Token Terminal, Artemis, filings and the issuer. Revenue and valuation fields are usually empty for crypto companies; an empty field is "Not public (searched: Tracxn, …)".
+
+**Handle with care:**
+- **Founding year can disagree** with press, because Tracxn often dates incorporation or the seed. Show both when they differ.
+- **Tracxn scores and the editor rating are directional, not evidence.** They can go in a caption under the numbers table, never in a scorecard or the short pitch.
+- **A precall still outranks Tracxn**, the same as any published source.
+- **Link the company's Tracxn page in Links** using `tracxnPlatformUrl` exactly as returned, tracking parameters included.
+- **If there's no curated match, or the tools aren't connected,** say "Not on Tracxn" or "Tracxn not available" in one line on the page and carry on with the web.
 
 **For the Fit axis:**
 
 1. LinkedIn profile, if not supplied. **Capture the URL, the short pitch needs it.**
 2. Company stage and THE NUMBERS (Akshay, 18 Oct: "I am not getting enough numbers about the venture - like funding, TVL, AUM, GTV"). Spend at least three of the searches here, and fill every row of the numbers table in Step 5 that applies to the venture type:
-   - **Funding:** total raised, last round (size, stage, date, lead), named backers, valuation if public. Sources: the company's own announcement, Crunchbase, RootData, CryptoRank, The Block, press.
+   - **Funding:** total raised, every round (size, stage, date, lead), named backers, valuation if public. Sources: Tracxn first (Step 2a), then the company's own announcement, RootData, CryptoRank, The Block, press to fill gaps and confirm.
    - **Scale, by what the firm does:** protocol or DeFi app → TVL (DefiLlama, with the date) and, where it applies, volume or open interest; exchange, payments, card, remittance or stablecoin flows → GTV, volume or payment volume for a stated period; stablecoin or tokenized asset issuer → supply or tokenized AUM (rwa.xyz, DefiLlama stablecoins, issuer attestations); asset manager or fund → AUM (filings, factsheets, the firm's site); operating company → revenue or ARR; chain → TVL, daily active addresses, fees (Artemis, Token Terminal).
    - **Revenue or fees** where public (Token Terminal, DefiLlama fees, filings).
    - **Users or customers:** monthly users, institutional clients, wallets, with the period.
@@ -152,6 +175,15 @@ Six to ten targeted searches, at least three of them on the numbers. Stop when b
 10. **Do they compete with aarnâ?** Two overlaps to check: agent-driven or automated onchain treasury management, and tokenized emerging-market credit sold to global investors.
 11. **Has Sri publicly positioned against them?** He has benchmarked âtvPTmax against Gauntlet and MEV Capital curator vaults, and argues publicly that curators sit outside the rail that holds the assets. Booking someone whose model he has attacked can be excellent tape. It should not be a surprise on the day.
 
+**For the Discovery axis, additionally (two or three searches, no more):**
+
+12. **Audience size, with the date.** X followers, LinkedIn followers, and the follower count of the company's own accounts (Solana's X account is part of Raj Gokal's reach if they reshare). Note any YouTube channel they run.
+13. **Search pull on the name.** Search YouTube for the person's name. Do videos titled with their name exist on other channels, and what view counts do they carry? Five-figure-plus views on a named interview is strong evidence people search for them. Google Trends for the name, where it shows anything, backs this up.
+14. **Recognition outside their firm.** Would a crypto-curious viewer who has never heard of their company still know the name? Mainstream press profiles (Bloomberg, Forbes, CNBC on camera), keynote slots at the top conferences (Breakpoint, Token2049, Consensus, Devcon), and being the name people use for the project are the signals.
+15. **Reshare likelihood.** Do they or their company post their podcast appearances? Check their last two or three. A celebrity who never reshares still brings search traffic, but scores one band lower than one who amplifies.
+
+Big appearances elsewhere count for Discovery even though they lower the bar on distinctiveness for Fit. The two axes are measuring different things.
+
 **The same-org better-fit check.** Is there a more senior or more on-thesis person at the same organization? Pitched contacts are often a comms lead or a junior exec at a firm that also houses a principal. Name the alternative only if you can verify they hold the role.
 
 ## Step 3a: score Fit (1 to 10)
@@ -164,6 +196,8 @@ The bar sets the ceiling. Depth and topical relevance position the guest inside 
 - **Declined despite real funding and TVL:** mid-tier protocols and important-sounding plumbing. Chains and scaling infra of every tier, including a Sui co-founder, a Bitcoin ZK rollup with Founders Fund backing, and an L3 with a GSR co-founder. Dev tooling and compute (a simulation layer doing $26.5M revenue, a ZK-AI compute network). White-label stablecoin issuance plumbing, including the layer sitting under MetaMask's own stablecoin. Generic crypto payments. Crypto-adjacent consumer fintech: crypto mortgages, web3 travel, crypto insurance. Non-principals at good orgs.
 
 Median scale in approved and declined pitches is roughly the same. **Big numbers do not move this.**
+
+These decisions predate the Discovery axis. The chain and infra declines were mid-tier names with little search pull; most would score Discovery 6 or below and still decline. A household-name founder in the same category is a different case (see Step 3b).
 
 **Apply the bar:**
 
@@ -197,9 +231,29 @@ Median scale in approved and declined pitches is roughly the same. **Big numbers
 
 **Auto-decline whatever the score:** already recorded; active fraud, enforcement or indictment; pure shitcoin or memecoin promotion.
 
-## Step 3b: score Partnership (1 to 10)
+**The caps don't bind on a celebrity.** The category caps above (chains, infra, payments and the rest) exist because Sri has heard those stories from mid-tier founders and the episodes don't grow the show. They still apply to Fit. But a guest scoring Discovery 9 or 10 is routed by Step 4 on Discovery, so a capped Fit of 5 doesn't hold them at Pre-call. Show the capped Fit honestly and say the Discovery override applied.
 
-Independent of Fit. The question is narrow: **could this person move a commercial needle for aarnâ inside a year?**
+## Step 3b: score Discovery (1 to 10)
+
+Independent of Fit and Partnership. The question: **will this guest get Unhashed discovered by people who don't watch it yet?**
+
+- **9 to 10: household name in crypto.** Co-founder or the public face of a top-tier chain, exchange, stablecoin or protocol that crypto-curious people already know by name (Solana, Ethereum, Coinbase, Tether, Binance, Uniswap, Aave tier). Named interviews with them pull six-figure views on other channels. Mainstream press knows them. Raj Gokal (Solana) is a 10.
+- **7 to 8: well known inside crypto.** Large X following (roughly 100k plus), regular on the big crypto shows (Bankless, Unchained, The Pomp Podcast, Empire), recognised by name beyond their own firm's users. Their name in a title earns clicks from people who aren't subscribers.
+- **5 to 6: known in their niche.** Respected by builders or allocators in one segment, modest following, search pull mostly from people already looking for their company.
+- **3 to 4: known as their firm's representative.** The logo carries the recognition; the person doesn't.
+- **1 to 2: no public profile.** Nobody searches for this name.
+
+**Measure the person, then add the company's reach only if they reshare.** A famous logo with an unknown spokesperson is a 3 or 4, however big the firm. The same test as Fit: score the person.
+
+**Don't confuse a large following with a buyable one.** Follower counts inflated by giveaways, engagement farming or token shilling don't count. If the audience exists mainly to pump a token, the guest fails the token-price marketing cap and Discovery doesn't rescue them.
+
+**Name the evidence in one line.** "Discovery 10: co-founder of Solana, 200k+ X followers, named interviews on other channels at six-figure views" is useful. A bare number isn't.
+
+Whether the guest is selective about podcasts or hard to schedule is a logistics note, not a Discovery discount. Scarcity is part of why the episode travels.
+
+## Step 3c: score Partnership (1 to 10)
+
+Independent of Fit and Discovery. The question is narrow: **could this person move a commercial needle for aarnâ inside a year?**
 
 - **9 to 10 — owns the channel.** Controls distribution or listings at a licensed venue that already sells third-party regulated products to individuals at a $5k to $25k ticket outside the US. Or runs a treasury that has actually awarded an external mandate. Or owns an earn or wealth desk that lists third-party yield products. Named as of September 2026: DigiFT, ADDX, InvestaX/IXS, IFSCA-registered distributors, DAO treasury councils with an RFP history.
 - **7 to 8 — one step from the money.** A curator or risk firm that runs partner vaults for third-party issuers (Steakhouse does this for Superstate, Centrifuge, Angle, M^0 and Coinshift; Gauntlet has a partner-vault programme). A lending protocol lead who decides collateral listings. A regulated-stack vendor: ERC-3643 issuance, transfer agency, qualified custody for permissioned tokens, a secondary venue.
@@ -213,9 +267,9 @@ Independent of Fit. The question is narrow: **could this person move a commercia
 
 **Never inflate for proximity.** A crypto VC who might invest one day is not a 9. Neither is a big name who would be nice to know. If you cannot name the specific thing they control, the score is 5 or below.
 
-## Step 3c: the competitor flag
+## Step 3d: the competitor flag
 
-Separate from both scores, and mandatory. Mark **Competitor**, **Partner**, or **Both**, with one line of reasoning.
+Separate from all three scores, and mandatory. Mark **Competitor**, **Partner**, or **Both**, with one line of reasoning.
 
 **Both, as of September 2026:** Karpatkey (agent-powered policy-bound vaults, the same sentence as âTARS, and also the firm DAOs already trust for distribution). Steakhouse and Gauntlet (they compete for the same treasury dollar and are also the route to an earn page). Zoth (tokenized emerging-market credit, and already a past guest).
 
@@ -231,12 +285,14 @@ A competitor can still be a great episode. It cannot be presented as a friendly 
 
 | Verdict | Criteria |
 |---|---|
-| **Book immediately** | Fit ≥ 8 and no red flags. Or Fit 6 to 7 with Partnership ≥ 8, in which case say plainly that the partnership is the reason |
-| **Strong consider** | Fit 7. **Then break the tie on Partnership:** ≥ 6 leans book, below 6 leans pre-call. Say which way it broke and why |
-| **Pre-call needed** | Fit 5 to 6 with Partnership below 8. Or seniority, depth or traction that needs testing |
-| **Decline** | Fit ≤ 4 and Partnership ≤ 6. Or already recorded. Or an auto-decline trigger |
+| **Book immediately** | Fit ≥ 8 and no red flags. Or Fit 6 to 7 with Partnership ≥ 8, in which case say plainly that the partnership is the reason. Or **Discovery ≥ 9 and no auto-decline trigger, whatever Fit says**, in which case say plainly that growth is the reason. Or Discovery 8 with Fit ≥ 5 |
+| **Strong consider** | Fit 7. **Then break the tie on Partnership or Discovery:** either one ≥ 7 leans book, otherwise Partnership ≥ 6 leans book, below that leans pre-call. Say which way it broke and why |
+| **Pre-call needed** | Fit 5 to 6 with Partnership below 8 and Discovery below 8. Or seniority, depth or traction that needs testing |
+| **Decline** | Fit ≤ 4, Partnership ≤ 6 and Discovery ≤ 7. Or already recorded. Or an auto-decline trigger |
 
-**Why Strong consider now carries a tiebreaker.** Across the pipeline, Sri approved 24 of 33 decided Book Immediatelys and split 13 to 14 on Strong Consider. A verdict that predicts nothing is not a verdict. The Partnership axis is what breaks it, and that matches why he runs the show.
+**A Discovery booking skips the precall gate.** Don't make a celebrity sit through a producer precall to prove depth. Their PR will often refuse one anyway (Raj Gokal's rep did). Send a written topics list instead, and use the themes to steer the hour away from the story the show has already heard. A boring hour with a famous guest still grows the show; a missed booking grows nothing.
+
+**Why Strong consider now carries a tiebreaker.** Across the pipeline, Sri approved 24 of 33 decided Book Immediatelys and split 13 to 14 on Strong Consider. A verdict that predicts nothing is not a verdict. Partnership and Discovery are what break it, and that matches why he runs the show.
 
 **A high Partnership score with a low Fit score is not automatically a booking.** Say so directly: this is a meeting, or a sponsored slot, not an editorial one. Then say who should take that meeting.
 
@@ -257,7 +313,9 @@ un# takes sponsored guests. They run on a separate commercial path, and the eval
 
 A guest who clears the floor but not the editorial bar → **Sponsored track**, with one line on the angle that would make the episode worth listening to.
 
-A guest who clears the floor and scores Partnership ≥ 7 → say so. **A real commercial counterparty should not be charged for the slot.** That is the one case where the sponsored framing should be dropped and the guest moved to the editorial track.
+A guest who clears the floor and scores Partnership ≥ 7 → say so. **A real commercial counterparty should not be charged for the slot.** That is one case where the sponsored framing should be dropped and the guest moved to the editorial track.
+
+The other case is **Discovery ≥ 9**. A household name pitching for a sponsored slot should be moved to editorial and booked free. The growth the episode brings is worth more than the fee.
 
 ## Step 5: publish the page
 
@@ -278,26 +336,40 @@ Dark theme, the aarna palette, the same one the un# host dossier uses. Define th
 --coral:#C97A4B
 ```
 
-Manrope for body and UI, JetBrains Mono for scores, dates and tags. Teal for the Fit score, teal-glow for Partnership, coral for red flags and the competitor tag.
+Manrope for body and UI, JetBrains Mono for scores, dates and tags. Teal for the Fit score, teal-glow for Partnership, ink (white) for Discovery, coral for red flags and the competitor tag.
 
 Sections, in order:
 
 1. **Verdict banner**, with the track (Editorial, Sponsored, Decline) as a tag beside it. Tag whether a precall was read
 2. **Header and a one-line synthesis.** The header line carries the evaluation date, whether a precall was read and when, and the recording window if one is set
-3. **Two scorecards side by side.** Fit, with one line on how the guest sits against the bar. Partnership, with one line naming which of the four aarnâ needs it serves. If the editorial priority was applied, say so here
-4. **Competitor flag**, if the guest is a competitor or both. Omit when they are neither
-5. **Career timeline**, forward chronological, 5 to 8 rows, crypto entry point marked explicitly
-6. **The numbers**, a table, before the story: one row per metric from Step 2 (funding total, last round, backers, valuation, the scale metric for the venture type such as TVL, AUM, GTV, volume or supply, revenue or fees, users or clients, token market cap and FDV, team size, founded), each with value, date and source, and "Not public (searched: <where>)" for any you could not find. Never fewer than five rows for a founder's venture. The one-line synthesis in the header quotes the two numbers that matter most.
-7. **Key facts.** Current state: stage, token, recent milestones, audits, regulatory permissions. For a non-founder: title, scope of authority, influence signals, the org's standing. **Where the precall and the public record disagree, show both and label which is which**
-8. **The story.** The angle this guest brings, or the honest absence of one. When a precall happened, say what it settled
-9. **Themes to cover**, 5 to 7
-10. **Better fit**, only when a stronger name at the same org was verified
-11. **Red flags**, only if any. Logistics from the precall belong here
-12. **Links.** LinkedIn, company, the precall notes Doc if one exists, one to three substantive recent pieces
+3. **Blurb for Sri, ready to copy** (from Step 6; Akshay, 10 Nov). A card headed "Blurb for Sri" holding the Sri blurb exactly as Step 6 writes it, in WhatsApp-ready plain text, plus a **Copy** button that puts that text on the clipboard. Omit it only on an auto-decline. Spec below.
+4. **Three scorecards side by side.** Fit, with one line on how the guest sits against the bar. Partnership, with one line naming which of the four aarnâ needs it serves. Discovery, with one line of evidence (following, search pull, recognition, reshare habit). If the editorial priority or the Discovery override was applied, say so here
+5. **Competitor flag**, if the guest is a competitor or both. Omit when they are neither
+6. **Career timeline**, forward chronological, 5 to 8 rows, crypto entry point marked explicitly
+7. **The numbers**, a table, before the story: one row per metric from Step 2 (funding total, last round, backers, valuation, the scale metric for the venture type such as TVL, AUM, GTV, volume or supply, revenue or fees, users or clients, token market cap and FDV, team size, founded), each with value, date and source, and "Not public (searched: <where>)" for any you could not find. Mark rows that came from Tracxn with a small mono "TRACXN" tag. Never fewer than five rows for a founder's venture. The one-line synthesis in the header quotes the two numbers that matter most.
+8. **Key facts.** Current state: stage, token, recent milestones, audits, regulatory permissions. For a non-founder: title, scope of authority, influence signals, the org's standing. **Where the precall and the public record disagree, show both and label which is which**
+9. **The story.** The angle this guest brings, or the honest absence of one. When a precall happened, say what it settled
+10. **Themes to cover**, 5 to 7
+11. **Better fit**, only when a stronger name at the same org was verified
+12. **Red flags**, only if any. Logistics from the precall belong here
+13. **Links.** LinkedIn, company, the Tracxn company page, the precall notes Doc if one exists, one to three substantive recent pieces
 
-## Step 6: the short pitch
+### The copy card (section 3)
 
-After publishing, write the short pitch in the chat reply beside the link. Akshay pastes it into the pipeline sheet, and Sri reads it to decide in ten seconds whether to open the eval.
+Write the Sri blurb (Step 6) before you build the page, so the page and the chat reply carry the same words.
+
+- **Text format: WhatsApp, not markdown.** Akshay pastes it into WhatsApp, where markdown links and `**bold**` show as raw symbols. So: the header line wrapped in single asterisks (`*Luca Prosperi, co-founder and CEO of M0*`), blank lines between paragraphs, then `Further reading` on its own line and one line per item as `- Title (Outlet, Mon YYYY): https://full-url`. Bare URLs, never `[text](url)`. No other formatting.
+- **Display.** A surface card (`--surface`, 1px `--rule` border, 8px radius) with the heading "Blurb for Sri" and a teal **Copy** button on the right. Show the text in a `pre`-like block with `white-space: pre-wrap`, Manrope, so it reads as it will paste. Keep the text in one element with an id and copy from its `textContent`, so what's shown is exactly what's copied.
+- **The button.** `navigator.clipboard.writeText(el.textContent)` inside try/catch; on failure, select the block's text (Range + Selection) so Ctrl/Cmd+C works. Flash the label to "Copied" for 1.5 seconds. Nothing else on the page needs JavaScript.
+- **What stays off the card:** the verdict, the scores and the one-line tone flag. Those sit in the chat reply and the rest of the page.
+
+## Step 6: the two blurbs
+
+Write both before publishing (the Sri blurb also goes on the page, section 3), then put them in the chat reply. **Blurb 1, the short pitch**, goes in the pipeline sheet. **Blurb 2, the Sri blurb**, is what Akshay sends Sri directly when he wants a yes. Both are always produced, for every verdict except an auto-decline (already recorded, fraud, memecoin), where only the verdict line is returned.
+
+## Blurb 1: the short pitch
+
+Write it in the chat reply beside the link. Akshay pastes it into the pipeline sheet, and Sri reads it to decide in ten seconds whether to open the eval.
 
 **The governing principle: the short pitch earns the ten seconds, the eval earns the hour.** It proves this person is worth opening the eval for. It does not summarise the eval.
 
@@ -326,7 +398,7 @@ After publishing, write the short pitch in the chat reply beside the link. Aksha
 - **The ticker and the exchange**, unless the listing is doing work: the listing is the business model (a treasury company), the market cap or IPO raise is the scale number, or the person's role only makes sense at a public company. Otherwise the AUM or revenue figure has already established the institution and the ticker is furniture. The same test kills "headquartered in", legal entity names, registration numbers and founding years.
 - **Anything needing a second sentence to land.** If the fact requires setup, it is a theme, not a pitch line.
 - **The best surprises.** The most interesting thing found in the precall stays in the eval. Putting it here spends the reward that should make Sri open the page.
-- **Anything already elsewhere in the same message.** The verdict, both scores and the competitor flag sit beside the pitch, not inside it.
+- **Anything already elsewhere in the same message.** The verdict, all three scores and the competitor flag sit beside the pitch, not inside it.
 - **Negative facts, unless they would flip the yes.** A stale headline number belongs in red flags. Active enforcement belongs in the pitch, because it changes the answer.
 - **Product surface.** Individual products, integrations and partnerships are what gets discussed once he has said yes.
 - **An alignment or "why this matters for aarnâ" clause.** Sri works that out himself in the time it takes to read the pitch, and spelling it out reads as condescension. The Partnership score already carries it.
@@ -339,19 +411,65 @@ After publishing, write the short pitch in the chat reply beside the link. Aksha
 - Third person, present tense, flat and factual. No selling.
 - Every voice rule below applies here too, em-dashes and negative parallelism included.
 
+## Blurb 2: the Sri blurb
+
+The short pitch earns ten seconds in the sheet. The Sri blurb makes the case when Akshay messages Sri directly: who this is, why the company matters now, what the episode would be about, and where to read more. It should be compelling enough that Sri wants the episode, while every claim stays sourced and flat.
+
+**Length.** 120 to 170 words of body, plus the reading list.
+
+**Structure, in this order:**
+
+1. **Bold header line:** the guest's name and title, e.g. **Luca Prosperi, co-founder and CEO of M0**.
+2. **What the company is, and the proof.** One plain sentence on what it does, then the named customers, partners or scale figure that make it matter, with the most recent and most regulated first. Close with funding and backers (Tracxn), plus team size if it adds weight.
+3. **The career arc in one or two sentences.** Here, unlike the short pitch, biography belongs, because Sri is deciding whether he'd enjoy the conversation. Pre-crypto roots, the crypto entry point, then the founding.
+4. **"The angle of the episode:"**, written exactly like that as the lead-in to the paragraph. One or two sentences on the question the hour is built around, taken from the strongest theme on the page. Ideally it's a live debate Sri cares about (TradFi-DeFi convergence, tokenization, curators versus rails, who captures yield). Add one sharp, number-backed tension if the numbers table has one. Never write "the hour I'd want" or any first-person framing, since the blurb may be forwarded.
+5. **An optional connection line**, only when it's real: the company serves or partners with a past un# guest's firm, or someone Sri knows is an investor. One sentence.
+6. **"Further reading"**, 4 to 6 bullets. Each is a markdown link with a descriptive title, then the outlet and month in brackets: [Anchorage picks M0 for regulated stablecoins (CoinDesk, Apr 2026)](url). Order: the most recent substantive news (the Tracxn news search usually supplies it), the funding story, the company's own explainer or research post, a guest interview or profile, then an independent landscape piece. Only use URLs you have actually seen this session. No paywalled data-broker pages. Leave the Tracxn link and the eval page out of this list: Sri may not have Tracxn access, and the eval page is private until Akshay shares it.
+
+**What stays out of the Sri blurb:** the verdict, the scores and any internal status; aarnâ partnership reasoning; the confidential credit managers; red flags (those live on the page). If the verdict is weaker than the blurb's tone suggests, flag it to Akshay in one line *after* the blurb, outside the copy-paste block, so he knows what he's sending.
+
+**Voice.** Every voice rule below applies. Third person, present tense, specific. Compelling comes from the named customers and the sharp question, never from adjectives.
+
+**Example (Luca Prosperi, M0, Nov 2026):**
+
+> **Luca Prosperi, co-founder and CEO of M0**
+>
+> M0 is the software companies use to issue their own branded stablecoins. MetaMask's mUSD runs on it. Stripe's Bridge, MoonPay and PayPal's PYUSDx extension use it too, and in April Anchorage Digital, a federally chartered crypto bank, made M0 the core technology for its regulated stablecoin platform. M0 has raised $100M from Pantera, Bain Capital Crypto, Polychain and Ribbit, and has about 56 people in Zug.
+>
+> Luca came up through bank strategy at Oliver Wyman and the financial-institutions group at Morgan Stanley. He then wrote DeFi research as Dirt Roads before starting M0 in 2023.
+>
+> The angle of the episode: now that GENIUS has passed, why would a bank or a wallet issue its own dollar instead of using USDC, and who keeps the reserve yield? There's also a sharp question in M0's own numbers. About $779M has been minted on it, yet almost none of it is used inside DeFi.
+>
+> KAST, which Raagulan Pathy brought on the show, is built on M0.
+>
+> **Further reading**
+> - [Anchorage picks M0 for regulated stablecoins (CoinDesk, Apr 2026)](https://www.coindesk.com/business/2026/04/30/regulated-crypto-custody-firm-anchorage-partners-with-stablecoin-tech-provider-m0)
+> - [M0's $40M Series B (Fortune, Aug 2025)](https://fortune.com/crypto/2025/08/28/m0-series-b-40-million-polychain-ribbit-capital-stablecoins)
+> - [How MetaMask built mUSD on M0 (M0 Research)](https://research.m0.org/research/metamask-uses-m0s-stablecoin-platform-to-build-metamask-usd)
+> - [Luca on his path from banking to M0 (Pulse 2)](https://pulse2.com/m0-profile-luca-prosperi-interview/)
+> - [Where M0 sits among stablecoin issuance providers (DefiPrime, Mar 2026)](https://defiprime.com/stablecoin-issuance-infrastructure-2026)
+
 ### The chat reply
 
-The verdict line, then the short pitch. Nothing else, no preamble, no offer to revise.
+The verdict line, then Blurb 1 labelled **Short pitch (sheet)**, then Blurb 2 labelled **Blurb for Sri** inside a horizontal-rule block so it copies cleanly, then at most one line flagging any gap between the verdict and the blurb's tone. Nothing else, no preamble, no offer to revise.
 
-> Verdict: Book immediately. Fit 9, Partnership 6 (regulated stack). Competitor: both, lightly.
+> Verdict: Book immediately. Fit 9, Partnership 6 (regulated stack), Discovery 7. Competitor: both, lightly.
 >
+> **Short pitch (sheet)**
 > **[Name](bio link).** [short pitch]
+>
+> **Blurb for Sri**
+> [Sri blurb with further reading]
 
 Other verdict lines:
 
-> Verdict: Book immediately (partnership). Fit 6, Partnership 9, distribution. Competitor: no.
+> Verdict: Book immediately (partnership). Fit 6, Partnership 9, distribution, Discovery 4. Competitor: no.
 
-> Verdict: Decline (junior contact). Fit 3, Partnership 2. Better fit at the same org: [Name], [Title].
+> Verdict: Book immediately (growth). Fit 5 (chain cap), Partnership 3, Discovery 10. Competitor: no.
+
+> Verdict: Decline (junior contact). Fit 3, Partnership 2, Discovery 2. Better fit at the same org: [Name], [Title].
+
+For a Discovery booking, the short pitch leads with the recognition itself, since that's the case: the project they're the face of, then the one reach figure that proves people search for them.
 
 ---
 
@@ -398,6 +516,9 @@ Mix personal-arc, macro and educational themes. The educational ones matter beca
 
 Each of these is a real failure, not a hypothetical.
 
+- **Don't let a category cap bury a celebrity.** Raj Gokal, co-founder of Solana, was scored Fit 5 under the chain cap and sent to Pre-call needed (Oct 2026). Akshay: he should have been booked asap, because a celebrity guest grows the podcast. Score Discovery every time, and let Discovery 9 or 10 book the guest
+- **Don't gate a celebrity behind a precall.** Their PR often refuses one. A written topics list is enough
+- **Don't score the logo for Discovery.** A famous company's comms lead brings no search traffic. The person has to be the name people search
 - **Don't skip the Drive search.** A WisdomTree eval shipped without it while a full precall transcript from the previous day sat in Drive. It had the guest's real AUM, a team size and an internal product that appear nowhere public, a policy win better than the one the eval led on, and a piece of legislation the eval described as live that had actually stalled
 - **Don't treat press coverage as current.** Published figures lag the guest's own numbers by months. When a precall exists, its numbers win
 - **Don't trust the embedded roster alone.** It was 14 names when the archive held 47, and it omitted Sandy Kaul while the skill held her up as the model for the bar. Search the project transcripts first, every time
@@ -405,6 +526,13 @@ Each of these is a real failure, not a hypothetical.
 - **Don't read the pipeline sheet's "Declined" as Sri declining.** It means the guest declined us
 - **Don't put internal status on the published page.** No pipeline stage, no approval state, no CRM language. That page gets shared
 - **Don't ship the short pitch without a bio link.** Sri clicks through. A pitch with no link makes him go and search
+- **Don't skip Tracxn.** The first M0 eval ran without it and missed the full round history, the 56-person headcount, and partnerships with Anchorage, 1Money and MoonPay that changed the story. Run Step 2a before the web
+- **Don't trust a fuzzy Tracxn match.** Resolve on the domain. "M0 Labs" by name returned Ma Labs, an IT reseller
+- **Don't quote Tracxn scores as evidence.** Growth and editor ratings are directional and stay in a caption
+- **Don't leave the Sri blurb off the page.** It goes in the copy card near the top, in WhatsApp plain text with bare URLs, the same words as the chat reply
+- **Don't send only one blurb.** Akshay needs the short pitch for the sheet and the longer Sri blurb with reading links, every time
+- **Don't write the angle in the first person.** It's "The angle of the episode:", never "the hour I'd want". The blurb gets forwarded
+- **Don't put the private eval or a Tracxn link in Sri's reading list.** He may not be able to open either
 - **Don't copy an old short pitch's furniture.** The ticker in a previous WisdomTree line was carried over by pattern-matching rather than decided. Every element has to earn its words on this guest
 - **Don't ship an eval thin on numbers.** Akshay (18 Oct) wasn't getting funding, TVL, AUM or GTV in the evals. The numbers table is mandatory, and a metric searched and not found is written as "Not public", not dropped
 - **Don't swap one scale metric for another.** Market cap is not AUM. Using it on an asset manager shrinks the guest by an order of magnitude
@@ -417,7 +545,7 @@ Each of these is a real failure, not a hypothetical.
 - **Don't put the credit managers in writing.** Public copy names no manager. Anything Akshay said privately stays out of the artifact
 - **Don't date the India credit token from a private plan.** Public record says IFSCA Sandbox Stage 1 approved April 2026, Stage 2 in review, Q4 2026 target
 - **Don't use the ICT acronym.** It is internal shorthand, not public, and Akshay does not use it in conversation
-- **Don't leave Strong consider unresolved.** It is a coin flip in the record. Break it on Partnership and say which way it broke
+- **Don't leave Strong consider unresolved.** It is a coin flip in the record. Break it on Partnership or Discovery and say which way it broke
 - **Don't charge a real partner for a sponsored slot.** Partnership 7 or above belongs on the editorial track
 - **Don't skip the sponsored floor.** Sponsored prospects have been evaluated Decline before and should be again
 - **Don't apply the tokenization tilt silently.** Say in the artifact that it was applied, and flag it for confirmation once it is more than about six months old
@@ -432,3 +560,5 @@ Sri's own fear about his show, stated 6 March 2026:
 > "is it boring content? I might be finding it very exciting to talk to someone else who is in the same boat as me and going into stuff which we both enjoy talking about. So we are both happy but the audience is not. Those are all lost opportunities then."
 
 A guest who is commercially useful and boring on tape still fails. Partnership potential buys a conversation, not an exemption from being worth listening to.
+
+A celebrity is the one exception. People click because they already want to hear from that person, so the audience shows up regardless. The themes still have to keep the hour sharp, and that's the producer's job once the booking is made.
