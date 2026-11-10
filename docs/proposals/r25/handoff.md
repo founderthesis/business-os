@@ -150,6 +150,14 @@ Two cuts pay for item 2: "on un#, Built to Share and Human by Design no recordin
 - **Pin 617f81b.** The SLOW task is built with the full pin sha, as before. My 8d5e291 build in 7a2957f used the short sha by mistake (15,627); it's superseded.
 - **WhatsApp is now 38,411 / 516af09f52e35947.**
 
+## Change, 10 Nov: decision 541 (every new pitch row starts on Akshay's list)
+
+- **Inbox capture STEP 3,** the row create for a pitch, on every show: Waiting on Akshay, Next action "Akshay: new pitch from <PR or self> for <guest>, eval running (captured <D Mon HH:MM>)". It replaces "Waiting on empty (... the evals routine sets it ...)". The repo copy routines/inbox.md gets the same text.
+- **routines/cowork-evals.md WORK FIELDS:** "Akshay: new pitch from" joins the segments the eval replaces. I added one clause beyond the segment name: with it, Akshay leaves Waiting on unless another segment of his stays. Without it, a Book immediately row (Waiting on Zoya) would keep Akshay in Waiting on with nothing of his left, the closed-asks problem in reverse. Drop the clause if you'd rather keep the file to the name only.
+- **Inbox actions STEP 5,** the Built to Share and Human by Design pitch bullet: its ask now replaces capture's "Akshay: new pitch from" segment, so those rows don't carry two asks. Their ask is unchanged.
+- **Capture is now 50,832 / 57750ace41cbf136; actions 48,386 / 7c1c98496f6e6c99;** cowork-evals.md 14,906 / e410b09063bbcbf2. WhatsApp and Zoya don't change.
+- **The rows already stuck** (Floris Jansen, Rahul Singh Yadav) aren't touched by this build; they need the CTO's one-off write, or they'll get the segment only when the eval runs.
+
 ## Builds
 
 Each was built twice, byte-identical. The Zoya builds were also rebuilt from a fresh worktree at f70901f with r25/zoya/build_one.patch. No new em dash.
@@ -157,14 +165,14 @@ Each was built twice, byte-identical. The Zoya builds were also rebuilt from a f
 | Routine | Base (live) | Build | Bytes / sha256 |
 |---|---|---|---|
 | WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 38,411 / 516af09f52e35947 |
-| Inbox actions | r24 845d0a41 | r25/actions.txt | 48,332 / b9101c39987ca605 |
+| Inbox actions | r24 845d0a41 | r25/actions.txt | 48,386 / 7c1c98496f6e6c99 |
 | Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin 617f81b) | 15,660 / 3ce32ab7e46241d0 |
 | Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **617f81b** | 94,687 / 8b249fe624cd09f6 |
 | Zoya hourly | r24 459d1dd1 | r25/zoya/zoya-one.txt | 62,960 / db09dc47d054cd00 |
-| Inbox capture | r24 f64eb54e | r25/capture.txt | 50,724 / 73a73754fad00eec |
+| Inbox capture | r24 f64eb54e | r25/capture.txt | 50,832 / 57750ace41cbf136 |
 | Zoya episodes (not live) | r24 1d238933 | r25/zoya/zoya-episodes.txt | 50,053 / 86ae49ee224cef0e |
 
-Unchanged: calendar, capture, sweep, host boards and dossiers.
+Unchanged: calendar, sweep, host boards and dossiers. Also changed in the repo: routines/cowork-evals.md (14,906 / e410b09063bbcbf2) and routines/inbox.md (decisions 538 and 541).
 
 **How to build:**
 - Non-Zoya: `python3 docs/proposals/r25/patch.py <wa|act> docs/proposals/r24/<whatsapp|actions>.txt <out>`.

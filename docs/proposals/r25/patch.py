@@ -41,6 +41,9 @@ EDITS = {
  # Decision 538 (Akshay, 10 Nov): a pitch's Show comes from what it names or fits, not the address it reached.
  ("Show = the one of ours the mail names (un#, which mail may call Unhashed; Built to Share; Human by Design); anything else is Founder Thesis.",
   "Show = the one of ours the mail names (un#, which mail may call Unhashed; Built to Share; Human by Design); anything else is Founder Thesis. The address it came to alone never decides: a pitch to a client-show inbox (un#, Built to Share, Human by Design) with no link to that show's subject (un#: crypto and web3; Built to Share: teams, leadership, ownership; Human by Design: AI and human outcomes) is Founder Thesis (decision 538)."),
+ # Decision 541 (Akshay, 10 Nov): every new pitch row starts on Akshay's list, never with Waiting on empty.
+ ('Waiting on empty (Founder Thesis and un#: the evals routine sets it; Built to Share and Human by Design: inbox actions STEP 5)',
+  'Waiting on Akshay, Next action "Akshay: new pitch from <PR or self> for <guest>, eval running (captured <D Mon HH:MM>)" on every show (decision 541; the eval, or inbox actions STEP 5 on Built to Share and Human by Design, replaces it)'),
 ],
 "wa": [
  ("for STEP 0d also Gmail and MCP Emails (read only) and Google Calendar", "for STEP 0d and STEP 0w's reply check also Gmail and MCP Emails (read only), and for 0d Google Calendar"),
@@ -56,6 +59,9 @@ EDITS = {
 "act": [
  ("you only draft it on the row and queue it for the WhatsApp routine on Akshay's ok; you never send it.",
   "you only write the row's \"WhatsApp draft\" for his tick in \"Send WhatsApp\" (decision 535), and a Your call \"invite <name>\" writes the standing invite draft as section 6 says; the WhatsApp routine sends; you never send it."),
+ # Decision 541: STEP 5's ask replaces capture's new-pitch segment on Built to Share and Human by Design.
+ ('- A pitch for Built to Share or Human by Design: Akshay, "Akshay: new <show> pitch via <PR>: put it on <host>\'s board, decline or park?".',
+  '- A pitch for Built to Share or Human by Design: Akshay, "Akshay: new <show> pitch via <PR>: put it on <host>\'s board, decline or park?", replacing capture\'s "Akshay: new pitch from" segment.'),
 ],
 }
 for e in EDITS[which]:
