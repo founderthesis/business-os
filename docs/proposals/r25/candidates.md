@@ -1,5 +1,6 @@
 # r25 candidates (parked, nothing built)
 
+- **URGENT: Zoya SLOW ACCESS_DENIED** (10 Nov 08:08 and 11:08 JST): it isn't r24. A fallback to Sonnet is drafted for Akshay's yes, and the closed-row asks are proposed: see slow-access-and-closed-asks.md.
 - **TOP: calendar sync quits early** (CTO, 9 Nov 23:35 JST). The 22:36 and 16:35 runs both stopped after the heavy reads. The diagnosis and proposed fix are in calendar-early-exit.md. Waiting on the CTO's yes.
 
 - **Decision 526, rename:** the Episodes property "Working doc" is now "Copywriting doc" (CTO, 9 Nov; links kept). The only repo file that names it is docs/proposals/r24/zoya/zoya-episodes.txt, the episodes build, which isn't live. Rename it there the next time that build is touched. No live routine references it.
