@@ -657,10 +657,10 @@ index 0000000..4ad550c
 +]
 diff --git a/routines/zoya/r25_edits.py b/routines/zoya/r25_edits.py
 new file mode 100644
-index 0000000..1dece74
+index 0000000..f637186
 --- /dev/null
 +++ b/routines/zoya/r25_edits.py
-@@ -0,0 +1,73 @@
+@@ -0,0 +1,81 @@
 +# r25 (CTO, 10 Nov; decisions 535 and 537, and Akshay, 10 Nov: "don't automate paas messages"): SLOW's PaaS
 +# follow-ups become WhatsApp drafts for Akshay's tick (approve-each, never standing); no number, or after follow-up 2,
 +# the row goes to his list.
@@ -733,4 +733,12 @@ index 0000000..1dece74
 + (('one', 'slowwork', 'episodes'), ', no "Zoya here, from Akshay\'s team")', ')'),
 + (('one', 'slowwork', 'episodes'), ' (the words of every one-off mail)', ''),
 + (('one', 'slowwork', 'episodes'), '(the un# pitch sheet and the client templates C1 to C19: the words of every un# mail)', '(the un# pitch sheet, templates C1 to C19)'),
++]
++# CTO, 10 Nov (Dinesh Venugopal): a Zencastr room in either form, zencastr.app.link/<room> or zencastr.com/record/<user>/<room>.
++R22 += [
++ (('one',), "a zencastr.app.link room link only in that guest's", "a Zencastr room link (zencastr.app.link/<room> or zencastr.com/record/<user>/<room>) only in that guest's"),
++ (('one',), 'that carry zencastr.app.link guest links', 'that carry Zencastr room links (either SENDING form)'),
++ (('one',), 'the old zencastr.app.link URL', 'the old Zencastr URL'),
++ (('one',), '(a zencastr.app.link room link only as SENDING allows', '(a Zencastr room link only as SENDING allows'),
++ (('one',), "founderthesis.com (the show site and guests' written profiles)", 'founderthesis.com (show site, guest profiles)'),
 +]

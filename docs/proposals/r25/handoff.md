@@ -158,6 +158,14 @@ Two cuts pay for item 2: "on un#, Built to Share and Human by Design no recordin
 - **Capture is now 50,832 / 57750ace41cbf136; actions 48,386 / 7c1c98496f6e6c99;** cowork-evals.md 14,906 / e410b09063bbcbf2. WhatsApp and Zoya don't change.
 - **The rows already stuck** (Floris Jansen, Rahul Singh Yadav) aren't touched by this build; they need the CTO's one-off write, or they'll get the segment only when the eval runs.
 
+## Change, 10 Nov: a Zencastr room in either form (CTO; Dinesh Venugopal)
+
+- **Zoya hourly:** SENDING's approved-link line now reads "a Zencastr room link (zencastr.app.link/<room> or zencastr.com/record/<user>/<room>) only in that guest's recording-link mail and invite". STEP 0r reads Mamatha's mails "that carry Zencastr room links (either SENDING form)", her corrections swap "the old Zencastr URL", and the HARD link rule says "a Zencastr room link only as SENDING allows".
+- **Calendar** already accepts zencastr.com links (recording detection, Call link, studio-link check), so it doesn't change.
+- **Paid for** by "founderthesis.com (show site, guest profiles)" in the hourly only. The SLOW file, SLOW task and episodes don't change, so **the pin stays 617f81b**.
+- **The hourly is now 62,992 / 1e4433434f13808b.**
+- **For the ledger:** CLAUDE.md's short-links list names only zencastr.app.link/<room>. The zencastr.com/record form needs a decision row (or Akshay's ok) and a line in that list.
+
 ## Builds
 
 Each was built twice, byte-identical. The Zoya builds were also rebuilt from a fresh worktree at f70901f with r25/zoya/build_one.patch. No new em dash.
@@ -168,7 +176,7 @@ Each was built twice, byte-identical. The Zoya builds were also rebuilt from a f
 | Inbox actions | r24 845d0a41 | r25/actions.txt | 48,386 / 7c1c98496f6e6c99 |
 | Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin 617f81b) | 15,660 / 3ce32ab7e46241d0 |
 | Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **617f81b** | 94,687 / 8b249fe624cd09f6 |
-| Zoya hourly | r24 459d1dd1 | r25/zoya/zoya-one.txt | 62,960 / db09dc47d054cd00 |
+| Zoya hourly | r24 459d1dd1 | r25/zoya/zoya-one.txt | 62,992 / 1e4433434f13808b |
 | Inbox capture | r24 f64eb54e | r25/capture.txt | 50,832 / 57750ace41cbf136 |
 | Zoya episodes (not live) | r24 1d238933 | r25/zoya/zoya-episodes.txt | 50,053 / 86ae49ee224cef0e |
 
