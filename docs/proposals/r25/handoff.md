@@ -8,6 +8,27 @@ Main, 10 Nov. CTO ask of 17:55 JST, built on the live r24 prompts (deploy 311e60
 - **WhatsApp STEP 0w accepts only two standing templates:** community-invite and release-day. A "[standing: paas-...]" line would fail its check and go to Akshay.
 - **Below:** wherever this hand-off says "paas-1 or paas-2" is standing, read it as approve-each.
 
+## Change, 10 Nov: send at the time Akshay names (Akshay: "I will put the send day/time in my call. don't schedule.")
+
+**WhatsApp STEP 0w TIMING.** A ticked draft goes at the day and time Akshay names. It reads that from the row's Your call, or from the Claude note line inbox actions keeps of his call: "Akshay's call: '...' (WhatsApp send time)". The time is IST unless he names a zone.
+- **No time named:** it goes this run, as before.
+- **A time already past:** it goes now.
+- **Agents never pick a time:** no window and no default delay.
+
+**A time still ahead:**
+1. All of 3/'s checks run now: no reply, the number, and the cap and 7-day rule counted on the day he named. His time stands even inside quiet hours, because it's his choice.
+2. It logs "Zoya scheduled: WhatsApp to <name> for <D Mon HH:MM IST>" under the send key, which also stops a second queueing.
+3. It queues each message with Blueticks scheduled send, 20 seconds apart in order.
+4. It records the time and the Blueticks ids in a Claude note line, unticks the box and keeps the draft.
+
+**Each later run:**
+- **Before the time:** it re-runs the no-reply check. A reply cancels the queued messages and puts "Akshay: <name> replied, scheduled WhatsApp cancelled" on his list.
+- **After the time:** it reads the Blueticks status. If all were sent it logs and clears as before; if any failed it reports a failure.
+
+**Section 6** (r25/section6-535.md, the WHATSAPP CHASE 5/ step) tells inbox actions to keep a send time from Your call as that Claude note line, so the WhatsApp routine can find it after Your call is cleared.
+
+The duplicate-reply fix and the 7-day-per-person limit are kept. **WhatsApp is now 37,467 bytes.**
+
 ## URGENT, 10 Nov 20:30 JST: one inbound got two replies (TYC, Abhinav; 17:44 and 19:44 JST)
 
 **Cause.**
@@ -81,7 +102,7 @@ Each was built twice, byte-identical. The Zoya builds were also rebuilt from a f
 
 | Routine | Base (live) | Build | Bytes / sha256 |
 |---|---|---|---|
-| WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 36,107 / c3cc25dbf19ad48a |
+| WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 37,467 / a2644ef5f9adf632 |
 | Inbox actions | r24 845d0a41 | r25/actions.txt | 48,332 / b9101c39987ca605 |
 | Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin 205a2e6) | 15,696 / 6761f7d0cc83120f |
 | Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **205a2e6** | 94,757 / 8a203da2cdf565cd |

@@ -29,7 +29,7 @@ WHATSAPP CHASE (decision 486, Akshay, 6 Nov: "go, I will review each draft"; dec
 
 4/ Write the Next action segment "Akshay: tick Send WhatsApp: chaser to <first name> (<D Mon>)", put Akshay in Waiting on, write the Claude note line ("YYYY-MM-DD: Akshay's call: '<text>'; WhatsApp draft written") and clear Your call.
 
-5/ His answer is the tick: "Send WhatsApp" ticked approves exactly the text in "WhatsApp draft" at that moment, his edits included. He changes it by editing the column, or in Your call (Zoya redrafts in place, never while it's ticked). "no" in Your call: clear the column and the segment; the page body copy stays as history.
+5/ His answer is the tick: "Send WhatsApp" ticked approves exactly the text in "WhatsApp draft" at that moment, his edits included. He changes it by editing the column, or in Your call (Zoya redrafts in place, never while it's ticked). "no" in Your call: clear the column and the segment; the page body copy stays as history. A send day or time in his Your call for a row with a WhatsApp draft ("send tue 10am", "thursday 6pm"; Akshay, 10 Nov: "I will put the send day/time in my call. don't schedule."): keep his words as the Claude note line "YYYY-MM-DD: Akshay's call: '<text>' (WhatsApp send time)" and clear Your call; nothing else. The WhatsApp routine sends at that time (IST unless he names a zone); with no time named it sends at its next run. Never choose a time yourself.
 
 6/ Never send it from inbox actions. The WhatsApp routine's STEP 0w sends a ticked draft, from Akshay's WhatsApp, one message per line, after its reply check, outside quiet hours, within 20 sets a day.
 
