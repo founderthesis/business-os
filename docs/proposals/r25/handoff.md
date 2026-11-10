@@ -121,6 +121,18 @@ What the step does with each draft:
 
 **3. Number enrichment: dropped from this build (CTO, 10 Nov).** The CTO is running it from the CTO session, since Akshay asked for it now. The read-only script Main wrote (`migration/wa_numbers.py`) is removed here so there's one source. It's in commit 9a052ef if it's useful.
 
+## Change, 10 Nov: mail format (CTO, from Zoya SLOW 17:11)
+
+1. **No quoted history in a reply's plain-text body: not buildable as asked.** MCP Emails' `draft` reply takes "your message text only: the server adds the signature and the quoted original", for both bodies. There's no switch to leave the quote out, and `email_compose` send has no In-Reply-To or References field, so we can't build our own body and still thread. Two ways out, Akshay's or the CTO's call:
+   - (a) On a 517 chain (a forward from Saurabh), Zoya's first mail to the pitcher goes as a new mail: subject "Re: <subject>", To the pitcher, Cc Saurabh and Akshay, no quote. It loses threading in the pitcher's client.
+   - (b) Keep the reply and accept MCP's plain-text quote there. Gmail and most clients show the HTML part, so the pitcher sees the HTML quote; only plain-text readers see Saurabh's note. LEAK CHECK would then exempt Saurabh's forward note on a 517 chain.
+
+   I'd take (a) only if Saurabh's notes ever carry something the pitcher mustn't see; otherwise (b). Nothing built for this item.
+2. **A draft update doubled the quote: built.** The update passed draft_read's whole body (our text plus MCP's quote) back as the new text, and MCP added the quote again. The rule now reads "the plain-text body keeps MCP's own quote (add none; a draft update passes only your own text, never draft_read's)", in the hourly, the SLOW file and episodes.
+3. **Sattya's 26 Oct decision mail was one send.** Sent UIDs 646 and 647 share Message-ID 4b9d73dd-e37c-4910-a74d-b20749c8de2a@mcpemails.com. 646 carries the relay's Received header; 647 is the copy appended over IMAP. Any duplicate check that counts Sent copies must count by Message-ID (as the r22 rule already says), never by UID.
+
+Two cuts pay for item 2: "on un#, Built to Share and Human by Design no recording time" becomes "on client shows no recording time", and "(decision 446, above)" goes. The hourly stays at 62,998. The SLOW file and SLOW task change, so the pin moves to **8d5e291**.
+
 ## Builds
 
 Each was built twice, byte-identical. The Zoya builds were also rebuilt from a fresh worktree at f70901f with r25/zoya/build_one.patch. No new em dash.
@@ -129,24 +141,24 @@ Each was built twice, byte-identical. The Zoya builds were also rebuilt from a f
 |---|---|---|---|
 | WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 37,759 / 25ca6f44b5cbe1ea |
 | Inbox actions | r24 845d0a41 | r25/actions.txt | 48,332 / b9101c39987ca605 |
-| Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin a4a553f) | 15,687 / 179e14a574d076a6 |
-| Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **a4a553f** | 94,725 / e9ac59f86b4bbabf |
-| Zoya hourly | r24 459d1dd1 | r25/zoya/zoya-one.txt | 62,998 / ba816e8b94d604c9 |
+| Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin 8d5e291) | 15,627 / 31f8e0cd129bd833 |
+| Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **8d5e291** | 94,725 / 8da7011e50cf251c |
+| Zoya hourly | r24 459d1dd1 | r25/zoya/zoya-one.txt | 62,998 / 6285c89b725f4611 |
 | Inbox capture | r24 f64eb54e | r25/capture.txt | 50,724 / 73a73754fad00eec |
-| Zoya episodes (not live) | r24 1d238933 | r25/zoya/zoya-episodes.txt | 50,091 / 97dd915197ddfad9 |
+| Zoya episodes (not live) | r24 1d238933 | r25/zoya/zoya-episodes.txt | 50,091 / c47d0cf845e5f569 |
 
 Unchanged: calendar, capture, sweep, host boards and dossiers.
 
 **How to build:**
 - Non-Zoya: `python3 docs/proposals/r25/patch.py <wa|act> docs/proposals/r24/<whatsapp|actions>.txt <out>`.
-- Zoya: apply r25/zoya/build_one.patch at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin a4a553f37e1adb6f40030b08848a56850c097af8`.
+- Zoya: apply r25/zoya/build_one.patch at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 8d5e291c9fa70b6239fd3cdb6fab177d5ce2fd05`.
 
 **The section 6 paste:** r25/section6-535.md replaces the WHATSAPP CHASE block (the 522 text) and adds WHATSAPP INVITE. Paste it with inbox actions.
 
 **Deploy order:**
 1. Section 6 paste plus inbox actions.
 2. WhatsApp.
-3. Zoya pin a4a553f, then the SLOW task. The hourly is unchanged.
+3. Zoya pin 8d5e291, then the SLOW task and the hourly.
 
 ## For the CTO: unclear or needing a call
 
