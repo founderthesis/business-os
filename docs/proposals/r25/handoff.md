@@ -142,32 +142,40 @@ Two cuts pay for item 2: "on un#, Built to Share and Human by Design no recordin
 - **Section 6** (r25/section6-535.md): the chaser draft uses "1/ " and "2/ " when it has two messages, and never starts a line "<n>/ " inside a message. Quoted text from Akshay keeps his split.
 - **WhatsApp is now 38,109 / 2f3a236ff3986488;** section6-535.md is 6426 / f827086c134895a3. Inbox actions, capture and the Zoya builds don't change (Zoya's PaaS draft is a one-liner, so one message).
 
+## Change, 10 Nov: decision 539 (Akshay: "zoya should fix obvious spelling errors before sending")
+
+- **WhatsApp STEP 0w,** one line before 1/: in the draft, fix only obvious typos (podast -> podcast), never wording, case, punctuation, names, numbers, links or a doubtful word. The fixed draft is written back to the row (the one change allowed while ticked; 6/'s "no routine changes a ticked draft" now says "SPELLING aside"), with the Claude note line "YYYY-MM-DD: spelling fixed: <old> -> <new>". It runs before the key is taken, so the key hashes the text that goes.
+- **Zoya SENDING,** one line, in the hourly, the SLOW file and episodes: the same rule for any text of Akshay's own or approved (a mail draft, text from Your call), with the note line.
+- **Paid for** in the hourly by cutting descriptions, no rule: the Rules for Zoya and wording page summaries in the rules list, the client mails page summary shortened, decision 420's restatement (the next sentence says it) and a duplicated example in the never-describe-yourself list. **The hourly is 62,960.**
+- **Pin 617f81b.** The SLOW task is built with the full pin sha, as before. My 8d5e291 build in 7a2957f used the short sha by mistake (15,627); it's superseded.
+- **WhatsApp is now 38,411 / 516af09f52e35947.**
+
 ## Builds
 
 Each was built twice, byte-identical. The Zoya builds were also rebuilt from a fresh worktree at f70901f with r25/zoya/build_one.patch. No new em dash.
 
 | Routine | Base (live) | Build | Bytes / sha256 |
 |---|---|---|---|
-| WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 38,109 / 2f3a236ff3986488 |
+| WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 38,411 / 516af09f52e35947 |
 | Inbox actions | r24 845d0a41 | r25/actions.txt | 48,332 / b9101c39987ca605 |
-| Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin 8d5e291) | 15,627 / 31f8e0cd129bd833 |
-| Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **8d5e291** | 94,725 / 8da7011e50cf251c |
-| Zoya hourly | r24 459d1dd1 | r25/zoya/zoya-one.txt | 62,998 / 6285c89b725f4611 |
+| Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin 617f81b) | 15,660 / 3ce32ab7e46241d0 |
+| Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **617f81b** | 94,687 / 8b249fe624cd09f6 |
+| Zoya hourly | r24 459d1dd1 | r25/zoya/zoya-one.txt | 62,960 / db09dc47d054cd00 |
 | Inbox capture | r24 f64eb54e | r25/capture.txt | 50,724 / 73a73754fad00eec |
-| Zoya episodes (not live) | r24 1d238933 | r25/zoya/zoya-episodes.txt | 50,091 / c47d0cf845e5f569 |
+| Zoya episodes (not live) | r24 1d238933 | r25/zoya/zoya-episodes.txt | 50,053 / 86ae49ee224cef0e |
 
 Unchanged: calendar, capture, sweep, host boards and dossiers.
 
 **How to build:**
 - Non-Zoya: `python3 docs/proposals/r25/patch.py <wa|act> docs/proposals/r24/<whatsapp|actions>.txt <out>`.
-- Zoya: apply r25/zoya/build_one.patch at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 8d5e291c9fa70b6239fd3cdb6fab177d5ce2fd05`.
+- Zoya: apply r25/zoya/build_one.patch at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 617f81b8e3e644f31a7ed39ddf9fdfe69b0e4475`.
 
 **The section 6 paste:** r25/section6-535.md replaces the WHATSAPP CHASE block (the 522 text) and adds WHATSAPP INVITE. Paste it with inbox actions.
 
 **Deploy order:**
 1. Section 6 paste plus inbox actions.
 2. WhatsApp.
-3. Zoya pin 8d5e291, then the SLOW task and the hourly.
+3. Zoya pin 617f81b, then the SLOW task and the hourly.
 
 ## For the CTO: unclear or needing a call
 
