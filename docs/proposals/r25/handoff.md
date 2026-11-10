@@ -166,13 +166,21 @@ Two cuts pay for item 2: "on un#, Built to Share and Human by Design no recordin
 - **The hourly is now 62,992 / 1e4433434f13808b.**
 - **For the ledger:** CLAUDE.md's short-links list names only zencastr.app.link/<room>. The zencastr.com/record form needs a decision row (or Akshay's ok) and a line in that list.
 
+## Change, 11 Nov: Cleanup's send-time fixes (CTO, before deploy)
+
+- **A day or time with no full date** ("tue 10am", "6pm") is the next such time after the date he wrote it (the note line's date), never a past one.
+- **A time already past at the run** sends now only if he wrote a full date. Otherwise nothing goes and his list gets "Akshay: WhatsApp time '<his words>' passed: new time? (<D Mon>)".
+- **Never a second queued set:** besides the "Zoya scheduled" Activity on the key, a "WhatsApp scheduled for" note line on the row whose ids scheduled_messages_read still shows pending blocks any new queue. This catches an edited draft, whose key changes.
+- **Re-tick or edit while queued:** a re-tick, or a draft whose sha12 no longer matches the scheduled Activity's key, with ids still pending: each id is cancelled first, Claude note line "YYYY-MM-DD: scheduled WhatsApp cancelled (re-ticked or edited)", then it's handled as a new draft (ticked: TIMING again; unticked: it waits).
+- **WhatsApp is now 39,051 / 7dd78bbfe2e610a8.** Nothing else changes; section 6 already keeps his words with the note line's date.
+
 ## Builds
 
 Each was built twice, byte-identical. The Zoya builds were also rebuilt from a fresh worktree at f70901f with r25/zoya/build_one.patch. No new em dash.
 
 | Routine | Base (live) | Build | Bytes / sha256 |
 |---|---|---|---|
-| WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 38,411 / 516af09f52e35947 |
+| WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 39,051 / 7dd78bbfe2e610a8 |
 | Inbox actions | r24 845d0a41 | r25/actions.txt | 48,386 / 7c1c98496f6e6c99 |
 | Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin 617f81b) | 15,660 / 3ce32ab7e46241d0 |
 | Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **617f81b** | 94,687 / 8b249fe624cd09f6 |
