@@ -133,13 +133,22 @@ What the step does with each draft:
 
 Two cuts pay for item 2: "on un#, Built to Share and Human by Design no recording time" becomes "on client shows no recording time", and "(decision 446, above)" goes. The hourly stays at 62,998. The SLOW file and SLOW task change, so the pin moves to **8d5e291**.
 
+## Change, 10 Nov: "<n>/ " starts a new WhatsApp message (Akshay, tested on his second number)
+
+- **WhatsApp STEP 0w 1/** splits the draft in Bash python. A line starting "<n>/ " (1/, 2/, 3/ ...) starts a new message, which runs to the next such line. The prefix and blank lines at each end are stripped. Text before the first marker is a message too. A draft with no marker is one message. "[standing: ...]" and "[to: ...]" lines are never sent.
+- **Sending:** each message in order, to the same chat, a Bash sleep 5 between them (scheduled sends: 5 seconds apart, was 20).
+- **One Activity per set,** with the sent text and every message id in its body. The key, the 20-a-day cap and the 7-day rule count the set as one send, as before.
+- **The old "one message per line" rule and the "[one message]" blocks are gone.** The standing invite writer (0a e0) and section 6's WHATSAPP INVITE now put "1/ ", "2/ " ... before each template message, with the member list one message.
+- **Section 6** (r25/section6-535.md): the chaser draft uses "1/ " and "2/ " when it has two messages, and never starts a line "<n>/ " inside a message. Quoted text from Akshay keeps his split.
+- **WhatsApp is now 38,109 / 2f3a236ff3986488;** section6-535.md is 6426 / f827086c134895a3. Inbox actions, capture and the Zoya builds don't change (Zoya's PaaS draft is a one-liner, so one message).
+
 ## Builds
 
 Each was built twice, byte-identical. The Zoya builds were also rebuilt from a fresh worktree at f70901f with r25/zoya/build_one.patch. No new em dash.
 
 | Routine | Base (live) | Build | Bytes / sha256 |
 |---|---|---|---|
-| WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 37,759 / 25ca6f44b5cbe1ea |
+| WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 38,109 / 2f3a236ff3986488 |
 | Inbox actions | r24 845d0a41 | r25/actions.txt | 48,332 / b9101c39987ca605 |
 | Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin 8d5e291) | 15,627 / 31f8e0cd129bd833 |
 | Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **8d5e291** | 94,725 / 8da7011e50cf251c |
