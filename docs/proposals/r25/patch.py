@@ -1,6 +1,7 @@
 """r25 item 1: WhatsApp automation (decisions 535 and 537, Akshay, 10 Nov; spec 41419a301a7f8130a4ebeabffd289e35,
 templates 41419a301a7f81ea8e73e0deb08052aa). Built on the live r24 prompts (deploy 311e607).
-Usage: python3 patch.py <wa|act> <live input> <out>; inputs r24/whatsapp.txt (bec8c1e1), r24/actions.txt (845d0a41).
+Usage: python3 patch.py <wa|act|cap> <live input> <out>; inputs r24/whatsapp.txt (bec8c1e1), r24/actions.txt (845d0a41),
+r24/capture.txt (f64eb54e, decision 538).
 - wa: STEP 0w becomes the one SEND step (ticked drafts and checked standing templates, the 486/522 chaser path folded
   in); 0a e0 writes the standing community invite; STEP 3n is the Saturday community news scan (drafts only).
 - act: the section 6 pointer says the chaser goes in the WhatsApp draft column for Akshay's tick.
@@ -8,7 +9,7 @@ Each edit is asserted once (a span edit: each marker once, end after start); no 
 import sys, hashlib
 which, src, out = sys.argv[1], sys.argv[2], sys.argv[3]
 b = open(src, "rb").read()
-BASE = {"wa": "bec8c1e1", "act": "845d0a41"}
+BASE = {"wa": "bec8c1e1", "act": "845d0a41", "cap": "f64eb54e"}
 assert hashlib.sha256(b).hexdigest().startswith(BASE[which]), "not the live %s" % which
 s = b.decode("utf-8")
 TPL = "41419a301a7f81ea8e73e0deb08052aa"
@@ -35,6 +36,11 @@ INVITE = ("Reply \"Zoya ✨ noted: <name> is on your invite list\" (decision 310
  "Then, when they have recorded (decision 537), write the standing invite on their Founder Thesis Engagement's \"WhatsApp draft\" unless it holds text: the line \"[standing: community-invite]\", then the community invite lines from the templates page (" + TPL + ", section 1) with {first name} from People and {rounded member count} and the member list (between a line \"[one message]\" and a line \"[/one message]\") from the invite kit page; Claude note line \"YYYY-MM-DD: Akshay's call: 'invite <name>' (WhatsApp); standing invite drafted\". STEP 0w sends it this run or the next. Reply \"Zoya ✨ noted: <name> is on your invite list\" (decision 310), plus \"invite goes out at the next run\" when drafted, or \"no WhatsApp number on their People row\" when it has none.")
 NEWS = ("\nSTEP 3n. COMMUNITY NEWS (decision 535; the first run on a Saturday, JST; drafts only, never a send). For FT Community rows at Added, at most 25 a run, those with no \"news checked\" Activity in the last 28 days first: web search for news about the member or their company in the last 7 days (funding, launch, award, listing). Each hit you verify (an article with a URL and a date within those 7 days), on a member with no news post Activity in the last 90 days: on their Founder Thesis Engagement, unless its \"WhatsApp draft\" holds text, write the draft: the line \"[to: group The Founder Thesis Community, tag <full name>]\", then a fresh short post in Akshay's voice (not a template, Akshay, 10 Nov: \"don't templatise it\"): lowercase, 1 to 3 lines, tags the member as \"@<their name>\", includes the article link, no em dashes, nothing private; add \"Akshay: tick Send WhatsApp: news post for <first name> (<D Mon>)\", Akshay in Waiting on. One Activity per member checked, Summary \"news checked: <name> (<hit or none>)\".\n")
 EDITS = {
+"cap": [
+ # Decision 538 (Akshay, 10 Nov): a pitch's Show comes from what it names or fits, not the address it reached.
+ ("Show = the one of ours the mail names (un#, which mail may call Unhashed; Built to Share; Human by Design); anything else is Founder Thesis.",
+  "Show = the one of ours the mail names (un#, which mail may call Unhashed; Built to Share; Human by Design); anything else is Founder Thesis. The address it came to alone never decides: a pitch to a client-show inbox (un#, Built to Share, Human by Design) with no link to that show's subject (un#: crypto and web3; Built to Share: teams, leadership, ownership; Human by Design: AI and human outcomes) is Founder Thesis (decision 538)."),
+],
 "wa": [
  ("for STEP 0d also Gmail and MCP Emails (read only) and Google Calendar", "for STEP 0d and STEP 0w's reply check also Gmail and MCP Emails (read only), and for 0d Google Calendar"),
  ("and STEP 0w sends one guest chaser as Akshay, only the text he approved, to that person's number (decisions 486, 519).",

@@ -657,10 +657,10 @@ index 0000000..4ad550c
 +]
 diff --git a/routines/zoya/r25_edits.py b/routines/zoya/r25_edits.py
 new file mode 100644
-index 0000000..bd85153
+index 0000000..4d5f131
 --- /dev/null
 +++ b/routines/zoya/r25_edits.py
-@@ -0,0 +1,44 @@
+@@ -0,0 +1,52 @@
 +# r25 (CTO, 10 Nov; decisions 535 and 537, and Akshay, 10 Nov: "don't automate paas messages"): SLOW's PaaS
 +# follow-ups become WhatsApp drafts for Akshay's tick (approve-each, never standing); no number, or after follow-up 2,
 +# the row goes to his list.
@@ -704,4 +704,12 @@ index 0000000..bd85153
 + (('one', 'slowwork', 'episodes', 'slowtask'), ' (6 Nov, the Dinesh case)', ''),
 + (('one', 'slowwork', 'episodes'), 'themselves (Akshay, 2 Nov: then they are added back if missing)', 'themselves (then they are added back if missing)'),
 + (('one', 'slowwork', 'episodes'), 'then he stays in Cc (Akshay, 2 Nov)', 'then he stays in Cc'),
++]
++# Decision 538 (Akshay, 10 Nov): a pitch's Show comes from its subject, never the inbox address alone; cuts pay for it.
++R22 += [
++ (('one',), 'as inbox capture STEP 3 creates it (a pitch: Status New,', 'as inbox capture STEP 3 creates it (a pitch: Show by subject, not inbox alone, decision 538; Status New,'),
++ (('one', 'slowwork'), ' (Cleanup C1)', ''),
++ (('one', 'episodes', 'slowtask'), '(L1, Cleanup)', '(L1)'),
++ (('one', 'slowwork', 'episodes'), 'GUESTS AND THE FORM (6 Nov)', 'GUESTS AND THE FORM'),
++ (('one', 'slowwork', 'episodes'), "(Akshay's decision, his Your call, or the Activity that recorded it)", "(Akshay's decision or call, or the Activity recording it)"),
 +]

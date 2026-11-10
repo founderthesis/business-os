@@ -8,6 +8,19 @@ Main, 10 Nov. CTO ask of 17:55 JST, built on the live r24 prompts (deploy 311e60
 - **WhatsApp STEP 0w accepts only two standing templates:** community-invite and release-day. A "[standing: paas-...]" line would fail its check and go to Akshay.
 - **Below:** wherever this hand-off says "paas-1 or paas-2" is standing, read it as approve-each.
 
+## Change, 10 Nov: decision 538 (a pitch's Show comes from its subject, not the inbox it reached)
+
+The case was Sung Hong at Patlytics: AI patent software, pitched only to the un# inbox, filed on un# and eval'd Decline for not being crypto. The CTO has moved that row to FT by hand.
+
+- **Inbox capture STEP 3** (live r24 f64eb54e, now 50,724 / 73a73754): the Show line gets the CTO's sentence as written:
+  > "The address it came to alone never decides: a pitch to a client-show inbox (un#, Built to Share, Human by Design) with no link to that show's subject (un#: crypto and web3; Built to Share: teams, leadership, ownership; Human by Design: AI and human outcomes) is Founder Thesis (decision 538)."
+
+  The repo copy routines/inbox.md gets the same sentence.
+- **Zoya hourly STEP 1** (parts/mail.txt): where she creates a row "as inbox capture STEP 3 creates it", it now reads "(a pitch: Show by subject, not inbox alone, decision 538; ...)".
+  - Four cuts pay for it: "(Cleanup C1)", "(L1, Cleanup)" becomes "(L1)", "GUESTS AND THE FORM (6 Nov)" loses its date, and one parenthesis is shortened.
+  - The hourly is 62,998 bytes, under 63,000.
+  - Those cuts also reach the SLOW file and the SLOW task, so the pin moves to **a4a553f**. SLOW has no rule change.
+
 ## Change, 10 Nov: send at the time Akshay names (Akshay: "I will put the send day/time in my call. don't schedule.")
 
 **WhatsApp STEP 0w TIMING.** A ticked draft goes at the day and time Akshay names. It reads that from the row's Your call, or from the Claude note line inbox actions keeps of his call: "Akshay's call: '...' (WhatsApp send time)". The time is IST unless he names a zone.
@@ -47,7 +60,7 @@ The duplicate-reply fix and the 7-day-per-person limit are kept. **WhatsApp is n
 - **Paying for it:** I cut dates and item numbers from cited rules in the hourly ("(decision 438; Akshay, 5 Nov, item 15)" becomes "(decision 438)" and so on), the duplicated decision 490 example list, two incident notes and one example. Every rule and decision number stays. **The hourly is 62,991 bytes, under 63,000.**
 - **The pin moves to 205a2e6.** The SLOW file also carries the WhatsApp change below.
 
-**Deploying the hourly alone:** the hourly can go ahead of the rest of r25. It doesn't depend on the WhatsApp build. If it goes first, SLOW should follow soon on pin 205a2e6, because SLOW shares the Sent check and the key form. Until then, the live SLOW still keys with a time, but the new hourly's lookup matches either form.
+**Deploying the hourly alone:** the hourly can go ahead of the rest of r25. It doesn't depend on the WhatsApp build. If it goes first, SLOW should follow soon on pin a4a553f, because SLOW shares the Sent check and the key form. Until then, the live SLOW still keys with a time, but the new hourly's lookup matches either form.
 
 ## Change, 10 Nov (CTO's answers)
 
@@ -104,23 +117,24 @@ Each was built twice, byte-identical. The Zoya builds were also rebuilt from a f
 |---|---|---|---|
 | WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 37,467 / a2644ef5f9adf632 |
 | Inbox actions | r24 845d0a41 | r25/actions.txt | 48,332 / b9101c39987ca605 |
-| Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin 205a2e6) | 15,696 / 6761f7d0cc83120f |
-| Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **205a2e6** | 94,757 / 8a203da2cdf565cd |
-| Zoya hourly | r24 459d1dd1 | r25/zoya/zoya-one.txt | 62,991 / 023a82dddad6bd76 |
-| Zoya episodes (not live) | r24 1d238933 | r25/zoya/zoya-episodes.txt | 50,119 / 59dc83d148c74d59 |
+| Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin a4a553f) | 15,687 / 179e14a574d076a6 |
+| Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **a4a553f** | 94,725 / e9ac59f86b4bbabf |
+| Zoya hourly | r24 459d1dd1 | r25/zoya/zoya-one.txt | 62,998 / ba816e8b94d604c9 |
+| Inbox capture | r24 f64eb54e | r25/capture.txt | 50,724 / 73a73754fad00eec |
+| Zoya episodes (not live) | r24 1d238933 | r25/zoya/zoya-episodes.txt | 50,091 / 97dd915197ddfad9 |
 
 Unchanged: calendar, capture, sweep, host boards and dossiers.
 
 **How to build:**
 - Non-Zoya: `python3 docs/proposals/r25/patch.py <wa|act> docs/proposals/r24/<whatsapp|actions>.txt <out>`.
-- Zoya: apply r25/zoya/build_one.patch at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 205a2e6588146d53dc2ea465c63d3d5f445d0b11`.
+- Zoya: apply r25/zoya/build_one.patch at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin a4a553f37e1adb6f40030b08848a56850c097af8`.
 
 **The section 6 paste:** r25/section6-535.md replaces the WHATSAPP CHASE block (the 522 text) and adds WHATSAPP INVITE. Paste it with inbox actions.
 
 **Deploy order:**
 1. Section 6 paste plus inbox actions.
 2. WhatsApp.
-3. Zoya pin 205a2e6, then the SLOW task. The hourly is unchanged.
+3. Zoya pin a4a553f, then the SLOW task. The hourly is unchanged.
 
 ## For the CTO: unclear or needing a call
 
