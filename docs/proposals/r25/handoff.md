@@ -41,14 +41,7 @@ What the step does with each draft:
   - A verified hit, on a member with no post in 90 days, becomes a fresh post draft on their FT row, tagging them, with the link, for his tick.
   - Drafts only.
 
-**3. Number enrichment: `migration/wa_numbers.py`.** Read-only.
-- **Inputs:** a People snapshot and a Blueticks contact-chats snapshot.
-- **Matching:** it matches People with no Phone by the exact normalised full name, or the name plus their organisation, in either order.
-- **Outputs:**
-  - `data/.../wa-numbers-review.csv`;
-  - `wa-numbers-plan.json` with the unique matches only. Anything ambiguous, or a number already on another People row, goes to review.
-- It writes nothing. The CTO writes the plan after his go.
-- Tested on a synthetic set: a unique match, two same-name chats, a number already used, and a group, which it ignores.
+**3. Number enrichment: dropped from this build (CTO, 10 Nov).** The CTO is running it from the CTO session, since Akshay asked for it now. The read-only script Main wrote (`migration/wa_numbers.py`) is removed here so there's one source. It's in commit 9a052ef if it's useful.
 
 ## Builds
 
@@ -74,13 +67,12 @@ Unchanged: calendar, capture, sweep, host boards and dossiers.
 1. Section 6 paste plus inbox actions.
 2. WhatsApp.
 3. Zoya pin 8110ebe, then the SLOW task. The hourly is unchanged.
-4. After review: the enrichment run and its writes.
 
 ## For the CTO: unclear or needing a call
 
 1. **PaaS timing replaces decision 496's reminders.** The old reminders were day 4 and 10 (New or Contacted) and day 3 and 10 (after a proposal). Under 535 and 537 they become the WhatsApp follow-ups at 7 and 14 quiet days, and the mail-only reminder stays only where there's no number. Confirm that's the intent.
 2. **Spec section 4's "one WhatsApp per person per 7 days, apart from replies"** isn't in "Your comments, applied", so I didn't build it. Say if it stands.
 3. **The release-day writer is the Episode copywriter chat,** whose instructions aren't in this repo. For STEP 0w to accept a release-day draft, that chat has to write the draft starting "[standing: release-day]", with the Episode's Short link and Ranjita's post link, plus the Claude note line "YYYY-MM-DD: release-day WhatsApp drafted (Episode copywriter chat)" on the guest's row. Without the line, the draft goes to Akshay for a tick. The template's "PR in a separate message only if they handled the booking" isn't automated; it's a ticked draft.
-4. **Numbers:** dropping 519's lookup means more "no WhatsApp number" asks until the enrichment writes land. I'd run the enrichment before, or with, the deploy.
+4. **Numbers:** dropping 519's lookup means more "no WhatsApp number" asks until the CTO's enrichment writes land. Best if they land before this deploys.
 5. **SLOW is still blocked** (Opus access, 10 Nov), so no PaaS drafts get written until it runs again, on Sonnet or Opus.
 6. **Standing lines rest on note markers.** A standing draft is trusted because of its "[standing: ...]" line plus the matching Claude note line that only the authorised writer adds. Anyone on the team with Notion edit access could still forge one; I judged that acceptable inside the team.
