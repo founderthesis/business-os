@@ -8,6 +8,26 @@ Main, 10 Nov. CTO ask of 17:55 JST, built on the live r24 prompts (deploy 311e60
 - **WhatsApp STEP 0w accepts only two standing templates:** community-invite and release-day. A "[standing: paas-...]" line would fail its check and go to Akshay.
 - **Below:** wherever this hand-off says "paas-1 or paas-2" is standing, read it as approve-each.
 
+## URGENT, 10 Nov 20:30 JST: one inbound got two replies (TYC, Abhinav; 17:44 and 19:44 JST)
+
+**Cause.**
+- The 19:39 run raised the reply action again with its own time in the key ("...:reply:msg-...:2026-11-10T19:44:00+09:00").
+- The Sent check looks for our mail "since the action was raised", so it looked only after 19:44 and missed the 17:44 reply.
+- The run also says it skipped the Sent check.
+
+**Fix, in the hourly, the SLOW file and episodes:**
+- **(a) A reply's key carries no time:** "<engagement page id>:reply:msg-<the inbound's Message-ID>[-n]", or "uid-<inbox>-<UID>" when there's no Message-ID. One reply per inbound, ever. Its raised time is the inbound's own Date. The short form is "Zoya [reply msg-<id>-n]".
+- **(b) The Sent check runs in a Bash python step, never by eye, never skipped, early exit or not:**
+  - The step is given the thread and Sent as read: each message's From, Date and Message-ID, in a quoted heredoc.
+  - It finds an Activity holding any key that starts "<row>:reply:msg-<id>", with or without a time, so older timestamped keys still match.
+  - It then lists our messages to that recipient on the thread since the inbound's Date: yours, or ad@'s other than a loop-in.
+  - A match means "completed match"; nothing is sent.
+- **SLOW's OUTCOME CHECK** accepts the timeless reply key form.
+- **Paying for it:** I cut dates and item numbers from cited rules in the hourly ("(decision 438; Akshay, 5 Nov, item 15)" becomes "(decision 438)" and so on), the duplicated decision 490 example list, two incident notes and one example. Every rule and decision number stays. **The hourly is 62,991 bytes, under 63,000.**
+- **The pin moves to 205a2e6.** The SLOW file also carries the WhatsApp change below.
+
+**Deploying the hourly alone:** the hourly can go ahead of the rest of r25. It doesn't depend on the WhatsApp build. If it goes first, SLOW should follow soon on pin 205a2e6, because SLOW shares the Sent check and the key form. Until then, the live SLOW still keys with a time, but the new hourly's lookup matches either form.
+
 ## Change, 10 Nov (CTO's answers)
 
 - **One WhatsApp set per person per 7 days** (spec section 4) is now in STEP 0w 3/. It counts only sets this routine sent from Akshay's number (Activities "Akshay to <name> on WhatsApp", keys wa-send: or wa-chase:); his own typed replies never count. A draft that would break it waits untouched until the day it may go. Group news posts are exempt; they keep their one-per-member-a-quarter rule.
@@ -63,22 +83,23 @@ Each was built twice, byte-identical. The Zoya builds were also rebuilt from a f
 |---|---|---|---|
 | WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 36,107 / c3cc25dbf19ad48a |
 | Inbox actions | r24 845d0a41 | r25/actions.txt | 48,332 / b9101c39987ca605 |
-| Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin f6793c2) | 15,949 / b13ee043dfc8ce2f |
-| Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **f6793c2** | 94,554 / 76080f19ee5675fd |
-| Zoya hourly | unchanged | r24/zoya/zoya-one.txt | 62,978 / 459d1dd19f1b4d8a |
+| Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin 205a2e6) | 15,696 / 6761f7d0cc83120f |
+| Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **205a2e6** | 94,757 / 8a203da2cdf565cd |
+| Zoya hourly | r24 459d1dd1 | r25/zoya/zoya-one.txt | 62,991 / 023a82dddad6bd76 |
+| Zoya episodes (not live) | r24 1d238933 | r25/zoya/zoya-episodes.txt | 50,119 / 59dc83d148c74d59 |
 
 Unchanged: calendar, capture, sweep, host boards and dossiers.
 
 **How to build:**
 - Non-Zoya: `python3 docs/proposals/r25/patch.py <wa|act> docs/proposals/r24/<whatsapp|actions>.txt <out>`.
-- Zoya: apply r25/zoya/build_one.patch at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin f6793c223a268f3d013c8bf93157b3955163adbd`.
+- Zoya: apply r25/zoya/build_one.patch at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 205a2e6588146d53dc2ea465c63d3d5f445d0b11`.
 
 **The section 6 paste:** r25/section6-535.md replaces the WHATSAPP CHASE block (the 522 text) and adds WHATSAPP INVITE. Paste it with inbox actions.
 
 **Deploy order:**
 1. Section 6 paste plus inbox actions.
 2. WhatsApp.
-3. Zoya pin f6793c2, then the SLOW task. The hourly is unchanged.
+3. Zoya pin 205a2e6, then the SLOW task. The hourly is unchanged.
 
 ## For the CTO: unclear or needing a call
 
