@@ -124,3 +124,17 @@ STEP 2b and 2c reuse it, and Gmail stays read-only.
 
 - **N4.** Per decision 541, the cloud Evals session runs routines/cowork-evals.md, so this pushed file may already be live there. If so, E1 and E2 should go in now rather than wait for a deploy.
 - **N5.** This adds Gmail connector calls from a routine. Decision 435 kept Gmail for chat sessions because of quota. The evals routine already read threads through Gmail before this change, so it isn't new exposure, but it now makes one download call per attachment. Watch the morning check for Gmail 429s.
+
+## Addendum, same review: 7f2241d (M2 done), e612d36, eda0bb7
+
+- **M2 is done in 7f2241d.**
+  - A day or time without a full date is "the next such time after the date he wrote it, never a past one".
+  - A past time sends now only if he wrote a full date. Otherwise it goes on Akshay's list as "time passed: new time?".
+  - It also covers my T4: a queued set with pending Blueticks ids blocks a second queue, and a re-tick or an edited draft cancels the pending ids first.
+  - SPELLING runs before the key is built, so a typo fix doesn't cancel its own queued set.
+  - Accepted. WhatsApp was rebuilt twice: **39,051 / 7dd78bbfe2e610a8d256c441ffc873c0307ed86aab77ee976ef1d53522d7156b**. This replaces row 3 of the table above.
+  - Section 6 is unchanged (f827086c).
+- **e612d36.** Main 2 took the attachments step back out of the live routines/cowork-evals.md. It now sits in docs/proposals/evals-attachments.md, so N4 no longer applies. E1 and E2 apply to that proposal.
+- **eda0bb7.** Main 2's own drift diff confirms the live calendar prompt is 62,916 / c613af00, the same as my read. Section 2 stands: rebuild on r24/calendar.txt.
+
+**The r25 table now waits only on M1, the hourly row create.** Everything else in the table is final: section 6 and actions, capture, WhatsApp 7dd78bbf, and the pin with the SLOW task. When M1 lands, I'll check the hourly and the SLOW task delta alone.
