@@ -2,6 +2,12 @@
 
 Main, 10 Nov. CTO ask of 17:55 JST, built on the live r24 prompts (deploy 311e607). Spec 41419a301a7f8130a4ebeabffd289e35, including "Your comments, applied"; templates 41419a301a7f81ea8e73e0deb08052aa. Both decisions are in force in the ledger. Nothing is deployed, the pin ref isn't moved, and nothing was written to Notion.
 
+## Change, 10 Nov (Akshay: "don't automate paas messages - propose the draft to me and I will finalise and check the box")
+
+- **PaaS follow-ups 1 and 2 are approve-each, not standing.** SLOW writes the one-liner into "WhatsApp draft", never with a "[standing: ...]" line, plus "Akshay: tick Send WhatsApp: PaaS follow-up for <first name> (<D Mon>)" with Akshay in Waiting on. Nothing goes out on a PaaS row without his tick.
+- **WhatsApp STEP 0w accepts only two standing templates:** community-invite and release-day. A "[standing: paas-...]" line would fail its check and go to Akshay.
+- **Below:** wherever this hand-off says "paas-1 or paas-2" is standing, read it as approve-each.
+
 ## What's in it
 
 **1. WhatsApp routine: one SEND step (STEP 0w, rewritten).** It sends from Akshay's number only:
@@ -49,24 +55,24 @@ Each was built twice, byte-identical. The Zoya builds were also rebuilt from a f
 
 | Routine | Base (live) | Build | Bytes / sha256 |
 |---|---|---|---|
-| WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 35,819 / b51887dba0a07f8b |
+| WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 35,841 / 6cfe881a09d57625 |
 | Inbox actions | r24 845d0a41 | r25/actions.txt | 48,332 / b9101c39987ca605 |
-| Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin 8110ebe) | 15,949 / 62204b6dd14850c7 |
-| Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **8110ebe** | 94,283 / a4e4ba977245e9c9 |
+| Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin f6793c2) | 15,949 / b13ee043dfc8ce2f |
+| Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **f6793c2** | 94,554 / 76080f19ee5675fd |
 | Zoya hourly | unchanged | r24/zoya/zoya-one.txt | 62,978 / 459d1dd19f1b4d8a |
 
 Unchanged: calendar, capture, sweep, host boards and dossiers.
 
 **How to build:**
 - Non-Zoya: `python3 docs/proposals/r25/patch.py <wa|act> docs/proposals/r24/<whatsapp|actions>.txt <out>`.
-- Zoya: apply r25/zoya/build_one.patch at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 8110ebeec06091c17265e539436dd0c035dd99dd`.
+- Zoya: apply r25/zoya/build_one.patch at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin f6793c223a268f3d013c8bf93157b3955163adbd`.
 
 **The section 6 paste:** r25/section6-535.md replaces the WHATSAPP CHASE block (the 522 text) and adds WHATSAPP INVITE. Paste it with inbox actions.
 
 **Deploy order:**
 1. Section 6 paste plus inbox actions.
 2. WhatsApp.
-3. Zoya pin 8110ebe, then the SLOW task. The hourly is unchanged.
+3. Zoya pin f6793c2, then the SLOW task. The hourly is unchanged.
 
 ## For the CTO: unclear or needing a call
 
