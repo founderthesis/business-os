@@ -8,6 +8,18 @@ Main, 10 Nov. CTO ask of 17:55 JST, built on the live r24 prompts (deploy 311e60
 - **WhatsApp STEP 0w accepts only two standing templates:** community-invite and release-day. A "[standing: paas-...]" line would fail its check and go to Akshay.
 - **Below:** wherever this hand-off says "paas-1 or paas-2" is standing, read it as approve-each.
 
+## Change, 10 Nov 20:45 JST: Cleanup's S1 and S2 (verdict 96bdfb8, accepted at 169abf1)
+
+- **The 7-day per-person limit** is already in STEP 0w 3/ (since 4f55763). It's unchanged.
+- **S1:** the community-invite check now accepts only the two exact note lines its writers produce, naming this person:
+  - "Akshay's call: 'invite <name>' (WhatsApp); standing invite drafted", from STEP 0a e0;
+  - "Akshay's call: 'invite <name>'; standing invite drafted", from section 6.
+
+  Any other note quoting "invite" doesn't count.
+- **S2:** NO REPLY also holds a draft when any Email in Activity from their side (Guest, Via or a Stakeholder) is on the row, dated after the draft was written. That covers a PR or EA replying by mail for the guest. It applies at a scheduled re-check too.
+- S3 is unchanged. S4 (moving the open 522-era "Zoya: send the approved WhatsApp" rows) is the CTO's, before deploy.
+- **WhatsApp is now 37,759 / 25ca6f44b5cbe1ea.** Nothing else changed.
+
 ## Change, 10 Nov: decision 538 (a pitch's Show comes from its subject, not the inbox it reached)
 
 The case was Sung Hong at Patlytics: AI patent software, pitched only to the un# inbox, filed on un# and eval'd Decline for not being crypto. The CTO has moved that row to FT by hand.
@@ -115,7 +127,7 @@ Each was built twice, byte-identical. The Zoya builds were also rebuilt from a f
 
 | Routine | Base (live) | Build | Bytes / sha256 |
 |---|---|---|---|
-| WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 37,467 / a2644ef5f9adf632 |
+| WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 37,759 / 25ca6f44b5cbe1ea |
 | Inbox actions | r24 845d0a41 | r25/actions.txt | 48,332 / b9101c39987ca605 |
 | Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin a4a553f) | 15,687 / 179e14a574d076a6 |
 | Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **a4a553f** | 94,725 / e9ac59f86b4bbabf |
