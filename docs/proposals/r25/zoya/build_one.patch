@@ -657,10 +657,10 @@ index 0000000..4ad550c
 +]
 diff --git a/routines/zoya/r25_edits.py b/routines/zoya/r25_edits.py
 new file mode 100644
-index 0000000..f637186
+index 0000000..2b3a711
 --- /dev/null
 +++ b/routines/zoya/r25_edits.py
-@@ -0,0 +1,81 @@
+@@ -0,0 +1,88 @@
 +# r25 (CTO, 10 Nov; decisions 535 and 537, and Akshay, 10 Nov: "don't automate paas messages"): SLOW's PaaS
 +# follow-ups become WhatsApp drafts for Akshay's tick (approve-each, never standing); no number, or after follow-up 2,
 +# the row goes to his list.
@@ -741,4 +741,11 @@ index 0000000..f637186
 + (('one',), 'the old zencastr.app.link URL', 'the old Zencastr URL'),
 + (('one',), '(a zencastr.app.link room link only as SENDING allows', '(a Zencastr room link only as SENDING allows'),
 + (('one',), "founderthesis.com (the show site and guests' written profiles)", 'founderthesis.com (show site, guest profiles)'),
++]
++# Cleanup M1 (decision 541): a pitch row Zoya creates starts on Akshay's list, like inbox capture's; cuts pay for it.
++R22 += [
++ (('one',), "Status New, Waiting on empty, nothing on Akshay's list; the evals routine takes it)", 'Status New, Waiting on Akshay, Next action "Akshay: new pitch from <PR or self> for <guest>, eval running (captured <D Mon HH:MM>)", decision 541)'),
++ (('one',), '(her correction; decision row to log)', '(her correction)'),
++ (('one',), '(a Zencastr room link only as SENDING allows, decision 445)', '(a Zencastr room link only as SENDING allows)'),
++ (('one',), 'recording-link mail and invite (STEP 0r, decision 445)', 'recording-link mail and invite'),
 +]

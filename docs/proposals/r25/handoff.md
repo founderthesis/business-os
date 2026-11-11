@@ -174,6 +174,12 @@ Two cuts pay for item 2: "on un#, Built to Share and Human by Design no recordin
 - **Re-tick or edit while queued:** a re-tick, or a draft whose sha12 no longer matches the scheduled Activity's key, with ids still pending: each id is cancelled first, Claude note line "YYYY-MM-DD: scheduled WhatsApp cancelled (re-ticked or edited)", then it's handled as a new draft (ticked: TIMING again; unticked: it waits).
 - **WhatsApp is now 39,051 / 7dd78bbfe2e610a8.** Nothing else changes; section 6 already keeps his words with the note line's date.
 
+## Change, 11 Nov: Cleanup's M1 (decision 541 in the hourly)
+
+- **Zoya hourly STEP 1,** where she creates a pitch row "as inbox capture STEP 3 creates it": "Status New, Waiting on empty, nothing on Akshay's list; the evals routine takes it" becomes "Status New, Waiting on Akshay, Next action \"Akshay: new pitch from <PR or self> for <guest>, eval running (captured <D Mon HH:MM>)\", decision 541". The eval replaces the segment, as on capture's rows.
+- **Paid for** in the hourly only: "(her correction; decision row to log)" loses its builder note, the HARD Zencastr parenthesis loses ", decision 445" (SENDING keeps it), and SENDING's "(STEP 0r, decision 445)" goes.
+- **The hourly is now 62,996 / b42dcfd41a6e6c71.** The SLOW file, SLOW task and episodes don't change; the pin stays 617f81b.
+
 ## Builds
 
 Each was built twice, byte-identical. The Zoya builds were also rebuilt from a fresh worktree at f70901f with r25/zoya/build_one.patch. No new em dash.
@@ -184,7 +190,7 @@ Each was built twice, byte-identical. The Zoya builds were also rebuilt from a f
 | Inbox actions | r24 845d0a41 | r25/actions.txt | 48,386 / 7c1c98496f6e6c99 |
 | Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin 617f81b) | 15,660 / 3ce32ab7e46241d0 |
 | Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **617f81b** | 94,687 / 8b249fe624cd09f6 |
-| Zoya hourly | r24 459d1dd1 | r25/zoya/zoya-one.txt | 62,992 / 1e4433434f13808b |
+| Zoya hourly | r24 459d1dd1 | r25/zoya/zoya-one.txt | 62,996 / b42dcfd41a6e6c71 |
 | Inbox capture | r24 f64eb54e | r25/capture.txt | 50,832 / 57750ace41cbf136 |
 | Zoya episodes (not live) | r24 1d238933 | r25/zoya/zoya-episodes.txt | 50,053 / 86ae49ee224cef0e |
 
