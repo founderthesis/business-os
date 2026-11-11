@@ -32,6 +32,16 @@ The case: Vishal Nigam @ WTF. The eval said Decline (sponsored route), and Aksha
 - **Replay:** r26/replay_557.py reads the clause from the built prompt and checks 8 cases. Decline plus "invite to precall" picks Tier 2; so do Sponsored track and no eval. The other four verdicts map as decided, and a named Tier 1 on a Decline row stays Tier 1. All pass.
 - **Build:** `python3 docs/proposals/r26/patch.py act docs/proposals/r25/actions.txt <out>`, on r25's actions (d0a8c26a). Built twice, byte-identical, no new em dash. **Actions is 48,515 / 2b894385566ff415.**
 
+## WhatsApp STEP 0w (three early exits, nothing sent since r25)
+
+See whatsapp-early-exit.md. In short:
+- a GATE: the status script decides, and an early Failed sends the run back;
+- 0w takes at most 5 drafts a run;
+- HIS OWN MESSAGE holds a draft once Akshay has messaged the person since it was written;
+- GREETING holds a draft that greets someone other than its recipient.
+
+**WhatsApp is 39,817 / c0ac14891bb14218,** on r25's ddb69276.
+
 ## Builds
 
 Built twice, byte-identical, and rebuilt from a fresh worktree at f70901f with r26/zoya/build_one.patch. The r25 patch still reproduces the r25 builds. No new em dash.
@@ -41,11 +51,12 @@ Built twice, byte-identical, and rebuilt from a fresh worktree at f70901f with r
 | Zoya hourly | r25 821895c1 | r26/zoya/zoya-one.txt | 62,990 / 5631d1497077a7a5 |
 | Zoya SLOW file | r25 12de32e (7e72f8dd) | routines/zoya/release/zoya-slow-work.txt at **63a4908** | 94,797 / df8adb0224c6a0e5 |
 | Zoya SLOW task | r25 825a3716 | r26/zoya/zoya-slow.txt (pin 63a4908) | 15,646 / d25036d209ea2bb8 |
+| WhatsApp | r25 ddb69276 | r26/whatsapp.txt | 39,817 / c0ac14891bb14218 |
 | Inbox actions | r25 d0a8c26a | r26/actions.txt | 48,515 / 2b894385566ff415 |
 | Zoya episodes (not live) | r25 f03f9677 | r26/zoya/zoya-episodes.txt | 50,146 / b796ea43640400c3 |
 
 **How to build:** apply r26/zoya/build_one.patch at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 63a49087f53f6b5589ef0cbdb09ee79aeff0e281`.
 
-**Deploy:** after r25. Inbox actions, then pin 63a4908 with the SLOW task and the hourly.
+**Deploy:** after r25. WhatsApp and inbox actions, then pin 63a4908 with the SLOW task and the hourly.
 
 The hourly has 10 bytes left under 63,000. The early-exit gate (about 230 bytes) will need its own cuts.
