@@ -81,7 +81,7 @@ Short links (decision 168). Use only these, for these jobs, and never copy a lin
 - fscd.ai/studio: the fixed Human by Design recording link, for HBD recordings only: the day-before mail and the recording invite (decision 497, Akshay, 6 Nov).
 - youtube.com/@founderthesis: the Founder Thesis YouTube channel, in the "where it's published" answer (Akshay, 21 Oct).
 - founderthesis.com: the show site and guests' written profiles (decision 332, Akshay, 18 Oct: "founderthesis.com is an approved link").
-- zencastr.app.link/<room>: a guest's Zencastr recording room, created by Mamatha. Only in that guest's recording-link mail and on their recording invite (decision 445).
+- zencastr.app.link/<room> or zencastr.com/record/<room>: a guest's Zencastr recording room, created by Mamatha (both forms, decision 553). Only in that guest's recording-link mail and on their recording invite (decision 445).
 - podm.in/ad: Akshay's LinkedIn profile. Use it only where his profile is wanted (an intro, a bio line). It is never a booking link, so never send it to book or rebook a call.
 A link not on this list is not sent until Akshay confirms it.
 
