@@ -102,6 +102,27 @@ def match_key(name):
     return (t[0], t[-1]) if len(t) >= 2 else tuple(t)
 
 
+EMAIL_RE = re.compile(r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}')
+
+
+def clean_person(prop, v, name):
+    """Only a personal LinkedIn profile or the person's own address goes on a People row.
+    An address whose local part carries neither their name nor their initials is likely
+    an EA's or PR's (the booker is not the guest, decision 424), so it goes to review."""
+    if prop == 'Email':
+        m = EMAIL_RE.search(v)
+        if not m:
+            return ''
+        local = m.group(0).split('@')[0].lower()
+        toks = norm(name)
+        if any(len(t) >= 3 and t in local for t in toks) or local == ''.join(t[0] for t in toks):
+            return m.group(0).lower()
+        return ''
+    if prop == 'LinkedIn':
+        return v if re.match(r'https://([a-z]+\.)?linkedin\.com/in/', v) else ''
+    return v
+
+
 def plan(episodes_json, people_json):
     rows = list(csv.DictReader(open(os.path.join(DATA, 'blue_csv_source.csv'))))
     eps = json.load(open(episodes_json))   # [{url, show, guestname, fields:{prop: value-or-empty}, guests:[people urls]}]
@@ -119,7 +140,8 @@ def plan(episodes_json, people_json):
             continue
         cands = idx.get((r['show'], match_key(r['guest'])), [])
         if len(cands) != 1:
-            review.append({'show': r['show'], 'guest': r['guest'], 'why': f'episode matches: {len(cands)}'})
+            if cands or not os.environ.get('GAPS_ONLY'):
+                review.append({'show': r['show'], 'guest': r['guest'], 'why': f'episode matches: {len(cands)}'})
         else:
             e = cands[0]
             for k, v in r.items():
@@ -128,7 +150,7 @@ def plan(episodes_json, people_json):
                     cur = (e['fields'].get(prop) or '').strip()
                     if not cur:
                         plan_rows.append({'kind': 'episode', 'url': e['url'], 'name': e['guestname'], 'prop': prop, 'value': v})
-                    elif cur.rstrip('/') != v.rstrip('/') and prop != 'Recording date':
+                    elif cur != 'x' and cur.rstrip('/') != v.rstrip('/') and prop != 'Recording date':
                         review.append({'show': r['show'], 'guest': r['guest'], 'why': f'conflict {prop}'})
         pc = pidx.get(match_key(r['guest']), [])
         if len(pc) == 1:
@@ -136,8 +158,13 @@ def plan(episodes_json, people_json):
             for k, v in r.items():
                 if k.startswith('pp:') and v:
                     prop = k[3:]
-                    if not (p['fields'].get(prop) or '').strip():
+                    if prop == 'Title' or (p['fields'].get(prop) or '').strip():
+                        continue  # People has no Title field; never overwrite
+                    v = clean_person(prop, v, p['name'])
+                    if v:
                         plan_rows.append({'kind': 'person', 'url': p['url'], 'name': p['name'], 'prop': prop, 'value': v})
+                    else:
+                        review.append({'show': r['show'], 'guest': r['guest'], 'why': f'unusable {prop} (not their own profile or address)'})
         elif len(pc) > 1:
             review.append({'show': r['show'], 'guest': r['guest'], 'why': f'people matches: {len(pc)}'})
     for fn, data in (('blue_csv_plan.csv', plan_rows), ('blue_csv_review.csv', review)):
