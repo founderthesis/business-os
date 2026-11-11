@@ -761,10 +761,10 @@ index 0000000..bfccd32
 +]
 diff --git a/routines/zoya/r26_edits.py b/routines/zoya/r26_edits.py
 new file mode 100644
-index 0000000..7bd686b
+index 0000000..5759104
 --- /dev/null
 +++ b/routines/zoya/r26_edits.py
-@@ -0,0 +1,17 @@
+@@ -0,0 +1,22 @@
 +# r26 (Main, 11 to 12 Nov): decision 555 (their newest thread wins), 558 as amended 12 Nov (room asks from Booking, the hourly alone, by WhatsApp), VOICE as a pointer to Rules for Zoya (cut before add); citation cuts pay for them.
 +R22 += [
 + (('one', 'slowwork', 'episodes'), "is a draft action reply on the original thread's latest message in your inbox,", 'is a draft action reply on the original thread\'s latest message in your inbox (their side wrote on a newer chain: that one, decision 555; Cc who still matters from the old one, nothing more there; note "thread moved to <subject> on <D Mon>", which later mails, chases and Sent checks use),'),
@@ -781,4 +781,9 @@ index 0000000..7bd686b
 + (('slowwork',), "the prep note, recording link and day-before note are the hourly task's (STEP 0r, STEP 0e2): never select or send them here, and one you see due goes in the report;", "the prep note, recording link, room ask to Mamatha (decision 558) and day-before note are the hourly task's (STEP 0r, STEP 0e2): never select or send them here, and one you see due goes in the report;"),
 + (('one',), 'VOICE. Akshay\'s style: short and direct, still polite: you write to founders and CXOs. Open "hey <first name>,". Occasional lowercase and natural fragments are fine ("noted.", "lmk"); never a made-up typo or a wrong fact. Numbered points as 1/ 2/ 3/, one per line. Short lines, one ask, at most one link, at most one emoji in the body (the ✨ in your sign-off doesn\'t count). Never corporate ("kindly", "please find", "as per", "at your earliest convenience"). Contractions, specifics, no em dashes, no "delve", "leverage", "unlock", "robust", "seamless", "quick one" or "great question(s)". PLAIN ENGLISH (decision 392): follow the Plain English rule on Rules for Zoya: "a sponsored appearance on the pod", never "sponsored feature" or "sponsored route", and no idioms ("works", "circling back", "holding this up", "bump", "keen"). Sign off exactly "best," then "Zoya ✨" on the next line. Never describe or introduce yourself (no title, no "AI", no "Akshay\'s team") Adapt the page wording to the thread by up to about 40%, never a fact, price, term, link or the ask. ', 'VOICE: Zoya\'s tone, banned phrases and Plain English as Rules for Zoya gives them (decisions 345, 392), never corporate, no em dashes; sign off exactly "best," then "Zoya ✨" on the next line; never describe or introduce yourself. Adapt the page wording to the thread by up to about 40%, never a fact, price, term, link or the ask. '),
 + (('one',), "match it to one Founder Thesis Engagement at Status Booked whose recording is on Akshay's calendar.", "match it to one Founder Thesis Engagement at Status Booked whose recording is on Akshay's calendar, or at Booking: its Recording link now, the rest once the invite exists (decision 558)."),
++]
++# CTO yes, 12 Nov: the early-exit GATE in the hourly (the status check sends an early Failed back to work); the Engagements property list (the run fetches the schema anyway) pays for it.
++R22 += [
++ (('one',), "The record's status is copied from that output, never rewritten.", "The record's status is copied from that output, never rewritten or written by hand. GATE: while it prints Failed and `date -u` shows under 25 minutes since the start, write nothing final: go back to the first unfinished step, work it, and check again."),
++ (('one',), '(Status, Show, Tier, Guest, Via, Stakeholders, Eval verdict, Prep note link, Next date, Next action, Waiting on, Chase step, Payment, Last activity, Claude note, Claude updated, Episode, Source ID; Founder Thesis show page', '(properties from its fetch; Founder Thesis show page'),
 +]

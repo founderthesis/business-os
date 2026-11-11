@@ -69,13 +69,19 @@ Sparsh Gupta's 12 Nov recording had no Zencastr room. The row's "ask Mamatha" se
 - **The hourly is 62,979 / 150b7767b1c2d263.** The SLOW file and SLOW task don't change (pin stays 63d63ec).
 - **Replay:** 7 cases, all pass, now including "Booking, no date yet": the ask goes that run. A Decision pending row gets no ask.
 
+## Early-exit gate in the hourly (CTO yes, 12 Nov)
+
+- **After the status rule:** "never rewritten or written by hand. GATE: while it prints Failed and `date -u` shows under 25 minutes since the start, write nothing final: go back to the first unfinished step, work it, and check again." It's the same gate WhatsApp got.
+- **Paid for** by the Engagements property list in NOTION DATA. That list is now "(properties from its fetch; ...)", because the prompt already makes every run fetch each data source to confirm property and option names. It's hourly only, so the SLOW file and pin don't change.
+- **The hourly is 62,996 / b1b0b0acf5a1f994.**
+
 ## Builds
 
 Built twice, byte-identical, and rebuilt from a fresh worktree at f70901f with r26/zoya/build_one.patch. The r25 patch still reproduces the r25 builds. No new em dash.
 
 | Routine | Base | Build | Bytes / sha256 |
 |---|---|---|---|
-| Zoya hourly | r25 821895c1 | r26/zoya/zoya-one.txt | 62,979 / 150b7767b1c2d263 |
+| Zoya hourly | r25 821895c1 | r26/zoya/zoya-one.txt | 62,996 / b1b0b0acf5a1f994 |
 | Zoya SLOW file | r25 12de32e (7e72f8dd) | routines/zoya/release/zoya-slow-work.txt at **63d63ec** | 94,833 / 78332307d8ba3cfd |
 | Zoya SLOW task | r25 825a3716 | r26/zoya/zoya-slow.txt (pin 63d63ec) | 15,646 / 4da2f1466a600967 |
 | WhatsApp | r25 ddb69276 | r26/whatsapp.txt | 39,817 / c0ac14891bb14218 |
@@ -87,3 +93,22 @@ Built twice, byte-identical, and rebuilt from a fresh worktree at f70901f with r
 **Deploy:** after r25. WhatsApp and inbox actions, then pin 63d63ec with the SLOW task and the hourly.
 
 The hourly has 10 bytes left under 63,000. The early-exit gate (about 230 bytes) will need its own cuts.
+
+## Final r26 for Cleanup
+
+Every build was made twice, byte-identical. The Zoya builds were rebuilt from a fresh worktree at f70901f with r26/zoya/build_one.patch, and the SLOW file matches pin 63d63ec. No new em dash. Replays: replay_557 8 of 8, replay_558 7 of 7.
+
+| Routine | Bytes | sha256 |
+|---|---|---|
+| WhatsApp | 39,817 | c0ac14891bb14218 |
+| Inbox actions | 48,515 | 2b894385566ff415 |
+| Zoya hourly | 62,996 | b1b0b0acf5a1f994 |
+| Zoya SLOW task (pin 63d63ec) | 15,646 | 4da2f1466a600967 |
+| Zoya SLOW file | 94,833 | 78332307d8ba3cfd |
+| Zoya episodes (not live) | 50,146 | b796ea43640400c3 |
+
+**Pin:** 63d63ec2ef9211dbc6a6b77b388aa57f96201d1f.
+
+**Two cuts for Cleanup to check specifically:**
+- the hourly's VOICE paragraph, now a pointer to Rules for Zoya (decision 558 section);
+- the Engagements property list, now "properties from its fetch" (gate section).
