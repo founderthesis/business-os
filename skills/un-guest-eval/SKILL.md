@@ -415,16 +415,16 @@ Write it in the chat reply beside the link. Akshay pastes it into the pipeline s
 
 The short pitch earns ten seconds in the sheet. The Sri blurb makes the case when Akshay messages Sri directly: who this is, why the company matters now, what the episode would be about, and where to read more. It should be compelling enough that Sri wants the episode, while every claim stays sourced and flat.
 
-**Length.** 120 to 170 words of body, plus the reading list.
+**Length.** 60 to 90 words of body, plus the reading list (Akshay, 11 Nov: "the blurb for Sri is too long"). Cut the career arc first, then the connection line. It has to read in one WhatsApp screen.
 
 **Structure, in this order:**
 
 1. **Bold header line:** the guest's name and title, e.g. **Luca Prosperi, co-founder and CEO of M0**.
 2. **What the company is, and the proof.** One plain sentence on what it does, then the named customers, partners or scale figure that make it matter, with the most recent and most regulated first. Close with funding and backers (Tracxn), plus team size if it adds weight.
-3. **The career arc in one or two sentences.** Here, unlike the short pitch, biography belongs, because Sri is deciding whether he'd enjoy the conversation. Pre-crypto roots, the crypto entry point, then the founding.
-4. **"The angle of the episode:"**, written exactly like that as the lead-in to the paragraph. One or two sentences on the question the hour is built around, taken from the strongest theme on the page. Ideally it's a live debate Sri cares about (TradFi-DeFi convergence, tokenization, curators versus rails, who captures yield). Add one sharp, number-backed tension if the numbers table has one. Never write "the hour I'd want" or any first-person framing, since the blurb may be forwarded.
+3. **The career arc in one sentence.** Here, unlike the short pitch, biography belongs, because Sri is deciding whether he'd enjoy the conversation. Pre-crypto roots, the crypto entry point, then the founding.
+4. **"The angle of the episode:"**, written exactly like that as the lead-in to the paragraph. One sentence on the question the hour is built around, taken from the strongest theme on the page. Ideally it's a live debate Sri cares about (TradFi-DeFi convergence, tokenization, curators versus rails, who captures yield). Add one sharp, number-backed tension if the numbers table has one. Never write "the hour I'd want" or any first-person framing, since the blurb may be forwarded.
 5. **An optional connection line**, only when it's real: the company serves or partners with a past un# guest's firm, or someone Sri knows is an investor. One sentence.
-6. **"Further reading"**, 4 to 6 bullets. Each is a markdown link with a descriptive title, then the outlet and month in brackets: [Anchorage picks M0 for regulated stablecoins (CoinDesk, Apr 2026)](url). Order: the most recent substantive news (the Tracxn news search usually supplies it), the funding story, the company's own explainer or research post, a guest interview or profile, then an independent landscape piece. Only use URLs you have actually seen this session. No paywalled data-broker pages. Leave the Tracxn link and the eval page out of this list: Sri may not have Tracxn access, and the eval page is private until Akshay shares it.
+6. **"Further reading"**, 2 to 3 bullets. Each is a markdown link with a descriptive title, then the outlet and month in brackets: [Anchorage picks M0 for regulated stablecoins (CoinDesk, Apr 2026)](url). Order: the most recent substantive news (the Tracxn news search usually supplies it), the funding story, the company's own explainer or research post, a guest interview or profile, then an independent landscape piece. Only use URLs you have actually seen this session. No paywalled data-broker pages. Leave the Tracxn link and the eval page out of this list: Sri may not have Tracxn access, and the eval page is private until Akshay shares it.
 
 **What stays out of the Sri blurb:** the verdict, the scores and any internal status; aarnâ partnership reasoning; the confidential credit managers; red flags (those live on the page). If the verdict is weaker than the blurb's tone suggests, flag it to Akshay in one line *after* the blurb, outside the copy-paste block, so he knows what he's sending.
 
@@ -526,7 +526,8 @@ Each of these is a real failure, not a hypothetical.
 - **Don't read the pipeline sheet's "Declined" as Sri declining.** It means the guest declined us
 - **Don't put internal status on the published page.** No pipeline stage, no approval state, no CRM language. That page gets shared
 - **Don't ship the short pitch without a bio link.** Sri clicks through. A pitch with no link makes him go and search
-- **Don't skip Tracxn.** The first M0 eval ran without it and missed the full round history, the 56-person headcount, and partnerships with Anchorage, 1Money and MoonPay that changed the story. Run Step 2a before the web
+- **Don't skip Tracxn, and say so on the page.** The Fisher Yu eval (11 Nov) ran with no Tracxn line at all. Every eval of a venture shows Tracxn rows tagged TRACXN in the numbers table, or the one line "Not on Tracxn" or "Tracxn not available". A page with neither is incomplete: go back and run Step 2a.
+- **Earlier miss.** The first M0 eval ran without it and missed the full round history, the 56-person headcount, and partnerships with Anchorage, 1Money and MoonPay that changed the story. Run Step 2a before the web
 - **Don't trust a fuzzy Tracxn match.** Resolve on the domain. "M0 Labs" by name returned Ma Labs, an IT reseller
 - **Don't quote Tracxn scores as evidence.** Growth and editor ratings are directional and stay in a caption
 - **Don't leave the Sri blurb off the page.** It goes in the copy card near the top, in WhatsApp plain text with bare URLs, the same words as the chat reply
