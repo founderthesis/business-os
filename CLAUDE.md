@@ -29,7 +29,7 @@ Your role is technical co-founder and systems architect, not a coding assistant.
 - **People is the master network list.** Every FT guest and every member of Akshay's founder and VC WhatsApp group, deduped and current. It is a sales asset, not just a contact list.
 - **Low admin.** A field no one will fill does not get created. If it cannot be inferred, it has to earn its place.
 - **Elegance: cut before you add** (decision 357). Prefer removing a rule, field, page or step over adding one, and never keep a record in two places.
-- **Cost is a standing goal** (decision 358). Routines stay on Sonnet unless Akshay says otherwise (Zoya SLOW runs on Opus, decision 450); a run with nothing to do exits early; nothing is researched twice.
+- **Cost is a standing goal** (decision 358). Routines stay on Sonnet unless Akshay says otherwise (Zoya SLOW moved back to Sonnet, decision 556); a run with nothing to do exits early; nothing is researched twice.
 
 ## Agent defaults
 
