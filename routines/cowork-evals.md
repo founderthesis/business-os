@@ -13,7 +13,7 @@ WORK FIELDS (AR-20261018-2; this overrides every Status, Waiting on and Next act
 Fetch each data source once to confirm property names. Never read or write the Credentials page. The Queue is retired: never read or write it. Skip Engagements with Kind Task (decision 329): they are work items, never guests. Never change Next date (decision 81): who acts next goes in Waiting on (multi-select of first names: Akshay, Zoya, Sri, Chaandini, ...) and Next action.
 
 STEP 1. FIND THE WORK
-Engagements where Show contains the FT page, Status = New, Direction = Inbound, Eval link is empty, and Captured or Claude updated within the last 7 days. Every inbound pitch counts, mass mailings included. Oldest first, at most 7 per run (Akshay, 11 Nov). If none, go to STEP 2b.
+Engagements where Show contains the FT page, Status = New, Direction = Inbound, Eval link is empty, and Captured or Claude updated within the last 7 days. Never filter on Kind: capture leaves Kind empty on new pitches; skip only Kind = Task (11 Nov: a Kind = Guest filter hid Saurabh Anand Rai and Cherubin Vanjinath). Print the filter and its row count in the report. Every inbound pitch counts, mass mailings included. Oldest first, at most 7 per run (Akshay, 11 Nov). If none, go to STEP 2b.
 
 STEP 2. FOR EACH ENGAGEMENT, ONE AT A TIME
 a. Read the Engagement, its Guest and Via People rows, and the pitch thread (Gmail get_thread on the thread id in Source ID "gmail:<thread id>", or else the Gmail Link on the latest Email in Activity linked to the Engagement).
