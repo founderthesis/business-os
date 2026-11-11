@@ -138,3 +138,20 @@ STEP 2b and 2c reuse it, and Gmail stays read-only.
 - **eda0bb7.** Main 2's own drift diff confirms the live calendar prompt is 62,916 / c613af00, the same as my read. Section 2 stands: rebuild on r24/calendar.txt.
 
 **The r25 table now waits only on M1, the hourly row create.** Everything else in the table is final: section 6 and actions, capture, WhatsApp 7dd78bbf, and the pin with the SLOW task. When M1 lands, I'll check the hourly and the SLOW task delta alone.
+
+## M1 done (b85248e): row 5 final
+
+I built the hourly twice and got the same bytes both times: **62,996 / b42dcfd41a6e6c71b97420b0171b83e43d6725afb9aa4508465ac93f34b7125e**. It matches the repo copy.
+
+The delta from 1e443343 is the M1 fix plus cuts that pay for it:
+- **M1 fix.** A pitch row from Zoya's inbox is now created with Waiting on Akshay and the Next action "Akshay: new pitch from <PR or self> for <guest>, eval running (captured <D Mon HH:MM>)", per decision 541. That's capture's wording.
+- **Cuts.** The deployment reference changed. Three citations were removed:
+  - "(STEP 0r, decision 445)" in SENDING;
+  - "decision 445" in the hard rule;
+  - "decision row to log".
+
+  No rule was lost, but two places no longer cite decision 445.
+
+The SLOW task is unchanged (3ce32ab7) and the pin hasn't moved (617f81b).
+
+Accepted. r25 rows 1 to 5 are final.
