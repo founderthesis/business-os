@@ -63,13 +63,19 @@ Sparsh Gupta's 12 Nov recording had no Zencastr room. The row's "ask Mamatha" se
   - SLOW sees "Zoya: ask Mamatha for the Zencastr link": SLOW does nothing.
 - **The hourly is now 62,856** (144 bytes spare). The SLOW file changes, so the pin moves to **63d63ec**.
 
+**Amended 12 Nov (Akshay: "we can get links even before the recording is locked", Rohit @ Acceldata):**
+- **The trigger is the row, not the invite:** every Founder Thesis row at Booking or Booked (or earlier, when Akshay asks) with no room link anywhere, Recording link included. A row with no date yet is listed as "date open", after the dated ones. Its note is "room asked <date>", with no event id.
+- **Her link for a Booking row goes to Recording link at once,** and the rest (the invite, Call link and the recording-link mail) once the invite exists. That's added to STEP 0r's matching sentence.
+- **The hourly is 62,979 / 150b7767b1c2d263.** The SLOW file and SLOW task don't change (pin stays 63d63ec).
+- **Replay:** 7 cases, all pass, now including "Booking, no date yet": the ask goes that run. A Decision pending row gets no ask.
+
 ## Builds
 
 Built twice, byte-identical, and rebuilt from a fresh worktree at f70901f with r26/zoya/build_one.patch. The r25 patch still reproduces the r25 builds. No new em dash.
 
 | Routine | Base | Build | Bytes / sha256 |
 |---|---|---|---|
-| Zoya hourly | r25 821895c1 | r26/zoya/zoya-one.txt | 62,856 / d46c0e7de9649c49 |
+| Zoya hourly | r25 821895c1 | r26/zoya/zoya-one.txt | 62,979 / 150b7767b1c2d263 |
 | Zoya SLOW file | r25 12de32e (7e72f8dd) | routines/zoya/release/zoya-slow-work.txt at **63d63ec** | 94,833 / 78332307d8ba3cfd |
 | Zoya SLOW task | r25 825a3716 | r26/zoya/zoya-slow.txt (pin 63d63ec) | 15,646 / 4da2f1466a600967 |
 | WhatsApp | r25 ddb69276 | r26/whatsapp.txt | 39,817 / c0ac14891bb14218 |
