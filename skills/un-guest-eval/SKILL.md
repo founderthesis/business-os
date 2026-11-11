@@ -1,6 +1,6 @@
 ---
 name: "un-guest-eval"
-description: "Evaluate inbound guest pitches for un# (Unhashed), Sri Misra's crypto podcast. Pulls precall notes from Drive, scores Fit, Partnership and Discovery (will this guest get the show found?) independently, books household-name guests on Discovery alone, pulls funding, team and news from Tracxn, routes through three tracks, publishes a page, and returns two blurbs: a 40 to 50 word short pitch with a bio link for the pipeline sheet, and a longer blurb for Sri with the angle of the episode and further-reading links, which also sits ready to copy (with a Copy button) near the top of the published page."
+description: "Evaluate inbound guest pitches for un# (Unhashed), Sri Misra's crypto podcast. Pulls precall notes from Drive, scores Fit, Partnership and Discovery (will this guest get the show found?) independently, books household-name guests on Discovery alone, pulls funding, team and news from Tracxn, routes through three tracks, publishes a page, and returns two blurbs: a 40 to 50 word short pitch with a bio link for the pipeline sheet, and a 60 to 90 word blurb for Sri that leads with audience value or an aarnâ partnership angle, with LinkedIn links and the angle of the episode, which also sits ready to copy (with a Copy button) near the top of the published page."
 ---
 
 # un-guest-eval
@@ -137,7 +137,7 @@ Tracxn is the fastest clean source for funding, backers, team size and dated com
 2. **`resolve_entities`** with the company domain (most reliable), the company name and the guest's name, `entityType` COMPANY and PEOPLE. Take the match with `curated: "Yes"`. A domain match scores 1; a fuzzy name match is often the wrong company (M0 Labs resolved to "Ma Labs"), so check the website before using it.
 3. **`search_companies`** filtered on `companyId`, with a `responseTemplate` of: name, foundedYear, shortDescription, stage, keyPeople, latestFundingRound, totalEquityFunding, investors, latestEmployeeCount, latestRevenue, latestValuation, latestEstimatedRevenue, editorRating, founderHighlights, socialMediaProfiles, tracxnScore, tracxnPlatformUrl, locations.
 4. **`search_funding_rounds`** filtered on `companyId`, sorted by `fundingRoundDate` DESC, with name, date, amount, investors (the `isLead` flag names the leads), valuation.
-5. **`search_news_events`** filtered on `companyId` and `newsDate` for the last 18 months (dates as DD/MM/YYYY), sorted by `newsDate` DESC, with title, date, type, url, publisherCompany. Partnerships, customer wins and regulatory news here feed the "last 12 months of substance" check and usually supply the strongest further-reading link.
+5. **`search_news_events`** filtered on `companyId` and `newsDate` for the last 18 months (dates as DD/MM/YYYY), sorted by `newsDate` DESC, with title, date, type, url, publisherCompany. Partnerships, customer wins and regulatory news here feed the "last 12 months of substance" check and usually supply the strongest proof point for the Sri blurb.
 
 **What Tracxn is good for:** every round with its date, size, leads and participants; total equity raised; headcount with an as-of date; co-founders and titles; serial-founder flags; the editor note, which often names customers; dated partnership and product news with source URLs. Fill those rows of the numbers table from it and tag each one as Tracxn on the page.
 
@@ -358,7 +358,7 @@ Sections, in order:
 
 Write the Sri blurb (Step 6) before you build the page, so the page and the chat reply carry the same words.
 
-- **Text format: WhatsApp, not markdown.** Akshay pastes it into WhatsApp, where markdown links and `**bold**` show as raw symbols. So: the header line wrapped in single asterisks (`*Luca Prosperi, co-founder and CEO of M0*`), blank lines between paragraphs, then `Further reading` on its own line and one line per item as `- Title (Outlet, Mon YYYY): https://full-url`. Bare URLs, never `[text](url)`. No other formatting.
+- **Text format: WhatsApp, not markdown.** Akshay pastes it into WhatsApp, where markdown links and `**bold**` show as raw symbols. So: the header line wrapped in single asterisks (`*Luca Prosperi, co-founder and CEO of M0*`), then one `Name: https://linkedin-url` line per guest, blank lines between paragraphs. Bare URLs, never `[text](url)`. No reading list. No other formatting.
 - **Display.** A surface card (`--surface`, 1px `--rule` border, 8px radius) with the heading "Blurb for Sri" and a teal **Copy** button on the right. Show the text in a `pre`-like block with `white-space: pre-wrap`, Manrope, so it reads as it will paste. Keep the text in one element with an id and copy from its `textContent`, so what's shown is exactly what's copied.
 - **The button.** `navigator.clipboard.writeText(el.textContent)` inside try/catch; on failure, select the block's text (Range + Selection) so Ctrl/Cmd+C works. Flash the label to "Copied" for 1.5 seconds. Nothing else on the page needs JavaScript.
 - **What stays off the card:** the verdict, the scores and the one-line tone flag. Those sit in the chat reply and the rest of the page.
@@ -413,41 +413,40 @@ Write it in the chat reply beside the link. Akshay pastes it into the pipeline s
 
 ## Blurb 2: the Sri blurb
 
-The short pitch earns ten seconds in the sheet. The Sri blurb makes the case when Akshay messages Sri directly: who this is, why the company matters now, what the episode would be about, and where to read more. It should be compelling enough that Sri wants the episode, while every claim stays sourced and flat.
+The short pitch earns ten seconds in the sheet. The Sri blurb is what Akshay sends Sri on WhatsApp when he wants a yes. Its one job is to impress Sri (Akshay, 11 Nov), and it does that in one of two ways, with data:
 
-**Length.** 60 to 90 words of body, plus the reading list (Akshay, 11 Nov: "the blurb for Sri is too long"). Cut the career arc first, then the connection line. It has to read in one WhatsApp screen.
+- **Audience value:** people know this guest or this company. Recognition, money raised, scale (TVL, AUM, volume, users), big-name backers, customers and partners.
+- **Partnership angle for aarnâ:** a specific, real thing the guest's company could do with aarnâ (from the Partnership score and the four aarnâ needs), stated as a concrete use, never as "synergies".
+
+Pick whichever is stronger for this guest and lead with it. Use both only when both are strong. If neither is strong, don't polish a weak case: write the blurb plainly and flag it to Akshay in one line after it ("neither lane is strong: Fit 5, Partnership 4, Discovery 5").
+
+**Length.** 60 to 90 words of body. It has to read in one WhatsApp screen. No reading list (Akshay, 11 Nov).
 
 **Structure, in this order:**
 
-1. **Bold header line:** the guest's name and title, e.g. **Luca Prosperi, co-founder and CEO of M0**.
-2. **What the company is, and the proof.** One plain sentence on what it does, then the named customers, partners or scale figure that make it matter, with the most recent and most regulated first. Close with funding and backers (Tracxn), plus team size if it adds weight.
-3. **The career arc in one sentence.** Here, unlike the short pitch, biography belongs, because Sri is deciding whether he'd enjoy the conversation. Pre-crypto roots, the crypto entry point, then the founding.
-4. **"The angle of the episode:"**, written exactly like that as the lead-in to the paragraph. One sentence on the question the hour is built around, taken from the strongest theme on the page. Ideally it's a live debate Sri cares about (TradFi-DeFi convergence, tokenization, curators versus rails, who captures yield). Add one sharp, number-backed tension if the numbers table has one. Never write "the hour I'd want" or any first-person framing, since the blurb may be forwarded.
-5. **An optional connection line**, only when it's real: the company serves or partners with a past un# guest's firm, or someone Sri knows is an investor. One sentence.
-6. **"Further reading"**, 2 to 3 bullets. Each is a markdown link with a descriptive title, then the outlet and month in brackets: [Anchorage picks M0 for regulated stablecoins (CoinDesk, Apr 2026)](url). Order: the most recent substantive news (the Tracxn news search usually supplies it), the funding story, the company's own explainer or research post, a guest interview or profile, then an independent landscape piece. Only use URLs you have actually seen this session. No paywalled data-broker pages. Leave the Tracxn link and the eval page out of this list: Sri may not have Tracxn access, and the eval page is private until Akshay shares it.
+1. **Header line:** the guest's name and title, in single asterisks: `*Luca Prosperi, co-founder and CEO of M0*`.
+2. **LinkedIn, one line per guest** (Akshay, 11 Nov): `Luca: https://www.linkedin.com/in/...`. WhatsApp can't link a name, so the bare URL goes on its own line right under the header. Use the profile you confirmed in Step 2 (name, company and education match) and save it to the People row's LinkedIn if empty. Not found after a real search: leave that guest's line out and say so in the one-line flag; never guess a URL.
+3. **What the company is, in one plain sentence** (Akshay, 11 Nov: the Babylon draft didn't explain what Babylon is). Written for someone who has never heard of it: what it lets people do, in everyday words, before any number.
+4. **The proof, from the lead lane.** Audience value: the scale figure with its source and month, money raised and the backers Sri will recognise, the named partners or customers, most recent and most regulated first. Partnership: the concrete aarnâ use and the one fact that makes it credible. Only verified facts; an unverified round or award stays out (it can sit on the page with its caveat).
+5. **Who the guest is, one sentence.** The credential that matters. With two guests, one credential each, in the same weight (below).
+6. **"The angle of the episode:"**, written exactly like that, then one sentence on the question the hour is built around. Never first-person ("the hour I'd want"), since the blurb may be forwarded.
+7. **An optional connection line**, only when it's real: the company serves or partners with a past un# guest's firm, or someone Sri knows is an investor. One sentence. Cut it first when over length.
 
-**What stays out of the Sri blurb:** the verdict, the scores and any internal status; aarnâ partnership reasoning; the confidential credit managers; red flags (those live on the page). If the verdict is weaker than the blurb's tone suggests, flag it to Akshay in one line *after* the blurb, outside the copy-paste block, so he knows what he's sending.
+**Two guests on one row: keep it neutral** (Akshay, 11 Nov: "after reading this Sri may not agree to Fisher as a guest"). Name them in the row's order, give each one credential of the same weight, and let the company carry the impressive part. Never call one the stronger guest, the public face or the better name in the blurb; that comparison lives on the page.
 
-**Voice.** Every voice rule below applies. Third person, present tense, specific. Compelling comes from the named customers and the sharp question, never from adjectives.
+**What stays out of the Sri blurb:** the verdict, the scores and any internal status; aarnâ partnership reasoning beyond the concrete use; the confidential credit managers; red flags and weak numbers such as no revenue, a falling TVL told as a decline, or a conflict in funding figures (those live on the page); the Tracxn link and the eval page. If the verdict is weaker than the blurb's tone suggests, flag it to Akshay in one line *after* the blurb, outside the copy-paste block, so he knows what he's sending.
 
-**Example (Luca Prosperi, M0, Nov 2026):**
+**Voice.** Every voice rule below applies. Third person, present tense, specific. Compelling comes from the named names and numbers, never from adjectives.
 
-> **Luca Prosperi, co-founder and CEO of M0**
+**Example (Fisher Yu and David Tse, Babylon, Nov 2026; audience lane, two guests):**
+
+> \*Fisher Yu and David Tse, co-founders of Babylon Labs\*
+> Fisher: https://www.linkedin.com/in/mingchaoyu/
+> David: https://www.linkedin.com/in/david-tse-01656774/
 >
-> M0 is the software companies use to issue their own branded stablecoins. MetaMask's mUSD runs on it. Stripe's Bridge, MoonPay and PayPal's PYUSDx extension use it too, and in April Anchorage Digital, a federally chartered crypto bank, made M0 the core technology for its regulated stablecoin platform. M0 has raised $100M from Pantera, Bain Capital Crypto, Polychain and Ribbit, and has about 56 people in Zug.
+> Babylon lets Bitcoin holders put their BTC to work without wrapping it or moving it off Bitcoin: they can stake it to secure other blockchains, or lock it as collateral for loans in DeFi. About $3.3B of Bitcoin sits in it (DefiLlama, Oct 2026), and it peaked at $7.1B. It's backed by a16z crypto and is live with Aave, Kraken and Ledger. Fisher is the CTO and built the protocol; David is a Stanford professor working on blockchain consensus.
 >
-> Luca came up through bank strategy at Oliver Wyman and the financial-institutions group at Morgan Stanley. He then wrote DeFi research as Dirt Roads before starting M0 in 2023.
->
-> The angle of the episode: now that GENIUS has passed, why would a bank or a wallet issue its own dollar instead of using USDC, and who keeps the reserve yield? There's also a sharp question in M0's own numbers. About $779M has been minted on it, yet almost none of it is used inside DeFi.
->
-> KAST, which Raagulan Pathy brought on the show, is built on M0.
->
-> **Further reading**
-> - [Anchorage picks M0 for regulated stablecoins (CoinDesk, Apr 2026)](https://www.coindesk.com/business/2026/04/30/regulated-crypto-custody-firm-anchorage-partners-with-stablecoin-tech-provider-m0)
-> - [M0's $40M Series B (Fortune, Aug 2025)](https://fortune.com/crypto/2025/08/28/m0-series-b-40-million-polychain-ribbit-capital-stablecoins)
-> - [How MetaMask built mUSD on M0 (M0 Research)](https://research.m0.org/research/metamask-uses-m0s-stablecoin-platform-to-build-metamask-usd)
-> - [Luca on his path from banking to M0 (Pulse 2)](https://pulse2.com/m0-profile-luca-prosperi-interview/)
-> - [Where M0 sits among stablecoin issuance providers (DefiPrime, Mar 2026)](https://defiprime.com/stablecoin-issuance-infrastructure-2026)
+> The angle of the episode: what it takes to make Bitcoin usable as collateral across DeFi, and what that means for credit built on top of it.
 
 ### The chat reply
 
@@ -459,7 +458,7 @@ The verdict line, then Blurb 1 labelled **Short pitch (sheet)**, then Blurb 2 la
 > **[Name](bio link).** [short pitch]
 >
 > **Blurb for Sri**
-> [Sri blurb with further reading]
+> [Sri blurb]
 
 Other verdict lines:
 
@@ -531,9 +530,10 @@ Each of these is a real failure, not a hypothetical.
 - **Don't trust a fuzzy Tracxn match.** Resolve on the domain. "M0 Labs" by name returned Ma Labs, an IT reseller
 - **Don't quote Tracxn scores as evidence.** Growth and editor ratings are directional and stay in a caption
 - **Don't leave the Sri blurb off the page.** It goes in the copy card near the top, in WhatsApp plain text with bare URLs, the same words as the chat reply
-- **Don't send only one blurb.** Akshay needs the short pitch for the sheet and the longer Sri blurb with reading links, every time
+- **Don't send only one blurb.** Akshay needs the short pitch for the sheet and the Sri blurb, every time
 - **Don't write the angle in the first person.** It's "The angle of the episode:", never "the hour I'd want". The blurb gets forwarded
-- **Don't put the private eval or a Tracxn link in Sri's reading list.** He may not be able to open either
+- **Don't put the private eval or a Tracxn link in Sri's blurb.** He may not be able to open either
+- **Don't rank two guests in the Sri blurb.** "David is the stronger guest" belongs on the page; in the blurb it costs Fisher the slot
 - **Don't copy an old short pitch's furniture.** The ticker in a previous WisdomTree line was carried over by pattern-matching rather than decided. Every element has to earn its words on this guest
 - **Don't ship an eval thin on numbers.** Akshay (18 Oct) wasn't getting funding, TVL, AUM or GTV in the evals. The numbers table is mandatory, and a metric searched and not found is written as "Not public", not dropped
 - **Don't swap one scale metric for another.** Market cap is not AUM. Using it on an asset manager shrinks the guest by an order of magnitude
