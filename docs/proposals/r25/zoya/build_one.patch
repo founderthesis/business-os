@@ -657,10 +657,10 @@ index 0000000..4ad550c
 +]
 diff --git a/routines/zoya/r25_edits.py b/routines/zoya/r25_edits.py
 new file mode 100644
-index 0000000..2b3a711
+index 0000000..bfccd32
 --- /dev/null
 +++ b/routines/zoya/r25_edits.py
-@@ -0,0 +1,88 @@
+@@ -0,0 +1,97 @@
 +# r25 (CTO, 10 Nov; decisions 535 and 537, and Akshay, 10 Nov: "don't automate paas messages"): SLOW's PaaS
 +# follow-ups become WhatsApp drafts for Akshay's tick (approve-each, never standing); no number, or after follow-up 2,
 +# the row goes to his list.
@@ -748,4 +748,13 @@ index 0000000..2b3a711
 + (('one',), '(her correction; decision row to log)', '(her correction)'),
 + (('one',), '(a Zencastr room link only as SENDING allows, decision 445)', '(a Zencastr room link only as SENDING allows)'),
 + (('one',), 'recording-link mail and invite (STEP 0r, decision 445)', 'recording-link mail and invite'),
++]
++# Decisions 546 and 547 (Akshay, 11 Nov): SLOW runs seven times a weekday; quiet hours are on Cadences (01:30 to 07:30 JST), never spelled here.
++R22 += [
++ (('one', 'slowwork', 'episodes', 'slowtask'), '(read them there; decision 393: 00:30 to 07:30 JST)', '(read them there; decision 547)'),
++ (('slowwork',), '(weekdays, decision 393: 07:30 to 00:30 JST;', '(weekdays, decision 547;'),
++ (('slowtask',), 'it runs at 08:08, 11:08 and 17:08 JST on weekdays,', 'it runs at 00:08, 08:08, 11:08, 14:08, 17:08, 20:08 and 23:08 JST on weekdays (decision 546),'),
++]
++R22 += [
++ (('one',), "is the Zoya SLOW task's, at 08:08, 11:08 and 17:08 JST on weekdays (decisions 449, 450):", "is the Zoya SLOW task's, on weekdays (decisions 449, 450, 546):"),
 +]

@@ -23,7 +23,7 @@ SEND = (
  "SPELLING (decision 539), before 1/: fix only obvious typos (podast -> podcast), never wording, case, punctuation, names, numbers, links or a doubtful word; write the fixed draft back (the one change allowed while ticked), Claude note line \"YYYY-MM-DD: spelling fixed: <old> -> <new>\". "
  "1/ Messages (Akshay, 10 Nov): split the draft in Bash python: a line starting \"<n>/ \" (1/, 2/, 3/ ...) starts a new message, which runs to the next such line; strip that prefix and blank lines at each end; text before the first such line is a message too; no such line: the whole draft is one message. A \"[standing: ...]\" or \"[to: ...]\" line is never sent, nor counted as text. Recipient: the person a first line \"[to: <full name>]\" names (the row's Guest, Via or a Stakeholder), else the row's Guest; \"[to: group The Founder Thesis Community, tag <full name>]\" is a news post (3/). "
  "2/ Key \"wa-send:<row id>:<the first 12 hex of the sha256 of the draft text, in Bash python>\": an Activity with that Source ID whose Summary starts \"Akshay to\" means it went: send nothing, just finish 6/; one starting \"Zoya sending\": read that chat's recent messages (list_messages) for each message before any resend; one found is never sent again. "
- "3/ Before a send, all must hold: outside quiet hours (00:30 to 07:30 JST), and release-day only after 10:00 IST; fewer than 20 sets sent today (Activities whose Source ID starts \"wa-send:\" or \"wa-chase:\" and Summary starts \"Akshay to\", dated today in JST; one person's set counts once); and no set from his number to that person in the last 7 days (spec section 4: Activities whose Summary starts \"Akshay to <name> on WhatsApp\", Source ID \"wa-send:\" or \"wa-chase:\"; his own typed replies in the chat never count); else it waits, untouched, for the run when it may go. "
+ "3/ Before a send, all must hold: outside quiet hours (01:30 to 07:30 JST, decision 547), and release-day only after 10:00 IST; fewer than 20 sets sent today (Activities whose Source ID starts \"wa-send:\" or \"wa-chase:\" and Summary starts \"Akshay to\", dated today in JST; one person's set counts once); and no set from his number to that person in the last 7 days (spec section 4: Activities whose Summary starts \"Akshay to <name> on WhatsApp\", Source ID \"wa-send:\" or \"wa-chase:\"; his own typed replies in the chat never count); else it waits, untouched, for the run when it may go. "
  "NO REPLY: nothing from that person since our last message to them, in ad@thepodium.in and Zoya's inbox (MCP Emails, read only, by every address on their People row) and in their WhatsApp chat with Akshay (list_messages since our last message), or any Email in Activity on the row from their side (Guest, Via or a Stakeholder) dated after the draft was written; a reply: send nothing, untick, add \"Akshay: <name> replied, draft held (<D Mon>)\", Akshay in Waiting on. "
  "NUMBER (decision 535): the recipient's People Phone only, with its country code (a leading + or 00); never a number from FT Community, a chat search, a thread, a signature, a form or memory; chat id = its digits, then \"@c.us\". None, or no country code: send nothing, untick, add \"Akshay: no WhatsApp number for <name>\", Akshay in Waiting on. "
  "A news post goes to the group named exactly \"The Founder Thesis Community\" (chats search, chatType group), at most one per member a quarter (Activities); the text holds \"@<their digits>\" with mentions [\"<their digits>@c.us\"] from their People Phone; NO REPLY and the 7-day rule don't apply. "
@@ -44,6 +44,8 @@ EDITS = {
  # Decision 541 (Akshay, 10 Nov): every new pitch row starts on Akshay's list, never with Waiting on empty.
  ('Waiting on empty (Founder Thesis and un#: the evals routine sets it; Built to Share and Human by Design: inbox actions STEP 5)',
   'Waiting on Akshay, Next action "Akshay: new pitch from <PR or self> for <guest>, eval running (captured <D Mon HH:MM>)" on every show (decision 541; the eval, or inbox actions STEP 5 on Built to Share and Human by Design, replaces it)'),
+ # Decision 547 (Akshay, 11 Nov): quiet hours are on Cadences (01:30 to 07:30 JST); the prompt cites no numbers.
+ ('in the quiet hours on Cadences (read them there; decision 393: 00:30 to 07:30 JST);', 'in the quiet hours on Cadences (read them there; decision 547);'),
 ],
 "wa": [
  ("for STEP 0d also Gmail and MCP Emails (read only) and Google Calendar", "for STEP 0d and STEP 0w's reply check also Gmail and MCP Emails (read only), and for 0d Google Calendar"),
@@ -62,6 +64,8 @@ EDITS = {
  # Decision 541: STEP 5's ask replaces capture's new-pitch segment on Built to Share and Human by Design.
  ('- A pitch for Built to Share or Human by Design: Akshay, "Akshay: new <show> pitch via <PR>: put it on <host>\'s board, decline or park?".',
   '- A pitch for Built to Share or Human by Design: Akshay, "Akshay: new <show> pitch via <PR>: put it on <host>\'s board, decline or park?", replacing capture\'s "Akshay: new pitch from" segment.'),
+ # Decision 547 (Akshay, 11 Nov): quiet hours are on Cadences (01:30 to 07:30 JST); the prompt cites no numbers.
+ ('in the quiet hours on Cadences (decision 393: 00:30 to 07:30 JST);', 'in the quiet hours on Cadences (decision 547);'),
 ],
 }
 for e in EDITS[which]:

@@ -180,32 +180,40 @@ Two cuts pay for item 2: "on un#, Built to Share and Human by Design no recordin
 - **Paid for** in the hourly only: "(her correction; decision row to log)" loses its builder note, the HARD Zencastr parenthesis loses ", decision 445" (SENDING keeps it), and SENDING's "(STEP 0r, decision 445)" goes.
 - **The hourly is now 62,996 / b42dcfd41a6e6c71.** The SLOW file, SLOW task and episodes don't change; the pin stays 617f81b.
 
+## Change, 11 Nov: decisions 546 and 547 (SLOW run times; quiet hours 01:30 to 07:30 JST)
+
+- **Quiet hours cite Cadences only:** "(read them there; decision 393: 00:30 to 07:30 JST)" becomes "(read them there; decision 547)" in inbox capture, the Zoya hourly, the SLOW file, the SLOW task and episodes; inbox actions' "(decision 393: 00:30 to 07:30 JST)" becomes "(decision 547)"; the SLOW file's send window "(weekdays, decision 393: 07:30 to 00:30 JST; ..." becomes "(weekdays, decision 547; ...". The repo copy routines/inbox.md matches.
+- **WhatsApp** doesn't read Cadences, so it keeps the numbers: "outside quiet hours (01:30 to 07:30 JST, decision 547)".
+- **SLOW task opening:** "it runs at 00:08, 08:08, 11:08, 14:08, 17:08, 20:08 and 23:08 JST on weekdays (decision 546)". The hourly's mention of SLOW's times drops the times: "is the Zoya SLOW task's, on weekdays (decisions 449, 450, 546)".
+- **Not in r25: calendar.** The live calendar (c613af00) and the calendar-prep-link build both carry "(read them there; decision 393: 00:30 to 07:30 JST)". It's safe as is (it only holds mail longer), and the same one-line edit should ride the next calendar deploy. routines/zoya.md (retired single prompt) also still says 00:30.
+- **Pin 12de32e.** Sizes: capture 50,812 / 41e188c51713d841; actions 48,366 / d0a8c26a63ddb697; WhatsApp 39,065 / ddb69276381303f1; hourly 62,951 / 821895c1d1a8a499; SLOW task 15,683 / 825a3716cdf059b0; SLOW file 94,647 / 7e72f8ddb97fe0fd; episodes 50,033 / f03f9677d269ac33.
+
 ## Builds
 
 Each was built twice, byte-identical. The Zoya builds were also rebuilt from a fresh worktree at f70901f with r25/zoya/build_one.patch. No new em dash.
 
 | Routine | Base (live) | Build | Bytes / sha256 |
 |---|---|---|---|
-| WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 39,051 / 7dd78bbfe2e610a8 |
-| Inbox actions | r24 845d0a41 | r25/actions.txt | 48,386 / 7c1c98496f6e6c99 |
-| Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin 617f81b) | 15,660 / 3ce32ab7e46241d0 |
-| Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **617f81b** | 94,687 / 8b249fe624cd09f6 |
-| Zoya hourly | r24 459d1dd1 | r25/zoya/zoya-one.txt | 62,996 / b42dcfd41a6e6c71 |
-| Inbox capture | r24 f64eb54e | r25/capture.txt | 50,832 / 57750ace41cbf136 |
-| Zoya episodes (not live) | r24 1d238933 | r25/zoya/zoya-episodes.txt | 50,053 / 86ae49ee224cef0e |
+| WhatsApp | r24 bec8c1e1 | r25/whatsapp.txt | 39,065 / ddb69276381303f1 |
+| Inbox actions | r24 845d0a41 | r25/actions.txt | 48,366 / d0a8c26a63ddb697 |
+| Zoya SLOW task | r24 595f107f | r25/zoya/zoya-slow.txt (pin 12de32e) | 15,683 / 825a3716cdf059b0 |
+| Zoya SLOW file | 1556243 (b6d1c52b) | routines/zoya/release/zoya-slow-work.txt at **12de32e** | 94,647 / 7e72f8ddb97fe0fd |
+| Zoya hourly | r24 459d1dd1 | r25/zoya/zoya-one.txt | 62,951 / 821895c1d1a8a499 |
+| Inbox capture | r24 f64eb54e | r25/capture.txt | 50,812 / 41e188c51713d841 |
+| Zoya episodes (not live) | r24 1d238933 | r25/zoya/zoya-episodes.txt | 50,033 / f03f9677d269ac33 |
 
 Unchanged: calendar, sweep, host boards and dossiers. Also changed in the repo: routines/cowork-evals.md (14,906 / e410b09063bbcbf2) and routines/inbox.md (decisions 538 and 541).
 
 **How to build:**
 - Non-Zoya: `python3 docs/proposals/r25/patch.py <wa|act> docs/proposals/r24/<whatsapp|actions>.txt <out>`.
-- Zoya: apply r25/zoya/build_one.patch at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 617f81b8e3e644f31a7ed39ddf9fdfe69b0e4475`.
+- Zoya: apply r25/zoya/build_one.patch at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 12de32e1df2cb4ba70ab583fc97848872012500d`.
 
 **The section 6 paste:** r25/section6-535.md replaces the WHATSAPP CHASE block (the 522 text) and adds WHATSAPP INVITE. Paste it with inbox actions.
 
 **Deploy order:**
 1. Section 6 paste plus inbox actions.
 2. WhatsApp.
-3. Zoya pin 617f81b, then the SLOW task and the hourly.
+3. Zoya pin 12de32e, then the SLOW task and the hourly.
 
 ## For the CTO: unclear or needing a call
 
