@@ -42,21 +42,42 @@ See whatsapp-early-exit.md. In short:
 
 **WhatsApp is 39,817 / c0ac14891bb14218,** on r25's ddb69276.
 
+## Decision 558 (room asks to Mamatha: the hourly alone, by WhatsApp)
+
+Sparsh Gupta's 12 Nov recording had no Zencastr room. The row's "ask Mamatha" segment was never sent: SLOW left it to the hourly, and the hourly only put "no recording room" on Akshay's list within 24 hours.
+
+- **Hourly STEP 0r, ROOM ASK** (replaces the 24-hour sentence):
+  - Each run, every Founder Thesis Booked recording with no room link anywhere (her mails and WhatsApp chat, the invite, Call link) and no "room asked" note goes into one WhatsApp to Mamatha, soonest first. It's sent by Blueticks to her one-to-one chat and opens "Zoya ✨" (decision 226).
+  - Each row gets the note "room asked <event id> <date>", and "Zoya: room from Mamatha for <guest> (asked <D Mon>)" replaces any ask-Mamatha segment.
+  - No link 24 hours later: one reminder. Within 48 hours of the recording and still none: Akshay's list, once.
+  - Her chat is read each run from the oldest open ask, and a link there is handled as one in her mail: written to the invite and the row's Call link (and Recording link) in the same run. Both Zencastr forms already count (decision 553).
+- **Hourly HARD and TOOLS:** "No WhatsApp in FAST work" now allows ROOM ASK to Mamatha, and TOOLS loads Blueticks ("+bluetick"). The hourly trigger already has the bluetick connector (checked with get_trigger), so no connector change is needed.
+- **SLOW file:** the room ask joins the list SLOW never selects or sends ("the prep note, recording link, room ask to Mamatha (decision 558) and day-before note are the hourly task's"). That's the whole of SLOW's part: it had no room step of its own, only the habit of leaving the segment open.
+- **Item 5 (the CTO round flags any recording within 72 hours with no link)** is in the CTO round's prompt, which is the CTO's to edit, not a Main build.
+- **Paid for by cut before add (decision 357):** the hourly's VOICE paragraph repeated Rules for Zoya line for line. That covers tone, opening, fragments, numbered points, one ask, emoji, the never-corporate list, banned words, Plain English and the 40% rule. RULES LOAD loads that page in full every run and blocks every send if it's short. VOICE is now a pointer that keeps the sign-off, no em dashes, never describing herself and the 40% limit, saving 738 bytes. **Cleanup should check this cut specifically.**
+- **Replay:** r26/replay_558.py checks the built hourly and SLOW file, 5 cases, all pass:
+  - booked, no room, 6 days out: the ask is sent that run;
+  - room already on the invite: nothing;
+  - asked 25 hours ago: one reminder;
+  - 40 hours out, already reminded: Akshay's list once;
+  - SLOW sees "Zoya: ask Mamatha for the Zencastr link": SLOW does nothing.
+- **The hourly is now 62,856** (144 bytes spare). The SLOW file changes, so the pin moves to **63d63ec**.
+
 ## Builds
 
 Built twice, byte-identical, and rebuilt from a fresh worktree at f70901f with r26/zoya/build_one.patch. The r25 patch still reproduces the r25 builds. No new em dash.
 
 | Routine | Base | Build | Bytes / sha256 |
 |---|---|---|---|
-| Zoya hourly | r25 821895c1 | r26/zoya/zoya-one.txt | 62,990 / 5631d1497077a7a5 |
-| Zoya SLOW file | r25 12de32e (7e72f8dd) | routines/zoya/release/zoya-slow-work.txt at **63a4908** | 94,797 / df8adb0224c6a0e5 |
-| Zoya SLOW task | r25 825a3716 | r26/zoya/zoya-slow.txt (pin 63a4908) | 15,646 / d25036d209ea2bb8 |
+| Zoya hourly | r25 821895c1 | r26/zoya/zoya-one.txt | 62,856 / d46c0e7de9649c49 |
+| Zoya SLOW file | r25 12de32e (7e72f8dd) | routines/zoya/release/zoya-slow-work.txt at **63d63ec** | 94,833 / 78332307d8ba3cfd |
+| Zoya SLOW task | r25 825a3716 | r26/zoya/zoya-slow.txt (pin 63d63ec) | 15,646 / 4da2f1466a600967 |
 | WhatsApp | r25 ddb69276 | r26/whatsapp.txt | 39,817 / c0ac14891bb14218 |
 | Inbox actions | r25 d0a8c26a | r26/actions.txt | 48,515 / 2b894385566ff415 |
 | Zoya episodes (not live) | r25 f03f9677 | r26/zoya/zoya-episodes.txt | 50,146 / b796ea43640400c3 |
 
-**How to build:** apply r26/zoya/build_one.patch at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 63a49087f53f6b5589ef0cbdb09ee79aeff0e281`.
+**How to build:** apply r26/zoya/build_one.patch at f70901f, then run `python3 routines/zoya/build_one.py <out> refs/heads/zoya-slow-pin 63d63ec2ef9211dbc6a6b77b388aa57f96201d1f`.
 
-**Deploy:** after r25. WhatsApp and inbox actions, then pin 63a4908 with the SLOW task and the hourly.
+**Deploy:** after r25. WhatsApp and inbox actions, then pin 63d63ec with the SLOW task and the hourly.
 
 The hourly has 10 bytes left under 63,000. The early-exit gate (about 230 bytes) will need its own cuts.
