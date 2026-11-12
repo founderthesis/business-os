@@ -69,6 +69,11 @@ if a decision changes, add a new line that says what it replaces.
   (5). Next: Mamatha reviews and sets Review to Shortlist or Drop. No Engagements
   created and nothing sent. Replaces the OPEN line below.
 
+- 2026-11-12 | DONE | Same 77-name list also made as a Google Sheet (Mamatha's request):
+  https://docs.google.com/spreadsheets/d/1gNRHqdnBiCgye9YG0jZKyaWP0A-FFVTb-oHL1lmKva0/edit
+  Created in the ad@thepodium.in Drive, private, not shared. Notion and the sheet are
+  separate copies: changes in one do not update the other.
+
 - 2026-11-12 | OPEN | BTS cold outreach list of 50 names. Plan not chosen yet.
   Options offered: A) research by lane, B) pull from Apollo/Clay/Tracxn,
   C) start from existing Notion contacts, or the recommended mix
