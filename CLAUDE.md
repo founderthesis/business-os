@@ -69,6 +69,13 @@ if a decision changes, add a new line that says what it replaces.
   (5). Next: Mamatha reviews and sets Review to Shortlist or Drop. No Engagements
   created and nothing sent. Replaces the OPEN line below.
 
+- 2026-11-12 | DONE | Restored six Type 3 guests to "To review" at Mamatha's call (name,
+  revenue and business): Matt Mullenweg, Tope Awotona, Eric Yuan, Daniel Ek, Brian Chesky,
+  Marcos Galperin. Quick fit ratings out of 10 are in their Review notes (Chesky 6,
+  Mullenweg 5, Yuan 5, Ek 5, Galperin 5, Awotona 4); the earlier concerns stay in the
+  notes to check before outreach. Replaces their Drop lines below. Active list: 58 names
+  (12 Type 1, 20 Type 2, 26 Type 3); 19 marked Drop.
+
 - 2026-11-12 | DONE | Restored Amitava Saha and Anshuman Singh to "To review" (Mamatha's
   call, after comparing with Satish's earlier guests: scale is strong, name recall still
   to be tested). Katkar stays dropped. Replaces their Drop lines in the entry below.
