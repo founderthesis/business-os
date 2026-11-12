@@ -60,6 +60,15 @@ Skills: bts-guest-eval (screen), bts-g-mail (outreach drafts).
 Newest first. Add a dated line for each decision. Never overwrite an old line;
 if a decision changes, add a new line that says what it replaces.
 
+- 2026-11-12 | DONE | BTS long list built in Notion: "Built to Share: Guest Long List
+  (Nov 2026)" (private page, https://app.notion.com/p/5b7c24e1311f40079e743915cac86ebc).
+  77 names (28 Type 1, 23 Type 2, 26 Type 3), not 80: one duplicate and two earlier
+  decliners (Kristo Kaarmann, Deep Kalra) removed, no padding. Founder Thesis past
+  guests are allowed (Mamatha's call). Emails and LinkedIn are only filled from our
+  People records; nothing guessed. Evaluation links only where an eval already exists
+  (5). Next: Mamatha reviews and sets Review to Shortlist or Drop. No Engagements
+  created and nothing sent. Replaces the OPEN line below.
+
 - 2026-11-12 | OPEN | BTS cold outreach list of 50 names. Plan not chosen yet.
   Options offered: A) research by lane, B) pull from Apollo/Clay/Tracxn,
   C) start from existing Notion contacts, or the recommended mix
