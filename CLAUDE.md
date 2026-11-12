@@ -69,6 +69,12 @@ if a decision changes, add a new line that says what it replaces.
   (5). Next: Mamatha reviews and sets Review to Shortlist or Drop. No Engagements
   created and nothing sent. Replaces the OPEN line below.
 
+- 2026-11-12 | DONE | Added "Unresponsive" as a Review option (Notion and Sheet dropdown)
+  so Mamatha can sort. Tagged the 7 whose Notion record says Unresponsive after earlier
+  cold mails: Ronnie Screwvala, Peyush Bansal, Girish Mathrubootham, Wade Foster, Tobi
+  Lutke, Mike Cannon-Brookes, Nikolay Storonsky. Kunal Bahl (on hold, 1 mail) and Alakh
+  Pandey (unclear) left as To review. Counts: To review 51, Unresponsive 7, Drop 19.
+
 - 2026-11-12 | DONE | Rated the 58 active guests out of 10 on Satish's lane rules
   (quick scores from research notes, not full evals) at Mamatha's request. Three new
   columns added to the guest list database only: "Satish Fit (out of 10)", "Rating lane",
