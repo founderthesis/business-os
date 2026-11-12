@@ -69,6 +69,11 @@ if a decision changes, add a new line that says what it replaces.
   (5). Next: Mamatha reviews and sets Review to Shortlist or Drop. No Engagements
   created and nothing sent. Replaces the OPEN line below.
 
+- 2026-11-12 | DONE | Restored Amitava Saha and Anshuman Singh to "To review" (Mamatha's
+  call, after comparing with Satish's earlier guests: scale is strong, name recall still
+  to be tested). Katkar stays dropped. Replaces their Drop lines in the entry below.
+  Active list: 52 names (12 Type 1, 20 Type 2, 20 Type 3); 25 marked Drop.
+
 - 2026-11-12 | DONE | Type 2 and Type 3 review (Mamatha's request): rule is looser than
   Type 1. Similar industries or backgrounds are NOT a reason to drop; only weak,
   repetitive or non-fitting profiles go. 11 marked Drop in Notion and the Sheet:
