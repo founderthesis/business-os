@@ -15,7 +15,7 @@ If the CTO adds the full CLAUDE.md, its rules win over anything here.
 ## Rules
 
 - Nothing is sent unless Mamatha asks for that exact send.
-- Mail from ad@thepodium.in is Akshay's. Draft it for him, never send it.
+- Mail from Akshay's own mailbox is his. Draft it for him, never send it.
 - Use approved short links only.
 - Read before you write. Write once at the end, in as few calls as possible,
   then read back what was written.
@@ -105,7 +105,7 @@ if a decision changes, add a new line that says what it replaces.
 
 - 2026-11-12 | DONE | Same 77-name list also made as a Google Sheet (Mamatha's request):
   https://docs.google.com/spreadsheets/d/1gNRHqdnBiCgye9YG0jZKyaWP0A-FFVTb-oHL1lmKva0/edit
-  Created in the ad@thepodium.in Drive, private, not shared. Notion and the sheet are
+  Created in Akshay's Google Drive account, private, not shared. Notion and the sheet are
   separate copies: changes in one do not update the other.
 
 - 2026-11-12 | OPEN | BTS cold outreach list of 50 names. Plan not chosen yet.
