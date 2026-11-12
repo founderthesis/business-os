@@ -69,6 +69,12 @@ if a decision changes, add a new line that says what it replaces.
   (5). Next: Mamatha reviews and sets Review to Shortlist or Drop. No Engagements
   created and nothing sent. Replaces the OPEN line below.
 
+- 2026-11-12 | DONE | Type 1 overlap check (Mamatha's request): kept the strongest
+  of each similar group, 5 more marked Drop in Notion and the Sheet (Shashi Kumar,
+  Shan M S, Julian Richer, Gary Grant, Edmund Schweitzer III). Kept: Vilas Shinde,
+  Vidit Aatrey, Guy Singh-Watson, Jack Stack. 61 active names now (12 Type 1,
+  23 Type 2, 26 Type 3). Type 2 and Type 3 overlap check not done yet.
+
 - 2026-11-12 | DONE | Type 1 review (Mamatha's request): 28 Type 1 names compared with
   Satish's 17 earlier guests. 11 marked Drop (Review = Drop plus a reason in Review
   notes), in both Notion and the Google Sheet; no rows deleted. Dropped: Rishabh Jalan,
