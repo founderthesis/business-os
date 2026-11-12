@@ -69,6 +69,12 @@ if a decision changes, add a new line that says what it replaces.
   (5). Next: Mamatha reviews and sets Review to Shortlist or Drop. No Engagements
   created and nothing sent. Replaces the OPEN line below.
 
+- 2026-11-12 | DONE | Rated the 58 active guests out of 10 on Satish's lane rules
+  (quick scores from research notes, not full evals) at Mamatha's request. Three new
+  columns added to the guest list database only: "Satish Fit (out of 10)", "Rating lane",
+  "Rating reason". 3 at 9, 17 at 8, 20 at 7, 12 at 6, 5 at 5, 1 at 4. The 19 dropped rows
+  have no rating. Google Sheet not updated with ratings yet.
+
 - 2026-11-12 | DONE | Restored six Type 3 guests to "To review" at Mamatha's call (name,
   revenue and business): Matt Mullenweg, Tope Awotona, Eric Yuan, Daniel Ek, Brian Chesky,
   Marcos Galperin. Quick fit ratings out of 10 are in their Review notes (Chesky 6,
