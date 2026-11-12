@@ -22,7 +22,7 @@ The 12 Nov run said "Failed: early exit: 3i, 3p, 3h, 3g, 3k, 3b, 3d, 4, 7b" afte
 - **Saved skipped phases first:** every step the previous run of the same part left unfinished, without a line, or with remaining above 0 runs first, in the part's order, but STEP 3h before the rest. Before, it said only "a step it skipped runs first".
 - **Billing search:** one search per term in subject or body (invoice, bill, payment, receipt, GST, remittance), merged by Message-ID, then judged by the existing forward and never-forward rules. Transaction alerts stay excluded by those rules, so the wider search doesn't widen what's forwarded.
 - **3h's source:**
-  - It read the OS Audit page (3fc19a301a7f8171b1e2ef19ded7c239), section "Independent review — latest checkpoint". That's the historical trail now.
+  - It read the OS Audit page (3fc19a301a7f8171b1e2ef19ded7c239), its "Independent review, latest checkpoint" section. That's the historical trail now.
   - It now reads the CTO Audit page's "Latest checkpoint" (40419a301a7f81c48c29d894e433750d, decision 516).
   - Each item's id is "<checkpoint id> item <n>" (CX-<date>T<time>, else its old AR- id).
   - **No duplicates:** an item is skipped when a CTOA card on the Build board already carries that checkpoint id in its body (the CTO answers Codex there), or an Engagement has the id in its Name or Source ID. In practice 3h will create a Task row only for something the CTO hasn't taken onto a card.
