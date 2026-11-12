@@ -27,6 +27,8 @@ If the CTO adds the full CLAUDE.md, its rules win over anything here.
 - Do not run evals here unless Mamatha asks. The hourly evals session picks up
   new Engagement rows.
 - No em dashes. Short answers, plain words.
+- Use simple English with no jargon. Mamatha asked for this on 2026-11-12.
+  If a technical word is needed, explain it in a few plain words.
 
 ## New Engagement checklist
 
