@@ -108,6 +108,7 @@ Evals are written by the Cowork "Founder Thesis guest evals" task, which runs th
 
 - This repo is private, but still: no email addresses, phone numbers, WhatsApp or Telegram handles, or credentials in committed files. Real data lives in `data/`, which is git-ignored.
 - Never read or write the Credentials page in Notion from any routine.
+- Never access, read or collect anything from a team member's own computer: no Remote Control folders, no Claude in Chrome, built-in browser or computer-use tools on their machine, no local files, open tabs or windows (Sarika, 12 Nov, decision 566). Akshay's own Mac tasks (routines/mac) are his to authorise and are outside this rule.
 - Never overwrite raw exports. Every transform is a script that can be re-run. Duplicates and unmapped values go to review CSVs, never silently merged or guessed.
 - Print and reconcile row counts after every migration step.
 
