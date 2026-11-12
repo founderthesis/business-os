@@ -69,6 +69,14 @@ if a decision changes, add a new line that says what it replaces.
   (5). Next: Mamatha reviews and sets Review to Shortlist or Drop. No Engagements
   created and nothing sent. Replaces the OPEN line below.
 
+- 2026-11-12 | DONE | Type 2 and Type 3 review (Mamatha's request): rule is looser than
+  Type 1. Similar industries or backgrounds are NOT a reason to drop; only weak,
+  repetitive or non-fitting profiles go. 11 marked Drop in Notion and the Sheet:
+  Type 2: Ankur Warikoo, Shantanu Deshpande, Anshuman Singh, Sanjay Katkar, Amitava Saha.
+  Type 3: Matt Mullenweg, Tope Awotona, Eric Yuan, Daniel Ek, Brian Chesky, Marcos
+  Galperin. Active list now 50 names (12 Type 1, 18 Type 2, 20 Type 3); 27 marked Drop
+  in total, none deleted.
+
 - 2026-11-12 | DONE | Type 1 overlap check (Mamatha's request): kept the strongest
   of each similar group, 5 more marked Drop in Notion and the Sheet (Shashi Kumar,
   Shan M S, Julian Richer, Gary Grant, Edmund Schweitzer III). Kept: Vilas Shinde,
