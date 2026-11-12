@@ -69,6 +69,14 @@ if a decision changes, add a new line that says what it replaces.
   (5). Next: Mamatha reviews and sets Review to Shortlist or Drop. No Engagements
   created and nothing sent. Replaces the OPEN line below.
 
+- 2026-11-12 | DONE | Type 1 review (Mamatha's request): 28 Type 1 names compared with
+  Satish's 17 earlier guests. 11 marked Drop (Review = Drop plus a reason in Review
+  notes), in both Notion and the Google Sheet; no rows deleted. Dropped: Rishabh Jalan,
+  Sumita Ghose, Neelam Chhiber, Harish Hande, Chetna Gala Sinha, Wilma Rodrigues,
+  Achyuta Samanta, B. Soundararajan, Chris Rufer, Dan Price, Kim Jordan. Kept close
+  calls: Yvon Chouinard, Julian Richer, Ideas2IT, Namma Yatri, Meesho. 66 names remain
+  (17 Type 1, 23 Type 2, 26 Type 3). Type 2 and Type 3 not yet reviewed this way.
+
 - 2026-11-12 | DONE | Same 77-name list also made as a Google Sheet (Mamatha's request):
   https://docs.google.com/spreadsheets/d/1gNRHqdnBiCgye9YG0jZKyaWP0A-FFVTb-oHL1lmKva0/edit
   Created in the ad@thepodium.in Drive, private, not shared. Notion and the sheet are
