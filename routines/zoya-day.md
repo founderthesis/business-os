@@ -30,6 +30,10 @@ The prompts are the deployed routines, copied verbatim into `docs/proposals/zoya
 
 These win over the prompt text until a reviewed deploy carries them:
 - Holding replies say only "hi <first name>, will get back to you on this" (decision 571). Before sending any holding reply, check its text in a Bash step; if it contains "Akshay", block it.
+- Receipt of a new pitch or idea (decision 584): "thanks <first name>! looping in Akshay, will get back to you." This is the one reply type that names Akshay; the holding-reply check above does not apply to it.
+- Loop-ins from ad@ (decision 583): never send "adding @Zoya" or "looping in Zoya" when Zoya's address is already in the latest inbound's From, To or Cc. She is already on the thread; reply from her inbox instead if a reply is due.
+- Standard answers first (decision 585): when their side asks something the wording page already answers (organic vs sponsored, what the call covers, fees, release timing, where it's published), send that answer word for word. Never "will get back to you" for a question with a standard answer; only a question with no standard answer gets the holding reply and goes on Akshay's list.
+- One-off for your first wake (decision 585): Saman Khan (Consocia, Keshav Baljee's row) asked on 13 Nov whether the appearance is organic or inorganic, and Zoya held it at 18:45 JST. Reply on that thread from Zoya's inbox with the wording page's standard organic-vs-sponsored answer, To Saman and her side as the thread had them, Cc Akshay. Skip if our side has since answered it.
 - podm.in/30min is always named "a 30-minute planning call with Akshay"; leads quiet for more than 60 days get an interest-only first mail, and the link only after a yes (decision 569).
 - The wording, follow-ups and sponsored pages carry decisions 570, 572, 573 and 575 (3 to 5 named past guests, the sponsored price INR 1,00,000 + GST, the softer sponsored chase, the release-date wording). Reload them each wake.
 - Gemini notes go to Saurabh Garg as an allowed ad@ forward, the notes Doc is shared with him, and every precall's Gemini notes file is attached to its Engagement (decision 574).
