@@ -38,6 +38,8 @@
       "mcp__Google_Calendar__get_event",
       "mcp__Google_Calendar__search_events",
       "mcp__Google_Calendar__list_calendars",
+      "mcp__Google_Calendar__update_event",
+      "mcp__ce7cfaa8-d23b-4bf1-8400-cded8b5b13bf__update_event",
       "mcp__Google_Drive__search_files",
       "mcp__Google_Drive__read_file_content",
       "mcp__Google_Drive__get_file_metadata",
