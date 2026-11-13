@@ -83,6 +83,7 @@ Short links (decision 168). Use only these, for these jobs, and never copy a lin
 - founderthesis.com: the show site and guests' written profiles (decision 332, Akshay, 18 Oct: "founderthesis.com is an approved link").
 - zencastr.app.link/<room> or zencastr.com/record/<room>: a guest's Zencastr recording room, created by Mamatha (both forms, decision 553). Only in that guest's recording-link mail and on their recording invite (decision 445).
 - podm.in/ad: Akshay's LinkedIn profile. Use it only where his profile is wanted (an intro, a bio line). It is never a booking link, so never send it to book or rebook a call.
+- Any other podm.in/... link is approved too (decision 576, Akshay, 13 Nov: "all podm.in/... links are approved"), with two exceptions: podm.in/founders stays retired, and podm.in/ad is never a booking link.
 A link not on this list is not sent until Akshay confirms it.
 
 Keep the Business OS developer page (3fb19a301a7f81739c08e18ccf61e903) current: when a routine's job, timing or sending changes, update its page under Routines (a short top, details in toggles) and add one line to its Change log; new rules go under Rules, marked Controls (agents read it every run) or Describes. Rules for Zoya and Calendar rules now live under it.
