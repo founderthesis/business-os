@@ -1,0 +1,173 @@
+{
+ "date": "2026-11-01",
+ "reviewed_at": "HEAD 4baa7d8 (after coordinator's update; round 2 originally at ed4657e also checked)",
+ "builds": {
+  "zoya-one.txt (HEAD)": {
+   "bytes": 43565,
+   "sha16": "e04512accf236171",
+   "identical": true,
+   "input": "build_one.py at HEAD parts, <out> refs/heads/zoya-slow-pin 39a5cce90dfd468ecd3bdfe413e5ef9981b4313d"
+  },
+  "zoya-one.txt (ed4657e)": {
+   "bytes": 43206,
+   "sha16": "f35016c5fe448a94",
+   "identical": true,
+   "input": "build_one.py at 39a5cce parts, branch arg refs/heads/zoya-slow-pin (the branch name claude/business-os-structure-k3sqo5 gives 43,217 / 1dd6ad1376694601)"
+  },
+  "zoya-slow-work.txt @39a5cce": {
+   "bytes": 64714,
+   "sha16": "9403ac13d1527139",
+   "identical": true,
+   "input": "build_one.py at 39a5cce (and at HEAD: unchanged)"
+  },
+  "inbox.txt (HEAD)": {
+   "bytes": 65306,
+   "sha16": "dcd1c44215676619",
+   "identical": true,
+   "input": "inbox-msgid/inbox.txt rev 2, 65,233 / debcde463cd9cd0f"
+  },
+  "inbox.txt (ed4657e)": {
+   "bytes": 65297,
+   "sha16": "932472e0a326181e",
+   "identical": true,
+   "input": "inbox-msgid/inbox.txt 65,334 / 2f3250ed1d45e7db"
+  },
+  "inbox on Cleanup rev": {
+   "bytes": 65300,
+   "sha16": "430ceefdda112a3f",
+   "identical": true,
+   "input": "inbox-msgid/cleanup/inbox.txt 65,227 / 3bb46f9332241e3b, patch.py with INPUT inbox set to 3bb46f9332241e3b"
+  },
+  "calendar.txt": {
+   "bytes": 58379,
+   "sha16": "60535446d9b0d650",
+   "identical": true,
+   "input": "d420/deploy/calendar-b1.txt 57,968 / f6d140196f3b75b4"
+  },
+  "sweep.txt": {
+   "bytes": 36093,
+   "sha16": "642eb4bd576c1d93",
+   "identical": true,
+   "input": "d420/deploy/sweep.txt 35,047 / 06c4120b2cd48ef1"
+  },
+  "hostboards.txt": {
+   "bytes": 8885,
+   "sha16": "8a3fd4b5a3bb6b77",
+   "identical": true,
+   "input": "live 8,474 / 5819ccf7528ca16f is not in the repo; verified by removing the rule line from hostboards.txt (gives exactly 5819ccf7528ca16f) and re-running patch.py on that"
+  }
+ },
+ "diffs": {
+  "zoya FAST vs d420 build (f70901f, 42,109 / 23551dc5)": "PASS: Action keys in field list, KEYS, old-format definition, NEXT ACTION + WRITE PATH, version hash, pin 39a5cce/9403ac13; plus HEAD's decision-action edits (queue-fast 'the sponsored commercials,', decision.txt 'So is a segment ...' sentence) only",
+  "SLOW vs f70901f": "PASS: same field-list, KEYS, old-format, WRITE PATH edits only",
+  "inbox (HEAD) vs msgid rev 2": "PASS: SHORT rule line; repeat-pitch 'Earlier: <D Mon> ...' -> 'Earlier thread and our answer: Claude note.'; replacement-proposal text shortened (drops '<new person, role>', '(<original Status, Tier>)', 'Eval pending'; Status New still triggers the eval, so no rule lost). 'zero rows', 'Kind follows the From header', look-back sentence are already absent in rev 2, so this patch no longer trims them",
+  "inbox (ed4657e) trims": "Safe: 'zero rows' is restated by 'IDENTITY: one Activity per message, ever' and 'create nothing'; 'Kind follows the From header' by 'Kind: \"Email out\" if the sender is Akshay or a person tagged Team, else \"Email in\"'",
+  "inbox on Cleanup rev": "PASS: the same edits as on rev 2; outputs differ only by the Cleanup rev's own msgid edits",
+  "calendar/hostboards": "PASS: rule line only",
+  "sweep": "PASS: rule, PART A list, STEP 3t"
+ },
+ "cases": {
+  "Z2": {
+   "verdict": "PASS",
+   "quotes": [
+    "Old-format steps (no Action keys line and no \"[...]\"; a \"[...]\" is its key)",
+    "a \"[...]\" still in Next action moves to Action keys in your next write to the row",
+    "(moving a \"[...]\" to Action keys and NEXT ACTION's drops excepted)"
+   ],
+   "defects": [
+    "'moves' is not 'verbatim'; it's implied but not said (minor)"
+   ]
+  },
+  "Z3": {
+   "verdict": "PASS with one gap",
+   "quotes": [
+    "Wherever this prompt writes \"Zoya [<key>]: <step>\" or writes a key onto a segment, write \"Zoya: <step>\" and that line; a send that moves a step on (follow-up, nurture) replaces its line with the next key.",
+    "SLOW 131: the segment stays \"Zoya: nurture <recipient>: <ask> (since <start>)\" with its start unchanged"
+   ],
+   "defects": [
+    "Remaining literal key-onto-segment phrases (covered only by the KEYS override): old-format 'write it back onto that segment before acting'; STEP 2 'writes that key onto the row as its segment'; templates 'Zoya [reply msg-<id>-n <ts>]: <ask>', SLOW 114 'Zoya [nurture seq-7-1 <that date>]', 128 'Zoya [nurture seq-7-<n> <date>]: recheck', 130 'Zoya [followup seq-<routine>-<n+1> <its due date>]'",
+    "Nurture's next key is never spelled out (follow-up's is, at 130): the model has to derive seq-7-<n+1> and the raised date from the seq-raised-time rule",
+    "Templates still carry history: '(since <D Mon YYYY>)', '(since <start>)'"
+   ]
+  },
+  "Z4": {
+   "verdict": "PASS in Zoya; FAIL in sweep",
+   "quotes": [
+    "short name: the step's first words, none the start of another on the row; a segment's key is the line whose name its step starts with"
+   ],
+   "defects": [
+    "Sweep 3t defines '(short name: the step's first words, kept when you shorten it)' without 'none the start of another', so a sweep move can create 'reply'/'reply-pr' names",
+    "Orphan key lines from inbox (whose rule only says 'leaves, with its key' and which has no Action keys field anywhere) break uniqueness and can match a later step with the same first words"
+   ]
+  },
+  "S1": {
+   "verdict": "PARTIAL",
+   "quotes": [
+    "move a bracketed key to Action keys as \"<short name> = <key>\" (short name: the step's first words, kept when you shorten it)",
+    "Never drop a step whose key is still open or that waits on a decision. At most 30 rows a run, oldest Claude updated first."
+   ],
+   "defects": [
+    "No no-prefix rule (Z4)",
+    "'kept when you shorten it' sits in the bracket-move clause; nothing forces it when shortening a segment that already has an Action keys line",
+    "'key is still open' is undefined in sweep: it never mentions Activities' Action key",
+    "No guard against Zoya holding the lock (sweep 13:10 JST against Zoya's 12:38 run), which the backfill plan does have"
+   ]
+  },
+  "done_step": {
+   "verdict": "PASS",
+   "quotes": [
+    "Completing or superseding a step removes it (and its key) in the same write",
+    "Adding, completing or dropping a segment adds or removes its line in the same write"
+   ]
+  },
+  "status_forward": {
+   "verdict": "PASS with defect",
+   "quotes": [
+    "a write that moves Status forward or passes the call date drops the earlier stage's steps"
+   ],
+   "defects": [
+    "Zoya's version has no sweep-style guard ('never drop a step whose key is still open or that waits on a decision'), and 'earlier stage' is undefined, so an owed reply or an Akshay decision step can be dropped"
+   ]
+  },
+  "decision_action": {
+   "verdict": "PASS with defect",
+   "quotes": [
+    "So is a segment \"Zoya: send the sponsored commercials ...\", \"Zoya: send the precall invite ...\" or \"Zoya: send the decline ...\" written from Akshay's decision (his Tier, Your call or mail, carried by the sweep or the inbox): a decision action; with no \"## Decision mail\" section, send the wording page's template for that decision."
+   ],
+   "defects": [
+    "With no section, 'Superseded check first: if the row's current decision ... no longer matches that section' has nothing to compare with, so a stale decision may be sent; the delivery check names '(decision <id>)' and 'the section names' too. ACTIONS' Sent-candidate check still blocks double sends"
+   ]
+  },
+  "inbox_identity": {
+   "verdict": "PASS",
+   "quotes": [
+    "IDENTITY: one Activity per message, ever.",
+    "Kind: \"Email out\" if the sender is Akshay or a person tagged Team, else \"Email in\""
+   ]
+  },
+  "sizes": {
+   "verdict": "PASS",
+   "values": {
+    "FAST": 43565,
+    "SLOW": 64714,
+    "inbox HEAD": 65306,
+    "inbox Cleanup": 65300,
+    "calendar": 58379,
+    "sweep": 36093,
+    "hostboards": 8885
+   },
+   "limit": 65336,
+   "em_dashes": "unchanged (sweep 1 = input 1; all others 0)"
+  }
+ },
+ "defects": [
+  "Sweep 3t short name has no 'none the start of another' rule (Z4/S1)",
+  "Inbox SHORT 'leaves, with its key' but inbox has no Action keys field: orphan lines; and Zoya never prunes an orphan line, which can match a later step (e.g. a stale 'send the decline' key that already has an Activity, so the new step is treated as done)",
+  "Sweep 'key is still open' undefined; 'kept when you shorten it' bound only to the bracket move; no Zoya-lock guard",
+  "Zoya's Status-forward drop has no open-key / waits-on-decision guard",
+  "Nurture next key not spelled out (derivable only)",
+  "Decision action without '## Decision mail' section: superseded check undefined",
+  "README HEAD still says the inbox is '39 bytes under the build limit'; it is now 30 (65,306)",
+  "Deploy precondition: refs/heads/zoya-slow-pin is at f70901f (ls-remote); it must move to 39a5cce or the SLOW runs end 'slow work file unavailable'"
+ ]
+}

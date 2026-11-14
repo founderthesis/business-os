@@ -1,0 +1,33 @@
+{
+  "candidate": {"file": "inbox-q.txt", "bytes": 64896, "sha256_16": "87941a82acac0970", "cap_headroom_bytes": 440},
+  "live": {"file": "inbox-live.txt", "bytes": 61957, "sha256_16": "aed0215a8bdf6a26"},
+  "diff_check": {"verdict": "PASS", "method": "re-ran docs/proposals/d420/inbox.py on inbox-live.txt -> rebuildCX.txt, byte-identical to inbox-q.txt (cmp); script asserts each replacement matches exactly once and em-dash count unchanged"},
+  "cases": {
+    "P1": {"verdict": "PASS", "trace": [
+      "10:02: M fails (STEP 2 create error). read to = newest time with every message logged/noise, never past a pending one -> <= 09:40. Body: 'pending: <M>'. Later messages logged.",
+      "11:02: T = read_to - 30m <= 09:10. Pending retry by Message-ID; M also re-read in window by STEP 2; fails again -> stays pending, read to still <= 09:40. Post-M messages re-read, skipped by msgid lookup (no duplicates).",
+      "12:02: same as 11:02.",
+      "13:02: M logs -> leaves pending line; read to moves to newest message."],
+      "notes": "Run status is Partial/Failed on 10:02-12:02 (connector error left work undone), never Completed."},
+    "P2": {"verdict": "PASS", "trace": ["T = 11:01:30 - 30m = 10:31:30 from the inbox's own record; Zoya's 11:40 Activity explicitly cannot move T", "11:40 message is in window; STEP 2 batch lookup finds its msgid (or provider id / part-before-@ spellings) -> skipped, zero rows"]},
+    "P3": {"verdict": "PASS", "trace": ["no inbox record with 'read to' -> T = 3 days ago; decision-419 records without 'read to' also count as none"]},
+    "P4": {"verdict": "PASS", "trace": ["STEP 1: one copy per RFC Message-ID, never collapsed by sender, subject or time -> one Activity", "STEP 2: 'Date and recipient alone never match: two mails are two rows' -> two Activities"]}
+  },
+  "defects": [
+    {"id": "D1", "severity": "medium", "title": "pending line read from 'the last record', not the record T comes from",
+     "detail": "STEP 1 retries the pending line of 'the last record'; RUN RECORD carries it 'from the last record'. If a run dies after writing its Started row (no final update), the next run's last record has no pending line, so M drops off the chain. T still comes from the newest record WITH read to, so M is still re-read through the cursor in practice, but requirement (1) 'never dropped' is broken on paper.",
+     "fix": "Read and carry the pending line from the same record T comes from (the newest inbox record with 'read to')."},
+    {"id": "D2", "severity": "medium", "title": "no reconciliation path for a pending message that can no longer be found",
+     "detail": "Pending leaves only when 'logged now, or noise'. If M is deleted or the search never returns it, it stays pending forever, read to stays pinned and the window grows with every run. Each run then reads every message since M, with an 'original' call each, so cost grows linearly. Nothing ages it out, caps the window or flags it specifically. The only signal is the pending line plus a Partial/Failed status each run, which the morning check would see.",
+     "fix": "Add a reconcile rule, e.g. pending older than 24h: say 'pending since <time>' in the report and put one line on Akshay's list or the builder queue. Keep it pending, never drop it."},
+    {"id": "D3", "severity": "low", "title": "time basis mixed",
+     "detail": "read to uses 'received time'; the window keeps messages 'dated at or after T'. A message whose Date header lags its delivery by more than 30 minutes can fall before T and never be read.",
+     "fix": "Use received time for both the filter and read to."}
+  ],
+  "contradictions": {
+    "pending_retry_vs_window": "No conflict. The pending retry is mostly redundant because the cursor never passes M, so M is re-read anyway. It matters only when the search misses M (see D2).",
+    "step6_72h_catchup": "No conflict. Catch-up is driven from Notion pitch Activities, so an unlogged pending M isn't in it. Once M logs within 72h of arrival, STEP 6 handles it in that run's read. If M is pending for more than 72h it never gets a loop-in, consistent with the 72h rule but unreported.",
+    "unbounded_window": "Not capped and not reported as its own item, only indirectly (pending line plus Partial/Failed status). See D2."
+  },
+  "overall": "PASS on P1-P4 and the diff; ship-able with D1 (one-phrase wording fix) recommended before deploy, D2/D3 as follow-ups or folded in if headroom (440 B) allows."
+}

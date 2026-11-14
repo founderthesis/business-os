@@ -1,0 +1,60 @@
+{
+ "round": "4b",
+ "inputs": {
+  "capture.txt": "35819/787edd7ac6b8db54",
+  "actions-v2.txt": "39304/10fd6e2a05c2e0ac",
+  "yourcall-sections.md": "7326/a28b43da3b0aac36",
+  "sweep.txt": "39131/6783dd01e396e5ab"
+ },
+ "cases": {
+  "A1": "PASS in the stated scenario: Zoya logs at 10:38 and capture is down until 15:02. When it stamps the row, it puts the id on 'your record's body line \"stamped: <ids>\"'. At 15:25 actions reads 'every id on the \"stamped:\" body line of each run:inbox-capture: record created since W minus 2 hours'. The 15:02 record qualifies, and the row is worked first because it's the oldest created. Two holes remain: S-J1 and S-J2.",
+  "R1b": "PASS: Zoya's run logs Akshay's 10:10 reply as 'Akshay to ...', Kind Email out. Capture stamps it, because the exception covers 'Kind Email in or Email out' and the Summary doesn't start 'Zoya'. Actions then runs STEP 2b and STEP 3 on it. Her own sends ('Zoya sent ...') are still excluded ('never a Kind Email out row whose Summary starts \"Zoya\"').",
+  "R3b": "PASS for an outage: each run fails, ends Failed and 'first removes its own try lines', so healthy rows never reach 3. But this reopens B4; see B4.",
+  "cursor_minor": "PASS: 'the newest record with Source ID run:inbox-capture: that has a \"read to\" (none yet: run:inbox:...)' now matches STEP 1.",
+  "B4": "FAIL (regression): one Activity's THREAD read fails with a connector error every run. Under RUN RECORD that makes the run Failed ('a connector error or limit left work undone'). The R3b clause then removes the row's try line every run, so it never reaches 3 and never becomes stuck, and it holds W forever. That's the original B4 freeze. See D-B4.",
+  "B1": "PASS: unchanged.",
+  "B2": "PASS: unchanged.",
+  "B3": "PASS: unchanged.",
+  "B5": "PASS: unchanged.",
+  "B6": "PASS: unchanged.",
+  "B7": "PASS: unchanged.",
+  "B8": "PASS: unchanged.",
+  "B9": "PASS: unchanged.",
+  "B10": "PASS: unchanged.",
+  "S1": "PASS: a Zoya-only inbox row is never in ad@, so it's never stamped.",
+  "S2": "PASS: unchanged (90-minute guard, :35 stop).",
+  "S3": "PASS: unchanged.",
+  "S4": "PASS: unchanged ('Zoya sending' row, Blueticks check).",
+  "S5": "PASS: unchanged.",
+  "S6": "PASS: unchanged.",
+  "S7": "PASS: unchanged.",
+  "S8": "PASS: unchanged.",
+  "S9": "PASS: unchanged.",
+  "D1_to_D9": "PASS: unchanged, except that D9 is now carried by the stamped: join (S-J1).",
+  "R1_R2_R4": "PASS: unchanged.",
+  "size_emdash": "PASS: capture is 35,819 bytes and actions-v2 39,304 (696 bytes to spare). No U+2014."
+ },
+ "defects": {
+  "D-B4_r3b_unfreezes_nothing": {
+   "quote": "'n = 1 + its earlier try lines; a run ending Failed on a connector error first removes its own try lines' + RUN RECORD 'Failed: a connector error or limit left work undone'",
+   "scenario": "One message's THREAD read returns an MCP Emails error every time (a malformed or vanished message). Each run tries it, fails and ends Failed on that connector error, then removes the try. The row never reaches 3 tries, so W is frozen for good. R3b can't tell a row-specific error from an outage.",
+   "fix": "Remove try lines only when the error isn't this row's: 'only if a second read (another message, or the Notion page) failed the same way', or 'only on quota, rate limit or 5xx'. A row-specific error keeps its try."
+  },
+  "S-J1_stamped_line_lost_on_crash": {
+   "quote": "capture STEP 1: 'its id goes on your record's body line \"stamped: <ids>\"' + RUN RECORD 'Your last write updates that row: ... page body = ...'",
+   "scenario": "PLAUSIBLE. A literal model writes the body at its last write. If capture crashes after stamping a row but before that write, the row has its capture: line but appears on no stamped: line. The next run doesn't stamp it again, because the exception covers only rows 'without a \"capture:\" line', and the row is too old for the cursor. Actions never sees it.",
+   "fix": "Say 'add its id to your record's \"stamped:\" line as you stamp it (the record exists since Started)'. Or make the exception also cover 'a row whose capture: line is from a run whose record has no read to'. The first option is the shortest."
+  },
+  "S-J2_stamped_try_drops_out": {
+   "quote": "actions: 'each run:inbox-capture: record created since W minus 2 hours ... they never move W'",
+   "scenario": "A stamped row is taken at 15:25 and gets 'actions: try 1', but isn't finished (one transient failure, or the run hits :35 after starting it). Stamped rows don't hold W, so after about 2 hourly runs W passes 17:02 and that capture record falls out of the window. The row keeps 'try 1' forever, is never retried and never becomes stuck. The 3-tries rule doesn't hold for this branch.",
+   "fix": "Say 'a stamped row with an open try line holds W', or widen the window to 'records created since W minus 24 hours'. The second option costs one more query of about 24 small bodies."
+  },
+  "N-zoya_prefix": {
+   "quote": "capture STEP 0: 'a Summary starting \"Zoya sent\" is hers: add nothing' vs STEP 1: 'never a Kind Email out row whose Summary starts \"Zoya\"'; actions closes n/a only 'a Summary starting \"Zoya sent\"'",
+   "scenario": "Minor. If Zoya's routine ever logs a send as 'Zoya to Rhea: ...', STEP 1 skips it but STEP 0 stamps it. Actions then works her send, because only 'Zoya sent' is closed n/a.",
+   "fix": "Use one prefix everywhere: 'a Kind Email out row whose Summary starts \"Zoya\"'."
+  }
+ },
+ "verdict": "Not accepted. A1, R1b, R3b and the CURSOR wording pass as specified. But R3b brings back B4: a row whose thread read fails on a connector error every run never reaches 3 tries, so W freezes (blocking, D-B4). The new stamped: join has two holes. A crash before the record's last write loses the stamped ids (S-J1, plausible, blocking if the model writes the body only at the end), and a stamped row that fails once is never retried (S-J2). Each fix is one clause, but actions has only 696 bytes left. Replay B4, S-J1 and S-J2 after the fix."
+}

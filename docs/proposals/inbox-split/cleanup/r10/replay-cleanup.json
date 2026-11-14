@@ -1,0 +1,23 @@
+{
+ "build": {"rebuild_x2": "byte-identical to repo files", "capture": "43,349 / 21ef8583", "actions": "42,394 / bbaa4262",
+  "note": "README hashes ARE current: 75cbcf8 had 776e6250/f82beb3e, d0cd599 24570e4b/bbaa4262, efeb028 21ef8583/bbaa4262. Premise that README is stale is wrong.",
+  "diff": "capture: STEP 0A inserted + STEP 0 class text only; actions: REPAIR clause only; em dash 0 -> 0 in all"},
+ "r9e_vs_r8e": ["decision 443 scheduling request: Zoya to Waiting on, 'Zoya: reply to <who>: slots for <date>', chase segments removed, Next date 4th case (replaces any Next date but a calendar booking's); Tier 1 or today/tomorrow -> Akshay ask",
+   "decision 444 new inbound on closed row: Akshay ask with recommendation, Status kept; blocks STEP 5/6e Zoya replies but holding reply; Status may change on Akshay's ok",
+   "Next action order: Akshay item after a 443 step", "no cursor/W change, no new send path"],
+ "blockers": [
+  {"id":"B1","area":"deploy order","quote_live_r8e":"except a stamped row with a \"link:\" line after its last \"actions: done\"","scenario":"Capture r10 live with actions r8e: 0A re-keyed/fold-kept rows have no actions: done, so r8e gives ~87 rows of 29-30 Oct mail a full first run, without REPAIR's Sent/thread check","fix":"State: capture r10 deploys only after actions r10 (so after r9e passes Cleanup)"},
+  {"id":"B2","area":"actions REPAIR staleness","quote":"never undo a newer Your call, Status or decision","scenario":"Akshay's 29 Oct mail recovered as REPAIR sets Waiting on Guest / Next action 'Waiting on X' / Next date, or r9e 443 queues 'Zoya: reply ... slots' for a past date, or 444 puts a stale ask on Akshay's list. Waiting on, Next action, Next date are not protected and calendar is not checked","fix":"REPAIR on a row whose Date is older than the Engagement's newest Activity (or older than 48h) writes no Status, Waiting on, Next action, Next date, no Akshay ask and no WhatsApp; ledger 'nothing left (superseded)'"},
+  {"id":"B3","area":"actions","scenario":"r10 actions = r9e unreviewed by Cleanup","fix":"Cleanup review of r9e first"}],
+ "should_fix": [
+  {"id":"S1","quote":"Start no row more than 8 minutes after the run's start","scenario":"STEP 0 text unchanged contradicts 0A's 'STEP 0's 8 minutes count from the end of 0A'","fix":"edit STEP 0's own sentence"},
+  {"id":"S2","quote":"starting none more than 5 minutes after STEP 0L ends","scenario":"0L is unbounded in time; slow 0L + 0A + STEP 0 to minute 12 leaves STEP 1 little or nothing before 18; new mail delayed (not lost)","fix":"absolute cap: 0A starts no row after minute 10"},
+  {"id":"S3","quote":"at its third such line","scenario":"hourly runs: a systemic RAW error (Bash recipe) retires a row to allmail-unread in 3 hours","fix":"one strike per JST day"},
+  {"id":"S4","scenario":"a row whose MCP Emails id no longer resolves is 'pended', rotates forever, never retired, allmail left never 0","fix":"any non-quota failure to read counts as a strike"},
+  {"id":"S5","quote":"2/ MSGID FIND by Date within 2 minutes","scenario":"drops STEP 2's People-overlap-within-a-day arm; ad@-only path has no Message-ID so an older msgid: row with skewed Date is missed -> duplicate adid: row","fix":"'MSGID FIND as STEP 2 defines it (both arms)'"},
+  {"id":"S6","scenario":"if allmail rows were created on/after 2026-11-01T03:00Z, re-keyed 'no fit' rows match 0L's SQL (ORDER BY createdTime LIMIT 10) and are passed over every run, starving 0L until 5 Nov","fix":"check createdTime; or 0L SQL excludes Captured today rows with first captured / LIMIT after body filter"},
+  {"id":"S7","quote":"No loop-in for a 0A row, here or in STEP 6's catch-up","scenario":"STEP 6 has no marker to recognise a 0A row in a later run; 30 Oct pitches are inside 72h on 2 Nov","fix":"STEP 6: a row with a 'link: <run> recovered' line is never caught up"},
+  {"id":"S8","quote":"0/ a Kind Meeting row (Gemini notes): its key is the Doc id","scenario":"0/ precedes 1/ read; replay's D1 fix 'look it up; fold into a row holding it' not written verbatim (relies on STEP 0 rule's lookup)","fix":"add 'read the mail HTML; look up the Doc id; fold or re-key'"},
+  {"id":"S9","area":"actions","quote":"such a row is never given a full first run","scenario":"a fresh 0L/LINK-linked row never worked by actions (backlog over 25 or after :35) now only gets REPAIR","fix":"limit 'never full first run' to rows with a 'recovered' link line or created before W"}],
+ "verdict": {"capture": "accept after B1 (deploy order) and S1-S5; mechanics of selection, folds/Trash, no double-take are sound", "actions": "not accept: B2, B3"}
+}

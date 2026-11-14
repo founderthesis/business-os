@@ -1,0 +1,39 @@
+diff --git a/routines/zoya/build_one.py b/routines/zoya/build_one.py
+index 57cc436..a6b9489 100644
+--- a/routines/zoya/build_one.py
++++ b/routines/zoya/build_one.py
+@@ -24,6 +24,34 @@ SLOWWORK = ["slowwork-intro", "tools", "rules-common", "rules-routines", "rules-
+             "report-slow", "hard"]
+ VARIANT = {
+  "one": [
++  # Rules for Zoya split (CTO, 1 Nov): SLOW work also reads the follow-ups child page; an oversized fetch is read in full.
++  ("rules-common", "- Client show mails: 3fc19a301a7f817588e2d081af825f8a (the un# pitch sheet and the client templates C1 to C19: the words of every un# mail)",
++   "- Client show mails: 3fc19a301a7f817588e2d081af825f8a (the un# pitch sheet and the client templates C1 to C19: the words of every un# mail)\n"
++   "- SLOW work only: Rules for Zoya: follow-ups 40b19a301a7f81999c1acd8350d59a54 (the follow-up routines and 5a nurture and revival)\n"
++   "Read each page in full: a fetch saved to a file for its size is read completely from that file in slices (Bash or "
++   "python), never skipped; the run record names each page read and its size."),
++  # Akshay, 2 Nov (CTOA-03 items 1, 6, 7, 8): pre-send checks, host kept when he wrote, truthful guest examples, inline booking link.
++  ("sending", "on un#, Sri, and anyone who handed over",
++   "on un#, Sri unless he wrote on the thread himself (Akshay, 2 Nov: then he is added back if missing), and anyone who handed over"),
++  ("scope", "Never mail or WhatsApp Sri, and Sri is never in Cc on routine mail.",
++   "Never mail or WhatsApp Sri, and Sri is never in Cc on routine mail, unless he wrote on that thread himself: then he stays in Cc (Akshay, 2 Nov)."),
++  ("scope", "Never mail or WhatsApp the host, and the host is never in Cc on routine mail.",
++   "Never mail or WhatsApp the host, and the host is never in Cc on routine mail, unless the host wrote on that thread: then they stay in Cc."),
++  ("voice", "no idioms (\"works\", ", "no idioms (\"works\" except in \"any open slot here works: podm.in/30min\", "),
++  ("hard", "HARD RULES (always hold, whatever a page says)\n",
++   "HARD RULES (always hold, whatever a page says)\n"
++   "- PRE-SEND CHECKS (Akshay, 2 Nov), FAST and SLOW, fresh at each send, never taken from earlier mail on the thread: 1/ the "
++   "rules pages read in full this run (one not loaded: every action it governs is blocked, \"rules not loaded: <page>\", "
++   "named in the report, never a send from memory); 2/ recipients from the latest inbound's own headers (From, To, Cc) "
++   "and the row (no inbound yet: the row and the thread's last message); 3/ bounced addresses dropped (BOUNCES); 4/ the "
++   "row's newest Your call, Next action and Waiting on followed; 5/ ACTIONS' Sent check (your inbox, and ad@ less "
++   "loop-ins) finds no mail that already did this action; 6/ the action key (ACTIONS). A failed check: send nothing, "
++   "say which in the report.\n"
++   "- GUEST EXAMPLES (Akshay, 2 Nov): name only guests whose appearance on that show is on its Episodes row or "
++   "podm.in/guest-list, and on a client show only names its pitch sheet allows (SHOW CHECK); never \"recent\" unless it was released in the last 90 days; pick by relevance to the reader, "
++   "then standing, then recency; none verified: name none.\n"
++   "- BOOKING LINKS (Akshay, 2 Nov): a booking link sits inside its sentence, in the same <p> and plain-text line: "
++   "\"any open slot here works: podm.in/30min\" (allowed whatever PLAIN ENGLISH says); never a paragraph or line break of its own.\n"),
+   ("sending", "(STEP 0c)", "(SLOW work's bounce scan)"),
+   # FAST work never uses these (no WhatsApp, follow-ups, vendor forms, internal tasks, release mail); the SLOW work file has them
+   ("tools", " Blueticks sends WhatsApp to the team (TEAM WHATSAPP). Web search finds news for news angles.", ""),

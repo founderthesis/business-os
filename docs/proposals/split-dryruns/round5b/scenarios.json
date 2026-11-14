@@ -1,0 +1,89 @@
+{
+ "clock_date": "2026-10-27 (Tuesday, JST)",
+ "rule": "Each scenario sees snapshot.json plus only the additions listed for it. Act only on the rows listed in its scope; every other row in the snapshot is out of scope for that scenario (record nothing for it). Do not invent any id, address, message or row not given here. Lock and R scenarios use their own HYP rows and inbounds as given; no Notion data beyond these. There is one routine (zoya-one.txt). Every run does FAST work; the 10:38 and 16:38 weekday runs then do SLOW work from zoya-slow-work.txt (treat it as already fetched and hash-checked). Every run takes the LOCK first; assume the lock is free and this run takes it, unless the scenario says otherwise.",
+ "G": {
+  "run": "10:38 run (FAST work, then SLOW work)",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-G-0955@impactkey.in",
+    "date": "2026-10-27T09:55:00+09:00",
+    "from": "Jheel Gehlot (impactkey.in)",
+    "to": [
+     "Zoya (myunnati.com)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "in_reply_to": "the latest message on Akshat's commercials thread in the snapshot",
+    "body": "Akshat is fine with the INR 50,000 + GST, what are the next steps?",
+    "logged_by_inbox": false
+   }
+  ]
+ },
+ "I3": {
+  "run": "Interaction: recovery + duplicate prevention. The 09:38 run held the lock and at 09:41 sent the 'Sponsored yes: next steps' reply for the G inbound (Message-ID HYP-I3-SENT@mcpemails.example, idempotency_key = the reply action key) on the thread, then crashed before logging and before releasing. The 10:38 to 16:38 runs found the lock held and skipped. At 17:20 the CTO completed the runbook (positive termination evidence) and released the lock WITHOUT having logged the send yet (assume the reconcile step was missed). The 17:38 run (FAST work only) takes the lock.",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-G-0955@impactkey.in",
+    "date": "2026-10-27T09:55:00+09:00",
+    "from": "Jheel Gehlot (impactkey.in)",
+    "to": [
+     "Zoya (myunnati.com)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "in_reply_to": "the latest message on Akshat's commercials thread in the snapshot",
+    "body": "Akshat is fine with the INR 50,000 + GST, what are the next steps?",
+    "logged_by_inbox": false
+   },
+   {
+    "type": "sent mail",
+    "message_id": "HYP-I3-SENT@mcpemails.example",
+    "date": "2026-10-27T10:41:00+09:00",
+    "from": "Zoya",
+    "to": [
+     "Jheel (PR)"
+    ],
+    "cc": [
+     "Akshay"
+    ],
+    "thread": "Akshat's commercials thread, reply to HYP-G-0955",
+    "logged": false
+   }
+  ],
+  "question": "What do the skipped runs write? What does the 17:38 run do with the unlogged reply and the inbound: is the reply resent? Final Activity count for HYP-I3-SENT."
+ },
+ "SKIP": {
+  "run": "Lock held: the 12:38 run finds refs/heads/zoya-lock at 'held: <session X> 2026-10-27T03:38Z' (the 11:38 run, still going).",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-G-0955@impactkey.in",
+    "date": "2026-10-27T09:55:00+09:00",
+    "from": "Jheel Gehlot (impactkey.in)",
+    "to": [
+     "Zoya (myunnati.com)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "in_reply_to": "the latest message on Akshat's commercials thread in the snapshot",
+    "body": "Akshat is fine with the INR 50,000 + GST, what are the next steps?",
+    "logged_by_inbox": false
+   }
+  ],
+  "question": "List every read and write this run makes, the run record's Summary, and the state of the G inbound's reply action afterwards."
+ }
+}

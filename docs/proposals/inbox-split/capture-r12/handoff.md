@@ -1,0 +1,69 @@
+# Capture r12: order gate, measured stop, 0L and 0A count lines (CTO, 3 Nov ~14:30 JST)
+
+| File | Bytes / sha256 |
+|---|---|
+| `capture.txt` (r12e) | 46,565 / 9caf2cdba8a63698 |
+| r12d (replaced) | 46,594 / 3d38d6f3b93860f8 |
+| r12c (replaced) | 46,195 / 44b14c3e0d3a7826 |
+| r12b (replaced) | 45,719 / 9800a28138445dd0 |
+| r12 (replaced, see `replay.json`) | 45,137 / 64f8fc5bf40c9ec6 |
+| Input: `../r11/capture.txt` (r11, should-fix included, assumed live) | 43,989 / 043dbe3ad8d0a858 |
+
+**Build:** `python3 patch.py ../r11/capture.txt <out>` asserts the input hash 043dbe3a and each edit exactly once. Patched twice, byte-identical. No em dashes. The CTO should byte-compare the live capture against 043dbe3a before pasting.
+
+## Why
+The 14:02 run lasted 2.5 minutes. It wrote "STEP 0L, 0A, STEP 0: not worked this run, stop time" without ever running 0L's or 0A's SQL. STOP TIME is minute 18.
+
+## The three edits, nothing else
+1. **ORDER GATE**, before STEP 0L:
+   - After the run record and OVERLAP's check, the first two Notion queries are 0L's SQL, then 0A's SQL. Both run before STEP 1's search or any other MCP Emails call.
+   - Each query's row count goes on the record as the "due" figure of its line.
+   - The run then works 0L's rows, then 0A's.
+   - Searching mail first, or a record without either line, makes the run Failed, "order gate".
+2. **MEASURED STOP**, in STOP TIME:
+   - Any stop for time is read from `date -u` at that moment, and the record says "stopped at minute <n> of <limit>".
+   - Rows of this run's 0L or 0A batch left unworked before a measured limit has passed make the run Failed, "0A skipped at minute <n>" (or 0L), never Partial.
+3. **Record body**: the first lines are "0L: <n> due, <n> worked" and "0A: <n> due, <n> worked (REF <n>, RAW <n>, adid <n>, fold <n>)". The "stamped:" line follows; actions finds it by name, not position.
+
+## One thing to confirm (CTO)
+Item 2 as asked ("ending before minute 18 with 0L or 0A rows due and unworked is Failed") would also fail a run that obeyed 0A's own window: start no row more than 5 minutes after 0L ends, nor after minute 10. So r12 counts that window as a measured limit, and so is STOP TIME. Leaving rows only at one of those limits, measured and logged, isn't Failed. If you meant 0A's window to go, that's one more edit.
+
+## r12b: replay fixes (`replay.json`: pass with fixes, 2 must-fix)
+
+- **D1 (must-fix), "worked" is defined:** a 0L row passed over for its "link:" line counts as worked, and so does a 0A row struck or pended with its record line. A row left by a quota, rate-limit or 5xx error doesn't. So one no-fit row no longer fails a healthy run. The lines gain buckets so they add up: "0L: <n> due, <n> worked (<n> passed over)" and "0A: <n> due, <n> worked (meeting <n>, fold <n>, adid <n>, REF <n>, RAW <n>, pended <n>)". That's slightly more than the CTO's four buckets.
+- **D2 (must-fix):**
+  - OVERLAP's No-op record is exempt from the gate.
+  - A line with no real SQL count ("0L: not run") counts as missing. That was the 14:02 record's shape.
+  - With no run record, the two lines open the final report instead.
+- **D3:** rows left by a quota error are Failed with the error named, never "skipped".
+- **D4:** "first two Notion queries" becomes "first two SQL queries", leaving aside the data-source fetches and the run record's own checks.
+
+**Not applied, for the CTO:**
+- **D5:** a run that obeys every measured window can still read Partial ("cut short") under RUN RECORD. The replay suggests stating that rows left only at a measured limit make a run neither Partial nor Failed. That changes existing RUN RECORD text, so it's left out under "no other change".
+- **D6, pre-existing:** RUN RECORD calls an early stop Failed, while STOP TIME calls it Partial. r12 settles this only for 0L and 0A rows. STEP 0 skipped with a time claim is still only Partial.
+
+## Fixture: the CTO's manual 0A batch (3 Nov)
+
+The CTO's hand batch, allmail 108690 to 108716, is the 0A fixture. It ended 10 of 10 re-keyed: REF 7, adid 2, RAW 1 (saved to a file at 337 KB, and the python recipe worked). There were 0 wrong confirms. Under r12b:
+- That run's line is "0A: 10 due, 10 worked (meeting 0, fold 0, adid 2, REF 7, RAW 1, pended 0)". The buckets add up to worked, and nothing is Failed.
+- With 0L clear first, the gate's two lines are "0L: 0 due, 0 worked (0 passed over)" and that 0A line.
+
+**Check that record (CTO):** run:inbox-capture:cto-0a-20261103 has no read-to, so STEP 1's cursor ignores it, as intended. Two things to confirm:
+- Its Summary shouldn't still say "Started". OVERLAP would turn any capture run within 30 minutes of its creation into a No-op.
+- It has no 0L or 0A lines. That's fine: r12b's gate judges only this run's own record.
+
+**Status:** r12b patched twice, byte-identical, no em dashes. Ready for Cleanup. Nothing is deployed.
+
+## r12c: decision 452 (3 Nov)
+
+The loop-in's html_body now ends with a gmail_quote blockquote of the pitch message: "On <date>, <name> <address> wrote:", then the message as HTML, or as escaped text. Gmail shows the HTML body, so without it Akshay saw no chain. The plain-text body keeps MCP Emails' own quote. That one edit is all r12c changes. Patched twice, byte-identical.
+
+**Not done here:** the CTO's one-draft test (create, draft_read, delete) is a write to a mailbox. This session needs Akshay's go-ahead before running it.
+
+## r12d: Zoya r15 replay D7, D8
+
+A pitch that came through a forward (Saurabh's, or Akshay's other address) quotes only the original message inside it, with that message's own Date and From. MAILBOX allows include_html for the loop-in quote. Patched twice, byte-identical.
+
+## r12e: Cleanup C1
+
+The quote is only the innermost message from outside the team. Every forward layer, and every note by Akshay, Saurabh or anyone tagged Team, is removed. If unsure, there's no quote. Patched twice, byte-identical.

@@ -1,0 +1,15 @@
+{
+  "inputs": {"inbox-v.txt": "65333 d1bba5802ca8872d", "iw1.txt": "65334 8135ce730219bb21", "wa_live": "26007 9e8b9f4891e9c03d", "ww1.txt": "26328 effaeb38503513c3"},
+  "rebuild": {"iw1": "byte-identical from patch.py", "ww1": "byte-identical from patch_wa.py", "diff": "only the patch's 4 inbox edits and 1 WA edit"},
+  "size": {"iw1": "PASS 65334 <= 65336 (2 B spare)"},
+  "em_dashes": "PASS 0 -> 0 both files",
+  "rules_lost": "PASS except minor: Zoya check lost '(JST)' on 'that day'",
+  "R1": "PASS for Activities and run record",
+  "R2": "FAIL: line 53 still says 'read each once (action read, then original for its Message-ID)' unconditionally; contradicts the 50 KB gate on line 58",
+  "R3": "PASS",
+  "R4": "PASS",
+  "R5": "PASS (minor: day boundary no longer JST)",
+  "R6": "PASS",
+  "R7": "FAIL: rows with no Source ID cannot be read back (People line 76, brand Engagement line 112, FT Network line 141, WhatsApp 'Zoya sent:' Activity line 25) -> counted failed and retried -> duplicate rows; '<the collection id above>' sits after Activities only, so literally ambiguous for People/Engagements/Organisations/Deals (all do have collection:// ids in NOTION); FT Network id is inline at line 141, not in NOTION",
+  "W1": "PASS for parent, read-back and report on wa: Activities; same defect for FT Community creates (lines 30, 81, 82) and 'Zoya posted:' digest Activities (no Source ID); WA has no run record so a failed write is reported, not counted in a status"
+}

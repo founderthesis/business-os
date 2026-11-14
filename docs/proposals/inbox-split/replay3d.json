@@ -1,0 +1,27 @@
+{
+ "round": "3d",
+ "inputs": {
+  "capture.txt": "35029/4cbe89dfde09147c",
+  "actions-v2.txt": "38584/b6e90754d9823051",
+  "yourcall-sections.md": "7326/a28b43da3b0aac36",
+  "sweep.txt": "39131/6783dd01e396e5ab"
+ },
+ "cases": {
+  "D9": "PASS: a guest replies-all at 10:30 and Zoya logs it at 10:38. Capture's 11:02 run reads it in ad@, and STEP 1 says 'skip any whose msgid: key an Activity already holds, except that such a row without a \"capture:\" line (another routine logged it first) gets that line and any missing link, once'. STEP 2 agrees: '(only add a missing link, and the \"capture:\" line if it has none)'. Actions at 11:25 takes the row, either as a cursor row (created 10:38, at or after W minus 2) or through the Captured window if W has already passed it.",
+  "contradictions": "PASS: none blocking. Stamped rows are 'already logged', so they don't count toward the 15 cap. SELF-CHECK only checks rows this run created, so stamped rows are untouched. 'never change its Kind, Summary or author' still holds. Capture's own rows re-read in T's 30-minute overlap already carry the line and are skipped.",
+  "size_emdash": "PASS: capture is 35,029 bytes and has no U+2014. actions-v2 is unchanged at 38,584 / b6e90754d9823051."
+ },
+ "defects": {
+  "N1_loopin_restamp": {
+   "quote": "preamble: 'except a loop-in, whose last line is \"actions: n/a (loop-in)\"' vs STEP 1: 'such a row without a \"capture:\" line (another routine logged it first) gets that line'",
+   "scenario": "The next run re-reads capture's own sent loop-in in the 30-minute overlap. The loop-in row has no capture: line, so capture takes it for another routine's row and appends one. That's harmless: actions still closes it n/a, because 'Summary ends \"Zoya loop-in\"'.",
+   "fix": "Optional: '(a loop-in row excepted)' in STEP 1's exception."
+  },
+  "N2_ledger_for_stamps": {
+   "quote": "'Each message worked has one body line \"<msgid>: Activity <id>; row <name> | none (<why>)\"; a missing line is a skipped step: Partial'",
+   "scenario": "It's unclear whether a stamped message counts as 'worked'. A model that writes no ledger line for it could end the run Partial. This is low risk.",
+   "fix": "Optional: 'a stamped row's line: \"<msgid>: Activity <id>; stamped\"'."
+  }
+ },
+ "verdict": "D9 passes and nothing new contradicts it. Round 3 is accepted for replay purposes. There are two optional nits (N1, N2) and one precondition: deploy capture on 2 Nov or later."
+}

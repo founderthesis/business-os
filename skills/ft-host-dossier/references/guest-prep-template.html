@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--
+  FOUNDER THESIS · GUEST PREP NOTE — visual base
+  Fill every {{SLOT}}. Keep total prose 480-550 words.
+  Voice: first-person Akshay, warm, peer-to-peer. No em-dashes anywhere.
+  HARD RULES: no specific questions; no edit-rights / content-review /
+  approval-of-final-cut language; light-touch flow framing only.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Founder Thesis · Prep Note for {{GUEST_FIRST_NAME}}</title>
+<style>
+  :root{
+    --ink:#1a1a1a; --muted:#5c5c5c; --accent:#0f4c81; --rule:#e4e0d8;
+    --bg:#ffffff; --card:#f7f5f0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);
+    font-family:Georgia,'Times New Roman',serif;line-height:1.65;
+    max-width:680px;margin:0 auto;padding:56px 28px}
+  .kicker{font-family:Arial,Helvetica,sans-serif;font-size:11px;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--accent);
+    border-bottom:1px solid var(--rule);padding-bottom:14px;margin-bottom:28px}
+  h1{font-size:30px;font-weight:normal;line-height:1.25;margin-bottom:6px}
+  .sub{color:var(--muted);font-style:italic;margin-bottom:32px}
+  p{margin-bottom:16px;font-size:16.5px}
+  h2{font-family:Arial,Helvetica,sans-serif;font-size:12px;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--accent);
+    margin:34px 0 12px}
+  ul{margin:0 0 16px 20px}
+  li{margin-bottom:9px;font-size:16px}
+  .card{background:var(--card);border-left:3px solid var(--accent);
+    padding:18px 20px;margin:26px 0;border-radius:0 6px 6px 0}
+  .card p{margin-bottom:6px;font-size:15.5px}
+  .sig{margin-top:36px}
+  .sig .name{font-weight:bold}
+  .sig .role{color:var(--muted);font-size:14.5px}
+  .ps{margin-top:28px;padding-top:18px;border-top:1px solid var(--rule);
+    color:var(--muted);font-size:15px;font-style:italic}
+</style>
+</head>
+<body>
+
+<div class="kicker">Founder Thesis · The Podium</div>
+
+<h1>Looking forward to our conversation, {{GUEST_FIRST_NAME}}</h1>
+<p class="sub">A short note on the podcast and what to expect</p>
+
+<!-- ~90-110 words: intro to Founder Thesis + Akshay. 520+ episodes,
+     audience of founders / operators / investors / ambitious 20-somethings,
+     2-3 recent recognizable guests as social proof, one line on the show's
+     promise: decoding how businesses actually work. -->
+<p>{{INTRO_PARA_1}}</p>
+<p>{{INTRO_PARA_2}}</p>
+
+<h2>How the conversation will run</h2>
+<!-- 2 bullets only: format (remote on Zencastr, the link is in the calendar
+     invite, about 2 hours) and style (conversational, curious,
+     zoom-in-zoom-out). NO pre-call bullet. -->
+<ul>
+  <li>{{BULLET_FORMAT}}</li>
+  <li>{{BULLET_STYLE}}</li>
+</ul>
+
+<h2>Themes we'll cover</h2>
+<!-- 5-6 broad themes, a few words each (Akshay, 12 Oct: guests must not
+     script answers). Name territories only: "How the company started",
+     "How the industry has changed", "Building without outside capital",
+     "What's next". NEVER specific questions, named incidents, products,
+     customers, numbers, dates or anecdotes to bring. No "stories we'd love
+     you to bring" section. -->
+<ul>
+  <li>{{THEME_1}}</li>
+  <li>{{THEME_2}}</li>
+  <li>{{THEME_3}}</li>
+  <li>{{THEME_4}}</li>
+  <li>{{THEME_5}}</li>
+  <li>{{THEME_6_OPTIONAL}}</li>
+</ul>
+
+<!-- Light-touch flow framing card, ~50-70 words. Retakes and off-record
+     moments are fine during the recording; the edit keeps the conversation
+     flowing naturally. DO NOT promise review, approval, or edit rights
+     over the final episode. -->
+<div class="card">
+  <p>{{FLOW_FRAMING}}</p>
+</div>
+
+<h2>Before we record</h2>
+<!-- ~70-90 words, these points in this order (Akshay, 12 Oct; this is
+     where recordings lose time):
+     1. Laptop height: raise the laptop higher than feels natural, so the
+        camera sits at eye level or a little above (a stack of books works).
+        People underestimate this most.
+     2. Backdrop: there is no background blur, so pick a background that
+        looks good on camera (bookshelf, plants, art, a textured or coloured
+        wall). Avoid a plain white wall: it looks flat and tires viewers.
+     3. Audio: AirPods or any decent earphones work well.
+     4. A quiet room and a stable connection.
+     Never ask them to join early. Keep it breezy. -->
+<p>{{LOGISTICS_PARA}}</p>
+
+<!-- ~40-60 words: warm close. Excited for the conversation, why THIS
+     story fits the show, "see you on <date>" if known. -->
+<p>{{CLOSE_PARA}}</p>
+
+<div class="sig">
+  <p class="name">Akshay Datt</p>
+  <p class="role">Host, Founder Thesis · The Podium</p>
+</div>
+
+<p class="ps">P.S. {{PS_LINE}}
+<!-- Invite them to flag anything sensitive in advance (a number they'd
+     rather not discuss, a topic to avoid). Frame as "much rather know now
+     than mid-recording". No pre-call promise. --></p>
+
+</body>
+</html>
