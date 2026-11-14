@@ -76,7 +76,7 @@ Short links (decision 168). Use only these, for these jobs, and never copy a lin
 - podm.in/note: more on our audience and distribution, in Show credentials (decision 230).
 - youtube.com/@spotlight-pod: The Spotlight Podcast channel, only in the negotiation reply (decision 237) and the sponsored-vs-Spotlight answer (decision 464).
 - Client shows (decisions 306, 307): unhashed.co/sponsored and unhashed.co/precall (un#), built2share.in/note (Built to Share), fscd.ai/note (Human by Design), each only on its own show.
-- unhashed.co/studio: the fixed un# recording link, for un# recordings only: the day-before mail and the recording invite (decision 462, Akshay, 4 Nov).
+- unhashed.co/studio: the fixed un# recording link, for un# recordings only: the day-before mail and the recording invite (decision 462, Akshay, 4 Nov). Every un# recording uses it, always (decision 587, Akshay, 14 Nov): it is the invite's location and the link in its body, with no Google Meet link (create the event with no conference, and remove one if Calendar adds it) and no Zencastr room, so no room is asked of Mamatha for un#.
 - built2share.in/studio: the fixed Built to Share recording link, for recordings only, never a precall (Akshay, 21 Oct).
 - fscd.ai/studio: the fixed Human by Design recording link, for HBD recordings only: the day-before mail and the recording invite (decision 497, Akshay, 6 Nov).
 - youtube.com/@founderthesis: the Founder Thesis YouTube channel, in the "where it's published" answer (Akshay, 21 Oct).
