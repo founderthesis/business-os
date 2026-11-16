@@ -22,7 +22,7 @@ The prompts are the deployed routines, copied verbatim into `docs/proposals/zoya
 
 1. `date -u` first. On weekends, prompts marked weekdays (Zoya SLOW, daily sweep) don't run. A prompt is due when at least one of its slots fell after your previous wake's start (first wake of the day: the last slot before now) and at or before now. A prompt with no slot in that window doesn't run.
 2. Run the due prompts in this order, one at a time, each to its end: inbox capture, inbox actions, Zoya FAST, WhatsApp, calendar, Zoya SLOW, daily sweep. Urgent work first: capture, actions and FAST never wait behind SLOW or the sweep.
-3. A prompt's own time limit (minute 22 or 25) still applies to that prompt. If the wake as a whole passes 50 minutes, stop starting new prompts and carry the rest to the next wake; say which in the wake record.
+3. A prompt's own time limit (minute 22 or 25) does not apply inside the day chat (decision 591, Akshay, 16 Nov): run each prompt to the end of its work. Its other stop rules (the Zoya lock, quiet hours, caps on sends) still apply. If the wake as a whole passes 90 minutes, stop starting new prompts and new items, finish the item in hand, release the lock, and carry the rest to the next wake; say which in the wake record.
 4. Don't send between :38 and :45 except inside Zoya FAST, which owns that slot.
 5. Work carried over from a stopped prompt stays due on its rows. Never replay a send: each prompt's Sent check and action key decide.
 
