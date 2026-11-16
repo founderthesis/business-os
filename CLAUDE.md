@@ -39,7 +39,7 @@ Agents do on their own: research, classify, summarise, draft; send an email Aksh
 
 Never hand Akshay a data problem to fix by hand or ask him to approve a bulk action (decision 90). Research and fix it, then report the few rows that truly could not be settled.
 
-Keep Akshay's approvals to a minimum (decision 91, as amended by decision 341): research read-only first and write once at the end; write directly in as few calls as possible, at any row count (decision 341 cancels the Notion AI upload for more than 10 rows), with one Notion writer at a time, a reviewed build, a drift check, count reconciliation and read-back; never run parallel agents that write to Notion; one commit and push per task.
+Keep Akshay's approvals to a minimum (decision 91, as amended by decision 341): research read-only first and write once at the end; write directly in as few calls as possible, at any row count (decision 341 cancels the Notion AI upload for more than 10 rows), with one Notion writer at a time, a reviewed build, a drift check, count reconciliation and read-back; never run parallel agents that write to Notion (one scoped exception: engagement chats, each writing only its own Engagement row and eval or prep note pages, decision 593); one commit and push per task.
 
 Agents ask first before: merging people, or deleting a whole database (row deletions to Trash are delegated, decision 416); changing prices or commercial terms; moving or deleting any calendar event with guests on it (except deleting a call their side has cancelled in writing, decision 398; creating an invite for a time agreed in writing is Zoya's job, decision 400); sending anything unapproved; exceeding the daily send cap.
 
