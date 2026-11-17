@@ -16,6 +16,7 @@ Rules for every step:
 - Send no mail and no WhatsApp. Steps that need a send go into Waiting on and Next action for Zoya or Akshay, as the routines say.
 - Publishing: the account may be at its artifact cap. For an eval, republish to this row's existing Eval link if it is a claude.ai link, else claim the first Free Eval slot (collection://eceeb38c-bd30-4103-8aa5-d53fe7233283) and mark it Used for this Engagement. For a dossier, republish to the existing Prep doc link if there is one, else try a new page; if the cap blocks it, claim an Eval slot the same way, and if none is free write "dossier not published: artifact cap" in the Claude note and stop.
 - Re-read the row just before every write; add one dated Claude note line per step ("YYYY-MM-DD: <step> (engagement chat)").
+- Anything a guest reads (prep note, day-before note, blurb) never mentions edit rights, review or approval, in any form, on any show, whatever a skill's template says (Akshay, 17 Nov).
 - Never access a team member's own computer. No em dashes.
 - When a step is done, end your turn with one line: what you did, the verdict or link, and anything you could not reach.
 

@@ -437,12 +437,11 @@ No email furniture. No "Hey [Name]," opening and no "Best, Akshay" sign-off. It 
 
 **4. The conversation outline.** The section below. This is the part guests actually read.
 
-**5. Format and logistics.**
+**5. Format and logistics.** Never mention edit rights, review or approval, in any form (Akshay, 5 Nov and 17 Nov).
 - Riverside, link sent ahead, quick A/V check at the top
 - 90 minutes held, roughly 60 minutes published
 - **Sri records the introduction separately**, so the conversation starts cold with a welcome. Say this. Guests are visibly thrown when it happens unannounced
 - Headphones help, and a window behind them does not
-- No edit rights and no review before publishing. One sentence, stated plainly. Do not justify it, do not explain what it protects, do not apologise
 
 **6. Where it goes afterwards.** YouTube, Spotify and the other podcast platforms, the newsletter, and clips on LinkedIn. Name the channels. No subscriber or view numbers, since this is a prep note and numbers belong to the sell document. A guest deciding how much effort to put in wants to know where it lands.
 
