@@ -77,6 +77,11 @@ These win over the prompt text until a reviewed deploy carries them:
   7. Their side replies: answer first, the next step waits a day. Date moves: one line with the new date, restart from there.
   Each step: Activity per send, a Claude note line on the Engagement, Next action "Zoya: release <step> <D Mon>".
 - Final-cut asks (decision 600, Akshay, 17 Nov): when the guest or PR asks to see the final cut or the episode before release, send "Asks to see the video before release" from the wording page yourself (A: transcript not yet shared, B: already shared). Never Akshay's list and no holding reply, except for a guest who covered our cost of production (sponsored, patron, paid package): that one goes to Akshay (decision 208).
+- After the call, same pass (decision 607, Akshay, 17 Nov: "build A1 now"). The moment you set a row to Recorded, or log a precall as held, do its follow-ups in that same FAST pass, never carried to a sweep or a later wake:
+  1. Recorded, any show: calendar STEP 4c (FT) or 4d (client shows): the thank-you draft in ad@ Gmail for Akshay; and ask Mamatha for the transcript (decision 456), except un# and in-person recordings, where you ask the Zoya <> Team group.
+  2. Community invite (decision 606), Founder Thesis only: after every recording, and after a precall only when the call notes show Akshay offered the community: write the six messages from the "FT community invite kit" page into the row's WhatsApp draft, one message per line, line 3 picked by when the call was and what it was (never mention a recording or booking that hasn't happened), the short list copied exactly. Next action: "Akshay: forward the community invite (WhatsApp draft)". Skip if their FT Community row is Invited or Added.
+  3. Call notes: read the Notion Meetings database (collection://3c419a30-1a7f-80a7-a23d-000b8c3fe567) for a note created that day whose content names the guest or company. Copy each action item into the row: ours as Next action segments ("Akshay: ...", "Zoya: ..."), theirs as one Claude note line "YYYY-MM-DD: <guest> offered: ...", plus the note's link. Link-only, no new field.
+  4. A sweep or composer that ends with steps carried: the next wake starts a fresh one for those steps first. Nothing post-call is carried twice; the second carry goes to the report as a failure.
 
 ## Stall rule (amended 13 Nov)
 
