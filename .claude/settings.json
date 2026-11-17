@@ -57,7 +57,9 @@
       "mcp__Blue__list-files",
       "mcp__Blue__list-custom-fields",
       "mcp__Gmail__unlabel_message",
-      "mcp__Gmail__label_message"
+      "mcp__Gmail__label_message",
+      "mcp__bluetick__chats_write",
+      "mcp__8c6368dd-abc2-4843-adc7-5224f8b6f399__chats_write"
     ]
   }
 }
