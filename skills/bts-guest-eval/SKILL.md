@@ -1,6 +1,6 @@
 ---
 name: "bts-guest-eval"
-description: "Decide whether a founder fits Built to Share (B2S), Satish Mugulavalli's Hissa podcast, under the guest profile Satish set in October 2026. Trigger on \"bts-guest-eval\" or \"/bts-guest-eval\" followed by a name, company or LinkedIn URL (with or without the guest's reply), or on \"should Satish book X\", \"is X a B2S guest\", \"evaluate this B2S guest\", \"X replied to the B2S invite\", or a list of names to screen for Built to Share. Works for a prospect before outreach and for a guest who replied. Auto-declines past B2S guests, anyone linked to Qapita or another Hissa competitor, and anyone already booked. Tests the guest against Satish's three lanes (Outlier business model or ownership structure, Discovery name, Global unicorn founder), scores Satish Fit with the strongest lane as the anchor, and publishes one decision page with a verdict of Book immediately, Strong consider or Decline."
+description: "Decide whether a founder fits Built to Share (B2S), Satish Mugulavalli's Hissa podcast, under the guest profile Satish set in October 2026. Trigger on \"bts-guest-eval\" or \"/bts-guest-eval\" followed by a name, company or LinkedIn URL (with or without the guest's reply), or on \"should Satish book X\", \"is X a B2S guest\", \"evaluate this B2S guest\", \"X replied to the B2S invite\", or a list of names to screen for Built to Share. Works for a prospect before outreach and for a guest who replied. Auto-declines past B2S guests, anyone linked to Qapita or another Hissa competitor, and anyone already booked. Tests the guest against Satish's three lanes (Outlier business model or ownership structure, Discovery name, Global unicorn founder), scores Satish Fit with the strongest lane as the anchor, and writes one skimmable Notion eval page inside the Engagement (scorecard, sector, market stack and comparables with infographics, go-deeper links) with a verdict of Book immediately, Strong consider or Decline."
 ---
 
 # bts-guest-eval: is this a Satish guest?
@@ -190,36 +190,39 @@ Book immediately here means "put this on Satish's board now". Akshay still decid
 
 For a Decline on someone who said yes, add one held-back line on how to close it gracefully. Don't draft the mail.
 
-### Step 5: the page
+### Step 5: the eval page (Notion, decision 611)
 
-Publish one self-contained HTML page with the Artifact tool. Title: `B2S guest eval: <Name>`. Icon: `microphone`. When the Artifact tool hits its daily limit, republish into a Free Eval slot. Host-show evals are public by default (decision 121), so the page carries **no contact details, PR names, fees or internal status.** Follow the Artifact tool's page rules: colour tokens on `:root` with a dark-mode set, an explicit body background, a phone-width layout with no horizontal scroll, scripts only from the allowed CDNs (none are needed).
+The eval is a Notion page **inside the guest's Engagement** (a child page of the Engagement row). Title: `B2S eval: <Name> @ <Company> (<D Mon YYYY>)`. Page icon: 🟢 Book immediately, 🟠 Strong consider, 🔴 Decline. No claude.ai artifact and no Eval slot. Follow the layout of ft-guest-eval v2 Step 6 and its Infographics section; the model page is Jacob George @ Duroflex (Notion 41c19a301a7f81d985f1f39a48f423f6). An auto-decline from Step 1 gets no page.
 
-The page runs in three acts.
+**Positive page.** The page may reach Satish and travel further. It carries **no contact details, PR names, fees or internal status.** Risks, gaps, sensitivities, guardedness, competitor ties and relationship notes drive the score but never appear on it. They go in the chat as "Held back from the page" bullets (at most three), and in one "Held back:" line under the callout on the Engagement body, which stays internal.
+
+Write it to be skimmed: lead with the point, bullets over paragraphs, at most two columns side by side, detail in closed toggles, Notion-flavoured markdown (callout, columns, toggle, tables), never HTML. Sections, in this order:
 
 **Decide (30 seconds)**
-1. **Verdict banner**: the verdict and Satish Fit `n/10`.
-2. **Header**: name, role and company, LinkedIn link, and a one-line synthesis that names the lane and the reason to book.
-3. **Lane card**: the three lanes, each with its score and one line. The anchor lane is highlighted. If two lanes cleared, say so.
+1. **Verdict callout** (green, orange or red background). Line 1, bold: the verdict and Satish Fit `n/10`. Line 2: the lane and the reason to book, in one sentence. Line 3: "**Next:**" what goes to Satish's board or why not.
+2. **Scorecard image**: Satish Fit as a bar out of 10, the three lanes as bars (anchor lane highlighted, one line each; if two lanes cleared, say so), and four tiles (funding or valuation, revenue or users, team size, founding year or IPO status), each with its source year.
+3. **Why this lane / Why it could miss** in two columns, three bullets each. Keep the "why it could miss" bullets positive and factual (the lane gap, not a sensitivity); real risks stay held back.
 
 **Understand**
-4. **The business**: the industry structure first, then where the company sits, one or two comparables Satish would recognise, and one line on the thesis. For a Lane 1 guest, this section explains the unusual model in plain terms.
-5. **Numbers**: a table, one row per number with its date and its grade (filing or press). Funding, valuation, revenue, headcount, users or customers, IPO status, founding year. Leave out rows that aren't public.
-6. **Why this lane**: the evidence behind the anchor lane. For Lane 1, the one-sentence outlier test and how the model works. For Lane 2, reach numbers with dates. For Lane 3, the valuation event and the practice, with a link to where they've described it.
-7. **People and ownership**: what they've done (ESOP breadth, buybacks, employee wealth, hiring stories) and one to three verbatim lines with links. Omit the section if there's nothing; never write a line about what's missing.
-8. **Career timeline**: five to eight rows, year and event, terse.
-9. **Better guest available?**: only when a named, bookable founder at the same company would score higher.
+4. **## The business.** The industry structure first, then where the company sits. For a Lane 1 guest, explain the unusual model in plain terms.
+   - **### The sector in 30 seconds**: 3 to 5 bullets (market size with year and source, who leads, what is shifting).
+   - **### Where <Company> sits in the stack**: a stack image, inputs to end customer, with the company's layers highlighted. Under it, 2 to 3 sentences on its moat and its bet.
+   - **### Comparable companies**: a comparables image of 4 to 6 peers Satish would recognise (revenue or funding, growth, stage), the company highlighted. Where ownership matters, add a column on it (ESOP pool, employee or community ownership, buybacks) from filings or credible press; leave it out when nothing is public. One bold "Read it this way:" line under it.
+5. **Toggles, closed:** "📊 Numbers" (a table, one row per number with its date and grade, filing or press; leave out rows that aren't public), "🎯 Why this lane" (the evidence behind the anchor lane: for Lane 1 the one-sentence outlier test and how the model works, for Lane 2 reach numbers with dates, for Lane 3 the valuation event and the practice with a link), "🤝 People and ownership" (ESOP breadth, buybacks, employee wealth, hiring stories, one to three verbatim lines with links; omit the toggle if there's nothing), "👤 Career" (five to eight rows, year and event, terse), and "🙋 Better guest available?" only when a named, bookable founder at the same company would score higher.
 
 **Prepare**
-10. **Themes to cover**: five to seven segments. Each is a bold title naming a moment or decision ("the weaver who became a shareholder", never "ESOP design"), plus one line, ending on the soft way into the people or ownership angle. For Lane 3, at least one theme is the global practice and how it would land in India. Include one theme where the guest agrees or clashes with something Satish has said publicly, if the research found one.
-11. **Links**: LinkedIn, company site, one to three substantive press links, the best long-form interview, and the best source for the lane evidence.
+6. **## Themes to cover**: five to seven bullets. Each is a bold title naming a moment or decision ("the weaver who became a shareholder", never "ESOP design"), plus one line, ending on the soft way into the people or ownership angle. For Lane 3, at least one theme is the global practice and how it would land in India. Include one theme where the guest agrees or clashes with something Satish has said publicly, if the research found one.
+7. **## 🔗 Go deeper**, in two columns, every item a link: the guest (LinkedIn, or a LinkedIn people-search link for "<name> <company>" if none found; the best long-form interview; talks and podcasts), the company (site, company LinkedIn, Tracxn, 2 to 4 substantive news pieces labelled with outlet), the lane evidence (the best source for it), and comparables on Tracxn. End with one grey line naming the data sources and the date pulled.
 
-**Positive page.** The page may reach Satish and travel further. Risks, gaps, sensitivities, guardedness, competitor ties and relationship notes drive the score but never appear on it. They go in the chat as "Held back from the page" bullets (at most three).
+**Infographics.** Three images: scorecard, stack and comparables. In Claude Code, build each as a small HTML card (Inter font, white background, 900px wide, orange highlight #f0a020 for the company), render it to PNG with Playwright at deviceScaleFactor 2, clipped to the content height, and look at the PNG before using it. Upload each with Notion's create-file-upload, POST the file to the returned URL, and place it with `![alt text](file-upload://<id>)`. Every number in an image is in the research with its source, and each image carries a one-line source note. Where images can't be made, use Notion tables and say so in the chat.
+
+**The Engagement body.** Keep it short: one callout (same colour as the verdict) with the verdict, Satish Fit and anchor lane on line 1 and the next step on line 2, then the "Held back:" line, then the eval page as a child page, then the pitch in one line. Set Eval link to the eval page's URL, plus Eval verdict and Eval date. On a re-run, update the eval page and the callout in place; never start a second eval page.
 
 ### Step 6: tightening pass (mandatory)
 
 A first draft is always 30 to 40% too long. Re-read once as an editor whose only job is to cut.
-- **Each fact lives in one section.** Business description in The business; numbers in Numbers; dates in the timeline; lane evidence in Why this lane; equity facts in People and ownership; why book in the synthesis and lane card.
-- **The timeline is a spine:** year plus event, no numbers, no adjectives.
+- **Each fact lives in one section.** Business description in The business; numbers in Numbers; dates in Career; lane evidence in Why this lane; equity facts in People and ownership; why book in the callout and scorecard.
+- **Career is a spine:** year plus event, no numbers, no adjectives.
 - **Cut throat-clearing:** "notably", "it's worth noting", "interestingly".
 - **The test for every sentence:** it states a fact the reader doesn't have, or makes a call they need. Otherwise cut it.
 
@@ -228,12 +231,12 @@ A first draft is always 30 to 40% too long. Re-read once as an editor whose only
 ```
 Verdict: Strong consider. Satish Fit 7/10.
 Lane: Global unicorn (7), Discovery (4), Outlier (0).
-<the page link>
+Eval page: <Notion link>
 Held back from the page:
 - <up to three bullets>
 ```
 
-When this runs inside the evals routine, the routine writes the Engagement (Eval link, Eval verdict, the "## Eval (YYYY-MM-DD)" and "## Guest Context" sections, Next action). Also add the anchor lane to the page body's eval section as a line, `Lane: <name>`, so list building can sort by it.
+When this runs inside an engagement chat, it writes Eval link (the Notion eval page), Eval verdict, Eval date and the short Engagement body above; workflow fields (Status, Next action, Waiting on) go through the chat's Row change Activity. The callout's line 1 carries the anchor lane as `Lane: <name>`, so list building can sort by it.
 
 ## Screening a list
 

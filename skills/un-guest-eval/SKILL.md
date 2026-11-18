@@ -1,6 +1,6 @@
 ---
 name: "un-guest-eval"
-description: "Evaluate inbound guest pitches for un# (Unhashed), Sri Misra's crypto podcast. Pulls precall notes from Drive, scores Fit, Partnership and Discovery (will this guest get the show found?) independently, books household-name guests on Discovery alone, pulls funding, team and news from Tracxn, routes through three tracks, publishes a page, and returns two blurbs: a 40 to 50 word short pitch with a bio link for the pipeline sheet, and a 60 to 90 word blurb for Sri that leads with audience value or an aarnâ partnership angle, with LinkedIn links and the angle of the episode, which also sits ready to copy (with a Copy button) near the top of the published page."
+description: "Evaluate inbound guest pitches for un# (Unhashed), Sri Misra's crypto podcast. Pulls precall notes from Drive, scores Fit, Partnership and Discovery (will this guest get the show found?) independently, books household-name guests on Discovery alone, pulls funding, team and news from Tracxn, routes through three tracks, writes a skimmable Notion eval page inside the Engagement (scorecard, sector, market stack and comparables with infographics, go-deeper links), and returns two blurbs: a 40 to 50 word short pitch with a bio link for the pipeline sheet, and a 60 to 90 word blurb for Sri that leads with audience value or an aarnâ partnership angle, with LinkedIn links and the angle of the episode, which also sit ready to copy in code blocks near the top of the eval page."
 ---
 
 # un-guest-eval
@@ -29,7 +29,7 @@ A mid-level person at a great org does not clear it. A commentator with no opera
 
 Sri has asked for **more regulated tokenization**: Superstate-shaped. Regulated issuers of tokenized funds and credit, transfer agents, licensed marketplaces, the institutions actually holding the assets. Bitwise, Canton, Circle and Franklin Templeton sit in the same band.
 
-This is an editorial tilt, not a permanent rule. It lifts a qualifying guest by one band on Fit and breaks ties in their favour. **Say in the artifact that it was applied.** When this priority is more than about six months old, flag it for confirmation rather than applying it silently.
+This is an editorial tilt, not a permanent rule. It lifts a qualifying guest by one band on Fit and breaks ties in their favour. **Say on the eval page that it was applied.** When this priority is more than about six months old, flag it for confirmation rather than applying it silently.
 
 ## Show context
 
@@ -52,9 +52,9 @@ Read that last number carefully. The integration surface is wide and the capital
 
 **The India credit token.** aarnâ's second product line, under the India Yield Platform: a regulated tokenized India private credit instrument out of GIFT City under IFSCA. ERC-3643, 8 to 9% net USD, $25,000 minimum. IFSCA FinTech Sandbox Stage 1 approved 17 April 2026, Stage 2 in review, targeted for Q4 2026. It has no distribution yet. This is the need with a deadline.
 
-**On the name.** Internal notes have called it ICT, for India Credit Token. That acronym is not established in aarnâ's public material and Akshay does not use it in conversation, so **write "aarnâ's India credit token" in full and do not use the acronym in any artifact.** Akshay's own shorthand for it on calls is "India's first debt token".
+**On the name.** Internal notes have called it ICT, for India Credit Token. That acronym is not established in aarnâ's public material and Akshay does not use it in conversation, so **write "aarnâ's India credit token" in full and do not use the acronym in any eval page.** Akshay's own shorthand for it on calls is "India's first debt token".
 
-**Treat the underlying credit managers as confidential.** Public aarnâ copy says only "two of India's top credit asset managers". If Akshay has named them privately, they do not go into an artifact, a dossier or a guest note.
+**Treat the underlying credit managers as confidential.** Public aarnâ copy says only "two of India's top credit asset managers". If Akshay has named them privately, they do not go into an eval page, a dossier or a guest note.
 
 ## The four needs, in priority order
 
@@ -109,7 +109,7 @@ Run `mcp__Google_Drive__search_files`:
 
 The naming convention is `<Guest Name> and Akshay Datt - YYYY/MM/DD HH:MM JST - Notes by Gemini`, usually inside a folder of the same name. Read the whole Doc with `mcp__Google_Drive__read_file_content`, including the transcript below the notes, because the notes summarise and the transcript carries the quotes.
 
-**A precall, when one exists, outranks every web source.** It is the guest's own current framing, in their own numbers, said out loud. Where it conflicts with press coverage or public filings, the precall wins and the artifact says which number came from where.
+**A precall, when one exists, outranks every web source.** It is the guest's own current framing, in their own numbers, said out loud. Where it conflicts with press coverage or public filings, the precall wins and the eval page says which number came from where.
 
 Pull these specifically:
 
@@ -121,7 +121,7 @@ Pull these specifically:
 - **Logistics.** Recording window, who handles scheduling, PR contact, anything flagged about their setup.
 - **What Akshay already told them** about Sri and about aarnâ, so the dossier does not repeat it or contradict it.
 
-If no precall exists, say so in one line in the artifact and proceed. If one exists and has not happened yet, note the date.
+If no precall exists, say so in one line on the eval page and proceed. If one exists and has not happened yet, note the date.
 
 Also accept these as direct input when Akshay pastes them: a Gemini notes export, a PR backgrounder, a pitch email, a Perplexity-style workup. Extract every name, company, URL, figure and date before searching.
 
@@ -317,55 +317,34 @@ A guest who clears the floor and scores Partnership ≥ 7 → say so. **A real c
 
 The other case is **Discovery ≥ 9**. A household name pitching for a sponsored slot should be moved to editorial and booked free. The growth the episode brings is worth more than the fee.
 
-## Step 5: publish the page
+## Step 5: write the eval page (Notion, decision 611)
 
-Build the page content and publish it with the Artifact tool, then paste the link into the pipeline sheet.
+The eval is a Notion page **inside the guest's Engagement** (a child page of the Engagement row), then paste its link into the pipeline sheet. Title: `un# eval: <Name> @ <Company> (<D Mon YYYY>)`. Page icon: 🟢 Book immediately, 🟠 Strong consider, 🔴 Decline. No claude.ai artifact and no Eval slot. Follow the layout of ft-guest-eval v2 Step 6 and its Infographics section, in un#'s voice; the model page is Jacob George @ Duroflex (Notion 41c19a301a7f81d985f1f39a48f423f6). An auto-decline (already recorded, fraud, memecoin) gets no page.
 
-**The page carries no internal status.** No pipeline stage, no "Sri approval pending", no CRM language, no reference to the sheet. It gets shared, and internal ops on a shared page reads badly. The verdict, the scores and the evidence are the page. Status lives in the sheet.
+**The page carries no internal status.** No pipeline stage, no "Sri approval pending", no CRM language, no reference to the sheet. It may be shared, and internal ops on a shared page reads badly. The verdict, the scores and the evidence are the page. Status lives in the sheet and on the Engagement row.
 
-**Load the `artifact-design` skill before writing it.** Write page content only: no doctype, html, head or body tags, since the tool wraps the file in its own skeleton. Put the `<title>` and `<style>` at the top. Inline all CSS. Google Fonts is the only permitted external host.
+Write it to be skimmed: lead with the point, bullets over paragraphs, at most two columns side by side, detail in closed toggles, Notion-flavoured markdown (callout, columns, toggle, tables, code blocks), never HTML. Sections, in order:
 
-Title it as a name: "Raagulan Pathy eval" works, "Guest eval" does not.
+1. **Verdict callout** (green, orange or red background). Line 1, bold: the verdict and the track (Editorial, Sponsored, Decline), and whether a precall was read and when. Line 2: the one-line synthesis, quoting the two numbers that matter most. Line 3: the evaluation date and the recording window if one is set. If the editorial priority or the Discovery override was applied, say so here.
+2. **The two blurbs, ready to copy** (from Step 6; Akshay, 10 Nov and 18 Nov). Heading "Blurb for Sri", then the Sri blurb in a plain-text code block, exactly as Step 6 writes it in WhatsApp format (single-asterisk header line, `Name: https://linkedin-url` lines, bare URLs, blank lines between paragraphs), so Notion's copy button copies it whole. Then heading "Short pitch (sheet)" and Blurb 1 in a second code block. Omit both only on an auto-decline. Nothing else in these blocks: no verdict, no scores, no tone flag.
+3. **Scorecard image**: Fit, Partnership and Discovery as three bars out of 10 (teal for Fit, teal-glow for Partnership, white for Discovery), each with one line: how the guest sits against the bar, which of the four aarnâ needs it serves, and the Discovery evidence. Plus four tiles with the venture's scale metrics (funding total and last round, the scale metric that fits the venture type such as TVL, AUM, GTV, volume or supply, revenue or fees where they exist, users or clients), each with its source date. On-chain protocols often have no revenue: use TVL, fees, users and funding instead, never market cap for AUM. Use the aarna palette on these images (dark background #0E1010, surface #171A1A, teal #1FBFB0, coral #C97A4B for red flags), Manrope for text and JetBrains Mono for figures.
+4. **Competitor flag** as a coral callout, only if the guest is a competitor or both.
+5. **Why book / Why not** in two columns, three bullets each.
+6. **## The business.** Teach it to a smart generalist: after reading, Akshay could explain it and ask an informed first question. Define every crypto term where it first appears.
+   - **### The sector in 30 seconds**: 3 to 5 bullets. The segment (stablecoins, tokenized credit, restaking, custody, exchanges), its size with a dated source (DefiLlama, rwa.xyz, Tracxn, press), who leads, and what is shifting now (regulation, an ETF, a chain upgrade).
+   - **### Where <Company> sits in the stack**: a stack image running from the base layer (chain or settlement) through protocol, applications and distribution to the end user or institution, with the company's layers highlighted and labelled. Under it, 2 to 3 sentences on its wedge and its bet, and where it touches aarnâ.
+   - **### Comparable companies**: a comparables image of 4 to 6 named peers from Tracxn or the web, with the metric that fits (TVL, AUM, volume, funding, users), the stage and the backers, the company highlighted. One bold "Read it this way:" line under it.
+7. **Toggles, closed:** "📊 The numbers" (the full numbers table from Step 2: one row per metric with value, date and source, a TRACXN tag on rows from Tracxn, "Not public (searched: <where>)" for any not found, never fewer than five rows for a founder's venture), "📌 Key facts" (current state, token, milestones, audits, regulatory permissions; where the precall and the public record disagree, show both and label which is which), "👤 Career" (forward chronological, 5 to 8 rows, crypto entry point marked), "📖 The story" (the angle this guest brings, or the honest absence of one, and what the precall settled), "🙋 Better fit" (only when a stronger name at the same org was verified), "🚩 Red flags" (only if any; logistics from the precall belong here).
+8. **## Themes to cover**: 5 to 7 bullets, built as "Constructing the sections" says.
+9. **## 🔗 Go deeper**, in two columns, every item a link: the guest (LinkedIn, or a LinkedIn people-search link for "<name> <company>" if none found; interviews, talks and podcasts), the company (site, company LinkedIn, the Tracxn company page, 2 to 4 substantive recent pieces labelled with outlet, the docs or the on-chain dashboard where one exists), the precall notes Doc if one exists, and the comparables on Tracxn. End with one grey line naming the data sources and the date pulled.
 
-Dark theme, the aarna palette, the same one the un# host dossier uses. Define the full palette on bare `:root`, set `color-scheme: dark`, give `body` an explicit background.
+**Infographics.** Three images: scorecard, stack and comparables. In Claude Code, build each as a small HTML card (900px wide, aarna palette), render it to PNG with Playwright at deviceScaleFactor 2, clipped to the content height, and look at the PNG before using it. Upload each with Notion's create-file-upload, POST the file to the returned URL, and place it with `![alt text](file-upload://<id>)`. Every number in an image is in the research with its source, and each image carries a one-line source note. Where images can't be made, use Notion tables and say so in the chat.
 
-```
---bg:#0E1010  --surface:#171A1A  --raised:#1F2423  --rule:#2C3030
---ink:#E8EAEA  --ink-soft:#B5BCBC  --ink-mute:#6B7474
---teal:#1FBFB0  --teal-deep:#0FA095  --teal-glow:#6FE5D8
---coral:#C97A4B
-```
-
-Manrope for body and UI, JetBrains Mono for scores, dates and tags. Teal for the Fit score, teal-glow for Partnership, ink (white) for Discovery, coral for red flags and the competitor tag.
-
-Sections, in order:
-
-1. **Verdict banner**, with the track (Editorial, Sponsored, Decline) as a tag beside it. Tag whether a precall was read
-2. **Header and a one-line synthesis.** The header line carries the evaluation date, whether a precall was read and when, and the recording window if one is set
-3. **Blurb for Sri, ready to copy** (from Step 6; Akshay, 10 Nov). A card headed "Blurb for Sri" holding the Sri blurb exactly as Step 6 writes it, in WhatsApp-ready plain text, plus a **Copy** button that puts that text on the clipboard. Omit it only on an auto-decline. Spec below.
-4. **Three scorecards side by side.** Fit, with one line on how the guest sits against the bar. Partnership, with one line naming which of the four aarnâ needs it serves. Discovery, with one line of evidence (following, search pull, recognition, reshare habit). If the editorial priority or the Discovery override was applied, say so here
-5. **Competitor flag**, if the guest is a competitor or both. Omit when they are neither
-6. **Career timeline**, forward chronological, 5 to 8 rows, crypto entry point marked explicitly
-7. **The numbers**, a table, before the story: one row per metric from Step 2 (funding total, last round, backers, valuation, the scale metric for the venture type such as TVL, AUM, GTV, volume or supply, revenue or fees, users or clients, token market cap and FDV, team size, founded), each with value, date and source, and "Not public (searched: <where>)" for any you could not find. Mark rows that came from Tracxn with a small mono "TRACXN" tag. Never fewer than five rows for a founder's venture. The one-line synthesis in the header quotes the two numbers that matter most.
-8. **Key facts.** Current state: stage, token, recent milestones, audits, regulatory permissions. For a non-founder: title, scope of authority, influence signals, the org's standing. **Where the precall and the public record disagree, show both and label which is which**
-9. **The story.** The angle this guest brings, or the honest absence of one. When a precall happened, say what it settled
-10. **Themes to cover**, 5 to 7
-11. **Better fit**, only when a stronger name at the same org was verified
-12. **Red flags**, only if any. Logistics from the precall belong here
-13. **Links.** LinkedIn, company, the Tracxn company page, the precall notes Doc if one exists, one to three substantive recent pieces
-
-### The copy card (section 3)
-
-Write the Sri blurb (Step 6) before you build the page, so the page and the chat reply carry the same words.
-
-- **Text format: WhatsApp, not markdown.** Akshay pastes it into WhatsApp, where markdown links and `**bold**` show as raw symbols. So: the header line wrapped in single asterisks (`*Luca Prosperi, co-founder and CEO of M0*`), then one `Name: https://linkedin-url` line per guest, blank lines between paragraphs. Bare URLs, never `[text](url)`. No reading list. No other formatting.
-- **Display.** A surface card (`--surface`, 1px `--rule` border, 8px radius) with the heading "Blurb for Sri" and a teal **Copy** button on the right. Show the text in a `pre`-like block with `white-space: pre-wrap`, Manrope, so it reads as it will paste. Keep the text in one element with an id and copy from its `textContent`, so what's shown is exactly what's copied.
-- **The button.** `navigator.clipboard.writeText(el.textContent)` inside try/catch; on failure, select the block's text (Range + Selection) so Ctrl/Cmd+C works. Flash the label to "Copied" for 1.5 seconds. Nothing else on the page needs JavaScript.
-- **What stays off the card:** the verdict, the scores and the one-line tone flag. Those sit in the chat reply and the rest of the page.
+**The Engagement body.** Keep it short: one callout (same colour as the verdict) with the verdict, track and the three scores on line 1 and the next step on line 2, then the eval page as a child page, then the pitch in one line. Set Eval link to the eval page's URL, plus Eval verdict and Eval date. On a re-run (after a precall), update the eval page and the callout in place; never start a second eval page.
 
 ## Step 6: the two blurbs
 
-Write both before publishing (the Sri blurb also goes on the page, section 3), then put them in the chat reply. **Blurb 1, the short pitch**, goes in the pipeline sheet. **Blurb 2, the Sri blurb**, is what Akshay sends Sri directly when he wants a yes. Both are always produced, for every verdict except an auto-decline (already recorded, fraud, memecoin), where only the verdict line is returned.
+Write both before writing the page (both go on the page, section 2), then put them in the chat reply. **Blurb 1, the short pitch**, goes in the pipeline sheet. **Blurb 2, the Sri blurb**, is what Akshay sends Sri directly when he wants a yes. Both are always produced, for every verdict except an auto-decline (already recorded, fraud, memecoin), where only the verdict line is returned.
 
 ## Blurb 1: the short pitch
 
@@ -523,13 +502,13 @@ Each of these is a real failure, not a hypothetical.
 - **Don't trust the embedded roster alone.** It was 14 names when the archive held 47, and it omitted Sandy Kaul while the skill held her up as the model for the bar. Search the project transcripts first, every time
 - **Don't assume the open web knows.** A guest who has recorded but not yet aired returns nothing. The transcript archive is the only check that catches them
 - **Don't read the pipeline sheet's "Declined" as Sri declining.** It means the guest declined us
-- **Don't put internal status on the published page.** No pipeline stage, no approval state, no CRM language. That page gets shared
+- **Don't put internal status on the eval page.** No pipeline stage, no approval state, no CRM language. That page may be shared
 - **Don't ship the short pitch without a bio link.** Sri clicks through. A pitch with no link makes him go and search
 - **Don't skip Tracxn, and say so on the page.** The Fisher Yu eval (11 Nov) ran with no Tracxn line at all. Every eval of a venture shows Tracxn rows tagged TRACXN in the numbers table, or the one line "Not on Tracxn" or "Tracxn not available". A page with neither is incomplete: go back and run Step 2a.
 - **Earlier miss.** The first M0 eval ran without it and missed the full round history, the 56-person headcount, and partnerships with Anchorage, 1Money and MoonPay that changed the story. Run Step 2a before the web
 - **Don't trust a fuzzy Tracxn match.** Resolve on the domain. "M0 Labs" by name returned Ma Labs, an IT reseller
 - **Don't quote Tracxn scores as evidence.** Growth and editor ratings are directional and stay in a caption
-- **Don't leave the Sri blurb off the page.** It goes in the copy card near the top, in WhatsApp plain text with bare URLs, the same words as the chat reply
+- **Don't leave the blurbs off the page.** Both go in code blocks near the top, the Sri blurb in WhatsApp plain text with bare URLs, the same words as the chat reply
 - **Don't send only one blurb.** Akshay needs the short pitch for the sheet and the Sri blurb, every time
 - **Don't write the angle in the first person.** It's "The angle of the episode:", never "the hour I'd want". The blurb gets forwarded
 - **Don't put the private eval or a Tracxn link in Sri's blurb.** He may not be able to open either
@@ -543,14 +522,14 @@ Each of these is a real failure, not a hypothetical.
 - **Don't inflate Partnership for proximity.** If you cannot name the specific thing the person controls, it is a 5 or below. The right function in the wrong jurisdiction is a 6
 - **Don't call an issuer a distributor.** A firm that only sells its own products cannot distribute aarnâ's India credit token. Look for a third-party issuer already listed on their platform
 - **Don't book a competitor without flagging it.** Agent-driven treasury management and tokenized emerging-market credit are the two overlaps
-- **Don't put the credit managers in writing.** Public copy names no manager. Anything Akshay said privately stays out of the artifact
+- **Don't put the credit managers in writing.** Public copy names no manager. Anything Akshay said privately stays out of the eval page
 - **Don't date the India credit token from a private plan.** Public record says IFSCA Sandbox Stage 1 approved April 2026, Stage 2 in review, Q4 2026 target
 - **Don't use the ICT acronym.** It is internal shorthand, not public, and Akshay does not use it in conversation
 - **Don't leave Strong consider unresolved.** It is a coin flip in the record. Break it on Partnership or Discovery and say which way it broke
 - **Don't charge a real partner for a sponsored slot.** Partnership 7 or above belongs on the editorial track
 - **Don't skip the sponsored floor.** Sponsored prospects have been evaluated Decline before and should be again
-- **Don't apply the tokenization tilt silently.** Say in the artifact that it was applied, and flag it for confirmation once it is more than about six months old
-- **Don't ship the eval as a loose file.** It gets published and the link goes in the sheet
+- **Don't apply the tokenization tilt silently.** Say on the eval page that it was applied, and flag it for confirmation once it is more than about six months old
+- **Don't ship the eval as a loose file.** It's a Notion page inside the Engagement, and the link goes in the sheet
 - **Don't repeat a transcription error.** Gemini transcripts garble years, figures and names. When a date in the transcript contradicts the surrounding story, flag it rather than reading it back
 - **Don't write generic themes.** "His journey" and "lessons learned" are not themes
 
