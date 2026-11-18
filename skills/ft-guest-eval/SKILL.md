@@ -1,6 +1,6 @@
 ---
 name: "ft-guest-eval"
-description: "Evaluate an inbound Founder Thesis guest request (PR pitch or paid promotion request). Trigger on /ft-guest-eval or ft-guest-eval followed by a name, LinkedIn URL, company, pitch email, screenshot or backgrounder, or on \"evaluate this FT guest\", \"should I book this founder\", \"is this pitch worth taking\". Checks the ThePodium Business OS in Notion for past guests and open engagements first, pins down revenue and funding, maps the guest's career journey, scores Audience Fit and Sales Fit, picks a route (editorial tier, sponsored only, or decline), publishes a slim decision page, and creates or updates the Engagements record. Also re-runs after a pre-call when notes are supplied."
+description: "Evaluate an inbound Founder Thesis guest request (PR pitch or paid promotion request). Trigger on /ft-guest-eval or ft-guest-eval followed by a name, LinkedIn URL, company, pitch email, screenshot or backgrounder, or on \"evaluate this FT guest\", \"should I book this founder\", \"is this pitch worth taking\". Checks the ThePodium Business OS in Notion for past guests and open engagements first, pins down revenue and funding, maps the guest's career journey, scores Audience Fit and Sales Fit, picks a route (editorial tier, sponsored only, or decline), writes a skimmable eval page inside the Engagement in Notion (verdict, scorecard, sector, market stack and comparables, with infographics and go-deeper links), and creates or updates the Engagements record. Also re-runs after a pre-call when notes are supplied."
 ---
 
 # ft-guest-eval
@@ -162,53 +162,47 @@ A sponsored guest fails on any red flag of fraud, regulatory trouble, unverifiab
 
 If the request is explicitly paid already, still score Audience Fit honestly. A paying guest who would have earned an editorial slot anyway is worth knowing about: it means the pricing conversation has leverage, or the guest deserves a better tier.
 
-## Step 6: Publish the decision page
+## Step 6: Write the eval page in Notion
 
-Write the page as HTML in the scratchpad and publish it with the Artifact tool (icon "user" on first publish). Title: `FT Eval: <Guest Name>`. Keep it to the sections below, in this order. Anything else belongs in ft-host-dossier, which runs once the guest is booked.
+The eval is a Notion page **inside the guest's Engagement** (a child page of the Engagement row; do Step 8's Engagement write first if the row doesn't exist yet). Title: `Eval: <Guest> @ <Company> (<D Mon YYYY>)`. Page icon: 🟢 Book immediately, 🟠 Strong consider, 🟡 Pre-call needed, 🔴 Decline. No claude.ai artifact: the page lives in Notion, so the artifact cap never blocks an eval. The model page is Jacob George @ Duroflex (18 Nov 2026), page 41c19a301a7f81d985f1f39a48f423f6.
 
-1. **Verdict banner.** Verdict plus route, for example "STRONG CONSIDER · Editorial Tier 2" or "DECLINE · Sponsored only".
-2. **Header.** Name, role and company, with the guest's **LinkedIn profile linked directly under the name** (a visible "LinkedIn" link, not just the name hyperlinked). If no profile was found, show "LinkedIn not found" in muted text there instead. Then a **one-line synthesis**: the arc plus the reason to book or pass. This line is the whole decision for a skimmer. If an engagement already existed, open it with that history ("Pitched in Jan, we declined; now Series B").
-3. **Business metrics strip.** A row of labelled figures directly under the header: Revenue/ARR (with year; an exact figure, or the signal-based band with YoY direction), Total funding, Last round (stage, size, date, lead), Valuation, Team size. Swap a cell that would only say "Not disclosed" for a stronger signal when you have one, such as Profitability or Debt (open charges). Show "Not disclosed" in muted text only where nothing turned up, and give each figure its source in small text. Add one line under the strip saying what the numbers mean for the decision. This is the only home for these numbers.
-4. **Two scorecards.** Audience Fit and Sales Fit. Each has a big score, a one-line summary and 2 to 3 bullets. Audience Fit names the closest past FT comparables and their views. Sales Fit names the pitch angle if 7+, or says "skip the pitch" if 4 or below.
-5. **The business.** This section **teaches** Akshay the business. Write it for a smart generalist who knows nothing about this industry. The test: after reading it, he could explain the business to someone else and ask the guest an informed first question. A paragraph that only gestures ("India is building X from near zero", "a capital-heavy bet") fails the test. No separate blurb above it (the 40 to 50 word blurb goes to Notion only).
+Write it to be skimmed. Akshay should get the decision from the first screen, and go deeper only where he wants to. Rules that hold everywhere on the page:
+- Lead with the point. A line that needs more than one breath to read aloud is too long.
+- Bullets over paragraphs. Bold the one fact a skimmer must not miss in each bullet.
+- At most two columns side by side (Akshay, 9 Oct).
+- Detail goes in closed toggles, never in the main flow.
+- No em dashes. Use Notion-flavoured markdown (callout, columns, toggle, tables), never HTML.
 
-   Use these short labelled paragraphs, each 2 to 4 sentences, bold label first:
-   - **What it actually is.** The product in plain, physical terms: what it is, what it does, and what it ends up inside or affects. Define jargon in the same sentence it appears ("glass substrate, the ultra-thin sheet that every LCD and OLED panel is built on").
-   - **Who pays and how money moves.** The buyer, the pain they pay to remove, roughly what they pay, and how the company earns (per unit, subscription, take rate, project fee). Give margin and capex intensity in a phrase if known.
-   - **The industry and who wins it.** Market size (with year), the 2 to 3 leaders and their rough share, and why it's hard to break in. Name 1 to 2 comparables inline, linked to their websites.
-   - **Where this company sits.** Its scale versus the leaders, its wedge, and what's changed that gives it a shot. If there are several entities, give each one a sentence and flag which is the cash core and which is the bet.
-   - **Is the model relevant?** Start this paragraph with that bolded question. Judge whether the model fits the moment: timing (regulation, budgets, platform shifts), whether the revenue model scales in this industry, and how funded the competition is. End on the bet the business rests on and whether there's evidence for it yet.
+Sections, in this order:
 
-   Concrete beats abstract: one number or named example per paragraph where possible, each industry figure with its source and year inline in small text or brackets. Mark anything unverified "(uncertain)".
+1. **Verdict callout** (colour to match the verdict: green, orange, yellow or red background). Line 1, bold: verdict and route ("Strong consider · Editorial Tier 2, only if he'll share numbers"). Line 2: the arc and the reason to book or pass, in one sentence. Line 3: "**Your call:**" the decision Akshay must make, in one line. If an engagement already existed, say that history here ("Pitched in Jan, we declined; now Series B").
+2. **Scorecard image** (see Infographics). Verdict, Audience Fit and Sales Fit as bars out of 10, each with a one-line reason, and four tiles: Revenue (with year and YoY), Profit or burn, Funding (last round, lead, date), and the one status that matters most (IPO, valuation, team size). Each tile shows its source year. If no image can be made, use a 2-column table with the same content.
+3. **Why yes / Why not** in two columns, three bullets each. Audience Fit's comparables (past FT guests and their views) and Sales Fit's pitch angle or "skip the pitch" belong here.
+4. **## The business.** It teaches Akshay the business: after reading it he could explain it to someone else and ask an informed first question. Define every piece of jargon where it first appears. One number or named example per bullet; mark anything unverified "(uncertain)".
+   - **What it is** and **Who pays**: one short paragraph each (the product in plain terms; the buyer, what they pay, how the company earns, margin or capex in a phrase).
+   - **### The sector in 30 seconds**: 3 to 5 bullets. Market size with year and source, how organised it is, who leads, why it's hard or easy to enter, and what is shifting now.
+   - **### Where <Company> sits in the stack**: a stack image (see Infographics) running from inputs to end customer, with the company's layers highlighted and labelled (core, the bet, where the money goes). Under it, 2 to 3 sentences: its moat and its bet.
+   - **### Comparable companies**: a comparables image of 4 to 6 named peers (revenue bar, growth, profit, stage), the company highlighted, each row labelled with its fiscal year. Pull peers and figures from Tracxn (competitors of the company, then the named leaders). Under it, one bold "Read it this way:" line saying what the comparison means for the decision.
+   - For a simple business (a D2C brand, a restaurant chain), keep What it is and Who pays to one line each, but always keep the sector, stack and comparables.
+5. **Toggles, closed:** "👤 Career" (chronological, oldest first, one bullet per role with dates, title, organisation and one line on the role; a total line at the end; "circa" for unconfirmed dates), "📊 Key numbers" (a revenue-by-year table, then rounds, valuation and filings), "🚩 Watch-outs" (diligence and interview risks, and pitch claims that didn't survive checking; include past history with us here), and "🙋 Better guest available?" only when Step 5's conditions for one hold.
+6. **## 🔗 Go deeper**, in two columns, every item a link Akshay can click:
+   - **The guest:** LinkedIn profile (if not found, write "no profile found" and give a LinkedIn people-search link for "<name> <company>"), 1 to 3 interviews, talks or podcasts he has done, and any news about him.
+   - **The company:** website, company LinkedIn, Tracxn page, and 2 to 4 substantive news pieces (funding, IPO, strategy, results), each labelled with what it is and the outlet.
+   - **Past FT episodes in this category:** the YouTube links of the comparable FT guests from Audience Fit, with views (from the Episodes database).
+   - **Comparables on Tracxn:** each peer's Tracxn page.
+   - **Booking:** the PR contact and a link to the pitch Activity.
+   End the page with one grey line naming the data sources and the date they were pulled.
 
-   **Simple-business exception.** For a business any reader already understands (a D2C brand, a restaurant chain, a staffing firm), collapse the first two paragraphs into one line and keep the rest short. Complex, technical or B2B-infrastructure businesses always get all five.
-6. **Career journey.** A replica of the LinkedIn experience section, in chronological order (oldest first), so the depth of experience is visible at a glance. One row per role: the date range and duration on the left; the title and organisation in bold, plus one line on what the role was, on the right. Link every organisation name (employers, universities, the guest's own companies) to its website so Akshay can dig deeper; leave a name unlinked only if no site exists. Education goes in as rows in its place in the sequence. Mark unconfirmed dates "circa". End with a total line, for example "~22 years of work, ~1 as a founder".
-7. **Key facts.** 3 to 6 bullets for what the metrics strip and career journey don't carry: marquee signals, named customers, regulatory clearances, recent milestones. Mark anything unverified "(couldn't verify)". Omit the section if nothing is left.
-8. **Better guest available?** PR agencies pitch whoever is available, often a hired CEO when the founder owns the better story. Include this section only when all of these hold:
-   - There's a named alternative at the same org who would plausibly score higher on Audience Fit.
-   - They are still at the org, or still its public face. Never surface exited founders, retired chairmen or purely ceremonial figures.
+### Infographics
 
-   Open the box with a visible link to the alternative's LinkedIn profile ("<Name> on LinkedIn"), or "LinkedIn not found" in muted text. Then write 2 to 3 sentences: who they are, what story they own that the pitched guest doesn't, and the bookability reality. Be honest when the upgrade is marginal, and remember that a founder who is a poor speaker isn't automatically the better guest. When the pitched guest is the best option, omit the section entirely, with no placeholder line.
-9. **Watch-outs.** Only if there are any. Diligence and interview risks, and any pitch claim that didn't survive checking.
-10. **Links.** The guest's LinkedIn profile first (required; repeat it here even though it's in the header, or write "LinkedIn not found"), company site, company LinkedIn page if found, 1 to 3 substantive press links, the booking contact if PR-brokered, and the Notion engagement link (added after Step 8).
+Three images per eval: scorecard, stack and comparables. In Claude Code, build each as a small HTML card (Inter font, white background, 900px wide, orange highlight #f0a020 for the company, green #2e7d5b and red #b42318 for good and bad), render it to PNG with Playwright at deviceScaleFactor 2, clipped to the content height, and look at the PNG before using it. Upload each with Notion's create-file-upload, POST the file to the returned URL, and place it with `![alt text](file-upload://<id>)`. Every number in an image must also be in the eval's research with its source, and the image carries a one-line source note. Where images can't be made (no browser), use Notion tables and a callout instead and say so in the chat reply.
 
-### Tightening pass (before publishing)
+### Tightening pass (before writing the page)
 
-- **Pre-publish checks.** The header shows a LinkedIn link (or "LinkedIn not found"), and so does the Better guest box if it's on the page. The business section has all five labelled paragraphs for any non-simple business, and every piece of jargon in it is defined. If either fails, fix it before publishing.
-- **One home per fact.** Revenue and funding live in the metrics strip, roles and dates in the career journey, the business and its model in The business (said once, not as a blurb plus an explainer), the why-book in the synthesis and scorecards, risks in Watch-outs. Delete second mentions.
+- **Checks.** The Go deeper section has a LinkedIn link or a LinkedIn search link. The business section has the sector, stack and comparables. Every jargon word is defined. Fix any miss before writing.
+- **One home per fact.** Figures live in the scorecard and Key numbers, roles in Career, the business in The business, risks in Watch-outs. Delete second mentions.
 - **Cut throat-clearing.** Remove "notably", "it's worth noting" and narration of your own process.
-- **Per-sentence test.** Every sentence either states a fact the host lacks or makes a judgment the host needs. If it does neither, cut it. This cuts filler, never the teaching in The business: explaining what the product is and how the industry works counts as facts the host lacks.
-
-### Page styling
-
-The page body only, with no doctype, html, head or body tags (the Artifact tool wraps it). A system sans-serif stack, 800px max width, 16px side gutters on mobile. The scorecards and the metrics strip stack below 640px, and career journey rows stack date-over-role at phone width.
-
-Define colours as tokens on `:root`, and redefine them under `@media (prefers-color-scheme: dark)` guarded by `:root:not([data-theme="light"])`, and again under `:root[data-theme="dark"]`. Give `body` an explicit background.
-
-- Banner: Book immediately `#059669`, Strong consider `#0284c7`, Pre-call needed `#d97706`, Decline `#dc2626`, with white text
-- Score colour by tier: 8+ `#059669`, 6 to 7 `#0284c7`, 4 to 5 `#d97706`, 3 or below `#dc2626`
-- Better-guest box: left border `#7c3aed`
-- Section titles in small uppercase with letter-spacing and a thin bottom border. Cards with an 8px radius and a subtle shadow. No emojis, no icons, no external scripts.
+- **Per-sentence test.** Every line either states a fact the host lacks or makes a judgment the host needs. If it does neither, cut it. Teaching the business counts as facts the host lacks.
 
 ## Step 7: Pre-call re-run
 
@@ -216,7 +210,7 @@ When pre-call notes arrive for an existing "Pre-call needed" engagement:
 
 - Re-score Audience Fit with the call evidence, especially any revenue figures the guest shared.
 - Pick a final verdict (Book immediately, Strong consider or Decline) and route.
-- Republish the same page URL from the engagement's `Eval link` (read it first), with a short "After the pre-call" line under the synthesis.
+- Update the same Notion eval page from the engagement's `Eval link` (read it first): rewrite the verdict callout and scorecard, and add an "After the pre-call" line under the callout. Never start a second eval page.
 - Update the engagement in Step 8: Status `Precall done`, the new Eval verdict, and Next action.
 
 ## Step 8: Write to Notion
@@ -234,7 +228,7 @@ When pre-call notes arrive for an existing "Pre-call needed" engagement:
 - Direction: `Inbound`
 - Guest, Organisation, Via: relations as above
 - Eval verdict: the verdict. Use `Evaluate after call` only if the eval genuinely couldn't be completed without a call.
-- Eval link: the published page URL
+- Eval link: the Notion eval page's URL
 - Status: `Decision pending` on create. On update, change Status only if the current one is `New`, `Contacted` or `Interested` (or `Precall done` on a pre-call re-run). Never move a record backwards.
 - Next action: one line naming the recommended route and step, for example "Offer sponsored feature via SGA" or "Book, Tier 1.5. Ask PR for founder's dates" or "Decline, already a guest (2023)"
 - Tags: add `Big name` for Audience Fit 9+, and `Has podcast` if applicable
@@ -243,16 +237,7 @@ When pre-call notes arrive for an existing "Pre-call needed" engagement:
 
 **Leave these for Akshay:** Decision, Tier, Heat, Host verdict, Payment, Amount. The recommendation goes in Next action and on the page, not in these fields.
 
-**Page body.** Append a dated block to the engagement page, so the history stacks up across runs:
-
-```
-### Eval, <YYYY-MM-DD>
-Verdict: <verdict> · Route: <route>
-Audience Fit <n>/10 · Sales Fit <n>/10
-Revenue: <figure, signal-based band with YoY direction, or Not disclosed> · Funding: <figure or Not disclosed>
-<40–50 word company blurb>
-Eval page: <url>
-```
+**Page body.** Keep the Engagement page short. At the top, one callout (same colour as the verdict): verdict and route with both scores on line 1, the next step on line 2. Under it, the eval page as a child page, then the pitch in one line (who pitched, when, what they said). On a re-run, update the callout in place; the eval page keeps the history.
 
 If Sales Fit is 7 or above, add a line `PaaS angle: <one sentence>`. Do not create a PaaS engagement; Akshay decides that.
 
@@ -263,7 +248,7 @@ If any Notion write fails, finish the eval anyway and name the failed write in t
 Exactly this shape, nothing more:
 
 > Verdict: Strong consider · Editorial Tier 2. Audience Fit 7/10, Sales Fit 6/10. Revenue ₹42 Cr (FY25), raised $12M.
-> Notion: created engagement (or "updated engagement, was We declined in Jan").
+> Eval page: <Notion link>. Notion: created engagement (or "updated engagement, was We declined in Jan").
 
 For a past guest:
 
