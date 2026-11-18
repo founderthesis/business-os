@@ -12,3 +12,8 @@
 - Change: part C only. The 9-tab editing doc, the brief rules (brief wins over skill rules, every list a real table, a self-check) and counts in the hand-back. The Rough cut test is unchanged.
 - Deployed by the Episode editor chat to the same three triggers; each byte-compared with the file: equal.
 - Skill zips for Akshay to upload: docs/proposals/editing-doc-v2/zips/ (ft-lower-thirds, ft-episode-titles, thumbnail-copy).
+
+## Deploy 3 (19 Nov JST): decision 592 line
+- Source: routines/editing-checks.txt at ce7760e, 8,925 bytes, sha256 b8aef3c84386c0d4...
+- Change: part B allocation mails never copy Akshay (decision 592).
+- Deployed by the Episode editor chat to trig_0177CBiFc4zP8SGCaVip97Gc, trig_01AU4fQevmq39TDZX6LvC4cq, trig_01SXrnWJb2iz5Q3zts34VZu4; each derived prompt byte-equal to the file.
