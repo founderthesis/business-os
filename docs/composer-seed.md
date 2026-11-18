@@ -13,8 +13,8 @@ Compose mode (decision 596). This overrides the prompt wherever they differ:
   - Engagement linked, Source ID = the prompt's own idempotency key for that step, Captured today, Date now.
   - Its page body holds three lines: "Composed against: <id and time of the thread's latest message you read>", "Checks done: <the prompt's pre-send checks, and their result>", and "After send:", followed by the exact row writes the prompt's AFTER SEND block would make for this mail (the Email out Activity summary, Chase step, Next date, Next action segment, Claude note line).
 - Don't make the AFTER SEND writes yourself: the day chat makes them when it sends.
-- Writes that involve no send are yours to make as the prompt says: holds, blocks, parks, nurture moves, Claude notes and the run record.
+- Never write Engagement or People fields yourself (decision 609). For every change the prompt would make to a row without a send (a hold, block, park, nurture move, Next action, Next date, Waiting on, Chase step, Claude note), create one Activity with Kind Note and Summary "Row change: <routine> <step> for <name>", with the Engagement linked. Its body holds "Read at: <the row's last edited time when you read it>" and the exact field writes. The day chat applies them. The run record is the only page you write directly.
 - Don't take the zoya-lock: you send nothing, and holding the lock would block the day chat's urgent replies.
 - WhatsApp items: don't draft or send them. List them in the run record.
-- Re-read a row just before every write. Never access a team member's own computer. No em dashes.
+- Re-read a row before composing for it. Never access a team member's own computer. No em dashes.
 - When the run record is written, end with one line: status, drafts made, held, blocked, carried.
