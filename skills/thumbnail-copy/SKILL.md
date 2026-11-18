@@ -74,7 +74,7 @@ These still appear in the menu when they are the obvious idea, badged **Avoid** 
 
 These come from Akshay reviewing menus line by line, not from YouTube tests. They are his taste and they are binding: every line is screened against them before it enters the menu. A line that fails one is cut, or kept only as an **Avoid** card with the failed rule named. First recorded on the un# KAST episode (Raagulan Pathmanathan), September 2026.
 
-1. **Short.** 3 to 4 words. Five only when every word is short. "Bigger than Coinbase by 2030?" and "Crypto's next giant: a money app?" both came back as too long, though he liked the idea behind the second; "Crypto's next giant?" is the cut-down form.
+1. **Short.** 3 to 5 words, never more than 6 (Akshay, 18 Nov; was 3 to 4). "Bigger than Coinbase by 2030?" and "Crypto's next giant: a money app?" both came back as too long, though he liked the idea behind the second; "Crypto's next giant?" is the cut-down form.
 2. **Somebody is building something.** A line that only names a problem, a statistic or a macro trend reads like a social documentary, not a founder interview. Rejected: "$8B in fees. Every year.", "The 2030 neobank shock", "The dollar already won", "Exchanges were round one".
 3. **Aspirational, never a gap.** Framing around what is missing reads as negative. Rejected: "The global Venmo nobody built".
 4. **Globally known references only.** The network's audience is India and Asia first. US-only or Europe-only brands fail: Venmo, Revolut. AWS passed.
@@ -119,25 +119,18 @@ The half the designer cannot get anywhere else. Write it for someone who has nev
 
 ## Building the menu
 
-**Ten to twelve combos.** Spread across the winning patterns so there is genuine choice: known reference point, a bet on scale phrased as a question, second person, plain money, number-in-a-claim, verbatim guest line. Screen each against the review rules first. Include one or two **Avoid** cards for the obvious ideas that fail, so she sees why they were dropped.
+**Two steps. Thumbnails first, titles second** (decision 602, Akshay, 17 and 18 Nov).
 
-Each combo carries:
+Step 1: **25 thumbnail options**, no titles. Table `# | Pick | Thumbnail copy | Angle | The idea, with timestamp | Visual concept`. Spread across angles (hooky, massy, contrarian, bold statement, strong idea, insightful, curiosity, why, what, how, controversial), at least 8 different angles, and name the angle. Screen every line against the review rules; drop failures rather than showing Avoid cards. Do not rank and do not pick; leave Pick for the editor.
 
-- **Thumbnail copy**, in the case it should be set in, with `[VERBATIM, speaker, ts]` or `[FRESH, ts]`
-- **Episode title**, see below
-- **The idea**: one plain sentence stating the full claim the copy compresses, with its timestamp. Name who or what is being compared, or what is being built. Written so she could explain the line to someone who hasn't seen the episode. Example for "Bigger than crypto exchanges?": "Rags predicts that stablecoin money apps like KAST will grow bigger than crypto exchanges, which most people see as crypto's giants today (30:14)."
-- **Visual concept**: two or three concrete sentences. The scene, the central contrast or metaphor that makes the idea visible, and where the guest sits in it. For a comparison line, name both sides and show which one wins. Specific to this line, never repeated across cards. Example: "Split frame. On the left, an exchange trading screen full of red and green candles, small and pushed to the edge. On the right, a phone with a clean money app towering over it. Rags stands on the app side."
-- **Alternate visual**: one line, a second way to show the same idea. This is what the image-axis test uses.
-- **Pattern badge**: `Proven` (matches a winning pattern), `Untested` (reasonable, no precedent), `Avoid` (matches a losing pattern or fails a review rule)
-- **The note**: the pattern and its number, then any warning. Legibility risk, a claim that needs checking, or why it is an Avoid. Two lines maximum.
-- **Traces to**: which viewer takeaway it sells
-- **Pairs with**: the option number it makes a clean one-axis test against
+Step 2, only after the editor ticks picks: **one title per picked thumbnail**. Table `# | Picked thumbnail | YouTube title | Chars | Keyword it targets`.
 
 ## Writing the title half
 
 - **The title carries the who.** Guest's full name and company in every title, usually after a pipe: `… | Raagulan Pathmanathan, KAST`. Add the host's credential hook only if it earns space (ex-Circle, ex-Flipkart).
 - **One searchable topic phrase** a viewer would type: stablecoin neobank, cold chain seafood, voice AI. Use the spelling the market uses, not the transcript's (transcripts mangle names; check the dossier).
-- **Around 60 to 75 characters.** Front-load the claim so it survives truncation on mobile.
+- **60 to 70 characters**, to match ft-episode-titles. Front-load the claim so it survives truncation on mobile.
+- Write titles only for thumbnails the editor has picked.
 - **The title may echo the thumbnail** when both stay specific. The Palantir winner ran title "India's Palantir: Inside the Defence Tech Startup Boom" with thumbnail "FUNDING INDIA'S PALANTIR?" and took 47.5%. The failure mode is an unspecific thumbnail, not an echoed one.
 - **Where the thumbnail is a question or a bet, the title answers enough of it** to make the click feel safe: "Bigger than crypto exchanges?" pairs with "Why Stablecoin Neobanks Will Shock Everyone by 2030 | …".
 - The same factual bar applies to titles as to thumbnails.
@@ -145,6 +138,8 @@ Each combo carries:
 Search-optimised title sets for Founder Thesis remain `ft-episode-titles`. When that skill has already produced a title for this episode, reuse it in at least two combos.
 
 ## Pairing for the test
+
+This runs after the picks: pair only picked thumbnails for the A/B test.
 
 Name **two or three pairings worth running**, and for each say what a win would tell you.
 
@@ -155,7 +150,7 @@ Never vary both, or the result explains nothing. Titles stay fixed during a thum
 
 ## Word budget
 
-Target 3 to 4 words, 5 at most (review rule 1). Numerals and symbols survive small better than spelled-out words; say so in the note when it is the deciding factor.
+Target 3 to 5 words, 6 at most (Akshay, 18 Nov). Shorter still wins when it says the same thing. Numerals and symbols survive small better than spelled-out words; say so in the note when it is the deciding factor.
 
 Legibility is the real constraint, and the artifact settles it visually rather than by assertion. The line must read at 168px wide, the browse size on a phone.
 
@@ -183,6 +178,8 @@ Non-negotiable. Curiosity gaps are the job. Half-truths are not.
 Hunt verbatim lines first. A line the guest actually said is already phrased the way a human would phrase it.
 
 ## The artifact
+
+Inside the editing doc, skip the artifact: write straight into the doc's tables, where the Pick column replaces the toggle. Keep the artifact and the Word export only for runs outside the editing doc.
 
 Write one self-contained HTML file and publish it with the Artifact tool, declaring `capabilities: {downloads: true}` on the first publish so the export works. New episode, new file path, so each brief keeps its own URL. Do not use the React artifact builder; a single hand-written HTML page is the right weight here.
 
