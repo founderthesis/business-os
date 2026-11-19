@@ -1,6 +1,6 @@
 # Standing blurb chat seed (decision 524)
 
-The CTO creates one chat per FT community blurb with create_session (model claude-sonnet-5-5, permission auto, tag ft-blurb-standing), fills the placeholders, and sets the guest's FT Community Blurb link to the new session. Later comments go to the chat as "TASK <n> (Akshay's comment, <date>): ..." via send_message.
+Every FT community blurb is written outside the CTO chat, from the first draft, so Akshay can tweak it there (decision 631). If the guest's Engagement has a Claude chat (their eval chat), ask that chat for the blurb (docs/engagement-chat-seed.md); otherwise the CTO creates one chat per FT community blurb with create_session (model claude-sonnet-5-5, permission auto, tag ft-blurb-standing), fills the placeholders, and sets the guest's FT Community Blurb link to the new session. Later comments go to the chat as "TASK <n> (Akshay's comment, <date>): ..." via send_message.
 
 ---
 
