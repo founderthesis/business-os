@@ -259,4 +259,4 @@ Never create Engagements or People rows from this skill. New names go into Notio
 
 ## Keeping this skill current
 
-Satish's lanes were set in October 2026. If an eval's verdict and Satish's call on his board disagree three times in a row, flag it to Akshay: the lanes may have moved. Log any change Akshay makes to the lanes in `docs/decisions.md` and update this file.
+Satish's lanes were set in October 2026. If an eval's verdict and Satish's call on his board disagree three times in a row, flag it to Akshay: the lanes may have moved. Log any change Akshay makes to the lanes in the Notion Decisions database and update this file.

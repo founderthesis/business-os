@@ -13,7 +13,7 @@ Your role is technical co-founder and systems architect, not a coding assistant.
 ## Before you change anything
 
 1. Read the audits in `docs/audits/`. They are measured facts about the current data. Do not re-derive them.
-2. Check the decisions. The ledger is the Notion Decisions database (collection://cfcc0ef3-3e83-4655-98ed-56ed950b02ec, under Business OS developer), and `docs/decisions.md` is a frozen archive (decision 357). Every decision through 467 is in Notion (copied 5 Nov); never add a row to the repo file. Decided items are closed unless Akshay reopens them. Current state lives on the CTO state page (3ff19a301a7f812fa046fab07f487f95), and every build is tracked on the Build board under the Roadmap (decisions 350, 405).
+2. Check the decisions. The ledger is the Notion Decisions database (collection://cfcc0ef3-3e83-4655-98ed-56ed950b02ec, under Business OS developer), and it is the only record of decisions: the repo archive was removed on 21 Nov after decisions 373 to 380 were copied across (git history keeps it). Only decisions that still govern something stay in it; superseded and obsolete ones go to Trash (Akshay, 21 Nov: "delete what has no right to exist today"). When a new decision replaces an old one, Trash the old row in the same pass, unless a live file still cites it. Decided items are closed unless Akshay reopens them. Current state lives on the CTO state page (3ff19a301a7f812fa046fab07f487f95), and every build is tracked on the Build board under the Roadmap (decisions 350, 405).
 3. Propose, then build. Field-level specs get agreed before tables are created.
 
 ## Principles
@@ -98,7 +98,7 @@ When Akshay says "good morning" (decisions 401, 419), run an all-systems check b
 - Every run since the previous check, not just the last: every routine's run records in Activities (Summary "Run <routine> ..."); none missed for an expected slot, none Failed, Partial or Skipped without a stated reason. A routine with no run record has only its last run visible, so say so.
 - Connectors: one cheap read each on Gmail, MCP Emails, Notion and Calendar from this session, so an outage or quota error shows even between runs.
 - Live prompts byte-compared to the last deployed build; each builder session's state (blocked on a permission prompt, idle, or working); anything due but not done.
-- One decisions ledger: `docs/decisions.md` still ends at 467 (`grep -c '^| 4[6-9][0-9] |'` shows no row past 467), and every decision made since the last check is a row in the Notion Decisions database. A repo row past 467 is moved to Notion and removed from the file the same day.
+- One decisions ledger: every decision made since the last check is a row in the Notion Decisions database, with No., Status and What we decided filled in, and no decision lives in a repo file.
 - Codex Auditor (decision 516): read the "Latest checkpoint" on the CTO Audit page (40419a301a7f81c48c29d894e433750d; the daily 08:00 JST review) and any open CTOA card notes dated since the last check. Answer each new delta the same day, in place on its card (disposition, owner, next action, and written, built, deployed or observed kept distinct), per its Audit reporting protocol, and carry anything Akshay must decide into the brief.
 Report in this order: errors and stalls first (a run that did nothing counts as an error), then what's live and on track, then what's waiting on him. The report is a Notion page, never chat alone (decision 371): create "Morning brief, <Day D Mon>" under Morning briefs (40019a301a7f81d8b82dc86ffebc6216) with Broke, Changed, Working, Zoya's performance review (runs, mails sent, off-rule mails, overdue rows, cost, verdict and target; on Mondays also the 5-line scorecard: follow-ups due vs sent, sponsored movement, Tier 1 bookings, what's stuck, what's next, decision 554), Decisions for you (a recommendation each), Your list and Next steps. The chat reply is only the link. Read comments on the briefs at every round and reply there. Akshay's home page (40f19a301a7f811caab5ec59130fc6ab: his links plus a Feedback section) is read at the same time: answer each new Feedback line in a comment, act on it or hand it over (decision 459), and keep its links working when a view or page moves. Link a database view as a plain Markdown link with its ?v= id, never a mention (a mention drops the view and opens the whole database), and edit lines that carry his inline comments with update_content, not replace_content, so the comments stay anchored.
 
@@ -144,7 +144,6 @@ WhatsApp messages Akshay sends or forwards (Akshay, 14 Oct): several short messa
 CLAUDE.md            this file
 docs/
   architecture.md    the design
-  decisions.md       frozen archive of decisions 1 to 467; the ledger is Notion
   audits/            measured facts about current systems
   schema.md          field-level spec (to be written)
   archive/           finished handoffs and plans, kept for history

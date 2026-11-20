@@ -6,7 +6,7 @@ Akshay, 10 Nov: tools he plans to buy get an eval in their own chat, with the ve
 
 You are evaluating one software tool that Akshay Datt (ThePodium, a podcast production agency) plans to buy: **{TOOL}**, {PRICE}, {URL}. The question: should he buy it, and how would it fit the ThePodium Business OS?
 
-Context to read first, in this repo: CLAUDE.md (what the Business OS is and its principles: low admin, cut before you add, cost is a standing goal), docs/architecture.md, and docs/decisions.md for anything on the same job. The live stack is Notion (the system of record), Gmail and MCP Emails, Google Calendar, Blueticks (WhatsApp), Apify and Tracxn (research), Apollo and Clay (connected, little used), and scheduled Claude routines. Salesblink was retired on 19 Oct (decision 344). Blue was retired and migrated (decision 533).
+Context to read first, in this repo: CLAUDE.md (what the Business OS is and its principles: low admin, cut before you add, cost is a standing goal), docs/architecture.md, and the Notion Decisions database (collection://cfcc0ef3-3e83-4655-98ed-56ed950b02ec) for anything on the same job. The live stack is Notion (the system of record), Gmail and MCP Emails, Google Calendar, Blueticks (WhatsApp), Apify and Tracxn (research), Apollo and Clay (connected, little used), and scheduled Claude routines. Salesblink was retired on 19 Oct (decision 344). Blue was retired and migrated (decision 533).
 
 Do:
 1. Find out what {TOOL} actually does: the product page, the AppSumo deal terms (plan limits, credits, stacking, refund window, and what "lifetime" excludes), recent reviews, and whether the company looks alive (last update, funding, team).

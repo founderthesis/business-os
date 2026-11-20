@@ -10,7 +10,7 @@ Capture first. It reads the ad@thepodium.in mailbox and writes down what happene
 
 Evals run in the Cowork task (`routines/cowork-evals.md`), calendar work in another (`routines/calendar.md`).
 
-Decided: 61, 62, 64, 65, 66, 67 and 68 in `docs/decisions.md`. Status ladder: `docs/statuses.md`.
+Decided: 61, 62, 64, 65, 66, 67 and 68 in the Notion Decisions database. Status ladder: `docs/statuses.md`.
 
 ## Prompt
 
