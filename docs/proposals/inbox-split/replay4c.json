@@ -1,0 +1,50 @@
+{
+ "round": "4c",
+ "inputs": {
+  "capture.txt": "35848/0c7cb3d1a16d13bd",
+  "actions-v2.txt": "39354/19701651a6c0edf3",
+  "yourcall-sections.md": "7326/a28b43da3b0aac36",
+  "sweep.txt": "39131/6783dd01e396e5ab"
+ },
+ "cases": {
+  "B4": "PASS: a THREAD read that fails on one message is 'one tied to a row', so the try stays. The row goes try 1, 2, 3, then stuck, and W passes it. During an outage, 'a run ending Failed on a quota, rate-limit or 5xx error, not one tied to a row, first removes its own try lines', so healthy rows aren't marked stuck. Note: a 5xx that only that one message triggers is left to the model to classify as tied to a row. The wording favours that reading.",
+  "S-J1": "PASS: 'you add its id to your record's body line \"stamped: <ids>\" as you stamp it'. If the run crashes later, the ids already written survive. Residual: the window between the two writes, stamping the row and then listing it, is one call wide. Writing the id first would close it. Optional.",
+  "S-J2": "PASS: actions now reads 'each run:inbox-capture: record created since W minus 24 hours'. A stamped row left at try 1 is taken again in later runs until it's done or reaches 3 and becomes stuck. The cost is reading about 24 record lines per run.",
+  "prefix": "PASS: there's now one rule in all three places. Capture STEP 0: 'an Email out whose Summary starts \"Zoya\" is hers: add nothing'. Capture STEP 1: 'never a Kind Email out row whose Summary starts \"Zoya\"'. Actions: closed n/a, 'an Email out whose Summary starts \"Zoya\" (her row, her routine works it)'. Capture's loop-in ('Akshay to X: Zoya loop-in') and Akshay's mail logged by Zoya ('Akshay to ...') don't match it. The 6c gate's 'Zoya sent: <template>' lookup still works, because it reads rows and doesn't work them.",
+  "A1": "PASS: unchanged; the stamped: join now covers 24 hours.",
+  "R1": "PASS.",
+  "R1b": "PASS.",
+  "R2": "PASS.",
+  "R3": "PASS: crash tries are kept.",
+  "R3b": "PASS.",
+  "R4": "PASS.",
+  "B1": "PASS.",
+  "B2": "PASS.",
+  "B3": "PASS.",
+  "B5": "PASS.",
+  "B6": "PASS.",
+  "B7": "PASS.",
+  "B8": "PASS.",
+  "B9": "PASS.",
+  "B10": "PASS.",
+  "S1": "PASS.",
+  "S2": "PASS.",
+  "S3": "PASS.",
+  "S4": "PASS.",
+  "S5": "PASS.",
+  "S6": "PASS.",
+  "S7": "PASS.",
+  "S8": "PASS.",
+  "S9": "PASS.",
+  "D1_to_D9": "PASS: nothing changed outside the four edits.",
+  "size_emdash": "PASS: capture is 35,848 bytes and actions-v2 39,354 (646 bytes to spare). No U+2014."
+ },
+ "defects": {
+  "N1_stamp_order": {
+   "quote": "'gets that line ... and you add its id to your record's body line \"stamped: <ids>\" as you stamp it'",
+   "scenario": "Optional. If the run crashes between stamping the row and adding its id, the row is stamped but not listed, and it's never stamped again.",
+   "fix": "Optional: 'add its id to the stamped: line first, then the capture: line'."
+  }
+ },
+ "verdict": "Accepted on replay. B4, S-J1, S-J2 and the prefix check pass, and the regression pass over R1 to R4, A1, B1 to B10, S1 to S9 and D1 to D9 is clean. One optional nit remains: put the id on the stamped: line before stamping the row. Preconditions: enable capture on 2 Nov JST or later, paste sections 6 to 8 and read them back before actions is enabled, and watch actions' 646 bytes of headroom."
+}

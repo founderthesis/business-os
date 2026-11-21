@@ -1,0 +1,186 @@
+{
+ "meta": {
+  "clock": "2026-10-28T15:02+09:00",
+  "session": "cse_TEST",
+  "live": {
+   "bytes": 61957,
+   "sha256": "aed0215a8bdf6a26fd5ce902a42969f0009108a53ae1427f92d720d371b78dc0"
+  },
+  "build_a": {
+   "bytes": 63550,
+   "sha256": "ccd2817ab942c093b987c3a53f1167c79d9c176795b0495c63dc1c808c1cea2a"
+  },
+  "scenarios": {
+   "bytes": 2954,
+   "sha256": "4ad1a97b06ecf93a33f8ccd403d4ff5ee9ae988efe274f1c7d7274e038e609ec"
+  },
+  "build_script_HEAD_reproduces_a": true,
+  "build_script_worktree": "docs/proposals/d420/inbox.py has an UNCOMMITTED edit (mtime 04:19 UTC) that outputs 63,636 B / 6f8ac0b774ab09ac, not inbox-a: new 'read to' definition (stops at the first message that failed to log; no line if STEP 1 failed) and STEP 2b header '(decisions 387, 102)'. This replay judges inbox-a only.",
+  "limit_bytes": 65536,
+  "headroom_a": 1786,
+  "em_dashes": 0,
+  "baseline_calls": "Every run also: ToolSearch loads; Bash printenv; Notion fetch of each data source once (~8) and the Controls pages (Inbox and Your call rules, Cadences); Your call query 1; run record create 1; run-record lookup (query 1 + page-body fetches until one has 'read to', because 'read to' lives only in the body); dedupe query 1; STEP 7 MCP search 1; STEP 7b guest-form query 1; final record update 1."
+ },
+ "I1": {
+  "gmail_calls": 0,
+  "mcp_calls": "email_read search x2 pages (since 2026-10-27, inbox+sent); 6 kept (>= 13:31:30 JST); read x6 + original x6 = 12 as written ('read each once (action read, then original ...) and skip any whose msgid: key an Activity already holds'), or original x6 + read x4 = 10 with the cheap check; plus THREAD reads (search + reads) for each thread STEPS 3-6 touch (Stakeholders: 'read the whole chain with get_thread' on every thread you touch); STEP 7 search 1",
+  "notion": "dedupe query 1 (2 hits), create batch 1 (4 Activities), Last activity/Engagement updates per linked row, record update 1",
+  "sends": "none unless one of the 4 is a new pitch",
+  "record": "Completed; 'read to <time of newest of the 6>'",
+  "T": "14:01:30 - 30 min = 13:31:30 JST; day before T's date (28 Oct either in JST or UTC) = 27 Oct; 'since' midnight UTC 27 Oct = 09:00 JST 27 Oct covers T",
+  "deciding": [
+   "Start time T: 30 minutes before the \"read to\" time on the newest inbox run record that has one",
+   "since <the day before T's date> (a date matches from midnight UTC)",
+   "Keep only messages dated at or after T"
+  ],
+  "verdict": "PASS",
+  "notes": "No 'limit' set: at the default 20 per page, 160 messages are 8 search calls, not 2; set limit 100 (or since=T as a datetime, which email_read accepts)."
+ },
+ "I2": {
+  "gmail_calls": 0,
+  "mcp_calls": "search since 2026-10-26 all pages; read+original per message >= 27 Oct 12:40",
+  "notion": "record lookup finds no record with 'read to' (this run's Started row has none); query newest Source=Gmail Activity 1",
+  "deciding": [
+   "none yet: the newest Activity with Source = Gmail (SQL: ORDER BY \"date:Date:start\" DESC LIMIT 1) minus one day"
+  ],
+  "T": "2026-10-27T12:40 JST; since 26 Oct",
+  "record": "Completed, read to newest message",
+  "verdict": "PASS"
+ },
+ "I3": {
+  "gmail_calls": 0,
+  "mcp_calls": "THREAD read (CONTEXT CHECK); email_compose x1 {action reply, message_id pitch, inbox_id cd37e47e, reply_all false, cc [others minus Saurabh] + Zoya, body+html_body '<p>thanks <first>, adding @Zoya to coordinate</p>', include_signature false, idempotency_key loopin:<Message-ID>}; likely +1-2 (search sent + original) to get the sent Message-ID for the msgid: key",
+  "notion": "People/Engagement create (Status New, FT), Activity in, Activity out 'Akshay to <name>: Zoya loop-in'",
+  "deciding": [
+   "The only mail you send from ad@thepodium.in is the loop-in (ZOYA LIVE): email_compose action reply on that message ... reply_all false, To its sender, Cc set explicitly, include_signature false",
+   "on the sender's own pitch message, To the sender, Cc everyone else on it except Saurabh, plus the house copies"
+  ],
+  "verdict": "PASS",
+  "notes": "STEP 6 logs 'Source ID the sent message id'; email_compose returns a provider id, not the Message-ID. If that is logged, the next run's read of the Sent copy (Gmail-over-IMAP may file two Sent copies with different UIDs) may not match and a second Activity appears. Say: Source ID msgid:<Message-ID of the sent copy>. Decision 420's 'optionally with the ask in a few words' is not carried (body 'exactly'); conservative, fine."
+ },
+ "I4": {
+  "gmail_calls": 0,
+  "mcp_calls": "email_compose x1 as a NEW mail (action send, to original sender, cc others on original minus Saurabh + Zoya, subject 'Re: <original subject>') if STEP 6's text wins; MAILBOX's only recipe is 'action reply on that message ... To its sender', which on Saurabh's forward would go To Saurabh",
+  "notion": "Engagement create with Via = original sender, Claude note 'forwarded by Saurabh'; Activities",
+  "sends_to_saurabh": 0,
+  "deciding": [
+   "- Nothing to Saurabh (decision 420: only loop-ins go from ad@thepodium.in); the original sender gets STEP 6's loop-in.",
+   "A pitch that reached us only through Saurabh or Akshay's other address: a new mail to the original sender",
+   "email_compose action reply on that message ... To its sender"
+  ],
+  "verdict": "PASS (with defect D1)",
+  "notes": "Once the 'Thanks for sharing, SG' reply is gone, nothing marks Saurabh's thread as answered and the new mail is not in it (no In-Reply-To). A run that re-reads the 72h window (see D5) sees 'nobody from our side has replied' and may loop in again once the 24h idempotency key lapses; STEP 6e could also queue 'Zoya: acknowledgement to Saurabh'. Only the vendor variant says 'Skip it if a loop-in already went out on that pitch'."
+ },
+ "I5": {
+  "gmail_calls": 0,
+  "mcp_calls": "THREAD read; email_compose reply x1 (loop-in, Cc Zoya, no link)",
+  "notion": "People create, Engagement create on Vendor show (Waiting on Zoya, Next action 'Zoya: ask <first> to fill podm.in/pitch-to-us'), Activity in + loop-in Activity",
+  "deciding": [
+   "the loop-in on the thread, To the sender, Cc the house copies: \"thanks <first name>, adding @Zoya to coordinate\"",
+   "Waiting on Zoya, Next action \"Zoya: ask <first name> to fill podm.in/pitch-to-us\""
+  ],
+  "verdict": "PASS",
+  "notes": "Vendor mail to built2share@: whether Chaandini is a house copy is unclear (Show is Vendor)."
+ },
+ "I6": {
+  "gmail_calls": 0,
+  "ad_sends": 0,
+  "mcp_calls": "none for sends; THREAD read for context optional",
+  "notion": "fetch wording page 1; Engagement update: page body '## Decision mail (<id>)', Waiting on Zoya, Next action 'Zoya: send Akshay's decision mail (Tier 1: keen, ask for a pre-call)', Claude note verbatim, Your call cleared; PR 'thanks, noted' logged as Email in only",
+  "deciding": [
+   "Never for a mail that is itself only thanks or \"noted\" to us",
+   "d0. You never send this mail; Zoya does, from her inbox",
+   "Buckets A and B send nothing (ZOYA LIVE)"
+  ],
+  "verdict": "PASS",
+  "notes": "A bare 'thanks, noted' gets no Zoya acknowledgement step at all (bucket A excludes it), so 'Zoya steps set' applies to the precall row only. Pre-existing conflict: STEP 3 'precall -> Status Precall requested' vs 6c 'Status stays as it is'."
+ },
+ "I7": {
+  "gmail_calls": 0,
+  "mcp_calls": "email_read search {folder inbox, subject 'invitation', since 3 days ago} x1; email_organize archive x1 per RSVP message; no flag calls",
+  "deciding": [
+   "Search: email_read search, inbox_id as in MAILBOX, folder inbox, subject \"invitation\", since 3 days ago.",
+   "archive each message (email_organize archive); never flag read or unread."
+  ],
+  "verdict": "FAIL (likely)",
+  "notes": "Google Calendar RSVP subjects read 'Accepted: <title> @ <time> (<address>)' and carry no 'invitation'; the old Gmail query used 'invitation' as a body term (footer 'Invitation from Google Calendar'). subject 'invitation' finds the invitations, which the 'every message is an automatic RSVP' filter then leaves, so nothing is archived. Gmail IMAP also matches whole words. Tools and the never-flag rule are right. Check one real RSVP subject in ad@ before deploying."
+ },
+ "I8": {
+  "gmail_calls": 0,
+  "mcp_calls": "draft_list x1 (not named in the prompt) to find the draft; draft delete x1",
+  "deciding": [
+   "delete_draft: draft delete",
+   "If an unsent agent draft for that same mail is still in Gmail ... delete that draft with delete_draft"
+  ],
+  "verdict": "PASS (with gap)",
+  "notes": "The Draft ID on the Draft Activity is a Gmail-connector draft id; an MCP Emails IMAP draft_id differs and changes on every update. The prompt never says how to find the draft (draft_list, match by subject and recipient), so the model may guess or delete nothing."
+ },
+ "I9": {
+  "gmail_calls": 0,
+  "mcp_calls": "search x2 (first, then one retry after the next no-mail step)",
+  "notion": "record create + final update; no 'read to' line",
+  "deciding": [
+   "An error: retry the call once after your next step that needs no mail; fails again: end Failed, naming it.",
+   "never call the Gmail connector",
+   "a line \"read to ...\" once STEP 1's read finished"
+  ],
+  "record": "Failed, naming email_read search error; no read-to so the next run re-reads the span",
+  "verdict": "PASS",
+  "notes": "'end Failed' vs STEP 8 'If a step fails, carry on with the rest' and TOOLS 'No partial work' read two ways (stop now, or still run STEP 7b and Your call work). 'Your next step that needs no mail' after STEP 1 is STEP 7b, so the retry ordering is odd."
+ },
+ "I10": {
+  "gmail_calls": 0,
+  "mcp_calls": "read with include_html x1 (instead of, or on top of, the plain read), original x1; then the Doc read",
+  "deciding": [
+   "include_html only where a step needs the HTML, such as Gemini notes",
+   "Gemini meeting notes mails: open the Doc from the message HTML ... Log one Activity with Kind \"Meeting\""
+  ],
+  "notion": "Activity Kind Meeting, Source Gemini notes, Source ID Doc id",
+  "verdict": "PASS",
+  "notes": "Pre-existing gap: TOOLS lists no Google Drive/Docs connector to open the Doc."
+ },
+ "checks": {
+  "a": {
+   "verdict": "PASS",
+   "detail": "live -> a diff is exactly the HEAD build script's 22 replacements (rebuilt byte-identical, ccd2817ab942c093). Em-dash count unchanged (0). 63,550 B, 1,786 B headroom under the 200 B margin. Worktree script now differs (see meta)."
+  },
+  "b": {
+   "verdict": "PASS with residue",
+   "detail": [
+    "No line forces a Gmail connector call; MAILBOX bans it outright.",
+    "Residue: STEP 2 'search Gmail rfc822msgid:<that Message-ID>; one that returns this mail's Gmail id' maps to 'email_read original', which takes a provider id and cannot search by Message-ID (dead-ish fallback, wrong mapping).",
+    "'still in Gmail' (STEP 5) and 'open Gmail' (page body) are wording only.",
+    "Other ad@ output: STEP 6e delete_event notificationLevel ALL makes Google send cancellation notices from ad@'s calendar (decision 398 allows it; flag to Akshay).",
+    "MAIL AKSHAY FORWARDS: 'Every reply on such a mail, in any step, is a NEW mail from ad@thepodium.in' reads as licence for non-loop-in replies; ZOYA LIVE overrides, but reword.",
+    "STEP 3 replacement: 'His no: reply that we'd like to keep <original guest>' names no sender (falls to Zoya by ZOYA LIVE).",
+    "CONTEXT CHECK 'adapt it' vs the loop-in's 'exactly'."
+   ]
+  },
+  "c": {
+   "verdict": "FAIL",
+   "detail": [
+    "Line 1 narrowed from 'replies in STEPS 6 to 6e' to 'loop-ins in STEPS 6 to 6b': STEP 6e's event cancel, STEP 5's draft delete and WhatsApp to Akshay are no longer in the 'you never act' exceptions (HARD RULES still allow them).",
+    "Daily cap: STEP 6 still says 'Within the daily cap' but the only definition (Activities starting 'Zoya sent', loop-ins excluded) was deleted with the Saurabh bullet. Loop-ins now log as 'Akshay to <name>: Zoya loop-in', so the count is undefined.",
+    "TOOLS 'No partial work' vs RUN RECORD's Partial and STEP 8 'carry on'; '(RUN RECORD still written)' is impossible when Notion is the missing tool.",
+    "Stakeholders 'read the whole chain with get_thread' on every touched thread vs STEP 1 'Read a message's THREAD only where a step needs the chain' (Stakeholders always needs it, so the cost is per touched thread).",
+    "THREAD tests References/In-Reply-To, but 'read each with action read' returns no headers (the prompt says so in STEP 2); every candidate needs 'original'. It also follows only ancestors and descendants, so sibling replies are missed unless you start at the root.",
+    "HOUSE COPIES fits the loop-in (Zoya in Cc); Chaandini on vendor mail to a B2S alias is unclear.",
+    "STEP 3 repeat pitch gets 'the usual holding reply (STEP 6a, \"thanks <first name>, adding @Zoya ...\")' vs STEP 6 'Skip repeat pitches (STEP 3)'; 6a is now the Saurabh step (pre-existing, now worse)."
+   ]
+  }
+ },
+ "defects": [
+  "D1 MAILBOX gives only the reply form for a loop-in ('email_compose action reply on that message ... To its sender'). There is no recipe for STEP 6/6a/6b's NEW mail (Saurabh-only or Akshay-forwarded pitch): action send, to original sender, explicit cc, subject 'Re: <original>'. Read literally, it replies to Saurabh.",
+  "D2 STEP 7 RSVP search uses subject 'invitation'. RSVP subjects lack it, so nothing gets archived (I7).",
+  "D3 Read window misses mail outside INBOX/Sent: on IMAP, include_folders ['inbox','sent'] skips archived mail and filtered labels. The old Gmail search covered all mail. Mail Akshay archives before the hourly run is never logged. Add the archive (All Mail) folder and dedupe by Message-ID.",
+  "D4 'read to' = newest message read, even if a later step failed on an older one. A message whose Activity create (or loop-in) failed falls behind T after 30 min and is never retried. The uncommitted worktree script fixes logging only.",
+  "D5 STEPS 6, 6a, 6b, 6d and 6e still say 'in the last 72 hours' / 'every inbox thread from the last 72 hours' while STEP 1 reads about an hour. Reading 1: a separate 72h search every run brings back the re-read load that blew the quota. Reading 2: only this run's messages, so a failed send is never retried. Pick one and say it.",
+  "D6 Daily cap reference left dangling (STEP 6).",
+  "D7 THREAD needs headers that action read does not return. It also misses sibling branches.",
+  "D8 'read to' lives only in the record's page body. Finding 'the newest inbox run record that has one' means fetching bodies one by one (this run's own Started row first). Put it in the Summary.",
+  "D9 STEP 5 draft delete: no way to map a Gmail draft id to an MCP draft_id (draft_list plus a match rule needed).",
+  "D10 Loop-in Activity 'Source ID the sent message id' should say msgid:<sent Message-ID>. Gmail-over-IMAP may also file a second Sent copy.",
+  "D11 Line 1 exception list narrowed (see c).",
+  "minor: search limit not set (default 20/page); 'dated' ambiguous (Date header vs received), and a future-dated message would push 'read to' ahead; rfc822msgid fallback mapping wrong; no Drive/Docs connector for Gemini docs."
+ ]
+}

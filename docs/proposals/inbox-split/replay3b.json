@@ -1,0 +1,60 @@
+{
+ "round": "3b",
+ "inputs": {
+  "capture.txt": "34639/0b3db1991a26068a",
+  "actions-v2.txt": "38649/0ecefb0eb7566b1f",
+  "yourcall-sections.md": "7326/a28b43da3b0aac36",
+  "sweep.txt": "39131/6783dd01e396e5ab",
+  "split.py": "28158/428acff7a9152021"
+ },
+ "cases": {
+  "B1": "PASS: the text is unchanged, and W comes from run 1's 10:26Z. 'the newest inbox actions run record other than this run's that has a \"worked to\"'",
+  "B1b": "PASS: the crashed record is 2 hours old, which is past 45 minutes, so the run goes on and W comes from the older record.",
+  "B2": "PASS: the re-keyed row is Captured today and carries the 'capture:' line, so it comes in through the Captured window. 'they never move W'",
+  "B3": "PASS: 'created at or after W minus 2 minutes' takes B, and A's 'actions: done' line skips it.",
+  "B4": "PASS: the row goes try 1, try 2, then stuck at 3, and W passes it after that.",
+  "B5": "PASS: the loop-in is closed n/a. 'a loop-in (Summary ends \"Zoya loop-in\" or body \"actions: n/a\")'",
+  "B6": "PASS: 'without all four, skip STEP 0 and every mail step, end Failed'. A full read goes on.",
+  "B7": "PASS: MAILBOX has the msgid: remap.",
+  "B8": "PASS: 'You never create a mail Activity'; 'leave it for capture'; 'update that Activity, never a second one'.",
+  "B9": "PASS: 'up to 8 of each class and the other class filling the rest', so the msgid: class always gets 7 or more slots. The fold clears relations, confirms none is left, then Trashes the row.",
+  "B10": "PASS with a gap: capture STEP 0 owns linking and actions waits. But an old ad@ row whose Summary is 'X to Zoya: ...' is now excluded and never linked; see D2b.",
+  "S1": "PASS: the row has no 'capture:' line and was created after the first record, so it's skipped.",
+  "S2": "PASS: capture's ':20' stop holds. The 40-minute-old Started record is under 45, so the run writes 'No-op, previous run still live' and changes nothing.",
+  "S3": "PASS: 'Your call decisions (STEP 0) are never capped'.",
+  "S4": "PASS: the wa-akshay: key stops a resend. Residual: a crash between the log and the send loses the message without anyone knowing.",
+  "S5": "PASS: SELF-CHECK only looks at 'Activity of Kind Email in, Email out or Draft this run created (the ids in its ledger lines; never another routine's)'.",
+  "S6": "PASS: the sweep is unchanged and the WRITES line comes before 7b.",
+  "S7": "PASS: section 8 is unchanged.",
+  "S8": "PASS: 'No partial work.' is present.",
+  "S9": "PASS: 'W to worked to' and 'you queue, Zoya sends' are present.",
+  "D1": "PASS: SELF-CHECK is scoped to 'Kind Email in, Email out or Draft', so Gemini Meeting rows (Doc id Source ID) are no longer trashed.",
+  "D2": "PASS for Zoya's own rows: STEP 0 and actions' old-row rule both exclude Summaries 'neither starting \"Zoya\" nor holding \" to Zoya: \"'. But the marker collides with capture's own Summary convention; see D2b.",
+  "D3": "FAIL: the cursor is fixed ('no W yet: W is 2026-11-01 12:00 JST'), but the Captured window still replays. 'plus rows Captured on or after the day before W's date' reaches back to 31 Oct and takes any mail row Captured then. The old-row clause ('a mail row created before your first record whose Summary neither starts \"Zoya\"...') then accepts the rows the old inbox already worked on 31 Oct and 1 Nov morning. See D3b.",
+  "D4": "PASS: 'a repeat pitch whose row capture put on Akshay's list (\"pitched again\"): his ask stays, nothing else changes'. A fresh FT or un# pitch is covered by STEP 5's 'Founder Thesis and un# pitches go to the evals routine'.",
+  "D5": "PASS: 8 per class means dead allmail: rows can't starve the msgid: rows. Residual: once only dead rows are left, STEP 0 re-reads up to 8 of them every run and never ends.",
+  "D6": "PASS: 'log section 7's Activity (one row, never a second after the send)'.",
+  "D7": "PASS as written: '<45 minutes' writes a No-op record. Note: scheduled runs are 60 minutes apart, so the guard only catches off-schedule or manual runs. The real protection against overlap is the ':35' stop.",
+  "D8": "PASS: STEP 1 takes 'or Kind Meeting with Source Gemini notes', and capture stamps 'capture:' on Meeting rows too. Residual: a Meeting row has no Message-ID, so a step that 'needs the chain' can't read THREAD. It could count tries until it's stuck; say 'Meeting rows: STEP 3's precall bullet only, no THREAD'.",
+  "stale": "PASS for the stated fixes. Capture's mail actions are now 'only the loop-in sends and RSVP archiving'. 7c says 'STEP 2 logs those (Edit notes) and the actions routine files them'. STEP 0 says 'STEP 0's rows don't count toward STEP 1's cap of 15'. Nit: actions' 'Mail actions allowed, all through MCP Emails: only the draft deletions, invite cancellations and WhatsApp messages' names Calendar and Blueticks actions as MCP Emails ones. Section 6's 'repeat guests (3, 6c)' stays verbatim on purpose because it's Controls text; accepted.",
+  "size": "PASS: capture 34,639 and actions-v2 38,649 are under 40,000 (actions has 1,351 bytes to spare). No U+2014 in capture, actions-v2 or yourcall-sections."
+ },
+ "defects": {
+  "D2b_zoya_marker_collides": {
+   "quote": "capture STEP 2 'Example: \"Rhea (Value360) to Zoya: offers 14 or 16 Oct ...\"' vs STEP 0 / actions STEP 1 'a Summary neither starting \"Zoya\" nor holding \" to Zoya: \"'",
+   "scenario": "A PR replies To Zoya with ad@ in Cc, and capture or the old inbox logs it as 'Rhea (Value360) to Zoya: ...'. That's the house format, and it's capture's own example. If the row is one of B10's unlinked old rows, STEP 0 now leaves it unlinked forever, and actions keeps excluding it ('never one with no Engagement and no Deal Captured before 2026-11-02'). If it's an old-inbox row inside the replay window, actions skips it. The Summary can't tell who logged the row, because both routines write '<who> to Zoya:'.",
+   "fix": "Tell the routines apart by provenance, not Summary. Option 1: Zoya's rows are the ones whose Message-ID isn't in ad@ (one email_read search, text = Message-ID). Option 2: if Zoya's routine sets Source or Link differently, use that (check one row of each on Notion before cutover)."
+  },
+  "D3b_captured_window_replays": {
+   "quote": "actions STEP 1: 'plus rows Captured on or after the day before W's date (capture's STEP 0 rows; they never move W)'",
+   "scenario": "First run: W = 1 Nov 03:00Z, so the Captured window starts 31 Oct. Every old-inbox mail row Captured 31 Oct or 1 Nov has no 'actions: done' line and passes the old-row clause, so it's worked again. STEP 5 then rewrites Waiting on and Next action from mail that's up to a day and a half stale.",
+   "fix": "Add 'and whose body has a \"capture:\" line' to the Captured window. STEP 0 always stamps it, so only STEP 0 rows come in that way."
+  },
+  "D9_zoya_logged_ad_mail_never_worked": {
+   "quote": "capture IDENTITY: 'Any other id that comes back already has its Activity: create nothing, and never change its Kind, Summary or author (only add a missing link)' + preamble: 'Every mail Activity you create, re-key or link (STEP 0) ends its page body with the line \"capture: <run id>\"' + actions: 'Yours only: its body has a \"capture:\" line'",
+   "scenario": "This was already present in round 3; I missed it then. A guest replies-all at 10:30 to a mail from Zoya, so ad@ and Zoya both get it ('Akshay is in Cc on every mail of hers'). Zoya's :38 run logs it first as 'Guest to Zoya: agrees 14 Nov'. At 11:02 capture finds the msgid: row and creates nothing, and writes no 'capture:' line. Actions never works it, so STEP 3's status moves (Booked, a sponsored no to They declined, a precall happened, Akshay's decision 'a mail to Zoya') never fire. Any ad@ mail that lands between :02 and :38 and also reaches Zoya is exposed. The old inbox worked every ad@ message it read, whoever had logged it.",
+   "fix": "In capture STEP 2: 'an existing row that another routine logged for a message you read in ad@ gets your \"capture: <run id>\" line appended (and its missing links); never its Summary or Kind'. Actions then works it. Its 6e checks the thread, so it won't re-queue a reply Zoya already sent."
+  }
+ },
+ "verdict": "Not accepted yet. Round 3b fixes D1, D2 (for Zoya's own rows), D4, D5, D6, D7 and D8 and the stale items, and every round 3 case still passes. Three wording defects are left. D3b (blocking): the Captured window still pulls in old-inbox rows Captured 31 Oct to 1 Nov, so they're worked again. D2b (should fix): the ' to Zoya: ' marker matches capture's own Summary convention and strands ad@ rows addressed to Zoya. D9 (blocking, carried over from round 3): ad@ mail that Zoya's routine logs first never gets a 'capture:' line, so actions never works it. Each is a one-clause fix within the 1,351 bytes actions has left. Replay D3b, D9 and B10 after the fix."
+}

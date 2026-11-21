@@ -1,0 +1,220 @@
+{
+ "inputs": {
+  "read": [
+   "CLAUDE.md",
+   "docs/decisions.md rows 419 and 449",
+   "docs/proposals/zoya-r13/handoff.md",
+   "docs/proposals/zoya-r13/build_one.patch"
+  ],
+  "builds": {
+   "A zoya-one.txt": {
+    "bytes": 50675,
+    "sha256_prefix": "99b244b6569a40b8",
+    "version_ref": "zoya-one 7294b8e9aef4 (recomputed from @@VERSION@@ placeholder: matches)",
+    "under_65336": true,
+    "em_dash": false
+   },
+   "B zoya-slow.txt": {
+    "bytes": 11027,
+    "sha256_prefix": "42863ae7f3f52237",
+    "version_ref": "zoya-slow 6c767618b22a (recomputed: matches)",
+    "under_65336": true,
+    "em_dash": false
+   },
+   "SLOW file zoya-slow-work.txt": {
+    "bytes": 70737,
+    "characters": 70733,
+    "sha256_prefix": "aa59b79a1784f959",
+    "em_dash": false,
+    "git_show_ab107654_sha256_prefix": "aa59b79a1784f959",
+    "git_show_byte_identical_to_proposal": true
+   }
+  },
+  "previous": [
+   "docs/proposals/zoya-r12/zoya-one.txt (51,023 bytes)",
+   "docs/proposals/zoya-r12/zoya-slow-work.txt (69,949 bytes)"
+  ],
+  "notes": [
+   "B pin strings: fetch refs/heads/zoya-slow-pin, git show ab107654e5af4db90c085f3545fe3d5cbfa891ae, sha must start aa59b79a1784f959: all match the file.",
+   "refs/heads/zoya-slow-pin does not exist in this local checkout; ab10765 is on claude/business-os-structure-k3sqo5 (local and origin). Deploy step 1 (move the pin) is required before B can fetch it in a fresh clone.",
+   "B HARD RULES are byte-identical to the SLOW file's HARD RULES. They differ from A's HARD RULES in 3 lines (445 zencastr clause, STEP 0r link add, FAST WhatsApp line), which is correct for SLOW work; the handoff's 'same text as FAST's' is true for LOCK (only the Skipped summary differs) but not for HARD RULES.",
+   "B TOOLS is identical to the file's TOOLS."
+  ]
+ },
+ "cases": {
+  "1_verify": {
+   "trace": "Sizes and hashes of A, B and the SLOW file match the handoff. git show ab107654:routines/zoya/release/zoya-slow-work.txt hashes aa59b79a... and cmp equals the proposal file. Version references recompute. No em dash and no @@ placeholder in any build; A 50,675 and B 11,027 are under 65,336. Word diff A vs r12d FAST: intro rewritten for 449, queue line 'leave them to the Zoya SLOW task', ACTIONS Sent reconcile now counts run:zoya: and run:zoya-slow:, version ref, SLOW WORK pointer removed. Nothing else changed. Word diff SLOW file vs r12d SLOW: intro, the shared ACTIONS reconcile line, LIMITS 'until it is empty or SLOW BATCH's stop applies', SLOW ORDER minute 22, SLOW BATCH rewritten (eligible, batch of 15 by class, outcome lines, carryover, Failed early exit, record first lines), SLOW REPORT header. r12d's 'elapsed <n> min' line and 'returned to Akshay' outcome were dropped with the old batch. All changes are 449.",
+   "verdict": "pass"
+  },
+  "2a_fast_only": {
+   "trace": "A's intro: 'No run of yours does SLOW work.' The SLOW WORK pointer, pin, hash and the 10:38/16:38 clause are gone (grep: zoya-slow-pin 0, SLOW WORK 0). Remaining SLOW mentions only hand work to the SLOW task (YOUR QUEUE, payment notices, bounce scan, edit notes to Sarika, shared daily cap). STEP 0r (4 hits), 0e2, decisions 445 to 448 counts are identical to r12d. FAST ORDER, 25-minute row limit, run record and LOCK unchanged.",
+   "verdict": "pass"
+  },
+  "2b_normal_run_1108": {
+   "trace": "Lock free. LOCK: run id from CLAUDE_CODE_REMOTE_SESSION_ID, fetch zoya-lock, M starts 'free:', commit-tree held, push with lease: held, keep H. RUN RECORD: Activity in the Activities data source B names, Summary 'Run zoya-slow 2026-11-03 11:08 JST: Started', Source ID run:zoya-slow:<id>. SLOW FILE: fetch pin, git show to /tmp, sha256 starts aa59b79a1784f959: ok. Load in python slices of 20,000: 0-20000, 20000-40000, 40000-60000, 60000-70733. Each 20,000-character slice fits under the Bash tool's roughly 30,000-character inline limit (verified here: a 20,000 slice prints inline, a 36,000 print was saved to a file with a 2 KB preview). It works only if each slice is its own Bash call; one python loop printing all four in one call yields 70k of output, which the harness saves to a file and shows a preview, and the model can still believe it read it (defect D7). Record line 'slow file: 70733 of 70733 characters, sha aa59b79a1784f959' (characters, not the 70,737 bytes). 'Follow it': the model now holds the file's TOOLS, RULES LOAD, NOTION DATA, ACTIONS, SENDING, LIMITS, SLOW ORDER, SLOW BATCH and steps in context; nothing in B or the file is lost by being in a tool result. The file's RULES LOAD then says 'right after LOCK and before anything else', already past; harmless but stale (D8). RULES LOAD: 5 pages plus 8 routine pages, each with a '<page>: <read> of <total>' line. SLOW BATCH: 40 eligible across STEP 0, 1b, team work, snoozes, STEP 2. Selection: class 1 'recording logistics (prep note, recording link, day-before note)' names mails the SLOW file has no step for (they are FAST's STEP 0r and STEP 0e2; the SLOW SENDING link list has no zencastr link), so Sonnet either finds class 1 empty or selects an item it has no rules to send (D1). Class 2 payments (STEP 1b), class 3 dated promises, class 4 sponsored follow-ups (routine 1), class 5 oldest due. STEP 0 items (feedback, bounces, vendor forms, owner mail, scorecard, edit notes) have no defined action key (only snoozes do), so the model invents keys that won't match next run's carryover (D6), and today's owner mail and the Monday scorecard sort last in class 5 behind a backlog (D6). Carryover: the newest run:zoya-slow: record other than this one; at first run none. 'selected:' written before working, but where is not said: only the final record write is defined, so a crash or compaction loses it (D2). Outcome lines per item, minute check with date -u before each item, stop at minute 22 (11:30). First lines written at the end, then RELEASE. Release around 11:30 to 11:35 if the last item takes under 5 minutes: before 11:38. STEP 2's 'Every due row ends the run sent, held or blocked' and LIMITS' 'works its due list ... until it is empty' still read as 'do all 40', in tension with the fixed 15 (D5).",
+   "verdict": "pass with defects D1, D2, D5, D6, D7, D8"
+  },
+  "2c_fixture_minute4": {
+   "trace": "Selected 15, 4 settled, the model ends at minute 4 (date -u), no tool error, no cap. SLOW BATCH 4/: the 11 have no sent, completed, held or blocked line, so they go under 'carryover:' and keep Next date. 'A run that ends with selected items lacking an outcome, before minute 22 and with no tool error or cap, is Failed, \"early exit at minute 4, 11 of 15 without outcome\"'. RUN RECORD agrees: 'Failed: stopped early, ... SLOW BATCH's early exit'. First line: 'eligible 40, oldest due <date> (<row>), selected 15, outcomes sent a, completed b, held c, blocked d, deferred 0, remaining 36'. Summary 'Run zoya-slow <start> JST: Failed'. RELEASE. 17:08 run: carryover = keys under 'carryover:' in the newest run:zoya-slow: record other than its own = the 11:08 record, 11 keys; each still eligible (Next date unchanged) and goes first within its class; the 4 free slots fill by class. The text produces exactly the CTO's result on this path. Two gaps: (1) if the 17:08 slot is Skipped (lock held by the 16:38 FAST run) the next day's 11:08 reads the Skipped record as newest and finds no carryover; the same happens after a 'slow work file unavailable' Failed or a record left at Started (D2). The items stay due and still sort by class and age, so nothing is lost, only the priority. (2) An early-quitting model can avoid Failed by writing the 11 as 'held <why>' or 'blocked <why>' with a free-text why ('not enough of the run'): the outcome grammar has no closed list, so the run would read Completed (D4).",
+   "verdict": "pass on the literal fixture; must fix D2 and D4 for it to hold under the realistic variants"
+  },
+  "2d_1638_excuse": {
+   "trace": "B's SLOW FILE: 'Its size, the number of rows due and a guess at the time are never a reason not to load it or not to work: only SLOW BATCH's measured minute 22, a cap or a tool error stops the work.' SLOW ORDER repeats it ('the number due' added). RUN RECORD: 'size or context never ends a run early'. A short read fails closed (Failed 'slow file not loaded'). Declining to load is no longer an option the text leaves. Residual routes: free-text 'held'/'blocked'/'deferred (tool error)' lines (D4); and a model that loads only part of the output when all slices go in one Bash call (D7). Context pressure is real: about 70k characters of file plus Rules for Zoya (previously measured at 62k), Wording, Cadences, Client show mails, the follow-ups page and 8 routine pages, then thread reads; on Sonnet this may trigger compaction mid-batch, which is another reason to write 'selected:' to the record early (D2).",
+   "verdict": "mostly closed; D4 and D7 close the remaining routes"
+  },
+  "2e_lock_overlap": {
+   "trace": "11:08 with the lock held by a 10:38 FAST run: B's LOCK step 3 writes one Activity, Summary 'Run zoya-slow 2026-11-03 11:08 JST: Skipped: lock held by <run id and time>', Source ID run:zoya-slow:<id> (RUN RECORD's Source ID), fetching only Activities, whose id B carries; no SLOW FILE, no reads, no sends, no release (it doesn't hold the lock). The slot does no SLOW work until 17:08. FAST at 11:38 while B holds: A's LOCK writes 'Run zoya ... Skipped: lock held by <B id>'. Neither reconciles. Sent reconcile: A and the file both read 'the earliest run of either Zoya task (run:zoya: or run:zoya-slow: records) that took the lock since the last Completed one (Skipped records don't count)' with a 24-hour floor, so a SLOW Failed or Partial run's unlogged sends are found by the next FAST run and vice versa. 'The last Completed one' is either task's; the 24-hour floor covers the gap. Double send: each action's Sent check plus idempotency key, the action types split FAST (reply, decision, hold) from SLOW (followup, nurture, team), and SLOW's 7-day rule counts FAST's substantive mail from Activities. Daily cap: both count today's JST 'Zoya sent'/'Agent sent' Activities; the lock serialises the tasks so no race. A crashed run that never releases blocks both tasks until the runbook; r13 adds two lock-takers a day, so watch for it in the good-morning check (decision 419).",
+   "verdict": "pass"
+  },
+  "2f_caps_and_tool_errors": {
+   "trace": "Daily cap reached after item 9: items 10 to 15 'deferred (cap)', no row change ('a cap moves nothing'), under carryover; status Partial. Per-run cap: same path. MCP Emails failing after one retry: mail items 'deferred (tool error)', Notion-only items (snoozes, vendor form rows, Task rows) carry on. Notion failing: every item needs Notion, so all deferred, and the run record's final write may itself fail ('retry once, then report it'): the carryover is lost but items stay due. End status for a tool-error deferral is not named in 4/ ('A cap or minute 22 with items deferred is Partial'); RUN RECORD's 'Partial: a step failed' covers it, but say so in 4/ (D9).",
+   "verdict": "pass with D9"
+  },
+  "2g_conflicts": {
+   "trace": "No text in the SLOW file still says it runs inside the FAST run or after FAST ORDER ('after the FAST report', 40 minutes, 10:38/16:38 all gone). Stale: THE RULES ARE IN NOTION 'right after LOCK and before anything else' (D8). LIMITS 'Replies to people who wrote to us come first, then your queue, then follow-ups, oldest due first' competes with SLOW BATCH's classes (D5). STEP 2 'Every due row ends the run sent, held or blocked' contradicts a fixed 15 (D5). Statuses: SLOW BATCH Failed/Partial/Completed align with RUN RECORD; eligible 0 should be No-op, but 4/ reads vacuously Completed; RULES LOAD's Partial versus 4/'s Completed when every item is blocked 'rules not loaded' is unordered (D9). STEP 0 items are in the batch by age with no keys (D6). Nurture's 10 a run: an 11th selected nurture item is 'held', and its hold moves Next date to the first day it may go, which is fine. Snoozes: keyed, eligible on their date, Notion-only. Carryover parsing: lines under 'carryover:' one key per line; source record choice is the gap (D2).",
+   "verdict": "pass with D2, D5, D6, D8, D9"
+  },
+  "2h_b_vs_file": {
+   "trace": "B's HARD RULES equal the file's byte for byte; A's differ only where FAST has STEP 0r. B's TOOLS equals the file's. Before the file loads B needs: the repo (LOCK), Bash, ToolSearch for Notion (TOOLS), and the Activities data source (given). No send happens before the load, so Cadences quiet hours are not needed before it. 'Where it and this prompt differ on SLOW work, it wins; LOCK, RUN RECORD and HARD RULES here always hold' is consistent with the file's intro. One gap: B gives no expected character total, so the short-read check depends on the model's own count (D7).",
+   "verdict": "pass with D7"
+  }
+ },
+ "defects": {
+  "D1": {
+   "severity": "high",
+   "quote": "(1) recording logistics within 7 days (prep note, recording link, day-before note);",
+   "scenario": "The SLOW file has no step that sends a prep note, recording link or day-before note (STEP 0r and STEP 0e2 are FAST only, decision 445 'SLOW untouched'; the SLOW SENDING link list has no zencastr link; a day-before note from ad@ is Akshay's draft). Class 1 is then always empty, or Sonnet selects such an item and improvises a send with no rules, or burns a top slot on a block.",
+   "fix": {
+    "file": "docs/proposals/zoya-r13/zoya-slow-work.txt (part slow-order and others via VARIANT slowwork in routines/zoya/build_one.py)",
+    "old": "(1) recording logistics within 7 days (prep note, recording link, day-before note);",
+    "new": "(1) recording logistics within 7 days: a SLOW item on a row with a precall or recording on Akshay's calendar in the next 7 days (an INVITES add or confirmation, a routine 2 or 3 step or PR coordination for it, a payment or billing ask due before it) and release mail 1 or 2 due within 7 days (routine 6); the prep note, recording link and day-before note are the hourly task's (STEP 0r, STEP 0e2): never select or send them here, and one you see due goes in the report;"
+   }
+  },
+  "D2": {
+   "severity": "high",
+   "quote": "Carryover (the keys under \"carryover:\" in the newest run:zoya-slow: record other than this run's; none: none) goes first within its class;",
+   "scenario": "11:08 ends Failed with 11 carryover keys; 17:08 is Skipped (lock held by the 16:38 FAST run). The next day's 11:08 reads the Skipped record as newest and takes no carryover. Same after a 'slow work file unavailable' Failed, or a run that crashed at Started. And 'Write \"selected:\" ... before working any' names no place, so a crash or compaction leaves no record of the batch.",
+   "fix": {
+    "file": "docs/proposals/zoya-r13/zoya-slow-work.txt (part slow-order and others via VARIANT slowwork in routines/zoya/build_one.py)",
+    "old": "Carryover (the keys under \"carryover:\" in the newest run:zoya-slow: record other than this run's; none: none) goes first within its class;",
+    "new": "Carryover (the keys under \"carryover:\" in the newest run:zoya-slow: record other than this run's that has a \"selected:\" line, passing over Skipped records, SLOW FILE failures and any without one; if that record is still at Started, its \"selected:\" keys with no outcome line; none: none) goes first within its class;",
+    "also": {
+     "old": "Write \"selected:\" with the keys in order before working any.",
+     "new": "Write \"eligible:\" and \"selected:\", keys in order, into this run's record body (an update of the same row, never a second) before working any."
+    }
+   }
+  },
+  "D3": {
+   "severity": "info",
+   "quote": "Then \"elapsed <n> min\" (date -u)",
+   "scenario": "r12d's elapsed line was dropped; the measured minute now appears only in a Failed line. Optional: add 'elapsed <n> min' to the first line so every SLOW run's duration shows in the good-morning check.",
+   "fix": {
+    "file": "docs/proposals/zoya-r13/zoya-slow-work.txt (part slow-order and others via VARIANT slowwork in routines/zoya/build_one.py)",
+    "old": "remaining <n>\" (remaining: eligible less those sent, completed, held or blocked)",
+    "new": "remaining <n>, elapsed <n> min\" (remaining: eligible less those sent, completed, held or blocked; elapsed by date -u)"
+   }
+  },
+  "D4": {
+   "severity": "high",
+   "quote": "\"<key>: sent <Message-ID> | completed by match | held <why> | blocked <why; next owner> | deferred (<cap | minute 22 | tool error>)\".",
+   "scenario": "A Sonnet run that wants to stop at minute 4 writes the 11 as 'held not enough of the run' or 'blocked too many rows; Zoya'. Every item then has an outcome and the run reads Completed, not Failed: the 16:38 excuse survives as an outcome.",
+   "fix": {
+    "file": "docs/proposals/zoya-r13/zoya-slow-work.txt (part slow-order and others via VARIANT slowwork in routines/zoya/build_one.py)",
+    "old": "\"<key>: sent <Message-ID> | completed by match | held <why> | blocked <why; next owner> | deferred (<cap | minute 22 | tool error>)\".",
+    "new": "\"<key>: sent <Message-ID> | completed by match | held <rule> (<what>), recheck <D Mon> | blocked <the missing fact or the decision someone else holds>; <next owner> | deferred (<cap | minute 22 | tool error: <tool> <its error text>>)\". A held line names a hold from STEP 2 or a one-group limit and is written on the row as STEP 2 says; a blocked line names a blocker the row shows. Time, size, context, the number due or the length of the run is never a hold, a block or a deferral: an item left for any of those has no outcome."
+   }
+  },
+  "D5": {
+   "severity": "medium",
+   "quote": "Every due row ends the run sent, held or blocked, never silently skipped:",
+   "scenario": "With 40 due, STEP 2 tells the run to settle all 40 and LIMITS says 'works its due list oldest first until it is empty' and 'replies ... then your queue, then follow-ups, oldest due first'. Sonnet either ignores the batch or reads the 25 unselected rows as defects, and the classes compete with LIMITS' order.",
+   "fix": {
+    "file": "docs/proposals/zoya-r13/zoya-slow-work.txt (part slow-order and others via VARIANT slowwork in routines/zoya/build_one.py)",
+    "old": "Every due row ends the run sent, held or blocked, never silently skipped:",
+    "new": "Every selected row (SLOW BATCH) ends the run sent, held, blocked or deferred, never silently skipped; a due row not selected stays due as it is:",
+    "also": [
+     {
+      "old": "A follow-up run works its due list oldest first until it is empty or SLOW BATCH's stop applies (a hold defers that one item only)",
+      "new": "A SLOW run works its selected batch in SLOW BATCH's order until it is done or SLOW BATCH's stop applies (a hold defers that one item only)"
+     },
+     {
+      "old": "Replies to people who wrote to us come first, then your queue, then follow-ups, oldest due first.",
+      "new": "In SLOW work the order is SLOW BATCH's."
+     }
+    ]
+   }
+  },
+  "D6": {
+   "severity": "medium",
+   "quote": "(snoozes due on or before today keyed \"snooze:<row id>:<YYYY-MM-DD>:<the first 20 characters of its ask>\");",
+   "scenario": "STEP 0 items (feedback, bounces, vendor forms, owner mail, scorecard) and edit notes have no key form, so each run invents one and carryover never matches. Owner mail ('once a day, the first run at or after 09:00') and the Monday scorecard are due today, so they sort last in class 5 and starve behind a backlog of 40; an unprocessed bounce means a follow-up can go to a dead address.",
+   "fix": {
+    "file": "docs/proposals/zoya-r13/zoya-slow-work.txt (part slow-order and others via VARIANT slowwork in routines/zoya/build_one.py)",
+    "old": "(snoozes due on or before today keyed \"snooze:<row id>:<YYYY-MM-DD>:<the first 20 characters of its ask>\");",
+    "new": "(snoozes due on or before today keyed \"snooze:<row id>:<YYYY-MM-DD>:<the first 20 characters of its ask>\"; feedback \"feedback:<Message-ID>\"; vendor forms \"vendor:<form row id>\"; edit notes \"editnotes:<Activity id>\"; owner mail \"ownermail:<YYYY-MM-DD>\"; the scorecard \"scorecard:<Monday YYYY-MM-DD>\"); STEP 0c's bounce scan runs first, outside the batch, with one line \"bounces: <n> tagged\";",
+    "also": {
+     "old": "(3) commitments with a promised date;",
+     "new": "(3) commitments with a promised date, today's owner mail and the Monday scorecard;"
+    }
+   }
+  },
+  "D7": {
+   "severity": "medium",
+   "quote": "in python, read it as one string and print it in slices of at most 20,000 characters, in order, to its end, never stopping at the part a step needs; record line",
+   "scenario": "Sonnet prints all four slices in one python loop: 70k of output exceeds the Bash tool's inline limit, the harness saves it to a file and shows a 2 KB preview, and the model logs 70733 of 70733 anyway. B also gives no expected total, so the check rests on the model's own count. The same wording is in the shared RULES LOAD for Notion pages.",
+   "fix": {
+    "file": "docs/proposals/zoya-r13/zoya-slow.txt (part routines/zoya/parts/slowtask-load.txt); the same per-call rule in rules-common's RULES LOAD for both builds",
+    "old": "in python, read it as one string and print it in slices of at most 20,000 characters, in order, to its end, never stopping at the part a step needs; record line",
+    "new": "in python, read it as one string and print one slice of at most 20,000 characters per Bash call, each ending with a line \"END <offset> OF <length>\", in order, to its end, never stopping at the part a step needs; output that is cut or saved to a file is not read: print that slice again; read = the last END offset you saw in full, total = 70,733 characters (characters, not bytes); record line"
+   }
+  },
+  "D8": {
+   "severity": "low",
+   "quote": "Every run, right after LOCK and before anything else, read:",
+   "scenario": "In the SLOW task the file is read after LOCK, RUN RECORD and SLOW FILE; the line is stale. Harmless today, but it is the kind of contradiction a model cites. Fix only in the slowwork variant (the line is shared with A).",
+   "fix": {
+    "file": "docs/proposals/zoya-r13/zoya-slow-work.txt (part slow-order and others via VARIANT slowwork in routines/zoya/build_one.py)",
+    "old": "Every run, right after LOCK and before anything else, read:",
+    "new": "Every run, right after your prompt's SLOW FILE load and before anything else, read:"
+   }
+  },
+  "D9": {
+   "severity": "low",
+   "quote": "A cap or minute 22 with items deferred is Partial; every selected item settled is Completed.",
+   "scenario": "Eligible 0 reads vacuously Completed, not RUN RECORD's No-op; a tool-error deferral has no named status; RULES LOAD's Partial 'rules not loaded' and 4/'s Completed (every item blocked) are unordered.",
+   "fix": {
+    "file": "docs/proposals/zoya-r13/zoya-slow-work.txt (part slow-order and others via VARIANT slowwork in routines/zoya/build_one.py)",
+    "old": "A cap or minute 22 with items deferred is Partial; every selected item settled is Completed.",
+    "new": "A cap, minute 22 or a tool error with items deferred is Partial, and so is a RULES LOAD failure, whatever the items show; eligible 0 is No-op; every selected item settled is Completed."
+   }
+  },
+  "D10": {
+   "severity": "info",
+   "quote": "B's HARD RULES and LOCK are the same text as FAST's.",
+   "scenario": "B's HARD RULES equal the SLOW file's, not A's (3 lines differ for STEP 0r and FAST WhatsApp). The build is right; the handoff line is not.",
+   "fix": {
+    "file": "docs/proposals/zoya-r13/handoff.md",
+    "old": "B's HARD RULES and LOCK are the same text as FAST's.",
+    "new": "B's LOCK is FAST's (only the Skipped summary differs) and its HARD RULES are the SLOW file's."
+   }
+  }
+ },
+ "verdict": {
+  "result": "not ready: fix and rebuild",
+  "must_fix": [
+   "D1",
+   "D2",
+   "D4",
+   "D5",
+   "D6",
+   "D7"
+  ],
+  "notes": [
+   "Verification passes: sizes, hashes, pin, version refs, no em dash, under the cap, diffs carry only decision 449 (plus the shared reconcile line).",
+   "A is clean FAST-only and keeps r12d's STEP 0r and 446 to 448: A could ship alone, but A without B leaves SLOW work undone, so deploy them together.",
+   "The fixture passes literally; D2 and D4 are what make it hold when a slot is skipped or the model writes a soft outcome.",
+   "Fixing the SLOW file changes its sha: commit a new pin, rebuild B with the new pin and hash, and re-run this replay on the diff.",
+   "Risks not fixable in text: a 10:38/16:38 FAST overrun past :08 costs the whole SLOW slot (watch measured durations); a run that dies without RELEASE blocks both tasks until the runbook; Sonnet context load (70k file plus all rule pages) is unmeasured, so record tokens on the first runs per 449."
+  ]
+ }
+}

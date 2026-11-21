@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>un#51 — permissionless isn't symmetric</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF6;
+    --paper: #FFFFFF;
+    --ink: #0E1010;
+    --ink-soft: #2C3030;
+    --ink-mute: #6B7474;
+    --ink-faint: #B5BCBC;
+    --rule: #E4E2DA;
+    --teal: #1FBFB0;
+    --teal-deep: #0FA095;
+    --teal-glow: #6FE5D8;
+    --banner-bg: #061614;
+    --banner-bg-2: #0A2522;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+  }
+
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 56px 32px 96px;
+    background: var(--paper);
+    box-shadow: 0 1px 0 var(--rule), 0 24px 80px -40px rgba(14,16,16,0.18);
+    min-height: 100vh;
+  }
+
+  @media (max-width: 720px) {
+    .page { padding: 32px 20px 64px; }
+    body { font-size: 16px; }
+  }
+
+  .masthead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 28px;
+  }
+
+  .brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+  }
+
+  .brand .hash { color: var(--teal-deep); }
+
+  .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+  }
+
+  /* hero banner — title + issue pill */
+  .hero {
+    position: relative;
+    margin: 4px 0 36px;
+    padding: 60px 36px 48px;
+    background: linear-gradient(135deg, var(--banner-bg) 0%, var(--banner-bg-2) 100%);
+    border-radius: 16px;
+    overflow: hidden;
+    isolation: isolate;
+    text-align: center;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(31, 191, 176, 0.18) 1px, transparent 0);
+    background-size: 16px 16px;
+    background-position: 0 0;
+    opacity: 0.6;
+    z-index: -1;
+    mask-image: radial-gradient(ellipse 75% 90% at 70% 55%, #000 25%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 75% 90% at 70% 55%, #000 25%, transparent 75%);
+  }
+
+  .hero::after {
+    content: "10 01 11 0 1 01 110 10 1 0";
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: rgba(111, 229, 216, 0.18);
+    letter-spacing: 0.15em;
+    pointer-events: none;
+  }
+
+  .hero h1 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 500;
+    font-size: 52px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--teal-glow);
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .issue-pill {
+    display: inline-block;
+    margin-top: 28px;
+    padding: 9px 24px;
+    border: 1.5px solid var(--teal);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(250, 250, 246, 0.92);
+    letter-spacing: 0.02em;
+    background: rgba(31, 191, 176, 0.05);
+    position: relative;
+    z-index: 1;
+  }
+
+  .issue-pill .hash {
+    color: var(--teal);
+    margin: 0 1px;
+  }
+
+  @media (max-width: 720px) {
+    .hero { padding: 44px 22px 36px; border-radius: 12px; }
+    .hero h1 { font-size: 36px; }
+    .issue-pill { font-size: 13px; padding: 7px 20px; margin-top: 22px; }
+  }
+
+  .dek {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--ink-soft);
+    max-width: 640px;
+    margin: 0 0 40px;
+    font-style: italic;
+  }
+
+  @media (max-width: 720px) {
+    .dek { font-size: 17px; }
+  }
+
+  /* body prose */
+  .prose p {
+    margin-bottom: 18px;
+    color: var(--ink-soft);
+  }
+
+  .prose p strong, .prose strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .prose .lede {
+    font-size: 18px;
+    color: var(--ink);
+    border-left: 2px solid var(--teal);
+    padding-left: 18px;
+    margin-bottom: 28px;
+  }
+
+  /* > subheadings — un#50 device */
+  .subhead {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 16.5px;
+    color: var(--ink);
+    margin: 30px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+    letter-spacing: -0.005em;
+    line-height: 1.35;
+  }
+
+  .subhead::before {
+    content: "> ";
+    color: var(--teal-deep);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  /* footnote refs */
+  sup.ref {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--teal-deep);
+    font-weight: 600;
+    padding: 0 1px;
+    vertical-align: super;
+    line-height: 0;
+  }
+
+  sup.ref a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  sup.ref a:hover {
+    text-decoration: underline;
+  }
+
+  /* section banner */
+  .banner {
+    position: relative;
+    margin: 56px 0 32px;
+    padding: 36px 32px 32px;
+    background: linear-gradient(135deg, var(--banner-bg) 0%, var(--banner-bg-2) 100%);
+    border-radius: 14px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(31, 191, 176, 0.18) 1px, transparent 0);
+    background-size: 14px 14px;
+    background-position: 0 0;
+    opacity: 0.55;
+    z-index: -1;
+    mask-image: radial-gradient(ellipse 80% 90% at 70% 50%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 90% at 70% 50%, #000 30%, transparent 75%);
+  }
+
+  .banner::after {
+    content: "10 01 11 0 1 01 110 10 1 0";
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: rgba(111, 229, 216, 0.18);
+    letter-spacing: 0.15em;
+    pointer-events: none;
+  }
+
+  .banner h2 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1.1;
+    color: var(--teal-glow);
+    letter-spacing: -0.015em;
+    text-transform: lowercase;
+    position: relative;
+    z-index: 1;
+  }
+
+  .banner .sub {
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(250, 250, 246, 0.55);
+    margin-top: 8px;
+    text-transform: lowercase;
+    letter-spacing: 0.005em;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 720px) {
+    .banner { padding: 28px 22px 24px; }
+    .banner h2 { font-size: 24px; }
+  }
+
+  /* pull quote */
+  .pullquote {
+    margin: 40px 0;
+    padding: 32px 28px 28px;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--teal);
+    border-radius: 4px;
+    position: relative;
+  }
+
+  .pullquote .mark {
+    font-family: 'Newsreader', serif;
+    font-size: 56px;
+    line-height: 0.6;
+    color: var(--teal);
+    position: absolute;
+    top: 18px;
+    left: 22px;
+    font-style: italic;
+    pointer-events: none;
+  }
+
+  .pullquote blockquote {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 21px;
+    line-height: 1.45;
+    font-style: italic;
+    color: var(--ink);
+    padding-left: 38px;
+    margin-bottom: 16px;
+  }
+
+  .pullquote cite {
+    font-style: normal;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding-left: 38px;
+    display: block;
+  }
+
+  .pullquote cite .name {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  @media (max-width: 720px) {
+    .pullquote blockquote { font-size: 18px; padding-left: 32px; }
+    .pullquote cite { padding-left: 32px; }
+  }
+
+  /* in-practice sidebar */
+  .in-practice {
+    margin: 44px 0 8px;
+    padding: 26px 28px 24px;
+    background: linear-gradient(180deg, rgba(31, 191, 176, 0.04) 0%, rgba(31, 191, 176, 0.02) 100%);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--teal);
+    border-radius: 4px;
+  }
+
+  .in-practice .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .in-practice .label::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--rule), transparent);
+  }
+
+  .in-practice p {
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+  }
+
+  .in-practice p:last-child { margin-bottom: 0; }
+  .in-practice strong { color: var(--ink); font-weight: 700; }
+
+  .in-practice a {
+    color: var(--teal-deep);
+    text-decoration: none;
+    border-bottom: 1px solid var(--teal);
+    padding-bottom: 1px;
+  }
+
+  /* inline stat tags */
+  .stat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.92em;
+    background: rgba(31, 191, 176, 0.08);
+    color: var(--ink);
+    padding: 1px 5px;
+    border-radius: 3px;
+    border-bottom: 1px solid rgba(31, 191, 176, 0.4);
+  }
+
+  /* chart */
+  .chart {
+    margin: 28px 0 32px;
+    padding: 22px 24px;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+  }
+
+  .chart .chart-title {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .chart .chart-sub {
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
+    color: var(--ink-mute);
+    margin-bottom: 14px;
+  }
+
+  .chart .chart-body {
+    height: 180px;
+    position: relative;
+    background: linear-gradient(180deg, var(--paper), transparent);
+    border-radius: 4px;
+  }
+
+  .chart svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .chart .caption {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    color: var(--ink-mute);
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  /* footer */
+  .closing {
+    margin-top: 56px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.02em;
+    line-height: 1.6;
+  }
+
+  .closing .pod-plug {
+    color: var(--ink);
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 16px;
+    margin-bottom: 14px;
+    letter-spacing: -0.005em;
+    line-height: 1.5;
+  }
+
+  .closing .pod-plug a {
+    color: var(--teal-deep);
+    text-decoration: none;
+    border-bottom: 1px solid var(--teal);
+    padding-bottom: 1px;
+  }
+
+  .closing-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* references */
+  .references {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .references h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 18px;
+  }
+
+  .references ol {
+    list-style: none;
+    counter-reset: refs;
+    padding: 0;
+  }
+
+  .references li {
+    counter-increment: refs;
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    word-break: break-word;
+  }
+
+  .references li::before {
+    content: counter(refs);
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--teal-deep);
+    width: 20px;
+  }
+
+  .references li a {
+    color: var(--teal-deep);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--teal);
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="masthead">
+    <div class="brand">un<span class="hash">#</span></div>
+    <div class="meta">fortnightly · 12 may 2026</div>
+  </header>
+
+  <div class="hero">
+    <h1>permissionless isn't symmetric</h1>
+    <div class="issue-pill">un<span class="hash">#</span>51</div>
+  </div>
+
+  <p class="dek">DeFi's protocol layer is open. Its execution layer is no longer the same game on each side of the trade.</p>
+
+  <section class="prose">
+    <p class="lede">There is a twelve-second gap between when an Ethereum transaction is broadcast and when it lands in a confirmed block. In that gap, the transaction sits in the public mempool, visible to anyone watching. For most of DeFi's first cycle, this transparency was treated as the system's central feature. Anyone could verify what was happening. Anyone could route through the same contracts. The mechanism worked the same way for everyone, which was assumed to mean it worked fairly for everyone.</p>
+
+    <p>By 2026, that assumption no longer survives contact with the data. The sophisticated half of the market stopped using the public mempool years ago. Institutional flow routes through private builder relationships, protected RPC endpoints, and encrypted intent-based aggregators that bypass the twelve-second window entirely. What's left in the public mempool is overwhelmingly retail. The same Uniswap pool now serves two different execution surfaces depending on which side of the trade you are on.</p>
+
+    <p>Permissionless was the architectural innovation, and it worked. It is now uncontroversial that anyone can access these protocols. What is less obvious, and what the empirical record from the last eighteen months is making undeniable, is that being able to access a protocol is not the same as being able to use it on the same terms as the participants on the other side of your trade.</p>
+  </section>
+
+  <div class="banner">
+    <h2>the execution stack underneath</h2>
+    <div class="sub">two completely different toolkits using the same contracts</div>
+  </div>
+
+  <section class="prose">
+    <p>To see the gap, look at the toolkit on each side.</p>
+
+    <h3 class="subhead">the retail path: one mempool, two hops</h3>
+
+    <p>A retail trader opens MetaMask, sets a slippage tolerance, and clicks swap. The transaction goes through the wallet's default RPC, into the public mempool, gets picked up by a builder, and lands in a block twelve seconds later. The path from signature to settlement is one or two hops.</p>
+
+    <h3 class="subhead">the institutional toolkit: dozens of venues, private rails</h3>
+
+    <p>An institutional execution stack looks nothing like this. Talos, which provides infrastructure for trading desks ranging from major banks down to small funds, connects to more than <span class="stat">100 venues</span><sup class="ref"><a href="#ref1">1</a></sup>. GSR Markets maintains active connectivity to over <span class="stat">60 venues</span>. Wintermute is plugged into more than <span class="stat">50</span> centralized and decentralized exchanges, with active inventory in nearly every high-cap token market. Amber Group processes approximately <span class="stat">$5B</span> in daily trading volume across more than 200 tokens, accounting for roughly 3% of global crypto trading activity<sup class="ref"><a href="#ref2">2</a></sup>. Jump Trading runs a proprietary stack of more than <span class="stat">10,000</span> global compute nodes executing over <span class="stat">5 million</span> trading simulations daily<sup class="ref"><a href="#ref3">3</a></sup>.</p>
+
+    <p>This is not expensive infrastructure for the same activity retail does with more horsepower. It is a fundamentally different activity. An institutional smart order router does not trade against the slippage curve of a single Uniswap pool. It splits the order across dozens of venues, internalizes part of the trade against the firm's own book, hedges the residual on a centralized exchange before the on-chain leg confirms, and captures the cross-venue arbitrage spread. The retail trader and the institution can use the same Uniswap contract in the same block, and one is executing a swap while the other is running a multi-venue routing problem.</p>
+
+    <p>Underneath both sits the reference rate layer. Institutions do not price trades off CoinGecko. They license Volume-Weighted Median feeds and Time-Weighted Average Price calculations from providers like Coin Metrics, Kaiko, Amberdata, and CCData<sup class="ref"><a href="#ref4">4</a></sup>, vendors whose pricing sits behind RFP processes and NDAs precisely because the data is a moat. The exact figures are guarded. Enterprise feeds at this tier are priced in seven figures annually. The bottom of the market literally cannot afford the inputs the top of the market treats as a baseline cost.</p>
+
+    <h3 class="subhead">the migration in numbers: $27B that left the public window</h3>
+
+    <p>The clearest single proof point of the migration is Flashbots Protect. By early 2024, it had served roughly <span class="stat">900,000</span> unique Ethereum addresses, protected more than <span class="stat">12 million</span> transactions, and shielded over <span class="stat">$27B</span> in DEX trading volume from public mempool exposure<sup class="ref"><a href="#ref5">5</a></sup>. That is twenty-seven billion dollars of flow that explicitly chose to leave the public window. Nobody who routes through Flashbots Protect, MEV Blocker, or BuilderNet is doing so because they want to lose a few basis points to a sandwich. They do so because, at some point, they understood the twelve-second window was no longer neutral infrastructure.</p>
+
+    <p>What is left in the public mempool is the flow that did not.</p>
+  </section>
+
+  <div class="banner">
+    <h2>the misleading headline</h2>
+    <div class="sub">why falling MEV revenue is evidence of a problem, not its solution</div>
+  </div>
+
+  <section class="prose">
+    <p>Average daily MEV revenue on Ethereum stabilised around <span class="stat">$300,000</span> in 2024, down from over <span class="stat">$500,000</span> daily in 2023, per Flashbots<sup class="ref"><a href="#ref6">6</a></sup>. Read carelessly, this looks like progress. The extraction problem shrinking, the system maturing, the bots running out of opportunity. Read carefully, it says something else.</p>
+
+    <p>Headline MEV revenue measures what gets extracted from the public mempool. If sophisticated flow has migrated to private channels, the headline declines not because extraction has stopped but because the participants who were the most lucrative targets are no longer in the kill zone. What gets extracted at headline rates is what is left in the flow that lacked access to the alternatives.</p>
+
+    <p>Plot daily MEV revenue from 2021 to 2026 against the cumulative volume protected by Flashbots Protect, MEV Blocker, and BuilderNet, and the two lines move in opposite directions. The downward slope of the MEV revenue line and the upward slope of the protected-volume line are the same fact stated twice.</p>
+
+    <p>The attack surface that flow lands on is still large. A 2025 study in the <em>Journal of Financial Economics</em> by Hua, Tang and Yu found that <span class="stat">90%</span> of Uniswap V2 blocks contained transactions vulnerable to front-running, with <span class="stat">16.1%</span> containing confirmed sandwich attacks<sup class="ref"><a href="#ref7">7</a></sup>. Independent empirical work has identified over <span class="stat">1.2 million</span> sandwich attacks across Ethereum DEXs<sup class="ref"><a href="#ref8">8</a></sup>. CoW Protocol, whose entire architecture exists because MEV is a problem, characterises MEV as a cumulative <span class="stat">$1.4B</span> problem for traders to date<sup class="ref"><a href="#ref9">9</a></sup>.</p>
+
+    <p>The falling headline and the persistent attack surface are the same story from opposite ends. Institutional flow is built to avoid exposure, while retail flow goes through the public mempool by default.</p>
+  </section>
+
+  <div class="banner">
+    <h2>the LP-side equivalent</h2>
+    <div class="sub">how the same pool returns different yields to different participants</div>
+  </div>
+
+  <section class="prose">
+    <p>This dynamic is not limited to the trading side. The same asymmetry expresses itself, even more brutally, on the LP side.</p>
+
+    <h3 class="subhead">LVR: stale prices, arbitraged systematically</h3>
+
+    <p>The mechanism is Loss-Versus-Rebalancing. Constant function market makers like Uniswap V2 have no internal price discovery. When an asset's price moves on a venue with real price formation, like Binance, the AMM price stays stale until an arbitrageur trades against the pool to bring it in line. The arbitrageur systematically buys what is underpriced and sells what is overpriced, against the LPs. LVR is the quantitative cost of this, what a passive LP loses relative to what they would have earned dynamically rebalancing the same portfolio on a zero-fee reference exchange.</p>
+
+    <h3 class="subhead">the empirical picture: a 40% gap on volatile pairs</h3>
+
+    <p>Empirical work places LVR at <span class="stat">5–7%</span> of total liquidity value annually across major AMMs<sup class="ref"><a href="#ref10">10</a></sup>. On individual trades, it averages around <span class="stat">0.1%</span> of pool value<sup class="ref"><a href="#ref11">11</a></sup>. For volatile pairs like ETH/USDC, the cumulative effect is severe. Passive positions in volatile Uniswap V3 pools have been measured underperforming a simple buy-and-hold strategy by up to <span class="stat">40%</span> over a sixty-day window, once impermanent loss and LVR are accounted for<sup class="ref"><a href="#ref12">12</a></sup>. Sophisticated LPs running algorithmic range management, typically through systems like Gamma Strategies, reduce impermanent loss by <span class="stat">20–35%</span> compared to static retail positions<sup class="ref"><a href="#ref12">12</a></sup>.</p>
+
+    <p>The same pool, advertised at the same APY, returns radically different realised yields depending on whether the LP has institutional-grade tooling or not.</p>
+
+    <h3 class="subhead">the quiet sorting: where retail liquidity ends up</h3>
+
+    <p>The economics force a quiet sorting. Retail capital that wants to provide liquidity at scale ends up clustered in stablecoin pairs at the 0.01% fee tier, where LVR is negligible because the underlying assets do not move. These pools yield <span class="stat">3–8%</span>, modest but survivable<sup class="ref"><a href="#ref12">12</a></sup>. The high-yield volatile pools are mathematically hostile to passive capital. The only participants who can extract returns from them at scale are the ones whose execution stacks can rebalance ranges in milliseconds. The flow looks open. The returns are not.</p>
+  </section>
+
+  <div class="banner">
+    <h2>the view from inside the algo</h2>
+    <div class="sub">what institutional execution sounds like from the institution doing it</div>
+  </div>
+
+  <section class="prose">
+    <p>Anton Katz, CEO of Talos, described how institutions actually deploy this kind of capital on a recent episode of Unhashed:</p>
+  </section>
+
+  <figure class="pullquote">
+    <span class="mark">&ldquo;</span>
+    <blockquote>
+      You can use an algo environment. You can slowly get in, very responsibly, into the market. We're gonna split it into a thousand, a million pieces if we need to. And over a day or a week or even a month, you're gonna get into your position.
+    </blockquote>
+    <cite>
+      <span class="name">Anton Katz</span> &nbsp;·&nbsp; CEO &amp; Co-founder, Talos &nbsp;·&nbsp; on Unhashed<sup class="ref"><a href="#ref13">13</a></sup>
+    </cite>
+  </figure>
+
+  <section class="prose">
+    <p>The framing matters because it is not a critique. It is a description of standard institutional execution from the institution doing it. Talos is not extracting value from retail counterparties out of malice. It is doing exactly what its institutional clients expect: getting into a position responsibly, minimising market impact, splitting the order across as many small fills as the market requires. From the institution's side, this is what good execution looks like.</p>
+
+    <p>From the retail LP's perspective, the same behaviour shows up as days or weeks of unfamiliar volume that does not quite resolve into a news-driven narrative. There is no instrument available to retail that distinguishes algorithmic accumulation from organic interest. Both descriptions are accurate. The asymmetry is structural, not adversarial.</p>
+  </section>
+
+  <div class="banner">
+    <h2>what shows up in the data</h2>
+    <div class="sub">where headline volume and committed capital diverge</div>
+  </div>
+
+  <section class="prose">
+    <p>The cleanest expression of the asymmetry is in the perp DEX market, where the gap between headline volume and committed capital has become impossible to ignore.</p>
+
+    <h3 class="subhead">volume vs OI: where the divergence is the story</h3>
+
+    <p>Monthly perp DEX trading volume first crossed the one trillion dollar mark in September 2025, peaked at <span class="stat">$1.36T</span> in October, and retraced to <span class="stat">$699B</span> by March 2026<sup class="ref"><a href="#ref14">14</a></sup>. The peak was driven heavily by incentive programs, airdrop farming, and a major liquidation cascade on October 10. None of these represented sustained institutional demand. The half-trillion-dollar deflation between October and March was the cycling-out of mercenary capital once incentives faded.</p>
+
+    <p>The structure that survived the deflation tells the story. Hyperliquid now holds between <span class="stat">66–73%</span> of decentralised perp open interest, with around <span class="stat">$9B</span> in OI as of early May 2026 and weekly trading volumes above <span class="stat">$50B</span><sup class="ref"><a href="#ref15">15</a></sup>. Its lead survived a brief late-2025 disruption when incentive-driven competitors briefly captured short-term volume share before reverting.</p>
+
+    <p>The open-interest-to-volume ratio across the major perp DEXs makes the difference explicit. Hyperliquid sits at <span class="stat">0.64</span>. Committed capital is roughly two-thirds of trading turnover. Aster sits at <span class="stat">0.18</span>. Lighter at <span class="stat">0.12</span><sup class="ref"><a href="#ref16">16</a></sup>. The volume on Aster and Lighter is real in the sense that trades happened, but the absence of meaningful committed capital tells you most of those trades were short-duration positions held by users farming incentives, not market participants warehousing risk overnight.</p>
+
+    <p>Open interest cannot be wash-traded without incurring real capital costs. Volume can. When the two metrics diverge by an order of magnitude, the divergence is the story.</p>
+
+    <div class="chart">
+      <div class="chart-title">perp DEX monthly volume vs. surviving open interest, 2024 – may 2026</div>
+      <div class="chart-sub">monthly volume (line) against composite OI of top 3 venues (area). volume cycled. OI compounded.</div>
+      <div class="chart-body">
+        <svg viewBox="0 0 720 180" xmlns="http://www.w3.org/2000/svg">
+          <!-- grid -->
+          <line x1="40" y1="20" x2="700" y2="20" stroke="#E4E2DA" stroke-width="0.5" stroke-dasharray="2 3"/>
+          <line x1="40" y1="60" x2="700" y2="60" stroke="#E4E2DA" stroke-width="0.5" stroke-dasharray="2 3"/>
+          <line x1="40" y1="100" x2="700" y2="100" stroke="#E4E2DA" stroke-width="0.5" stroke-dasharray="2 3"/>
+          <line x1="40" y1="140" x2="700" y2="140" stroke="#E4E2DA" stroke-width="0.5"/>
+
+          <!-- y axis labels -->
+          <text x="32" y="24" font-family="JetBrains Mono" font-size="9" fill="#6B7474" text-anchor="end">$1.4T</text>
+          <text x="32" y="64" font-family="JetBrains Mono" font-size="9" fill="#6B7474" text-anchor="end">$1T</text>
+          <text x="32" y="104" font-family="JetBrains Mono" font-size="9" fill="#6B7474" text-anchor="end">$500B</text>
+          <text x="32" y="144" font-family="JetBrains Mono" font-size="9" fill="#6B7474" text-anchor="end">$0</text>
+
+          <!-- x axis labels -->
+          <text x="80" y="158" font-family="JetBrains Mono" font-size="9" fill="#6B7474">Jan'24</text>
+          <text x="240" y="158" font-family="JetBrains Mono" font-size="9" fill="#6B7474">Jul'24</text>
+          <text x="380" y="158" font-family="JetBrains Mono" font-size="9" fill="#6B7474">Jan'25</text>
+          <text x="510" y="158" font-family="JetBrains Mono" font-size="9" fill="#6B7474">Sep'25</text>
+          <text x="600" y="158" font-family="JetBrains Mono" font-size="9" fill="#6B7474">Mar'26</text>
+
+          <!-- OI area (committed capital — compounding) -->
+          <path d="M 60 138 L 100 137 L 140 136 L 180 134 L 220 132 L 260 129 L 300 125 L 340 121 L 380 116 L 420 110 L 460 103 L 500 95 L 540 90 L 580 85 L 620 80 L 660 76 L 690 72 L 690 140 L 60 140 Z" fill="rgba(31, 191, 176, 0.18)" stroke="none"/>
+          <path d="M 60 138 L 100 137 L 140 136 L 180 134 L 220 132 L 260 129 L 300 125 L 340 121 L 380 116 L 420 110 L 460 103 L 500 95 L 540 90 L 580 85 L 620 80 L 660 76 L 690 72" stroke="#0FA095" stroke-width="1.5" fill="none"/>
+
+          <!-- Volume line (cyclical) -->
+          <path d="M 60 130 L 100 128 L 140 125 L 180 122 L 220 118 L 260 113 L 300 108 L 340 102 L 380 96 L 420 88 L 460 76 L 500 60 L 530 30 L 545 65 L 575 88 L 610 102 L 645 112 L 685 115" stroke="#0E1010" stroke-width="1.8" fill="none"/>
+
+          <!-- October peak marker -->
+          <circle cx="530" cy="30" r="3" fill="#C97A4B"/>
+          <text x="540" y="26" font-family="JetBrains Mono" font-size="9" fill="#C97A4B">Oct '25 peak</text>
+          <text x="540" y="36" font-family="JetBrains Mono" font-size="8" fill="#6B7474">$1.36T</text>
+
+          <!-- legend -->
+          <g transform="translate(50, 12)">
+            <line x1="0" y1="0" x2="14" y2="0" stroke="#0E1010" stroke-width="1.8"/>
+            <text x="18" y="3" font-family="Manrope" font-size="9" fill="#2C3030">monthly volume</text>
+            <rect x="120" y="-3" width="14" height="6" fill="rgba(31, 191, 176, 0.4)" stroke="#0FA095" stroke-width="1"/>
+            <text x="138" y="3" font-family="Manrope" font-size="9" fill="#2C3030">composite OI (Hyperliquid + top 2)</text>
+          </g>
+        </svg>
+      </div>
+      <div class="caption">sources: DefiLlama monthly perp aggregate; Hyperliquid OI per DefiLlama snapshots Jan 2024 – May 2026. illustrative composite.<sup class="ref"><a href="#ref15">15</a></sup></div>
+    </div>
+
+    <h3 class="subhead">what HIP-3 tells us: tokenized RWA, not crypto pairs</h3>
+
+    <p>The HIP-3 finding sharpens this further. As of April–May 2026, seven of the top ten markets on Hyperliquid by trading volume are tokenized real-world assets, including silver, WTI crude, Brent crude, gold, S&amp;P 500, Nasdaq 100, and individual equities, rather than crypto pairs<sup class="ref"><a href="#ref17">17</a></sup>. Total open interest in HIP-3 tokenized RWA markets scaled from approximately <span class="stat">$280M</span> at the start of 2026 to <span class="stat">$2.47B</span> by mid-May<sup class="ref"><a href="#ref18">18</a></sup>. The flow using these markets is structurally different from crypto-pair speculation. It is macro hedging, executed on-chain because the venues that traditionally serve macro hedging (CME, ICE, NYSE) are closed on weekends, holidays, and at night. The Hyperliquid order book is the only liquid place to trade tokenized oil when the Strait of Hormuz makes news on a Saturday.</p>
+
+    <p>The composition of where institutional flow actually lands is no longer abstract. It is observable on a public order book.</p>
+  </section>
+
+  <div class="banner">
+    <h2>what design can still do</h2>
+    <div class="sub">mechanism design is where DeFi has a real edge over TradFi</div>
+  </div>
+
+  <section class="prose">
+    <p>Mechanism design is the one area where DeFi has a real advantage over TradFi. Protocol behaviour is rewritable in ways that traditional market structure is not. Several mitigation patterns are now battle-tested.</p>
+
+    <p>The most successful is CoW Protocol's batch auction model. Orders are collected over thirty-second windows and cleared at a uniform price by competing solvers. The architecture removes the sequential ordering that sandwich attacks require. CoW processed <span class="stat">$87B</span> in 2025, more than double the <span class="stat">$40.2B</span> in 2024<sup class="ref"><a href="#ref19">19</a></sup>. Its volume growth has come at the direct expense of order flow that would otherwise pass through public AMM pools. The broader intent-based aggregator category (CoW Swap, UniswapX, 1inch Fusion) has effectively won the DEX aggregator wars by abstracting execution away from the public mempool entirely<sup class="ref"><a href="#ref20">20</a></sup>.</p>
+
+    <p>The trade-offs are real and worth naming. Batched auctions take thirty seconds to settle, which makes them unsuitable for latency-sensitive trading. The shift to solver-based execution consolidates routing power in the hands of a small set of professional market makers, many of them the same firms that operate the institutional execution stacks described earlier. Private mempool adoption has scaled, but at the cost of letting large fractions of Ethereum transaction flow bypass the public gossip network. The system that emerges is more protective for retail users, more centralised at the execution layer, and a meaningful step away from the credibly neutral base layer DeFi started with.</p>
+
+    <p>Whether that trade is a feature or a bug depends on which problem you weight more.</p>
+  </section>
+
+  <aside class="in-practice">
+    <div class="label">in practice</div>
+    <p>For treasuries deploying stablecoins into DeFi yield, the question this leaves is no longer simply <em>what is the APY</em>. It is what flow the pool sits across from, what execution model the protocol uses, and what mechanism inside the protocol reintroduces symmetry against more sophisticated counterparties. Pools without a defensible answer to those questions are not safer for being decentralised. They are simply more opaque about who is paying whom.</p>
+    <p><strong>aarnâ</strong> is built around exactly that question: capital deployment as continuous optimisation under enforceable constraints, with concentration caps, liquidity-aware sizing, pre-simulated execution, and full on-chain logging. The vault is not smarter than the institution on the other side of the trade. It is bound by rules that prevent the same disadvantage from compounding silently. Read more at <a href="https://aarna.ai">aarna.ai</a>.</p>
+  </aside>
+
+  <div class="banner">
+    <h2>in closing</h2>
+    <div class="sub">what the next cycle has to defend</div>
+  </div>
+
+  <section class="prose">
+    <p>The first generation of DeFi defended a single principle, that anyone should be able to access the protocol. That principle won. It is now uncontroversial.</p>
+
+    <p>The second generation has to defend a harder one: that the people who do access the protocol should not be structurally disadvantaged inside it by virtue of using the tools they actually have available. The infrastructure for institutional execution on decentralised rails is already in place. The interesting question, the one that will define the next cycle, is what gets built on top of it, and for whom.</p>
+  </section>
+
+  <footer class="closing">
+    <p class="pod-plug">The full conversation with Anton Katz, CEO &amp; co-founder of Talos, on institutional execution architecture and the future of digital asset management is on the latest episode of <a href="#">Unhashed</a>.</p>
+    <div class="closing-meta">
+      <span>aarnâ &nbsp;·&nbsp; un#51</span>
+      <span>unhashed.aarna.ai</span>
+    </div>
+  </footer>
+
+  <section class="references">
+    <h3>references</h3>
+    <ol>
+      <li id="ref1">Anton Katz, CEO &amp; Co-founder of Talos, on Unhashed podcast, May 2026. Talos venue connectivity described in interview.</li>
+      <li id="ref2">"Six of the Best Crypto Market Makers Supplying Liquidity in 2025," TradingView via NewsBTC, 2025. <a href="https://www.tradingview.com/news/newsbtc:23bbda981094b:0-six-of-the-best-crypto-market-makers-supplying-liquidity-in-2025/">tradingview.com</a></li>
+      <li id="ref3">"Top High-Frequency Trading Firms Dominating Global Markets," QuantVPS, 2025. <a href="https://www.quantvps.com/blog/top-10-high-frequency-trading-firms-dominating-global-markets">quantvps.com</a></li>
+      <li id="ref4">Kaiko Reference Rates documentation, Coin Metrics, Amberdata, CCData enterprise data feeds. <a href="https://www.kaiko.com/indices/reference-rates/crypto-rates">kaiko.com</a>, accessed 2025.</li>
+      <li id="ref5">"Publishing Flashbots Protect and MEV-share Data," Flashbots Collective, February 2024. <a href="https://collective.flashbots.net/t/publishing-flashbots-protect-and-mev-share-data/3087">collective.flashbots.net</a></li>
+      <li id="ref6">"Implementing Effective MEV Protection in 2025," Ancilar via Medium, citing Flashbots transparency data, July 2025. <a href="https://medium.com/@ancilartech/implementing-effective-mev-protection-in-2025-c8a65570be3a">medium.com/@ancilartech</a></li>
+      <li id="ref7">Hua, Tang &amp; Yu, "Maximal extractable value and allocative inefficiencies in public blockchains," <em>Journal of Financial Economics</em>, July 2025. <a href="https://www.sciencedirect.com/science/article/abs/pii/S0304405X25001400">sciencedirect.com</a></li>
+      <li id="ref8">"Remeasuring the Arbitrage and Sandwich Attacks of Maximal Extractable Value in Ethereum," arXiv:2405.17944, May 2024. <a href="https://arxiv.org/abs/2405.17944">arxiv.org/abs/2405.17944</a></li>
+      <li id="ref9">CoW Protocol official homepage, <a href="https://cow.fi/cow-swap">cow.fi/cow-swap</a>, accessed May 2026. "MEV is a $1.4+ billion problem."</li>
+      <li id="ref10">"The Problem of LVR (Loss-versus-rebalancing)," CoW Protocol Documentation. <a href="https://docs.cow.fi/cow-amm/concepts/the-problem-of-lvr">docs.cow.fi</a></li>
+      <li id="ref11">Zack Mendel, "Quantifying LVR on Uniswap," Medium, 2024. <a href="https://zackmendel.medium.com/quantifying-lvr-on-uniswap-9bf533bc949e">zackmendel.medium.com</a></li>
+      <li id="ref12">"Financial Analysis of Uniswap Liquidity Pools: Performance and Profitability Metrics," Orthorest, 2024–2025. <a href="https://www.orthorest.in/financial-analysis-of-uniswap-liquidity-pools-performance-and-profitability-metrics/">orthorest.in</a></li>
+      <li id="ref13">Unhashed podcast episode featuring Anton Katz, CEO &amp; Co-founder of Talos, May 2026. unhashed.aarna.ai</li>
+      <li id="ref14">"Onchain perp DEX volumes fall for five straight months after October peak," TradingView via Cointelegraph, April 2026, citing DefiLlama. <a href="https://www.tradingview.com/news/cointelegraph:57a1aab63094b:0-onchain-perp-dex-volumes-fall-for-five-straight-months-after-october-peak/">tradingview.com</a></li>
+      <li id="ref15">DefiLlama Hyperliquid dashboard, May 6, 2026 snapshot, <a href="https://defillama.com/protocol/hyperliquid">defillama.com/protocol/hyperliquid</a>; weekly volume figure per Coindesk and DL News, March–April 2026.</li>
+      <li id="ref16">"Hyperliquid vs Aster: How the Perp DEX Market Share War Ended in Just 7 Months," Blockonomi via Binance Square, April 2026. <a href="https://www.binance.com/en/square/post/313441106457601">binance.com/square</a></li>
+      <li id="ref17">"HIP-3 open interest tops $2 billion as demand for 24/7 tokenized equity exposure surges," The Block, May 2026. <a href="https://www.theblock.co/post/397276">theblock.co</a></li>
+      <li id="ref18">"Hyperliquid's HIP-3 Smashes Open Interest All-Time High," Bitget News, May 11, 2026. <a href="https://www.bitget.com/asia/news/detail/12560605406876">bitget.com/news</a></li>
+      <li id="ref19">"CoW DAO: 2025 in Review," CoW Protocol, January 2026. <a href="https://cow.fi/learn/cow-dao-2025-in-review">cow.fi/learn</a></li>
+      <li id="ref20">"Investments – Cowswap," Dune Analytics dashboard, 2025–2026, <a href="https://dune.com/fbfbfbfbfb/investments-cow">dune.com/fbfbfbfbfb</a>; supplementary context from BlockEden, "The Intent Architecture Explained," 2026.</li>
+    </ol>
+  </section>
+
+</div>
+</body>
+</html>

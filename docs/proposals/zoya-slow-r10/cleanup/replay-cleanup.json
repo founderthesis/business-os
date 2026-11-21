@@ -1,0 +1,68 @@
+{
+  "subject": "Zoya SLOW r10d (8bf34ea, 66,441 / 0283994c454d1d42) + FAST zoya-one.txt (44,075 / a61097095c2e3070)",
+  "rebuild": {
+    "base": "worktree at f70901f + docs/proposals/zoya-slow-r10/build_one.patch (git apply clean: build_one.py, release/zoya-slow-work.txt)",
+    "runs": 2,
+    "zoya_one": "44,075 / a61097095c2e3070 both runs; byte-identical to docs/proposals/zoya-slow-r10/zoya-one.txt",
+    "zoya_slow_work": "66,441 / 0283994c454d1d42 both runs; cmp-equal to git show 8bf34ea:routines/zoya/release/zoya-slow-work.txt",
+    "fast_diff_vs_live_775b9ed8": "PASS. Only: SENDING host add-back wording, PRE-SEND check 2 'if any', SLOW WORK pin 8bf34ea + hash 0283994c454d1d42, version string zoya-one 512ccf371522 -> acd1fc6c4ec3 (derived).",
+    "slow_diff_vs_f70901f": "PASS. Only: un# scope Sri, BTS/HbD scope host, VOICE 'works' exception, SENDING exclusion wording, LIMITS follow-up-run sentence, SLOW BATCH in SLOW ORDER, HARD RULES + PRE-SEND CHECKS / GUEST EXAMPLES / BOOKING LINKS.",
+    "worktree": "removed and pruned"
+  },
+  "deploy_order": {
+    "verdict": "PASS",
+    "facts": [
+      "origin/zoya-slow-pin = f70901f (pin not moved yet).",
+      "f70901f is an ancestor of 8bf34ea (116 commits), and both are on origin/claude/business-os-structure-k3sqo5.",
+      "Live FAST: 'git fetch origin refs/heads/zoya-slow-pin, then git show f70901f6f07d4a6610fda60132b4cdbb5ac43979:...; its sha256 must start fae90990931445db'. It shows by hard-coded sha, so moving the pin first is harmless: the fetch brings 8bf34ea and its ancestor f70901f.",
+      "New FAST: 'git show 8bf34eacda40afc723083d6888e5db1706414762:... its sha256 must start 0283994c454d1d42': matches the built file."
+    ]
+  },
+  "blockers": [],
+  "should_fix": [
+    {
+      "id": "S1", "severity": "medium",
+      "quote": "carryover (the keys under \"carryover:\" ...) goes first, then SLOW ORDER's groups",
+      "conflicts_with": "A cap is never a hold: one you don't reach stays due as it is ... and goes first next run, ahead of its group's order",
+      "scenario": "SLOW ORDER's groups start with STEP 0 (feedback, bounces). A literal model works carryover follow-ups before STEP 0c's bounce scan and STEP 0b's feedback from Akshay, so a follow-up can go to an address that bounced since the last SLOW run, or against feedback not yet read. With a large carryover it can also eat the 40 minutes before STEP 0 (owner mail, scorecard) runs.",
+      "fix": "'carryover goes first within STEP 2 (after STEP 0, STEP 1b and the team work); a carried key not in this run's eligible list is dropped.'"
+    },
+    {
+      "id": "S2", "severity": "low-medium",
+      "quote": "Stop only on the per-run or daily cap, the 40 minutes, or a tool error",
+      "scenario": "One transient error (a Blueticks read for a snooze, one Notion 504) ends the whole batch. That is safe, but it is the most likely early stop and it's undefined. A failed PRE-SEND check could also be misread as a 'tool error'.",
+      "fix": "'a tool error: a connector call that fails after one retry; it stops only the work that needs that tool. A failed PRE-SEND check blocks that item only.'"
+    },
+    {
+      "id": "S3", "severity": "low",
+      "quote": "SENDING: 'less ... on un#, Sri unless he wrote on the thread himself (... then he, or on Built to Share and Human by Design the host who wrote there, is added back if missing)' vs SCOPE: 'the host is never in Cc on routine mail, unless the host wrote on that thread'",
+      "scenario": "The read-back exclusion list names Sri only on un#. On BTS/HbD, a host who was Cc'd by PR but never wrote must be kept by the read-back ('everyone on the latest inbound') but dropped by SCOPE. Same in FAST. This predates r10, but the new parenthetical implies the host is excluded when the list doesn't say so.",
+      "fix": "'on un#, Sri, and on Built to Share and Human by Design the host, unless he wrote on the thread himself (then added back if missing)'."
+    },
+    {
+      "id": "S4", "severity": "low",
+      "quote": "FAST LIMITS: 'Everything this run sends answers someone or carries Akshay's own call: the 7-day limit, ONE PERSON, ONE ASK and the hand-written pause don't hold it'",
+      "scenario": "In a 10:38 or 16:38 run, 'this run' also covers SLOW sends. 'SLOW wins' resolves it, but SLOW BATCH's 'stopping sooner is a defect' pressure makes the misreading more tempting. This predates r10.",
+      "fix": "'Everything FAST work sends ...' at the next FAST rebuild."
+    },
+    {
+      "id": "S5", "severity": "low",
+      "quote": "keyed \"snooze:<row id>:<its date>\"",
+      "scenario": "This can't collide with ACTIONS keys, because those start with the page id and never with 'snooze:'. But <its date> is '<D Mon>' (no year, has a space), and two snoozes on one row returning on the same date share one key. Processing twice is harmless ('A segment already rewritten is done').",
+      "fix": "'snooze:<row id>:<YYYY-MM-DD>:<n>' (n = segment order)."
+    },
+    {
+      "id": "S6", "severity": "low",
+      "scenario": "A longer batch means more context per run. A crash before RELEASE leaves zoya-lock held, and every later hourly run (FAST replies included) skips until the CTO recovers it. Runtime is otherwise bounded: FAST stops new rows at 25 min, SLOW at 40 min from run start, release well before the next :38.",
+      "fix": "None to the text. On the first SLOW run, watch for 'lock release rejected' or a held lock."
+    }
+  ],
+  "checked_ok": [
+    "Per-run cap: LIMITS 'this run's own sends' + FAST 'shared with your SLOW work' means FAST sends count. Cap 40/run (decision 317) and 150/day both bind, and both are named stop reasons, so ~97 due items cannot go in one run.",
+    "No cadence limit is lifted: the batch says 'within every limit there; no cadence changes'. The 7-day limit, ONE PERSON, ONE ASK (fresh read per mail), quiet hours, PR gap and nurture 10/run are per-item checks. D14 makes group limits defer, never 'stopped early'.",
+    "'a hold defers that one item only' doesn't weaken person-wide stops. No-contact ('stops all their rows'), Akshay's held decision and ONE PERSON are each evaluated per item from fresh reads, so the other items for that person hit the same stop. PRE-SEND checks are 'fresh at each send'.",
+    "Duplicate sends: a carryover item re-worked goes through ACTIONS' key-on-Activity lookup + Sent candidate check + idempotency_key = action key. Seq keys are stable (raised = step due date), so no resend.",
+    "PRE-SEND CHECKS, GUEST EXAMPLES, BOOKING LINKS are byte-identical in FAST and SLOW (shared SHARED list), including 'if any'. No contradiction."
+  ],
+  "verdict": "ACCEPT. No blockers. Deploy pin then FAST as the handoff says. S1 worth a one-line fix at the next rebuild (or now if cheap)."
+}

@@ -1,0 +1,415 @@
+{
+ "clock_date": "2026-10-27 (Tuesday, JST)",
+ "rule": "Each scenario sees snapshot.json plus only the additions listed for it. Act only on the rows listed in its scope; every other row in the snapshot is out of scope for that scenario (record nothing for it). Do not invent any id, address, message or row not given here. Lock and R scenarios use their own HYP rows and inbounds as given; no Notion data beyond these.",
+ "C": {
+  "run": "SLOW",
+  "start": "10:08",
+  "scope": [
+   "3f019a301a7f812ea2a8d1e74b88113c",
+   "3fa19a301a7f811da4a8d2ff78897041",
+   "3f019a301a7f817fae25cc8414c31aa5",
+   "3f019a301a7f8126bd0ee7b39fd456b1"
+  ],
+  "additions": []
+ },
+ "G": {
+  "run": "FAST and SLOW both start 10:08",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-G-0955@impactkey.in",
+    "date": "2026-10-27T09:55:00+09:00",
+    "from": "Jheel Gehlot (impactkey.in)",
+    "to": [
+     "Zoya (myunnati.com)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "in_reply_to": "the latest message on Akshat's commercials thread in the snapshot",
+    "body": "Akshat is fine with the INR 50,000 + GST, what are the next steps?",
+    "logged_by_inbox": false
+   }
+  ]
+ },
+ "H": {
+  "run": "SLOW record Started 10:08 and still running; FAST starts 10:38",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2"
+  ],
+  "additions": []
+ },
+ "D": {
+  "run": "SLOW",
+  "start": "10:08",
+  "scope": [
+   "HYP-D-01 .. HYP-D-45"
+  ],
+  "additions": [
+   {
+    "type": "rows",
+    "count": 45,
+    "ids": "HYP-D-01 to HYP-D-45",
+    "each": {
+     "Status": "Sponsored offered",
+     "Show": "Founder Thesis",
+     "Next date": "2026-10-27",
+     "Chase step": 0,
+     "Next action": "Zoya [followup seq-1-1 2026-10-27T00:00:00+09:00]: sponsored step 1 on 27 Oct",
+     "key": "HYP-D-NN:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+     "raised order": "HYP-D-01 oldest",
+     "thread": "each has its own thread; the only mail on it is our sponsored offer of 13 Oct, no reply; no other holds apply",
+     "offer": "sponsored offer (routine 1, step 0) mailed 2026-10-13 10:00 JST; step 1 sent nowhere yet; Chase step 0"
+    }
+   }
+  ]
+ },
+ "E": {
+  "run": "FAST",
+  "start": "10:38",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-E-1010@impactkey.in",
+    "date": "2026-10-27T10:10:00+09:00",
+    "from": "Jheel Gehlot (impactkey.in)",
+    "to": [
+     "Zoya (myunnati.com)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "in_reply_to": "the latest message on Akshat's commercials thread in the snapshot",
+    "body": "1) Akshat is fine with INR 50,000 + GST, next steps? 2) for the January in-person shoot, what would the camera crew cost?",
+    "logged_by_inbox": false
+   }
+  ]
+ },
+ "L1": {
+  "run": "Lock test (a) same-second acquire: FAST and SLOW both write their Started run record at 2026-10-27T10:50:00+09:00; FAST's record was created at 10:50:00.400, SLOW's at 10:50:00.900 (same second). The G inbound is present",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-G-0955@impactkey.in",
+    "date": "2026-10-27T09:55:00+09:00",
+    "from": "Jheel Gehlot (impactkey.in)",
+    "to": [
+     "Zoya (myunnati.com)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "in_reply_to": "the latest message on Akshat's commercials thread in the snapshot",
+    "body": "Akshat is fine with the INR 50,000 + GST, what are the next steps?",
+    "logged_by_inbox": false
+   }
+  ],
+  "question": "Which run holds the lease? Exactly one must. What does the other do, and what is each run's run record outcome?"
+ },
+ "L2": {
+  "run": "Lock test (b) crashed holder: a SLOW run record Started that never completed (the run crashed; no later write). FAST starts at 11:38. Case 1: SLOW's record Started 10:50 (48 minutes before). Case 2: SLOW's record Started 10:30 (68 minutes before).",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-G-0955@impactkey.in",
+    "date": "2026-10-27T09:55:00+09:00",
+    "from": "Jheel Gehlot (impactkey.in)",
+    "to": [
+     "Zoya (myunnati.com)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "in_reply_to": "the latest message on Akshat's commercials thread in the snapshot",
+    "body": "Akshat is fine with the INR 50,000 + GST, what are the next steps?",
+    "logged_by_inbox": false
+   }
+  ],
+  "question": "For each case: does FAST treat the lease as held or stale, does it wait and for how long, and what then? State the exact limit the prompts give."
+ },
+ "L3": {
+  "run": "Lock test (c) wait out: SLOW's record Started 10:50 and stays Started (genuinely running) through 11:50. FAST starts at 11:38 with the G inbound (raised 09:55) due as its reply action.",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-G-0955@impactkey.in",
+    "date": "2026-10-27T09:55:00+09:00",
+    "from": "Jheel Gehlot (impactkey.in)",
+    "to": [
+     "Zoya (myunnati.com)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "in_reply_to": "the latest message on Akshat's commercials thread in the snapshot",
+    "body": "Akshat is fine with the INR 50,000 + GST, what are the next steps?",
+    "logged_by_inbox": false
+   }
+  ],
+  "question": "FAST waits its limit and gives up. List exactly what FAST writes (run record only?), and the row's Next date, Waiting on and Next action after FAST ends. Is the reply action still due for the next FAST run, with owner and Next date unchanged?"
+ },
+ "L4": {
+  "run": "Lock test (d) FAST at 10:38 still running when SLOW starts at 10:50: FAST Started 10:38 and is still Started (genuinely running, a long run) until 11:02, then Completed",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2",
+   "3f019a301a7f812ea2a8d1e74b88113c"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-G-0955@impactkey.in",
+    "date": "2026-10-27T09:55:00+09:00",
+    "from": "Jheel Gehlot (impactkey.in)",
+    "to": [
+     "Zoya (myunnati.com)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "in_reply_to": "the latest message on Akshat's commercials thread in the snapshot",
+    "body": "Akshat is fine with the INR 50,000 + GST, what are the next steps?",
+    "logged_by_inbox": false
+   }
+  ],
+  "question": "What does SLOW do between 10:50 and 11:02, when does it start rows, and when must it stop starting new rows? Does any row get written by both?"
+ },
+ "R1": {
+  "run": "SLOW, start 10:50 (decision 412 thank-you)",
+  "scope": [
+   "HYP-R1-TASK",
+   "HYP-R1-GUEST"
+  ],
+  "additions": [
+   {
+    "type": "rows",
+    "HYP-R1-GUEST": {
+     "Name": "Riya Sen @ Hypo Foods, Founder Thesis",
+     "Status": "Booked",
+     "Show": "Founder Thesis",
+     "Guest": "Riya Sen (People row has an Email)",
+     "Via": "Kabir (PR, hypopr.example)",
+     "Stakeholders": [
+      "Neha (Hypo Foods comms)"
+     ],
+     "Waiting on": [
+      "Guest or PR"
+     ],
+     "Next action": "Waiting on Kabir: nothing open",
+     "Next date": "2026-10-23",
+     "recording": "23 Oct 2026 11:00 JST, calendar event not cancelled",
+     "activities": "no thank-you Activity; no thank-you in Akshay's Sent"
+    },
+    "HYP-R1-TASK": {
+     "Name": "Transcript: Riya Sen @ Hypo Foods (FT, 23 Oct recording)",
+     "Kind": "Task",
+     "Show": "Internal",
+     "For engagement": "HYP-R1-GUEST",
+     "Task state": "Handed over",
+     "Waiting on": [
+      "Zoya"
+     ],
+     "Source ID": "transcript:cal:HYP-EVT-R1",
+     "Next action": "Ranjita: transcript for Riya's 23 Oct recording",
+     "Email out Activity": "Zoya sent: transcript request for Riya Sen (26 Oct)"
+    }
+   },
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-R1-RANJITA@myunnati.example",
+    "date": "2026-10-27T10:20:00+09:00",
+    "from": "Ranjita (Team)",
+    "to": [
+     "Zoya"
+    ],
+    "cc": [
+     "Akshay"
+    ],
+    "in_reply_to": "the transcript request",
+    "body": "attached",
+    "attachment": "riya-sen-23oct.txt, 61 KB, both voices speak at length, 52 minutes of conversation"
+   }
+  ],
+  "question": "Walk c(1) to (5). Give the thank-you draft exactly as addressed: mailbox, new mail or reply, subject, To, Cc, attachment. Give the guest row's Status, Waiting on and Next action after."
+ },
+ "R2": {
+  "run": "FAST, start 10:38 (decision 411 recording status)",
+  "scope": [
+   "HYP-R2"
+  ],
+  "additions": [
+   {
+    "type": "rows",
+    "HYP-R2": {
+     "Name": "Dev Rao @ Hypo Labs, Founder Thesis",
+     "Status": "Booked",
+     "Show": "Founder Thesis",
+     "Via": "Pallavi (PR)",
+     "Waiting on": [
+      "Guest or PR"
+     ],
+     "Next date": "2026-10-23",
+     "recording": "23 Oct 11:00 JST event still on the calendar, not cancelled; no Zencastr audio in Drive; no transcript; nothing from Akshay"
+    }
+   },
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-R2-PR@hypopr.example",
+    "date": "2026-10-27T10:05:00+09:00",
+    "from": "Pallavi (PR)",
+    "to": [
+     "Zoya"
+    ],
+    "cc": [
+     "Akshay"
+    ],
+    "body": "hi Zoya, just checking how the recording went with Dev? when can we expect the episode?",
+    "logged_by_inbox": false
+   }
+  ],
+  "question": "Is the recording settled? What does FAST reply to Pallavi (if anything), and what goes on the row (Waiting on, Next action)? Does anything go to WhatsApp or ask the PR or guest whether it happened?"
+ },
+ "R3": {
+  "run": "FAST, start 10:38 (decision 413 recipients)",
+  "scope": [
+   "HYP-R3"
+  ],
+  "additions": [
+   {
+    "type": "rows",
+    "HYP-R3": {
+     "Name": "Sreya Pal @ Hypo Bank, Founder Thesis",
+     "Status": "Booking",
+     "Show": "Founder Thesis",
+     "Via": "Rajmohan (PR)",
+     "Stakeholders": [
+      "Santhosh (PR)",
+      "Mala (Hypo Bank comms)"
+     ],
+     "Waiting on": [
+      "Guest or PR"
+     ]
+    }
+   },
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-R3-IN@hypopr.example",
+    "date": "2026-10-27T10:12:00+09:00",
+    "from": "Sreya Pal (hypobank.example)",
+    "to": [
+     "Zoya"
+    ],
+    "cc": [
+     "Akshay",
+     "Mamatha (myunnati.com)",
+     "Rajmohan (PR)",
+     "Santhosh (PR)",
+     "Mala (Hypo Bank comms)"
+    ],
+    "body": "Thursday 29 Oct 3pm IST works for the recording, can you send the invite?",
+    "logged_by_inbox": false
+   }
+  ],
+  "question": "Give the reply's To and Cc exactly, and the read-back check the prompt requires before sending."
+ },
+ "I1": {
+  "run": "Interaction: lock + crash recovery. SLOW started 10:50 and held the lease. At 11:05 it sent Ronit's routine 1 step 1 (key 3fa19a301a7f811da4a8d2ff78897041:followup:seq-1-1:2026-10-27T00:00:00+09:00) from Zoya's inbox; the mail is in Zoya's Sent and on the thread (Message-ID HYP-I1-SENT@mcpemails.example). Then SLOW crashed: no Activity, no row write, its run record still Started. FAST starts 11:38. SLOW's next run starts 16:50.",
+  "scope": [
+   "3fa19a301a7f811da4a8d2ff78897041"
+  ],
+  "additions": [
+   {
+    "type": "sent mail",
+    "message_id": "HYP-I1-SENT@mcpemails.example",
+    "date": "2026-10-27T11:05:00+09:00",
+    "from": "Zoya",
+    "to": [
+     "Payal (PR)"
+    ],
+    "cc": [
+     "Akshay"
+    ],
+    "thread": "Ronit's commercials thread",
+    "body": "sponsored step 1 wording per Rules for Zoya",
+    "logged": false
+   }
+  ],
+  "question": "What does FAST at 11:38 do with the lease and with Ronit's row? What does SLOW at 16:50 do with the unlogged send? Is the step resent by either run? Give the final Activity count for HYP-I1-SENT and the row's Chase step and Next date."
+ },
+ "I2": {
+  "run": "Interaction: lock + duplicate prevention. Case a: FAST and SLOW both start 10:50:00 (FAST's record created first by 0.5 s). Row 3f019a301a7f81ef81a4c4780c92fee2 carries an old-format unkeyed segment 'Zoya: send next steps to Jheel' (raised by the inbox at 10:20 for the G inbound, which is present). Case b: two FAST runs start at 11:38:00 and 11:38:20 (a scheduled run and a manual re-fire of the same trigger), same row and inbound, both due the same reply.",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-G-0955@impactkey.in",
+    "date": "2026-10-27T09:55:00+09:00",
+    "from": "Jheel Gehlot (impactkey.in)",
+    "to": [
+     "Zoya (myunnati.com)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "in_reply_to": "the latest message on Akshat's commercials thread in the snapshot",
+    "body": "Akshat is fine with the INR 50,000 + GST, what are the next steps?",
+    "logged_by_inbox": false
+   }
+  ],
+  "question": "For each case: which run(s) act on the step, how many mails go out, and what stops a second one (the lease, the type split, the action key and idempotency_key, the Sent check)? Case b: does the lease stop the second FAST run at all, given it reads only the other run kind's record? If not, what stops a duplicate send?"
+ },
+ "I3": {
+  "run": "Interaction: recovery + duplicate prevention. FAST started 10:38, held the lease, and at 10:41 sent the 'Sponsored yes: next steps' reply for the G inbound (Message-ID HYP-I3-SENT@mcpemails.example, idempotency_key = the reply action key) from Zoya's inbox on the thread. Then FAST crashed before logging: no Activity, the inbound not logged, its record still Started. SLOW starts 10:50; FAST's next run starts 11:38.",
+  "scope": [
+   "3f019a301a7f81ef81a4c4780c92fee2"
+  ],
+  "additions": [
+   {
+    "type": "inbound mail",
+    "message_id": "HYP-G-0955@impactkey.in",
+    "date": "2026-10-27T09:55:00+09:00",
+    "from": "Jheel Gehlot (impactkey.in)",
+    "to": [
+     "Zoya (myunnati.com)"
+    ],
+    "cc": [
+     "Akshay Datt (thepodium.in)"
+    ],
+    "in_reply_to": "the latest message on Akshat's commercials thread in the snapshot",
+    "body": "Akshat is fine with the INR 50,000 + GST, what are the next steps?",
+    "logged_by_inbox": false
+   },
+   {
+    "type": "sent mail",
+    "message_id": "HYP-I3-SENT@mcpemails.example",
+    "date": "2026-10-27T10:41:00+09:00",
+    "from": "Zoya",
+    "to": [
+     "Jheel (PR)"
+    ],
+    "cc": [
+     "Akshay"
+    ],
+    "thread": "Akshat's commercials thread, reply to HYP-G-0955",
+    "logged": false
+   }
+  ],
+  "question": "What does SLOW at 10:50 do (the lease, RECONCILE, this row)? What does FAST at 11:38 do (FAST's own 10:38 record, the reply action)? Is the reply sent again by either run? Final Activity count for HYP-I3-SENT."
+ }
+}

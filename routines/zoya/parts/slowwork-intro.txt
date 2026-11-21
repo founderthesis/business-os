@@ -1,0 +1,1 @@
+SLOW WORK FILE (Zoya, 10:38 and 16:38 weekday runs only). You read this after your FAST work, in the same run, under the same LOCK and RUN RECORD; it adds your SLOW work. Your prompt's RUN RECORD and LOCK still hold: write no second record and touch the lock only as LOCK says. The rules below repeat your prompt's shared rules in full; for SLOW work they are the ones to follow.

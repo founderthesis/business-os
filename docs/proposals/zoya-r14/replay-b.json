@@ -1,0 +1,225 @@
+{
+ "inputs": {
+  "date": "2026-11-03",
+  "replay_of": "docs/proposals/zoya-r14/replay.json (D1 to D7) and handoff.md section r14b",
+  "files": {
+   "A zoya-one.txt": {
+    "bytes": 50822,
+    "sha256": "677aa3473026e9ef96a8b77b073fa71ce54fc3a652fd62a3c713a767f81aef21"
+   },
+   "B zoya-slow.txt": {
+    "bytes": 11238,
+    "characters": 11238,
+    "sha256": "20cce0904095ec86fe99dd1c0ed7425306c90f7e168acfb61cdc06a156915473"
+   },
+   "zoya-slow-work.txt": {
+    "bytes": 74785,
+    "characters": 74781,
+    "sha256": "68ec0805f5393c2d9f5ec704fc7e7161061d319a0556e5eef080cf53010bf2aa",
+    "pinned_at": "2f607f0b30dbc0688feef8f16e4859c9796a8f23"
+   },
+   "r14 B (scratchpad r14a-zoya-slow.txt)": {
+    "bytes": 11276,
+    "sha256": "054661701f27651ad41aa6c68481ecb0078fb7b296d7f6200fe5e5646711f812"
+   },
+   "r14 file (scratchpad r14a-zoya-slow-work.txt)": {
+    "bytes": 73243,
+    "characters": 73239,
+    "sha256": "26b60e7c6b8eca3960c49c1ceee9a1046facb276dbc9e110824f40fe6535d78f"
+   },
+   "r14 A (scratchpad r14a-zoya-one.txt)": {
+    "sha256": "677aa3473026e9ef96a8b77b073fa71ce54fc3a652fd62a3c713a767f81aef21"
+   }
+  },
+  "checker": "/tmp/claude-0/-home-user-business-os/4ead98fe-1e28-5d8b-9104-e01951a693a8/scratchpad/r14b/check.py (offline python written to the 4/ spec; sample bodies a_body.txt, f_body.txt, r_body.txt beside it)",
+  "note": "Sample Message-IDs write '-AT-' in place of the at sign so this file carries nothing address-shaped."
+ },
+ "checks": {
+  "A_unchanged": {
+   "pass": true,
+   "detail": "zoya-one.txt sha 677aa347... equals the r14 copy in the scratchpad"
+  },
+  "B_hash": {
+   "pass": true,
+   "detail": "20cce0904095ec86, 11,238 bytes, as handoff states"
+  },
+  "work_file_hash": {
+   "pass": true,
+   "detail": "68ec0805f5393c2d, 74,785 bytes"
+  },
+  "pin": {
+   "pass": true,
+   "detail": "git show 2f607f0b:routines/zoya/release/zoya-slow-work.txt | sha256sum = 68ec0805f5393c2d9f5ec704fc7e7161061d319a0556e5eef080cf53010bf2aa, equal to the local file. B names the same commit and the prefix 68ec0805f5393c2d. 2f607f0 is on claude/business-os-structure-k3sqo5 only; no zoya-slow-pin ref exists locally, so cutover step 1 (move the pin) must land before B's first run, as the handoff says."
+  },
+  "B_stated_total": {
+   "pass": true,
+   "detail": "B says total = 74,781 characters (characters, not bytes); python len(decoded file) = 74781 (bytes 74,785: 4 multibyte characters)"
+  },
+  "no_em_dashes": {
+   "pass": true,
+   "detail": "0 em dashes and 0 en dashes in B and in the work file"
+  },
+  "diff_scope": {
+   "pass": true,
+   "detail": "B: 2 lines changed. RUN RECORD status parenthetical (D2) and deployment reference 939443afcedd -> f4c4c1081584; SLOW FILE: pin 9d1bda1 -> 2f607f0, sha prefix 26b60e7c -> 68ec0805, total 73,239 -> 74,781 (mechanical). Work file: 158 lines before and after, 3 lines changed: line 82 (D6 keys), lines 83 to 85 (D1 x4, D5, D3, D4), line 138 AFTER SEND (D7), line 141 SLOW REPORT (D7). Nothing outside D1 to D7. The build_one.py comment fix in D7 shows in build_one.patch ('up to 30 in chunks of 10' present, 'a batch of 15' absent)."
+  }
+ },
+ "defects": {
+  "D1": {
+   "fixed": true,
+   "old": "\"selected: <key>, <key>, ...\" in order. ... one line \"chunk <n>: <key>=<outcome>, ...\" ... parse the record body's \"selected:\" keys and the outcome keys of every chunk line",
+   "new": "then a line \"selected:\" and under it one line per item, in order, \"S<nn> <key>\" (S01, S02, ...; the key exactly, nothing else on the line). | append to the record body a line \"chunk <n>:\" and under it one line per item, \"S<nn> <outcome>\", its number from the \"selected:\" lines (never the key itself) | fetch this run's record and give python its body verbatim in a quoted heredoc (<<'EOF'); parse the \"S<nn> <key>\" lines under \"selected:\" (the key is the rest of the line) and the \"S<nn> <outcome>\" lines under each \"chunk <n>:\" (the outcome is the first word after the number) | goes under a line \"carryover:\" as \"S<nn> <key>\" | Carryover (the keys on the lines under \"carryover:\", each after its S number, ...)",
+   "evidence": "Case a: keys with '=' and ', ' and a held outcome with ', recheck' parse correctly; diff is by number, so key text never matters to it."
+  },
+  "D2": {
+   "fixed": true,
+   "old": "(No-op: nothing was due; a held or blocked action is handled, so a run whose due actions were all sent, held or blocked is Completed; Partial: a step failed or was skipped; Failed: stopped early, a SLOW FILE failure or SLOW BATCH's early exit; Skipped: LOCK)",
+   "new": "(the status is the one SLOW BATCH 4/'s OUTCOME CHECK IN CODE prints, as 4/ and RULES LOAD define Completed, Partial, Failed and No-op; also Failed: a SLOW FILE failure, or a stop before SLOW BATCH selects; Skipped: LOCK)",
+   "evidence": "Minute 22 and cap now Partial, RULES LOAD failure Partial, overtaken terminal. See N4 for one edge left."
+  },
+  "D3": {
+   "fixed": true,
+   "old": "the per-run cap and the daily cap (shared with the hourly task, counted from today's JST Activities as LIMITS says)",
+   "new": "the per-run cap and the daily cap (shared with the hourly task, counted from today's JST Activities as LIMITS says; SLOW stops at the daily cap less the FAST reserve Cadences gives, so FAST keeps that room; no reserve on Cadences: SLOW stops 30 short of the daily cap and the report says \"FAST reserve missing on Cadences\")",
+   "evidence": "Case c. Still needs the reserve number set on Cadences (Akshay or CTO); not checkable offline."
+  },
+  "D4": {
+   "fixed": true,
+   "old": "and stays due (Next date unchanged). Status:",
+   "new": "and stays due (Next date unchanged). The same python takes the run's start and the current `date -u`, counts each outcome, and prints the first line and the status: an \"unfinished (minute 22)\" while the measured elapsed is under 22, or an \"unfinished (tool error)\" with no tool and error text, counts as no reason; the record's first line, status and carryover are copied from its output, never rewritten. Status:",
+   "evidence": "Case a2 and a5: false minute 22 and bare tool error both read Failed. Partly open: a false 'cap' is not checked (N2), and minute 22 is checked at the end, not at the stop (N3)."
+  },
+  "D5": {
+   "fixed": "yes in SLOW BATCH 3/, but contradicted elsewhere in the same file (N1)",
+   "old": "Cadences (the Diwali pause included: a follow-up inside it is held \"Diwali\")",
+   "new": "Cadences (the Diwali pause included: a chase inside it (routines 1 to 5, 7 and 8, nurture, revival, PR coordination) is held \"Diwali\", recheck the first weekday after the pause; release mails, INVITES confirmations, payments, billing, team steps, owner mail and the scorecard go on their dates unless Cadences names them; among held items due the same day, the oldest key date goes first)",
+   "evidence": "Case e. Still to confirm against the Cadences page's Diwali line (pause dates and end are only on Cadences)."
+  },
+  "D6": {
+   "fixed": true,
+   "old": "the scorecard \"scorecard:<Monday YYYY-MM-DD>\").",
+   "new": "the scorecard \"scorecard:<Monday YYYY-MM-DD>\"; a payment reminder (STEP 1b) \"<row id>:team:seq-pay<invoice 1 or 2>-<reminder n>:<its due date>T00:00:00+09:00\", one key per reminder; an owner mail item sent at once in its own mail \"ownermail:<YYYY-MM-DD>:<row id>\").",
+   "evidence": "Case b: reminder 1 and 2 keys differ (seq-pay1-1 vs seq-pay1-2), so 2 cannot match 1's Activity. The other STEP 1b obligations (Jaya re-ask after 2 working days) still key by the generic origin forms, which works (msg- of their paid mail)."
+  },
+  "D7": {
+   "fixed": true,
+   "old": "rows deferred by ONE PERSON, ONE ASK (name: the other row), actions left for the next run with their keys (a cap) | a hold or deferral moves the segment's",
+   "new": "rows held by ONE PERSON, ONE ASK (name: the other row), unfinished items as \"carryover:\" lists them, with their reason | a hold moves the segment's",
+   "evidence": "Two older 'defer' words remain outside the D7 scope (N6)."
+  }
+ },
+ "cases": {
+  "a_quit_minute_4": {
+   "setup": "30 selected (S01 to S30), chunk 1 written for S01 to S10, then the run stops at minute 4. Keys include feedback:<CAF=x9Q+k2==-AT-mail.example> ('='), snooze:3a1f0003:2026-11-02:call back, then = fe (', ' and '='); outcomes include 'held 7-day rule (last mail 30 Oct, to the PR lead), recheck 9 Nov' and 'held ONE PERSON, ONE ASK (other row 3a1f0099), recheck 10 Nov'.",
+   "runs": {
+    "a1 no stop reason, elapsed 4": "Failed, 'early exit at minute 4, 20 of 30 unfinished'; carryover S11 to S30 with their keys; first line 'selected 30, completed 6, overtaken 1, held 2, blocked 1, unfinished 20, remaining eligible 31, elapsed 4 min'",
+    "a2 model writes minute 22, elapsed 4": "Failed (minute 22 under 22 measured minutes is no reason)",
+    "a3 genuine, elapsed 23": "Partial, minute 22",
+    "a4 model writes cap, elapsed 4": "Partial, cap (not verifiable from the body: N2)",
+    "a5 'tool error' with no tool or text": "Failed",
+    "a6 'tool error: MCPEmail 504 gateway timeout'": "Partial, tool error"
+   },
+   "result": "pass for the required case (Failed, 20 carried); gap N2"
+  },
+  "b_two_obligations_one_row": {
+   "setup": "Row 3a1f0004 has S04 3a1f0004:team:seq-pay1-2:2026-11-03T00:00:00+09:00 and S05 3a1f0004:followup:seq-8-2:2026-11-02T00:00:00+09:00",
+   "result": "pass: two items, two numbers, two outcomes (S04 completed, S05 blocked no invoice 2 date on the row; Jaya); 1/ says so in words and D6 gives the payment its own key"
+  },
+  "c_caps": {
+   "rules": "per-run 40 (this run's sends), daily 150 counted from today's JST 'Zoya sent'/'Agent sent' Activities, loop-ins excluded; SLOW limit = 150 less Cadences' FAST reserve, or 120 with none",
+   "with_reserve_20": "today 125 sent at 17:08: SLOW limit 130, 5 sends left; the rest unfinished (cap), Partial; FAST keeps 20",
+   "without_reserve": "today 125 sent: SLOW limit 120, already past: no SLOW sends, items unfinished (cap), Partial, report says 'FAST reserve missing on Cadences'",
+   "note": "With 30 items a run the 40 per-run cap binds only if items send more than one message each (a payment reminder plus a Jaya WhatsApp, owner mail at once). A cap stop ends the whole batch, so non-send items after it (holds, blocks) also go unfinished (cap); acceptable, they carry.",
+   "result": "pass on text; reserve number still to be set on Cadences"
+  },
+  "d_lock_held": {
+   "result": "pass: B LOCK 3 writes only a Skipped record (never Started), no SLOW FILE, no batch; the next run's carryover passes over Skipped records and SLOW FILE failures and takes the newest record with a 'selected:' line, so nothing is lost. A 07:38 FAST run still holding the lock at 08:08 makes B skip that slot (handoff already notes it)."
+  },
+  "e_diwali": {
+   "setup": "Mon 9 Nov, inside the pause from Fri 6 Nov: release mail 1 due 9 Nov (routine 6), and a routine 2 step 3 chase due 9 Nov",
+   "slow_batch_3": "release mail goes on its date; the chase is held 'held Diwali (routine 2 step 3), recheck <first weekday after the pause>'",
+   "conflict": "SENDING line 72 still says 'Follow-ups go only on the days and in the window Cadences gives (weekdays, decision 393: 07:30 to 00:30 JST; never Diwali week; ...)', and ACTIONS defines followup as routines 1 to 6 and 8, so routine 6 release mails are also barred. N1.",
+   "also": "Class 1 routine 2 or 3 steps and PR coordination for a call inside the next 7 days are chases and will be held; confirm that is what Cadences means.",
+   "result": "partial: fixed in 3/, contradicted by line 72"
+  },
+  "f_minute_22": {
+   "setup": "Chunks 1 and 2 done (S01 to S20), chunk 3 not started because date -u shows 22+ minutes",
+   "runs": {
+    "genuine, check at 23": "Partial, minute 22; carryover S21 to S30; first line 'selected 30, completed 16, overtaken 1, held 2, blocked 1, unfinished 10, remaining eligible 21, elapsed 23 min'",
+    "stopped at 21, check at 22": "Partial, minute 22 (accepted: the check measures elapsed at the end, not at the stop: N3)"
+   },
+   "result": "pass for the honest case; gap N3"
+  },
+  "rules_load_failure": {
+   "setup": "Follow-ups page 20000 of 30210 characters, every item blocked 'rules not loaded'",
+   "result": "Partial 'rules not loaded: Follow-ups 20000 of 30210', as RULES LOAD and 4/ say; B now defers to 4/"
+  },
+  "no_op": {
+   "result": "eligible 0: No-op"
+  },
+  "status_rules_agree": {
+   "result": "yes, with one edge. B RUN RECORD: the status 4/ prints, plus Failed for a SLOW FILE failure (matches SLOW FILE's own 'end Failed') or a stop before SLOW BATCH selects, Skipped for LOCK. 4/: Completed all terminal; Partial cap, minute 22 or tool error; Failed unexplained; RULES LOAD failure Partial; eligible 0 No-op. RULES LOAD: 'the run ends Partial'. Edge N4: a run that reads 'the run ends Partial' as stop-now and stops before selecting is Failed by B and Partial by RULES LOAD."
+  }
+ },
+ "new_issues": {
+  "N1": {
+   "severity": "medium (dated: pause starts Fri 6 Nov)",
+   "where": "zoya-slow-work.txt line 72, SENDING",
+   "quote": "(weekdays, decision 393: 07:30 to 00:30 JST; never Diwali week; quiet hours: OUTSIDE MAIL)",
+   "why": "Bars every follow-up type, routine 6 release mails included, against D5's new rule in 3/; the model can follow either.",
+   "old": "(weekdays, decision 393: 07:30 to 00:30 JST; never Diwali week; quiet hours: OUTSIDE MAIL)",
+   "new": "(weekdays, decision 393: 07:30 to 00:30 JST; the Diwali pause holds chases only, as SLOW BATCH 3/ says; quiet hours: OUTSIDE MAIL)"
+  },
+  "N2": {
+   "severity": "medium",
+   "where": "SLOW BATCH 4/",
+   "why": "D4 checks 'minute 22' and 'tool error' in code but not 'cap'. A run that quits at minute 4 and writes 'unfinished (cap)' reads Partial (case a4), the same excuse D4 closed.",
+   "old": "or an \"unfinished (tool error)\" with no tool and error text, counts as no reason;",
+   "new": "or an \"unfinished (tool error)\" with no tool and error text, counts as no reason, and so does an \"unfinished (cap)\" unless the python, given this run's own sends and today's count as LIMITS counts it, finds the per-run cap or the daily cap less the FAST reserve reached;"
+  },
+  "N3": {
+   "severity": "low",
+   "where": "SLOW BATCH 3/ and 4/",
+   "why": "The python measures elapsed when it runs, not when the run stopped, so a stop at minute 21 claimed as minute 22 passes once the final check runs after 22 (case f2).",
+   "old": "append to the record body a line \"chunk <n>:\" and under it",
+   "new": "append to the record body a line \"chunk <n>:\" (and, when minute 22 stops the work, a line \"stop: minute 22 at <date -u>\", which the python checks is 22 or more minutes after the start) and under it"
+  },
+  "N4": {
+   "severity": "low",
+   "where": "zoya-slow.txt RUN RECORD",
+   "old": "also Failed: a SLOW FILE failure, or a stop before SLOW BATCH selects;",
+   "new": "also Failed: a SLOW FILE failure, or a stop before SLOW BATCH selects other than RULES LOAD's, which is Partial;"
+  },
+  "N5": {
+   "severity": "low",
+   "where": "SLOW BATCH 4/ record layout",
+   "why": "The diff has no header line, so on a retried check its lines sit under the last 'chunk <n>:' and an 'S<nn> <key>' diff line would parse as an outcome (first word = key, unfinished with no reason).",
+   "old": "the chunk lines, the diff and \"carryover:\".",
+   "new": "the chunk lines, a line \"diff:\" with the diff under it, and \"carryover:\"."
+  },
+  "N6": {
+   "severity": "low (wording)",
+   "where": "line 72 and the STEP 2 hold rule",
+   "quotes": [
+    "(a hold defers that one item only)",
+    "a deferral never changes nurture n"
+   ],
+   "fix": "'(a hold stops that one item only)' and 'a hold never changes nurture n'"
+  },
+  "N7": {
+   "severity": "low",
+   "where": "SLOW BATCH 4/",
+   "why": "The python must know of a RULES LOAD failure to print Partial; the text implies it reads the '<page>: <read> of <total> characters' lines from the body but doesn't say so. The checker here does it that way and works.",
+   "suggestion": "add '(a RULES LOAD failure is any \"<page>: <read> of <total>\" line in the body with read short of total)'"
+  }
+ },
+ "verdict": {
+  "ready": "ready for Cleanup once N1 is fixed (before Fri 6 Nov); N2 should go in the same rebuild; N3 to N7 are optional",
+  "summary": "Hashes, pin and the 74,781-character total all check. The r14 to r14b diff is only the D1 to D7 fixes plus the pin, sha, total and deployment-reference changes they force. D1, D2, D3, D4, D6 and D7 are fixed as written. D5 is fixed in SLOW BATCH 3/ but SENDING line 72 still says follow-ups never go in Diwali week, which bars release mails (N1). The S-number parser computes the right unfinished set and status on keys with '=' and ', '. A claimed cap stop isn't checked in code, though (N2).",
+  "still_outside_the_build": [
+   "the FAST reserve number on Cadences",
+   "the Cadences Diwali line (dates, and whether class 1 routine 2/3 steps are held)",
+   "pin ref move to 2f607f0 at cutover"
+  ]
+ }
+}

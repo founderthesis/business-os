@@ -1,0 +1,97 @@
+{
+ "meta": {
+  "clock": "2026-10-27 Tue JST",
+  "sha256_checked": {
+   "zoya-fast.txt": "3da29ae693347239 ok",
+   "zoya-slow.txt": "0464082b0360545a ok",
+   "scenarios.json": "a5435613e4be70aa ok"
+  },
+  "run_id_note": "run ids are not given in the scenarios; records are named by kind and start time"
+ },
+ "I1": {
+  "canon": {
+   "new_sends": 0,
+   "activities_for_presend": {
+    "HYP-I1-SENT@mcpemails.example": 1
+   },
+   "held": [],
+   "waiting_on": [
+    "Guest or PR",
+    "Zoya"
+   ],
+   "akshay_segments": 0,
+   "stale_records_closed": [
+    "run:zoya:slow:<SLOW 10:50 run id> (closed Failed by FAST 11:38 at about 11:50)"
+   ],
+   "run_records": {
+    "SLOW 10:50": "Failed",
+    "FAST 11:38": "No-op",
+    "SLOW 16:50": "Completed"
+   },
+   "row_after": {
+    "Chase step": "1",
+    "Next date": "2026-11-03",
+    "Next action": "Zoya [followup seq-1-2 2026-11-03T00:00:00+09:00]: Sponsored offers step 2 on 3 Nov"
+   }
+  },
+  "verdict": "PASS",
+  "findings": "1/ Cross-run gap in the ACTIONS candidate filter. FAST's 24-hour Sent scan has no FAST action on Ronit's row (the seq-1-1 key is SLOW's to write and SLOW crashed before writing it), so FAST takes the 'nothing it completes: log it on that row' branch and logs HYP-I1-SENT with no Action key. At 16:50 SLOW's ACTIONS check then finds no Activity with the key, and the candidate list ('whose Message-ID no Activity holds') is empty because FAST's Activity holds the Message-ID. Read literally, ACTIONS says 'None: it is due'. The resend is stopped by other text instead: STEP 2 'Work out the step from Chase step and the dates of our earlier mails on the thread; never send a step twice' and AFTER SEND 'Before any send or retry, look there for this step's mail ... a run that finds one sends nothing and completes whatever below is missing for it (never a second Activity for one message)'. Suggested fix: the candidate filter should exclude only messages whose Activity carries an Action key, or the Sent scan's catch-all log should be matched against the due follow-up's key. 2/ Order ambiguity at SLOW: if the 7-day rule is applied before AFTER SEND's look-up (Payal got a substantive mail today, now logged), the row could be written as 'held: 7-day rule, recheck 3 Nov' with Chase step still 0. That is wrong state for a week, though it is still not a resend, because on 3 Nov the look-up finds the step 1 mail. 3/ FAST's lease wait: 'for up to 10 minutes, or until the holder's record turns 60 minutes old if that comes within 20 minutes of your start'. The SLOW record turns 60 at 11:50, 12 minutes in, so FAST waits until 11:50 and does not end Partial at 11:48. A stricter reading (10 minutes, then Partial) would leave the stale record for SLOW 16:50 to close as 'your own kind's earlier record'. Either way it is closed once. 4/ 'No-op' vs 'Completed' for FAST: nothing was due, but it wrote an Activity and closed a record. I chose No-op by the definition 'No-op: nothing was due'.",
+  "notes": "FAST 11:38, LEASE: 'read the latest run record with Source ID starting \"run:zoya:slow:\": one still at Started, begun under 60 minutes ago, holds the lease'. SLOW began 10:50 and is 48 minutes old, so it holds. FAST 'only read[s], re-checking every 2 minutes ... for up to 10 minutes, or until the holder's record turns 60 minutes old if that comes within 20 minutes of your start' (11:50 is +12 min). At 11:50: 'one Started 60 minutes ago or more is stale: set it Failed, \"stale: no end written (closed by <your run id>)\", and it holds nothing'. FAST holds the lease, re-reads after sleep 60 and proceeds. Ronit's row has no reply, decision or hold action: its Next action is 'Waiting on Payal ...: reply to the sponsored commercials sent 18 Oct' and there is no new inbound, so FAST sends nothing ('Follow-up chains ... are your SLOW run's; never do them here'). FAST's Sent scan: 'a message from us no Activity holds goes through this check for its thread's row ...; nothing it completes: log it on that row and report it'. That gives one Email out Activity, Source ID 'msgid:HYP-I1-SENT@mcpemails.example', no Action key ('Write \"Action key\" on the Activity only after a send receipt or a match'). FAST does not touch Chase step or Next date. SLOW 16:50: LEASE ('close your own kind's earlier record the same way'): the 10:50 record is already Failed, so there is nothing to close. RECONCILE: no FAST reply or decision action is outstanding. STEP 2 routine 1 ('rows at Status Sponsored offered whose Next date is today or earlier') selects Ronit and keys seq-1-1 per the given key. 'Work out the step from Chase step and the dates of our earlier mails on the thread; never send a step twice' plus the AFTER SEND look-up find the 11:05 step 1 mail, so SLOW sends nothing and completes. It does not create a second Activity ('Any hit means it is logged, so add only a missing link'). It adds the Action key to FAST's Activity ('a send found by the thread check gets its Action key too') and renames it to 'Zoya sent: Sponsored offers step 1 to Payal'. Row: Chase step = 1. Next date: step 2 is day 14 after the 18 Oct offer, Sun 1 Nov, so weekdays give Mon 2 Nov, and 'the next step never before the first day LIMITS' 7-day rule allows' gives Tue 3 Nov (outside Diwali week, 6 to 13 Nov), so 2026-11-03. The segment becomes 'Zoya [followup seq-1-2 2026-11-03T00:00:00+09:00]: Sponsored offers step 2 on 3 Nov', replacing the 'Waiting on Payal' segment. Zoya is added to Waiting on ('Zoya added to Waiting on (other owners stay)'), and Guest or PR stays because the sponsored offer is still open (OWNERS: 'an open proposal'). Neither run resends. If SLOW 10:50 used the action key as idempotency_key, a provider retry at 16:50 (under 24 hours) would also have been deduped. Final count for HYP-I1-SENT: 1 Activity."
+ },
+ "I3": {
+  "canon": {
+   "new_sends": 0,
+   "activities_for_presend": {
+    "HYP-I3-SENT@mcpemails.example": 1
+   },
+   "held": [],
+   "waiting_on": [
+    "Akshay",
+    "Guest or PR"
+   ],
+   "akshay_segments": 0,
+   "stale_records_closed": [
+    "run:zoya:fast:<FAST 10:38 run id> (closed Failed by FAST 11:38)"
+   ],
+   "run_records": {
+    "FAST 10:38": "Failed",
+    "SLOW 10:50": "Partial",
+    "FAST 11:38": "Completed"
+   },
+   "also_logged": {
+    "HYP-G-0955@impactkey.in (Email in)": 1
+   }
+  },
+  "verdict": "PASS",
+  "findings": "1/ A crashed FAST blocks the whole SLOW 10:50 run. The FAST record is 12 minutes old, so it holds the lease. SLOW may wait up to 25 minutes, and the holder only turns 60 at 11:38 (48 minutes after SLOW's start, not 'within 20 minutes'), so SLOW ends Partial at about 11:15 with no row written. All morning follow-ups, payments and team work slip to 16:50. That is correct by the text but costly: a crash costs SLOW a full slot. 2/ The own-kind stale close is on a knife edge: FAST runs exactly 60 minutes apart, so at 11:38 its 10:38 record is 60 minutes old only if the lease read comes later in the second than the old record's creation. 'Begun under 60 minutes ago' for one's own kind is not defined to hold or block. In practice the read comes minutes into the run (after the rules pages), so it closes. Otherwise FAST 12:38 closes it. 3/ The recovered 'Sponsored yes: next steps' mail went with Akshay only in Cc. SENDING requires Jaya and Sarika on revenue mail ('on revenue mail (sponsored from the guest's yes onward: next steps ...) also Jaya and Sarika'). The recovery path logs it as complete and nothing repairs the missing copies. It needs a report line at least. 4/ The Claude note hands Zoya 'tell Akshay the answer once it comes' (the production-cost answer). Akshat's yes is that answer, and it belongs in the Claude note and the report, not a new Akshay Waiting on (decision inbox).",
+  "notes": "SLOW 10:50, LEASE: the latest 'run:zoya:fast:' record is Started at 10:38, 12 minutes old, so it 'holds the lease'. SLOW: 'While it does, only read, re-checking every 2 minutes ... for up to 25 minutes, or until the holder's record turns 60 minutes old if that comes within 20 minutes of your start; still held, end Partial \"lease held by FAST <run id>\" with no row written.' RECONCILE runs first but only reads: 'If FAST has no record in the last 90 minutes, or any reply or decision action is older than 2 hours and not complete'. FAST's record is 12 minutes old and the reply action (raised 09:55) is 55 minutes old, so neither trigger fires, and it would not send anyway ('reconcile only, never a send of FAST's types'). Nothing is written on Akshat's row and the 24-hour Sent scan's logging waits. SLOW record: Partial. FAST 11:38, LEASE: the SLOW record is Partial and holds nothing. 'close your own kind's earlier record the same way': the 10:38 record, still Started and 60 minutes old, is set Failed with 'stale: no end written (closed by <11:38 id>)'. The reply action is keyed '3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00'. FAST reaches it through the 24-hour Sent scan, or through STEP 1 if the unlogged inbound is read as owed. Either way 'Before sending': there is no Activity with the key. Candidates are 'messages from us in your Sent to that recipient on the action's thread ... since the action was raised, whose Message-ID no Activity holds': exactly HYP-I3-SENT (10:41, to Jheel, a reply to HYP-G-0955). 'one candidate: that is the match: send nothing, log the Activity if it is missing, complete the action.' The Sent scan adds '(the inbound it answers is logged too)'. Writes: Email in Activity for HYP-G-0955 ('Jheel to Zoya: Akshat is fine with INR 50,000 + GST, asks next steps'), Email out Activity 'Zoya sent: reply to Jheel: Sponsored yes: next steps' with Source ID 'msgid:HYP-I3-SENT@mcpemails.example' and the Action key. The row, under WRITE PATH: the 'Waiting on Jheel ...: reply to the sponsored commercials (sent 26 Oct)' segment is completed by HYP-G-0955 ('An inbound that answers our open asks completes each'). The next step waits on their side for billing details (Guest or PR). Akshay's own travel segment is untouched, so Waiting on is Akshay and Guest or PR. Chase step 0 ('Chase step 0 after their reply'). There is no resend: the idempotency key matches within 24 hours and the ACTIONS match sends nothing. SLOW 16:50 (not asked) finds HYP-I3-SENT held by an Activity in its Sent scan and does nothing. Final count for HYP-I3-SENT: 1."
+ },
+ "I4": {
+  "canon": {
+   "new_sends": 0,
+   "activities_for_presend": {
+    "HYP-I4-A@mcpemails.example": 0,
+    "HYP-I4-B@mcpemails.example": 0
+   },
+   "held": [
+    "3fa19a301a7f811da4a8d2ff78897041:reply:msg-HYP-I4-IN@brandit.example:2026-10-27T09:30:00+09:00",
+    "3fa19a301a7f811da4a8d2ff78897041:followup:seq-1-1:2026-10-27T00:00:00+09:00"
+   ],
+   "waiting_on": [
+    "Akshay",
+    "Guest or PR",
+    "Zoya"
+   ],
+   "akshay_segments": 1,
+   "akshay_segment_text": "Akshay: can't tell which mail completed reply to Payal's audience-numbers ask (msg-HYP-I4-IN) and Sponsored offers step 1 (seq-1-1): HYP-I4-A@mcpemails.example (27 Oct 11:05 JST), HYP-I4-B@mcpemails.example (27 Oct 11:20 JST). Write which in Your call",
+   "stale_records_closed": [],
+   "run_records": {
+    "FAST 11:38": "Completed",
+    "SLOW 16:50": "Completed"
+   }
+  },
+  "verdict": "PASS",
+  "findings": "1/ Conflict that decides PASS or FAIL. The 24-hour Sent scan says 'a message from us no Activity holds goes through this check for its thread's row ...; nothing it completes: log it on that row and report it'. A held candidate 'completes' nothing, so a literal executor at FAST 11:38 could log HYP-I4-A and HYP-I4-B as Activities with no Action key. That removes both from every later candidate list ('whose Message-ID no Activity holds'). SLOW 16:50 would then find 'None: it is due' for seq-1-1. The followup would not be HELD. It would be deferred only by the 7-day / PR per-thread limit (two substantive mails to Payal today) to 3 Nov, and could then go out as a second step 1. My canon applies the specific HOLD branch over the catch-all: held candidates stay unlogged until Akshay names one. The prompt should say so explicitly ('a candidate in an open hold is not logged'), and the filter should key on Action key, not on any Activity. 2/ FAST cannot include the followup in its segment. It only checks its own types, and the seq-1-1 key is SLOW's to write. So the shared segment is created by FAST with one action and extended by SLOW ('one segment per candidate set, shared by the actions it holds'). The text doesn't say whether SLOW edits FAST's segment or writes its own. WRITE PATH ('changes only this action's own segment') arguably forbids editing FAST's segment, which would produce two segments for one candidate set. I treated it as one shared segment, per ACTIONS. 3/ Policy conflict: the HOLD asks Akshay to resolve a data ambiguity by hand. CLAUDE.md decision 90 says 'Never hand Akshay a data problem to fix by hand', and decision 325 says his list is a decision inbox. The prompt's HOLD is explicit, so the run follows it, but the design conflicts with standing decisions. 4/ Payal's audience-numbers question stays unanswered until Akshay writes in Your call. No holding reply is triggered (STEP 1c is for asks waiting on his decision or wording, and this one is held, not his). It may sit for days. 5/ 'less any that plainly does something else' excludes 'another row's ask' but not another action on the same row, so two nudges on one thread are always ambiguous between a reply and a follow-up. That is correct here, since the bodies are unclear.",
+  "notes": "Actions: reply '3fa19a301a7f811da4a8d2ff78897041:reply:msg-HYP-I4-IN@brandit.example:2026-10-27T09:30:00+09:00' (FAST's type) and followup '3fa19a301a7f811da4a8d2ff78897041:followup:seq-1-1:2026-10-27T00:00:00+09:00' (SLOW's). FAST 11:38: there is no lease contention. STEP 1 sees Payal's 09:30 ask with no answer from us: A and B are nudges and don't share the numbers, so a 'Reply owed means an unresolved substantive ask ... that no message from us has answered'. It writes the segment 'Zoya [reply msg-HYP-I4-IN@brandit.example 2026-10-27T09:30:00+09:00]: share the audience numbers again'. 'Before sending (before any hold rule)': there is no Activity with the key. Candidates are messages to Payal on Ronit's thread since 09:30 that no Activity holds: A (11:05) and B (11:20). Neither 'plainly does something else (a holding reply, a loop-in, another row's ask)'. 'Two or more: HOLD, never send: Akshay in Waiting on and one segment per candidate set, shared by the actions it holds, \"Akshay: can't tell which mail completed <actions, short>: <each candidate's Message-ID and send time>. Write which in Your call\", Claude note \"YYYY-MM-DD: held for review (<keys>)\", named in the report'. FAST adds Akshay to Waiting on, writes the segment for the reply action, and adds the Claude note '2026-10-27: held for review (<reply key>)'. The Sent scan reaches A and B, the check gives the same HOLD, and (canon, see finding 1) they are not logged. Run: due 1, held 1, so Completed ('a run whose due actions were all sent, held or blocked is Completed'). FAST 12:38 to 15:38: 'a held action is skipped while that segment is open', and the Sent scan's check of A and B gives the same hold. The segment exists, so nothing is re-added. SLOW 16:50: STEP 2 routine 1 selects Ronit (Sponsored offered, Next date 27 Oct). It writes key seq-1-1 onto the row in place of 'Waiting on Payal ...' ('the first time it selects it (send, hold or block)'). 'Before sending (before any hold rule)': no Activity has the key, and the candidates since 00:00 that no Activity holds are A and B again. That is two, so HOLD. It is the same candidate set {A, B}, so the followup joins the existing Akshay segment ('shared by the actions it holds'). It is not a second segment, and the Claude note is '2026-10-27: held for review (<followup key>)'. RECONCILE: the reply action is older than 2 hours but 'explicit holds ... are not misses', so there is no stuck alert. Run: Completed. Waiting on: Akshay (the hold), Zoya (her two held segments), and Guest or PR, kept because the sponsored offer and Payal's side are still open (OWNERS: 'unless another segment, an open proposal or a decision still needs them'). Next date per WRITE PATH: the earliest open segment date, 27 Oct (both keys date 27 Oct). Nothing is resent by either run. A and B each stay at 0 Activities until Akshay answers in Your call. The named mail is then logged once with both actions' completion lines if it completed both ('One message can complete several actions: one Activity'), and the other is logged as unattributed."
+ }
+}

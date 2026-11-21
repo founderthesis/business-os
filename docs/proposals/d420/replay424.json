@@ -1,0 +1,30 @@
+{
+  "decision": 424,
+  "builds": {
+    "calendar": {"bytes": 57789, "sha16": "2e0e113fe9663514", "reproduced_from_patch": true},
+    "inbox": {"bytes": 65334, "sha16": "4d8a49fdf3ca91c7", "reproduced_from_patch": true, "limit": 65336, "headroom": 2,
+              "diff_vs_inbox_s": "only the 424 text in STEP 3 plus three provenance trims (lines 26, 87, 102)"},
+    "zoya_one": {"bytes": 41714}
+  },
+  "cases": {
+    "C1": {"result": "PASS", "quote": "the booker works at the guest's own company (not an agency) and that company has exactly one open row on that show ... Attached: add the person to that row's Stakeholders, link the event there ... and create no row."},
+    "C2": {"result": "PASS", "quote": "the guest is named in the invite title, description, thread or form"},
+    "C3": {"result": "PASS", "quote": "Only someone booking for themselves with no match gets a new Engagement"},
+    "C4": {"result": "PASS", "quote": "STEP 1: If two could match, do not guess: add it to the report. (never reaches 1a); 1a backstop: Via or a Stakeholder on another row ... attach nothing, create nothing, one report line"},
+    "C5": {"result": "PASS", "quote": "or with two candidate rows: attach nothing, create nothing, one report line for the CTO"},
+    "F1": {"result": "PASS_WITH_GAP", "quote": "Carry every Claude note line, every open Next action segment and commitment, Waiting on, all Activities, and the Call, Eval and Dossier links to the kept row; read the kept row back; then Trash the duplicate once no relations remain",
+           "gap": "duplicate's Guest/Via/Stakeholders (People relations) are not carried and are relations, so 'once no relations remain' either blocks the trash or drops Sakshi's link; same omission in inbox and Zoya fold text. Kept row with its own Eval link: no rule on which wins."},
+    "F2": {"result": "PASS", "quote": "never by organisation or domain alone"},
+    "I1": {"result": "PASS", "quote": "the sender works at the guest's own company, not an agency, which has one open row on that show): the sender joins its Stakeholders", "note": "inbox says 'one', not 'exactly one'"},
+    "I2": {"result": "PASS_WITH_RISK", "quote": "no evidence or two candidates: create nothing, report it ... Otherwise create one: Name \"<Guest> @ <Company>, <Show>\"",
+           "risk": "a new agency (no rows) pitching a new guest is 'None, for a sender acting for another'; the case 'evidence names the guest but zero rows' is unstated, so creation relies on the pitch rule's 'Otherwise create one'."},
+    "Z1": {"result": "PASS", "quote": "the sender works at the guest's own company, not an agency, which has exactly one open row on that show): they join that row's Stakeholders and no row is created",
+           "note": "pre-existing: the clause sits inside the '(those older than 72 hours: ...)' parenthetical"}
+  },
+  "conflicts": {
+    "decision_209": "Calendar STEP 1a header still reads 'EVERY BOOKING GETS AN ENGAGEMENT (decision 209 ... \"anyone booking time with me should get an engagements entry\")' while BOOKER says create nothing; decisions.md row 209 not annotated as narrowed by 424. Body is specific so behaviour is right, but header and 209 should say 'narrowed by 424'.",
+    "calendar_steps_2_3_C4": "OK. STEP 2 is 'For each matched, confirmed event' so skips it; STEP 3 gives an unmatched recording a prep block keyed on event id and reports it; an unmatched precall has no explicit rule (pre-existing).",
+    "inbox_new_lead": "OK, line 42 only sets Next date.",
+    "inbox_different_guest": "OK. The PR is already Via/Stakeholder on the original row, so the 424 'None' clause never fires; the replacement row is created by the explicit rule; same-organisation rows are not folded."
+  }
+}

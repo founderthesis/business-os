@@ -1,0 +1,1548 @@
+{
+ "C": {
+  "action_keys": [
+   "3fa19a301a7f811da4a8d2ff78897041:followup:seq-1-1:2026-10-25T00:00:00+09:00",
+   "3f019a301a7f8126bd0ee7b39fd456b1:nurture:seq-7-1:2026-10-20T00:00:00+09:00"
+  ],
+  "rows": {
+   "3f019a301a7f812ea2a8d1e74b88113c": "not due (Next date 2026-10-29; keyed segment seq-5-2 due 29 Oct): untouched",
+   "3fa19a301a7f811da4a8d2ff78897041": "sponsored step 1 SENT (routine 1)",
+   "3f019a301a7f817fae25cc8414c31aa5": "not due (Next date 2026-11-09): untouched",
+   "3f019a301a7f8126bd0ee7b39fd456b1": "HELD (cold outreach / Akshay hold with no date, decision 381): 7-day recheck segment, Zoya as owner"
+  },
+  "next_date": {
+   "3f019a301a7f812ea2a8d1e74b88113c": "unchanged",
+   "3fa19a301a7f811da4a8d2ff78897041": "2026-11-02",
+   "3f019a301a7f817fae25cc8414c31aa5": "unchanged",
+   "3f019a301a7f8126bd0ee7b39fd456b1": "2026-11-03"
+  },
+  "waiting_on": {
+   "3f019a301a7f812ea2a8d1e74b88113c": [
+    "Zoya",
+    "Guest or PR"
+   ],
+   "3fa19a301a7f811da4a8d2ff78897041": [
+    "Guest or PR",
+    "Zoya"
+   ],
+   "3f019a301a7f817fae25cc8414c31aa5": [
+    "Zoya",
+    "Guest or PR"
+   ],
+   "3f019a301a7f8126bd0ee7b39fd456b1": [
+    "Zoya"
+   ]
+  },
+  "next_action": {
+   "3f019a301a7f812ea2a8d1e74b88113c": [
+    "Zoya [followup seq-5-2 2026-10-29T00:00:00+09:00]: form chaser 2 on 29 Oct"
+   ],
+   "3fa19a301a7f811da4a8d2ff78897041": [
+    "Zoya [followup seq-1-2 2026-11-02T00:00:00+09:00]: sponsored step 2 on 2 Nov"
+   ],
+   "3f019a301a7f817fae25cc8414c31aa5": [
+    "Zoya [followup seq-1-2 2026-11-09T00:00:00+09:00]: sponsored step 2 on 9 Nov",
+    "Waiting on Payal Dash (Brandit): reply to the sponsored commercials"
+   ],
+   "3f019a301a7f8126bd0ee7b39fd456b1": [
+    "On hold: cold outreach, Akshay will revisit (21 Oct) (kept or replaced: unclear, finding)",
+    "Zoya [nurture seq-7-1 2026-10-20T00:00:00+09:00]: recheck cold outreach hold on 3 Nov"
+   ]
+  },
+  "mails": [
+   {
+    "key": "3fa19a301a7f811da4a8d2ff78897041:followup:seq-1-1:2026-10-25T00:00:00+09:00",
+    "row": "3fa19a301a7f811da4a8d2ff78897041",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "Payal Dash (branditcommunications.com, address from the thread, not the .co typo on her People row)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)"
+    ],
+    "thread": "draft action reply on Zoya's 17 Oct 23:40Z commercials message (latest on 'Podcast Opportunity | From Digital India to Global Investing with Ronit Kar...'); Mamatha not added (not on latest inbound); wording: planned from the thread and podm.in/why-sponsor (no '## Next sponsored mail' section), per routine page 1 / Rules for Zoya; then the next mail is written into '## Next sponsored mail'",
+    "attachments": []
+   }
+  ],
+  "run_record": "Run zoya SLOW 2026-10-27 10:08 JST: Completed (due 2, sent 1, held 1, blocked 0, remaining 0)",
+  "answer": "",
+  "verdict": "PASS",
+  "findings": "1/ Ronit's key raised date is ambiguous: 'the date the previous step set, else the row's Next date when the step was written' gives 2026-10-25 (Cadences day 7 after the 18 Oct offer, the date the 20 Oct line set) or 2026-10-27 (current Next date after the 26 Oct hold moved it). 2/ AFTER SEND's Next date for step 2 is the Cadences chain day (offer + 14 = Sun 1 Nov -> Mon 2 Nov) and ignores the 7-day per-thread limit, so on 2 Nov the row is selected and held to 3 Nov; the Devesh row's existing '9 Nov' was computed from the step-1 send date instead: two anchors in live data. 3/ Payal Dash has two People rows (duplicate pair, .co typo on one); PR weekly-limit counting 'across all their guests' depends on People, so the duplicate splits her count (no effect today: 1 mail this week + Ronit = 2, the limit). 4/ Vijay: the hold rule says recheck 'as its own segment' but STEP 2 keying says 'in place of the row's waiting segment'; whether 'On hold: cold outreach, Akshay will revisit (21 Oct)' stays is unclear, and the nurture key's n and date for a never-nurtured hold are not defined. This row will be re-held every 7 days indefinitely. 5/ SLOW start 10:08 is off schedule: 'Start no new row 40 minutes after your start (11:30, 17:30)' gives 10:48 by the rule and 11:30 by the parenthesis.",
+  "notes": "SLOW STEP 2 selects rows at Sponsored offered/Precall requested/Booking/Recorded/LT chase 'with Next date today or earlier'. Amit (Recorded, 29 Oct) and Devesh (9 Nov) are not due. Ronit: Sponsored offered, Next date 27 Oct, Chase step 0: routine 1 ('whatever Next action says (a plan written as \"Waiting on <name>: reply to the sponsored offer\" is still a sponsored row)'). SLOW keys it ('SLOW keys it itself ... in place of the row's waiting segment'). Holds checked: PR per guest thread ('for a PR or agency person the 7 days count per guest thread'): last mail on Ronit's thread 18 Oct; Payal's weekly limit 2 (Cadences), 1 used (Devesh 26 Oct); staleness: last reply 18 Oct < 60 days. Send as reply on the thread's latest message in Zoya's inbox ('where the team wrote last ... the people outside the team go in To, Akshay in Cc'). AFTER SEND: Activity 'Zoya sent: Sponsored offers step 1 to Payal', Chase step 1, Zoya added to Waiting on, Claude note line. Vijay: LT chase, Next date 20 Oct, Outbound, never wrote back, no thread: REVIVAL excludes 'a target that never wrote back to us (cold outreach stays with its owner)'; 'Every due row ends the run sent, held or blocked ... a hold with no first day, cold outreach or an Akshay hold with no date, rechecks in 7 days as its own segment ... keeps an owner, never empty (... else Zoya); never a new ask to Akshay, decision 381'. Claude note 'held: cold outreach (no thread, never wrote back; Akshay will revisit), recheck 3 Nov'."
+ },
+ "G": {
+  "action_keys": [
+   "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00"
+  ],
+  "rows": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "FAST holds the lease (same-minute tie: 'in the same minute FAST does'); FAST logs the inbound and sends 'Sponsored yes: next steps'; SLOW waits (read only), then finds nothing due on this row"
+  },
+  "next_date": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "2026-10-29"
+  },
+  "waiting_on": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Guest or PR",
+    "Akshay"
+   ]
+  },
+  "next_action": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Waiting on Jheel (Impactkey PR): billing details for the 70% invoice",
+    "Akshay: confirm your India travel plans with Akshat and plan the in-person interview for his Jan or Feb visit (original due 2026-10-29; consolidated from Task 40119a301a7f812ca6e0cba045fa9221)"
+   ]
+  },
+  "mails": [
+   {
+    "key": "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00",
+    "row": "3f019a301a7f81ef81a4c4780c92fee2",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "Jheel Gehlot (impactkey.in)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "Jaya (People row, Team)",
+     "Sarika (People row, Team)"
+    ],
+    "thread": "draft action reply on HYP-G-0955@impactkey.in (latest message of the Akshat commercials thread in Zoya's inbox; In-Reply-To/References from it); reply_all false; wording 'Sponsored yes: next steps' per Rules for Zoya / wording page, adapted by CONTEXT CHECK (precall already held 22 Oct, so no podm.in/30min precall ask)",
+    "attachments": []
+   }
+  ],
+  "run_record": "FAST: Run zoya FAST 2026-10-27 10:08 JST: Completed. SLOW: waits re-checking every 2 min (max 25 min); after FAST's record leaves Started it proceeds and, for this scope, records No-op (if FAST were still Started at 10:33: Partial 'lease held by FAST <run id>')",
+  "answer": "",
+  "verdict": "PASS",
+  "findings": "1/ FAST STEP 1c says not to answer 'a message on a row that waits on Akshay's decision or wording'; this row has Akshay in Waiting on for his own travel-planning step. SLOW has the carve-out ('an independent ask of theirs on the row ... doesn't stop a due step'), FAST does not; the literal FAST text could push the sponsored yes to Akshay's list. 2/ No Status is named for a mailed sponsored yes (stays Sponsored offered unless Rules for Zoya says otherwise). 3/ The template's 'precall via podm.in/30min' is stale here (precall held 22 Oct); only CONTEXT CHECK removes it. 4/ The write moves Next date from 2 Nov to 29 Oct because 'original due 2026-10-29' counts (WRITE PATH): correct by the text, and it surfaces the hidden deadline the 26 Oct CTO audit flagged.",
+  "notes": "LEASE (both prompts): 'if both are Started, the earlier start holds it, and in the same minute FAST does.' FAST: STEP 1 finds the unanswered inbound; 1a logs it (no Activity with msgid:HYP-G-0955@impactkey.in): Kind Email in, 'Jheel to Zoya: Akshat is fine with INR 50,000 + GST, asks next steps'. 1b: 'a yes at the standard price gets \"Sponsored yes: next steps\" (billing details for the 70% invoice, precall via podm.in/30min, recording after), Jaya and Sarika in Cc'. INR 50,000 + GST is the standard commercial already on the thread. Recipients: latest inbound From Jheel, To Zoya, Cc Akshay -> To Jheel, Cc Akshay + Jaya + Sarika (revenue mail). The inbound completes the open waiting segment 'Waiting on Jheel ...: reply to the sponsored commercials (sent 26 Oct)' ('An inbound that answers our open asks completes each'). 1e: Activity 'Zoya sent: reply to Jheel: sponsored yes next steps' with Action key, Chase step 0, Claude note '2026-10-27: Zoya replied (sponsored yes: next steps)'. WRITE PATH: Next date = earliest open segment date = original due 2026-10-29. SLOW after the lease: RECONCILE finds FAST's record within 90 min and the reply complete; STEP 2: Next date 29 Oct not due; STEP 1b: 'a mailed yes is FAST's'; no billing details yet."
+ },
+ "H": {
+  "action_keys": [],
+  "rows": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "no change: nothing due for FAST (no new inbound; segments are Akshay's and a waiting segment); SLOW (still running) has nothing due here either (Next date 2 Nov)"
+  },
+  "next_date": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "unchanged"
+  },
+  "waiting_on": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Guest or PR",
+    "Akshay"
+   ]
+  },
+  "next_action": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Waiting on Jheel (Impactkey PR): reply to the sponsored commercials (sent 26 Oct)",
+    "Akshay: confirm your India travel plans with Akshat and plan the in-person interview for his Jan or Feb visit (original due 2026-10-29; consolidated from Task 40119a301a7f812ca6e0cba045fa9221)"
+   ]
+  },
+  "mails": [],
+  "run_record": "FAST: Run zoya FAST 2026-10-27 10:38 JST: No-op (it never reaches a row write, so it never needs the lease and does not wait). SLOW: its own outcome is outside this row; nothing written to this row.",
+  "answer": "",
+  "verdict": "PASS",
+  "findings": "1/ SLOW's Started 10:08 record holds the lease at 10:38 (30 min old, under 60). The lease is only consulted 'Before your first row write', so a FAST run with nothing to write ends No-op without waiting; had a reply been due it would wait up to 10 minutes (to 10:48) and end Partial 'lease held by SLOW <run id>'. 2/ Neither prompt has a run re-check the lease after it acquires it, so a holder that over-runs its own row-start limit keeps holding without limit until 60 minutes.",
+  "notes": "FAST LEASE: 'one still at Started, begun under 60 minutes ago, holds the lease ... While it does, only read'. FAST ACTIONS: none of type reply/decision/hold on the row; the 'Akshay:' segment and the 'Waiting on Jheel' segment are not Zoya segments, so FAST has nothing to key ('Any other old-format segment still unkeyed is FAST's to key' covers Zoya segments)."
+ },
+ "D": {
+  "action_keys": [
+   "HYP-D-01:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-02:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-03:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-04:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-05:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-06:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-07:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-08:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-09:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-10:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-11:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-12:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-13:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-14:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-15:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-16:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-17:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-18:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-19:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-20:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-21:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-22:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-23:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-24:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-25:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-26:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-27:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-28:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-29:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-30:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-31:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-32:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-33:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-34:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-35:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-36:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-37:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-38:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-39:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-40:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-41:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-42:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-43:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-44:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+   "HYP-D-45:followup:seq-1-1:2026-10-27T00:00:00+09:00"
+  ],
+  "rows": {
+   "HYP-D-01": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-02": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-03": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-04": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-05": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-06": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-07": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-08": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-09": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-10": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-11": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-12": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-13": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-14": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-15": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-16": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-17": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-18": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-19": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-20": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-21": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-22": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-23": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-24": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-25": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-26": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-27": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-28": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-29": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-30": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-31": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-32": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-33": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-34": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-35": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-36": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-37": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-38": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-39": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-40": "sponsored step 1 SENT (oldest first)",
+   "HYP-D-41": "NOT SENT: per-run cap of 40 reached; stays due as it is, first in the next run",
+   "HYP-D-42": "NOT SENT: per-run cap of 40 reached; stays due as it is, first in the next run",
+   "HYP-D-43": "NOT SENT: per-run cap of 40 reached; stays due as it is, first in the next run",
+   "HYP-D-44": "NOT SENT: per-run cap of 40 reached; stays due as it is, first in the next run",
+   "HYP-D-45": "NOT SENT: per-run cap of 40 reached; stays due as it is, first in the next run"
+  },
+  "next_date": {
+   "HYP-D-01": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-02": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-03": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-04": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-05": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-06": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-07": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-08": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-09": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-10": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-11": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-12": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-13": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-14": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-15": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-16": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-17": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-18": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-19": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-20": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-21": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-22": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-23": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-24": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-25": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-26": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-27": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-28": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-29": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-30": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-31": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-32": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-33": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-34": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-35": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-36": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-37": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-38": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-39": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-40": "2026-10-27 (literal: step 2 = offer + 14 days = 27 Oct; see findings)",
+   "HYP-D-41": "unchanged",
+   "HYP-D-42": "unchanged",
+   "HYP-D-43": "unchanged",
+   "HYP-D-44": "unchanged",
+   "HYP-D-45": "unchanged"
+  },
+  "waiting_on": {
+   "HYP-D-01": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-02": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-03": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-04": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-05": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-06": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-07": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-08": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-09": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-10": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-11": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-12": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-13": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-14": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-15": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-16": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-17": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-18": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-19": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-20": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-21": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-22": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-23": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-24": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-25": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-26": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-27": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-28": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-29": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-30": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-31": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-32": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-33": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-34": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-35": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-36": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-37": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-38": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-39": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-40": [
+    "Zoya (added; other owners as found)"
+   ],
+   "HYP-D-41": [
+    "unchanged"
+   ],
+   "HYP-D-42": [
+    "unchanged"
+   ],
+   "HYP-D-43": [
+    "unchanged"
+   ],
+   "HYP-D-44": [
+    "unchanged"
+   ],
+   "HYP-D-45": [
+    "unchanged"
+   ]
+  },
+  "next_action": {
+   "HYP-D-01": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-02": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-03": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-04": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-05": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-06": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-07": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-08": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-09": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-10": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-11": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-12": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-13": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-14": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-15": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-16": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-17": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-18": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-19": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-20": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-21": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-22": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-23": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-24": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-25": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-26": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-27": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-28": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-29": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-30": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-31": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-32": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-33": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-34": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-35": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-36": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-37": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-38": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-39": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-40": [
+    "Zoya [followup seq-1-2 2026-10-27T00:00:00+09:00]: sponsored step 2 on 27 Oct"
+   ],
+   "HYP-D-41": [
+    "Zoya [followup seq-1-1 2026-10-27T00:00:00+09:00]: sponsored step 1 on 27 Oct"
+   ],
+   "HYP-D-42": [
+    "Zoya [followup seq-1-1 2026-10-27T00:00:00+09:00]: sponsored step 1 on 27 Oct"
+   ],
+   "HYP-D-43": [
+    "Zoya [followup seq-1-1 2026-10-27T00:00:00+09:00]: sponsored step 1 on 27 Oct"
+   ],
+   "HYP-D-44": [
+    "Zoya [followup seq-1-1 2026-10-27T00:00:00+09:00]: sponsored step 1 on 27 Oct"
+   ],
+   "HYP-D-45": [
+    "Zoya [followup seq-1-1 2026-10-27T00:00:00+09:00]: sponsored step 1 on 27 Oct"
+   ]
+  },
+  "mails": [
+   {
+    "key": "HYP-D-01:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-01",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-02:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-02",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-03:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-03",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-04:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-04",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-05:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-05",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-06:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-06",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-07:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-07",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-08:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-08",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-09:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-09",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-10:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-10",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-11:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-11",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-12:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-12",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-13:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-13",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-14:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-14",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-15:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-15",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-16:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-16",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-17:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-17",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-18:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-18",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-19:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-19",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-20:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-20",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-21:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-21",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-22:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-22",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-23:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-23",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-24:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-24",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-25:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-25",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-26:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-26",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-27:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-27",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-28:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-28",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-29:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-29",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-30:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-30",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-31:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-31",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-32:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-32",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-33:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-33",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-34:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-34",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-35:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-35",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-36:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-36",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-37:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-37",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-38:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-38",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-39:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-39",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   },
+   {
+    "key": "HYP-D-40:followup:seq-1-1:2026-10-27T00:00:00+09:00",
+    "row": "HYP-D-40",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "the offer's recipient on that row's thread (guest or PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "everyone else on the 13 Oct offer"
+    ],
+    "thread": "draft action reply on the 13 Oct offer (that row's own thread); wording per routine page 1 / '## Next sponsored mail' / Rules for Zoya",
+    "attachments": []
+   }
+  ],
+  "run_record": "Run zoya SLOW 2026-10-27 10:08 JST: Partial (due 45, sent 40, held 0, blocked 0, remaining 5: HYP-D-41..45 with their keys; 'stopped at the per-run cap of 40')",
+  "answer": "",
+  "verdict": "PASS",
+  "findings": "1/ The step-2 date anchor is ambiguous in live use: Cadences counts days from the offer (day 14 = 27 Oct, today), so AFTER SEND literally sets Next date 27 Oct and the 16:50 run re-selects all 40 rows only to hold them to 3 Nov under the 7-day rule (no double send, but 40 wasted holds); the Devesh row shows an earlier run counting from the step-1 send instead (26 Oct + 14 = 9 Nov), which here would land in Diwali week (6 to 13 Nov). 2/ Run status for a cap is implied, not stated: Completed is defined as 'all sent, held or blocked' and a cap is 'never a hold', so Partial follows, but the Partial definition only names 'a step failed or was skipped'. 3/ With a 10:08 start the row-start cutoff is 10:48 by '40 minutes after your start' and 11:30 by the parenthesis.",
+  "notes": "Cadences: 'Per day: 150 sends in total, 40 per Zoya run'. SLOW LIMITS: 'Stop at the cap and say so.' SLOW ORDER: 'A cap is never a hold: one you don't reach stays due as it is (Next date unchanged) and goes first next run, ahead of its group's order. A Partial report names every action left.' AFTER SEND 'Nothing sent: ... a cap moves nothing'. Each sent row: Activity 'Zoya sent: Sponsored offers step 1 to <name>' with Action key, Chase step 1, Claude note line, next mail written into '## Next sponsored mail'. 7-day rule: offer 13 Oct, 14 days ago; staleness: under 60 days; 'Rows of one company may share one mail' not applicable (own threads)."
+ },
+ "E": {
+  "action_keys": [
+   "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-E-1010@impactkey.in-1:2026-10-27T10:10:00+09:00",
+   "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-E-1010@impactkey.in-2:2026-10-27T10:10:00+09:00"
+  ],
+  "rows": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "ask 1 (yes at INR 50,000 + GST): answered with 'Sponsored yes: next steps'; ask 2 (camera crew cost for the January in-person shoot): a price not on the wording or sales page, so Akshay's list (c), its reply action stays open"
+  },
+  "next_date": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "2026-10-27 if a reply key's raised time counts as a segment date, else 2026-10-29 (original due); ambiguous"
+  },
+  "waiting_on": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Guest or PR",
+    "Akshay"
+   ]
+  },
+  "next_action": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Waiting on Jheel (Impactkey PR): billing details for the 70% invoice",
+    "Akshay: confirm your India travel plans with Akshat and plan the in-person interview for his Jan or Feb visit (original due 2026-10-29; consolidated from Task 40119a301a7f812ca6e0cba045fa9221)",
+    "Ask Akshay: Jheel asks what the camera crew for Akshat's January in-person shoot would cost",
+    "Zoya [reply msg-HYP-E-1010@impactkey.in-2 2026-10-27T10:10:00+09:00]: answer Jheel on the camera crew cost (after Akshay's call)"
+   ]
+  },
+  "mails": [
+   {
+    "key": "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-E-1010@impactkey.in-1:2026-10-27T10:10:00+09:00",
+    "row": "3f019a301a7f81ef81a4c4780c92fee2",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "Jheel Gehlot (impactkey.in)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "Jaya (Team)",
+     "Sarika (Team)"
+    ],
+    "thread": "draft action reply on HYP-E-1010@impactkey.in; wording 'Sponsored yes: next steps' per Rules for Zoya, adapted (precall already held); no separate holding reply ('unless ... the real answer goes on it this run (one receipt at most)'); whether this mail carries a 'checking with akshay on the crew cost' line is not settled by the prompt",
+    "attachments": []
+   }
+  ],
+  "run_record": "Run zoya FAST 2026-10-27 10:38 JST: Completed (due 2, sent 1, blocked 1: ask 2 on Akshay's list)",
+  "answer": "",
+  "verdict": "FAIL",
+  "findings": "1/ Ask 2 handling is ambiguous. c requires 'the holding reply ... unless one went on it in the last 7 days or the real answer goes on it this run (one receipt at most)'. The real answer to ask 1 goes on the same thread this run, so no holding reply is sent. The prompt never says the answer mail must acknowledge ask 2, so Jheel's crew-cost question can go unacknowledged. 2/ c's 'Set ... Next action \"Ask Akshay: ...\"' reads as replacing Next action. WRITE PATH and 'write each open reply action as its own segment' say to add segments. So it is unclear whether both the Ask Akshay segment and the open Zoya reply-2 segment are written. 3/ It is undefined whether a reply key's raised timestamp is a 'segment date' for Next date (27 Oct vs 29 Oct). 4/ As in G, FAST lacks SLOW's independent-ask carve-out for a row already waiting on Akshay. Here ask 2 really does relate to Akshay's own in-person/travel step. 5/ Akshay already told Jheel on WhatsApp (23 Oct) that the crew is hired and paid by their side, but that term is not on the wording or sales page, so Zoya cannot restate it.",
+  "notes": "ACTIONS: 'two reply actions raised by one inbound key as msg-<id>-1, msg-<id>-2, in the order the asks appear'. 1b: 'a yes at the standard price gets \"Sponsored yes: next steps\" ... Jaya and Sarika in Cc'; '... any other term ... goes to Akshay (c)'. HARD RULES: 'Never a price, discount, term or deadline that isn't on the wording page or the sales page.' 1a logs the inbound (msgid:HYP-E-1010@impactkey.in). Recipients from the latest inbound (Jheel; To Zoya; Cc Akshay) plus revenue copies."
+ },
+ "L1": {
+  "action_keys": [
+   "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00"
+  ],
+  "rows": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "written by FAST only (as in G); SLOW writes nothing while FAST holds"
+  },
+  "next_date": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "2026-10-29 (FAST's write)"
+  },
+  "waiting_on": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Guest or PR",
+    "Akshay"
+   ]
+  },
+  "next_action": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Waiting on Jheel (Impactkey PR): billing details for the 70% invoice",
+    "Akshay: confirm your India travel plans with Akshat and plan the in-person interview for his Jan or Feb visit (original due 2026-10-29; consolidated from Task 40119a301a7f812ca6e0cba045fa9221)"
+   ]
+  },
+  "mails": [
+   {
+    "key": "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00",
+    "row": "3f019a301a7f81ef81a4c4780c92fee2",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "Jheel Gehlot (impactkey.in)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "Jaya (People row, Team)",
+     "Sarika (People row, Team)"
+    ],
+    "thread": "draft action reply on HYP-G-0955@impactkey.in (latest message of the Akshat commercials thread in Zoya's inbox; In-Reply-To/References from it); reply_all false; wording 'Sponsored yes: next steps' per Rules for Zoya / wording page, adapted by CONTEXT CHECK (precall already held 22 Oct, so no podm.in/30min precall ask)",
+    "attachments": []
+   }
+  ],
+  "run_record": "FAST: Completed. SLOW: waits (read only, re-check every 2 min up to 25 min); once FAST's record is Completed it proceeds and records No-op for this scope; if FAST were still Started at 10:33, SLOW ends 'Partial: lease held by FAST <run id>' with no row written",
+  "answer": "FAST holds the lease. Both records say Started 10:08, and both prompts say 'if both are Started, the earlier start holds it, and in the same minute FAST does.' SLOW only reads, re-checking every 2 minutes for up to 25 minutes. FAST sends the Sponsored yes next steps reply and ends Completed. SLOW then proceeds, finds nothing due on the row and ends No-op, or Partial 'lease held by FAST' if FAST were still Started at 10:33.",
+  "verdict": "PASS",
+  "findings": "1/ Residual race. The rule is write-own-record-then-read-the-other with a fixed tie-break, and no run re-reads after deciding. Suppose SLOW writes and reads before FAST's record exists, in the same minute. SLOW then proceeds, and FAST, reading later, sees a same-minute SLOW record and also proceeds by the tie-break. Both write rows. The as-stated same-second case (both writes before both reads) is safe. Fix: the tie-break should only let FAST proceed if SLOW's record shows it has not yet passed its lease check, or both runs should re-read after a short delay. 2/ 'Earlier start' is compared by the record's Date/minute. The Summary carries HH:MM only, so the tie-break covers up to 59 seconds of real difference.",
+  "notes": "FAST LEASE and SLOW LEASE lines are symmetric with the same tie-break; SLOW's wait is 'up to 25 minutes', FAST's 'up to 10 minutes'."
+ },
+ "L2": {
+  "action_keys": [
+   "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00"
+  ],
+  "rows": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "Case 1: untouched by this FAST run (lease held; Partial). Case 2: FAST treats the lease as stale and does the G reply (as in G)"
+  },
+  "next_date": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "Case 1: unchanged (2026-11-02); Case 2: 2026-10-29"
+  },
+  "waiting_on": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Guest or PR",
+    "Akshay"
+   ]
+  },
+  "next_action": {
+   "3f019a301a7f81ef81a4c4780c92fee2": {
+    "case1": [
+     "Waiting on Jheel (Impactkey PR): reply to the sponsored commercials (sent 26 Oct)",
+     "Akshay: confirm your India travel plans with Akshat and plan the in-person interview for his Jan or Feb visit (original due 2026-10-29; consolidated from Task 40119a301a7f812ca6e0cba045fa9221)"
+    ],
+    "case2": [
+     "Waiting on Jheel (Impactkey PR): billing details for the 70% invoice",
+     "Akshay: confirm your India travel plans with Akshat and plan the in-person interview for his Jan or Feb visit (original due 2026-10-29; consolidated from Task 40119a301a7f812ca6e0cba045fa9221)"
+    ]
+   }
+  },
+  "mails": [
+   {
+    "key": "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00",
+    "row": "3f019a301a7f81ef81a4c4780c92fee2",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "Jheel Gehlot (impactkey.in)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "Jaya (People row, Team)",
+     "Sarika (People row, Team)"
+    ],
+    "thread": "draft action reply on HYP-G-0955@impactkey.in (latest message of the Akshat commercials thread in Zoya's inbox; In-Reply-To/References from it); reply_all false; wording 'Sponsored yes: next steps' per Rules for Zoya / wording page, adapted by CONTEXT CHECK (precall already held 22 Oct, so no podm.in/30min precall ask)",
+    "attachments": [],
+    "note": "Case 2 only, sent at about 11:38; in Case 1 the same mail goes at the 12:38 FAST run (SLOW record then 108 min old, stale)"
+   }
+  ],
+  "run_record": "Case 1: 'Run zoya FAST 2026-10-27 11:38 JST: Partial' with 'lease held by SLOW <run id>', no row written. Case 2: Completed.",
+  "answer": "Case 1 (SLOW Started 10:50, 48 minutes old): the lease counts as held, because a Started record 'begun under 60 minutes ago' holds it. FAST only reads and re-checks every 2 minutes for up to 10 minutes (11:38 to 11:48). At 11:48 the record is 58 minutes old, so still held. FAST ends Partial 'lease held by SLOW <run id>' with no row written, and the reply goes at the 12:38 FAST run, when the lease is stale. Case 2 (Started 10:30, 68 minutes old): stale, so FAST proceeds at once and sends the reply. The exact limits: stale at 60 minutes (a lease is held only while 'begun under 60 minutes ago'); FAST waits up to 10 minutes, re-checking every 2 (Bash sleep 120); SLOW waits up to 25.",
+  "verdict": "PASS",
+  "findings": "1/ Nothing ever marks a crashed run's record Failed; it stays Started forever and only ages out at 60 minutes. Harmless to the lease, but run reports and the good-morning check will show a perpetual Started. 2/ In Case 1 the crash delays a sponsored-yes reply by a full hour (09:55 inbound answered 12:38), because FAST's 10-minute wait ends 2 minutes before the lease goes stale at 11:50. A re-check at expiry, or a wait that runs until the lease would go stale when that falls within a few minutes, would answer at 11:50. 3/ SLOW's RECONCILE would flag the reply as stuck only after 2 hours (11:55), and only on a SLOW run (next 16:50).",
+  "notes": "FAST: 'Before your first row write, read the latest run record with Source ID starting \"run:zoya:slow:\": one still at Started, begun under 60 minutes ago, holds the lease ... re-checking every 2 minutes (Bash sleep 120, else between read steps) for up to 10 minutes; still held, end Partial \"lease held by SLOW <run id>\" with no row written.' Logging the inbound Activity also sets Last activity on the row, so FAST does not log it while held."
+ },
+ "L3": {
+  "action_keys": [
+   "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00"
+  ],
+  "rows": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "no row write by FAST: lease held by SLOW (Started 10:50, 48 to 58 min old during FAST's wait); FAST writes only its run record (Started, then Partial)"
+  },
+  "next_date": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "unchanged (2026-11-02)"
+  },
+  "waiting_on": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Guest or PR",
+    "Akshay"
+   ]
+  },
+  "next_action": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Waiting on Jheel (Impactkey PR): reply to the sponsored commercials (sent 26 Oct)",
+    "Akshay: confirm your India travel plans with Akshat and plan the in-person interview for his Jan or Feb visit (original due 2026-10-29; consolidated from Task 40119a301a7f812ca6e0cba045fa9221)"
+   ]
+  },
+  "mails": [],
+  "run_record": "Run zoya FAST 2026-10-27 11:38 JST: Partial, 'lease held by SLOW <run id>', no row written; body names the action left (key 3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00)",
+  "answer": "FAST writes only its own run record: the Started Activity at 11:38 ('Run zoya FAST 2026-10-27 11:38 JST: Started', Source ID run:zoya:fast:<id>), then at 11:48 the same row updated to Partial 'lease held by SLOW <run id>', with the report naming the action left. It writes no inbound Email in Activity (that sets Last activity on the row), no Claude note and no reply. The row after FAST ends: Next date 2026-11-02, Waiting on [Guest or PR, Akshay], Next action unchanged ('Waiting on Jheel (Impactkey PR): reply to the sponsored commercials (sent 26 Oct) | Akshay: confirm your India travel plans ... (original due 2026-10-29; ...)'). Yes, the reply action is still due for the next FAST run (12:38) with owner and Next date unchanged. It was never written as a segment, so STEP 1 re-finds it from the inbox: Jheel's message is still the last real outside message on the thread and unanswered.",
+  "verdict": "PASS",
+  "findings": "1/ The pending reply exists only as 'unanswered in the inbox', not as a row segment or a logged Activity, until a FAST run gets the lease. It survives because STEP 1 re-scans 'of any age', but nothing on the row shows it is waiting. 2/ SLOW was itself due to stop starting rows at 11:30 yet still holds the lease at 11:50; a holder past its own row-start cutoff keeps blocking FAST until it ends or reaches 60 minutes.",
+  "notes": "FAST LEASE: 'While it does, only read ... still held, end Partial \"lease held by SLOW <run id>\" with no row written.' FAST ORDER: 'A cap is never a hold: one you don't reach stays due as it is'; 'A Partial report names every action left.' RUN RECORD: 'The record never sets Last activity, Waiting on or a contact date'."
+ },
+ "L4": {
+  "action_keys": [
+   "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00"
+  ],
+  "rows": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "written by FAST only (10:38 to 11:02, G reply); SLOW then finds it not due (Next date 29 Oct, mailed yes is FAST's)",
+   "3f019a301a7f812ea2a8d1e74b88113c": "SLOW: not due (seq-5-2 on 29 Oct); untouched"
+  },
+  "next_date": {
+   "3f019a301a7f81ef81a4c4780c92fee2": "2026-10-29 (FAST's write)",
+   "3f019a301a7f812ea2a8d1e74b88113c": "unchanged"
+  },
+  "waiting_on": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Guest or PR",
+    "Akshay"
+   ],
+   "3f019a301a7f812ea2a8d1e74b88113c": [
+    "Zoya",
+    "Guest or PR"
+   ]
+  },
+  "next_action": {
+   "3f019a301a7f81ef81a4c4780c92fee2": [
+    "Waiting on Jheel (Impactkey PR): billing details for the 70% invoice",
+    "Akshay: confirm your India travel plans with Akshat and plan the in-person interview for his Jan or Feb visit (original due 2026-10-29; consolidated from Task 40119a301a7f812ca6e0cba045fa9221)"
+   ],
+   "3f019a301a7f812ea2a8d1e74b88113c": [
+    "Zoya [followup seq-5-2 2026-10-29T00:00:00+09:00]: form chaser 2 on 29 Oct"
+   ]
+  },
+  "mails": [
+   {
+    "key": "3f019a301a7f81ef81a4c4780c92fee2:reply:msg-HYP-G-0955@impactkey.in:2026-10-27T09:55:00+09:00",
+    "row": "3f019a301a7f81ef81a4c4780c92fee2",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "Jheel Gehlot (impactkey.in)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "Jaya (People row, Team)",
+     "Sarika (People row, Team)"
+    ],
+    "thread": "draft action reply on HYP-G-0955@impactkey.in (latest message of the Akshat commercials thread in Zoya's inbox; In-Reply-To/References from it); reply_all false; wording 'Sponsored yes: next steps' per Rules for Zoya / wording page, adapted by CONTEXT CHECK (precall already held 22 Oct, so no podm.in/30min precall ask)",
+    "attachments": []
+   }
+  ],
+  "run_record": "FAST 10:38: Completed. SLOW 10:50: No-op for this scope (nothing due after the wait); Partial 'lease held by FAST' only if FAST were still Started at 11:15",
+  "answer": "From 10:50 to 11:02 SLOW only reads. Its RECONCILE and other reads may run, but it writes no rows and sends nothing. FAST's 10:38 record is Started and under 60 minutes old, so 'While it does, only read, re-checking every 2 minutes ... for up to 25 minutes'. At the first re-check after 11:02 (11:02 or 11:04) FAST's record reads Completed, and SLOW starts rows. It must start no new row after 11:30 ('Start no new row 40 minutes after your start (11:30, 17:30)'), so the wait cost it about 12 to 14 of its 40 minutes. No row is written by both. FAST writes the Akshat row (G reply). SLOW then finds Akshat not due (Next date 29 Oct; 'a mailed yes is FAST's') and Amit not due (29 Oct).",
+  "verdict": "PASS",
+  "findings": "1/ The 40-minute cutoff counts from SLOW's start, not from when it gets the lease, so a long FAST run eats SLOW's window. If FAST ran 25 minutes or more past 10:50, SLOW would end Partial having done nothing. 2/ FAST's own 'Start no new row after 25 minutes' does not bound how long FAST keeps the lease (it finishes the row in hand), which is what decides SLOW's wait.",
+  "notes": "SLOW LEASE quoted above. RECONCILE: FAST has a record within 90 minutes and the reply is complete, so no reconcile line."
+ },
+ "R1": {
+  "action_keys": [
+   "HYP-R1-TASK:team:<origin of the 26 Oct transcript request: call- or seq- per keying rules>:<raised>"
+  ],
+  "rows": {
+   "HYP-R1-TASK": "INTERNAL TASKS c: file taken from Ranjita's 27 Oct reply; c(2) blocked (no Episode linked); see findings",
+   "HYP-R1-GUEST": "Recorded (decision 374 test passes); thank-you draft created in ad@; Akshay asked to send it"
+  },
+  "next_date": {
+   "HYP-R1-TASK": "unchanged",
+   "HYP-R1-GUEST": "unchanged (2026-10-23): no open segment carries a date (prompt undefined, finding)"
+  },
+  "waiting_on": {
+   "HYP-R1-TASK": "[] if closed per c(5); stays [Zoya] if c(5) is withheld because the attach failed (ambiguous)",
+   "HYP-R1-GUEST": [
+    "Guest or PR",
+    "Akshay"
+   ]
+  },
+  "next_action": {
+   "HYP-R1-TASK": [
+    "unchanged: Ranjita: transcript for Riya's 23 Oct recording (row closed or left open per c(5), see findings)"
+   ],
+   "HYP-R1-GUEST": [
+    "Waiting on Kabir: nothing open",
+    "Akshay: send the thank-you draft to Riya (draft ready)"
+   ]
+  },
+  "mails": [
+   {
+    "key": "draft only (not sent): HYP-R1-GUEST thank-you",
+    "row": "HYP-R1-GUEST",
+    "mailbox": "ad@thepodium.in (draft)",
+    "from": "Akshay Datt (ad@thepodium.in)",
+    "to": [
+     "Riya Sen (People row Email)"
+    ],
+    "cc": [
+     "Kabir (PR, hypopr.example)",
+     "Neha (Hypo Foods comms)",
+     "house copies: Akshay (ad@thepodium.in) per SENDING; Zoya per CLAUDE.md decision 225 (the prompt does not define 'house copies')"
+    ],
+    "thread": "standalone NEW mail, never a reply on the PR thread; subject 'Next Steps | Riya Sen @ Hypo Foods <> Founder Thesis'; approved 'FT thank-you after recording' wording in Akshay's voice per Rules for Zoya / wording page; read back; Activity 'Zoya drafted: FT thank-you for Riya Sen'",
+    "attachments": []
+   }
+  ],
+  "run_record": "Run zoya SLOW 2026-10-27 10:50 JST: Partial (c(2) attach to the Episode failed: no Episode on the guest row); 'Completed' only if an Episode exists",
+  "answer": "c(1): save riya-sen-23oct.txt from Ranjita's 27 Oct 10:20 reply with MCP Emails (action attachment). It is already .txt, so no conversion. Compute bytes and sha256 in Bash. The search in a. ('LOOK BEFORE ASKING') also finds it in Zoya's inbox, so nothing is sent. c(2): attach the .txt to the Episode's Transcript file (61 KB, under 200 KB, so Notion create-attachment), re-fetch, then write '## Transcript' (name, bytes, sha256, source 'Ranjita's reply of 27 Oct') at the top of the Episode body. The scenario gives no Episode for HYP-R1-GUEST, so this step fails, is reported and the run goes on. c(3): Founder Thesis and the row is still Booked. Both voices speak at length over 52 minutes (20 or more), so Status Recorded, Call type cleared, Claude note '2026-10-27: recorded 2026-10-23 (transcript)'. c(4): there is no 'Zoya drafted: FT thank-you' Activity and no thank-you in Akshay's Sent, so the draft is created in ad@thepodium.in. It is a NEW standalone mail, subject 'Next Steps | Riya Sen @ Hypo Foods <> Founder Thesis', To Riya Sen, Cc Kabir (PR), Neha (Hypo Foods comms) and the house copies (Akshay). No attachment: 'never attach the .txt to a thank-you draft'. Wording per Rules for Zoya. It is read back and logged as 'Zoya drafted: FT thank-you for Riya Sen'. c(5): close the Task row: Task state Done, Waiting on cleared, Claude note '2026-10-27: transcript attached (<bytes> B, <sha256 first 16>)'. That note would be false while c(2) has failed, so whether to close is unsettled. Guest row after: Status Recorded, Waiting on [Guest or PR, Akshay], Next action 'Waiting on Kabir: nothing open | Akshay: send the thank-you draft to Riya (draft ready)'.",
+  "verdict": "PASS",
+  "findings": "1/ No fallback when the guest row has no Episode: c(2) cannot attach, and the prompt does not say whether c(5) still closes the Task row with a 'transcript attached' note, or whether SLOW should find or create the Episode. 2/ 'House copies' is never defined in the SLOW prompt. SENDING's Cc rule gives Akshay, which matches the intent, but Cc'ing Akshay on a draft in his own mailbox is odd. CLAUDE.md (decision 225) puts Zoya in Cc on ad@ mail to outsiders, and the prompt does not say so for this draft. 3/ The Task row arrived inconsistent (Waiting on Zoya while Next action names Ranjita). Selection a. still matches it, which is what lets Ranjita's reply be taken. 4/ The guest row's Next date stays at the past 23 Oct because neither segment has a date; WRITE PATH does not cover 'no dated segment'.",
+  "notes": "INTERNAL TASKS a: 'a row with Task state Handed over, Waiting on Zoya and Source ID starting \"transcript:\". LOOK BEFORE ASKING ... your own inbox ... Found: take it as in c, send nothing.' c(4): 'it never waits for a transcript and carries none; never attach the .txt to a thank-you draft ... create the draft in ad@thepodium.in as a standalone new mail, never a reply on the PR thread ... subject \"Next Steps | <guests> @ <company> <> Founder Thesis\", To the guests, Cc the PR, every other Stakeholder and the house copies, no attachment; read back ... Then make sure Waiting on has Akshay and Next action has \"Akshay: send the thank-you draft to <guest first name> (draft ready)\".' Internal: quiet hours and the 7-day limit do not apply."
+ },
+ "R2": {
+  "action_keys": [
+   "HYP-R2:reply:msg-HYP-R2-PR@hypopr.example-1:2026-10-27T10:05:00+09:00",
+   "HYP-R2:reply:msg-HYP-R2-PR@hypopr.example-2:2026-10-27T10:05:00+09:00"
+  ],
+  "rows": {
+   "HYP-R2": "recording NOT settled; Akshay's recording-status ask added once; Pallavi's two asks (how it went, when the episode is out) on Akshay's list via c; holding reply sent to Pallavi; reply actions stay open"
+  },
+  "next_date": {
+   "HYP-R2": "2026-10-27 if reply keys' raised times count as segment dates; else no dated segment and Next date stays 2026-10-23 (ambiguous)"
+  },
+  "waiting_on": {
+   "HYP-R2": [
+    "Guest or PR",
+    "Akshay"
+   ]
+  },
+  "next_action": {
+   "HYP-R2": [
+    "Akshay: did the 23 Oct recording with Dev Rao happen? Write yes or no in Your call",
+    "Ask Akshay: Pallavi asks how Dev's recording went and when the episode will be out",
+    "Zoya [reply msg-HYP-R2-PR@hypopr.example-1 2026-10-27T10:05:00+09:00]: tell Pallavi how the recording went",
+    "Zoya [reply msg-HYP-R2-PR@hypopr.example-2 2026-10-27T10:05:00+09:00]: tell Pallavi when the episode is out"
+   ]
+  },
+  "mails": [
+   {
+    "key": "HYP-R2:hold:msg-HYP-R2-PR@hypopr.example:2026-10-27T10:05:00+09:00 (holding reply; the prompt gives no separate key form for it)",
+    "row": "HYP-R2",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "Pallavi (PR)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)"
+    ],
+    "thread": "draft action reply on HYP-R2-PR@hypopr.example; one line 'hi Pallavi, checking with akshay, will come back by friday.' (3 working days from Tue 27 Oct = Fri 30 Oct); logged 'Zoya sent: holding reply to Pallavi'",
+    "attachments": []
+   }
+  ],
+  "run_record": "Run zoya FAST 2026-10-27 10:38 JST: Completed (due 2, sent 1 holding reply, blocked 2 on Akshay)",
+  "answer": "No, the recording is not settled. The event is still on the calendar and not cancelled, but there is no Zencastr audio, no transcript and nothing from Akshay, so the row gets once: Akshay in Waiting on and 'Akshay: did the 23 Oct recording with Dev Rao happen? Write yes or no in Your call'. Pallavi's question (how it went, when the episode is out) is a release-date/publishing ask, so it goes to c: 'Ask Akshay: Pallavi asks how Dev's recording went and when the episode will be out'. She gets only the holding reply 'hi Pallavi, checking with akshay, will come back by friday.' from Zoya's inbox on her thread, To Pallavi, Cc Akshay. Nothing goes to WhatsApp (FAST: 'No WhatsApp from this run'; decision 411: 'never on WhatsApp'), and nothing asks Pallavi or Dev whether the recording happened ('Never ask the guest, PR or anyone outside the team').",
+  "verdict": "PASS",
+  "findings": "1/ Two overlapping Akshay asks land on the row (the RECORDING STATUS segment and c's 'Ask Akshay' segment), and the prompt does not say to fold them into one. 2/ It is undefined whether the open reply segments' raised timestamps set Next date. 3/ The holding reply has no key type of its own ('hold' is a FAST type, but its origin is the same inbound), so its idempotency key is left to interpretation.",
+  "notes": "NOTION DATA (FAST): 'RECORDING STATUS (decision 411): whether a recording happened is settled from our side only: the calendar event, Zencastr, a transcript, Akshay's mail or WhatsApp. Never ask the guest, PR or anyone outside the team ... Still unclear: once, Akshay in Waiting on and the segment ...'. 1c: 'a release-date ask, any publishing ask ... don't answer it. Set Waiting on Akshay ... Then the holding reply ... \"hi <first name>, checking with akshay, will come back by <weekday, 3 working days out>.\"' 1a logs the inbound (not logged by inbox)."
+ },
+ "R3": {
+  "action_keys": [
+   "HYP-R3:reply:msg-HYP-R3-IN@hypopr.example:2026-10-27T10:12:00+09:00"
+  ],
+  "rows": {
+   "HYP-R3": "INVITES: read Akshay's calendar for Thu 29 Oct 18:30 to 20:30 JST (15:00 IST), plus 30 min before and after. If clear: create the invite (organiser ad@thepodium.in; attendees Sreya, Rajmohan, Santhosh, Mala; JST and IST; 'zoya-key:HYP-R3:recording:2026-10-29' in the description), then confirm on the thread this run. If a clash: send nothing to them, Akshay's list 'Akshay: Sreya Pal's 29 Oct 18:30 JST clashes with <event>'. No calendar data in the snapshot, so the branch cannot be fixed here"
+  },
+  "next_date": {
+   "HYP-R3": "2026-10-29 (if the invite is created)"
+  },
+  "waiting_on": {
+   "HYP-R3": [
+    "Guest or PR"
+   ]
+  },
+  "next_action": {
+   "HYP-R3": [
+    "reply segment completed; no open Zoya step (booked recording: Guest or PR)"
+   ]
+  },
+  "mails": [
+   {
+    "key": "HYP-R3:reply:msg-HYP-R3-IN@hypopr.example:2026-10-27T10:12:00+09:00",
+    "row": "HYP-R3",
+    "mailbox": "zoya@myunnati.com (MCP Emails)",
+    "from": "Zoya",
+    "to": [
+     "Sreya Pal (hypobank.example)"
+    ],
+    "cc": [
+     "Akshay Datt (ad@thepodium.in)",
+     "Mamatha (myunnati.com) (kept: she is on the latest inbound)",
+     "Rajmohan (PR)",
+     "Santhosh (PR)",
+     "Mala (Hypo Bank comms)"
+    ],
+    "thread": "draft action reply on HYP-R3-IN@hypopr.example (In-Reply-To/References from it), reply_all false; confirms the invite in one line, wording per Rules for Zoya",
+    "attachments": []
+   }
+  ],
+  "run_record": "Run zoya FAST 2026-10-27 10:38 JST: Completed",
+  "answer": "To: Sreya Pal. Cc: Akshay (ad@thepodium.in), Mamatha, Rajmohan, Santhosh, Mala. Read-back before sending, per SENDING (decision 413): check that the draft is a reply on that thread (on HYP-R3-IN's latest message), and 'that To and Cc together hold everyone on the latest inbound, To and Cc, less bounced addresses and Akshay's other addresses, plus Akshay'. Then send; any edit is read back again. Also drop any address tagged 'Email bounced' and none of Akshay's other addresses.",
+  "verdict": "PASS",
+  "findings": "1/ The read-back wording 'everyone on the latest inbound, To and Cc' read literally covers the inbound's To and Cc fields only. That omits the sender (Sreya, who is in To only through 'MCP Emails' reply puts the thread's last sender in To') and includes Zoya herself (she was in To). The intent ('everyone on the latest inbound plus Akshay') holds only when this is read as From + To + Cc less self. 2/ 'Agreed in writing' is assumed from the guest's 'works for the recording'; the prompt does not say whether a guest-proposed slot we never offered counts. 3/ No Status change is named on creating a recording invite (Booking to Booked is left to Calendar rules).",
+  "notes": "SENDING: 'read the draft back (that it is a reply on that thread, and that To and Cc together hold everyone on the latest inbound, To and Cc, less bounced addresses and Akshay's other addresses, plus Akshay: decision 413)'; 'never add Mamatha (keep her only where she is on the latest inbound)'; 'Guest-facing mail (... recording link ...) reaches the guest's side directly: To the guest when their People row has an Email ... PR goes in Cc.' INVITES: 'Clear and agreed in writing ... create the invite, then confirm it on the thread in the same run'."
+ }
+}

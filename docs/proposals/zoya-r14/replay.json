@@ -1,0 +1,185 @@
+{
+ "inputs": {
+  "A": {
+   "file": "docs/proposals/zoya-r14/zoya-one.txt",
+   "bytes": 50822,
+   "chars": 50818,
+   "sha256_prefix": "677aa347",
+   "under_cap": true
+  },
+  "B": {
+   "file": "docs/proposals/zoya-r14/zoya-slow.txt",
+   "bytes": 11276,
+   "chars": 11276,
+   "sha256_prefix": "05466170",
+   "under_cap": true
+  },
+  "slow_file": {
+   "file": "docs/proposals/zoya-r14/zoya-slow-work.txt",
+   "bytes": 73243,
+   "chars": 73239,
+   "sha256_prefix": "26b60e7c6b8eca39",
+   "pin": "9d1bda1e84b57cbb6372c33664179fdebaff740f",
+   "pin_blob_sha_ok": true,
+   "pin_blob_equals_proposal_file": true,
+   "pin_commit_on_remote_branch": "origin/claude/business-os-structure-k3sqo5",
+   "zoya_slow_pin_ref_exists_locally": false
+  },
+  "B_stated_total": "73,239 characters, equals the file's character length",
+  "em_dashes": 0,
+  "word_diff_vs_r13b": {
+   "A": "only the intro's 08:08 slot, 'decisions 449, 450' and the deployment ref (a864a3d3cb5c to c4173f3719c0)",
+   "B": "only the header (decisions 449 and 450, 08:08 slot), the deployment ref (9b01d60ae939 to 939443afcedd), the pin sha, the file hash and the total (72,407 to 73,239)",
+   "slow_file": "only the intro slot, SLOW ORDER's :38 sentence and SLOW BATCH 1/ to 4/ (decision 450) plus STEP 2's selected-item sentence; nothing else"
+  },
+  "r13_defects_D1_to_D10": "still fixed: D1 class 1 excludes the prep note, recording link and day-before note; D2 carryover passes over Skipped, SLOW FILE failures and records without selected, and reads a Started record; D3 elapsed on the first line; D4 time, size or count never a hold, block or reason; D5 STEP 2 and LIMITS work the selected batch; D6 key forms for STEP 0 items; D7 one slice per Bash call with END lines against a known total; D8 RULES LOAD line follows SLOW FILE; D9 No-op, tool error and RULES LOAD statuses in 4/; D10 handoff line is gone",
+  "decisions_read": [
+   "449",
+   "450"
+  ],
+  "method": "offline replay of the text only; no MCP tools, Notion pages (Cadences, follow-ups page) not read, so Cadences numbers are as the prompts name them (40 a run, 150 a day, Diwali 6 to 13 Nov)"
+ },
+ "cases": {
+  "a_early_exit_minute_4": {
+   "trace": "B: LOCK held, record Started, SLOW FILE 73,239 of 73,239, RULES LOAD, bounce scan, 2/ writes 'eligible 41, oldest ...', 'selected:' with 30 keys. Chunk 1 works 10 and appends its line. At minute 4 the model stops working. If it still runs 4/: python diffs 30 selected against 10 outcomes, 20 have no outcome and no stop reason applied (minute 4 is under 22, no cap, no tool error), so they are unfinished with none, 'carryover:' gets the 20, status Failed 'early exit at minute 4, 20 of 30 unfinished', Next dates unchanged. Next run (11:08): 2/ finds the newest run:zoya-slow record with 'selected:' (this one), takes its 20 carryover keys first within their classes, drops any no longer eligible with a 'dropped:' line. If the model ends its turn without 4/ and RELEASE, the record stays Started (next run reads its unanswered selected keys) but the lock stays held and every run of both tasks Skips until the runbook.",
+   "verdict": "pass on the text, with two weak points: the stop reason and the status are still the model's own words (D4), and the line format the code parses breaks on real keys and outcomes (D1)."
+  },
+  "b_two_obligations_one_row": {
+   "trace": "Row R has routine 5 step 3 due (key R:followup:seq-5-3:2026-11-03T00:00:00+09:00) and an invoice 1 reminder due (STEP 1b, type team). ACTIONS keys differ by type and origin, so 1/ makes two items. The follow-up key form is set by ACTIONS; the payment reminder has none (not seq-<routine>, never from our own outgoing mail, no segment to key from), so each run invents one, and reminders 2 and 3 can match reminder 1's Activity and never go (D6). Order: the payment is class 2, the follow-up class 4, so the reminder goes first. ONE PERSON, ONE ASK then reads a substantive mail to that person in the last 7 days (the reminder) and holds the follow-up: 'held ONE PERSON, ONE ASK (payment reminder on this row), recheck <D Mon + 7 days>'. Two keys, two outcomes (completed, held), each on its own segment by WRITE PATH.",
+   "verdict": "pass for the two-item rule; payment reminder keys need a fixed form (D6)."
+  },
+  "c_caps": {
+   "trace": "Per-run cap 40 with at most 30 items: most items send at most one mail; a few send two (they've paid: a thank-you plus a WhatsApp to Jaya, which is a 'Zoya sent' Activity; owner mail plus an item due within 2 days in its own mail). 40 is reachable only with more than 10 two-send items, so in practice it is a backstop. Daily cap 150 reached mid-chunk 2 (FAST used 130 by 17:08): the next send-bearing item stops, the rest of chunk 2 and all of chunk 3 have no outcome, 4/ marks them unfinished (cap), status Partial 'cap', carryover holds them. But 450 says the daily ceiling holds 'with room kept for FAST' and neither A nor the SLOW file keeps any: SLOW can take the last 20 and FAST's replies at 17:38 onward then stop at the cap (D3). Three runs at 40 each cap SLOW at 120 alone, so FAST only lacks room when it is already the heavy user.",
+   "verdict": "pass for Partial and carryover; fail on 'room kept for FAST' (D3)."
+  },
+  "d_lock_held_0808": {
+   "trace": "07:38 FAST still holds zoya-lock at 08:08. B LOCK 2/3: fetch, M starts 'held:', so one Activity is created (never Started first) with Summary 'Run zoya-slow <start> JST: Skipped: lock held by <run id and time>', only the Activities data source fetched, nothing else read or written, no release. The Skipped record has no 'selected:' so 11:08 passes over it for carryover. The 07:38 run is the first after quiet hours and carries the overnight replies, so this skip may be common: watch measured durations on the first days.",
+   "verdict": "pass."
+  },
+  "e_diwali": {
+   "trace": "Cadences pause 6 to 13 Nov (Fri to Fri). 3/ says 'a follow-up inside it is held \"Diwali\"' and LIMITS 'never Diwali week'. Payments, billing, owner mail, the scorecard and team steps are team or STEP 0 items, and LIMITS lets queue steps and team mail go any run, so they are not held. But 'follow-up' is ACTIONS' type followup, routines 1 to 6 and 8, which takes in release mails 1 and 2 (routine 6) and class 1 routine 2 or 3 steps for a booked call: a release on 10 Nov would lose its day-before and pre-release mails, the time-bound class 1 logistics 450 puts first (D5). The recheck date is right if the model reads the pause's end from Cadences: the hold moves Next date to the first day it may go, Mon 16 Nov, so 'recheck 16 Nov'. Then every held chase falls due on 16 Nov at once; ordering by 'oldest due' should use the key's raised date, not the moved Next date (all 16 Nov), noted in D5's fix.",
+   "verdict": "fix: name which steps the pause holds (D5)."
+  },
+  "f_minute_22": {
+   "trace": "Chunk 2 ends at minute 22.5: SLOW ORDER and 3/ start no chunk 3, 4/ marks its 10 keys unfinished (minute 22), Partial 'minute 22', carryover the 10. A chunk that started at minute 21 runs to minute 35 (allowed: the check is per chunk), 4/, the last write and RELEASE end near minute 37 to 40: an 08:08 start released about 08:45, so the 08:38 FAST run Skips (LOCK), its work waits for 09:38. 450 accepts this and the lock is never taken over. An optional item-level stop (no new item after minute 28, unfinished (minute 28)) would keep :38 free more often; left to measurement.",
+   "verdict": "pass."
+  },
+  "g_outcome_check_parse": {
+   "trace": "'selected: <key>, <key>, ...' and 'chunk <n>: <key>=<outcome>, ...' are split on ', ' and '='. The held outcome is itself 'held <rule> (<what>), recheck <D Mon>', so every held item splits into two entries; feedback keys are 'feedback:<Message-ID>' and Google Message-IDs routinely contain '=' (and may contain '+', '/', '$', backticks); msg- origins on team items the same; snooze keys carry 20 characters of free ask text, which can hold commas, '=' or ':'. A python split then miscounts keys, finds outcomes for keys that do not exist and none for real ones: statuses come out Failed or, worse, a missing key is matched by a fragment. The body also reaches python through the model's transcription, where an unquoted heredoc expands '$' and backticks.",
+   "verdict": "fail: change the format (D1)."
+  },
+  "h_statuses": {
+   "trace": "B's RUN RECORD: 'No-op: nothing was due; ... all sent, held or blocked is Completed; Partial: a step failed or was skipped; Failed: stopped early, a SLOW FILE failure or SLOW BATCH's early exit'. SLOW BATCH 4/: Completed only if every key is completed, overtaken, held or blocked; unfinished from cap, minute 22 or tool error is Partial; any other unfinished is Failed; RULES LOAD failure Partial whatever the items show; eligible 0 No-op. B also says 'LOCK, RUN RECORD and HARD RULES here always hold' over the file, so B wins a conflict: a minute 22 or cap stop is 'stopped early' (Failed) under B and Partial under 4/; a RULES LOAD failure with every item blocked is Completed under B and Partial under 4/ and RULES LOAD; 'overtaken' is not in B's Completed list (D2). SLOW FILE failure: B ends Failed 'slow work file unavailable' or 'slow file not loaded: <read> of <total>' and releases; no 'selected:' line, so carryover passes over it: consistent. RULES LOAD failure: Partial 'rules not loaded: <page> <read> of <total>' and nothing written for the actions it governs: consistent between RULES LOAD and 4/.",
+   "verdict": "fix B's RUN RECORD to defer to 4/ (D2)."
+  },
+  "i_leftovers_from_449": {
+   "trace": "No batch of 15, no sponsored revenue class, no 'deferred' outcome in SLOW BATCH. Left: SLOW REPORT 'rows deferred by ONE PERSON, ONE ASK', 'actions left for the next run with their keys (a cap)' and AFTER SEND 'a hold or deferral moves the segment', in r13 vocabulary; and the build_one.py comment 'a batch of 15 by class' (comment only). None contradicts 450's rules, but 'actions left ... (a cap)' duplicates 'carryover:' with a narrower reason (D7).",
+   "verdict": "pass with a wording cleanup (D7)."
+  }
+ },
+ "defects": {
+  "D1": {
+   "severity": "high",
+   "quote": "\"selected: <key>, <key>, ...\" in order. ... append to the record body one line \"chunk <n>: <key>=<outcome>, ...\", one outcome per key: ... held <rule> (<what>), recheck <D Mon>",
+   "scenario": "Case g: the held outcome contains ', ', Google Message-IDs in feedback and msg- keys contain '=', snooze keys carry free ask text. The python split miscounts, and the code check that 450 rests on reports wrong unfinished sets and wrong statuses.",
+   "fix": {
+    "file": "docs/proposals/zoya-r14/zoya-slow-work.txt (part slow-order via VARIANT slowwork in routines/zoya/build_one.py; new pin and sha after)",
+    "edits": [
+     {
+      "old": "update this run's record body (the same row, never a second) with \"eligible <n>, oldest <key> due <date>\" and \"selected: <key>, <key>, ...\" in order.",
+      "new": "update this run's record body (the same row, never a second) with \"eligible <n>, oldest <key> due <date>\", then a line \"selected:\" and under it one line per item, in order, \"S<nn> <key>\" (S01, S02, ...; the key exactly, nothing else on the line)."
+     },
+     {
+      "old": "Carryover (the keys under \"carryover:\" in the newest run:zoya-slow: record",
+      "new": "Carryover (the keys on the lines under \"carryover:\", each after its S number, in the newest run:zoya-slow: record"
+     },
+     {
+      "old": "append to the record body one line \"chunk <n>: <key>=<outcome>, ...\", one outcome per key:",
+      "new": "append to the record body a line \"chunk <n>:\" and under it one line per item, \"S<nn> <outcome>\", its number from the \"selected:\" lines (never the key itself), one outcome per item:"
+     },
+     {
+      "old": "parse the record body's \"selected:\" keys and the outcome keys of every chunk line and print the diff; each selected key with no outcome is \"unfinished\" (with the stop reason if one applied, else none), goes into \"carryover: <key>, ...\" with every other unfinished key, and stays due (Next date unchanged).",
+      "new": "fetch this run's record and give python its body verbatim in a quoted heredoc (<<'EOF'); parse the \"S<nn> <key>\" lines under \"selected:\" (the key is the rest of the line) and the \"S<nn> <outcome>\" lines under each \"chunk <n>:\" (the outcome is the first word after the number) and print the diff; each selected number with no outcome line is \"unfinished\" (with the stop reason if one applied, else none), goes under a line \"carryover:\" as \"S<nn> <key>\" with every other unfinished one, and stays due (Next date unchanged)."
+     }
+    ]
+   }
+  },
+  "D2": {
+   "severity": "high",
+   "quote": "(No-op: nothing was due; a held or blocked action is handled, so a run whose due actions were all sent, held or blocked is Completed; Partial: a step failed or was skipped; Failed: stopped early, a SLOW FILE failure or SLOW BATCH's early exit; Skipped: LOCK)",
+   "scenario": "Case h: B says its RUN RECORD always holds over the file. A minute 22 or cap stop reads as 'stopped early' (Failed) instead of Partial; a RULES LOAD failure with every item blocked reads Completed instead of Partial; overtaken is missing from Completed. The good-morning check then flags normal Partial runs as Failed, or misses a rules failure.",
+   "fix": {
+    "file": "docs/proposals/zoya-r14/zoya-slow.txt, RUN RECORD (the 'runrecord' entries of VARIANT slowtask in routines/zoya/build_one.py; A unchanged; new B sha after)",
+    "old": "(No-op: nothing was due; a held or blocked action is handled, so a run whose due actions were all sent, held or blocked is Completed; Partial: a step failed or was skipped; Failed: stopped early, a SLOW FILE failure or SLOW BATCH's early exit; Skipped: LOCK)",
+    "new": "(the status is the one SLOW BATCH 4/'s OUTCOME CHECK IN CODE prints, as 4/ and RULES LOAD define Completed, Partial, Failed and No-op; also Failed: a SLOW FILE failure, or a stop before SLOW BATCH selects; Skipped: LOCK)"
+   }
+  },
+  "D3": {
+   "severity": "medium",
+   "quote": "the per-run cap and the daily cap (shared with the hourly task, counted from today's JST Activities as LIMITS says)",
+   "scenario": "Case c: decision 450 says the 150-send daily ceiling holds 'with room kept for FAST'. Nothing keeps it: a 17:08 SLOW run can take the last sends of the day and every FAST reply owed after 17:38 stops at the cap.",
+   "fix": {
+    "file": "docs/proposals/zoya-r14/zoya-slow-work.txt (part slow-order via VARIANT slowwork in routines/zoya/build_one.py; new pin and sha after); plus a FAST reserve number on the Cadences page (CTO to set with Akshay)",
+    "old": "the per-run cap and the daily cap (shared with the hourly task, counted from today's JST Activities as LIMITS says)",
+    "new": "the per-run cap and the daily cap (shared with the hourly task, counted from today's JST Activities as LIMITS says; SLOW stops at the daily cap less the FAST reserve Cadences gives, so FAST keeps that room; no reserve on Cadences: SLOW stops 30 short of the daily cap and the report says \"FAST reserve missing on Cadences\")"
+   }
+  },
+  "D4": {
+   "severity": "medium",
+   "quote": "each selected key with no outcome is \"unfinished\" (with the stop reason if one applied, else none)",
+   "scenario": "Case a: a model that wants to stop at minute 4 writes chunk 2 as 'unfinished (minute 22)' or leaves the status to its own reading; the code only diffs keys, so the run reads Partial, the 16:38 excuse again, one level down. The model also writes the counts and the status itself.",
+   "fix": {
+    "file": "docs/proposals/zoya-r14/zoya-slow-work.txt (part slow-order via VARIANT slowwork in routines/zoya/build_one.py; new pin and sha after)",
+    "old": "and stays due (Next date unchanged). Status:",
+    "new": "and stays due (Next date unchanged). The same python takes the run's start and the current `date -u`, counts each outcome, and prints the first line and the status: an \"unfinished (minute 22)\" while the measured elapsed is under 22, or an \"unfinished (tool error)\" with no tool and error text, counts as no reason; the record's first line, status and carryover are copied from its output, never rewritten. Status:"
+   }
+  },
+  "D5": {
+   "severity": "medium",
+   "quote": "Cadences (the Diwali pause included: a follow-up inside it is held \"Diwali\")",
+   "scenario": "Case e, live from Fri 6 Nov: 'follow-up' is the followup type, routines 1 to 6 and 8, which takes in release mails 1 and 2 and class 1 call logistics. A release on 10 Nov loses its pre-release ask and day-before mail. After the pause every held chase has Next date 16 Nov, so 'oldest due' cannot order them.",
+   "fix": {
+    "file": "docs/proposals/zoya-r14/zoya-slow-work.txt (part slow-order via VARIANT slowwork in routines/zoya/build_one.py; new pin and sha after) (confirm against the Cadences page's Diwali line before building)",
+    "old": "Cadences (the Diwali pause included: a follow-up inside it is held \"Diwali\")",
+    "new": "Cadences (the Diwali pause included: a chase inside it (routines 1 to 5, 7 and 8, nurture, revival, PR coordination) is held \"Diwali\", recheck the first weekday after the pause; release mails, INVITES confirmations, payments, billing, team steps, owner mail and the scorecard go on their dates unless Cadences names them; among held items due the same day, the oldest key date goes first)"
+   }
+  },
+  "D6": {
+   "severity": "medium",
+   "quote": "the scorecard \"scorecard:<Monday YYYY-MM-DD>\").",
+   "scenario": "Case b: STEP 1b payment reminders have no key form (not seq-<routine>, never from our own invoice mail, no segment). Each run invents one, carryover misses it, and a reused key makes reminder 2 match reminder 1's Activity and never go.",
+   "fix": {
+    "file": "docs/proposals/zoya-r14/zoya-slow-work.txt (part slow-order via VARIANT slowwork in routines/zoya/build_one.py; new pin and sha after)",
+    "old": "the scorecard \"scorecard:<Monday YYYY-MM-DD>\").",
+    "new": "the scorecard \"scorecard:<Monday YYYY-MM-DD>\"; a payment reminder (STEP 1b) \"<row id>:team:seq-pay<invoice 1 or 2>-<reminder n>:<its due date>T00:00:00+09:00\", one key per reminder; an owner mail item sent at once in its own mail \"ownermail:<YYYY-MM-DD>:<row id>\")."
+   }
+  },
+  "D7": {
+   "severity": "low",
+   "quote": "rows deferred by ONE PERSON, ONE ASK (name: the other row), actions left for the next run with their keys (a cap)",
+   "scenario": "Case i: r13 vocabulary next to 450's held and unfinished; 'a cap' names one of three stop reasons and duplicates 'carryover:'.",
+   "fix": {
+    "file": "docs/proposals/zoya-r14/zoya-slow-work.txt (part report-slow via VARIANT slowwork; also AFTER SEND 'a hold or deferral moves' to 'a hold moves', and the build_one.py comment 'a batch of 15 by class' to 'up to 30 in chunks of 10')",
+    "old": "rows deferred by ONE PERSON, ONE ASK (name: the other row), actions left for the next run with their keys (a cap)",
+    "new": "rows held by ONE PERSON, ONE ASK (name: the other row), unfinished items as \"carryover:\" lists them, with their reason"
+   }
+  }
+ },
+ "verdict": {
+  "result": "not ready: fix and rebuild",
+  "must_fix": [
+   "D1",
+   "D2",
+   "D3",
+   "D5"
+  ],
+  "notes": [
+   "Verification passes: sizes, hashes, the pin blob (26b60e7c, byte-equal to the proposal file, commit on origin), B's 73,239 total, no em dash, A and B under the cap; word diffs carry only decision 450 (plus the version refs). r13's D1 to D10 stay fixed.",
+   "D4 and D6 should go in the same rebuild; D7 is cleanup.",
+   "D5 is dated: the pause starts Fri 6 Nov, so the rebuild should land before then or B goes live with the ambiguity.",
+   "Fixing the SLOW file changes its sha: commit a new pin, rebuild B with the new pin, hash and total, rebuild A only if a shared part changed, and re-run this replay on the diff.",
+   "Not fixable in text: a run that ends its turn without RELEASE holds the lock for both tasks until the runbook; the 07:38 FAST run (first after quiet hours) may often still hold the lock at 08:08; a chunk started at minute 21 can push release past :38. Record measured durations and usage on the first runs, as 450 asks.",
+   "Not checked offline: the Cadences numbers (40, 150, Diwali dates, any FAST reserve) and the follow-ups page."
+  ]
+ }
+}

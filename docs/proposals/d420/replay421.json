@@ -1,0 +1,65 @@
+{
+  "replay": "decision 421 loop-in, offline",
+  "date": "2026-10-28",
+  "inputs": {
+    "inbox_live": {"file": "scratchpad/d420/inbox-live.txt", "bytes": 61957, "sha16": "aed0215a8bdf6a26"},
+    "inbox_build": {"file": "scratchpad/d420/inbox-m.txt", "bytes": 64755, "sha16": "b529deaeb56489db", "rebuilt_by_inbox_py": "byte-identical", "headroom": 581},
+    "zoya_fast_candidate": {"file": "docs/proposals/d420/zoya-one.txt", "bytes": 41209, "sha16": "341e49f0887e9ef3", "slow_pin": "2e39cbd58eb715a443e4d6527be80336e9a60854 / 4e4f4b59ce160b4b (matches)"},
+    "zoya_slow": {"commit": "2e39cbd", "bytes": 61749, "sha16": "4e4f4b59ce160b4b"},
+    "zoya_fast_live": {"file": "routines/zoya/release/zoya-one.txt", "bytes": 40975}
+  },
+  "cases": {
+    "L1": {
+      "inbox": {"verdict": "PASS", "where": "STEP 6 + MAILBOX + LOOP-IN", "text": "thanks <first name>, adding @Zoya to coordinate", "notes": "reply on the pitch message, To sender, Cc others + house copies (not Saurabh, not ad@), idempotency loopin:<pitch Message-ID>, logged 'Akshay to <name>: Zoya loop-in'"},
+      "zoya": {"verdict": "N/A (inbox owns fresh pitches)", "notes": "If Zoya ever needs a thread she is not on where their side wrote last, SENDING gives the same 'thanks <first name>, adding @Zoya to coordinate'. A pitch sent to her own inbox gets her own 'thanks <first name>! looping in Akshay' (mail.txt d), not an ad@ mail."}
+    },
+    "L2": {
+      "inbox": {"verdict": "N/A (correct)", "notes": "STEP 6 only fires where nobody on our side (Team incl. Mamatha) has written, so a Mamatha-chased thread gets no inbox loop-in."},
+      "zoya": {"verdict": "PASS", "where": "SENDING (FAST line 50 = SLOW line 62, byte-identical paragraph)", "text": "adding @Zoya to coordinate further", "notes": "our side wrote last -> no thanks; addressed to the current contact (handover checked); email_compose reply on that person's latest message, Cc Zoya, ad@ never in To/Cc, key loopin:<thread latest Message-ID>, not on closed/declined rows; the step stays in Next action for her own mail."}
+    },
+    "L3": {
+      "inbox": {"verdict": "PASS", "where": "STEP 6a -> STEP 6 new-mail branch", "text": "thanks <first name>, adding @Zoya to coordinate", "notes": "NEW mail (action send) to the original sender, subject 'Re: <original subject>', Cc the others on the original mail (never Saurabh) + house copies per general To/Cc rule; nothing to Saurabh (old 'Thanks for sharing, SG' removed). Thanks is valid: the sender did write the pitch. Vendor forward: same, via STEP 6b."},
+      "zoya": {"verdict": "N/A", "notes": "Zoya has no Saurabh-forward path."}
+    },
+    "L4": {
+      "inbox": {"verdict": "PASS", "where": "STEP 3 repeat pitch + STEP 6 skip list", "notes": "STEP 3: 'the new thread gets the loop-in (LOOP-IN; sent here, so STEP 6 skips it)'; STEP 6: 'Skip repeat pitches (STEP 3)'. Same idempotency key loopin:<pitch Message-ID> on both paths, so even the 72h catch-up cannot double-send. Exactly one."},
+      "zoya": {"verdict": "N/A"}
+    },
+    "L5": {
+      "inbox": {"verdict": "PASS (no contradiction)", "remaining_fixed_strings": [
+        "STEP 6 parenthetical: (a \"Thanks for sharing, SG\" to Saurabh doesn't count) - stale reference to a mail no longer sent; harmless, cosmetic",
+        "LOOP-IN examples themselves (intended)"
+      ]},
+      "zoya": {"verdict": "PASS (no contradiction)", "remaining_fixed_strings": [
+        "mail.txt (FAST line 81): loop-in example '(\"adding @Zoya to coordinate\")' used only to recognise a loop-in; matches both variants",
+        "limits.txt (SLOW line 68): '(\"adding @Zoya to coordinate\", an acknowledgement)' as an admin mail for the 7-day clock; see low note on an ask-bearing loop-in",
+        "old 'Sreerag, any update... adding @Zoya' follow-up and 'joining mail' removed"
+      ]}
+    }
+  },
+  "inbox_diff_vs_live": {
+    "verdict": "only intended edits, with two small side effects",
+    "intended": [
+      "LOOP-IN rule (421) added; STEP 6 'Body, one line, exactly' replaced by reference to LOOP-IN",
+      "STEP 3 repeat pitch, STEP 6b vendor: hard-coded strings replaced by LOOP-IN",
+      "TOOLS -> MCP Emails; MAILBOX map (420); LINKS block cut to text-for-Zoya; ZOYA LIVE send list = loop-ins only",
+      "6a: no mail to Saurabh; vendor forward -> STEP 6b loop-in (old two-mail block and its 'Daily cap ... loop-ins excluded' line removed)",
+      "RUN RECORD (419) + STEP 1 read-to anchor; RAW/Message-ID via email_read original; RSVP archive via email_organize; report lines",
+      "STEP 6 catch-up for 72h, loop-ins outside daily cap",
+      "provenance trims: 144, 359, 385 (round 5) plus MESSAGE IDENTITY, CTO 22 Oct, 316, 399, 325, 387/102 (earlier rounds); every decision number kept",
+      "em-dash count unchanged"
+    ],
+    "side_effects": [
+      "The live TOOLS line's tail ('Without Calendar, skip STEP 6d and say so. Without Blueticks, skip WHATSAPP TO AKSHAY and say so. No partial work.') now sits at the end of the LOOP-IN paragraph (line 5), because MAILBOX + RULE are spliced mid-line. Content intact, placement wrong.",
+      "Round 5 also dropped '(RUN RECORD still written)' after 'If MCP Emails or Notion is missing, stop and say so' (a round-4 addition, not in live), and two more provenance notes; commit message mentions only the three trims."
+    ]
+  },
+  "other": [
+    "README Status says zoya-one candidate 41,166 B; actual 41,209 B / 341e49f0887e9ef3 (commit dfe8da2). Stale line.",
+    "Low: a loop-in carrying 'the ask in a few words' might be read as substantive under the 7-day limit (decision 346); limits.txt calls loop-ins administrative, so it should not count, but it is not explicit."
+  ],
+  "defects": {
+    "blocking": [],
+    "low": ["inbox line 5 misplaced TOOLS tail", "stale Saurabh parenthetical in STEP 6", "README size stale"]
+  }
+}

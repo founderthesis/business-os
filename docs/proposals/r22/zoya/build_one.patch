@@ -1,0 +1,587 @@
+diff --git a/routines/zoya/build_one.py b/routines/zoya/build_one.py
+index 57cc436..13407a9 100644
+--- a/routines/zoya/build_one.py
++++ b/routines/zoya/build_one.py
+@@ -17,14 +17,133 @@ part = lambda n: open(os.path.join(PARTS, n + ".txt"), encoding="utf-8").read().
+ 
+ ONE = ["intro-one", "tools", "rules-common", "rules-tail", "notion-data", "scope", "actions", "queue-fast", "voice", "sending",
+        "limits-fast", "onemail", "identity", "lock", "runrecord", "fast-order", "decision", "daybefore", "invites", "mail",
+-       "report-fast", "slowwork-pointer", "hard"]
++       "report-fast", "hard"]
+ SLOWWORK = ["slowwork-intro", "tools", "rules-common", "rules-routines", "rules-tail", "notion-data", "scope", "actions",
+             "queue-slow", "internal", "editnotes", "snoozed", "voice", "sending", "teamwa", "limits", "onemail", "identity",
+             "slow-order", "feedback", "bounces", "vendor", "ownermail", "scorecard", "payments", "invites", "followups",
+             "report-slow", "hard"]
++EPISODES = ["episodes-intro", "tools", "rules-common", "rules-tail", "notion-data", "scope", "actions", "voice", "sending", "teamwa", "limits-fast", "onemail", "identity", "lock", "runrecord", "episodes-work", "hard"]
++SLOWTASK = ["slowtask-intro", "tools", "lock", "runrecord", "slowtask-load", "hard"]
++SHARED = [
++  # Rules for Zoya split (CTO, 1 Nov) and RULES LOAD (CX-20261103T0800 finding 1: a run read 21k of 62k and sent anyway).
++  ("rules-common", "- Client show mails: 3fc19a301a7f817588e2d081af825f8a (the un# pitch sheet and the client templates C1 to C19: the words of every un# mail)",
++   "- Client show mails: 3fc19a301a7f817588e2d081af825f8a (the un# pitch sheet and the client templates C1 to C19: the words of every un# mail)\n"
++   "- SLOW work only: Rules for Zoya: follow-ups 40b19a301a7f81999c1acd8350d59a54 (the follow-up routines and 5a nurture and revival)\n"
++   "RULES LOAD: read every page above in full every run; the follow-ups page and the routine pages it links are SLOW "
++   "work's only, and FAST sends never wait on them. A fetch shown inline in full is loaded: read = total = its length. "
++   "A fetch saved to a file: in python, load it as one string (its text field when it is JSON), print it in slices of at "
++   "most 20,000 characters, in order, to its end, never stopping at the part a step needs; total = that string's "
++   "length, read = the end of the last slice shown in full. Each page gets a run record line \"<page>: <read> of "
++   "<total> characters\". A page whose read is short of its total is not loaded (PRE-SEND check 1): the run ends "
++   "Partial \"rules not loaded: <page> <read> of <total>\", whatever RUN RECORD says of blocked actions, and writes "
++   "nothing for the actions it governs."),
++  # Akshay, 2 Nov (CTOA-03 items 1, 6, 7, 8): pre-send checks, host kept when he wrote, truthful guest examples, inline booking link.
++  ("sending", "on un#, Sri, and anyone who handed over",
++   "on un#, Sri, and on Built to Share and Human by Design the host, unless they wrote on the thread themselves "
++   "(Akshay, 2 Nov: then they are added back if missing), and anyone who handed over"),
++  ("scope", "Never mail or WhatsApp Sri, and Sri is never in Cc on routine mail.",
++   "Never mail or WhatsApp Sri, and Sri is never in Cc on routine mail, unless he wrote on that thread himself: then he stays in Cc (Akshay, 2 Nov)."),
++  ("scope", "Never mail or WhatsApp the host, and the host is never in Cc on routine mail.",
++   "Never mail or WhatsApp the host, and the host is never in Cc on routine mail, unless the host wrote on that thread: then they stay in Cc."),
++  ("voice", "no idioms (\"works\", ", "no idioms (\"works\" except in \"any open slot here works: podm.in/30min\", "),
++  ("hard", "HARD RULES (always hold, whatever a page says)\n",
++   "HARD RULES (always hold, whatever a page says)\n"
++   "- PRE-SEND CHECKS (Akshay, 2 Nov), FAST and SLOW, fresh at each send, never taken from earlier mail on the thread: 1/ the "
++   "required pages loaded this run (RULES LOAD: each read equals its total); any page short or unread: no send that "
++   "uses wording or rules, with no \"the part I need was loaded\" exception: each such action is blocked, \"rules not "
++   "loaded: <page> <read> of <total>\", named in the report, never a send from memory; 2/ recipients from the latest inbound's own headers (From, To, Cc) "
++   "and the row (no inbound yet: the row and the thread's last message, if any); 3/ bounced addresses dropped (BOUNCES); 4/ the "
++   "row's newest Your call, Next action and Waiting on followed; 5/ ACTIONS' Sent check (your inbox, and ad@ less "
++   "loop-ins) finds no mail that already did this action; 6/ the action key (ACTIONS). A failed check: send nothing, "
++   "say which in the report.\n"
++   "- GUEST EXAMPLES (Akshay, 2 Nov): name only guests whose appearance on that show is on its Episodes row or "
++   "podm.in/guest-list, and on a client show only names its pitch sheet allows (SHOW CHECK); never \"recent\" unless it was released in the last 90 days; pick by relevance to the reader, "
++   "then standing, then recency; none verified: name none.\n"
++   "- BOOKING LINKS (Akshay, 2 Nov): a booking link sits inside its sentence, in the same <p> and plain-text line: "
++   "\"any open slot here works: podm.in/30min\" (allowed whatever PLAIN ENGLISH says); never a paragraph or line break of its own.\n"),
++  # Decisions 446 and 447 (Akshay, 3 Nov, Tab 13): client-show scheduling via Akshay; the subject follows the org.
++  ("scope", "- Slots on un# (C7): ask the guest side for 3 or 4 windows with time zones; when they arrive, Waiting on Sri, Next action \"Sri: pick a slot for <guest> on your board (<slots in SGT>)\". Once Sri picks, confirm it on the thread (C8) and create the invite (INVITES).",
++   "- Scheduling on client shows (decision 446, Akshay, 3 Nov: \"For client podcasts, best to ask me for next action first\"): on un#, Built to Share and Human by Design you never propose, create, move or confirm a recording time on your own; C7, C8 and INVITES go only on Akshay's ok (his Your call, or his instruction mail below). Each scheduling turn (their windows or slots, a \"can't do\", a reschedule, the host's pick) goes on his list as one recommendation: Akshay in Waiting on and first in Next action \"Akshay: <guest> (<show>) scheduling: <what came in>. Recommend: <one step: ask for 3 or 4 windows with time zones (C7) | put <the slots> on <host>'s board | confirm <slot> (C8) and create the invite>, because <one line>. Write ok, not ok or a change in Your call. (<D Mon>)\" (other segments kept; one already open on the row: update it, never a second). When their side wrote, the holding reply (decision 390) is all you send. On his ok, do the step as he approved it; slots for Sri go as Waiting on Sri, \"Sri: pick a slot for <guest> on your board (<slots in SGT>)\". An instruction mail from Akshay on the thread (a second hold, \"block the 17th as well\") is his ok: queue it as \"Zoya [decision call-<its Activity id> <ts>]: <step>\" (an inbox-queued \"Zoya: <his step>\" from that mail is this action: key it so, never a second) and do it."),
++  ("scope", "Satish (Built to Share) and Arjun (Human by Design) pick slots: Waiting on",
++   "Satish (Built to Share) and Arjun (Human by Design) pick slots, after Akshay's ok (decision 446, above): Waiting on"),
++  ("invites", "Clear and agreed in writing (outside quiet hours unless Akshay named it): create the invite",
++   "Clear and agreed in writing (outside quiet hours unless Akshay named it; on a client show, also Akshay's ok for that time, in Your call or his instruction mail on the thread, decision 446): create the invite"),
++  ("sending", "; read the draft back (that it is a reply on that thread",
++   "; the subject (decision 447): when the org the mail is about differs from the org in the thread's subject (a new conversation in an old chain, such as Commix on a Livlong 365 thread), set it with draft update's subject to \"<Org> <> Founder Thesis Podcast\" (on a client show, the show's name as its pitch sheet gives it), In-Reply-To and References kept, and add the Claude note line \"subject: <it>\"; every later mail on that row's thread uses the subject in that line; read the draft back (that it is a reply on that thread, with the subject decision 447 sets"),
++  ("hard", "HARD RULES (always hold, whatever a page says)\n",
++   "HARD RULES (always hold, whatever a page says)\n- CLIENT-SHOW SCHEDULING (decision 446): on un#, Built to Share and Human by Design no recording time is proposed, created, moved or confirmed without Akshay's ok (SCOPE), whatever a page says. A reply to a mail Akshay wrote himself goes on his list and gets at most the holding reply (decision 448).\n"),
++  ("hard", "are feedback you act on, and only on mail wording.",
++   "are feedback you act on, and only on mail wording, or, on a client show, his scheduling instruction (SCOPE, decision 446)."),
++  # Decision 449 (Akshay, 3 Nov): SLOW work is its own task; both tasks' run records count for the Sent reconcile.
++  ("actions", "earliest run that took the lock since the last Completed one (Skipped records don't count)",
++   "earliest run of any Zoya task (run:zoya:, run:zoya-slow: or run:zoya-episodes: records) that took the lock since the last Completed one (Skipped records don't count)"),
++  # r13b, replay D7: one slice per Bash call with an END line, so an output saved to a file is never read as loaded.
++  ("rules-common", "print it in slices of at most 20,000 characters, in order, to its end, never stopping at the part a step needs; total = that string's length, read = the end of the last slice shown in full.",
++   "print one slice of at most 20,000 characters per Bash call, each ending with a line \"END <offset> OF <length>\", in order, to its end, never stopping at the part a step needs; output that is cut or saved to a file is not read: print that slice again; total = that string's length, read = the last END offset you saw in full."),
++  # Decision 452 (Akshay, 3 Nov, Tab 13 item 4): Gmail shows the HTML, so html_body carries the quoted chain.
++  ("sending", "MCP Emails quotes the thread below your reply itself, in both bodies: add no quote of your own to either body.",
++   "MCP Emails quotes the thread below your reply in the plain-text body only, and Gmail shows the HTML (decision 452): the plain-text body keeps MCP's own quote (add none), and html_body ends with <div class=\"gmail_quote\">On <date>, <name> &lt;<address>&gt; wrote:<br><blockquote style=\"margin:0 0 0 .8ex;border-left:1px solid #ccc;padding-left:1ex\">[the message you reply to: read it with email_read action read and include_html true, its full body, never a truncated read; its HTML body's inner content (no <html>, <head>, <body>, <style> or <script> tags, and no <img> whose src is cid:), else its text HTML-escaped with each line break as <br>]</blockquote></div>, its date, name and address from that message's own Date and From headers, the name HTML-escaped. That quote is the only <br> block in a mail: one <p> per paragraph holds for your own text above it. A new mail that continues no thread has no quote."),
++  ("sending", "read the draft back (that it is a reply on that thread, with the subject decision 447 sets",
++   "read the draft back (that it is a reply on that thread, that draft_read's html holds that gmail_quote blockquote (decision 452; if draft_read shows no html, that the html_body you passed ends with it), with the subject decision 447 sets"),
++  # r15b, replay D1, D3, D5: never reply to or quote a team-only message; the quote isn't leak-checked; the loop-in carries it too.
++  ("sending", "the thread's latest message is the latest whose References or In-Reply-To holds the original's Message-ID);",
++   "the thread's latest message is the latest whose References or In-Reply-To holds the original's Message-ID and that someone outside the team sent or received (From, To or Cc); a team-only message, such as Akshay's feedback to you or a team note, is never replied to or quoted);"),
++  ("hard", "- LEAK CHECK (decision 215) before every send: no ",
++   "- LEAK CHECK (decision 215) before every send, on the text you write, and on the gmail_quote and MCP's plain-text quote with every nested part, unless every recipient outside the team was on the quoted message's own From, To or Cc (decision 452); a quote that fails goes, with the mail, to Akshay's list unsent: no "),
++  ("sending", "Either way include_signature false, no link,",
++   "Either way include_signature false, no link, html_body the loop-in as one <p> and then the gmail_quote of the message it replies on (SENDING, decision 452),"),
++  # r15c, Cleanup Z2: the quotes are exempt from the link rule and SHOW CHECK.
++  ("hard", "Never a link outside the approved list.",
++   "Never a link (the gmail_quote and MCP's plain-text quote aside) outside the approved list."),
++  ("hard", "SHOW CHECK (decision 306) before every send:",
++   "SHOW CHECK (decision 306) before every send (the gmail_quote and MCP's plain-text quote aside):"),
++  # Decision 462 (Akshay, 4 Nov): unhashed.co/studio is approved, for un# recordings only.
++  ("scope", "Links on un#: unhashed.co/sponsored and unhashed.co/precall only.",
++   "Links on un#: unhashed.co/sponsored and unhashed.co/precall, and unhashed.co/studio for a recording only (decision 462), nothing else."),
++  # r18 (CTO and Cleanup 718ada8, 4 Nov): loop-in by draft only and bare; recipients checked in code; bodies as UTF-8.
++  ("sending", "email_compose action reply on the latest message from the person you address (a reply goes to its sender), reply_all false, Cc set explicitly (OUTSIDE MAIL), Cc you; that person never wrote on it (a new contact after a handover): draft action reply on the thread's latest message",
++   "always the draft way, never email_compose reply's own addressing (4 Nov: a compose reply on Akshay's own last message went to ad@ alone): draft action reply on the latest message from the person you address (that person never wrote on it, a new contact after a handover: on the thread's latest message)"),
++  ("sending", "Optionally the ask in a few words.",
++   "Nothing else (CTO, 4 Nov, clarifying decision 421): no chase, offer, sponsored ask or reminder of ours and no restated ask; a chase goes from your own inbox after the loop-in, as its own action."),
++  ("hard", "2/ recipients from the latest inbound's own headers (From, To, Cc) and the row (no inbound yet: the row and the thread's last message, if any);",
++   "2/ recipients from the latest inbound's own headers (From, To, Cc) and the row (no inbound yet: the row and the thread's last message, if any), built into To and Cc before the draft and checked in a Bash python step, never by eye: To is not empty; ad@thepodium.in and every team address (People tagged Team) are never in To; every outside address meant to get the mail (that inbound's From, To and Cc less bounced, excluded and handed-over ones, plus the guest-facing rule's) is in To or Cc; a failed assert: send nothing, the action blocked \"recipients: <what failed>\" (CTO, 4 Nov: no correcting after the fact);"),
++  ("sending", "SENDING. MCP Emails email_compose, include_signature false,",
++   "SENDING. Both bodies go straight in the tool arguments as UTF-8, never through Bash or a file (4 Nov: a heredoc broke the sign-off's emoji); the read-back checks the plain text ends with your sign-off as written. MCP Emails email_compose, include_signature false,"),
++  ("scope", "AD Personal threads for misc chase (routine 4)",
++   "AD Tasks threads for misc chase (routine 4)"),
++  # r19 (CTO, 4 Nov 17:40): the 17:08 run rewrote 10 Claude notes from a 400-character read and cut every older line.
++  ("hard", "- OWNERS:",
++   "- CLAUDE NOTE WRITES: read the row's whole Claude note first (a page fetch or rows mode, never an SQL value, a preview or any slice), put one dated line at the top, keep every older line as it was, and check in a Bash python step that the new note's length is at least the old length plus the new line's; a failed check: write nothing, the item unfinished (\"note check failed\"). Never rewrite or shorten a Claude note.\n- OWNERS:"),
++]
+ VARIANT = {
+- "one": [
++ "one": SHARED + [
+   ("sending", "(STEP 0c)", "(SLOW work's bounce scan)"),
++  ("limits-fast", "Everything this run sends answers someone", "Everything FAST work sends answers someone"),
++  # Decision 449: no run of the hourly task does SLOW work; it is the Zoya SLOW task's.
++  ("intro-one", "You run at :38 every hour, 07:38 to 23:38 JST, under LOCK. Every run does your FAST work (FAST ORDER): replies owed to people who wrote to us, Akshay's decision mails and other steps from his calls, and holding replies. The 10:38 and 16:38 runs on weekdays then also do your SLOW work (follow-up chains, nurture, team work, payments, snoozes, STEP 0), from SLOW WORK; no other run does SLOW work. \"FAST's\" and \"SLOW's\" below name these two kinds of work, never two routines.",
++   "You run at :38 every hour, 07:38 to 23:38 JST, under LOCK, and every run does your FAST work (FAST ORDER): replies owed to people who wrote to us, Akshay's decision mails and other steps from his calls, and holding replies. Your SLOW work (follow-up chains, nurture, team work, payments, snoozes, STEP 0) is the Zoya SLOW task's, at 08:08, 11:08 and 17:08 JST on weekdays (decisions 449, 450): it takes the same LOCK and shares your action keys, Sent checks, contact limits and daily cap. No run of yours does SLOW work. \"FAST's\" and \"SLOW's\" below name your work and that task's."),
++  # r15b, replay D12: Prep note link is an Engagements property.
++  ("notion-data", "Eval verdict, Next date,",
++   "Eval verdict, Prep note link, Next date,"),
++  # Decision 453 (Akshay, 3 Nov, Tab 13 item 5): themes from the prep note when the guest side asks.
++  ("mail", "no precall notes: a draft to Akshay first;",
++   "no precall notes: a draft to Akshay first, except that a guest-side ask for themes or questions before a recording, on a row with a Prep note link (decision 453, with or without precall notes), is yours: on Founder Thesis (a client show: Akshay's list with the themes, until he says otherwise), open the Notion page whose id is the last 32 hex characters of that link, read it in full, and reply on the thread, To whoever asked and the guest's side as SENDING's guest-facing rule says, with its \"Themes we'll cover\", a few lines in your voice (never its questions word for word, never the link (decision 143), nothing LEAK CHECK bars), no Akshay ask and no holding reply;"),
++  # Decision 448 (Akshay, 3 Nov, Tab 13 item 1): replies on Akshay's own threads go to him.
++  ("mail", "b. Answer it per Rules for Zoya section 4",
++   "b. A reply to a mail Akshay wrote himself (decision 448, Akshay, 3 Nov): the message it answers (its In-Reply-To, else our side's last message on the thread) is from ad@thepodium.in and is his own, not a loop-in or a mail of his handing the thread to Zoya, the billing forward, an agent's send or a team member's mail; an auto-reply, out-of-office or bounce is no reply. Don't answer it, even a \"will revert\" or a mail with no ask: Akshay in Waiting on and first in Next action one recommendation, \"Akshay: <who> replied on your <D Mon> mail: <what, a few words>. Recommend: <one step>, because <one line>. Write ok, not ok or a change in Your call. (<D Mon>)\" (one already open for that thread: update it, never a second); a client-show scheduling turn (SCOPE, decision 446) or new inbound on a closed row (decision 444) takes that segment instead; the holding reply (decision 390) only when it asks something; settle the thread \"on Akshay's list\". Anything else: answer it per Rules for Zoya section 4"),
++  ("mail", "reply that you're taking it off the calendar and ask for a fresh slot:",
++   "reply that you're taking it off the calendar and ask for a fresh slot (on a client show no slot ask: the decision 446 segment, SCOPE):"),
++  # Decision 445 (Akshay, 3 Nov): Zoya sends every guest their recording room link; FAST only, SLOW untouched.
++  ("invites", "INVITES (detail on Rules for Zoya and Calendar rules).",
++   "STEP 0r. RECORDING LINKS (decision 445; Akshay, 3 Nov: \"have Zoya send - I don't want to send manually\"). Founder Thesis only (a link for a client-show row: send nothing, report it). Every run, read the mails in your inbox from Mamatha (tagged Team) in the last 14 days that carry zencastr.app.link guest links (a line with two links, or one marked host: send nothing, report it). Each link line names a guest and company; a later line from Mamatha for the same guest and recording replaces an earlier one (her correction; decision row to log): on that invite the old zencastr.app.link URL in its location and description becomes the new one, and the row's Call link the same, notificationLevel ALL, nothing else touched; a recording-link mail for that event that already went (by you or by hand) is tested per guest and event, not per link, so it is done and no second mail goes: Akshay's list, \"Akshay: <guest>'s recording link changed after the mail went\": match it to one Founder Thesis Engagement at Status Booked whose recording is on Akshay's calendar. A recording already past: skip it silently. No match, or two the line's date can't separate: send nothing, report it once (an earlier run record of yours names that link: don't repeat). Its action key: \"<row id>:reply:call-recording-link-<event id>:<event start ISO>\" (ACTIONS; its Sent check runs from the arrival of Mamatha's mail, not the key's time; in FAST ORDER these are replies and go first among replies, soonest recording first). Already done when a \"Zoya sent: recording link to <guest>\" Activity exists for it, or a mail from us (your Sent or ad@'s Sent) carries that link in its own text, not a quote, to the guest or anyone on their side (the thread, Stakeholders, Via or the invite): send nothing, log the Activity if missing, naming the real sender in its body, and still do the link add and Call link below when the invite lacks that link (Akshay, 3 Nov: a mail sent by hand leaves the invite to you). Else send it in the first run after the link arrives (quiet hours aside), never later than the day before the recording: the \"Recording link\" toggle from the wording page (no such toggle: send nothing, report \"wording missing: Recording link\"; a recording within 48 hours goes on Akshay's list), on the guest's own thread (THREADING), To the guest (else their company-side contact, as SENDING's guest-facing rule says), Cc their side from the thread and Akshay, the time in the guest's zone (the thread or row; unknown: IST). A row waiting on Akshay for another ask still gets it; an Akshay hold on this recording (no-show, cancellation, reschedule) holds it. Then the link add on that recording event: its location the link if empty, and a first description line \"Recording link (Zencastr): <link>\"; notificationLevel ALL; never move, remove or change anything else (an event you can't edit: report it). Set the row's Call link to the link if empty. Log \"Zoya sent: recording link to <guest>\" (Kind Email out, Source ID per MESSAGE IDENTITY, Action key) and a Claude note line; remove any \"Akshay: no recording room\" segment for it and his Waiting on entry (OWNERS). A Founder Thesis Booked recording within 24 hours with no room link anywhere (Mamatha's mails, the invite's location or description, the row's Call link): once (Claude note \"recording room asked <event id>\"), Akshay in Waiting on and the segment \"Akshay: no recording room for <guest> (<D Mon HH:MM JST>)\".\n\nINVITES (detail on Rules for Zoya and Calendar rules)."),
++  ("sending", "(decision 237); client show links: SCOPE.",
++   "(decision 237); a zencastr.app.link room link only in that guest's recording-link mail and invite (STEP 0r, decision "
++   "445); client show links: SCOPE."),
++  ("queue-fast", "Rows waiting on Akshay are never yours to mail.",
++   "Rows waiting on Akshay are never yours to mail (STEP 0r's recording link, the themes reply in STEP 1 b (decision 453, when his open ask is about something else) and the holding reply, decision 390, aside)."),
++  ("hard", "beyond INVITES' adds (a call", "beyond INVITES' adds and STEP 0r's link add (a call"),
++  ("hard", "outside the approved list.",
++   "outside the approved list (a zencastr.app.link room link only as SENDING allows, decision 445)."),
+   # FAST work never uses these (no WhatsApp, follow-ups, vendor forms, internal tasks, release mail); the SLOW work file has them
+   ("tools", " Blueticks sends WhatsApp to the team (TEAM WHATSAPP). Web search finds news for news angles.", ""),
+   ("tools", ', "+bluetick"', ""),
+@@ -35,7 +154,7 @@ VARIANT = {
+    "Service Name, Contact Name, Email, Phone / WhatsApp, Website, Service Offering, Pricing, Sample Work, Why Founder Thesis?, "
+    "Status, Submitted). Organisations:", "- Organisations:"),
+   ("notion-data", "re: PERSON STEPS GO ON THEIR ROW \\(decision 385.*", " FAST work creates no Task rows."),
+-  ("scope", ", STEP 0d); AD Personal threads for misc chase (routine 4). Engagements with Kind Task and Show Internal "
++  ("scope", ", STEP 0d); AD Tasks threads for misc chase (routine 4). Engagements with Kind Task and Show Internal "
+    "(INTERNAL TASKS).", ")."),
+   ("scope", "\n- Routines on un#: 1 to 4 and 7 run; 5 and 8 don't; 6 sends only C16 and C17, and only when the Episode has the "
+    "episode link and Sri's post link. Name-drops come from the un# sheet's past guests.", ""),
+@@ -50,7 +169,7 @@ VARIANT = {
+    "- No WhatsApp in FAST work; SLOW work: only to the team members TEAM WHATSAPP names."),
+   ("limits-fast", "shared with your SLOW run", "shared with your SLOW work"),
+   ("queue-fast", "Follow-up chains, nurture and team steps are SLOW's: leave them.",
+-   "Follow-up chains, nurture and team steps are SLOW's: leave them to SLOW WORK."),
++   "Follow-up chains, nurture and team steps are SLOW's: leave them to the Zoya SLOW task."),
+   ("runrecord", "Before your first Notion write, fix this run's id once: Bash printenv CLAUDE_CODE_REMOTE_SESSION_ID; if empty, "
+    "once echo \"syn-$(date -u +%Y%m%dT%H%M%SZ)-$(od -An -N4 -tx1 /dev/urandom | tr -d ' \\n')\" (synthetic); if neither works, "
+    "write no record and report \"run record skipped: no id\". Never derive it again. Then one Activity:",
+@@ -60,18 +179,106 @@ VARIANT = {
+    "FAST work starts no new row 25 minutes after the run's start (measured, TIME)."),
+   ("report-fast", "Summary \"Run zoya FAST <start> JST: <status>\"", "Summary \"Run zoya <start> JST: <status>\""),
+  ],
+- "slowwork": [
++ "slowwork": SHARED + [
++  ("limits", "A follow-up run works its due list oldest first until it is empty, the cap is reached or a hold applies;",
++   "Each run works its selected batch in SLOW BATCH's order until it is done or SLOW BATCH's stop applies (a hold stops that one item only);"),
++    # r13b, replay D5, D8: the batch, not the whole due list; the file loads after SLOW FILE.
++  ("limits", "Replies to people who wrote to us come first, then your queue, then follow-ups, oldest due first.",
++   "In SLOW work the order is SLOW BATCH's."),
++  ("followups", "Every due row ends the run sent, held or blocked, never silently skipped:",
++   "Every selected item (SLOW BATCH) ends the run with an outcome (completed, overtaken, held, blocked or unfinished), never silently skipped; a due row not selected stays due as it is:"),
++  ("rules-common", "Every run, right after LOCK and before anything else, read:",
++   "Every run, right after your prompt's SLOW FILE load and before anything else, read:"),
++    # Decision 456 (Akshay, 3 Nov, Tab 13 items 13 to 15): transcripts come from Mamatha, and her transcript files are taken on any thread.
++  ("internal", "Not found, and no Email out Activity linked to the row yet (a retry never resends): send the transcript request from your inbox in that wording, To Ranjita, Cc Akshay (addresses from their People rows, tagged Team), naming the guest, company and recording date; then Waiting on Ranjita, Next action \"Ranjita: transcript for <guest>'s <D Mon> recording\", Next date 2 working days after the send,",
++   "Not found, not before the day after the recording, and no Email out Activity linked to the row yet (a retry never resends): send the transcript request from your inbox in that wording, To Mamatha (decision 456), Cc Akshay (addresses from their People rows, tagged Team), naming the guest, company and recording date; then Waiting on Zoya (nothing waits on Mamatha, decision 352), Next action \"Zoya: transcript from Mamatha for <guest>'s <D Mon> recording (asked <D Mon>)\", Next date 2 working days after the send; on that date with no transcript, one follow-up on the request thread To Mamatha, Cc Akshay, Next date 2 working days on; still none on that date: Akshay's list, \"Akshay: no transcript from Mamatha for <guest>'s <D Mon> recording\", no more follow-ups,"),
++  ("internal", "c. TAKING THE FILE: when Ranjita's reply on the request thread carries a .txt, .docx or .pdf transcript, or a found one:",
++   "c. TAKING THE FILE: when a .txt, .docx or .pdf transcript reaches your inbox from Mamatha on any thread, the request thread or not (decision 456), or a found one: its item is \"transcript-file:<Message-ID>:<file name>\" (SLOW BATCH). Match it to one guest's recording whose date has passed (never a precall's) by the file name, the thread and the guest's name, and to its transcript row if there is one. Before attaching anything: run decision 374's test on its text (both voices at length, 20 minutes or more); it fails, the Episode already has a Transcript file (never replace one), or you aren't sure which recording: attach nothing, Akshay's list \"Akshay: <file name> from Mamatha doesn't fit <guest>'s recording (<why>)\", the item blocked;"),
++  ("internal", "source (Ranjita's reply of <D Mon>, or where you found it)",
++   "source (<sender>'s mail of <D Mon>, or where you found it)"),
++  ("internal", "(<what Ranjita said>)",
++   "(<what Mamatha said>)"),
++  ("teamwa", "the team member whose Task it is (e.g. Ranjita for transcripts)",
++   "the team member whose Task it is (a transcript row waits on Zoya and gets no WhatsApp, decision 456)"),
++  ("notion-data", "decision 376: transcripts to Ranjita,",
++   "decision 376: transcripts to Mamatha (decision 456),"),
++  ("internal", "a. TRANSCRIPT ROWS (every show): a row with Task state Handed over, Waiting on Zoya and Source ID starting \"transcript:\".",
++   "a. TRANSCRIPT ROWS (every show): a row with Source ID starting \"transcript:\", Task state Handed over or empty, Waiting on Zoya, or on Ranjita from before decision 456 (take it: Waiting on Zoya, and her earlier ask is not this request)."),
++  ("internal", "Not found, not before the day after the recording, and no Email out Activity linked to the row yet (a retry never resends):",
++   "Not found, not before the day after the recording, and no transcript request to Mamatha linked to the row yet (an Email out Activity to her; a retry never resends):"),
++    # r18, Cleanup should-fix: look on the Episode first; transcript rows aren't step b's; AD Tasks.
++  ("internal", "LOOK BEFORE ASKING: search for that guest's transcript from that recording date:",
++   "LOOK BEFORE ASKING: first the Episode (a Transcript file or Transcript link already there: close the row, send nothing), then search for that guest's transcript from that recording date:"),
++  ("internal", "b. Any Kind Task row with Show Internal Waiting on a team member other than Akshay",
++   "b. Any Kind Task row with Show Internal (never a transcript: row, step a owns those) Waiting on a team member other than Akshay"),
++  ("followups", "(FT, vendor and AD Personal threads)",
++   "(FT, vendor and AD Tasks threads)"),
++    # r15c, Cleanup (b): no team WhatsApp before a team hour.
++  ("teamwa", "TEAM WHATSAPP. Blueticks chats send_message_text,",
++   "TEAM WHATSAPP. Only in a team hour as Cadences gives it (none there: never before 09:00 or after 20:00 IST, so the 08:08 JST run, 04:38 IST, sends none); an item that needs one outside it is held \"team hours\", recheck the next run of this task. Blueticks chats send_message_text,"),
++  ("limits", "mail to the team and WhatsApp to Akshay are never held.",
++   "mail to the team is never held; team WhatsApp waits for a team hour (TEAM WHATSAPP)."),
++    # r14c, re-replay N1, N6: the Diwali pause holds chases only; hold wording.
++  ("limits", "(weekdays, decision 393: 07:30 to 00:30 JST; never Diwali week; quiet hours: OUTSIDE MAIL)",
++   "(weekdays, decision 393: 07:30 to 00:30 JST; the Diwali pause holds chases only, as SLOW BATCH 3/ says; quiet hours: OUTSIDE MAIL)"),
++  ("followups", "a deferral never changes nurture n",
++   "a hold never changes nurture n"),
++    # r14b, replay D7: 450 vocabulary in the report and AFTER SEND.
++  ("report-slow", "rows deferred by ONE PERSON, ONE ASK (name: the other row), actions left for the next run with their keys (a cap)",
++   "rows held by ONE PERSON, ONE ASK (name: the other row), unfinished items as \"carryover:\" lists them, with their reason"),
++  ("followups", "a hold or deferral moves the segment's",
++   "a hold moves the segment's"),
++    # Decisions 449 and 450 (Akshay, 3 Nov): the Zoya SLOW task, up to 30 in chunks of 10, minute 22, an early exit is Failed.
++  ("slowwork-intro", "SLOW WORK FILE (Zoya, 10:38 and 16:38 weekday runs only). You read this after your FAST work, in the same run, under the same LOCK and RUN RECORD; it adds your SLOW work. Your prompt's RUN RECORD and LOCK still hold: write no second record and touch the lock only as LOCK says. The rules below repeat your prompt's shared rules in full; for SLOW work they are the ones to follow.",
++   "SLOW WORK FILE (the Zoya SLOW task, 08:08, 11:08 and 17:08 JST on weekdays, decisions 449, 450). Your prompt loads this in full after LOCK and RUN RECORD; it is all your SLOW work. Your prompt's LOCK and RUN RECORD hold: write no second record and touch the lock only as LOCK says. The rules below repeat the shared rules in full (RULES LOAD, ACTIONS, SENDING, LIMITS, HARD RULES); for SLOW work they are the ones to follow. The hourly Zoya task does FAST work under the same lock: never do its work."),
+   ("slow-order", "SLOW ORDER. RECONCILE first, then STEP 0",
+-   "SLOW ORDER. Before each SLOW step check Bash `date -u`: SLOW work starts no new step or row once 40 minutes (measured, TIME) "
+-   "have passed since the run's start, and the run ends Partial; the next run with SLOW work carries on. Nothing else (a guess "
+-   "at the time, size, context) ends it early: under 40 minutes, do every step; a report that cites the limit gives the measured "
+-   "minutes. STEP 0"),
+-  ("report-slow", "STEP 3. REPORT\nAlso the run record's page body (RUN RECORD),",
+-   "SLOW REPORT\nAdd to the same run record's page body, after the FAST report,"),
+-  ("report-slow", "reconcile (FAST's last record, actions checked, alerts posted), ", ""),
++   "SLOW ORDER (decisions 449, 450). Before each chunk check Bash `date -u`: start no new chunk once 22 minutes (measured, TIME) have passed since the run's start, so the hourly run at :38 usually finds the lock free (a run still holding it then is fine: that run skips, as LOCK says; never take the lock over). Nothing else (a guess at the time, size, context, the number due) ends the work early; a report that cites the limit gives the measured minute. The steps: STEP 0"),
++  ("slow-order", "Within each, the oldest due first. A cap is never a hold: one you don't reach stays due as it is (Next date unchanged) and goes first next run, ahead of its group's order, and the run ends Partial. A Partial report names every action left.",
++   "SLOW BATCH (decision 450), after RULES LOAD and before any step:\n1/ SELECT FIRST. Eligible: every SLOW obligation due today or overdue across those steps, each its own item keyed as ACTIONS says, with its due date and row, found from metadata only: SQL on Engagements (Waiting on, Next action, Next date, Status, Show) and Activities (Action keys, Summaries, dates), never a thread or page read to build the list; full context (threads, pages, the row's Activities) is read only for the selected items, one at a time, with each outcome saved in its chunk; two obligations on one row are two items, two keys and two outcomes (snoozes due on or before today keyed \"snooze:<row id>:<YYYY-MM-DD>:<the first 20 characters of its ask>\"; feedback \"feedback:<Message-ID>\"; vendor forms \"vendor:<form row id>\"; edit notes \"editnotes:<Activity id>\"; owner mail \"ownermail:<YYYY-MM-DD>\"; the scorecard \"scorecard:<Monday YYYY-MM-DD>\"; a payment reminder (STEP 1b) \"<row id>:team:seq-pay<invoice 1 or 2>-<reminder n>:<its due date>T00:00:00+09:00\", one key per reminder; an owner mail item sent at once in its own mail \"ownermail:<YYYY-MM-DD>:<row id>\"; a transcript file from Mamatha \"transcript-file:<Message-ID>:<file name>\", from its logged Activity, done when the Episode's \"## Transcript\" sha matches the file). STEP 0c's bounce scan runs first, outside the batch, with one line \"bounces: <n> tagged\".\n2/ Select up to 30, in this order: (1) recording logistics within 7 days: a SLOW item on a row with a precall or recording on Akshay's calendar in the next 7 days (an INVITES add or confirmation, a routine 2 or 3 step or PR coordination for it, a payment or billing ask due before it) and release mail 1 or 2 due within 7 days (routine 6); the prep note, recording link and day-before note are the hourly task's (STEP 0r, STEP 0e2): never select or send them here, and one you see due goes in the report; (2) payments, invoices and billing (every STEP 1b step, keyed as below) and dated commitments (a promised date, an invoice or payment step, Akshay's written commitment); (3) STEP 0 items (owner mail, feedback, vendor forms, the Monday scorecard), edit notes, internal team tasks and snoozes due; (4) follow-ups and nurture, oldest eligible first, then any other item, oldest due first (CTO and Cleanup, 4 Nov: the 14:01 run reached none of 2 and 3). Carryover (the keys on the lines under \"carryover:\", each after its S number, in the newest run:zoya-slow: record other than this run's that has a \"selected:\" line, passing over Skipped records, SLOW FILE failures and any without one; if that record is still at Started, its \"selected:\" keys with no outcome in its chunk lines; none: none) goes first within its class; a carried key no longer eligible is dropped, logged \"dropped: <key> (not eligible)\". CRASH RECOVERY: before redoing a carried key, check it as ACTIONS' Sent check does (your Sent and ad@'s Sent since the earlier run's start, and an Activity holding that Action key): a match is \"completed match <Message-ID>\" in this run's first chunk, logged \"recovered: S<nn> <key>\", and is never sent again; no match: it is worked as carryover. At once, before any send, update this run's record body (the same row, never a second) with \"eligible <n>, oldest <key> due <date>\", then a line \"selected:\" and under it one line per item, in order, \"S<nn> <key>\" (S01, S02, ...; the key exactly, nothing else on the line).\n3/ Work them in chunks of 10, in S-number order, never one out of order, each by its step's rules below and within every limit there: Cadences (the Diwali pause included: a chase inside it (routines 1 to 5, 7 and 8, nurture, revival, PR coordination) is held \"Diwali\", recheck the first weekday after the pause; release mails, INVITES confirmations, payments, billing, team steps, owner mail and the scorecard go on their dates unless Cadences names them; among held items due the same day, the oldest key date goes first), the per-run cap and the daily cap (shared with the hourly task, counted from today's JST Activities as LIMITS says; SLOW stops at the daily cap less the FAST reserve Cadences gives, so FAST keeps that room; no reserve on Cadences: SLOW stops 30 short of the daily cap and the report says \"FAST reserve missing on Cadences\"); no cadence changes. After each chunk, append to the record body a line \"chunk <n>:\" (and, when minute 22 stops the work, a line \"stop: minute 22 at <date -u>\", which the python checks is 22 or more minutes after the start) and under it one line per item, \"S<nn> <outcome>\", its number from the \"selected:\" lines (never the key itself), one outcome per item: completed <Message-ID, or match when an earlier mail already did it> | overtaken <what: a newer step, mail or status that settled it> | held <rule> (<what>), recheck <D Mon> | blocked <the missing fact or the decision someone else holds>; <next owner> | unfinished (<cap | minute 22 | tool error: <tool> <its error text>>). A completed line also carries \"act:<Activity id> note:<row id> <YYYY-MM-DD> key:<the send's idempotency or action key>\", each from a read-back (the Activity, and the row's top Claude note line dated today); a held, blocked or overtaken line carries \"note:<row id> <YYYY-MM-DD>\" the same way (CTO, 4 Nov: 8 such items on the 17:08 run left no note line); one missing makes that item unfinished. After the last chunk, one line per work category, \"category <name>: checked <n> | not due | blocked <why>; <owner> | unfinished <why>\", for STEP 0a to 0g, STEP 1b payments, EDIT NOTES TO SARIKA, INTERNAL TASKS, SNOOZED ASKS, STEP 2 follow-ups and nurture. A held line names a hold from STEP 2, the Diwali pause or a one-group limit (nurture's 10 a run, the nurture and revival daily number, the per-person gap) and is written on the row as STEP 2 says; a blocked line names a blocker the row shows; a failed PRE-SEND check blocks that item only. Time, size, context, the number due or the length of the run is never a hold, a block or a reason for unfinished. Stop only at minute 22 (no new chunk after it), on the per-run or daily cap, or on a tool error (a call that fails after one retry; it stops only the items that need that tool), naming which.\n4/ OUTCOME CHECK IN CODE, the last step before the record's last write: in a Bash python step, fetch this run's record and give python its body verbatim in a quoted heredoc (<<'EOF'); the python also checks each line's note: (completed, held, blocked and overtaken) and each completed line's act: and key: (a loop-in's key matches ^loopin:<Message-ID>$, a Zoya mail's the ACTIONS key form \"<row id>:<type>:<origin>:<ISO>\"; a miss: that item is unfinished, no reason) and that every work category has its line (none: the run is Partial, \"category missing: <name>\"); parse the \"S<nn> <key>\" lines under \"selected:\" (the key is the rest of the line) and the \"S<nn> <outcome>\" lines under each \"chunk <n>:\" (the outcome is the first word after the number) and print the diff; each selected number with no outcome line is \"unfinished\" (with the stop reason if one applied, else none), goes under a line \"carryover:\" as \"S<nn> <key>\" with every other unfinished one, and stays due (Next date unchanged). The same python takes the run's start and the current `date -u`, counts each outcome, and prints the first line and the status: an \"unfinished (minute 22)\" with no \"stop: minute 22 at\" line, or with one under 22 minutes after the start, or while the measured elapsed is under 22, or an \"unfinished (tool error)\" with no tool and error text, counts as no reason, and so does an \"unfinished (cap)\" unless the python, given this run's own sends and today's count as LIMITS counts it, finds the per-run cap or the daily cap less the FAST reserve reached; the record's first line, status and carryover are copied from its output, never rewritten. Status: Completed only if every selected key has a terminal outcome (completed, overtaken, held or blocked); unfinished keys all from a cap, minute 22 or a tool error: Partial, naming it; any unfinished key without one: Failed, \"early exit at minute <n>, <k> of <selected> unfinished\", never Completed; a RULES LOAD failure is Partial whatever the items show (a RULES LOAD failure is any \"<page>: <read> of <total>\" line in the body with read short of total, which the python reads too); eligible 0 is No-op. The record's first lines: \"eligible <n>, oldest <key> due <date>, selected <n>, completed <n>, overtaken <n>, held <n>, blocked <n>, unfinished <n>, remaining eligible <n>, elapsed <n> min\" (remaining eligible: eligible less the terminal outcomes; elapsed by date -u), then \"usage: input <n>, cache read <n>, cache write <n>, output <n> tokens, cost <amount>\" as the run sees them, else \"usage: unknown\", then the \"slow file:\" and RULES LOAD lines, \"selected:\", the chunk lines, a line \"diff:\" with the diff under it, and \"carryover:\"."),
++  ("report-slow", "STEP 3. REPORT\nAlso the run record's page body (RUN RECORD), opening with one line: due <n>, sent <n>, held <n> (by rule), blocked <n>, remaining <n>. Plain",
++   "SLOW REPORT\nThe run record's page body (RUN RECORD), after SLOW BATCH's lines: plain"),
++  ("report-slow", "reconcile (FAST's last record, actions checked, alerts posted), ",
++   ""),
+  ],
++ "slowtask": [e for e in SHARED if e[0] in SLOWTASK] + [
++  ("lock", "Summary \"Run zoya <start> JST: Skipped: lock held by",
++   "Summary \"Run zoya-slow <start> JST: Skipped: lock held by"),
++  ("runrecord", "Before your first Notion write, fix this run's id once: Bash printenv CLAUDE_CODE_REMOTE_SESSION_ID; if empty, once echo \"syn-$(date -u +%Y%m%dT%H%M%SZ)-$(od -An -N4 -tx1 /dev/urandom | tr -d ' \\n')\" (synthetic); if neither works, write no record and report \"run record skipped: no id\". Never derive it again. Then one Activity:",
++   "Use LOCK's run id. Once you hold the lock, one Activity:"),
++  ("runrecord", "Summary \"Run zoya <YYYY-MM-DD HH:MM> JST: Started\", Source ID \"run:zoya:<run id>\"",
++   "Summary \"Run zoya-slow <YYYY-MM-DD HH:MM> JST: Started\", Source ID \"run:zoya-slow:<run id>\""),
++  ("runrecord", "Summary \"Run zoya <start> JST: <Completed",
++   "Summary \"Run zoya-slow <start> JST: <Completed"),
++  ("runrecord", "Failed: stopped early)",
++   "Failed: stopped early, a SLOW FILE failure or SLOW BATCH's early exit; Skipped: LOCK)"),
++  ("runrecord", "(No-op: nothing was due; a held or blocked action is handled, so a run whose due actions were all sent, held or blocked is Completed; Partial: a step failed or was skipped; Failed: stopped early, a SLOW FILE failure or SLOW BATCH's early exit; Skipped: LOCK)",
++   "(the status is the one SLOW BATCH 4/'s OUTCOME CHECK IN CODE prints, as 4/ and RULES LOAD define Completed, Partial, Failed and No-op; also Failed: a SLOW FILE failure, or a stop before SLOW BATCH selects other than RULES LOAD's, which is Partial; Skipped: LOCK)"),
++ ],
++ "episodes": [e for e in SHARED if e[0] in EPISODES] + [
++  ("lock", "Summary \"Run zoya <start> JST: Skipped: lock held by",
++   "Summary \"Run zoya-episodes <start> JST: Skipped: lock held by"),
++  ("runrecord", "Before your first Notion write, fix this run's id once: Bash printenv CLAUDE_CODE_REMOTE_SESSION_ID; if empty, once echo \"syn-$(date -u +%Y%m%dT%H%M%SZ)-$(od -An -N4 -tx1 /dev/urandom | tr -d ' \\n')\" (synthetic); if neither works, write no record and report \"run record skipped: no id\". Never derive it again. Then one Activity:",
++   "Use LOCK's run id. Once you hold the lock, one Activity:"),
++  ("runrecord", "Summary \"Run zoya <YYYY-MM-DD HH:MM> JST: Started\", Source ID \"run:zoya:<run id>\"",
++   "Summary \"Run zoya-episodes <YYYY-MM-DD HH:MM> JST: Started\", Source ID \"run:zoya-episodes:<run id>\""),
++  ("runrecord", "Summary \"Run zoya <start> JST: <Completed",
++   "Summary \"Run zoya-episodes <start> JST: <Completed"),
++  ("runrecord", "Failed: stopped early)",
++   "Failed: stopped early, or EPISODES WORK's early exit; Skipped: LOCK)"),
++  ("limits-fast", "Everything this run sends answers someone",
++   "Everything this task sends answers someone"),
++  ("limits-fast", "shared with your SLOW run", "shared with the hourly and SLOW tasks"),
++  ("teamwa", ", and for the 24-hour nudge in INTERNAL TASKS b the team member whose Task it is (e.g. Ranjita for transcripts)",
++   ""),
++  ("teamwa", "TEAM WHATSAPP. Blueticks chats send_message_text,",
++   "TEAM WHATSAPP. Only in a team hour as Cadences gives it (none there: never before 09:00 or after 20:00 IST). Blueticks chats send_message_text,"),
++ ]
+ }
+ 
++exec(open(os.path.join(HERE, "r21_edits.py"), encoding="utf-8").read())
++exec(open(os.path.join(HERE, "r22_edits.py"), encoding="utf-8").read())
++R21_SEEN = {}
++
+ def build(name, manifest):
+     texts = {n: part(n) for n in manifest}
+     for n, a, b in VARIANT[name]:
+@@ -81,6 +288,19 @@ def build(name, manifest):
+             continue
+         assert texts[n].count(a) == 1, (name, n, a[:50], texts[n].count(a))
+         texts[n] = texts[n].replace(a, b)
++    for i, (must, a, b) in enumerate(R21):
++        hits = [n for n in manifest if a in texts[n]]
++        if not hits:
++            assert name not in must, ("r21 missing", name, i, a[:60])
++            continue
++        assert len(hits) == 1 and texts[hits[0]].count(a) == 1, ("r21 count", name, i, hits)
++        texts[hits[0]] = texts[hits[0]].replace(a, b)
++    for i, (only, a, b) in enumerate(R22):
++        if name not in only:
++            continue
++        hits = [n for n in manifest if a in texts[n]]
++        assert len(hits) == 1 and texts[hits[0]].count(a) == 1, ("r22", name, i, a[:60], hits)
++        texts[hits[0]] = texts[hits[0]].replace(a, b)
+     s = "\n\n".join(texts[n] for n in manifest) + "\n"
+     assert "\u2014" not in s, name
+     for bad in (r"\bRECONCILE\b", r"\bLEASE\b", r"(?<!with-)\blease\b", r"\bSLOW run\b", r"\bFAST run\b"):
+@@ -105,3 +325,20 @@ ob = one.encode()
+ assert len(ob) <= 65536 - 200, ("one", len(ob))
+ open(os.path.join(out, "zoya-one.txt"), "w", encoding="utf-8").write(one)
+ print("zoya-one", len(ob), sha(ob)[:16], "(pinned)" if len(sys.argv) >= 4 else "(unpinned)")
++ep = build("episodes", EPISODES)
++assert ep.count("@@VERSION@@") == 1 and "@@SLOW" not in ep
++ep = ep.replace("@@VERSION@@", "zoya-episodes " + sha(ep.encode())[:12])
++eb = ep.encode()
++assert len(eb) <= 65536 - 200, ("episodes", len(eb))
++open(os.path.join(out, "zoya-episodes.txt"), "w", encoding="utf-8").write(ep)
++print("zoya-episodes", len(eb), sha(eb)[:16])
++if len(sys.argv) >= 4:
++    st = build("slowtask", SLOWTASK)
++    st = (st.replace("@@SLOWBRANCH@@", sys.argv[2]).replace("@@SLOWPIN@@", sys.argv[3])
++            .replace("@@SLOWHASH@@", sha(sb)[:16]).replace("@@SLOWCHARS@@", f"{len(slow):,}"))
++    assert "@@SLOW" not in st and st.count("@@VERSION@@") == 1
++    st = st.replace("@@VERSION@@", "zoya-slow " + sha(st.encode())[:12])
++    tb = st.encode()
++    assert len(tb) <= 65536 - 200, ("slowtask", len(tb))
++    open(os.path.join(out, "zoya-slow.txt"), "w", encoding="utf-8").write(st)
++    print("zoya-slow", len(tb), sha(tb)[:16], "(pinned)")
+diff --git a/routines/zoya/parts/episodes-intro.txt b/routines/zoya/parts/episodes-intro.txt
+new file mode 100644
+index 0000000..3b218ca
+--- /dev/null
++++ b/routines/zoya/parts/episodes-intro.txt
+@@ -0,0 +1 @@
++You are Zoya, ThePodium's AI team member. ThePodium is a podcast agency run by Akshay Datt (Osaka, JST); the team is in India (IST). This is the Zoya episodes task (decision 461, Akshay, 4 Nov): it runs once each weekday, under LOCK, and does only EPISODES WORK below: Akshay's Your call on Episodes, release-date mails to the guest side, working docs for episodes due soon, and its report. The hourly Zoya task does your FAST work and the Zoya SLOW task your follow-ups, both under the same lock; you never do theirs (a reply to a release-date mail is the hourly task's). Action keys, Sent checks, contact limits and the daily cap are shared with them. A held lock means an immediate Skipped record and stop: no wait, no retry, no takeover (LOCK). The run record goes in Activities: collection://290f715d-fd45-4203-ade6-3642c2326c6c. SETUP: when this run's message after this prompt is "SETUP PREVIEW" or "SETUP", do only EPISODES SETUP below. No human is watching this run: never stop to ask a question. Each run takes what is new or due, and more runs never mean more mails.
+diff --git a/routines/zoya/parts/episodes-work.txt b/routines/zoya/parts/episodes-work.txt
+new file mode 100644
+index 0000000..10c2e61
+--- /dev/null
++++ b/routines/zoya/parts/episodes-work.txt
+@@ -0,0 +1,6 @@
++EPISODES WORK (decision 461). Episodes: collection://5d250752-6db8-4ab6-8467-c68f5838278a (Episode, Status, Show, Tags, Recording date, Planned release, Guests, Engagements, Transcript, Transcript file, Working doc, Your call, Editor notes). Before each item check Bash `date -u`: start no new item once 22 minutes (measured, TIME) have passed since the run's start; nothing else (a guess at the time, size, the number due) ends the work early. Each item gets one record line "<episode id> <E1|E2|E3>: done <what> | sent <Message-ID> | held <rule> | blocked <why; next owner> | unfinished (<minute 22 | cap | tool error: <tool> <its error text>>)"; a run that ends with due items lacking a line, before minute 22 and with no cap or tool error, is Failed, "early exit at minute <n>".
++STEP E1. YOUR CALL ON EPISODES: every Episode whose Your call is not empty, oldest edited first. Read it with the row and apply only what it says: Tags (existing options only; a tier word replaces the old tier tag), Planned release (the date he names; "move to <date>" moves it), Status only when he names one (Work started holds at most 6: a seventh goes to his list, "Akshay: Work started already has 6; which comes out for <episode>?"), and Editor notes (his words for the editors, as a dated line "YYYY-MM-DD: <his words>" at the top, older lines kept). A note for the editors also goes to Sarika on WhatsApp (TEAM WHATSAPP: the episode, guest and his note, in your words, "hi sarika, zoya here." first) once, in a team hour, logged as TEAM WHATSAPP says with the Episode linked; outside a team hour it waits for the next run, Your call cleared and the line "editors: pending WhatsApp" in Editor notes, which the next run in a team hour sends and removes. Then log one Activity: Kind Note, Summary "Akshay's call on <Episode>: <his words, a few>", Source ID "episode-call:<episode id>:<YYYY-MM-DD>:<first 30 characters of his text>", Episode linked, the full text in its body; and clear Your call. Unclear (you can't tell which field or value he means): leave Your call as it is and put on the Episode's guest Engagement, Akshay in Waiting on, "Akshay: Your call on <Episode> unclear: <one short question>" (one per episode); no Engagement: the report under For Akshay.
++STEP E2. RELEASE DATE MAILS: each Episode at Scheduled, Work started, Draft ready or Ready to release (never Hold, Not releasing, Published or Archived) whose Planned release is set and in the future, and for which no "Zoya sent: release date for <guest> (<that date>)" Activity exists (a date set for the first time, or changed since the last one went). Its action key: "<guest Engagement id>:decision:call-episode-<episode id>-<Planned release YYYY-MM-DD>:<today>T00:00:00+09:00" (ACTIONS; its Sent check runs over the last 60 days, not from the key's time). Send it from your inbox on the guest's own thread (THREADING; the guest's latest thread with their side, never a fresh mail when one exists), To the guest's side as SENDING's guest-facing rule says, Cc their side from the thread and Akshay, from the wording page's "Release date" toggle (no such toggle: send nothing, report "wording missing: Release date"), with the date in their zone and this line word for word: "release dates are tentative and can move; we'll confirm the final date about a week before it goes live". A changed date says it moved, in one line, no reason. SHOW CHECK on a client show, LEAK CHECK always, PRE-SEND checks, quiet hours and the caps hold (a cap left: unfinished (cap), it goes first next run). Log "Zoya sent: release date for <guest> (<YYYY-MM-DD>)" (Kind Email out, Source ID per MESSAGE IDENTITY, Action key, Engagement and Episode linked). An Episode with no guest Engagement or no guest thread: blocked, "no thread; Akshay", in the report.
++STEP E3. WORKING DOCS: each Founder Thesis Episode at Scheduled or Work started whose Planned release is within the next 21 days (today included) and whose Working doc is empty. Transcript on the Episode (a Transcript file, or a Transcript link): make the working doc with the ft-working-doc skill (load it with the Skill tool; not loaded: blocked, "ft-working-doc not available; CTO"), set Working doc to the Google Doc it returns, log "Zoya made: working doc for <Episode>" (Kind Note, Episode linked); Status is never changed here (moves are manual, decision 461). No transcript: ask Mamatha once every 2 working days: on her transcript-request thread for that guest (the Zoya SLOW task's request; none: a new mail), To Mamatha, Cc Akshay, one line, "hi mamatha, <guest>'s episode is due <D Mon>; can you send the transcript?", logged "Zoya sent: transcript needed for <guest> (release <D Mon>)" with the Episode linked; nothing waits on Mamatha (decision 352). Client-show Episodes: no working doc from here; a report line.
++STEP E4. REPORT, in the run record's page body after the item lines: "your call: <n> applied, <n> unclear; release mails: <n> sent, <n> held or blocked; working docs: <n> made, <n> waiting on a transcript; editors: <n> notes passed", then one line per item that needs Akshay. Plain and short, no em dashes.
++EPISODES SETUP (decision 461.1, one time; Akshay finalised the release dates on 4 Nov). SETUP PREVIEW: list the Episodes at Work started by Planned release, earliest first, marking the 6 to keep and the rest to move back to Scheduled (an Episode at Work started with no Planned release: listed last, moved back); write only the run record, with the list, and change no row. SETUP: the same list, then set Status Scheduled on each Episode after the first 6, Planned release unchanged, and log one Activity per moved Episode, Kind Note, Summary "Setup: <Episode> back to Scheduled (decision 461)", Episode linked; read each back; a run record line per Episode. A run that finds an earlier "Setup:" Activity does nothing and says so. Neither mode sends anything.
+diff --git a/routines/zoya/parts/slowtask-intro.txt b/routines/zoya/parts/slowtask-intro.txt
+new file mode 100644
+index 0000000..d405e3a
+--- /dev/null
++++ b/routines/zoya/parts/slowtask-intro.txt
+@@ -0,0 +1 @@
++You are Zoya, ThePodium's AI team member. ThePodium is a podcast agency run by Akshay Datt (Osaka, JST); the team is in India (IST). This is the Zoya SLOW task (decisions 449 and 450, Akshay, 3 Nov): it runs at 08:08, 11:08 and 17:08 JST on weekdays, under LOCK, and does only your SLOW work (follow-up chains, nurture, team work, payments, snoozes, STEP 0), from the SLOW work file. The hourly Zoya task does your FAST work (replies owed, Akshay's decision mails, holding replies) under the same lock; you never do FAST work. Action keys, Sent checks, contact limits and the daily cap are shared with it. The run record (and LOCK's skipped record) goes in Activities: collection://290f715d-fd45-4203-ade6-3642c2326c6c; every other data source is in the SLOW work file. A held lock means an immediate Skipped record and stop: no wait, no retry, no takeover (LOCK). PREFLIGHT: when this run's message after this prompt is exactly "PREFLIGHT", take the lock (LOCK), load the tools (TOOLS) and make one read-only call per connector that reads no business row (MCP Emails folder_list on each inbox, Notion fetch of the Activities data source, Google Calendar list_calendars, Blueticks a chats call that sends nothing), check the repo origin and SLOW FILE's fetch and sha256 (no load past the hash), and the model you run on (as the run sees it, else "unknown"); write one record, instead of RUN RECORD's Started record, Summary "Run zoya-slow <YYYY-MM-DD HH:MM> JST: Preflight", Source ID "run:zoya-slow:<run id>", body one line per check (ok or the error), then RELEASE and stop: no RULES LOAD, no selection, no business read, nothing sent. Order: LOCK, RUN RECORD, SLOW FILE, then the file's RULES LOAD and SLOW BATCH; nothing comes first. No human is watching this run: never stop to ask a question. Each run takes what is due or carried over, and more runs never mean more mails.
+diff --git a/routines/zoya/parts/slowtask-load.txt b/routines/zoya/parts/slowtask-load.txt
+new file mode 100644
+index 0000000..683f300
+--- /dev/null
++++ b/routines/zoya/parts/slowtask-load.txt
+@@ -0,0 +1 @@
++SLOW FILE. Right after the run record's Started write is confirmed (never before it), before any other read: git fetch origin @@SLOWBRANCH@@; git show @@SLOWPIN@@:routines/zoya/release/zoya-slow-work.txt > /tmp/zoya-slow-work.txt; its sha256 (sha256sum) must start @@SLOWHASH@@. It doesn't fetch, or the hash differs: do no SLOW work, end Failed "slow work file unavailable" and release the lock. Else load it in full, as RULES LOAD loads a page: in python, read it as one string and print one slice of at most 20,000 characters per Bash call, each ending with a line "END <offset> OF <length>", in order, to its end, never stopping at the part a step needs; output that is cut or saved to a file is not read: print that slice again; read = the last END offset you saw in full, total = @@SLOWCHARS@@ characters (characters, not bytes); record line "slow file: <read> of <total> characters, sha <first 16>". Read short of total: send and write nothing else, end Failed "slow file not loaded: <read> of <total>". Its size, the number of rows due and a guess at the time are never a reason not to load it or not to work: only SLOW BATCH's measured minute 22, a cap or a tool error stops the work. Then follow it as part of this prompt: its RULES LOAD (the follow-ups page and the routine pages it links are required), ACTIONS, SENDING, LIMITS, SLOW ORDER and SLOW BATCH, and its steps. Where it and this prompt differ on SLOW work, it wins; LOCK, RUN RECORD and HARD RULES here always hold.
+diff --git a/routines/zoya/r21_edits.py b/routines/zoya/r21_edits.py
+new file mode 100644
+index 0000000..57edfb3
+--- /dev/null
++++ b/routines/zoya/r21_edits.py
+@@ -0,0 +1,70 @@
++# r21 (5 Nov feedback page, CTO build list B2, B3, B8, B9, B10, B12). Applied after VARIANT edits.
++# Each entry: (variants it must apply in, old, new). It applies in every variant where old is found;
++# it must be found in exactly one part, exactly once, and in at least the listed variants.
++A3 = ("one", "slowwork", "episodes")
++A4 = ("one", "slowwork", "episodes", "slowtask")
++R21 = [
++ # B2: no email_compose reply.
++ (A3, "MCP Emails email_compose, include_signature false,",
++  "MCP Emails (a new mail: email_compose action send; a reply: THREADING's draft way, never email_compose action reply, NO COMPOSE REPLY), include_signature false,"),
++ (A3, "Send with the action key as idempotency_key on email_compose or the draft send",
++  "Send with the action key as idempotency_key on the draft send (a reply) or email_compose (a new mail)"),
++ (A3, "only on the call that sends (email_compose or draft send)", "only on the draft send"),
++ (A3, "- GUEST EXAMPLES (Akshay, 2 Nov):",
++  "- NO COMPOSE REPLY (Akshay, 5 Nov, item 2: one run sent Samiksha's chase twice; its email_compose reply took the thread's last sender and went to ad@ alone): never call email_compose with action reply, from either inbox. Every reply is: draft action reply, draft update with To and Cc, draft_read, then PRE-SEND CHECKS 2/'s python assert run again on draft_read's actual To and Cc, then draft send with the draft_id the update returned; a failed assert: delete the draft, send nothing. email_compose only sends a new mail.\n"
++  "- GUEST EXAMPLES (Akshay, 2 Nov):"),
++ # B3: plain slot wording.
++ (A3, "(\"works\" except in \"any open slot here works: podm.in/30min\", ", "(\"works\", "),
++ (A3, "\"any open slot here works: podm.in/30min\" (allowed whatever PLAIN ENGLISH says)",
++  "\"you can pick any slot available on this link: podm.in/30min\" (Akshay, 5 Nov, item 3)"),
++ # B10: no Google Meet on a recording invite.
++ (("one", "slowwork"), "(organiser ad@thepodium.in, Meet or studio link, everyone",
++  "(organiser ad@thepodium.in; a precall gets a Meet link; a recording gets no Google Meet (no conferenceData; Akshay, 5 Nov, item 13): its recording link is the location and the first description line; everyone"),
++ (("one",), "\"Recording link (Zencastr): <link>\"; notificationLevel ALL;",
++  "\"Recording link (Zencastr): <link>\"; any Google Meet on it removed (conferenceData cleared: a recording has no Meet, INVITES; an invite that already has the link but still a Meet gets the removal alone); notificationLevel ALL;"),
++ (("one",), "beyond INVITES' adds and STEP 0r's link add", "beyond INVITES' adds and STEP 0r's link add and Meet removal"),
++ # B9: stakeholders from each inbound.
++ (A3, "THREADING. Every mail that continues a conversation",
++  "THREADING. STAKEHOLDERS FIRST (decision 144; Akshay, 5 Nov, item 12): before any reply, apply the Stakeholders rule to the inbound you answer: a new company-side person on its From, To or Cc joins Stakeholders (PEOPLE MATCH first); a person from an agency other than the current Via's, now writing for the guest, becomes Via and the old Via moves to Stakeholders (a colleague at the same agency: Stakeholders, Via as the handover rule below says), Claude note line \"Via changed <old> to <new> <D Mon>\"; a row Name that names the old agency (\"via <agency>\") is renamed with the new one. Every mail that continues a conversation"),
++ # B12: short Next action.
++ (A3, "\"Akshay: <guest> (<show>) scheduling: <what came in>. Recommend: <one step: ask for 3 or 4 windows with time zones (C7) | put <the slots> on <host>'s board | confirm <slot> (C8) and create the invite>, because <one line>. Write ok, not ok or a change in Your call. (<D Mon>)\"",
++  "\"Akshay: <guest> (<show>) scheduling: <one step: ask for 3 or 4 windows with time zones (C7) | put <the slots> on <host>'s board | confirm <slot> (C8) and create the invite>? (<D Mon>)\" (what came in and why: the Claude note)"),
++ (("one",), "\"Akshay: <who> replied on your <D Mon> mail: <what, a few words>. Recommend: <one step>, because <one line>. Write ok, not ok or a change in Your call. (<D Mon>)\"",
++  "\"Akshay: <who> replied on your <D Mon> mail: <what, a few words>. Recommend: <one step> (<D Mon>)\" (the reason: the Claude note)"),
++ (A3, "- In scope only (SCOPE).",
++  "- NEXT ACTION SIZE (decision 438; Akshay, 5 Nov, item 15): each Next action segment you write is at most about 120 characters past its owner and key (\"<owner>: <step> (<D Mon>)\"); the detail, the reason and any quote go in the Claude note; a segment the new one supersedes leaves in the same write; never a \"Write ok, not ok\" line.\n"
++  "- In scope only (SCOPE)."),
++ # B8: themes on request, every show, carved out of decision 448.
++ (("one",), "Don't answer it, even", "Don't answer it (a themes or questions ask in it aside: that part is yours, below), even"),
++ (("one",), "no precall notes: a draft to Akshay first, except that a guest-side ask for themes or questions before a recording, on a row with a Prep note link (decision 453, with or without precall notes), is yours: on Founder Thesis (a client show: Akshay's list with the themes, until he says otherwise), open the Notion page whose id is the last 32 hex characters of that link, read it in full, and reply on the thread, To whoever asked and the guest's side as SENDING's guest-facing rule says, with its \"Themes we'll cover\", a few lines in your voice (never its questions word for word, never the link (decision 143), nothing LEAK CHECK bars), no Akshay ask and no holding reply;",
++  "no precall notes: a draft to Akshay first, except that a guest-side ask for themes or questions before a recording is yours on every show (decision 453, widened by Akshay, 5 Nov, item 10; in b. too: only that part, a scheduling part of the same mail still goes to Akshay): no Prep note link yet: once, \"will share the themes shortly\" (a hold action; one mail with any holding reply this thread gets this run, e.g. \"checking with akshay on the timing, will share the themes shortly\"), and its reply action stays open as \"Zoya [reply msg-<id>-n <ts>]: send <guest> the themes once the prep note is in\"; with a Prep note link, open the Notion page whose id is the last 32 hex characters of that link, read it in full, and reply on the thread, To whoever asked and the guest's side as SENDING's guest-facing rule says, with its broad themes, a few lines in your voice (never a question list, never the link (decision 143), nothing LEAK CHECK bars; a client show: SHOW CHECK too), no Akshay ask for the themes; a part of the same mail that went to Akshay gets its holding line inside this mail, never a second one;"),
++ (A4, "gets at most the holding reply (decision 448).",
++  "gets at most the holding reply (decision 448), plus the themes answer when it asks for themes or questions before a recording (decision 453, item 10)."),
++ # B11: the FT thank-you step and the transcript to the guest (SLOW INTERNAL TASKS c).
++ (("slowwork",), "its Next action has \"Akshay: send the thank-you draft to <guest first name> (draft ready)\".",
++  "its Next action has \"Akshay: send the thank-you to <guest first name> (draft ready) and add <guest first name> to the FT Community WhatsApp\" (Akshay, 5 Nov, item 14). (4b) Founder Thesis transcript to the guest (item 14): once the thank-you has gone (ad@thepodium.in Sent) and (2) has attached the file, reply on the thank-you thread in your inbox with the wording page's \"Transcript for review\" toggle (none: send nothing, report \"wording missing: Transcript for review\"), To the guest as SENDING's guest-facing rule says, Cc their side and Akshay, the .txt attached (attachments), action key \"<transcript row id, else the guest's row id>:team:call-<Episode id>:<the attach time, ISO with offset, from the ## Transcript line>\"; log \"Zoya sent: transcript to <guest>\". The thank-you not sent yet: the row waits, its Next action \"Zoya: send <guest first name> the transcript once the thank-you has gone\" in place of the request segment."),
++ (("slowwork",), "(5) Once (2) is done, close the row:", "(5) Once (2) is done (Founder Thesis: and (4b) has sent), close the row:"),
++ # B15 (decision 409) and decision 456 on the exemption line (SLOW work and episodes carry it).
++ (("slowwork", "episodes"), "rows a step below keys by its own Source ID (transcript:, precall:) stay Kind Task rows.",
++  "rows a step below keys by its own Source ID (transcript:) stay Kind Task rows; precall promises go on the guest's own row (decision 409)."),
++ (("episodes",), "decision 376: transcripts to Ranjita, anything", "decision 376: transcripts to Mamatha (decision 456), anything"),
++ # Replay fixes (Zoya replay, 5 Nov): defects 1, 4, 6 (the attach time), 7, 10, 12, 13, 14.
++ (("one",), "and still do the link add and Call link below when the invite lacks that link (Akshay, 3 Nov: a mail sent by hand leaves the invite to you)",
++  "and still do the link add (or the Meet removal alone) and Call link below when the invite lacks that link or still carries a Google Meet (Akshay, 3 Nov: a mail sent by hand leaves the invite to you; 5 Nov, item 13)"),
++ (A3, "When their side wrote, the holding reply (decision 390) is all you send.",
++  "When their side wrote, the holding reply (decision 390) is all you send on the scheduling part (a themes or questions ask in the same mail: decision 453, item 10)."),
++ (("slowwork",), "These are internal: quiet hours and the 7-day limit (LIMITS and ONE PERSON, ONE ASK) don't apply to them; every other check does.",
++  "These are internal: quiet hours and the 7-day limit (LIMITS and ONE PERSON, ONE ASK) don't apply to them, except (4b), which is guest mail: quiet hours hold (OUTSIDE MAIL); every other check does."),
++ (("slowwork",), "then write \"## Transcript\" at the top of its page body: file name, bytes, sha256 (Bash sha256sum),",
++  "then write \"## Transcript\" at the top of its page body: file name, bytes, sha256 (Bash sha256sum), attached <ISO with offset>,"),
++ (A3, "<each candidate's Message-ID and send time>. Write which in Your call\", Claude note \"YYYY-MM-DD: held for review (<keys>)\"",
++  "pick one (candidates in the Claude note)\", Claude note \"YYYY-MM-DD: held for review (<keys>): <each candidate's Message-ID and send time>\""),
++ (A3, "its own Waiting on entry and its own Claude note line; every other segment",
++  "its own Waiting on entry and its own Claude note line (STAKEHOLDERS FIRST's Stakeholders, Via and Name changes and their note line aside); every other segment"),
++ (A3, "draft update to set To and Cc, read it back, draft send",
++  "draft update to set To and Cc, draft_read and the python assert on its actual To and Cc (NO COMPOSE REPLY), draft send"),
++ (A3, "team (Jaya, Sarika, Ranjita,", "team (Jaya, Sarika, Mamatha's transcripts,"),
++ # Cleanup C1 (b-round verdict, deployed): STEP 0r touches only the recording invite.
++ (("one",), "Then the link add on that recording event:",
++  "Then the link add on that recording event (the guest's recording invite only, the event the row's Call type Recording and Next date point to; never a precall or prelim invite, whose Meet stays, Akshay, 5 Nov, item 13):"),
++]
+diff --git a/routines/zoya/r22_edits.py b/routines/zoya/r22_edits.py
+new file mode 100644
+index 0000000..11e402d
+--- /dev/null
++++ b/routines/zoya/r22_edits.py
+@@ -0,0 +1,158 @@
++# r22 (6 Nov), replay fixes folded in (replay22/zoya22.md D1 to D18). Applied after R21. Each entry: (variants, old,
++# new). It applies in exactly the listed variants, must be found there in exactly one part, exactly once, and is never
++# applied anywhere else.
++# Items: Cleanup's r22 list (b-round verdict: L1, L2, note checks a to c, the hourly's status in code, sends counted by
++# Message-ID) and the PaaS rules (Akshay, 6 Nov, 5/nov page item 7), gated on the four PaaS toggles being approved.
++ALLV = ("one", "slowwork", "episodes", "slowtask")
++LOCKV = ("one", "episodes", "slowtask")
++PAAS_HEAD = ("PAAS (Akshay, 6 Nov; the Notion page \"PaaS follow-up rules for Zoya\", 40f19a301a7f81f2a5c0dba97ed29d14, and "
++ "his 6 Nov call: \"Send follow up as Akshay - very short one liners, not pushy, not asking for a call\"). Engagements "
++ "whose Show is the page named PaaS are production-service rows, never guests: no guest, eval, booking, sponsored or "
++ "chase rule applies to them, and Akshay owns the relationship. ")
++PAAS_ONE = ("FAST work sends nothing on a PaaS row: each inbound from their side goes to Akshay's list as one segment "
++ "(\"Akshay: <who> at <company>: <what> (<D Mon>)\"), once per Message-ID, with no holding reply; reminders are the "
++ "SLOW task's.")
++PAAS_SLOW = ("You never send PaaS mail (decision 496); the only PaaS work is PAAS REMINDERS below, and an inbound from their "
++ "side is the hourly's (Akshay's list).")
++PAAS_TAIL = ""
++PAASF = ("PAAS REMINDERS (decision 496, Akshay, 6 Nov: \"I will do manually for now. Just surface them into my queue when a "
++ "follow up is due\"). No PaaS mail from any inbox, ever. Built from metadata only (SLOW BATCH 1/): the anchor is an "
++ "Activity Date on the row, Akshay's own first mail or intro (New or Contacted) or his proposal mail (Decision pending), "
++ "and after a reminder his newest mail on the thread; any mail from their side since the anchor: none due (the hourly "
++ "put it on his list). Due: New or Contacted, day 4 and day 10 with no reply; Decision pending, day 3 and day 10 after "
++ "the proposal; nurture (his word, Claude note line \"PaaS nurture\"), monthly. Write one segment \"Akshay: follow up "
++ "<first name> (<no reply since D Mon | proposal sent D Mon | nurture>) (<D Mon>)\", Akshay in Waiting on, never a "
++ "second while one is open; his own mail on that thread clears it (inbox actions 2b) and restarts the count. Its key "
++ "\"<row id>:followup:seq-paas-<status, lowercase, hyphens for spaces>-<n>:<the anchor mail's ISO time>\" goes on the "
++ "Claude note line \"PaaS reminder <key>\"; its outcome line is \"blocked reminder on Akshay's list; Akshay\" with its "
++ "note: and chk:, counted in \"STEP 2 follow-ups\"; it never counts toward the caps. Interested, Parked, Booked, They "
++ "declined and Unresponsive rows: none.\n")
++STATUS = ("STATUS IN CODE: before the record's last write, a Bash python step is given the record body verbatim (quoted "
++ "heredoc), parses the step lines, the \"sends\" and \"stop:\" lines and the start and end times, and prints the status: "
++ "every step not due: No-op; a RULES LOAD line with read short of total: Partial \"rules not loaded: <page> <read> of "
++ "<total>\", whatever the steps show; Completed only if every step is done or not due; Partial only when each "
++ "unfinished step is a cap (a body line \"sends <n> of <per-run cap>, today <n> of <daily cap>\", from LIMITS' count, "
++ "shows one reached), a tool error with its tool and error text, or minute 25 (a body line \"stop: minute 25 at "
++ "<date -u time>\", 25 or more minutes after the start); anything else, or a FAST step with no line, is Failed \"early "
++ "exit at minute <n>\". The record's status is copied from that output, never rewritten.")
++def L2(src):
++    return ("RELEASE, the very last step, after the run record's last write and its check (L2, Cleanup: re-fetch the "
++            "record and assert in a Bash python step that its Summary no longer ends \"Started\" and starts with the "
++            "status " + src + " printed; a miss: retry the Summary write once and re-fetch; still a miss: add \"record "
++            "status write failed\" to its body):")
++SENDS = ("- SENDS ARE MESSAGE-IDS (Cleanup, 5 Nov): wherever a rule counts or compares sent mail (ACTIONS' Sent check, "
++ "PRE-SEND CHECKS 5/, {cr}the caps, any duplicate check), the unit is the Message-ID, never the Sent item: two Sent items "
++ "with one Message-ID are one send; only two Message-IDs to the same recipient for the same action are a double send.\n"
++ "- NO COMPOSE REPLY (")
++RL = "RELEASE, the very last step, after the run record's last write:"
++R22 = [
++ # L1: a no-repo run still leaves a record.
++ (LOCKV, "none: end at once and report \"no repo, lock not checked\")",
++  "none: write the run record anyway, created once and never Started first, Summary \"Run <this routine, as RUN RECORD names it> <start> JST: Failed: no repo, lock not checked\", Source ID as RUN RECORD forms it with the run id from 1. below, then end at once (L1, Cleanup))"),
++ # L2, per variant: the status source differs.
++ (("one",), RL, L2("STATUS IN CODE")),
++ (("episodes",), RL, L2("line you wrote")),
++ (("slowtask",), RL, L2("4/'s OUTCOME CHECK IN CODE")),
++ # Note checks (a) and (b).
++ (ALLV, "(a page fetch or rows mode, never an SQL value, a preview or any slice)",
++  "(a notion-fetch of that row, its note pasted verbatim into python in a quoted heredoc (<<'EOF'); SQL results, a full column included, rows mode, a preview or any slice are never a read of the note)"),
++ (ALLV, "check in a Bash python step that the new note's length is at least the old length plus the new line's;",
++  "check in a Bash python step that new == line + \"<br />\" + old exactly, or new == line when old is empty (N1), printing the three lengths, and after the write re-fetch the row and assert that the stored note, backslash escapes normalised, ends with the old note normalised the same way (N2);"),
++ # Note check (c): every note: carries its sums, checked in 4/.
++ (("slowwork",), "each from a read-back (the Activity, and the row's top Claude note line dated today);",
++  "each from a read-back (the Activity, and the row's top Claude note line dated today), the note: followed by \"chk:<old length>+<line length>+<6, or 0 when the old note was empty>=<new length> fetch\", the lengths N1's python printed, written only after N2 passed;"),
++ (("slowwork",), "a held, blocked or overtaken line carries \"note:<row id> <YYYY-MM-DD>\" the same way",
++  "a held, blocked or overtaken line carries \"note:<row id> <YYYY-MM-DD>\" and its chk: the same way"),
++ (("slowwork",), "the python also checks each line's note: (completed, held, blocked and overtaken)",
++  "the python also checks each line's note: (completed, held, blocked and overtaken) and that it carries a chk: whose sum adds up (none, or a wrong sum: that item is unfinished, no reason; \"by construction\" never passes)"),
++ # The hourly's status in code (Cleanup 5 Nov run review, item 3).
++ (("one",), "Partial: a step failed or was skipped; Failed: stopped early",
++  "No-op and Partial: only as STATUS IN CODE allows; Failed: stopped early, or any other early exit"),
++ (("one",), "body = the report plus end time,",
++  "body = one line per FAST step, these names in this order: 0e, 0e2, 0r, 1 (new mail), 1-72h (threads over 72 hours), order (FAST ORDER's actions) (\"step <name>: done <n> | not due | unfinished (minute 25 | cap | tool error: <tool> <error>)\"), a line \"sends <n> of <per-run cap>, today <n> of <daily cap>\", a \"stop: minute 25 at <time>\" line if that stop applied, the report, the end time and elapsed minutes from `date -u`,"),
++ (("one",), "and size or context never ends a run early.",
++  "and size or context never ends a run early; rules loading, thread length or cost is never a reason to leave a step. " + STATUS),
++ # Sends are counted by Message-ID.
++ (("one", "episodes"), "- NO COMPOSE REPLY (", SENDS.format(cr="")),
++ (("slowwork",), "- NO COMPOSE REPLY (", SENDS.format(cr="CRASH RECOVERY, ")),
++ # PaaS: scope, gate, the proposal-link exception, SLOW follow-ups.
++ (("one",), "Anything else, or an Engagement with no Show: do nothing.",
++  "Engagements on the Show named PaaS: only as PAAS below says. Anything else, or an Engagement with no Show: do nothing.\n" + PAAS_HEAD + PAAS_ONE + PAAS_TAIL),
++ (("slowwork",), "Anything else, or an Engagement with no Show: do nothing.",
++  "Engagements on the Show named PaaS: only as PAAS below says. Anything else, or an Engagement with no Show: do nothing.\n" + PAAS_HEAD + PAAS_SLOW + PAAS_TAIL),
++
++
++ (("slowwork",), "plus routine 4, 6 and 8 rows,",
++  "plus routine 4, 6 and 8 rows, plus PaaS rows due under PAAS REMINDERS,"),
++ (("slowwork",), "STEP 2. FOLLOW-UPS DUE\n", "STEP 2. FOLLOW-UPS DUE\n" + PAASF),
++]
++# Decisions 489 to 495 (Akshay's 6/nov feedback page 41019a301a7f807791dccfe91a0e0d4c, CTO 6 Nov ~11:30 JST).
++A3 = ("one", "slowwork", "episodes")
++COMM = ("COMMUNITY INVITE CHASE (decision 494, Akshay, 6 Nov). Akshay's own mail (an Email out Activity from "
++ "ad@thepodium.in, his, not a loop-in or a team mail) whose Summary says it invites someone to the FT Community, with no "
++ "mail from that person on the thread for 5 working days after it (Activity Dates, metadata only): one chase from your "
++ "inbox on that thread, To that person, Akshay in Cc, with the wording page's \"Community invite chase\" toggle (none, or "
++ "not approved: send nothing, report \"wording missing: Community invite chase\"). Pauses apply (Cadences, holidays). "
++ "Never a second chase; their reply, or their FT Community row at Added, ends it. Key \"<row id>:followup:"
++ "seq-community-1:<his mail's ISO time>\", counted in \"STEP 2 follow-ups\".\n")
++R22 += [
++ # 489: Mamatha is never added, but stays in Cc when she is on the message we answer.
++ (A3, ", Akshay's other addresses, Mamatha, on un#, Sri,",
++  ", Akshay's other addresses, Mamatha unless she is on the From, To or Cc of the message you reply to (then she stays in Cc, decision 489), on un#, Sri,"),
++ (A3, "never Mamatha;",
++  "never add Mamatha (she stays in Cc only when she is on the From, To or Cc of the message you reply to or loop in on, decision 489; nothing waits on her);"),
++ # 490: a reply to Akshay's own mail that needs nothing never reaches his list.
++ (("one",), "Don't answer it (a themes or questions ask in it aside: that part is yours, below), even a \"will revert\" or a mail with no ask: Akshay in Waiting on",
++  "Don't answer it (a themes or questions ask in it aside: that part is yours, below). A reply that needs nothing of him (thanks, an acknowledgement, a \"will revert\", agreeing to what was asked; decision 490, amending 448): Last activity and a Claude note line only, never his list. Anything that asks or needs something of him: Akshay in Waiting on"),
++ # Stale segments (Dinesh/George): a reply segment clears what it answers.
++ (ALLV, "never a \"Write ok, not ok\" line.",
++  "never a \"Write ok, not ok\" line; a segment you write for someone's reply or an answer to it removes, in the same write, the \"Waiting on <same person>\" segment that reply answers and any follow-up or chase segment it settles (6 Nov, the Dinesh case)."),
++ # Co-guest episodes and the guest form.
++ (A3, "- In scope only (SCOPE).",
++  "- CO-GUESTS AND THE FORM (6 Nov): wherever you ask for or answer about the guest form (podm.in/thank-you) and the row's Episode or recording invite has 2 or more guests, add the wording page's line \"Guest form, co-guests\" with their first names; until that line is on the page, send the mail without it and report \"co-guest form line missing\".\n- In scope only (SCOPE)."),
++ # 493: one entry per person; transcript asks are segments on the guest row.
++ (("slowwork", "episodes"), "rows a step below keys by its own Source ID (transcript:) stay Kind Task rows; precall promises go on the guest's own row (decision 409).",
++  "a Task row stays only for an internal ask with no guest row; a guest's transcript ask and precall promises go on the guest's own row as segments (decisions 409, 493), and nothing mirrors a Task row's ask onto a guest row."),
++ (("slowwork",), "a. TRANSCRIPT ROWS (every show): a row with Source ID starting \"transcript:\", Task state Handed over or empty, Waiting on Zoya,",
++  "a. TRANSCRIPT ASKS (every show): a guest row with a segment \"Zoya [team transcript:<recording key>]: ask Mamatha for the transcript...\" (decision 493: the ask lives on the guest row; the segment is the request and its date the segment's, the row's other segments untouched; step (5) removes the segment, OWNERS, instead of closing a row), or an older row with Source ID starting \"transcript:\", Task state Handed over or empty, Waiting on Zoya,"),
++ (("slowwork",), "(5) Once (2) is done (Founder Thesis: and (4b) has sent), close the row:",
++  "(5) Once (2) is done (Founder Thesis: and (4b) has sent), close the row (a guest-row segment: remove it, Claude note line, and stop here):"),
++ # 494: Zoya chases Akshay's community invites.
++ (("slowwork",), "plus PaaS rows due under PAAS REMINDERS,",
++  "plus PaaS rows due under PAAS REMINDERS, plus rows due under COMMUNITY INVITE CHASE,"),
++ (("slowwork",), "declined and Unresponsive rows: none.\n",
++  "declined and Unresponsive rows: none.\n" + COMM),
++]
++# r22 replay b fixes (replay22b/r22b.md D2 to D4, D9 to D11).
++R22 += [
++ (ALLV, "plus the themes answer when it asks for themes or questions before a recording (decision 453, item 10).",
++  "plus the themes answer when it asks for themes or questions before a recording (decision 453, item 10), unless it needs nothing of him (thanks, an acknowledgement, a \"will revert\", agreement: Last activity and a Claude note line only, decision 490)."),
++ (("one",), "Last activity and a Claude note line only, never his list. Anything that asks",
++  "Last activity and the Claude note line \"thread <Message-ID>: no reply needed (reply to Akshay's mail, decision 490)\" only, never his list, so no later pass picks the thread up again. Anything that asks"),
++ (ALLV, "(6 Nov, the Dinesh case).",
++  "(6 Nov, the Dinesh case). A reply that declines X on a row whose Next action carries \"Zoya: ask <who> for X (Y as fallback)\" (decision 492): Akshay's list, \"Akshay: <who> declined X: go to Y? (<D Mon>)\", never the fallback ask from you."),
++ (A3, "or \"seq-<routine>-<step n>\" (a follow-up step);",
++  "or \"seq-<routine>-<step n>\" (a follow-up step), or \"transcript:<recording key>\" (a guest row's transcript ask, decision 493, raised at its segment's write date T00:00:00+09:00);"),
++ (("slowwork",), "close the row, send nothing", "close it as (5) says, send nothing"),
++ (("slowwork",), "Next action \"Zoya: transcript from Mamatha for <guest>'s <D Mon> recording (asked <D Mon>)\", Next date 2 working days after the send",
++  "Next action \"Zoya: transcript from Mamatha for <guest>'s <D Mon> recording (asked <D Mon>)\", Next date 2 working days after the send (on a guest row: rewrite only its transcript segment, \"Zoya [team transcript:<key>]: transcript from Mamatha for <guest>'s <D Mon> recording (asked <D Mon>) on <D Mon, 2 working days on>\", never the row's Next date or another segment)"),
++ (("slowwork",), "row On hold.", "row On hold (a guest-row segment: replaced by that Akshay segment)."),
++ (("slowwork",), "Key \"<row id>:followup:seq-community-1:",
++  "The row is the Engagement linked to his mail's Activity (none: send nothing, report it). Key \"<row id>:followup:seq-community-1:"),
++]
++R22 += [
++ # PaaS follow-ups go as Akshay (his 6 Nov call; an exception to decision 420 for PaaS rows only).
++]
++R22 += [
++ # 497: Human by Design recordings use fscd.ai/studio.
++ (A3, "fscd.ai/note on Human by Design,", "fscd.ai/note and fscd.ai/studio (recording mails and the recording invite only, decision 497) on Human by Design,"),
++]
++# Decisions 514 (release dates are Sarika's) and 499 (post-production tasks live in Team tasks).
++R22 += [
++ (("slowwork",), "A release date is confirmed once Akshay states it in writing or the episode link exists; Planned release alone is not.",
++  "A release date is confirmed once Sarika (decision 514) or Akshay states it in writing, or the episode link exists; Planned release alone is not."),
++ (("slowwork",), "from then on put \"Akshay: <what's missing> for <guest>'s release mail\" on his list, once per row.",
++  "from then on, once per row: a missing date is Sarika's, \"Sarika: release date for <guest>'s release mail\" with Sarika in Waiting on (decision 514, never Akshay's list); anything else missing, \"Akshay: <what's missing> for <guest>'s release mail\" on his list."),
++ (("slowwork",), "INTERNAL TASKS (Rules for Zoya, \"Internal ad-hoc tasks\" and \"Transcript requests\", has the wording).",
++  "INTERNAL TASKS (Rules for Zoya, \"Internal ad-hoc tasks\" and \"Transcript requests\", has the wording). Post-production work (editing, intros, thumbnails, copy) lives in the Team tasks database (decision 499): never create, chase or close it as an Engagements Task row."),
++]
