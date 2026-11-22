@@ -30,13 +30,28 @@ The prompts are the deployed routines, copied verbatim into `docs/proposals/zoya
 | zoya-fast.txt | Zoya (FAST, hourly) | :38, 07 to 23 |
 | whatsapp.txt | WhatsApp to Business OS | :45, 07 to 23 |
 | calendar.txt | Calendar sync | :35 at 07, 10, 13, 16, 19, 22 |
-| zoya-slow.txt | Zoya SLOW | :08 at 00, 08, 11, 14, 17, 20, 23, weekdays |
-| daily-sweep.txt | Daily sweep | :10 at 13 and 15, weekdays |
+| zoya-slow.txt | Zoya SLOW | :08 at 11 and 17, weekdays (decision 657) |
+
+## Health-audit fixes (Akshay, 22 Nov, on the page "Health audit, 22 Nov")
+- Inbox capture runs in its own composer (decision 653). At the start of every wake, before anything else, start a one-shot capture chat with create_session:
+  - title "Capture <YYYY-MM-DD HH:MM> JST", model claude-sonnet-5-5, tags ["zoya-oneshot"], the same source_url and revision as other composers;
+  - prompt: docs/composer-seed.md filled with inbox-capture.txt (git show 83e8fb0) and the read-to cursor from the last capture run record.
+  It logs only: Activities, the run record and Row change notes. It sends nothing, changes no Status, Waiting on or Next action, and reports back to you with send_message when it's done.
+  Wait for that report, up to 30 minutes, before inbox actions, so there's only one Notion writer at a time. If no report comes in 30 minutes, go on and name the stuck chat in your wake record. The old phase (a) budget no longer applies.
+- Precall before any Founder Thesis recording (decision 654). Whatever an eval says, Book immediately included, the next guest-facing step is the precall invite (podm.in/30min, the FT precall-first wording), or Akshay's own call.
+  - Never send a recording slot ask (podm.in/book) to a Founder Thesis guest or their PR until a precall with Akshay has happened, or Akshay has said in writing to skip it for that guest.
+  - This overrides routines/cowork-evals.md TEAM ROLES and every "Book immediately: ask for recording slots" rule in the 83e8fb0 prompts.
+- "Builder" is not a Waiting on value any more (decision 655). Builder work lives on the Build board. Never set Waiting on Builder. A step for a builder goes to the CTO session by send_message instead.
+- No parking without Akshay (decision 656, Akshay: "don't park any engagement without my go ahead"). Never set an Engagement to Parked yourself, whatever a prompt or override says. That includes the 7-day sponsored rule (618) and "Park if silent" (625).
+  - Where a rule says park, leave the Status as it is and add the row to the weekly "Park proposals" list instead. That list is one Kind Task row in Engagements, Waiting on Akshay, Show AD Tasks, Source ID "park:<Saturday date>", rebuilt in Saturday's first wake. Each line gives the guest, the reason and the date the rule would have parked it.
+  - Akshay answers in Your call. Park only the rows he names.
+  - A Zoya step blocked past its date (no email, no reply, waiting on an outside fact) is never re-dated unless something new has happened. It stays overdue so it shows, and goes on that Saturday list.
+- The daily sweep is retired, and Zoya SLOW runs twice on weekdays, at 11:08 and 17:08 JST (decision 657). Start a SLOW composer only for those slots.
 
 ## Each wake
 
 1. `date -u` first. On weekends, prompts marked weekdays (Zoya SLOW, daily sweep) don't run. A prompt is due when at least one of its slots fell after your previous wake's start (first wake of the day: the last slot before now) and at or before now. A prompt with no slot in that window doesn't run.
-2. Run the due prompts in this order, one at a time, each to its end: inbox capture, inbox actions, Zoya FAST, WhatsApp, calendar, Zoya SLOW, daily sweep. Urgent work first: capture, actions and FAST never wait behind SLOW or the sweep.
+2. Run the due prompts in this order, one at a time, each to its end: inbox capture (in its own composer, decision 653), inbox actions, Zoya FAST, WhatsApp, calendar, Zoya SLOW. The daily sweep is retired (decision 657). Urgent work first: capture, actions and FAST never wait behind SLOW or the sweep.
 3. A prompt's own time limit (minute 22 or 25) does not apply inside the day chat (decision 591): its other stop rules (the Zoya lock, quiet hours, send caps) still apply. Time inside the 90-minute wake is budgeted by phase so no essential phase starves (decision 609, Auditor recommendation 2, 18 Nov). Order and budget: (a) capture, oldest unlogged mail first, at most 25 messages and 25 minutes; (b) actions and FAST together, 25 minutes; (c) OUTBOX; (d) urgent calendar: events in the next 48 hours (prep blocks, recording links, invites asked for in writing), 10 minutes; (e) WhatsApp; (f) the full calendar pass; (g) composers. A phase that reaches its budget stops at the item in hand and carries the rest. The next wake starts with whichever phase holds the oldest carried item, then follows the order. If the wake as a whole passes 90 minutes, finish the item in hand, release the lock and stop. The wake record gives, per phase: start and end time, selected, completed, held, remaining, and the age of its oldest open item. A phase carried in three wakes in a row goes to the report as a failure with its cause.
 4. Don't send between :38 and :45 except inside Zoya FAST, which owns that slot.
 5. Work carried over from a stopped prompt stays due on its rows. Never replay a send: each prompt's Sent check and action key decide.
