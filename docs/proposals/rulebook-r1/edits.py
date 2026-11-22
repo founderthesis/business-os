@@ -472,3 +472,27 @@ EDITS['zoya-slow-work.txt'].append(('R6-scorecard', "team steps and the scorecar
 EDITS['zoya-slow-work.txt'].append(('R6-scorecard', "STEP 0 (feedback, bounces, vendor forms, scorecard)", "STEP 0 (feedback, bounces, vendor forms, Monday numbers)"))
 EDITS['zoya-fast.txt'].append(('R2-rules-once', "RULES LOAD: read every page above in full every run.", "RULES LOAD: read every page above in full every run. Inside the day chat, the wake's RULES GATE read is your RULES LOAD; read again only a page fetched before this wake or edited since."))
 EDITS['inbox-actions.txt'].append(('R5-cancel', "A plain cancel request still cancels the event as section 8 says, then hands the reply to Zoya (\"invite cancelled\").", "A plain cancel request is handled as section 8 says (the blocked-delete segment, never delete_event), then the reply goes to Zoya."))
+
+# Fix 1 (23 Nov, Auditor CX-20261123T0800 finding 2): decision 637 date ownership.
+# Zoya's own chase steps write Zoya date; Next date holds only people's steps.
+_F1 = 'F1-zoya-date'
+for _f in ('zoya-slow-work.txt', 'zoya-fast.txt'):
+    EDITS[_f].append((_F1, "A follow-up STEP 2 selects by Status and Next date needs no wording", "A follow-up STEP 2 selects by Status and Zoya date needs no wording"))
+EDITS['zoya-slow-work.txt'] += [
+    (_F1, "stays due (Next date unchanged)", "stays due (Zoya date unchanged)"),
+    (_F1, "Booking, Recorded or LT chase with Next date today or earlier", "Booking, Recorded or LT chase with Zoya date today or earlier (decision 637; a row with no Zoya date yet is selected by its Next date once, and that run writes its Zoya date)"),
+    (_F1, "Chase step 0, Next date 30 days after our last mail", "Chase step 0, Zoya date 30 days after our last mail"),
+    (_F1, "Every hold writes Next date and the reason", "Every hold writes Zoya date and the reason"),
+    (_F1, "Status LT chase, Next date today or earlier, nurture rows included", "Status LT chase, Zoya date today or earlier, nurture rows included"),
+    (_F1, "moves its segment's date and Next date to the first day it may go", "moves its segment's date and Zoya date to the first day it may go"),
+    (_F1, "names the blocker and its owner and moves Next date 7 days on", "names the blocker and its owner and moves Zoya date 7 days on"),
+    (_F1, "Chase step = n; Next date = the earliest of the next step's due date and any other open segment's date", "Chase step = n; Zoya date = the earliest of the next step's due date and any other open Zoya segment's date"),
+    (_F1, "Chase step 0; Next date = this send's date plus the NURTURE interval for n", "Chase step 0; Zoya date = this send's date plus the NURTURE interval for n"),
+    (_F1, "a hold moves the segment's \"on <D Mon>\" (never its key) and Next date; a failed send moves only Next date", "a hold moves the segment's \"on <D Mon>\" (never its key) and Zoya date; a failed send moves only Zoya date; none of these ever moves Next date"),
+]
+EDITS['zoya-slow-work.txt'] += [
+    (_F1, "Eval verdict, Next date, Next action", "Eval verdict, Next date, Zoya date, Next action"),
+    (_F1, "SQL on Engagements (Waiting on, Next action, Next date, Status, Show)", "SQL on Engagements (Waiting on, Next action, Next date, Zoya date, Status, Show)"),
+    (_F1, "other than Akshay whose Next date is today or earlier", "other than Akshay whose Next date or Zoya date is today or earlier"),
+    (_F1, "either way set Next date 2 working days on", "either way set Zoya date 2 working days on"),
+]
