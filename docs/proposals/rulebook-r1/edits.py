@@ -533,3 +533,8 @@ EDITS['inbox-actions.txt'] += [
     (_F2, "Eval link, Next action, Next date, Chase step", "Eval link, Next action, Next date, Zoya date, Chase step"),
 ]
 UPKEEP_EDITS.append((_F2, "Tier, Payment, Next date, Next action", "Tier, Payment, Next date, Zoya date, Next action"))
+EDITS['inbox-actions.txt'].append((_F2, "Waiting on and Next action: per decision 81 above. Next date only in the four cases above.", "Waiting on and Next action: per decision 81 above. Next date only in NEXT DATE's three cases; Zoya date only in its two."))
+UPKEEP_EDITS += [
+    (_F2, "only a new lead or a calendar booking sets it)", "only a new lead, a calendar booking or a scheduling request (decision 443) sets it)"),
+    (_F2, "Window: since the previous sweep run (Friday's on a Monday)", "Window: since the previous upkeep report (Source ID \"upkeep:<date>\"; Friday's on a Monday)"),
+]
