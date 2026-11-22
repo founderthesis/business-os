@@ -497,3 +497,39 @@ EDITS['zoya-slow-work.txt'] += [
     (_F1, "either way set Next date 2 working days on", "either way set Zoya date 2 working days on"),
 ]
 EDITS['zoya-slow-work.txt'].append((_F1, "rows at Status Sponsored offered whose Next date is today or earlier", "rows at Status Sponsored offered whose Zoya date is today or earlier (no Zoya date yet: its Next date once, as SELECT says)"))
+
+# Fix 2 (23 Nov, Cleanup findings 2 and 3 on fix 1): decision 637 outside SLOW.
+_F2 = 'F2-zoya-date'
+EDITS['inbox-actions.txt'] += [
+    (_F2, "NEXT DATE AND WAITING ON (decision 81). Next date belongs to the team. You set it in exactly five cases and never otherwise:",
+          "NEXT DATE, ZOYA DATE AND WAITING ON (decisions 81, 637). Next date holds people's steps; Zoya date holds Zoya's own next step. You set Next date in three cases (a new lead, a calendar booking, a scheduling request) and Zoya date in two (a hold, a routine 5 start), and never otherwise:"),
+    (_F2, "- A hold (decision 104): the guest or PR puts it on hold or gives a timing reason (STEP 3, LT chase). Next date = the date they give, else 90 days from today.",
+          "- A hold (decision 104): the guest or PR puts it on hold or gives a timing reason (STEP 3, LT chase). Zoya date = the date they give, else 90 days from today (Zoya's revisit); Next date unchanged."),
+    (_F2, "- A routine 5 start (STEP 2b c): Next date = the earliest open segment date on the row.",
+          "- A routine 5 start (STEP 2b c): Zoya date = the earliest open Zoya segment date on the row; Next date unchanged."),
+    (_F2, "Zoya in Waiting on; Next date = the earliest open segment date (NEXT DATE);",
+          "Zoya in Waiting on; Zoya date = the earliest open Zoya segment date (NEXT DATE);"),
+    (_F2, "Zoya added to Waiting on, Next date our last mail + 30 days, Chase step 0",
+          "Zoya added to Waiting on, Zoya date our last mail + 30 days, Chase step 0"),
+]
+UPKEEP_EDITS += [
+    (_F2, "- You never change Next date, with two exceptions: the hold below, and STEP 4's Form backstop (Next date = the earliest open segment date when you add the seq-5 segment). Next date belongs to the team; only a new lead (the inbox), a calendar booking (the calendar routine) or a hold sets it. The exception (decision 104): when mail shows the guest or PR put it on hold or gave a timing reason and you move the row to LT chase, set Next date to the date they give, else 90 days from today,",
+          "- You never change Next date (decision 637: it holds people's steps; only a new lead or a calendar booking sets it). You set Zoya date, Zoya's own next step, in two cases only: STEP 4's Form backstop (Zoya date = the earliest open Zoya segment date when you add the seq-5 segment), and a hold (decision 104): when mail shows the guest or PR put it on hold or gave a timing reason and you move the row to LT chase, set Zoya date to the date they give, else 90 days from today,"),
+    (_F2, "with Zoya in Waiting on and Next date = the earliest open segment date (the second Next date exception)",
+          "with Zoya in Waiting on and Zoya date = the earliest open Zoya segment date (decision 637)"),
+    (_F2, "whoever else Waiting on names, with Next date before today and no linked Activity of Kind Email out dated on or after that Next date.",
+          "whoever else Waiting on names, with a due date before today and no linked Activity of Kind Email out dated on or after that date. The due date is Zoya date for Zoya's own step and Next date for a people's step (decision 637); a row with both overdue counts once, under the earlier date."),
+    (_F2, "Parked or Form filled) and Next date today or earlier.",
+          "Parked or Form filled) and Next date or Zoya date today or earlier."),
+    (_F2, "with Next date empty and no Activity in 14 days",
+          "with Next date and Zoya date both empty and no Activity in 14 days"),
+]
+EDITS['calendar.txt'].append((_F2, "Next action \"Zoya: ask Ranjita for the transcript\", Next date today,",
+                                    "Next action \"Zoya: ask Ranjita for the transcript\", Zoya date today (decision 637),"))
+EDITS['inbox-actions.txt'] += [
+    (_F2, "LT chase, Next date = the date they give, else 90 days from today (decision 104)", "LT chase, Zoya date = the date they give, else 90 days from today (decisions 104, 637; Next date unchanged)"),
+    (_F2, "Next date as NEXT DATE's fourth case", "Next date as NEXT DATE's scheduling-request case"),
+    (_F2, "whatever the chase step or a chase Next date said", "whatever the chase step or a chase Zoya date said"),
+    (_F2, "Eval link, Next action, Next date, Chase step", "Eval link, Next action, Next date, Zoya date, Chase step"),
+]
+UPKEEP_EDITS.append((_F2, "Tier, Payment, Next date, Next action", "Tier, Payment, Next date, Zoya date, Next action"))

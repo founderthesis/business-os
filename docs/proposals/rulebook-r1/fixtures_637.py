@@ -101,6 +101,38 @@ def text_checks(page_dir):
     return bad
 
 
+# Fix 2: Zoya's own steps outside SLOW (form chasers, LT-chase revisit, nurture start,
+# the calendar transcript Task row) write Zoya date; upkeep's overdue flags read both.
+FIX2 = {
+    "inbox-actions.txt": {
+        "forbidden": ["Next date = the date they give, else 90 days", "Next date = the earliest open segment date",
+                      "Next date our last mail + 30 days", "a chase Next date said", "exactly five cases"],
+        "required": ["Zoya date = the date they give, else 90 days", "Zoya date = the earliest open Zoya segment date",
+                     "Zoya date our last mail + 30 days", "You set Next date in three cases"],
+    },
+    "upkeep.txt": {
+        "forbidden": ["set Next date to the date they give", "Next date = the earliest open segment date",
+                      "with Next date before today and no linked Activity"],
+        "required": ["set Zoya date to the date they give", "Zoya date = the earliest open Zoya segment date",
+                     "The due date is Zoya date for Zoya's own step and Next date for a people's step"],
+    },
+    "calendar.txt": {
+        "forbidden": ["ask Ranjita for the transcript\", Next date today"],
+        "required": ["ask Ranjita for the transcript\", Zoya date today"],
+    },
+}
+
+
+def fix2_checks():
+    bad = 0
+    for f, c in FIX2.items():
+        t = open(os.path.join(HERE, "prompts", f), encoding="utf-8").read()
+        bad += sum(1 for s in c["forbidden"] if s in t and not print("BAD", f, "still has:", s))
+        bad += sum(1 for s in c["required"] if s not in t and not print("BAD", f, "lacks:", s))
+    print("fix 2 checks:", "clean" if not bad else f"{bad} failures")
+    return bad
+
+
 if __name__ == "__main__":
-    n = model() + text_checks(sys.argv[1] if len(sys.argv) > 1 else None)
+    n = model() + text_checks(sys.argv[1] if len(sys.argv) > 1 else None) + fix2_checks()
     sys.exit(1 if n else 0)
