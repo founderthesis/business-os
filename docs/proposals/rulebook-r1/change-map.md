@@ -130,3 +130,19 @@ FAST and SLOW work both shrink: the recipient rule lives once, on Rules for Zoya
 - Cloud skills installed on claude.ai: unreadable from here. Their repo sources are listed in inventory.md; every installed copy is unverified.
 - Stored scheduled-task prompts: read in batch 2 with list_triggers (read only).
 - The live day chat's context: edits don't reach a running conversation; the cutover needs the daily rollover.
+
+## Batch 3
+
+| # | What | Staged |
+|---|---|---|
+| B3-1 | CTO coordination round stored prompt: quiet hours 00:30 (now 01:30, 547) in 2b; 2c's "v2 warm welcomes" toggle (Akshay, 22 Nov: the new blurb replaces the old in its section and the Blurb field; sources checked first; ft-community-blurb); 2d's standing Evals session (disabled; evals run in engagement chats, 593); "builders can't message you" (they can) | routines/cto-round.txt (full replacement) |
+| B3-2 | Follow-up routine pages. Routine 1 (sponsored) was five stacked overrides ("since 19 Oct", "since 13 Nov ... overrides", "since 19 Nov ... overrides everything below") with mails 3 to 10 retired and a 7-day auto-park | Rewritten whole: 9,747 to 3,646 chars; points to the 5c table; only mails 1 and 2 |
+| B3-3 | Routine 6 (release) still described the pre-v2 run (Mail 1 from Zoya, a 3-day task for Akshay, a +4-day nudge) | Rewritten whole as a pointer to the release table, the day duty and the v2/v3 toggles: 9,046 to 670 chars |
+| B3-4 | Routine 3 (recording slot): override callout and "since" history; no precall-first rule (654) | Top rewritten with 594, 618, 654 |
+| B3-5 | Routine 2: "anyone else is Parked (366)" twice; routine 8: PR-routed sponsored leads "then nurture while silent" | Park proposals; no nurture (5c) |
+| B3-6 | Calendar rules: Zencastr links and transcripts from Mamatha (439); "the evals routine" re-runs the eval; the 15 Oct audit snapshot and the moved double-booking mail kept in the reading path | Ranjita (646); engagement chat (593); history sections removed (open questions kept) |
+| B3-7 | Client show mails C15 to C17 still read as current for un# | Scoped to Built to Share and Human by Design until their Release v3; not un# (638) |
+| B3-8 | inbox-capture STEP 0L ("through 2026-11-05"), 0A and 0 (one-offs, "every run until none is left"): checked 22 Nov, 0 allmail rows and 0 old unlinked rows | Removed with their run-record lines, order gate and windows; the REF lookup capture still needs is now written where it's used. inbox-capture.txt 50,812 to 42,288 bytes |
+| B3-9 | Leftovers in prompts: Salesblink hold "ends 2 Nov" (SLOW work), "the evals routine" (calendar, actions), minute-25 machinery (WhatsApp, inside the day chat, 591), old deployment references (SLOW) | Removed or replaced |
+
+Not inspected: Inbox and Your call rules beyond a keyword pass (nothing stale found), Rules index child pages "Rules for your inbox", "Rules for your Notion list", "Data rules", "Links and limits", "Blurb sources", "Episode asset filing", "Host board sync" (batch 4 if wanted).
