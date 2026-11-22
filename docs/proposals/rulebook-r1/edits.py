@@ -20,29 +20,29 @@ STATUS_AUTHORITY = (
 )
 
 RECIPIENTS = (
-    "RECIPIENTS (decisions 229, 586, 592, 643, 646, 647). One rule for every send and every draft, from either inbox, "
-    "in every path (FAST, SLOW drafts, OUTBOX, loop-ins). "
-    "1/ Reply on a thread with anyone outside the team: start from everyone on the thread's latest message (From, To, Cc). "
-    "Remove only: your own address; addresses tagged \"Email bounced\" in People; People whose Role starts "
-    "\"Ex-employee (mailbox dead)\"; Akshay's addresses other than ad@thepodium.in; Mamatha (on a long break, decision 646). "
-    "Everyone else stays, whether or not they wrote: team members on it, Sri on un#, the host on Built to Share, Human by "
-    "Design and Pathfinders, PR, comms and EAs. Then add whoever is missing of: Akshay (ad@thepodium.in) in Cc; Chaandini "
-    "on Built to Share and Human by Design; Divir and Ankita Joshi on Pathfinders; Jaya and Sarika on revenue mail "
-    "(sponsored from their yes onward: next steps, billing, invoices, payments; never expense mail); the guest or a "
-    "company-side contact when the mail is guest-facing (the day-before note, prep note, recording link, reschedule, "
-    "thank-you). "
-    "2/ A new mail to someone outside the team (no thread exists): their side from the row and the step, plus the same "
-    "additions. "
-    "3/ Team-only mail (every recipient tagged Team): the team members only; never Akshay (decision 592), never Mamatha. "
-    "Never add on your own: Sri or a host to a thread they are not on, Mamatha, Saurabh Garg (except decision 517's "
-    "forwarded pitch). "
-    "To is whoever's move it is; everyone else is in Cc; ad@thepodium.in is never in To; on outside mail no team address "
-    "is in To. "
-    "CHECK, before every send, in a Bash python step on the draft as read back (never by eye): build the required set from "
-    "1/ to 3/, compare it with the draft's To and Cc (addresses only, case-insensitive), print both lists side by side, and "
-    "assert they are equal and To is not empty. A difference on a reply draft: correct it once with draft action update "
-    "(to, cc), which keeps the thread (decision 658), read it back and check again. Still different: delete the draft, "
-    "send nothing, block the action \"recipients: <what differed>\"."
+    "RECIPIENTS (decisions 229, 586, 592, 643, 646, 647). One rule for every send and draft, both inboxes, every path (FAST, SLOW drafts, OUTBOX, loop-ins). "
+    "1/ Reply on a thread with outsiders: everyone on its latest message (From, To, Cc), less only your own address, People tagged \"Email bounced\", "
+    "People whose Role starts \"Ex-employee (mailbox dead)\", Akshay's addresses other than ad@thepodium.in, and Mamatha (on a long break). Everyone else stays, "
+    "wrote or not: team members, Sri, client-show hosts, PR, comms, EAs. Then add whoever is missing of: Akshay (ad@thepodium.in) in Cc; Chaandini on "
+    "Built to Share and Human by Design; Divir and Ankita Joshi on Pathfinders; Jaya and Sarika on revenue mail (sponsored from their yes on: next steps, "
+    "billing, invoices, payments; never expenses); the guest or a company-side contact on guest-facing mail (day-before, prep note, recording link, "
+    "reschedule, thank-you). 2/ New mail to outsiders: their side from the row and the step, plus the same additions. 3/ Team-only mail: the team members "
+    "only, never Akshay (592), never Mamatha. Never add on your own Sri or a host to a thread they're not on, Mamatha, or Saurabh Garg (except decision 517). "
+    "To is whoever's move it is, the rest Cc; ad@thepodium.in never in To; no team address in To on outside mail. "
+    "CHECK before every send, in a Bash python step on the draft as read back: build the required set from 1/ to 3/, print it beside the draft's To and Cc "
+    "(addresses, case-insensitive), assert equal and To not empty. A reply draft that differs gets one draft action update (to, cc), which keeps the thread "
+    "(decision 658), then a re-read and a second check; still different: delete it, send nothing, block \"recipients: <what differed>\"."
+)
+
+FAST_PARKED = (
+    "PARKED (decision 656). Never set Parked: only Akshay parks (his Your call, mail or Zoya-group message). Their side's no is They declined, a no-contact request They declined plus the note. A chase that ends with nothing to send keeps its Status and goes on the weekly Park proposals (SLOW and the day chat keep that list)."
+)
+
+RECIPIENTS_CALL = (
+    "RECIPIENTS: Rules for Zoya section 2's recipient rule, for every send and draft from either inbox. "
+    "Before every send, a Bash python step builds the required set from it and prints it beside the draft's To and Cc as read back; assert equal "
+    "(addresses, case-insensitive) and To not empty. A reply draft that differs gets one draft update (to, cc), which keeps the thread (decision 658), "
+    "and a second check; still different: delete it, send nothing, block \"recipients: <what differed>\"."
 )
 
 TEAM_ROLES = (
@@ -71,7 +71,7 @@ EDITS["zoya-fast.txt"] = [
      "Never start a mail or WhatsApp to the host and never add them to a thread; when the host is on a thread's latest message they stay (RECIPIENTS)."),
     ("S4-ranjita",
      " Nothing waits on Mamatha (decision 352): on any row you touch, replace her in Waiting on with Zoya and rewrite her step as yours when it is a step you run; a cold-outreach step is never yours, so leave that row as found and list it in the report.",
-     " TEAM ROLES says who owns what; a row you touch that still waits on Mamatha moves as it says."),
+     " A row you touch that still waits on Mamatha: a room or transcript step moves to Ranjita, a routine step to you, a decision to Akshay."),
     ("S3-recipients",
      ", and that To and Cc together hold everyone on the latest inbound, its From, To and Cc, less your own address, bounced addresses, Akshay's other addresses, Mamatha unless she is on the From, To or Cc of the message you reply to (then she stays in Cc, decision 489), on un#, Sri, and on Built to Share and Human by Design the host, unless they wrote on the thread themselves (then they are added back if missing), and anyone who handed over anywhere on the thread (a message saying a new contact takes over, the new contact on the thread since), plus Akshay; the read-back fails if any of those excluded is still on it; a handover that names the new contact also sets Via to them on the row), then send it;",
      ", and RECIPIENTS' check on its To and Cc; someone who handed over on the thread (a message saying a new contact takes over) is replaced by the new contact, and that handover also sets Via to them on the row), then send it;"),
@@ -107,7 +107,7 @@ EDITS["zoya-fast.txt"] = [
      " 2/ RECIPIENTS' check;"),
     ("S4-ranjita",
      "- No WhatsApp in FAST work but ROOM ASK to Mamatha; SLOW work: only to the team members TEAM WHATSAPP names.",
-     "- No WhatsApp in FAST work but ROOM ASK to Ranjita; SLOW work: only to the team members TEAM WHATSAPP names.\n- " + RECIPIENTS + "\n- " + TEAM_ROLES + "\n- " + STATUS_AUTHORITY),
+     "- No WhatsApp in FAST work but ROOM ASK to Ranjita. Ranjita creates the rooms and attaches transcripts; Mamatha is on a long break: never mail, Cc, ask or wait on her (decision 646).\n- " + RECIPIENTS_CALL + "\n- " + FAST_PARKED),
 ]
 
 EDITS["zoya-slow-work.txt"] = [
@@ -187,7 +187,7 @@ EDITS["zoya-slow-work.txt"] = [
      "(Zoya)\";"),
     ("S3-recipients",
      "- PRE-SEND CHECKS, FAST and SLOW",
-     "- " + RECIPIENTS + "\n- " + TEAM_ROLES + "\n- " + STATUS_AUTHORITY + "\n- PRE-SEND CHECKS, FAST and SLOW"),
+     "- " + RECIPIENTS_CALL + "\n- " + TEAM_ROLES + "\n- " + STATUS_AUTHORITY + "\n- PRE-SEND CHECKS, FAST and SLOW"),
 ]
 
 EDITS["zoya-fast.txt"] += [
@@ -268,7 +268,7 @@ EDITS["whatsapp.txt"] = [
 ]
 
 BOOKING_OLD = "\"you can pick any slot available on this link: podm.in/30min\"; never a paragraph"
-BOOKING_NEW = "\"you can book a 30-minute planning call with Akshay here: podm.in/30min\" (decision 569: podm.in/30min is always named as a 30-minute planning call with Akshay); never a paragraph"
+BOOKING_NEW = "\"you can book a 30-minute planning call with Akshay here: podm.in/30min\" (always named that way, decision 569); never a paragraph"
 for _f in ("zoya-fast.txt", "zoya-slow.txt", "zoya-slow-work.txt"):
     EDITS[_f].append(("S0-carried-569", BOOKING_OLD, BOOKING_NEW))
 
@@ -339,3 +339,69 @@ UPKEEP_EDITS += [
     ("S6-sweep", "old notes rewritten (STEP 3a); owners removed (STEP 3a2); rows changed from Gmail (name: old -> new, evidence date); ", ""),
     ("S6-sweep", "Next action segments trimmed (STEP 3a3); one-time moves (STEP 3a4: steps moved to Zoya, transcript asks folded, by name); ", ""),
 ]
+
+
+EDITS["zoya-fast.txt"] += [
+    ("S6-sweep",
+     "You are the only routine that writes Zoya's work. You run at :38 every hour, 07:38 to 23:38 JST, under LOCK, and every run does your FAST work (FAST ORDER): replies owed to people who wrote to us, Akshay's decision mails and other steps from his calls, and holding replies. Your SLOW work (follow-up chains, nurture, team work, payments, snoozes, STEP 0) is the Zoya SLOW task's, on weekdays (decisions 449, 450, 546): it takes the same LOCK and shares your action keys, Sent checks, contact limits and daily cap. No run of yours does SLOW work.",
+     "This is Zoya FAST, one pass inside the Zoya day chat's wake, under LOCK: replies owed to people who wrote to us, Akshay's decision mails and other steps from his calls, and holding replies (FAST ORDER). SLOW work (follow-up chains, nurture, team work, payments, snoozes) runs in the SLOW composer and shares your action keys, Sent checks, contact limits and daily cap; you never do it."),
+    ("S6-sweep",
+     "\n- SLOW work only: Rules for Zoya: follow-ups 40b19a301a7f81999c1acd8350d59a54\nRULES LOAD: read every page above in full every run; the follow-ups page and the routine pages it links are SLOW work's only, and FAST sends never wait on them.",
+     "\nRULES LOAD: read every page above in full every run."),
+    ("S0-links", "Approved links only: podm.in/30min, podm.in/book, podm.in/sponsored (the first sponsored link a lead sees), podm.in/why-sponsor (sponsored follow-ups and questions), podm.in/guest-list, podm.in/community, podm.in/note, podm.in/pitch-to-us, podm.in/thank-you, founderthesis.com (show site, guest profiles), and youtube.com/@spotlight-pod only in the Founder Thesis price negotiation reply (decision 237); a Zencastr room link (zencastr.app.link/<room> or zencastr.com/record/<user>/<room>) only in that guest's recording-link mail and invite; client show links: SCOPE.", "Approved links only: the list on Rules for Zoya, each for its job; client show links: SCOPE."),
+    ("S6-sweep",
+     " FAST work starts no new row 25 minutes after the run's start (measured, TIME).",
+     ""),
+    ("S6-sweep",
+     "(\"step <name>: done <n> | not due | unfinished (minute 25 | cap | tool error: <tool> <error>)\"), a line \"sends <n> of <per-run cap>, today <n> of <daily cap>\", a \"stop: minute 25 at <time>\" line if that stop applied,",
+     "(\"step <name>: done <n> | not due | unfinished (carried by the wake budget | cap | tool error: <tool> <error>)\"), a line \"sends <n> of <per-run cap>, today <n> of <daily cap>\","),
+    ("S0-release",
+     "deployment reference \"zoya-one ded73b07d8e3\" (this prompt's version),",
+     "the release commit and this file's sha256 from manifest.json,"),
+    ("S6-sweep",
+     ", or minute 25 (a body line \"stop: minute 25 at <date -u time>\", 25 or more minutes after the start); anything else, or a FAST step with no line, is Failed \"early exit at minute <n>\".",
+     ", or carried by the day chat's wake budget; anything else, or a FAST step with no line, is Failed \"early exit\"."),
+    ("S6-sweep",
+     " GATE: while it prints Failed and `date -u` shows under 25 minutes since the start, write nothing final: go back to the first unfinished step, work it, and check again.",
+     " GATE: while it prints Failed and the wake budget has time, write nothing final: go back to the first unfinished step, work it, and check again."),
+    ("S10-holding",
+     "a negotiation other than the Founder Thesis lower-price ask in b, a call he offered, an upset guest or PR, press, a partnership, a release-date ask, any publishing ask, a request to see the cut or final episode from a Tier 1, sponsored or patron guest, anything new):",
+     "a negotiation other than the Founder Thesis lower-price ask in b, a call he offered, an upset guest or PR, press, a partnership, any publishing ask, a request to see the cut from a guest who covered our cost (sponsored, patron, paid package; decision 208), anything new; a release-date ask is the wording page's \"Next steps and release date\" (decision 427) and a final-cut ask from anyone else \"Asks to see the video before release\" (decision 600), both yours):"),
+    ("S10-holding",
+     "one line, \"hi <first name>, checking with akshay, will come back to you.\" (no date: decision 418)",
+     "one line, \"hi <first name>, will get back to you on this\" (decision 571: never Akshay's name, never a date)"),
+    ("S10-holding",
+     "A fresh guest pitch gets \"thanks <first name>! looping in Akshay\" with him in Cc,",
+     "A fresh guest pitch gets \"thanks <first name>! looping in Akshay, will get back to you.\" (decision 584) with him in Cc,"),
+]
+LINKS_OLD_START = "Approved links only: podm.in/30min,"
+
+for _f in ("zoya-fast.txt", "zoya-slow-work.txt"):
+    EDITS[_f].append(("S3-recipients",
+        " Set To and Cc explicitly: To is whoever's move it is, Cc the house copies; Akshay is never in To.",
+        " To and Cc: RECIPIENTS."))
+EDITS["zoya-fast.txt"].append(("S1-parking",
+    " A chase that ends with nothing to send keeps its Status and goes on the weekly Park proposals (SLOW and the day chat keep that list).", ""))
+
+for _f in ('zoya-fast.txt','zoya-slow-work.txt'):
+    EDITS[_f].append(('S11-zoya-date', "A write that changes Next action sets Next date to the earliest open segment date (a segment's date: the due date its text gives (\"on\", \"by\" or \"original due\", never a date the ask is about), else its key's; undated segments don't count, and with none dated it is the day of the write; \"original due <YYYY-MM-DD>\" counts; a snoozed or held-for-snooze one never does); any other write leaves Next date as it is.", "A write that changes Next action sets Zoya date (decision 637) to the earliest open Zoya segment date (a segment's date: the due date its text gives (\"on\", \"by\" or \"original due\", never a date the ask is about), else its key's; a snoozed or held-for-snooze one never counts), and Next date only from people's steps (Akshay's decision or step, their side's move, a call): never a Zoya-only date; while a row waits on an Akshay decision, Next date is the day he must act. Any other write leaves both as they are."))
+EDITS['zoya-fast.txt'].append(('S11-next-action', "- NEXT ACTION SIZE (decision 438): each Next action segment you write is at most about 120 characters past its owner and key (\"<owner>: <step> (<D Mon>)\"); the detail, the reason and any quote go in the Claude note;", "- NEXT ACTION SIZE (decisions 438, 588): one segment per person, \"<Who>: <step>\" and a date if any, about 15 words; background goes in the page body or the Claude note;"))
+EDITS['zoya-fast.txt'].append(('S0-trim', " KIND (decision 329): an Engagement with Kind Task is a work item, never a guest: never pitch-match, evaluate, book, chase or mail a guest about it, and skip it in every guest step; act on it only where a step names Task rows. Each Task row is one obligation with its own Waiting on, Next action, Next date and Task state (Captured, Handed over, Doing, Awaiting someone else, Done, On hold); closing it never touches the row in its For engagement or any other ask. FAST work creates no Task rows.", " KIND (decision 329): a Kind Task row is a work item, never a guest: skip it in every guest step. FAST work creates no Task rows."))
+EDITS['zoya-slow-work.txt'].append(('S11-next-action', "- NEXT ACTION SIZE (decision 438): each Next action segment you write is at most about 120 characters past its owner and key (\"<owner>: <step> (<D Mon>)\"); the detail, the reason and any quote go in the Claude note;", "- NEXT ACTION SIZE (decisions 438, 588): one segment per person, \"<Who>: <step>\" and a date if any, about 15 words; background goes in the page body or the Claude note;"))
+EDITS['zoya-fast.txt'].append(('S0-trim', " Fold only a proven duplicate: carry every Claude note line, open Next action segment and commitment, Waiting on, all Activities and the Call, Eval and Prep doc links (Prep doc link is named \"Dossier link\" until the rename; use whichever the row has, never create a new property; two Eval links: the kept row's stays, the other in a Claude note line) to the kept row, and its Guest, Via and Stakeholders to the kept row's Stakeholders; read it back, clear the duplicate's relations, then Trash it (decision 416) and report it; never merge People)", " Fold only a proven duplicate, exactly as CLAUDE.md's booker rule says (every note, open commitment, Activity and link carried to the kept row and read back, then Trash, decision 416), and report it; never merge People)"))
+EDITS['zoya-fast.txt'].append(('S0-trim', " Guest-facing mail (day-before note, prep note, recording link, reschedule, thank-you) reaches the guest's side directly: To the guest when their People row has an Email, else the person from the guest's company on the Engagement (Stakeholders, Via, or any company-side attendee on its invites); PR goes in Cc.", " Guest-facing mail goes To the guest, else a company-side contact on the Engagement (Stakeholders, Via, an invite attendee); PR in Cc."))
+EDITS['zoya-fast.txt'].append(('S0-trim', "TIME: Bash `date -u` at the start gives the run's start; the end time is `date -u` at your last write; elapsed minutes are always measured with `date -u`, never estimated, and size or context never ends a run early; rules loading, thread length or cost is never a reason to leave a step.", "TIME: start and end are `date -u` (at the start and at your last write), never estimated; size, context, rules loading, thread length or cost never ends a run or leaves a step."))
+EDITS['zoya-fast.txt'].append(('S0-trim', "parses the step lines, the \"sends\" and \"stop:\" lines and the start and end times,", "parses the step lines, the \"sends\" line and the start and end times,"))
+EDITS['zoya-fast.txt'].append(('S0-trim', " Where the FT routine pages set timing, follow them.", ""))
+EDITS['zoya-fast.txt'].append(('S0-trim', "Never introduce or describe yourself (SLOW work: except in release mail 2).", "Never introduce or describe yourself."))
+EDITS['zoya-fast.txt'].append(('S0-trim', "To the person who pitched (the founder if they wrote directly), Cc everyone else on the thread and Akshay.", "To the person who pitched (the founder if they wrote directly); the rest per RECIPIENTS."))
+EDITS['zoya-fast.txt'].append(('S0-trim', "(a new mail: email_compose action send; a reply: THREADING's draft way, never email_compose action reply, NO COMPOSE REPLY)", "(a new mail: email_compose action send; a reply: NO COMPOSE REPLY)"))
+EDITS['zoya-fast.txt'].append(('S0-trim', "a thread with no Engagement gets one as inbox capture STEP 3 creates it (a pitch: Show by subject, not inbox alone, decision 538; Status New, Waiting on Akshay, Next action \"Akshay: new pitch from <PR or self> for <guest>, eval running (captured <D Mon HH:MM>)\", decision 541), Source ID \"zoya-mail:<folder>:<uid>\", but first (decision 424): a sender acting for someone else is attached only on evidence naming the guest (the thread or form names them, or the sender works at the guest's own company, not an agency, which has exactly one open row on that show): they join that row's Stakeholders and no row is created; organisation or domain alone never attaches; no such evidence, or two candidates: create nothing, report it.", "a thread with no Engagement gets one (Show by subject, decision 538; Status New, Waiting on Akshay, \"Akshay: new pitch from <PR or self> for <guest>, eval running (captured <D Mon HH:MM>)\", decision 541; Source ID \"zoya-mail:<folder>:<uid>\"), but a sender acting for someone else is attached only as CLAUDE.md's booker rule says (decision 424): no evidence naming the guest, or two candidates: create nothing, report it."))
+EDITS['zoya-fast.txt'].append(('S0-trim', "- CLIENT-SHOW SCHEDULING (decision 446): on client shows no recording time is proposed, created, moved or confirmed without Akshay's ok (SCOPE), whatever a page says. A reply to a mail Akshay wrote himself goes on his list and gets at most the holding reply (decision 448), plus the themes answer when it asks for themes or questions before a recording (decision 453), unless it needs nothing of him (Last activity and a Claude note line only, decision 490).", "- CLIENT-SHOW SCHEDULING (decision 446): on client shows no recording time is proposed, created, moved or confirmed without Akshay's ok (SCOPE), whatever a page says. A reply to a mail Akshay wrote himself: STEP 1 b (decisions 448, 453, 490)."))
+EDITS['zoya-slow-work.txt'].append(('S8-oneoffs', "STEP 0 (feedback, bounces, vendor forms, owner mail, scorecard)", "STEP 0 (feedback, bounces, vendor forms, scorecard)"))
+EDITS['zoya-slow-work.txt'].append(('S8-oneoffs', "; owner mail \"ownermail:<YYYY-MM-DD>\"", ""))
+EDITS['zoya-slow-work.txt'].append(('S8-oneoffs', "; an owner mail item sent at once in its own mail \"ownermail:<YYYY-MM-DD>:<row id>\"", ""))
+EDITS['zoya-slow-work.txt'].append(('S8-oneoffs', "(owner mail, feedback, vendor forms, the Monday scorecard)", "(feedback, vendor forms, the Monday scorecard)"))
+EDITS['zoya-slow-work.txt'].append(('S8-oneoffs', "team steps, owner mail and the scorecard go on their dates", "team steps and the scorecard go on their dates"))
+EDITS['zoya-slow-work.txt'].append(('S8-oneoffs', ", the owner mail and the Monday scorecard (sent or not due)", ", the Monday scorecard (sent or not due)"))
+EDITS['zoya-slow-work.txt'].append(('S8-oneoffs', " Where the FT routine pages set timing, follow them.", ""))
