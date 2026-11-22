@@ -88,6 +88,9 @@ def fill_ids(text):
 def main():
     src, dst = sys.argv[1], sys.argv[2]
     os.makedirs(dst, exist_ok=True)
+    for name in ne.MUST_KEEP:
+        if name not in ne.EDITS:
+            raise SystemExit(f"MUST_KEEP names {name}, which has no edits")
     for name in ne.EDITS:
         raw = open(os.path.join(src, name + ".md"), encoding="utf-8").read()
         body = re.sub(r"\A<!--.*?-->\n", "", raw, flags=re.S)
@@ -97,6 +100,9 @@ def main():
             for k in ("old_str", "new_str"):
                 if k in p:
                     p[k] = fill_ids(p[k]) if "_ID}" in p[k] else p[k]
+        missing = [k for k in ne.MUST_KEEP.get(name, []) if k not in new]
+        if missing:
+            raise SystemExit(f"{name}: new text lost required strings {missing}")
         lost = set(CHILD.findall(body)) - set(CHILD.findall(new))
         if lost:
             raise SystemExit(f"{name}: would drop child pages or databases {sorted(lost)}: move them first or keep their blocks")

@@ -44,8 +44,8 @@ Write pages one at a time, in this order, never two writers. Every write uses th
 
 1. Archive the history child pages of Rules for Zoya first: notion-move-pages with ids 3fa19a301a7f81959333c3f38b93c90c (Background, 12 to 14 Oct), 3fa19a301a7f8149bea3eb60422ba660 (Mail feedback, 15 Oct), 3fa19a301a7f814f925ef20c8c4a659c (Routine audit, 16 Oct), 3ff19a301a7f81e2b13ec0b339cd9bbe (Mock follow-ups) to new parent CTO Audit (40419a301a7f81c48c29d894e433750d). Read back each page's parent.
    - Rollback: move them back under Rules for Zoya (3f719a301a7f81a09de3ee3ad6ad98a3).
-2. Fresh fetch of all 18 pages in notion_edits.PAGES into data/rulebook-r1/notion-cutover/<short-name>.md (content only, first line a comment with the page id and fetch time). These are also the rollback copies.
-3. `python3 docs/proposals/rulebook-r1/apply_notion.py data/rulebook-r1/notion-cutover data/rulebook-r1/notion-new`. It must print every page with no error. It fails on a moved anchor, a lost required title, an unfilled id or a dropped child page. Any failure: stop. That page's edits must be rebased on the new text first.
+2. Fresh fetch of all 18 pages in notion_edits.PAGES into data/rulebook-r1/notion-cutover/<short-name>.md (content only, first line a comment with the page id and fetch time). Copy the text with a script: from the tool-result file when the fetch gives one, else from the inline result; never retype. These are also the rollback copies.
+3. `python3 docs/proposals/rulebook-r1/apply_notion.py data/rulebook-r1/notion-cutover data/rulebook-r1/notion-new`. It must print every page with no error. It fails on a moved anchor, a lost required title, an unfilled id or a dropped child page. A miss is first treated as a copy error: re-fetch that page and copy it again from the tool-result file, then rerun. A miss that survives a clean re-fetch means the page changed since staging: stop, and that page's edits are rebased before any write.
 4. For each page, in the order the script printed them, run data/rulebook-r1/notion-new/<page>.plan.json:
    - "update_content" ops: one notion-update-page call per page, command update_content, content_updates = the ops in order (old_str, new_str, and replace_all_matches where set). Never allow_deleting_content.
    - "replace_content" (fu-1-sponsored, fu-6-release, rules-inbox, links-limits): command replace_content with new_str; never allow_deleting_content. A validation error listing child pages is a stop.
@@ -57,6 +57,10 @@ Write pages one at a time, in this order, never two writers. Every write uses th
    - Trash list: first run the grep check in decisions-edits.md on the live files. It must return only decisions-edits.md and change-map.md. Then move each row to Trash.
    - Rollback: write the saved text back, and restore Trashed rows (notion-restore-pages).
 7. Update the Notion home and Business OS developer pages as CLAUDE.md asks: one Change log line on the Zoya routine page, "Rulebook r1 cutover: <date>, commit <live-files commit>".
+
+## Rollback across steps
+
+A failure after (b) has started rolls back (b) and (a) together, before Monday 07:38 JST: put back every page already written from data/rulebook-r1/notion-cutover/ (replace_content with its saved text; move the four history pages back), restore the Decisions rows from decisions-before.json, then revert the live-files commit and push. A half state must never meet Monday's first wake: the old FAST loop-in uses the MCP Emails draft tool on ad@, which the new pages and sender table no longer describe, and new pages with old prompts would disagree. If the full rollback can't finish by 07:00 JST, tell the CTO at once so Monday's day-chat trigger can be held.
 
 ## (c) Stored prompts (CTO, with update_trigger)
 
