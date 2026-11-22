@@ -217,7 +217,7 @@ When pre-call notes arrive for an existing "Pre-call needed" engagement:
 
 **Organisation.** Find it by name or domain. If none exists, create it with Name, Website, Domain, Type (Startup, Enterprise or Fund) and Source `Agent`.
 
-**People.** If the guest has no People row, create one with Name, Role, LinkedIn, Organisation, Location, What they do (a short descriptor such as "Fintech, auto loans"), Source `Agent` and Captured (today). On every run, set `Latest eval verdict` (it has no "Evaluate after call" option, so use the closest match). Fill LinkedIn (with the profile URL from Step 2) and What they do only if they're empty. Never touch `Blurb` (founder-thesis-blurb owns it), `FT guest`, or the duplicate fields.
+**People.** If the guest has no People row, create one with Name, Role, LinkedIn, Organisation, Location, What they do (a short descriptor such as "Fintech, auto loans"), Source `Agent` and Captured (today). On every run, set `Latest eval verdict` (it has no "Evaluate after call" option, so use the closest match). Fill LinkedIn (with the profile URL from Step 2) and What they do only if they're empty. Never touch `Blurb` (the ft-community-blurb chat owns it), `FT guest`, or the duplicate fields.
 
 **PR contact.** If the pitch came through an agency, find or create the contact in People (tag `PR contact`) and their agency in Organisations (Type `PR agency`). Link the contact via `Via`.
 
