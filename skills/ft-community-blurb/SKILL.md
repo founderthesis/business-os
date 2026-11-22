@@ -1,6 +1,6 @@
 ---
 name: "ft-community-blurb"
-description: "Write the welcome blurb that introduces one new member of the Founder Thesis WhatsApp community (a founder or investor Akshay Datt has interviewed), in Akshay's voice, from the call transcripts, the episode transcript, LinkedIn via Apify and Tracxn. Trigger on \"write <guest>'s blurb\", \"community blurb for <guest>\", \"blurb with skills/ft-community-blurb\", or a comment asking to change an existing blurb. Returns DRAFT, SOURCES and NOTES FOR AKSHAY. Writes nothing to Notion and sends nothing."
+description: "Write the welcome blurb that introduces one new member of the Founder Thesis WhatsApp community (a founder or investor Akshay Datt has interviewed), in Akshay's voice, from the call transcripts, the episode transcript, LinkedIn via Apify and Tracxn. Trigger on \"write the blurb for Ankur\", \"community blurb for a guest\", \"blurb with skills/ft-community-blurb\", or a comment asking to change an existing blurb. Returns DRAFT, SOURCES and NOTES FOR AKSHAY. Writes nothing to Notion and sends nothing."
 ---
 
 # ft-community-blurb
