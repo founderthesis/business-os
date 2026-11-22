@@ -29,8 +29,19 @@ data/rulebook-r1/ids.json written from the live routines/zoya-day.md; git-ignore
 4. Writes, one page at a time: rules-for-zoya, cadences, follow-ups, wording, routines, client-show-mails, fu-1-sponsored (replace), fu-6-release (replace, child page kept), fu-2-precall, fu-3-recording, fu-8-revival, calendar-rules, inbox-your-call, rules-inbox (replace), links-limits (replace), rules-notion-list, data-rules, blurb-sources. No op matched nothing; the only warnings were three markdown parser notes on Rules for Zoya (<room>, <name>, <step> kept as text).
 5. Read-back: all 18 pages MATCH the expected text after normalising Notion's own rendering (autolinks, escaped characters, <br />), and their last 200 characters agree.
 6. Decisions ledger: rollback copy of 24 rows in data/rulebook-r1/decisions-before.json. 20 "Rewrite whole" rows written and read back, all equal to decisions-edits.md: 235, 329, 352, 366, 390, 420, 423, 427, 488, 514, 573, 575, 585, 618, 625, 637, 646, 647, 656, 657. Decision 367 has no row in the ledger, so nothing was written for it.
-   - Trash held: the pre-check grep did not come back clean. Live or semi-live files still cite the four rows: routines/mac/transcripts.md (456), routines/zoya.md and routines/calendar.md (old standalone prompts), routines/retired/daily-sweep.md, and the staged scripts' old-text anchors. Rows 439, 456, 489 and 546 stay in the ledger, In force, until the CTO decides.
-7. Change log line added on the Zoya routine page (3fb19a301a7f81b686adcbafec82287f).
+   - Trash, first pass held: the pre-check grep was not clean. routines/mac/transcripts.md cited 456, and the unscheduled routines/zoya.md and routines/calendar.md cited the four rows.
+   - CTO's call (12:06 UTC): fix the callers, then Trash. routines/mac/transcripts.md source 5 now reads Ranjita's mail per decision 646 and clears her Engagement segment (repo copy only: Akshay's Mac copy is unverified until he re-runs it). routines/zoya.md and routines/calendar.md moved to routines/retired/ (not scheduled since 568). The grep then showed only the staged scripts' old-text anchors, the CLAUDE.md diff's old side and the unread old build in routines/zoya/release/. Rows 439, 456, 489 and 546 moved to Trash; a query by No. returns none of them (restorable from Trash).
+7. Zoya routine page (3fb19a301a7f81b686adcbafec82287f): the stale body was replaced with a short current pointer (what runs now, where her rules live, the Routines inventory); the Change log is kept, with the cutover line added. Read back.
+
+## (c) Stored prompts (CTO)
+
+| Scheduled task | Trigger | Bytes | sha256 (first 16) | Result |
+|---|---|---|---|---|
+| Host boards | trig_01K8bueCr2xsPkbgQzjeRKsz | 8,585 | 8ace96f5e9031c1a | EQUAL (CTO, 11:55 UTC) |
+| CTO coordination round | trig_019sfzEHt9djonNhbxcATgYA | 7,101 | 366fbeaee7d17fb3 | EQUAL (CTO, 11:56 UTC) |
+| Sarika's editing asks | trig_01AU4fQevmq39TDZX6LvC4cq, trig_01SXrnWJb2iz5Q3zts34VZu4, trig_0177CBiFc4zP8SGCaVip97Gc | 9,067 | 216d73acc272c4f1 | EQUAL (deployed from their own session, session_019pwcV3jbCtwb56pcVB3o6J, 11:58 UTC; previous prompt 8,925 bytes, b8aef3c84386c0d4, kept there as rollback) |
+
+Installed claude.ai cloud skills: unverified.
 
 ## Rollback
 
