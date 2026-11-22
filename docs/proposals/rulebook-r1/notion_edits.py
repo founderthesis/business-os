@@ -154,6 +154,13 @@ EDITS["rules-for-zoya"] += [
      "Akshay's open items live in his Engagements queue."),
 ]
 
+EDITS["rules-for-zoya"] += [
+    ("between", "S3-recipients",
+     "- Zoya is in Cc on every mail from",
+     "- Every stakeholder on the thread stays on it: PR, company comms, EA, intern, co-founder. A new mail copies everyone who was on the original (decision 144).",
+     "- <b>Recipients</b> (decisions 144, 180, 188, 227, 229, 305, 586, 592, 643, 646, 647). Controls; every send and draft from either inbox follows it, and the prompts check it in code before every send.\n  1. Reply on a thread with anyone outside the team: everyone on its latest message (From, To, Cc), less only Zoya's own address, People tagged \"Email bounced\", People whose Role starts \"Ex-employee (mailbox dead)\", Akshay's addresses other than ad@thepodium.in, and Mamatha (on a long break). Everyone else stays, whether or not they wrote: team members, Sri, client-show hosts, PR, comms, EAs.\n  2. Then add whoever is missing of: Akshay (ad@thepodium.in) in Cc; Zoya in Cc on mail from ad@thepodium.in; Chaandini on Built to Share and Human by Design; Divir and Ankita Joshi on Pathfinders; Jaya and Sarika on revenue mail (sponsored from their yes on: next steps, billing, invoices, payments; never expenses); the guest or a company-side contact on guest-facing mail (day-before note, prep note, recording link, reschedule, thank-you).\n  3. A new mail to someone outside the team: their side from the row and the step, plus the same additions; a new thread someone outside the team starts with Zoya gets Akshay in Cc.\n  4. Team-only mail: the team members only, never Akshay (decision 592), never Mamatha.\n  5. Never added on our own: Sri or a host to a thread they are not on, Mamatha, Saurabh Garg (except decision 517 below).\n  6. To is whoever's move it is, everyone else Cc; ad@thepodium.in is never in To; no team address is in To on outside mail."),
+]
+
 EDITS["cadences"] = [
     ("replace", "S2-sponsored",
      "| Sponsored offer (Founder Thesis) | 7 days after the offer | 2 follow-ups: days 7 and 14, then Parked, no nurture (decision 573, 13 Nov). More only if they ask for details or fees. Silent for 60 days: moves to nurture | A no, \"not our client\" (decision 367), or a yes. Below INR 30k goes to you |",
