@@ -2,6 +2,7 @@
 # Ops (all anchors are address-free, so this file carries no email addresses):
 #   ("replace", subject, old, new)                 old must occur exactly once
 #   ("between", subject, start, end, new)          replace start..end inclusive; each once, end after start
+#   ("replace_all", subject, old, new)             old must occur at least once
 #   ("drop_toggles", subject, marker)              remove every <toggle ...>...</toggle> whose text holds marker
 #   ("drop_section", subject, heading)             remove "## heading" up to the next "## " heading or the end
 # apply_notion.py applies them in order and fails on any miss.
@@ -15,14 +16,15 @@ PAGES = {
 }
 
 RELEASE_TABLE = """<callout icon="📅" color="blue_bg">
-<b>Release dates: what may be said, and when</b> (decisions 427, 580, 582, 589, 628). Controls.
+<b>Release dates: what may be said, and when</b> (decisions 427, 514, 575, 582, 601, 628, 638). Controls.
 
-| Show | Before the date is confirmed | After Sarika or Akshay confirms it in Zoya <> Team |
+Sarika sets Planned release on every show (decision 514). A Planned release nobody has confirmed is a draft.
+
+| Show | Before Sarika or Akshay confirms the date | After they confirm it in Zoya <> Team |
 | --- | --- | --- |
-| Founder Thesis and FT Tier 3 Spotlight | Never state or hint at a date. A release-date ask gets "Next steps and release date" (no date). | The release workflow in the Zoya day instructions: the "Release date (post-recording)" mail, then FT Release v2. Only the confirmed date, never a pencilled one. |
-| un#, Built to Share, Human by Design, Pathfinders | Never state or hint at a date. A release-date ask gets "Next steps and release date" (no date). | No change: release mail on these shows is Akshay's own, drafted for him to send. |
-
-A Planned release that nobody has confirmed is a draft, not a fact.
+| Founder Thesis and FT Tier 3 Spotlight | On the post-recording thread, the tentative week only, in "Release date (post-recording)" (decision 575). A release-date ask gets "Next steps and release date". | FT Release v2 (decisions 601, 628): Mail 1 is Akshay's draft, Mails 2 to 6 Zoya's. |
+| un# | No date. A release-date ask gets "Next steps and release date". | Release v3 (decision 638): Mail 1 is Akshay's draft, Mails 2 to 5 Zoya's, no WhatsApps. |
+| Built to Share, Human by Design, Pathfinders | No date. A release-date ask gets "Next steps and release date". | Release mail stays Akshay's own (the pre-release ask drafted for him) until Release v3 starts on that show, once its short link is confirmed. |
 </callout>"""
 
 SPONSORED_TABLE = """## 5c. Sponsored offers and pauses: one table (decisions 227, 237, 367, 422, 573, 618, 625, 656)
@@ -123,6 +125,35 @@ EDITS["rules-for-zoya"] += [
      LINKS),
 ]
 
+EDITS["rules-for-zoya"] += [
+    ("between", "S15-history",
+     "## System-audit corrections, 25 Oct 2026",
+     "Zoya is live (since 2026-10-16 00:20 JST).",
+     "## Standing checks\n\n- <b>Reach claims.</b> A figure that combines Akshay's and Unnati's channels says \"we have\" and names the channels and the dated source; never call it Founder Thesis's own following.\n- <b>Verified completion closes only its own obligation.</b> A group join removes the add or invite ask (and Akshay from Waiting on only if nothing else of his is left); it never proves a list, an intro or another promise was sent.\n\nZoya is live (since 2026-10-16 00:20 JST)."),
+    ("between", "S10-holding",
+     "- <b>Holding reply when a PR person chases a row waiting",
+     "Akshay's list item stays as it is.",
+     "- <b>Holding reply when someone chases a row waiting on Akshay</b> (decisions 390, 418, 571). Zoya replies on that thread the same day with only \"hi \\<first name>, will get back to you on this\": never Akshay's name, never a date. At most one holding reply per thread per 7 days; it is a reply, not a chase, so the 7-day limit doesn't hold it. A question the wording page answers gets that answer instead (decision 585). Akshay's list item stays as it is."),
+    ("between", "S4-ranjita",
+     "<b>Internal ad-hoc tasks (decision 376, Akshay, 21 Oct).</b>",
+     "goes to Akshay's list.",
+     "<b>Asks of the team</b> (decisions 376, 385, 592, 646). A step for a team member about a guest is a \"<name>: <step>\" segment on that guest's Engagement with the person in Waiting on; only work with no guest row is a Kind Task row (Show Internal). Zoya asks on WhatsApp (team hours) or by mail with no Akshay in To or Cc, and chases every 2 working days (Ranjita: once, after 2 days). A date they give wins. A reply that it can't be done goes to Akshay's list."),
+    ("between", "S4-ranjita",
+     "<b>Transcript requests while Zencastr blocks standalone",
+     "Stops when Akshay says Zencastr downloads work again.",
+     "<b>Transcripts</b> are Ranjita's (section 5: Zencastr rooms and transcripts)."),
+    ("replace", "S4-ranjita",
+     "Only the team (Ranjita, Sarika, Jaya, Mamatha, Chaandini).",
+     "Only the team (Ranjita, Sarika, Jaya, Chaandini)."),
+    ("replace", "S15-history",
+     "## More rules (decisions 373 to 382)",
+     "## Guest-facing mail, team asks and replies"),
+    ("between", "S15-history",
+     "Sections 9 and 10 (one-time plans and go-live history)",
+     "Akshay's open items live in his Engagements queue.",
+     "Akshay's open items live in his Engagements queue."),
+]
+
 EDITS["cadences"] = [
     ("replace", "S2-sponsored",
      "| Sponsored offer (Founder Thesis) | 7 days after the offer | 2 follow-ups: days 7 and 14, then Parked, no nurture (decision 573, 13 Nov). More only if they ask for details or fees. Silent for 60 days: moves to nurture | A no, \"not our client\" (decision 367), or a yes. Below INR 30k goes to you |",
@@ -167,6 +198,16 @@ EDITS["follow-ups"] = [
 ]
 
 EDITS["wording"] = [
+    ("replace_all", "S9-release", "PROPOSED: Release v3", "Release v3"),
+    ("replace_all", "S9-release", "<b>Status:</b> PROPOSED", "<b>Status:</b> approved (decisions 601, 638)"),
+    ("replace", "S9-release", " \\[approved 19 Nov, with \"we\" for Zoya\\]", ""),
+    ("replace", "S9-release", " \\[approved 19 Nov, 3/ reworded\\]", ""),
+    ("replace", "S9-release", "Mail 2: confirmed (day before) \\[approved 19 Nov\\]", "Mail 2: confirmed (day before)"),
+    ("between", "S9-release",
+     "<b>Status: LIVE for un# from 20 Nov (decision 638",
+     "Until he approves them, Founder Thesis keeps FT Release v2 and the client shows keep their current release mails.",
+     "<b>Status:</b> live on un# (decision 638): Mails 1 to 5, no WhatsApps. Founder Thesis runs FT Release v2, which this set matches word for word. Built to Share, Human by Design and Pathfinders start once their short links are confirmed; until then they keep the pre-release ask and the release-day mails below."),
+    ("drop_toggles", "S9-release", "un# Episode Planned release is 7 days away or less and no pre-release mail yet"),
     ("drop_section", "S8-templates", "Retired: do not send"),
     ("drop_toggles", "S8-templates", "<b>Status:</b> retired"),
     ("drop_toggles", "S8-templates", "Kept for reference; do not send."),

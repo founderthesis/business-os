@@ -34,6 +34,12 @@ def apply(name, text):
             if b < 0 or text.count(op[3], a) != 1:
                 raise SystemExit(f"{tag}: end not found once after start: {op[3][:90]!r}")
             text = text[:a] + op[4] + text[b + len(op[3]):]
+        elif kind == "replace_all":
+            n = text.count(op[2])
+            if n < 1:
+                raise SystemExit(f"{tag}: not found: {op[2][:90]!r}")
+            text = text.replace(op[2], op[3])
+            print(f"  {name}: replaced {n} x {op[2][:50]!r}")
         elif kind == "drop_toggles":
             pat = re.compile(r"<toggle[^>]*>.*?</toggle>\n?", re.S)
             hits = [m for m in pat.finditer(text) if op[2] in m.group(0)]
