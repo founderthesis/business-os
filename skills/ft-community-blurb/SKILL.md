@@ -38,7 +38,7 @@ Write as Akshay. Pick the examples closest to this guest (an investor, a deep-te
 - **Length.** Let the examples set it. Most run 120 to 200 words.
 - **Name.** First mention is the full name followed by `(<LinkedIn URL> - @{WhatsApp handle})`, as in his recent blurbs. Leave the handle as that placeholder; Akshay tags the person in WhatsApp.
 - **Numbers.** Figures the guest gave on the call can go in as stated. They are self-reported, so say that in the notes, not in the blurb.
-- **No em dashes, ever** (CLAUDE.md). The writing rules in CLAUDE.md apply.
+- **No em dashes, ever.** Short varied sentences, contractions, specifics over generalities.
 
 ## Return
 
