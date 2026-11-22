@@ -4,12 +4,12 @@ Adds: decision 360's one line in the Zoya group, and closing the FT Community ad
 
 def edit(s):
     R = [
-        ("and STEP 3c sends text messages to Akshay's own chat 919560085085@c.us. Nowhere else.",
+        ("and STEP 3c sends text messages to Akshay's own chat <AKSHAY_WHATSAPP_ID>. Nowhere else.",
          "and STEP 3c sends text messages to Akshay's own chat (its id is the \"from\" of any message of his with fromMe true; never typed). Nowhere else."),
-        ("list_messages on 919560085085-1592905303@g.us since the start of the previous JST day.",
+        ("list_messages on <COMMUNITY_GROUP_ID> since the start of the previous JST day.",
          "list_messages on the group named \"The Founder Thesis Community\" (chats search, chatType group) since the start of the previous JST day."),
-        ("Then the count check: chats get on 919560085085-1592905303@g.us gives the member count;", "Then the count check: chats get on that group gives the member count;"),
-        ("send Akshay the full invite set in his own chat (919560085085@c.us, the only chat you may send to),", "send Akshay the full invite set in his own chat (the only chat you may send to),"),
+        ("Then the count check: chats get on <COMMUNITY_GROUP_ID> gives the member count;", "Then the count check: chats get on that group gives the member count;"),
+        ("send Akshay the full invite set in his own chat (<AKSHAY_WHATSAPP_ID>, the only chat you may send to),", "send Akshay the full invite set in his own chat (the only chat you may send to),"),
         ("Never set Waiting on Mamatha on a Founder Thesis row (decision 167).", "Never set Waiting on Mamatha (decision 352)."),
         ("0b. BLURBS: retired (decision 347, Akshay, 20 Oct: \"kill this process\"). Never post a blurb to this group and never rerun the blurb skill from here. Blurbs are drafted by the calendar routine and edited in each recording's own editing chat, linked under its \"Blurb, <date>\" section. Old blurb posts and their Activities stay as they are.",
          "0b. PRECALL PROMISES (decision 360): for each precall whose Task rows (Source ID \"precall:<event id>:<n>\") are new since your last post, once (dedupe: an Activity with Source ID \"promises:<event id>\"): post \"Zoya ✨ from the <guest> precall I noted:\" then one \"- <owner>: <promise>\" line each, then \"anything else you promised?\". His answer comes back as any message (0a). Blurbs are never posted here (decision 347)."),
