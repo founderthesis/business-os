@@ -564,3 +564,4 @@ EDITS['inbox-actions.txt'] += [
 ]
 EDITS['inbox-capture.txt'].append((_F3b, "in every spelling older rows use: Source ID \"adid:<UID>\", \"allmail:<its MCP Emails id>\",",
     "in every spelling older rows use: Source ID \"adid:<UID>\", \"allmail:<its MCP Emails id>\", \"zoya:\", \"zoyaid:\" or \"mcpemails:\" followed by its MCP Emails id or its folder:UID,"))
+EDITS['inbox-capture.txt'].append((_F3b, "followed by its MCP Emails id or its folder:UID,", "followed by its MCP Emails id, its folder:UID or (zoyaid:) its bare UID,"))

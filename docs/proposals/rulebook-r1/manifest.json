@@ -22,9 +22,9 @@
   "source": "83e8fb0:docs/proposals/zoya-day/prompts/inbox-capture.txt",
   "source_sha256": "41e188c51713d841523102214cab72045907748abae663c17b5205885bb47b0c",
   "bytes_before": 50812,
-  "bytes_after": 42877,
-  "sha256": "589fd4acb713daf24a8d7e2ba965a535e8c5f550a63b2963b810fcba4d5ad493",
-  "edits": 19
+  "bytes_after": 42901,
+  "sha256": "eeb496baf7245b853a5a9af210e1fc5527882d20b755e18e7292524629773ebe",
+  "edits": 20
  },
  {
   "file": "whatsapp.txt",
