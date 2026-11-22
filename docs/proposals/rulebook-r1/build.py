@@ -93,6 +93,17 @@ def build():
         if r["file"] == "zoya-slow.txt":
             r["bytes_after"] = len(out["zoya-slow.txt"].encode())
             r["sha256"] = hashlib.sha256(out["zoya-slow.txt"].encode()).hexdigest()
+    # Size gates (CTO, 22 Nov): FAST well under the 65,536-byte prompt cap, and no prompt
+    # grows past its pinned source except where a new duty was written in.
+    sizes = {r["file"]: r for r in report}
+    if sizes["zoya-fast.txt"]["bytes_after"] >= 60000:
+        raise SystemExit(f"zoya-fast.txt is {sizes['zoya-fast.txt']['bytes_after']} bytes: must be under 60,000")
+    for f in ("zoya-slow-work.txt", "zoya-slow.txt", "inbox-capture.txt"):
+        if sizes[f]["bytes_after"] >= sizes[f]["bytes_before"]:
+            raise SystemExit(f"{f} grew: {sizes[f]['bytes_before']} -> {sizes[f]['bytes_after']}")
+    for f, r in sizes.items():  # the SLOW work file is read from git in slices, not a stored prompt
+        if f != "zoya-slow-work.txt" and r["bytes_after"] >= 65536:
+            raise SystemExit(f"{f} is over the 65,536-byte prompt cap")
     if "--release" in sys.argv and "{SLOW_WORK_COMMIT}" in out["zoya-slow.txt"]:
         raise SystemExit("release.json has no slow_work_commit: commit the work file first, then stamp")
     return out, report

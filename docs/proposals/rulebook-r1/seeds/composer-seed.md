@@ -18,4 +18,4 @@ Compose mode (decision 596). You compose; the day chat sends. So:
 - WhatsApp items: don't draft or send them. List them in the run record.
 - Capture only: where the prompt sends the ad@ loop-in (STEPS 6 to 6b), send nothing; put one line per loop-in in your report, "loop-in due: <row>, <name>, <the thread's latest Message-ID>". The day chat sends them.
 - Re-read a row before composing for it. Never access a team member's own computer. No em dashes.
-- When the run record is written, end with one line: status, drafts made, held, blocked, carried.
+- When the run record is written, report back to the day chat that started you: send_message (load claude-code-remote's tools with ToolSearch "+claude-code-remote") to {day chat session id}; if that id is missing, list_sessions and pick the newest session tagged zoya-day. One line: status, drafts made, held, blocked, carried, and every "loop-in due" line. End with the same line here.

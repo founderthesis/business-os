@@ -7,7 +7,7 @@ Usage: python3 apply_notion.py <before_dir> <after_dir>
 edits fail loudly if the page moved under them. Output goes to <after_dir>,
 which should be git-ignored (pages carry mailto links). Prints sizes.
 """
-import os, re, sys
+import json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -62,13 +62,25 @@ def apply(name, text):
     return text
 
 
+def fill_ids(text):
+    """Group chat ids live outside git: data/rulebook-r1/ids.json (git-ignored)."""
+    p = os.path.join(HERE, "..", "..", "..", "data", "rulebook-r1", "ids.json")
+    ids = json.load(open(p)) if os.path.exists(p) else {}
+    for k, v in ids.items():
+        text = text.replace("{" + k + "}", v)
+    left = re.findall(r"\{[A-Z_]+_ID\}", text)
+    if left:
+        raise SystemExit(f"unfilled ids {left}: create data/rulebook-r1/ids.json from the live routines/zoya-day.md")
+    return text
+
+
 def main():
     src, dst = sys.argv[1], sys.argv[2]
     os.makedirs(dst, exist_ok=True)
     for name in ne.EDITS:
         raw = open(os.path.join(src, name + ".md"), encoding="utf-8").read()
         body = re.sub(r"\A<!--.*?-->\n", "", raw, flags=re.S)
-        new = apply(name, body)
+        new = fill_ids(apply(name, body))
         open(os.path.join(dst, name + ".md"), "w", encoding="utf-8").write(new)
         print(f"{name:16} {ne.PAGES[name]}  {len(body):>7} -> {len(new):>7} chars")
 

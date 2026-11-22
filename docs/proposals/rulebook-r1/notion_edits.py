@@ -31,7 +31,8 @@ Sarika sets Planned release on every show (decision 514). A Planned release nobo
 | --- | --- | --- |
 | Founder Thesis and FT Tier 3 Spotlight | On the post-recording thread, the tentative week only, in "Release date (post-recording)" (decision 575). A release-date ask gets "Next steps and release date". | FT Release v2 (decisions 601, 628): Mail 1 is Akshay's draft, Mails 2 to 6 Zoya's. |
 | un# | No date. A release-date ask gets "Next steps and release date". | Release v3 (decision 638): Mail 1 is Akshay's draft, Mails 2 to 5 Zoya's, no WhatsApps. |
-| Built to Share, Human by Design, Pathfinders | No date. A release-date ask gets "Next steps and release date". | Release mail stays Akshay's own (the pre-release ask drafted for him) until Release v3 starts on that show, once its short link is confirmed. |
+| Built to Share, Human by Design | No date. A release-date ask gets "Next steps and release date". | Release mail stays Akshay's own (the pre-release ask drafted for him) until Release v3 starts on that show, once its short link is confirmed. |
+| Pathfinders | Pre-launch: no release mail until its pitch sheet's release lines are confirmed (decision 626). | Same |
 </callout>"""
 
 SPONSORED_TABLE = """## 5c. Sponsored offers and pauses: one table (decisions 227, 237, 367, 422, 573, 618, 625, 656)
@@ -43,6 +44,7 @@ SPONSORED_TABLE = """## 5c. Sponsored offers and pauses: one table (decisions 22
 | The offer | podm.in/sponsored, no price in the first mail | unhashed.co/sponsored, no price in the first mail |
 | Price, only when asked | INR 1,00,000 + GST (podm.in/why-sponsor) | USD 1,500 |
 | Before any follow-up | They must show interest in the sponsored option: ask about fees, deliverables or timing, say they are considering it, or ask for details. Silent or noncommittal: no follow-up at all. | Same |
+| Silent or noncommittal 7 days after the offer, no interest shown | No mail. The row goes on the weekly Park proposals for Akshay (decisions 618, 656) | No mail. Status Unresponsive (decisions 422, 618) |
 | After interest | Answer what they asked from the wording page, then at most 2 follow-ups on the Cadences days | Same; a yes, a negotiation, terms or a call go to Akshay |
 | What counts toward the 2 | Every chase already sent on the thread, by anyone (Zoya, ad@, the team). Loop-ins and answers to their questions don't. A template change, deploy or Chase step reset never adds more. | Same |
 | Negotiation | Zoya holds the price, makes the value case, offers The Spotlight Podcast at INR 30,000 + GST, fully upfront. A custom package or a call goes to Akshay. | Akshay |
@@ -99,7 +101,7 @@ EDITS["rules-for-zoya"] = [
      "- <b>Zencastr rooms and transcripts are Ranjita's</b> (decisions 445, 558, 644, 646). Founder Thesis rooms: as soon as a row reaches Booking, Zoya WhatsApps Ranjita one message listing every Booking or Booked row without a room, soonest first, and puts \"Ranjita: create \\<guest>'s Zencastr room and send Zoya the link (recording \\<D Mon>)\" on each row with Ranjita in Waiting on. One reminder after 2 days. A recording under 48 hours away with no link: Akshay's list, once. Her link (mail, WhatsApp or the Zoya <> Team group) goes on the row and the recording invite, and Zoya sends the guest the recording-link mail. Transcripts: after each recording, \"Ranjita: download \\<guest>'s Zencastr transcript and attach it to the Episode's Transcript file\" with one WhatsApp to her; one chase after 2 days, then Akshay's list. un# uses unhashed.co/studio and has no room ask."),
     ("replace", "S1-parking",
      "  - We declined (33) and Parked (34): Akshay's call; agents never touch them.",
-     "  - We declined and Parked: Akshay's call; agents never set or change them (decision 656). A live ask on such a row reopens it to Decision pending for him (decision 621)."),
+     "  - Parked: Akshay's call; agents never set it (decision 656). We declined: Akshay's call, or a client-show host's no on their board. A live ask on such a row reopens it to Decision pending for him (decision 621)."),
     ("replace", "S4-ranjita",
      "She's added the way Mamatha always was: \"thanks Sujeet, adding @Zoya to coordinate\" (decision 199).",
      "She's added the way a colleague is: \"thanks Sujeet, adding @Zoya to coordinate\" (decision 199)."),
@@ -114,6 +116,9 @@ EDITS["rules-for-zoya"] = [
      "| Release mail 1 (the full ask) and the patron ask 7 days after release |",
      "| Release mails 2 to 4 | Zoya | Routine 6 |",
      "| Release mail 1 (Founder Thesis) | Akshay: drafted in his Gmail for him to send (decision 589) | A new mail that starts the release thread |\n| Release mails 2 to 6, the patron ask | Zoya, on the release thread | FT Release v2 on the wording page |"),
+    ("replace", "C-privacy",
+     "## 6. WhatsApp\n",
+     "## 6. WhatsApp\n\n- <b>Group chat ids</b> (Blueticks): Zoya <> Team {ZOYA_TEAM_GROUP_ID}; The Founder Thesis Community {FT_COMMUNITY_GROUP_ID}. Kept here, not in the repo.\n"),
     ("replace", "S4-ranjita",
      "- <b>Agents send only to Akshay's own chat, the Zoya group, Jaya and Sarika.</b>",
      "- <b>Agents send only to Akshay's own chat, the Zoya group, the Zoya <> Team group, Jaya, Sarika and Ranjita.</b>"),
@@ -136,7 +141,7 @@ EDITS["rules-for-zoya"] += [
     ("between", "S15-history",
      "## System-audit corrections, 25 Oct 2026",
      "Zoya is live (since 2026-10-16 00:20 JST).",
-     "## Standing checks\n\n- <b>Reach claims.</b> A figure that combines Akshay's and Unnati's channels says \"we have\" and names the channels and the dated source; never call it Founder Thesis's own following.\n- <b>Verified completion closes only its own obligation.</b> A group join removes the add or invite ask (and Akshay from Waiting on only if nothing else of his is left); it never proves a list, an intro or another promise was sent.\n\nZoya is live (since 2026-10-16 00:20 JST)."),
+     "## Standing checks\n\n- <b>Reach claims.</b> A figure that combines Akshay's and Unnati's channels says \"we have\" and names the channels and the dated source; never call it Founder Thesis's own following.\n- <b>Threading.</b> A follow-up replies on the original conversation, found by its RFC Message-ID, In-Reply-To and References across ad@ and Zoya's inbox; a matching subject or a typed Re: is not a reply. If Zoya is not on it, the ad@ loop-in adds her on that chain first. If the headers or the source can't be recovered, record a blocker on the row; never start a replacement thread.\n- <b>One company per conversation.</b> A shared PR contact never lets two companies share one mail (Rules for Zoya: follow-ups, 5a).\n- <b>Addresses.</b> Keep ad@thepodium.in in Cc and drop Akshay's other alias (never both); never remove anyone else's address by a name match.\n- <b>Team deliverables.</b> Check incoming mail and work WhatsApp before chasing a team member; 24 hours after the ask, one WhatsApp nudge in team hours replaces that cycle's mail chase (SLOW work, INTERNAL TASKS b).\n- <b>Verified completion closes only its own obligation.</b> A group join removes the add or invite ask (and Akshay from Waiting on only if nothing else of his is left); it never proves a list, an intro or another promise was sent.\n\nZoya is live (since 2026-10-16 00:20 JST)."),
     ("between", "S10-holding",
      "- <b>Holding reply when a PR person chases a row waiting",
      "Akshay's list item stays as it is.",
@@ -165,7 +170,14 @@ EDITS["rules-for-zoya"] += [
     ("between", "S3-recipients",
      "- Zoya is in Cc on every mail from",
      "- Every stakeholder on the thread stays on it: PR, company comms, EA, intern, co-founder. A new mail copies everyone who was on the original (decision 144).",
-     "- <b>Recipients</b> (decisions 144, 180, 188, 227, 229, 305, 586, 592, 643, 646, 647). Controls; every send and draft from either inbox follows it, and the prompts check it in code before every send.\n  1. Reply on a thread with anyone outside the team: everyone on its latest message (From, To, Cc), less only Zoya's own address, People tagged \"Email bounced\", People whose Role starts \"Ex-employee (mailbox dead)\", Akshay's addresses other than ad@thepodium.in, and Mamatha (on a long break). Everyone else stays, whether or not they wrote: team members, Sri, client-show hosts, PR, comms, EAs.\n  2. Then add whoever is missing of: Akshay (ad@thepodium.in) in Cc; Zoya in Cc on mail from ad@thepodium.in; Chaandini on Built to Share and Human by Design; Divir and Ankita Joshi on Pathfinders; Jaya and Sarika on revenue mail (sponsored from their yes on: next steps, billing, invoices, payments; never expenses); the guest or a company-side contact on guest-facing mail (day-before note, prep note, recording link, reschedule, thank-you).\n  3. A new mail to someone outside the team: their side from the row and the step, plus the same additions; a new thread someone outside the team starts with Zoya gets Akshay in Cc.\n  4. Team-only mail: the team members only, never Akshay (decision 592), never Mamatha.\n  5. Never added on our own: Sri or a host to a thread they are not on, Mamatha, Saurabh Garg (except decision 517 below).\n  6. To is whoever's move it is, everyone else Cc; ad@thepodium.in is never in To; no team address is in To on outside mail."),
+     "- <b>Recipients</b> (decisions 144, 180, 188, 227, 229, 305, 586, 592, 643, 646, 647). Controls; every send and draft from either inbox follows it, and the prompts check it in code before every send.\n  1. Reply on a thread with anyone outside the team: everyone on its latest message (From, To, Cc), less only Zoya's own address, anyone who handed over (8), People tagged \"Email bounced\", People whose Role starts \"Ex-employee (mailbox dead)\", Akshay's addresses other than ad@thepodium.in, and Mamatha (on a long break). Everyone else stays, whether or not they wrote: team members, Sri, client-show hosts, PR, comms, EAs.\n  2. Then add whoever is missing of: Akshay (ad@thepodium.in) in Cc; Zoya in Cc on mail from ad@thepodium.in; Chaandini on Built to Share and Human by Design; Divir and Ankita Joshi on Pathfinders; Jaya and Sarika on revenue mail (sponsored from their yes on: next steps, billing, invoices, payments; never expenses); the guest or a company-side contact on guest-facing mail (day-before note, prep note, recording link, reschedule, thank-you).\n  3. A new mail to someone outside the team: their side from the row and the step, plus the same additions; a new thread someone outside the team starts with Zoya gets Akshay in Cc.\n  4. Team-only mail: the team members only, never Akshay (decision 592), never Mamatha.\n  5. Never added on our own: Sri or a host to a thread they are not on, Mamatha, Saurabh Garg (except decision 517 below).\n  6. To is whoever's move it is, everyone else Cc; ad@thepodium.in is never in To; no team address is in To on outside mail.\n  7. The ad@thepodium.in loop-in: ad@ is the sender, so it is never in To or Cc. To the person whose move it is; Cc everyone else on the message it replies on, less the removals in 1, plus Zoya. Nothing else is added.\n  8. Someone who handed over on the thread (a message saying a new contact takes over) is removed, and the new contact takes their place."),
+]
+
+EDITS["rules-for-zoya"] += [
+    ("between", "C6-senders",
+     " Nothing else goes from his account: no acknowledgements, close notes, decision mails or follow-ups.",
+     "Signed \"Regards, Akshay\".",
+     " What Zoya can send goes from her inbox once she's on the thread; anything only Akshay can send goes on his list, drafted in his Gmail when it carries a link (the thank-you without the transcript: decisions 300, 308, 412). The no-show note is Zoya's (decision 236). Agents read ad@thepodium.in through MCP Emails and never mark it read. Akshay's own mails are signed \"Regards, Akshay\"."),
 ]
 
 EDITS["cadences"] = [
@@ -183,6 +195,7 @@ EDITS["cadences"] = [
 ]
 
 EDITS["follow-ups"] = [
+    ("replace", "C8-nurture", "a no-contact request from that person, anywhere (\"## Standing\", Claude note, Your call or the thread; Status Parked).", "a no-contact request from that person, anywhere (\"## Standing\", Claude note, Your call or the thread; Status They declined with the no-contact note)."),
     ("replace", "S6-sweep",
      "Zoya's SLOW work (the 10:38 and 16:38 weekday runs) reads this page every run, with the same authority as the parent page.",
      "Zoya SLOW reads this page every run, with the same authority as the parent page."),
@@ -222,7 +235,8 @@ EDITS["wording"] = [
      "Until he approves them, Founder Thesis keeps FT Release v2 and the client shows keep their current release mails.",
      "<b>Status:</b> live on un# (decision 638): Mails 1 to 5, no WhatsApps. Founder Thesis runs FT Release v2, which this set matches word for word. Built to Share, Human by Design and Pathfinders start once their short links are confirmed; until then they keep the pre-release ask and the release-day mails below."),
     ("drop_toggles", "S9-release", "un# Episode Planned release is 7 days away or less and no pre-release mail yet"),
-    ("drop_section", "S8-templates", "Retired: do not send"),
+    ("drop_toggles", "C7-release", "Release v3, WhatsApps (from Akshay's WhatsApp, unsigned)"),
+    ("replace", "S8-templates", "## Retired: do not send\n\nKept only so nobody rewrites them by accident. Each is replaced by the routine named.\n\n", ""),
     ("drop_toggles", "S8-templates", "<b>Status:</b> retired"),
     ("drop_toggles", "S8-templates", "Kept for reference; do not send."),
     ("between", "S8-templates",
@@ -239,7 +253,7 @@ EDITS["routines"] = [
     ("between", "S6-sweep",
      "## 25 Oct audit: runtime ownership and deployment status",
      "| Community sync | Member cities, public directory mirror | Sat 09:47 | Nothing |",
-     "## Runtime inventory\n\n<b>Describes.</b> Who runs what, when, and from which source. The CTO updates this table in the same release as any schedule or prompt change, and reads each scheduled task back before marking it live. Cadences owns how often people are contacted.\n\n| Worker | Job | When (JST) | Reads | Model | Sends |\n| --- | --- | --- | --- | --- | --- |\n| Zoya day chat | Runs inbox actions, Zoya FAST, WhatsApp and calendar, and the OUTBOX | Weekdays every 2 hours 07:38 to 23:38; weekends 08:38, 12:38, 16:38, 20:38 | routines/zoya-day.md, the release prompts, Rules for Zoya and its subpages, Cadences, Client show mails | as its seed sets | Every mail, WhatsApp and invite |\n| Capture composer | Logs mail (inbox capture) | Start of every wake | composer seed, inbox-capture.txt | claude-sonnet-5-5 | Nothing |\n| SLOW composer | Follow-ups, nurture, team work, payments | Weekdays 11:08 and 17:08 | composer seed, zoya-slow.txt and its work file | claude-opus-5-5 | Nothing: drafts only |\n| Engagement chats | Evals, dossiers, blurbs for one guest | When the day chat sends a step | docs/engagement-chat-seed.md, the show's skills | claude-opus-5-5 | Nothing |\n| Blurb chats | One community blurb | On request | docs/blurb-chat-seed.md, skills/ft-community-blurb | as started | Nothing |\n| On Akshay's Mac | Zencastr transcripts | His schedule | routines/mac | n/a | Nothing |\n\nThe daily sweep, the hourly routines' own scheduled tasks, the evals and dossier schedules are retired; see Retired routines."),
+     "## Runtime inventory\n\n<b>Describes.</b> Who runs what, when, and from which source. The CTO updates this table in the same release as any schedule or prompt change, and reads each scheduled task back before marking it live. Cadences owns how often people are contacted.\n\n| Worker | Job | When (JST) | Reads | Model | Sends |\n| --- | --- | --- | --- | --- | --- |\n| Zoya day chat | Runs inbox actions, Zoya FAST, WhatsApp and calendar, and the OUTBOX | Weekdays every 2 hours 07:38 to 23:38; weekends 08:38, 12:38, 16:38, 20:38 | routines/zoya-day.md, the release prompts, Rules for Zoya and its subpages, Cadences, Client show mails | as its seed sets | Every mail, WhatsApp and invite |\n| Capture composer | Logs mail (inbox capture) | Start of every wake | composer seed, inbox-capture.txt | claude-sonnet-5-5 | Nothing |\n| SLOW composer | Follow-ups, nurture, team work, payments | Weekdays 11:08 and 17:08 | composer seed, zoya-slow.txt and its work file | claude-opus-5-5 | Nothing: drafts only |\n| Engagement chats | Evals, dossiers, blurbs for one guest | When the day chat sends a step | docs/engagement-chat-seed.md, the show's skills | claude-opus-5-5 | Nothing |\n| Blurb chats | One community blurb | On request | docs/blurb-chat-seed.md, skills/ft-community-blurb | as started | Nothing |\n| Upkeep (in the day chat) | The retired sweep's live steps: client pre-release drafts, guests list, community backstop, BD episodes, flags, billing forwards to Jaya, guest forms | Weekdays, first wake at or after 13:00 | upkeep.txt | the day chat's | Nothing (drafts and one allowed ad@ forward) |\n| Host boards | Keeps the un#, Built to Share and Human by Design host boards in step with Engagements | 08:15, 12:15, 16:15, 20:15 daily | its stored prompt (routines/host-boards.md) | claude-sonnet-5-5 | Nothing |\n| Sarika's editing asks | Sarika's asks on Episodes, hand-made task allocations, editing docs | Mon to Sat 11:17, 12:17, 13:15, 15:47, 18:17, 22:47 IST (three scheduled tasks, one session) | its stored prompt (routines/editing-checks.txt) | as its session | Team allocation mail and Zoya calendar blocks |\n| FT Community directory sync | Member cities and the public directory mirror | Saturdays 09:47 | its stored prompt (routines/community-directory.md) | claude-sonnet-5-5 | Nothing |\n| Zoya day monitor | Watches the day chat for stalls and tells Akshay | Weekdays hourly at :55; weekends 08:55, 12:55, 16:55, 20:55 | its own session | claude-sonnet-5-5 | Alerts only |\n| CTO coordination round | Checks every run by outcome, relays work to builders, handles blocked cancel deletes | 08:45 and 20:45 daily | its stored prompt (routines/cto-round.txt) | as its session | Nothing routine |\n| Codex review | Independent audit, CTO Audit page, summary mail from Zoya to Akshay | Daily 08:00 | Codex's own task | n/a | One summary mail |\n| Monday scorecard | Zoya's weekly scorecard for Akshay | Mondays, in the 11:08 SLOW run (STEP 0g) | SLOW work file | as SLOW | One mail to Akshay |\n| On Akshay's Mac | Zencastr transcripts | His schedule | routines/mac | n/a | Nothing |\n\nNo longer scheduled: the daily sweep (657), the standing evals session and the dossier schedule (593), and the old separate Zoya, inbox, calendar and WhatsApp tasks (the day chat runs them, 568); none is in the enabled list."),
 ]
 
 EDITS["client-show-mails"] = [
@@ -358,3 +372,11 @@ EDITS["calendar-rules"] = [
      "Zoya\n</callout>\n",
      ""),
 ]
+
+# Toggles and headings that must survive every run (apply_notion asserts them).
+MUST_KEEP = {
+    "wording": ["Recording link", "Release date (post-recording)", "FT Release v2, Mail 1", "Release v3, Mail 1",
+                "Next steps and release date", "Sponsored: no organic slot (via PR)", "Feature interest: book the call with Akshay"],
+    "rules-for-zoya": ["## 1. Who sends what", "## 2. Rules for every mail", "Sender table", "<b>Recipients</b>"],
+    "follow-ups": ["## 5c. Sponsored offers and pauses", "## 5a. Nurture and revival"],
+}
