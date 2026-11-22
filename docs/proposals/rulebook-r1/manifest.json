@@ -61,5 +61,14 @@
   "bytes_after": 96443,
   "sha256": "e3771ef5a13bbdf8eb1b450b0ca50d21282fd5360d936591550845feddc1b10e",
   "edits": 32
+ },
+ {
+  "file": "upkeep.txt",
+  "source": "83e8fb0:docs/proposals/zoya-day/prompts/daily-sweep.txt (lines kept: 102)",
+  "source_sha256": "2203cc3f38c60836337bed57b3c863787143d9e98a4f0827bc18150470cac687",
+  "bytes_before": 0,
+  "bytes_after": 35929,
+  "sha256": "a53eba2f79c7e3163fa6519ef0673379d3704cbed9a42d2970a9d4b7f57f71d8",
+  "edits": 12
  }
 ]

@@ -61,6 +61,21 @@ def build():
             "edits": sum(1 for e in edits.EDITS.get(name, []) if e[1] is not None)
                      + len(edits.REMOVE_LINES.get(name, [])),
         })
+    # upkeep.txt from the retired sweep (change-map S6).
+    sweep = pinned("83e8fb0", "docs/proposals/zoya-day/prompts/daily-sweep.txt").split("\n")
+    keep = sorted(set(edits.UPKEEP_LINES))
+    up = edits.UPKEEP_INTRO + "\n\n" + "\n".join(sweep[i - 1] for i in keep)
+    for subj, old, new in edits.UPKEEP_EDITS:
+        n = up.count(old)
+        if n != 1:
+            raise SystemExit(f"upkeep.txt: {subj}: old text found {n} times: {old[:90]!r}")
+        up = up.replace(old, new)
+    out["upkeep.txt"] = up
+    report.append({"file": "upkeep.txt", "source": "83e8fb0:docs/proposals/zoya-day/prompts/daily-sweep.txt (lines kept: %d)" % len(keep),
+                   "source_sha256": hashlib.sha256("\n".join(sweep).encode()).hexdigest(),
+                   "bytes_before": 0, "bytes_after": len(up.encode()),
+                   "sha256": hashlib.sha256(up.encode()).hexdigest(), "edits": len(edits.UPKEEP_EDITS)})
+
     # Stamp the SLOW prompt with its work file's release (release.json, written at cutover
     # after the work file is committed). Without it the placeholders stay and --release fails.
     work = out["zoya-slow-work.txt"]

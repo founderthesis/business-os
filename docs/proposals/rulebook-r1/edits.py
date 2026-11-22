@@ -296,3 +296,46 @@ REMOVE_LINES = {
         ("S8-oneoffs", "STEP 0f. OWNER MAIL. Once a day,"),  # decision 619
     ],
 }
+
+# ---------------------------------------------------------------------------
+# upkeep.txt: the retired daily sweep's still-live steps (change-map S6), cut
+# mechanically from daily-sweep.txt at 83e8fb0 by line number, then edited.
+# The day chat runs it once a weekday (zoya-day.md). Not a new schedule.
+# ---------------------------------------------------------------------------
+UPKEEP_INTRO = (
+    "You run the daily upkeep of ThePodium's Business OS in Notion, inside the Zoya day chat, once each weekday in the first wake at or after 13:00 JST. "
+    "These steps were the daily sweep's; the sweep is retired (decision 657) and only the steps below still run. Zoya sends every routine mail; Akshay takes the decisions (decisions 207, 223). "
+    "FLAGGED FT ROWS: Engagements with Show Founder Thesis, an open Status (not They declined, We declined, Unresponsive, Parked or Form filled) and Next date today or earlier. "
+    "Run, in this order, every step in full: STEP 4b, 3p, 3h, 3g, 3k, 3d, 4, 5, 6c, 7b, then STEP 7. A step left unfinished by a cap or a tool error runs first next weekday. "
+    "Log the report as one Activity, Kind Note, Summary \"Upkeep <D Mon>: <Completed|Partial|Failed>\", Source ID \"upkeep:<today>\", the report in its page body; one already there for today is updated, never a second."
+)
+# Line numbers in daily-sweep.txt (1-based) that carry over unchanged before editing.
+UPKEEP_LINES = [5, 6, 7] + list(range(8, 21)) + [21] + list(range(22, 39)) + [39] \
+    + list(range(70, 75)) + [75] + list(range(76, 86)) + [86, 87, 88, 89, 91, 92, 95, 96] \
+    + list(range(97, 110)) + [110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120] \
+    + list(range(121, 137)) + [137, 138, 139]
+UPKEEP_EDITS = [
+    ("S4-ranjita",
+     "TEAM ROLES (decisions 154, 211, 223, 352). Nothing waits on Mamatha: never set Waiting on Mamatha or write \"Mamatha:\" on any row; a row you touch that waits on her moves to Zoya (a routine step) or Akshay (a decision).",
+     "TEAM ROLES (decisions 154, 211, 223, 646). Mamatha is on a long break: never put her in Waiting on or Next action; a row you touch that waits on her moves to Ranjita (a room or transcript step), Zoya (a routine step) or Akshay (a decision)."),
+    ("S5-senders",
+     "A draft: MCP Emails draft (action create for a new mail with to and cc; action reply on a thread's latest message, then action update to set To and Cc, since a reply draft can't take them at creation) on that inbox, body plus html_body; never sent by you; log the draft_id the last call returned (it changes on every update).",
+     "A draft in ad@thepodium.in: Gmail connector create_draft (never the MCP Emails draft tool on ad@, which stops on a permission prompt), body plus html_body; never sent by you; log the draft id it returns."),
+    ("S6-sweep",
+     ", and, in STEP 3a4 b only, a Task row's Task state, For engagement and Activities links, and its move to Trash (decision 416); in STEP 3p only, creating a PaaS Engagement. Never set Parked,",
+     "; in STEP 3p only, creating a PaaS Engagement. Never set Parked (decision 656),"),
+    ("S9-release",
+     "on un#, Built to Share or Human by Design (not Founder Thesis: Zoya sends its release mail 1, decision 235),",
+     "on Built to Share or Human by Design (not Founder Thesis or un#: their Mail 1 is the day chat's release duty, decisions 601, 638),"),
+]
+UPKEEP_EDITS += [
+    ("S7-builder", "STEP 3h. AUDIT HANDOFFS AND FIX CHECKS (decisions 315, 329)", "STEP 3h. MAIL ISSUES FIX CHECKS (decision 315; auditor items go to the CTO and the Build board, decision 655)"),
+    ("S7-builder", "otherwise Waiting on Builder.", "otherwise send the CTO session (session_015wSc87F8WCdJKB91Tm34tJ) the issue with send_message; no Engagements row (decision 655)."),
+    ("S6-sweep", "First line: \"Sweep <A|B> <D Mon>: <status>\" from STATUS IN CODE. Then one line per step of your part, in TWO PARTS' order:",
+     "First line: \"Upkeep <D Mon>: <status>\" from STATUS IN CODE. Then one line per step, in the intro's order:"),
+    ("S6-sweep", "Bash `date -u` at the start of your part and before this write;", "Bash `date -u` at the start and before this write;"),
+    ("S6-sweep", "Completed only if every step of your part has a line and each is done;", "Completed only if every step has a line and each is done;"),
+    ("S6-sweep", "audit handoffs filed and fixes observed or reopened (STEP 3h); transcript asks added (STEP 3i);", "fixes observed or reopened (STEP 3h);"),
+    ("S6-sweep", "old notes rewritten (STEP 3a); owners removed (STEP 3a2); rows changed from Gmail (name: old -> new, evidence date); ", ""),
+    ("S6-sweep", "Next action segments trimmed (STEP 3a3); one-time moves (STEP 3a4: steps moved to Zoya, transcript asks folded, by name); ", ""),
+]
