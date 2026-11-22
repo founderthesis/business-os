@@ -1,0 +1,43 @@
+# Decisions ledger edits for cutover (rulebook r1, batch 1)
+
+The CTO applies these at cutover, in one pass, after the staged files are live. Each "What we decided" below is the whole new text, written as the current decision with no replacement chain. Read each row back after the write. Status stays In force unless the row is listed under Trash.
+
+Data source: collection://cfcc0ef3-3e83-4655-98ed-56ed950b02ec. Row links are the row's Notion page.
+
+## Rewrite whole
+
+| No. | Row | New "What we decided" |
+|---|---|---|
+| 235 | 3fb19a301a7f8165b0dff35e48be4abd | Mail with a link or an attachment goes from Zoya's inbox, never from ad@thepodium.in by an agent: decision mails, the day-before note, the recording link, release mails 2 to 6. Akshay's own mail (release Mail 1, the thank-you, client-show day-before and release mail) is drafted in his Gmail for him to send. The sender table on Rules for Zoya says which mailbox, action and tool. |
+| 329 | 3ff19a301a7f8140b272c4c178b2625c | Engagements is the single work board for relationship and operational work: guests, vendors, internal tasks and reminders, each work item a Kind Task row with its own owner, date and Task state (Captured, Handed over, Doing, Awaiting someone else, Done, On hold) and a For engagement link. Post-production work for an Episode lives in Team tasks (decision 499); engineering work lives on the Build board (decisions 405, 655). The old Tasks board is retired and read-only. |
+| 352 | 3ff19a301a7f81ae8ce7fac88e06a208 | Mamatha is on a long break (decision 646): nothing waits on her, she is never in To, Cc, Waiting on or Next action, and nothing is asked of her. A row still waiting on her moves to Ranjita (rooms, transcripts), Zoya (a routine step) or Akshay (a decision). |
+| 366 | (look up by No.) | When a PR says they no longer represent the guest: on a Tier 1 row Zoya finds a direct route to the guest (decision 633's direct invite); on any other row she stops the chase and puts the row on the weekly Park proposals with the reason. Only Akshay parks (decision 656). |
+| 367 | (look up by No.) | An eval Decline never ends a sponsored conversation; their no does: a decline, "not our client" or words to that effect. Silence after the offer gets no chase at all (decision 618). |
+| 420 | 40f19a301a7f815d9989ef250b3d0e95 | Routines read ad@thepodium.in through MCP Emails (inbox cd37e47e), which leaves mail unread, never the Gmail connector. From ad@ an agent sends the "adding @Zoya" loop-in (MCP Emails email_compose reply, To and Cc passed explicitly, never the draft tool, which stops on a permission prompt) and the two forwards in decisions 423 and 574. Every other mail from ad@ is Akshay's own. |
+| 423 | 40f19a301a7f815eb48be137b3175635 | Billing documents received in ad@thepodium.in are forwarded to Jaya through MCP Emails. One of the two allowed ad@ forwards, with decision 574's Gemini notes forward. |
+| 427 | 40f19a301a7f8170a697f5948e66bc14 | A next-steps or release-date ask after a recording is routine: Zoya answers with "Next steps and release date" from the wording page and adds any open step of theirs (the guest form). She gives a date only once it is confirmed and only as the release-date table on Rules for Zoya allows. |
+| 488 | 41019a301a7f81c2bc91e8e98e5c96b6 | No routine calls delete_event on an event with guests. When their side cancels in writing, the routine does the row part, puts "Akshay: delete the <D Mon> invite for <guest> (blocked: auto mode)" on the row and messages the CTO session; the CTO round re-checks the written cancel, deletes the invite and its prep entries, logs it and clears the step. Unclear cases stay with Akshay. |
+| 573 | 41719a301a7f818ba15df8b77816aec7 | The Founder Thesis sponsored offer says organic isn't possible, offers sponsored and ends "let me know if you need more details on that." After the offer, the sponsored table on Rules for Zoya: follow-ups (section 5c) governs: no follow-up unless they show interest, then at most 2 (days 7 and 14 on Cadences), every earlier chase on the thread counted, no nurture. |
+| 585 | 41719a301a7f8163bf27f1bcbcf8f0a5 | When their side asks something the wording page already answers (organic vs sponsored, what the call covers, fees, release timing, where it's published), Zoya sends that answer word for word. Only a question with no standard answer gets the holding reply and goes on Akshay's list. "checking with Akshay" never appears (decision 571). |
+| 618 | 41c19a301a7f81fa83e6c449a8522561 | Sponsored offers on every show get no follow-up while their side is silent or noncommittal; follow-ups go only after they show interest (ask about fees, deliverables or timing, say they are considering it, ask for details), as the sponsored table on Rules for Zoya: follow-ups sets. Founder Thesis recording-slot chase is for Tier 1 rows only, and a Sponsored row only after their yes. |
+| 625 | 41d19a301a7f81e2afbfc13b23d476e4 | When their side's last mail says they'll reach out when ready ("as and when", "we'll get back", "will revert once"), Zoya sends nothing for 30 days from that mail, then at most one short warm check-in on the primary thread, then nothing unless they write; the row goes on the weekly Park proposals. A date they name wins. This pauses every chase on the row, the Tier 1 recording chase included. |
+| 637 | 41e19a301a7f81d7815bc1c06b48fb5b | Engagements "Zoya date" holds when Zoya's own next step is due, written only by Zoya. Next date holds only people's steps (Akshay's decision, the guest side's move, a call), so a Zoya date never hides an Akshay ask. Zoya's due list uses Zoya date. |
+| 646 | 41e19a301a7f81cf936fe2841ced809d | Ranjita creates the Zencastr rooms for Founder Thesis recordings and sends Zoya the links, and downloads each Zencastr transcript and attaches it to the Episode's Transcript file herself. Her work is "Ranjita:" segments with Ranjita in Waiting on, in the Engagements view "Ranjita: my queue". Zoya asks her on WhatsApp and chases once after 2 days. Mamatha is on a long break: nothing goes to her. |
+| 647 | 41e19a301a7f811283b2cbbacde7c230 | Recipients follow one rule, RECIPIENTS in the Zoya prompts: a reply goes to everyone on the thread's latest message, Sri and client-show hosts included, less only Zoya, bounced and dead mailboxes, Akshay's other addresses and Mamatha; then the house copies are added. Before every send, from any path, a Bash check compares the draft's To and Cc with that set; a reply draft may be corrected once with draft update, else nothing is sent. |
+| 656 | 42019a301a7f8111b8dff25cb06d56b4 | Only Akshay parks a row: his Your call, mail, Zoya-group message or his answer on the Park proposals. Where a rule ends a chase with nothing left to send, Zoya stops, leaves Status as it is and adds the row to the weekly "Park proposals" Task row (Saturday's first wake, Waiting on Akshay, Show AD Tasks, Source ID "park:<Saturday date>"). A blocked Zoya step keeps its date unless something new happened, and goes on the same list. |
+| 657 | 42019a301a7f81fbab64ca31cd5fb7f9 | The daily sweep is retired. Zoya SLOW runs at 11:08 and 17:08 JST on weekdays only, in a composer the day chat starts. Its live obligations moved: Tier 1 revival starts and Mail issues fix checks to SLOW, the rest to the day chat (change-map S6). |
+
+## Trash (after the rewrites above, and after checking no live file cites them)
+
+| No. | Row | Why |
+|---|---|---|
+| 439 | 40f19a301a7f81f487a4f42e5ee6aecf | Mamatha's Zencastr and transcript asks; replaced in full by 646. No staged file cites it. |
+| 456 | 40f19a301a7f8102981adb9cba36b713 | "Transcripts come from Mamatha"; replaced by 646 and 644. The staged SLOW work file no longer cites it. |
+| 489 | 41019a301a7f8133a188c1c6e334acf9 | Mamatha stays in Cc when on the thread; replaced by 646 and 647 (she is dropped while away). |
+| 546 | 41519a301a7f810190cccdf8043ce086 | SLOW six times a weekday; replaced by 657. The evals-per-run half is moot (evals run in engagement chats, decision 593). |
+
+Check before trashing: `grep -rn "decision 439\|decision 456\|decision 489\|decision 546\|decisions 4[0-9][0-9], 456" routines docs/*.md skills docs/proposals/rulebook-r1` must return only this file and change-map.md.
+
+## Already current (no change)
+
+229, 329's companion 405, 420's companion 435, 558, 574, 580, 582, 586, 592, 594, 621, 628, 630, 653, 654, 655, 658.
