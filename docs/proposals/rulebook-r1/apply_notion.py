@@ -34,6 +34,8 @@ def apply(name, text):
             if b < 0 or text.count(op[3], a) != 1:
                 raise SystemExit(f"{tag}: end not found once after start: {op[3][:90]!r}")
             text = text[:a] + op[4] + text[b + len(op[3]):]
+        elif kind == "whole":
+            text = op[2]
         elif kind == "replace_all":
             n = text.count(op[2])
             if n < 1:

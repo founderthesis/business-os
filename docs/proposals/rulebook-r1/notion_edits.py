@@ -13,6 +13,13 @@ PAGES = {
     "follow-ups": "40b19a301a7f81999c1acd8350d59a54",
     "wording": "3fa19a301a7f81b6a807d0f01847dae7",
     "routines": "3fb19a301a7f813b949cf28cc0993541",
+    "client-show-mails": "3fc19a301a7f817588e2d081af825f8a",
+    "fu-1-sponsored": "3fa19a301a7f81b0a80dc0c75102b60e",
+    "fu-2-precall": "3fa19a301a7f8197be92d74c8f8e0660",
+    "fu-3-recording": "3fa19a301a7f814086fdd272fb6f6b86",
+    "fu-6-release": "3fa19a301a7f814da20ae36f6aaee724",
+    "fu-8-revival": "3fa19a301a7f81008e72f23ebc526327",
+    "calendar-rules": "3fa19a301a7f816c9a53fe80557d0046",
 }
 
 RELEASE_TABLE = """<callout icon="📅" color="blue_bg">
@@ -233,4 +240,121 @@ EDITS["routines"] = [
      "## 25 Oct audit: runtime ownership and deployment status",
      "| Community sync | Member cities, public directory mirror | Sat 09:47 | Nothing |",
      "## Runtime inventory\n\n<b>Describes.</b> Who runs what, when, and from which source. The CTO updates this table in the same release as any schedule or prompt change, and reads each scheduled task back before marking it live. Cadences owns how often people are contacted.\n\n| Worker | Job | When (JST) | Reads | Model | Sends |\n| --- | --- | --- | --- | --- | --- |\n| Zoya day chat | Runs inbox actions, Zoya FAST, WhatsApp and calendar, and the OUTBOX | Weekdays every 2 hours 07:38 to 23:38; weekends 08:38, 12:38, 16:38, 20:38 | routines/zoya-day.md, the release prompts, Rules for Zoya and its subpages, Cadences, Client show mails | as its seed sets | Every mail, WhatsApp and invite |\n| Capture composer | Logs mail (inbox capture) | Start of every wake | composer seed, inbox-capture.txt | claude-sonnet-5-5 | Nothing |\n| SLOW composer | Follow-ups, nurture, team work, payments | Weekdays 11:08 and 17:08 | composer seed, zoya-slow.txt and its work file | claude-opus-5-5 | Nothing: drafts only |\n| Engagement chats | Evals, dossiers, blurbs for one guest | When the day chat sends a step | docs/engagement-chat-seed.md, the show's skills | claude-opus-5-5 | Nothing |\n| Blurb chats | One community blurb | On request | docs/blurb-chat-seed.md, skills/ft-community-blurb | as started | Nothing |\n| On Akshay's Mac | Zencastr transcripts | His schedule | routines/mac | n/a | Nothing |\n\nThe daily sweep, the hourly routines' own scheduled tasks, the evals and dossier schedules are retired; see Retired routines."),
+]
+
+EDITS["client-show-mails"] = [
+    ("replace", "S9-release",
+     "<b>Status:</b> approved 17 Oct. Replaces the separate buy-in mail and kit mail.",
+     "<b>Status:</b> approved 17 Oct, for Built to Share and Human by Design until Release v3 starts there. Not for un#: un# runs Release v3 (decision 638)."),
+    ("between", "S9-release",
+     "C16 Episode is live\n\n<b>From:</b> Zoya (Akshay in Cc), on release day. <b>Status:</b> approved 17 Oct",
+     "C16 Episode is live\n\n<b>From:</b> Zoya (Akshay in Cc), on release day. <b>Status:</b> approved 17 Oct",
+     "C16 Episode is live\n\n<b>From:</b> Zoya (Akshay in Cc), on release day. <b>Status:</b> approved 17 Oct, for Built to Share and Human by Design until Release v3 starts there; not for un# (decision 638)"),
+    ("between", "S9-release",
+     "C17 After release: company pages\n\n<b>From:</b> Zoya (Akshay in Cc), 2 working days after release. <b>Status:</b> approved 17 Oct",
+     "C17 After release: company pages\n\n<b>From:</b> Zoya (Akshay in Cc), 2 working days after release. <b>Status:</b> approved 17 Oct",
+     "C17 After release: company pages\n\n<b>From:</b> Zoya (Akshay in Cc), 2 working days after release. <b>Status:</b> approved 17 Oct, for Built to Share and Human by Design until Release v3 starts there; not for un# (decision 638)"),
+]
+
+FU1_PAGE = """<b>Status: live.</b> Owner: Zoya, from her inbox, in SLOW runs. Who, when and how many: the sponsored table, Rules for Zoya: follow-ups section 5c, and Cadences. In short: no follow-up unless their side shows interest in the sponsored option; then at most 2 follow-ups, counting every chase already sent on the thread; no nurture, no revival; only Akshay parks (decision 656).
+
+<b>Plain English</b> (decision 392): many readers use English as a second language. Say "a sponsored appearance on the pod", never "sponsored feature", "sponsored route" or idioms like "circling back".
+
+## Who gets it
+
+Every open Founder Thesis Engagement at Sponsored offered, and un# rows with our sponsored offer on the thread (decision 307). On un# the facts and the link come from the un# pitch sheet (unhashed.co/sponsored only), the price (USD 1,500) is stated only when asked, and a yes, a negotiation or terms go to Akshay. Founder Thesis numbers, peers and links never go into a un# mail.
+
+## What each reply gets
+
+- <b>A price question:</b> the commercials, fee and ROI only (decision 197). <b>What's included:</b> 2 or 3 lines from podm.in/why-sponsor "What you get" plus the link (decision 549).
+- <b>A yes at the standard price:</b> "Sponsored yes: next steps", Jaya and Sarika in Cc (decision 227).
+- <b>A lower-price ask (Founder Thesis):</b> "Price negotiation": the price holds and Zoya offers The Spotlight Podcast at INR 30,000 + GST, fully payable upfront (decisions 237, 464). A counter-offer below that, any other term, a custom package or a call goes to Akshay.
+- <b>A no, "not interested" or "not our client" (decision 367):</b> the close note on Founder Thesis (decision 145), one short thank-you on un# (decision 397); Status They declined. On "not our client", a Tier 1 row goes direct (decision 366). Routine 8 may later write to a founder who wrote to us directly and whose no was to the price (decision 355).
+- <b>They'll come back, it's not the right time, or approval pending:</b> the pause table in section 5c.
+
+## How every mail is written
+
+- On the original thread, from Zoya, recipients as Rules for Zoya section 2 says. Signed "best," / "Zoya ✨".
+- The mails below, adapted up to about 40% to fit the thread (decision 152), never a fact, price, link or the ask. No stats block, no price, no mail built on the lead's company details.
+- <b>LinkedIn numbers</b> (decision 395): our following is Akshay's profile plus the company pages combined, never "Founder Thesis has". First person plural and rounded: "50k+ director level and above folks follow us on LinkedIn". Never the seniority breakdown or exact counts.
+- <b>Links</b> (decision 218): at most one per mail: podm.in/sponsored in mail 1, podm.in/why-sponsor for questions.
+- The next planned mail sits at the top of each Engagement page under "Next sponsored mail". Edit it there and Zoya sends your version.
+
+## The mails
+
+Things in \\{braces\\} are filled per lead.
+
+### Mail 1
+
+> Hi \\{PR\\},
+
+>
+
+> Has \\{guest\\} had a chance to look at our offer of a sponsored appearance on the pod? The details are here: [podm.in/sponsored](https://podm.in/sponsored)
+
+>
+
+> best,
+
+> Zoya ✨
+
+### Mail 2
+
+> Hey \\{PR\\},
+
+>
+
+> Just following up - would \\{guest\\} like to come on the Founder Thesis podcast as a sponsored guest? Guest profiles on [founderthesis.com](http://founderthesis.com) got 860k+ impressions from Google search alone in the last 3 months.
+
+>
+
+> best,
+
+> Zoya ✨
+
+The impressions figure (decision 620) is the last 3 months of Google Search Console (Web), rounded down; Akshay refreshes it. Use it only as written here.
+"""
+
+FU6_PAGE = """<b>Status: live.</b> Owner: Zoya, with Mail 1 and the release WhatsApps from Akshay. What may be said when: the release-date table on Rules for Zoya. Who sends each step and when: the release duty in the Zoya day instructions. Every mail word for word: "FT Release v2" (Founder Thesis and Spotlight) and "Release v3" (un#) on Mail and WhatsApp wording. Built to Share, Human by Design and Pathfinders keep the pre-release ask drafted for Akshay (Client show mails C15 to C17) until Release v3 starts on that show.
+
+Patron ask (Mail 6, Founder Thesis only) is skipped for sponsored guests, existing patrons, anyone who said no to the patron line, and any open complaint.
+"""
+
+EDITS["fu-1-sponsored"] = [("whole", "S2-sponsored", FU1_PAGE)]
+EDITS["fu-6-release"] = [("whole", "S9-release", FU6_PAGE)]
+EDITS["fu-2-precall"] = [
+    ("replace_all", "S1-parking", "If they say no: Tier 1 goes direct, anyone else is Parked (decision 366).",
+     "If they say no: Tier 1 goes direct; anyone else stops and goes on the Park proposals (decisions 366, 656)."),
+]
+EDITS["fu-3-recording"] = [
+    ("between", "S2-sponsored",
+     "<callout icon=\"🛑\">",
+     "## Who gets it",
+     "<b>Status: live.</b> Owner: Zoya, in SLOW runs, To the person whose move it is, recipients as Rules for Zoya section 2 says. Rows due are Waiting on Zoya with Next action \"Zoya: recording step \\<n> on \\<D Mon>\". On Founder Thesis only Tier 1 rows are chased, and a Sponsored row only after their yes to the sponsored appearance (decisions 594, 618). No Founder Thesis slot ask before a precall with Akshay has happened, unless he said in writing to skip it (decision 654). Silence never makes a row Unresponsive.\n\n## Who gets it"),
+    ("between", "S2-sponsored",
+     "<b>Since 17 Nov (decision 594",
+     "Precall follow-ups (routine 2) are unchanged.",
+     "Tier 1.5, Tier 2 and untiered Founder Thesis rows get no slot follow-up: Status stays Booking, Waiting on Guest or PR, and they book through podm.in/book when ready."),
+]
+EDITS["fu-8-revival"] = [
+    ("replace", "S2-sponsored",
+     "PR-routed leads get routine 1, then nurture while silent (Rules for Zoya section 5a). After a no, nothing.",
+     "PR-routed leads get routine 1 only (section 5c: no nurture). After a no, nothing."),
+]
+EDITS["calendar-rules"] = [
+    ("between", "S4-ranjita",
+     "<b>Decision 433 (Akshay, 30 Oct).</b> Every recording invite on a Zencastr show",
+     "<b>2 days out, still no link:</b> your list.",
+     "<b>Zencastr rooms</b> (decisions 433, 445, 558, 646). Every Founder Thesis recording invite carries its Zencastr room link before the recording. Zoya asks Ranjita on WhatsApp as soon as the row reaches Booking (\"Ranjita: create \\<guest>'s Zencastr room and send Zoya the link\" on the row, Ranjita in Waiting on), reminds her once after 2 days, and adds the link to the invite's location and first description line when it arrives, guests notified, nothing else changed. Under 48 hours out with no link: your list. Transcripts: Ranjita downloads and attaches each one to the Episode (decision 646). un#, Built to Share and Human by Design use their fixed studio links and need no room."),
+    ("replace", "S0-retired",
+     "The evals routine then re-runs the eval and puts your final call on your list (decision 172)",
+     "The guest's engagement chat then re-runs the eval and your final call goes on your list (decisions 172, 593)"),
+    ("between", "S4-ranjita",
+     "<b>Zencastr links (decision 433, owner changed by decision 439 on 1 Nov).</b>",
+     "need no new link.",
+     "<b>Zencastr rooms:</b> Ranjita creates them when Zoya asks, as soon as the row reaches Booking, and attaches transcripts to the Episode (decisions 558, 646). The calendar run puts the link on the invite. Shows with a fixed studio link (unhashed.co/studio, built2share.in/studio, fscd.ai/studio) need no room."),
+    ("between", "S15-history",
+     "## 3. Today's audit (15 Oct, next 30 days)",
+     "Zoya\n</callout>\n",
+     ""),
 ]
