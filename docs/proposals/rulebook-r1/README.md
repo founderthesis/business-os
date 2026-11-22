@@ -20,7 +20,9 @@ The system-wide rulebook cleanup Akshay asked for on 22 Nov (audit page 42019a30
 | routines/cto-round.txt | The CTO coordination round's stored prompt, staged for the CTO to deploy |
 | inventory.md | Every worker and what it reads, stored prompts included |
 
-## Cutover (CTO)
+## Cutover
+
+The exact, ordered runbook is cutover.md. Summary:
 
 1. Cleanup reviews this folder read-only and reports sizes and sha256 against manifest.json.
 2. `python3 docs/proposals/rulebook-r1/build.py --check` shows no drift.

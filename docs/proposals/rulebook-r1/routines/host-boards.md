@@ -1,6 +1,6 @@
 # Host boards
 
-Scheduled routine "Host boards" (decision 261, Akshay, 16 Oct), every hour at :15 JST (AR-20261019-6, 20 Oct; was four times a day), with the Notion connector only. It was STEP 7d of the inbox routine (decision 187) until 16 Oct; the steps are unchanged, only moved.
+Scheduled task "Host boards" (trig_01K8bueCr2xsPkbgQzjeRKsz, decision 261), at 08:15, 12:15, 16:15 and 20:15 JST, claude-sonnet-5-5, with the Notion connector only. The stored prompt is the text in the code block below, byte for byte.
 
 It keeps the un#, Built to Share and Human by Design host boards in step with Engagements both ways: the hosts' calls, availability and notes come into Engagements; guests the team curates (Host board ticked, or Booking or Booked) go onto the boards with their eval, pitch and availability. It never sends anything.
 

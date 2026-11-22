@@ -13,9 +13,9 @@
   "source": "83e8fb0:docs/proposals/zoya-day/prompts/inbox-actions.txt",
   "source_sha256": "2b894385566ff415cd406ad1920b6c7369859c34accc1619f43d0a38f979b49f",
   "bytes_before": 48515,
-  "bytes_after": 48627,
-  "sha256": "0653b0f03beef8d4de884d10b8f1277f7a36d6e2f6e177e7bd722aeeb723363e",
-  "edits": 2
+  "bytes_after": 48641,
+  "sha256": "a82db71db992baa23aaee889385eee49f019e23aaf66707595320d85b5f1b8f1",
+  "edits": 3
  },
  {
   "file": "inbox-capture.txt",
@@ -40,9 +40,9 @@
   "source": "83e8fb0:docs/proposals/zoya-day/prompts/zoya-fast.txt",
   "source_sha256": "b1b0b0acf5a1f9945a1db9099ac81cb3e3ab8e20222b4f650b0b097ebf810b23",
   "bytes_before": 62996,
-  "bytes_after": 59497,
-  "sha256": "80e0dc45cf3fcd2061c8ea398aa3d854de1389cdd4f364600f6cdc7161d06d39",
-  "edits": 48
+  "bytes_after": 59630,
+  "sha256": "4f792e4820993b8f6e22e66030f3c747a8db56aedb5b5836f1e3eb64ae444230",
+  "edits": 49
  },
  {
   "file": "zoya-slow.txt",
@@ -50,7 +50,7 @@
   "source_sha256": "4da2f1466a600967652e9336849fa11c2187962ed0d6816f2e6467bd2c4dd576",
   "bytes_before": 15646,
   "bytes_after": 15185,
-  "sha256": "2148aa0c79a6f147c038994fdcfc6cceac65542f10a2085f939c9b0aa61c3156",
+  "sha256": "257d197ddbc4d00d92a4c5c6d032d091a93f8adb86612af460089462f1058326",
   "edits": 7
  },
  {
@@ -58,9 +58,9 @@
   "source": "63d63ec:routines/zoya/release/zoya-slow-work.txt",
   "source_sha256": "78332307d8ba3cfda5c02905c6718f6ce7ad4b00b23ff7f01165bfb0c787644b",
   "bytes_before": 94833,
-  "bytes_after": 94364,
-  "sha256": "ce80f871ad35cbf3c11d7da47a67a1e02ea9348c608806b5ff6fcb28a5717333",
-  "edits": 59
+  "bytes_after": 94295,
+  "sha256": "594fbbddeda9044b23b36d44b8ad315fa18dcb615fdec85b45adf41181b97e83",
+  "edits": 65
  },
  {
   "file": "upkeep.txt",
@@ -70,5 +70,32 @@
   "bytes_after": 36546,
   "sha256": "43baa1fa85601fcee5f957133d0ec11b7698aa69687aa7cbad1405575351f138",
   "edits": 22
+ },
+ {
+  "file": "stored/host-boards.prompt.txt",
+  "source": "routines/ (staged)",
+  "source_sha256": "",
+  "bytes_before": 0,
+  "bytes_after": 8585,
+  "sha256": "8ace96f5e9031c1a4c73b5bcb97352ade4fba31cba75053a543ceb6a7ac4ae16",
+  "edits": 0
+ },
+ {
+  "file": "stored/editing-checks.prompt.txt",
+  "source": "routines/ (staged)",
+  "source_sha256": "",
+  "bytes_before": 0,
+  "bytes_after": 9067,
+  "sha256": "216d73acc272c4f18bd2494586ff4f9885424ea20e782c3aecdd7fc6e9629afd",
+  "edits": 0
+ },
+ {
+  "file": "stored/cto-round.prompt.txt",
+  "source": "routines/ (staged)",
+  "source_sha256": "",
+  "bytes_before": 0,
+  "bytes_after": 7101,
+  "sha256": "366fbeaee7d17fb383f023ffba57bfd77a49e9f55a61acfa928e1c73c83449b0",
+  "edits": 0
  }
 ]

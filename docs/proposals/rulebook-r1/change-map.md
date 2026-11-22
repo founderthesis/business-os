@@ -182,3 +182,16 @@ Not inspected: Inbox and Your call rules beyond a keyword pass (nothing stale fo
 | Blurb sources (Controls) | "Ownership override, 25 Oct: Codex writes, Claude maintains records" and the ChatGPT routine section, both replaced by 524 and 652; a gap goes to a Task row "Waiting on Builder" | The two history sections replaced by one current paragraph; the gap is a Ranjita segment on the Engagement (385, 646, 655): 8,995 to 4,342 chars |
 | Episode asset filing (Controls) | Nothing stale that conflicts with a current decision; "Legacy receipts" is a closed historical case | No change |
 | Host board sync: Notion agent instructions | Instructions for two Notion agents meant to replace the Host boards routine. Host boards still runs as a scheduled task, so it is not clear these agents exist. Its B2S and HBD hand-off to Zoya matches the staged host-boards.md | No change; **CTO to confirm** whether the two Notion agents exist. If not, the page is a proposal and should move out of Rules |
+
+## Cleanup re-review of 0575c60: fixes
+
+| # | Fix |
+|---|---|
+| 1 | fu-6-release keeps its child page "Release v2: get the guest to post (proposal, 16 Nov)" (MUST_KEEP). The release duty now has the postponement rule (Mail 2 and WhatsApp 1 only once the new date is confirmed) and the views rule (a real YouTube Studio or release-report number, else drop the line). The old +3/+4 check-and-nudge was replaced by v2's +24h and +72h checks (601) |
+| 2 | FAST: inside the day chat, the wake's RULES GATE read is the RULES LOAD; re-read only a page fetched before the wake or edited since. SLOW runs in its own composer, so it keeps its own load |
+| 3 | 5c un# "Stop: their no" carries 397's line verbatim: "noted, thanks for letting us know." |
+| 4 | Blurb sources keeps the Controls line (331), the membership and no-group-posting lines and the verified-join rule; "never write to Notion" applies only to the research chats; the CTO writes the blurb, Ranjita attaches a missing transcript, the day chat writes the gap segment |
+| 5 | inbox-actions STEP 6e already covers every unanswered thread from outside the team, and acknowledgements, thanks and auto-replies never trigger a reply. The staged Rules for your inbox makes no 72-hour claim. STEP 6e's "a plain cancel request still cancels the event" now follows section 8 (no delete_event) |
+| 6 | SLOW STEP 0g is now MONDAY NUMBERS: the five lines plus the 589 share rate go into the Monday run record, never a mail (554, 619); its key and the "sent" wording are gone; the inventory row is removed |
+| 7 | fu-8 cites 618; Rules for your Notion list cites 412 |
+| Runbook | cutover.md. build.py now also writes the exact stored-prompt texts to data/rulebook-r1/stored/ (git-ignored) with their sizes and sha256 in manifest.json. apply_notion.py writes a per-page plan of exact update_content spans and refuses to drop a child page |

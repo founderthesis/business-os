@@ -76,6 +76,24 @@ def build():
                    "bytes_before": 0, "bytes_after": len(up.encode()),
                    "sha256": hashlib.sha256(up.encode()).hexdigest(), "edits": len(edits.UPKEEP_EDITS)})
 
+    # Stored scheduled prompts the CTO deploys with update_trigger (cutover.md step c).
+    stored = {}
+    hb = open(os.path.join(HERE, "routines", "host-boards.md"), encoding="utf-8").read()
+    i = hb.index("\n", hb.index("```text")) + 1
+    j = hb.rindex("\n```")
+    stored["host-boards.prompt.txt"] = hb[i:j]
+    for f in ("editing-checks.txt", "cto-round.txt"):
+        stored[f.replace(".txt", ".prompt.txt")] = open(os.path.join(HERE, "routines", f), encoding="utf-8").read().rstrip("\n")
+    sdir = os.path.join(HERE, "..", "..", "..", "data", "rulebook-r1", "stored")
+    os.makedirs(sdir, exist_ok=True)
+    for name, text in stored.items():
+        # Written to data/ (git-ignored): these texts carry mail addresses (CLAUDE.md privacy).
+        with open(os.path.join(sdir, name), "w", encoding="utf-8") as fh:
+            fh.write(text)
+        report.append({"file": "stored/" + name, "source": "routines/ (staged)", "source_sha256": "",
+                       "bytes_before": 0, "bytes_after": len(text.encode()),
+                       "sha256": hashlib.sha256(text.encode()).hexdigest(), "edits": 0})
+
     # Stamp the SLOW prompt with its work file's release (release.json, written at cutover
     # after the work file is committed). Without it the placeholders stay and --release fails.
     work = out["zoya-slow-work.txt"]
