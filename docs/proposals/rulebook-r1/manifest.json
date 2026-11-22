@@ -1,0 +1,65 @@
+[
+ {
+  "file": "calendar.txt",
+  "source": "83e8fb0:docs/proposals/zoya-day/prompts/calendar.txt",
+  "source_sha256": "c613af00ddf02c8c6f128590867d1ac7bef157a46602878fc08a194f3b7be16c",
+  "bytes_before": 62916,
+  "bytes_after": 63120,
+  "sha256": "ead0664acad68cf3b0af375ed436d00a3301554ab436ae3ca4e295977b0130d8",
+  "edits": 7
+ },
+ {
+  "file": "inbox-actions.txt",
+  "source": "83e8fb0:docs/proposals/zoya-day/prompts/inbox-actions.txt",
+  "source_sha256": "2b894385566ff415cd406ad1920b6c7369859c34accc1619f43d0a38f979b49f",
+  "bytes_before": 48515,
+  "bytes_after": 48576,
+  "sha256": "6c51c73852d0089c81866e14eba7cf0e38425477ba348331dff25bd42dee2e5c",
+  "edits": 1
+ },
+ {
+  "file": "inbox-capture.txt",
+  "source": "83e8fb0:docs/proposals/zoya-day/prompts/inbox-capture.txt",
+  "source_sha256": "41e188c51713d841523102214cab72045907748abae663c17b5205885bb47b0c",
+  "bytes_before": 50812,
+  "bytes_after": 50913,
+  "sha256": "b47ae5d835396a0868f406c21d1a77aba869cfca753802f2df52fd13ee585a1a",
+  "edits": 3
+ },
+ {
+  "file": "whatsapp.txt",
+  "source": "83e8fb0:docs/proposals/zoya-day/prompts/whatsapp.txt",
+  "source_sha256": "c0ac14891bb14218739c72e5f620f82f5429ccd1ad12d0ad4aa52c4f89f72ead",
+  "bytes_before": 39817,
+  "bytes_after": 39820,
+  "sha256": "5ef6fb3165aa4cbb5e172d8904c76def1d80dd866c13cdef49f5608365af757a",
+  "edits": 1
+ },
+ {
+  "file": "zoya-fast.txt",
+  "source": "83e8fb0:docs/proposals/zoya-day/prompts/zoya-fast.txt",
+  "source_sha256": "b1b0b0acf5a1f9945a1db9099ac81cb3e3ab8e20222b4f650b0b097ebf810b23",
+  "bytes_before": 62996,
+  "bytes_after": 65443,
+  "sha256": "8c10da4435e6d5622a939078e7d8e3abe9f4a99b9930f28539ecc0dff03dbe01",
+  "edits": 17
+ },
+ {
+  "file": "zoya-slow.txt",
+  "source": "83e8fb0:docs/proposals/zoya-day/prompts/zoya-slow.txt",
+  "source_sha256": "4da2f1466a600967652e9336849fa11c2187962ed0d6816f2e6467bd2c4dd576",
+  "bytes_before": 15646,
+  "bytes_after": 15243,
+  "sha256": "582919fb17084bb8f7944b3dd23f0507a728084bc5d638635be5a84cd26e74c3",
+  "edits": 6
+ },
+ {
+  "file": "zoya-slow-work.txt",
+  "source": "63d63ec:routines/zoya/release/zoya-slow-work.txt",
+  "source_sha256": "78332307d8ba3cfda5c02905c6718f6ce7ad4b00b23ff7f01165bfb0c787644b",
+  "bytes_before": 94833,
+  "bytes_after": 96443,
+  "sha256": "e3771ef5a13bbdf8eb1b450b0ca50d21282fd5360d936591550845feddc1b10e",
+  "edits": 32
+ }
+]
