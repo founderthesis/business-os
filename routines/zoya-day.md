@@ -48,6 +48,12 @@ The prompts are the deployed routines, copied verbatim into `docs/proposals/zoya
   - A Zoya step blocked past its date (no email, no reply, waiting on an outside fact) is never re-dated unless something new has happened. It stays overdue so it shows, and goes on that Saturday list.
 - The daily sweep is retired, and Zoya SLOW runs twice on weekdays, at 11:08 and 17:08 JST (decision 657). Start a SLOW composer only for those slots.
 
+- Replies stay on the thread (decision 658, Akshay, 22 Nov, after both StockGro mails to Renu split into new chains with no history: "it has split from the mail chain and started a new chain"). Every mail that continues a conversation is made with MCP Emails draft action "reply" on the message_id of the newest message in that thread in your inbox (THREADING's draft way), and then sent. The quoted history stays below.
+  - Never email_compose with a typed "Re:" subject.
+  - If you were only Cc'd on the latest message (a loop-in), reply to that message.
+  - If the thread isn't in your inbox at all, send the ad@ loop-in first. Never start a fresh mail.
+  - After every reply, read your Sent copy (email_read read). Its thread must match the message you answered, and the quote must be there. If either fails, send nothing more that way: report it, and put "Akshay: Zoya's reply to <who> split the thread" on the row.
+
 ## Each wake
 
 1. `date -u` first. On weekends, prompts marked weekdays (Zoya SLOW, daily sweep) don't run. A prompt is due when at least one of its slots fell after your previous wake's start (first wake of the day: the last slot before now) and at or before now. A prompt with no slot in that window doesn't run.
