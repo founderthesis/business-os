@@ -496,3 +496,4 @@ EDITS['zoya-slow-work.txt'] += [
     (_F1, "other than Akshay whose Next date is today or earlier", "other than Akshay whose Next date or Zoya date is today or earlier"),
     (_F1, "either way set Next date 2 working days on", "either way set Zoya date 2 working days on"),
 ]
+EDITS['zoya-slow-work.txt'].append((_F1, "rows at Status Sponsored offered whose Next date is today or earlier", "rows at Status Sponsored offered whose Zoya date is today or earlier (no Zoya date yet: its Next date once, as SELECT says)"))

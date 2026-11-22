@@ -50,7 +50,7 @@
   "source_sha256": "4da2f1466a600967652e9336849fa11c2187962ed0d6816f2e6467bd2c4dd576",
   "bytes_before": 15646,
   "bytes_after": 15229,
-  "sha256": "6c03ebac70c932648595442911e071f37d417ad77a6c00fd0aa43d58940ec4fb",
+  "sha256": "dfb5ab0e2c3888e2765b898815d50120d20793d43cd63882d621e76b78726034",
   "edits": 7
  },
  {
@@ -58,9 +58,9 @@
   "source": "63d63ec:routines/zoya/release/zoya-slow-work.txt",
   "source_sha256": "78332307d8ba3cfda5c02905c6718f6ce7ad4b00b23ff7f01165bfb0c787644b",
   "bytes_before": 94833,
-  "bytes_after": 94484,
-  "sha256": "e1e5f19917597d567f16a4f1d8b903b7f6b6cc3fd930321deea598ac480dfb17",
-  "edits": 80
+  "bytes_after": 94539,
+  "sha256": "ce206094606d1366cbc75b133d11d7686642a57b5a8621021b3d9f3ac094c15a",
+  "edits": 81
  },
  {
   "file": "upkeep.txt",

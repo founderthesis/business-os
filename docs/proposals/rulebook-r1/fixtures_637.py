@@ -60,6 +60,7 @@ FORBIDDEN_SLOW = [
     "moves Next date 7 days on",
     "Chase step 0, Next date 30 days after",
     "Every hold writes Next date",
+    "Sponsored offered whose Next date is today",
     "LT chase with Next date today or earlier",
     "stays due (Next date unchanged)",
     "set Next date 2 working days on",
