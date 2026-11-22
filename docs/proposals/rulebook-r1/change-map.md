@@ -11,24 +11,24 @@ How the staged rulebook is built:
 
 | Source | Before | After | Note |
 |---|---|---|---|
-| routines/zoya-day.md | 49,523 | 26,035 | No override section; duties only the day chat runs |
+| routines/zoya-day.md | 49,523 | 26,760 | No override section; duties only the day chat runs |
 | CLAUDE.md | 27,140 | 18,280 | Zoya section points to the rule pages |
-| zoya-fast.txt | 62,996 | 65,443 | Recipients, team roles and parking written in once; Mamatha and Sri clauses replaced |
-| zoya-slow.txt | 15,646 | 15,243 | Schedule, work-file pin stamped at release |
-| zoya-slow-work.txt | 94,833 | 96,443 | Sponsored, pauses, recording chase, transcripts, owner mail removed |
+| zoya-fast.txt | 62,996 | 59,851 | Under the 60,000 target. Recipient rule moved to Rules for Zoya and checked in code; Mamatha and Sri clauses replaced; minute-25 logic, the links list and the duplicate-fold detail removed |
+| zoya-slow.txt | 15,646 | 15,194 | Schedule, work-file pin stamped at release |
+| zoya-slow-work.txt | 94,833 | 94,524 | Sponsored, pauses, recording chase, transcripts; owner mail and its keys removed |
 | calendar.txt | 62,916 | 63,120 | Ranjita, no Builder, no delete_event on guest events |
 | inbox-capture.txt | 50,812 | 50,913 | Team roles, recipients |
 | inbox-actions.txt | 48,515 | 48,576 | Team roles |
 | whatsapp.txt | 39,817 | 39,820 | Mamatha |
 | host-boards.md / editing-checks.txt / cowork-evals.md | 9,357 / 8,925 / 15,198 | 9,209 / 9,067 / 15,121 | Mamatha, dated branches, B2S/HBD hand-offs to Zoya |
 | daily-sweep.txt | 50,569 | retired | Its live steps: upkeep.txt, 35,929 (S17) |
-| Rules for Zoya (Notion) | 66,758 | 62,420 | Release table, sender table, full links list, standing checks; hold, 25 Oct corrections, Mamatha section, transcript-by-mail, Gmail-connector line removed |
+| Rules for Zoya (Notion) | 66,758 | 62,886 | Release table, sender table, full links list, standing checks; hold, 25 Oct corrections, Mamatha section, transcript-by-mail, Gmail-connector line removed |
 | Cadences | 9,540 | 5,847 | Old timetables removed; sponsored rows rewritten |
 | Rules for Zoya: follow-ups | 17,074 | 18,949 | Sponsored and pause table added; nurture branch for sponsored removed |
 | Mail and WhatsApp wording | 91,251 | 76,917 | Retired toggles, the Retired section, the sweep's Mamatha list and the un# pre-release ask removed; Release v3 marked live on un# |
 | Routines | 4,001 | 3,004 | One runtime inventory replaces the historical overview |
 
-The prompts grow slightly in batch 1 because three shared rules (RECIPIENTS, TEAM ROLES, PARKED) are written in whole; batch 2 removes the scattered clauses they replace.
+FAST and SLOW work both shrink: the recipient rule lives once, on Rules for Zoya section 2 (read in full every run), and each prompt runs its check in code before every send.
 
 ## Subjects
 
@@ -114,13 +114,15 @@ The prompts grow slightly in batch 1 because three shared rules (RECIPIENTS, TEA
 |---|---|---|
 | S10 (staged) | Rules for Zoya's holding reply (390: "checking with akshay, will come back by <day>") against 571 ("hi <first name>, will get back to you on this", never "Akshay") and 418 (no deadlines) | 571's wording; rewrite 390's section |
 | S11 | Rules for Zoya section 1 table: thank-you "Akshay by hand", Release mail 1 "Zoya (235)" against v2 | Release rows staged; thank-you row checked in batch 2 |
-| S12 | Inbox capture now runs in a composer that sends nothing (653), but its ad@ loop-in step for fresh pitches has no other sender | Capture leaves a Row change "loop-in due"; the day chat sends it in inbox actions. Needs CTO confirmation of what happened to loop-ins since 22 Nov |
+| S12 (staged) | Capture runs in a composer that sends nothing (653). The CTO checked: loop-ins still went (SK Minerals, Sujal/Novix and 12 more), sent by the day chat from the composer's report, by habit | Written down: the composer lists "loop-in due" lines; the day chat sends each right after the report with FAST's loop-in mechanics (zoya-day step 4, composer seed) |
 | S13 (done) | "Book immediately: ask for recording slots" against 654 | Already fixed in routines/cowork-evals.md at db38ce7; the sweep's copy is retired; no skill routes to a slot ask |
 | S14 | PRE-SEND CHECKS "every team address never in To" against team-only mail | Covered by RECIPIENTS 3/ (staged) |
 | S15 (staged) | Rules for Zoya "System-audit corrections, 25 Oct" and "More rules (decisions 373 to 382)" restate and supersede older text | Staged: the two still-valid checks (reach claims, verified completion) kept as "Standing checks"; the rest already lives in its topic section or is obsolete (Zencastr Mac task, eval migration, Codex blurbs, which 652 replaced). The appendix is renamed and its 376 transcript-by-mail paragraph replaced by Ranjita's flow |
 | S16 (staged) | Stored prompts: Sarika's editing asks (Mamatha transcripts, 456; Mamatha in the share list) and Host boards (Waiting on Mamatha or Chaandini; "until 19 Oct" branches) | Staged routines/editing-checks.txt and routines/host-boards.md; B2S and HBD host yes/no now hand the step to Zoya (decision 323) |
 | S17 (staged) | The sweep's live steps had no owner after 657 | prompts/upkeep.txt, cut by line number from the sweep's own text plus 12 edits; the day chat runs it once a weekday |
 | S18 | The CTO reminder for Monday's seed says "SLOW and the sweep back on" | Reported to the CTO, 22 Nov 20:00 JST |
+| S20 (staged) | FAST WRITE PATH set Next date from Zoya's own segments, against 637; NEXT ACTION SIZE (438, 120 characters) against 588 (about 15 words); FAST's own holding line said "checking with akshay" (against 571); release-date and final-cut asks were routed to Akshay (against 427, 600) | WRITE PATH sets Zoya date for Zoya steps and Next date for people only; 588's rule; 571's line; 427 and 600 answered by Zoya |
+| S21 | inbox-capture STEP 0 and 0A are one-off repairs ("every run until none is left", 1 and 2 Nov) still in the recurring prompt | CTO to check they find nothing, then batch 3 removes them |
 | S19 | skills/notion-business-os: not installed, not referenced, carries Mamatha examples and the retired Deals board | Delete at cutover |
 
 ## Uninspected or unverified
