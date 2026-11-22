@@ -54,3 +54,10 @@ Installed claude.ai cloud skills: unverified.
 - Notion (08:51 JST): follow-ups 10 replaces, 7. Long-term chase 1, Rules for Zoya 2 (the "All 8 routines are live" line and the one-time un# loop-in removed). No op matched nothing. Read back: all three MATCH the staged text, last 200 characters equal. Before copies in data/rulebook-r1/fix637-before/ (rollback).
 - fixtures_637.py passes: ordinary send, nurture, deferral, failed send and cap keep the person's Next date and write Zoya date (a cap writes nothing); no Zoya-step Next date write left in SLOW or on the page.
 - Next fix (Cleanup findings 2 and 3, not blocking because SLOW's fallback picks a row with no Zoya date once): inbox-actions form chasers and LT-chase revisit, upkeep 7b form chaser, upkeep step 4 overdue flags, and the calendar transcript Task row still use Next date for Zoya's own steps.
+
+## Fix 2, 23 Nov: decision 637 outside SLOW (Cleanup findings 2 and 3 on fix 1)
+
+- inbox-actions, upkeep and calendar: form chasers, the decision 104 hold, the nurture start and the calendar transcript Task row write Zoya date; upkeep's overdue flags read Zoya date for Zoya's steps and Next date for people's. Prompts only, no Notion change.
+- Cleanup: ship (e5ca26b), plus three text fixes applied in d39c2b7 (case counts, 443 in upkeep's Next-date rule, upkeep window keyed to the last upkeep report).
+- Release candidate d39c2b72fca9b570db91357bb8f344ada7af4255: all 8 prompts match manifest.json; SLOW stamp unchanged (09d6e71). fixtures_637.py passes with the fix 2 checks. The CTO sets RELEASE.
+- Later, not blocking: a 443 request that drops the chase segment leaves Zoya date on the old chase date; reset it to today so date and open step agree.
