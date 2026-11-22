@@ -46,3 +46,11 @@ Installed claude.ai cloud skills: unverified.
 ## Rollback
 
 (b) and (a) together, before Monday 07:38 JST: replace_content each page from data/rulebook-r1/notion-cutover/, move the four history pages back under Rules for Zoya, restore the 20 rows from decisions-before.json, then git revert bc6f103 and push.
+
+## Fix 1, 23 Nov: decision 637 date ownership (Auditor CX-20261123T0800 finding 2)
+
+- Staged in b80a887 (prompts, fix637.py, fixtures_637.py); Cleanup's diff check said ship after one fix (the SLOW sponsored selector read Next date), applied in 09d6e71.
+- Release candidate 3abad5205e92730289fdf46b014ce3973b19e42b: SLOW stamped to 09d6e71, work-file sha256 starting ce206094606d1366; all 8 prompts at R match manifest.json. The CTO sets the RELEASE line.
+- Notion (08:51 JST): follow-ups 10 replaces, 7. Long-term chase 1, Rules for Zoya 2 (the "All 8 routines are live" line and the one-time un# loop-in removed). No op matched nothing. Read back: all three MATCH the staged text, last 200 characters equal. Before copies in data/rulebook-r1/fix637-before/ (rollback).
+- fixtures_637.py passes: ordinary send, nurture, deferral, failed send and cap keep the person's Next date and write Zoya date (a cap writes nothing); no Zoya-step Next date write left in SLOW or on the page.
+- Next fix (Cleanup findings 2 and 3, not blocking because SLOW's fallback picks a row with no Zoya date once): inbox-actions form chasers and LT-chase revisit, upkeep 7b form chaser, upkeep step 4 overdue flags, and the calendar transcript Task row still use Next date for Zoya's own steps.
