@@ -9,9 +9,9 @@ How the staged rulebook is built:
 
 ## Before and after (bytes, or characters for Notion)
 
-| Source | Before | After (batch 1) | Note |
+| Source | Before | After | Note |
 |---|---|---|---|
-| routines/zoya-day.md | 49,523 | 25,520 | No override section; duties only the day chat runs |
+| routines/zoya-day.md | 49,523 | 26,035 | No override section; duties only the day chat runs |
 | CLAUDE.md | 27,140 | 18,280 | Zoya section points to the rule pages |
 | zoya-fast.txt | 62,996 | 65,443 | Recipients, team roles and parking written in once; Mamatha and Sri clauses replaced |
 | zoya-slow.txt | 15,646 | 15,243 | Schedule, work-file pin stamped at release |
@@ -20,11 +20,12 @@ How the staged rulebook is built:
 | inbox-capture.txt | 50,812 | 50,913 | Team roles, recipients |
 | inbox-actions.txt | 48,515 | 48,576 | Team roles |
 | whatsapp.txt | 39,817 | 39,820 | Mamatha |
-| daily-sweep.txt | 50,569 | retired | Obligations: S6 |
-| Rules for Zoya (Notion) | 66,758 | 68,032 | Release table, sender table, full links list added; hold, Mamatha section, Gmail-connector line removed |
+| host-boards.md / editing-checks.txt / cowork-evals.md | 9,357 / 8,925 / 15,198 | 9,209 / 9,067 / 15,121 | Mamatha, dated branches, B2S/HBD hand-offs to Zoya |
+| daily-sweep.txt | 50,569 | retired | Its live steps: upkeep.txt, 35,929 (S17) |
+| Rules for Zoya (Notion) | 66,758 | 62,420 | Release table, sender table, full links list, standing checks; hold, 25 Oct corrections, Mamatha section, transcript-by-mail, Gmail-connector line removed |
 | Cadences | 9,540 | 5,847 | Old timetables removed; sponsored rows rewritten |
 | Rules for Zoya: follow-ups | 17,074 | 18,949 | Sponsored and pause table added; nurture branch for sponsored removed |
-| Mail and WhatsApp wording | 91,251 | 78,289 | 6 retired toggles, the Retired section and the sweep's Mamatha list removed |
+| Mail and WhatsApp wording | 91,251 | 76,917 | Retired toggles, the Retired section, the sweep's Mamatha list and the un# pre-release ask removed; Release v3 marked live on un# |
 | Routines | 4,001 | 3,004 | One runtime inventory replaces the historical overview |
 
 The prompts grow slightly in batch 1 because three shared rules (RECIPIENTS, TEAM ROLES, PARKED) are written in whole; batch 2 removes the scattered clauses they replace.
@@ -75,15 +76,15 @@ The prompts grow slightly in batch 1 because three shared rules (RECIPIENTS, TEA
   |---|---|
   | 3r Tier 1 revival start | SLOW (staged) |
   | 3i Episodes without a transcript | Day chat (decision 644 duty, staged) |
-  | 6c Billing and invoices forwarded to Jaya (an allowed ad@ forward) | Day chat, daily: **unowned since 657**; batch 2 stages it |
-  | 7b Guest form submissions merge | Day chat, daily: **unowned**; batch 2 |
-  | 3g Founder Thesis guests list (podm.in/guest-list) | Saturday chat: **unowned**; batch 2 |
-  | 3k FT Community rows for recorded guests (backstop) | Saturday chat: **unowned**; batch 2 |
-  | 3p BD prospect episodes to PaaS rows | Saturday chat: **unowned**; batch 2 |
-  | 3h Auditor handoffs to Task rows, fix checks | Auditor items go to the Build board and the CTO (655); Mail issues fix checks to SLOW: batch 2 |
-  | 3, 3a, 3a2, 3a3, 3a4, 3b, 4, 4b, 5 (data upkeep, owners, flags, due vs done) | Day chat wake record and row tidying (588); 3a4 one-time moves end |
+  | 6c Billing and invoices forwarded to Jaya (an allowed ad@ forward) | upkeep.txt STEP 6c (staged) |
+  | 7b Guest form submissions merge | upkeep.txt STEP 7b (staged) |
+  | 3g Founder Thesis guests list (podm.in/guest-list) | upkeep.txt STEP 3g (staged) |
+  | 3k FT Community rows for recorded guests (backstop) | upkeep.txt STEP 3k (staged) |
+  | 3p BD prospect episodes to PaaS rows | upkeep.txt STEP 3p (staged) |
+  | 3h Auditor handoffs to Task rows, fix checks | Auditor items go to the CTO and the Build board (655); fix checks: upkeep.txt STEP 3h (staged) |
+  | 3, 3a, 3a2, 3a3, 3a4, 3b, 4, 4b, 5 (data upkeep, owners, flags, due vs done) | 4, 4b, 5: upkeep.txt (staged). 3, 3a, 3a2, 3a3, 3b: the day chat's row tidying (588) and inbox actions. 3a4 one-time moves: ended |
   | 2 Decisions sync | Retired: the ledger is Notion (350) |
-  Recommendation: batch 2 builds these steps into one `upkeep.txt` made mechanically from the sweep's own text, run by the day chat (daily and Saturday parts). No new schedule.
+  Also STEP 3d, client-show pre-release drafts for Built to Share and Human by Design: upkeep.txt (staged). upkeep.txt is cut by line number from the sweep's own text and run by the day chat once a weekday. No new schedule.
 - Verify: F15.
 
 ### S7. Engineering work ownership
@@ -94,29 +95,33 @@ The prompts grow slightly in batch 1 because three shared rules (RECIPIENTS, TEA
 - Verify: F13.
 
 ### S8. One-off repairs and retired templates
-- Saman Khan / Keshav Baljee reply (585, 13 Nov) and the Zoya date backfill (637, 20 Nov): removed from recurring text. **To verify before cutover**: that Zoya's reply to Saman went (Activity on Keshav Baljee's Engagement after 13 Nov) and that the backfill report reached the CTO session. If either is missing, it goes on its existing row with its original date.
-- WisdomTree (Ryan Louvar, un#) hands-off: a row-specific hold, not policy. Moved out of the day file; **to verify** it is on that Engagement's Next action or Claude note before cutover.
+- Saman Khan / Keshav Baljee reply (585): done, Activity "Zoya sent: reply to Saman (Consocia)" 13 Nov 23:54. Zoya date backfill (637): done, wake record 20 Nov 15:38 (122 Zoya dates set, 113 Next dates cleared). Both removed from recurring text.
+- WisdomTree (Ryan Louvar, un#) hands-off: lifted by the CTO on 17 Nov and the recording happened on 18 Nov. Removed.
 - Owner mail (619): SLOW work STEP 0f deleted. Other owner-mail references in SLOW work (batch keys, Mail issues "Needs Akshay not yet mailed"): batch 2.
 - Wording page: 6 retired toggles, the "Retired: do not send" section, the sweep's "Mamatha's daily list" and the Templates database sentence removed. Old FT release toggles that Release v2 replaced: batch 2.
 - Verify: F14.
 
 ### S9. Release-date authority
-- Authority: 427, 580, 582, 589, 601, 628, 630; the 30 Oct hold (Akshay, until he lifts it).
-- Evidence: the hold was never lifted in writing on the page, but later Akshay decisions send dates for Founder Thesis once Sarika or he confirms. No decision lifts it for other shows.
-- Final wording: the release-date table on Rules for Zoya; zoya-day.md's release duty; Rules section 1's release rows (Mail 1 is Akshay's, 2 to 6 Zoya's, replacing the 235 row).
-- Open: question 1.
-- Verify: F16, F17.
+- Authority: 427, 514 (Sarika sets dates), 575 (hold lifted for the tentative week on FT post-recording chains), 582, 589, 601, 628, 630, 638 (Release v3 live on un# from 20 Nov).
+- Losing clauses: Rules for Zoya's 30 Oct blanket hold callout; Rules section 1 "Release mail 1 ... Zoya (235)"; the live day file's "Release v3 is PROPOSED, not live", which contradicts 638 (the un# release has no executor in the live day file); the wording page's PROPOSED labels on v3; the un# pre-release ask toggle that v3 replaced; follow-ups' duplicate "Release week" paragraph; the sweep's STEP 3d covering un#.
+- Final wording: the release-date table on Rules for Zoya (per show: before and after confirmation); zoya-day.md's release duty covering FT (v2) and un# (v3); upkeep STEP 3d for Built to Share and Human by Design until their v3 starts.
+- Consumers: Rules for Zoya, wording, follow-ups, zoya-day.md, upkeep.txt, decisions 427, 514, 575.
+- Verify: F16, F17, F20. No question left for Akshay.
 
 ## Other conflicts found (batch 2 unless noted)
 
 | # | Conflict | Proposed resolution |
 |---|---|---|
-| S10 | Rules for Zoya's holding reply (390: "checking with akshay, will come back by <day>") against 571 ("hi <first name>, will get back to you on this", never "Akshay") and 418 (no deadlines) | 571's wording; rewrite 390's section |
+| S10 (staged) | Rules for Zoya's holding reply (390: "checking with akshay, will come back by <day>") against 571 ("hi <first name>, will get back to you on this", never "Akshay") and 418 (no deadlines) | 571's wording; rewrite 390's section |
 | S11 | Rules for Zoya section 1 table: thank-you "Akshay by hand", Release mail 1 "Zoya (235)" against v2 | Release rows staged; thank-you row checked in batch 2 |
 | S12 | Inbox capture now runs in a composer that sends nothing (653), but its ad@ loop-in step for fresh pitches has no other sender | Capture leaves a Row change "loop-in due"; the day chat sends it in inbox actions. Needs CTO confirmation of what happened to loop-ins since 22 Nov |
-| S13 | "Book immediately: ask for recording slots" in routines/cowork-evals.md and in inbox-actions and the sweep, against 654 | Rewrite cowork-evals.md TEAM ROLES and the skills' route text (ft-guest-eval) |
+| S13 (done) | "Book immediately: ask for recording slots" against 654 | Already fixed in routines/cowork-evals.md at db38ce7; the sweep's copy is retired; no skill routes to a slot ask |
 | S14 | PRE-SEND CHECKS "every team address never in To" against team-only mail | Covered by RECIPIENTS 3/ (staged) |
-| S15 | Rules for Zoya "System-audit corrections, 25 Oct" and "More rules (decisions 373 to 382)" sections restate and supersede older text | Fold each into its topic section, remove the history |
+| S15 (staged) | Rules for Zoya "System-audit corrections, 25 Oct" and "More rules (decisions 373 to 382)" restate and supersede older text | Staged: the two still-valid checks (reach claims, verified completion) kept as "Standing checks"; the rest already lives in its topic section or is obsolete (Zencastr Mac task, eval migration, Codex blurbs, which 652 replaced). The appendix is renamed and its 376 transcript-by-mail paragraph replaced by Ranjita's flow |
+| S16 (staged) | Stored prompts: Sarika's editing asks (Mamatha transcripts, 456; Mamatha in the share list) and Host boards (Waiting on Mamatha or Chaandini; "until 19 Oct" branches) | Staged routines/editing-checks.txt and routines/host-boards.md; B2S and HBD host yes/no now hand the step to Zoya (decision 323) |
+| S17 (staged) | The sweep's live steps had no owner after 657 | prompts/upkeep.txt, cut by line number from the sweep's own text plus 12 edits; the day chat runs it once a weekday |
+| S18 | The CTO reminder for Monday's seed says "SLOW and the sweep back on" | Reported to the CTO, 22 Nov 20:00 JST |
+| S19 | skills/notion-business-os: not installed, not referenced, carries Mamatha examples and the retired Deals board | Delete at cutover |
 
 ## Uninspected or unverified
 
