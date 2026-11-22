@@ -538,3 +538,17 @@ UPKEEP_EDITS += [
     (_F2, "only a new lead or a calendar booking sets it)", "only a new lead, a calendar booking or a scheduling request (decision 443) sets it)"),
     (_F2, "Window: since the previous sweep run (Friday's on a Monday)", "Window: since the previous upkeep report (Source ID \"upkeep:<date>\"; Friday's on a Monday)"),
 ]
+
+# Fix 3 (23 Nov, CTO): 443 resets Zoya date to today; Zoya-inbox keys are eligible.
+_F3 = 'F3-443-and-keys'
+EDITS['inbox-actions.txt'] += [
+    (_F3, "Query mail Activities (Kind Email in or Email out with Source ID msgid: or adid:, or Kind Meeting with Source Gemini notes)",
+          "Query mail Activities (Kind Email in or Email out with Source ID msgid: or adid:, or a Zoya-inbox key mcpemails:, zoya: or zoyaid: (handled exactly as msgid: and adid: rows), or Kind Meeting with Source Gemini notes)"),
+    (_F3, "and Zoya date in two (a hold, a routine 5 start), and never otherwise:",
+          "and Zoya date in three (a hold, a routine 5 start, a scheduling request's reply owed now), and never otherwise:"),
+    (_F3, "Next date = that date (a window: its first day; a date already past: today, the step keeps the date they asked for), replacing any Next date but a calendar booking's.",
+          "Next date = that date (a window: its first day; a date already past: today, the step keeps the date they asked for), replacing any Next date but a calendar booking's; Zoya date = today, for the reply owed now (decision 637)."),
+    (_F3, "Next date as NEXT DATE's scheduling-request case.",
+          "Next date and Zoya date as NEXT DATE's scheduling-request case."),
+    (_F3, "Zoya date only in its two.", "Zoya date only in its three."),
+]

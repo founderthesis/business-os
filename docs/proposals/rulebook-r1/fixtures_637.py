@@ -133,6 +133,43 @@ def fix2_checks():
     return bad
 
 
+ELIGIBLE_PREFIXES = ("msgid:", "adid:", "mcpemails:", "zoya:", "zoyaid:")
+
+
+def eligible(kind, source_id, source=""):
+    """Inbox actions STEP 1: which Activities are mail rows it works (fix 3)."""
+    if kind in ("Email in", "Email out"):
+        return source_id.startswith(ELIGIBLE_PREFIXES) and not source_id.startswith("msgid:gmail:")
+    return kind == "Meeting" and source == "Gemini notes"
+
+
+def fix3_checks():
+    bad = 0
+    cases = [  # (kind, Source ID, source, expected)
+        ("Email in", "msgid:CAF1x@mail.example", "", True),
+        ("Email in", "adid:48213", "", True),
+        ("Email in", "mcpemails:9f2c1a", "", True),      # Zoya-inbox key
+        ("Email in", "zoya:7d41", "", True),
+        ("Email out", "zoyaid:5521", "", True),
+        ("Email in", "gmail:18c2f", "", False),          # old Gmail thread key: not a mail row key
+        ("Note", "zoya:7d41", "", False),                # a key alone never makes a Note eligible
+        ("Meeting", "", "Gemini notes", True),
+    ]
+    for kind, sid, src, want in cases:
+        got = eligible(kind, sid, src)
+        if got != want:
+            print("BAD eligible", kind, sid, got); bad += 1
+    t = open(os.path.join(HERE, "prompts", "inbox-actions.txt"), encoding="utf-8").read()
+    for s in ["a Zoya-inbox key mcpemails:, zoya: or zoyaid: (handled exactly as msgid: and adid: rows)",
+              "Zoya date = today, for the reply owed now (decision 637)",
+              "Next date and Zoya date as NEXT DATE's scheduling-request case",
+              "Zoya date in three (a hold, a routine 5 start, a scheduling request's reply owed now)"]:
+        if s not in t:
+            print("BAD inbox-actions lacks:", s); bad += 1
+    print("fix 3 checks:", "clean" if not bad else f"{bad} failures")
+    return bad
+
+
 if __name__ == "__main__":
-    n = model() + text_checks(sys.argv[1] if len(sys.argv) > 1 else None) + fix2_checks()
+    n = model() + text_checks(sys.argv[1] if len(sys.argv) > 1 else None) + fix2_checks() + fix3_checks()
     sys.exit(1 if n else 0)
