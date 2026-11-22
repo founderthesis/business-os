@@ -380,3 +380,100 @@ MUST_KEEP = {
     "rules-for-zoya": ["## 1. Who sends what", "## 2. Rules for every mail", "Sender table", "<b>Recipients</b>"],
     "follow-ups": ["## 5c. Sponsored offers and pauses", "## 5a. Nurture and revival"],
 }
+
+# ---------------------------------------------------------------------------
+# Batch 4: Rules index child pages and Inbox and Your call rules
+# ---------------------------------------------------------------------------
+PAGES.update({
+    "inbox-your-call": "3ff19a301a7f8148993ccea78fc66428",
+    "rules-inbox": "3fb19a301a7f818ca72ff4c8fcaf3dce",
+    "rules-notion-list": "3fb19a301a7f81dda506eae542190b59",
+    "data-rules": "3fb19a301a7f8101a6aaf3f557b7a240",
+    "links-limits": "3fb19a301a7f81248dfec97a4569bd48",
+    "blurb-sources": "3fc19a301a7f81eb9bcfc36f3a1cd6a9",
+})
+
+EDITS["inbox-your-call"] = [
+    ("replace", "B4-history",
+     "<b>Controls</b> (agents read this every run). AR-20261020-1, deployed 20 Oct 2026. Source: docs/proposals/[ar20261020-1-inbox-controls.md](http://ar20261020-1-inbox-controls.md).",
+     "<b>Controls</b> (agents read this every run)."),
+    ("replace", "B4-zoya-date",
+     "Next date = the earliest date still open on the row, not counting held steps, so another segment due sooner keeps its date.",
+     "Zoya date = the earliest open Zoya segment date (the snooze's included), not counting held steps; Next date only from people's steps (decision 637)."),
+    ("between", "B4-cancel",
+     "If they ask us to cancel the invite, or say the guest can't make it (decision 165), first cancel",
+     "cancel nothing and put it in bucket C.",
+     "If they ask us to cancel the invite, or say the guest can't make it (decision 165): never call delete_event on it (decision 609). Match the one event for that guest on the date they name (the guest's name in the title, or an attendee from the thread), put \"Akshay: delete the \\<D Mon> \\<precall|recording> invite for \\<guest> (blocked: auto mode)\" on the row, and the CTO round deletes it (decision 488); if two events could match, or the mail is unclear, put it in bucket C."),
+    ("replace", "B4-final-cut",
+     "(seeing the cut or final episode, or any reel, collab or tag ask, is bucket C, decision 208)",
+     "(a reel, collab or tag ask is bucket C, decision 208; seeing the cut or final episode gets \"Asks to see the video before release\" from Zoya, bucket C only for a guest who covered our cost, decision 600)"),
+    ("replace", "B4-history",
+     "Team messages keep Zoya's signature. The 15 Oct \"never pose as Akshay\" rule stands for them; decision 486 replaces it only for these guest chasers.",
+     "Guest chasers go from Akshay's WhatsApp as him, unsigned, only after his tick (decision 486). Team messages are Zoya's, opening \"Zoya ✨\", and never pose as Akshay."),
+]
+
+EDITS["rules-for-zoya"] += [
+    ("replace", "C5-opener", "opening \"hi \\<name>, zoya here.\" (decision 226)", "opening \"Zoya ✨\" (decision 226)"),
+]
+
+RULES_INBOX_PAGE = """<callout icon="📖" color="gray_bg">
+<b>Describes</b> what happens to mail that reaches ad@thepodium.in. It controls nothing: the rules are in the inbox capture and inbox actions prompts, Rules for Zoya and Inbox and Your call rules.
+</callout>
+
+## The short version
+
+- <b>Every mail is logged</b> as an Activity on the right person and Engagement. Personal mail is skipped. Nothing is ever marked read: you do that.
+- <b>A new pitch gets one line from your account</b>, only when Zoya isn't on it yet: "thanks \\<name>, adding @Zoya to coordinate". Nothing else ever goes from ad@ except two forwards: billing to Jaya and Gemini notes to Saurabh.
+- <b>Zoya answers everything she can</b> from her own inbox, with you in Cc: acknowledgements, routine replies, standard answers from the wording page, your decision once you make it.
+- <b>Your list gets only what needs you</b>: a decision, a negotiation below the fixed price, a custom package, a call, an upset guest, press, a partnership, anything new. Zoya sends a one-line holding reply on the thread.
+- <b>Your call</b> is how you answer. Write in it on the row; the next run acts on it, clears it and takes you off.
+"""
+
+LINKS_LIMITS_PAGE = """<callout icon="📖" color="gray_bg">
+<b>Describes.</b> Nothing here controls a routine.
+</callout>
+
+- <b>Approved links:</b> the list in Rules for Zoya, section 2. A link not on it isn't sent until you approve it.
+- <b>Limits</b> (daily cap, per-run cap, per-person gap, sending days, quiet hours, pauses): Cadences.
+- <b>Writing style:</b> Rules for Zoya, Voice, and the Writing rules in CLAUDE.md.
+"""
+
+EDITS["rules-inbox"] = [("whole", "B4-describes", RULES_INBOX_PAGE)]
+EDITS["links-limits"] = [("whole", "B4-describes", LINKS_LIMITS_PAGE)]
+
+EDITS["rules-notion-list"] = [
+    ("replace", "B4-describes",
+     "- A Founder Thesis thank-you to send (decision 300): drafted in your Gmail; attach the transcript and send. The next calendar run sees it in Sent and moves the row on.",
+     "- A Founder Thesis thank-you to send (decisions 300, 615): drafted in your Gmail, subject \"Gratitude! | ...\". The next calendar run sees it in Sent and moves the row on."),
+    ("replace", "B4-describes",
+     "- Three unanswered chases. The routine closes the row or moves it to the long-term chase.",
+     "- Three unanswered chases. The row moves to the long-term chase (nurture), or onto the weekly Park proposals for sponsored offers; only you park a row (decision 656)."),
+    ("replace", "B4-describes",
+     "- Approvals are kept few: research first, write once; more than 10 rows go as one Notion AI upload (decision 91).",
+     "- Approvals are kept few: research first, write once, in as few calls as possible (decisions 91, 341)."),
+    ("replace", "B4-describes",
+     "- To shelve a row without an instruction, set Status to Parked: it leaves your list at once and nobody follows it up.",
+     "- To shelve a row without an instruction, set Status to Parked: it leaves your list at once and nobody follows it up. Only you park; rows a rule would park come to you once a week as Park proposals (decision 656)."),
+]
+
+EDITS["data-rules"] = [
+    ("replace", "B4-history",
+     " This owner instruction supersedes the no-show exception for Tasks in decision 329.",
+     ""),
+    ("replace", "B4-describes",
+     "- Agents can't delete Notion rows: dedupe flags rows and a person deletes. Merging or deleting people needs your OK.",
+     "- Agents move duplicate, test or asked-for rows to Trash themselves, after checking no relation is left, and report it (decision 416). Merging people or deleting a whole database needs your OK."),
+]
+
+EDITS["blurb-sources"] = [
+    ("between", "B4-blurbs",
+     "## Ownership override, 25 Oct 2026: Codex writes, Claude maintains records",
+     "## Read before writing",
+     "<b>Who writes blurbs</b> (decisions 524, 652, Akshay, 22 Nov). One blurb chat per guest writes the blurb with skills/ft-community-blurb, from the sources below, and hands DRAFT, SOURCES and NOTES FOR AKSHAY to the CTO, who checks every source before it reaches the page. A new blurb goes into the FT Community Blurb field and its section on Warm Welcomes only when Akshay asks or approves. Chats never write to Notion or send anything.\n\n## Read before writing"),
+    ("replace", "B4-blurbs",
+     "Write nothing, and put the gap on the Engagement: a Task row \"Blurb blocked: \\<guest>'s \\<D Mon> recording transcript not found (\\<where you looked>)\", Kind Task, Waiting on Builder.",
+     "Write nothing, and put the gap on the Engagement as a segment, \"Ranjita: attach \\<guest>'s \\<D Mon> recording transcript to the Episode (blurb blocked; looked in \\<where>)\", with Ranjita in Waiting on (decisions 385, 646, 655)."),
+]
+
+MUST_KEEP["inbox-your-call"] = ["## 3. Your call snoozes", "## 6. Your call", "WHATSAPP CHASE"]
+MUST_KEEP["blurb-sources"] = ["## Read before writing", "## Gaps", "## Writing and storing"]
