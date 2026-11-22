@@ -61,3 +61,10 @@ Installed claude.ai cloud skills: unverified.
 - Cleanup: ship (e5ca26b), plus three text fixes applied in d39c2b7 (case counts, 443 in upkeep's Next-date rule, upkeep window keyed to the last upkeep report).
 - Release candidate d39c2b72fca9b570db91357bb8f344ada7af4255: all 8 prompts match manifest.json; SLOW stamp unchanged (09d6e71). fixtures_637.py passes with the fix 2 checks. The CTO sets RELEASE.
 - Later, not blocking: a 443 request that drops the chase segment leaves Zoya date on the old chase date; reset it to today so date and open step agree.
+
+## Fix 3, 23 Nov: 443 Zoya date and Zoya-inbox rows in inbox actions
+
+- 443: Zoya date = today when Zoya owns the reply owed now; when it goes to Akshay (Tier 1, a date today or tomorrow, a host-show recording), Zoya date untouched.
+- Inbox actions STEP 1: Zoya-inbox keys (mcpemails:, zoya:, zoyaid:; provider ids, never Message-IDs) are mail rows, need no capture: line, and are read by provider id then worked as msgid: (THREAD also in Zoya's inbox), else as adid:. Capture's dedupe spellings cover all three, including a bare zoyaid: UID.
+- Cleanup: ship (0308768, plus the bare-UID note in 5b8b67e10df952c27e8cdc4e92d7e451d9bfc83d). fixtures_637.py fix 3 checks pass. Release candidate 5b8b67e10df952c27e8cdc4e92d7e451d9bfc83d; all 8 prompts match manifest.json.
+- Reconciliation (CTO): the 55 rows are older than W, so STEP 1 reaches them only if a capture run record lists them on its "stamped:" line; give each a "link:" line so they run as REPAIR rows (effects not yet performed only).
