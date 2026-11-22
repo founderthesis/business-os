@@ -552,3 +552,15 @@ EDITS['inbox-actions.txt'] += [
           "Next date and Zoya date as NEXT DATE's scheduling-request case."),
     (_F3, "Zoya date only in its two.", "Zoya date only in its three."),
 ]
+# Fix 3b (Cleanup on fix 3): who owns the 443 reply; how Zoya-inbox rows are read; capture dedupe.
+_F3b = 'F3b-cleanup'
+EDITS['inbox-actions.txt'] += [
+    (_F3b, "Zoya date = today, for the reply owed now (decision 637).",
+           "Zoya date = today when Zoya owns the reply owed now (decision 637); when it goes to Akshay (a Tier 1 row, a date today or tomorrow, a host-show recording), Zoya date untouched."),
+    (_F3b, "a Zoya-inbox key mcpemails:, zoya: or zoyaid: (handled exactly as msgid: and adid: rows)",
+           "a Zoya-inbox key mcpemails:, zoya: or zoyaid: (a provider id, not a Message-ID: read the message by that id in the mailbox the key names, Zoya's inbox unless it says ad:, take its Message-ID and work it as a msgid: row, THREAD searching Zoya's inbox as well as ad@; no Message-ID readable: as an adid: row, the subject search in that mailbox)"),
+    (_F3b, "Yours only: its body has a \"capture:\" line (a row Captured before 2026-11-02 has none until capture's STEP 0 stamps it).",
+           "Yours only: its body has a \"capture:\" line (a row Captured before 2026-11-02 has none until capture's STEP 0 stamps it; a row with a Zoya-inbox key needs none)."),
+]
+EDITS['inbox-capture.txt'].append((_F3b, "in every spelling older rows use: Source ID \"adid:<UID>\", \"allmail:<its MCP Emails id>\",",
+    "in every spelling older rows use: Source ID \"adid:<UID>\", \"allmail:<its MCP Emails id>\", \"zoya:\", \"zoyaid:\" or \"mcpemails:\" followed by its MCP Emails id or its folder:UID,"))

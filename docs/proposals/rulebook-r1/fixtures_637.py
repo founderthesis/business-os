@@ -136,17 +136,24 @@ def fix2_checks():
 ELIGIBLE_PREFIXES = ("msgid:", "adid:", "mcpemails:", "zoya:", "zoyaid:")
 
 
-def eligible(kind, source_id, source=""):
-    """Inbox actions STEP 1: which Activities are mail rows it works (fix 3)."""
+ZOYA_INBOX = ("mcpemails:", "zoya:", "zoyaid:")
+
+
+def eligible(kind, source_id, source="", body="capture: x"):
+    """Inbox actions STEP 1 (fix 3): the key test, then "Yours only": a capture: line,
+    which a row with a Zoya-inbox key does not need."""
     if kind in ("Email in", "Email out"):
-        return source_id.startswith(ELIGIBLE_PREFIXES) and not source_id.startswith("msgid:gmail:")
-    return kind == "Meeting" and source == "Gemini notes"
+        if not source_id.startswith(ELIGIBLE_PREFIXES) or source_id.startswith("msgid:gmail:"):
+            return False
+    elif not (kind == "Meeting" and source == "Gemini notes"):
+        return False
+    return "capture:" in body or source_id.startswith(ZOYA_INBOX)
 
 
 def fix3_checks():
     bad = 0
     cases = [  # (kind, Source ID, source, expected)
-        ("Email in", "msgid:CAF1x@mail.example", "", True),
+        ("Email in", "msgid:CAF1x", "", True),
         ("Email in", "adid:48213", "", True),
         ("Email in", "mcpemails:9f2c1a", "", True),      # Zoya-inbox key
         ("Email in", "zoya:7d41", "", True),
@@ -155,13 +162,23 @@ def fix3_checks():
         ("Note", "zoya:7d41", "", False),                # a key alone never makes a Note eligible
         ("Meeting", "", "Gemini notes", True),
     ]
+    no_capture = [  # real key shapes from Activities (23 Nov), body without a capture: line
+        ("Email in", "mcpemails:[Gmail]/All Mail:110947", True),
+        ("Email in", "zoya:[Gmail]/All Mail:3096", True),
+        ("Email in", "zoyaid:4155", True),
+        ("Email in", "msgid:CAF1x", False),              # an ad@ row still needs capture:
+    ]
+    for kind, sid, want in no_capture:
+        if eligible(kind, sid, body="summary only") != want:
+            print("BAD no-capture eligible", sid); bad += 1
     for kind, sid, src, want in cases:
         got = eligible(kind, sid, src)
         if got != want:
             print("BAD eligible", kind, sid, got); bad += 1
     t = open(os.path.join(HERE, "prompts", "inbox-actions.txt"), encoding="utf-8").read()
-    for s in ["a Zoya-inbox key mcpemails:, zoya: or zoyaid: (handled exactly as msgid: and adid: rows)",
-              "Zoya date = today, for the reply owed now (decision 637)",
+    for s in ["a Zoya-inbox key mcpemails:, zoya: or zoyaid: (a provider id, not a Message-ID",
+              "a row with a Zoya-inbox key needs none",
+              "Zoya date = today when Zoya owns the reply owed now (decision 637); when it goes to Akshay",
               "Next date and Zoya date as NEXT DATE's scheduling-request case",
               "Zoya date in three (a hold, a routine 5 start, a scheduling request's reply owed now)"]:
         if s not in t:
