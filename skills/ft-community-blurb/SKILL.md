@@ -40,7 +40,7 @@ Akshay is the thought leader here, sharing his own take, not a reporter describi
 > When Ankur told me that Rio is a pharma quick comm business, I spent a lot of time pushing back: why wouldn't a Blinkit rule this market too, given they already have density and distribution? By the end of our conversation Ankur had changed my mind. You see, the consumer behaviour quick commerce runs on is totally different from how pharma retail works. For one, the consumer is not brand agnostic. They don't search for oat biscuits, they search for the specific brand their doctor prescribed. That means the basic quick commerce Pareto rule (20% of the assortment covers 80% of the demand) breaks. The business breaks if you don't stock the long tail.
 
 - **Length.** Let the examples set it. Most run 120 to 200 words.
-- **Name.** First mention is the full name followed by `(<LinkedIn URL> - @{WhatsApp handle})`, as in his recent blurbs. Leave the handle as that placeholder; Akshay tags the person in WhatsApp.
+- **Name.** First mention is the full name followed by `(<LinkedIn URL> - @<first name>)`, e.g. `(https://www.linkedin.com/in/sakets - @Saket)`. Every member's WhatsApp handle starts with their first name, so Akshay's tag resolves from it.
 - **Numbers.** Figures the guest gave on the call can go in as stated. They are self-reported, so say that in the notes, not in the blurb.
 - **No em dashes, ever.** Short varied sentences, contractions, specifics over generalities.
 
