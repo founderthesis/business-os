@@ -607,3 +607,10 @@ EDITS['zoya-slow-work.txt'] += [
 UPKEEP_EDITS += [
     (_F4, "with Next date and Zoya date both empty and no Activity in 14 days", "with Next date and Zoya date both empty, no Activity in 14 days and no \"free feature offered\" Claude note line (decision 661)"),
 ]
+
+# Fix 5 (23 Nov): Akshay approved the free feature wording (decision 661); no reply 30 days after the offer goes on the Park proposals.
+_F5 = 'F5-free-feature-approved'
+EDITS['zoya-slow-work.txt'] += [
+    (_F5, "gets the free feature offer once, never the Park proposals: only the wording page's approved toggle; one still PROPOSED is never sent, the step waits as \"Zoya: free feature offer to <name> (wording awaiting Akshay)\". Once sent: Zoya date empty, Waiting on Guest or PR, note \"YYYY-MM-DD: free feature offered, no chase (661)\"; no reply is no chase and never a chase end under PARKED.",
+          "gets the free feature offer once, the wording page's toggle word for word. Once sent: Waiting on Guest or PR, Zoya date the send date + 30 days, note \"YYYY-MM-DD: free feature offered, no chase (661)\"; no chase. On that Zoya date with no reply from their side since the offer: the row goes on this week's Park proposals (PARKED), reason \"free feature, no reply in 30 days\"."),
+]

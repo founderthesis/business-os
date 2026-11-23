@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Offline fixtures for fix 4 (decisions 660, 661, 662).
+"""Offline fixtures for fix 4 (decisions 660, 661, 662), as amended by fix 5 (wording approved).
 
 1. Sponsored model: what Zoya does next on a Founder Thesis or un# sponsored row.
 2. Enrichment model: the daily Reach budget and who is picked.
@@ -105,9 +105,7 @@ def text_checks(page_dir):
     must = [
         (slow, "a Founder Thesis row gets FREE FEATURE and a un# row Status Unresponsive"),
         (slow, "FREE FEATURE (decisions 660, 661; FT only)"),
-        (slow, "no reply is no chase and never a chase end under PARKED"),
         (up, "no \"free feature offered\" Claude note line"),
-        (slow, "one still PROPOSED is never sent"),
         (slow, "A pending free feature (not money): one check-in 7 days after that mail instead."),
         (slow, "only FREE FEATURE's revival text"),
         (up, "STEP 7c. PEOPLE LINKEDIN ENRICHMENT (decisions 659, 662)"),
@@ -128,13 +126,13 @@ def text_checks(page_dir):
         for t, s in [(fu, "up to 5 follow-ups, 7 days apart"), (fu, "| The free feature offer |"),
                      (fu1, "### Mail 5: who's been on"), (fu8, "Free feature offer: sponsored revival (FT)"),
                      (cad, "Up to 5 follow-ups, 7 days apart"),
-                     (w, "PROPOSED: Free feature offer: silent sponsored lead (FT)"),
-                     (w, "PROPOSED: Free feature offer: sponsored revival (FT)"),
-                     (w, "PROPOSED: Free feature check-in (7 days)")]:
+                     (w, "Free feature offer: silent sponsored lead (FT)"),
+                     (w, "Free feature offer: sponsored revival (FT)"),
+                     (w, "Free feature check-in (7 days)")]:
             if s not in t:
                 print("BAD page lacks:", s); bad += 1
         for t, s in [(fu, "weekly Park proposals for Akshay (decisions 618, 656)"), (fu, "at most 2 follow-ups, no nurture"),
-                     (cad, "Park proposals for you"), (fu8, "podm.in/sponsored")]:
+                     (cad, "After the second with no reply: Park proposals for you"), (fu8, "podm.in/sponsored")]:
             if s in t:
                 print("BAD page still has:", s); bad += 1
     print("text checks:", "clean" if not bad else f"{bad} failures")
