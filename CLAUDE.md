@@ -106,7 +106,7 @@ Zoya talks to Akshay in the WhatsApp group "Zoya" (decision 304, STEP 0 of routi
 
 Zoya never WhatsApps outsiders (guests, PR, prospects, community members) as "Akshay's AI Chief of Staff" (Akshay, 23 Nov: "I don't ever want Zoya to send Whatsapp messages as Akshay's chief of staff... this is to outsiders, not to team"). Her WhatsApp, signed as Zoya, goes only to the Zoya group and to the team (the Zoya <> Team group and team members' own chats). A WhatsApp to a non-team person always goes as Akshay writing personally (Akshay, 23 Nov: "for non-team - we always send as Akshay sending personally"): first person, his style (the 14 Oct rule below), no Zoya signature and no mention of Zoya. It goes only when he asked for that message or wrote ok on its exact draft on the row (this absorbs decision 486, the guest chaser sent as him).
 
-WhatsApp messages Akshay sends or forwards (Akshay, 14 Oct): several short messages, not one long one (long messages read as AI); each starts lowercase; one message per send so he can forward each.
+WhatsApp messages Akshay sends or forwards (Akshay, 14 Oct): several short messages, not one long one (long messages read as AI); each starts lowercase, with people's and company names capitalised; one message per send so he can forward each. Keep each message to a few words or one line; only a name drop or knowledge sharing runs long (Akshay, 23 Nov). Never "quick one", never "bhai".
 
 ## Repo layout
 
