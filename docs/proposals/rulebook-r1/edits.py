@@ -576,7 +576,7 @@ EDITS['zoya-slow-work.txt'] += [
     (_F4, "founders who wrote to us directly whose no was to the sponsored price, at most one mail a quarter and only with a new reason to write;",
           "founders who wrote to us directly whose no was to the sponsored price, at most one mail a quarter, only FREE FEATURE's revival text, and only with a new reason to write;"),
     (_F4, "PAUSES ON THEIR WORD (",
-          "FREE FEATURE (decisions 660, 661; Founder Thesis only). A sponsored lead silent 7 days after the offer, or after its fifth follow-up, gets the free feature offer once, never the Park proposals. Only the wording page's approved toggle for the case: one still PROPOSED is never sent, the step stays \"Zoya: free feature offer to <name> (wording awaiting Akshay)\" with its Zoya date. A yes: \"Feature interest: book the call with Akshay\". No reply: no chase.\nPAUSES ON THEIR WORD ("),
+          "FREE FEATURE (decisions 660, 661; FT only). A sponsored lead silent 7 days after the offer, or after its fifth follow-up, gets the free feature offer once, never the Park proposals: only the wording page's approved toggle; one still PROPOSED is never sent, the step waits as \"Zoya: free feature offer to <name> (wording awaiting Akshay)\". Once sent: Zoya date empty, Waiting on Guest or PR, note \"YYYY-MM-DD: free feature offered, no chase (661)\"; no reply is no chase and never a chase end under PARKED. A yes: \"Feature interest: book the call with Akshay\".\nPAUSES ON THEIR WORD ("),
     (_F4, "A decline gets the sponsored close note from the wording page, from your inbox in your voice and signed as you, once: not if the thread already shows it or a \"sponsored close\" Activity is on the row (the inbox hands these to you as \"Zoya: send the sponsored close note to <name>\", older rows \"Zoya: send Akshay's sponsored close note to <name>\").",
           "The close note goes once, from your inbox in your voice: never if the thread shows it or a \"sponsored close\" Activity is on the row (the inbox hands it to you as \"Zoya: send the sponsored close note to <name>\")."),
 ]
@@ -594,9 +594,16 @@ UPKEEP_EDITS += [
     (_F4, "5, 6c, 7b, then STEP 7.", "5, 6c, 7b, 7c, then STEP 7."),
     (_F4, "STEP 7. REPORT", "STEP 7c. PEOPLE LINKEDIN ENRICHMENT (decisions 659, 662). Read only: Reach MCP (ToolSearch \"+reach\"; missing: report \"step 7c: blocked: Reach not connected\" and go on). "
           "1/ QUOTA FIRST: get_account_quotas. Today's budget is 35 reads a day across every agent (decision 662) less the reads already used today, and never more than the account's own remaining daily quota; 0: report \"step 7c: done 0 (quota)\" and stop. "
-          "2/ PICK, oldest relationship first, at most the budget: People rows with LinkedIn, Role or What they do blank who have a real relationship: FT guest ticked, In WhatsApp group ticked, an FT Community row, or an Engagement with an Email in Activity, a precall or a recording. Never a row whose only Engagements are cold outreach with no reply from them (untouched cold outreach stays out), never a team member (Tags Team), never a row with Tags \"No enrichment\". "
+          "2/ PICK, oldest relationship first, at most the budget: People rows with LinkedIn, Role or What they do blank who have a real relationship: FT guest ticked, In WhatsApp group ticked, an FT Community row, or an Engagement with a precall, a recording or an Email in from that person that isn't an auto-reply, out-of-office or bounce. Never a row whose only Engagements are cold outreach with no reply from them (untouched cold outreach stays out), never a team member (Tags Team), never a row with Tags \"No enrichment\". "
           "3/ READ, one person at a time: the LinkedIn URL on the row, else scrape_search on name plus company confirmed by scrape_profile (same name, same company or a past one on the row; not certain: skip, note it in the report, read nothing more for them). "
           "4/ WRITE only blank fields, never overwrite: LinkedIn, Role, What they do, City, Country; then Researched = today and one page-body line \"YYYY-MM-DD: LinkedIn via Reach (upkeep): filled <fields> (decision 662)\". Never a phone number or email from LinkedIn, never Tags, Blurb or Engagements. "
           "5/ STOP AT ONCE on any LinkedIn verification, captcha, checkpoint, sign-in prompt, rate or quota error: no retry today, report \"step 7c: stopped: <what> after <n> reads\", and put one line for the CTO on the run record. "
           "Report \"step 7c: done <n> read, <n> rows filled, <n> skipped (not certain), budget <b> of 35\".\nSTEP 7. REPORT"),
+]
+EDITS['zoya-slow-work.txt'] += [
+    (_F4, " (CTO and Cleanup, 4 Nov: the 14:01 run reached none of 2 and 3)", ""),
+    (_F4, "(decision 354, from its start date on Cadences)", "(decision 354)"),
+]
+UPKEEP_EDITS += [
+    (_F4, "with Next date and Zoya date both empty and no Activity in 14 days", "with Next date and Zoya date both empty, no Activity in 14 days and no \"free feature offered\" Claude note line (decision 661)"),
 ]

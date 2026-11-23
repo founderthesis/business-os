@@ -104,7 +104,9 @@ def text_checks(page_dir):
     up = open(os.path.join(P, "upkeep.txt"), encoding="utf-8").read()
     must = [
         (slow, "a Founder Thesis row gets FREE FEATURE and a un# row Status Unresponsive"),
-        (slow, "FREE FEATURE (decisions 660, 661; Founder Thesis only)"),
+        (slow, "FREE FEATURE (decisions 660, 661; FT only)"),
+        (slow, "no reply is no chase and never a chase end under PARKED"),
+        (up, "no \"free feature offered\" Claude note line"),
         (slow, "one still PROPOSED is never sent"),
         (slow, "A pending free feature (not money): one check-in 7 days after that mail instead."),
         (slow, "only FREE FEATURE's revival text"),
