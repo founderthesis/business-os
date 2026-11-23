@@ -365,6 +365,8 @@ The eval is a Notion page **inside the guest's Engagement**, as a child page of 
 Write it to be skimmed. Lead with the point. Use bullets over paragraphs, and bold the one fact a skimmer must not miss in each bullet. Put at most two columns side by side and put detail in closed toggles. Use Notion-flavoured markdown (callout, columns, toggle, tables), never HTML.
 
 **Act 1, The Call: decide in 30 seconds**
+**Page layout, Akshay 23 Nov (this wins over the section list below; model page: Eval: Vaibhav Pandey @ Instawork, 41e19a301a7f81518bc9cd92f62747fd).** (1) Lead with a short company TLDR: what the company is, who pays and how big it is, before any verdict ("Need to get a TLDR of the co first before I see the verdict"). (2) Then the verdict callout, then the scorecard as a table at full page width (`<table fit-page-width="true">`), never an image. (3) No infographics at all: no scorecard, stack or comparables images; the stack and comparables stay as tables. (4) Never write a bare "you replied": quote Akshay's actual reply in the callout, with its date. The rest of the order stays as listed; the sector-in-30-seconds part stays inside The business.
+
 1. **Verdict callout**, in a colour matching the verdict (green, orange or red background).
    - Line 1, bold: the verdict and the archetype in plain words ("Academic founder", "Deep builder", or none), plus any location flag ("European professor", "India-based").
    - Line 2: the synthesis. This is the arc plus the reason to book or pass, and it is the whole decision for a skimmer. If Arjun has seen this person before, or Notion holds history, open with it.
