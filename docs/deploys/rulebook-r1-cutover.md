@@ -77,3 +77,12 @@ Installed claude.ai cloud skills: unverified.
 - Notion (23 Nov, about 10:45 JST): follow-ups 8 ops, fu-1-sponsored 4, fu-8-revival, Cadences, Routines and wording (three toggles, all marked PROPOSED, never sent until Akshay approves). Read back: all six MATCH the staged text. Before copies in data/rulebook-r1/fix4-before/ (rollback).
 - Ledger: 573 (text and title), 618 and 625 rewritten and read back by SQL; rollback copy data/rulebook-r1/decisions-fix4-before.json.
 - Open: Akshay approves the three PROPOSED toggles and answers whether an unanswered free feature row closes after N days (handover 42119a301a7f815b925de1f5fd89b385; CTO default 30 days, then Park proposals). The Reach account import quota is 30, below 7c's 35: raising it is a config write for Akshay or the CTO; until then 7c's budget takes the lower figure.
+
+## Fix 5, 23 Nov: Akshay's answers on fix 4 (decision 661)
+
+- The three free feature toggles are approved (Status "approved (decision 661, Akshay, 23 Nov)"); drafts 1 and 2 ask "interested?" in place of "ok to go ahead?" (Akshay: "ok to go ahead seems too eager"); the repeat-guest toggle (decision 642) keeps its wording. The "wording awaiting Akshay" wait is gone from SLOW and the pages.
+- 30-day park (CTO default, Akshay didn't object): after the silent-lead free feature offer, Zoya date = send date + 30; no reply from their side since: this week's Park proposals, reason "free feature, no reply in 30 days". The same 30 days after the 7-day check-in on a pending free feature (Cleanup finding 2). Revival rows stay closed and are never parked. Upkeep's quiet-check skip now holds only while their side hasn't written since the offer.
+- Reach import cap on account 374 raised to 35 a day by the CTO; 7c unchanged (it takes the lower of 35 less used and the account's remaining).
+- Cleanup: hold on 338efa1 (the stamp named a commit without the stamped work file); fixed by the release flow, and fixtures_fix5.stamp_check() now compares the stamped commit's work file with the stamp. Ship at R.
+- Release candidate a4558764b953396f82b64d92c97e9cdd47feea3e: SLOW stamped to W eabd07f, work sha16 63a6870663a0082e, 94,809 bytes; all 8 prompts at R match manifest.json. The CTO sets RELEASE.
+- Notion: follow-ups 5 ops, fu-8-revival 1, Cadences 2, wording 9. Read back: all four MATCH; fixtures_fix5 passes on the live text. Before copies in data/rulebook-r1/fix5-before/. Ledger 661 amended and read back by SQL; rollback data/rulebook-r1/decisions-fix5-before.json.
