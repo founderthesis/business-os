@@ -1,6 +1,6 @@
 ---
 name: "ft-community-blurb"
-description: "Write the welcome blurb that introduces one new member of the Founder Thesis WhatsApp community (a founder or investor Akshay Datt has interviewed), in Akshay's voice, from the call transcripts, the episode transcript, LinkedIn via Apify and Tracxn. Trigger on \"write the blurb for Ankur\", \"community blurb for a guest\", \"blurb with skills/ft-community-blurb\", or a comment asking to change an existing blurb. Returns DRAFT, SOURCES and NOTES FOR AKSHAY. Writes nothing to Notion and sends nothing."
+description: "Write the welcome blurb that introduces one new member of the Founder Thesis WhatsApp community (a founder or investor Akshay Datt has interviewed), in Akshay's voice, from the call transcripts, the episode transcript, LinkedIn via Reach MCP and Tracxn. Trigger on \"write the blurb for Ankur\", \"community blurb for a guest\", \"blurb with skills/ft-community-blurb\", or a comment asking to change an existing blurb. Returns DRAFT, SOURCES and NOTES FOR AKSHAY. Writes nothing to Notion and sends nothing."
 ---
 
 # ft-community-blurb
@@ -15,7 +15,7 @@ Do this once per guest and keep it in this chat as a research file (`research-<g
 
 1. **Notion** (ToolSearch "+Notion"). The guest's Founder Thesis Engagement (Engagements, collection://5522ee21-d8e5-4ec0-bf3e-90bcf88d24c5, search the name): its page body holds the precall notes and the eval. Its Episode (collection://5d250752-6db8-4ab6-8467-c68f5838278a): download the Transcript file and read all of it, keeping timestamps. The guest's People row has the LinkedIn URL. Not recorded yet: say so and work from the precall.
 2. **Call notes.** Search Google Drive and Gmail for the guest's name. Precalls and some recordings leave a "Notes by Gemini" doc (title "<Guest> and Akshay Datt ...", also mailed from gemini-notes@google.com). Read its Transcript tab, not just the summary. Pick up any backgrounder, deck or PR note filed under their name too.
-3. **LinkedIn via Apify.** Confirm the profile URL is this person's, then read the profile and recent posts for role, career and what they're pushing now.
+3. **LinkedIn via Reach MCP** (ToolSearch "Reach_MCP"; list_accounts gives the account id). scrape_profile reads the profile; list_user_posts reads recent posts. No URL yet: scrape_search on name plus company, then confirm with scrape_profile. Read only: never visit_profile, message, invite, comment or react. Confirm the profile is this person's, then note role, career and what they're pushing now.
 4. **Tracxn** (call `load_prompt` first). Funding, investors, revenue, headcount, valuation, acquisitions. Cite it as "Tracxn".
 5. **Web**, for anything else. Keep the URL.
 

@@ -30,7 +30,7 @@ them; never inline or paraphrase their rules here.
    contradicts. Note the date of its last run in the Overview.
 3. **Research** (decision 531): look the company up on Tracxn (funding, investors,
    revenue, headcount, competitors), and read the guest's and the company page's
-   recent LinkedIn posts with Apify. Write both up in the Overview tab, with what
+   recent LinkedIn posts with Reach MCP (list_user_posts, list_page_posts; read only, decision 659). Write both up in the Overview tab, with what
    each copy tab can use. Tracxn figures are cited "Source: Tracxn" (decision 532).
 4. **Episode link**: use `[episode link]` until the episode is live.
 
