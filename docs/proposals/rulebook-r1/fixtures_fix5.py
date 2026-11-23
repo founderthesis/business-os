@@ -19,6 +19,24 @@ def after_free_offer(days_since_offer, replied_since, show="FT", revival=False):
     return "Park proposals" if days_since_offer >= 30 else "wait (Zoya date = offer + 30)"
 
 
+def stamp_check():
+    """The SLOW stamp must name a commit whose work file has the stamped sha (Cleanup, fix 5)."""
+    import hashlib, re, subprocess
+    stub = open(os.path.join(HERE, "prompts", "zoya-slow.txt"), encoding="utf-8").read()
+    c = re.search(r"git fetch origin ([0-9a-f]{40})", stub); h = re.search(r"must start ([0-9a-f]{16})", stub)
+    if not (c and h):
+        print("BAD stamp: no commit or sha in zoya-slow.txt"); return 1
+    try:
+        blob = subprocess.run(["git", "show", c.group(1) + ":docs/proposals/rulebook-r1/prompts/zoya-slow-work.txt"],
+                              cwd=HERE, capture_output=True, check=True).stdout
+    except subprocess.CalledProcessError:
+        print("BAD stamp: commit", c.group(1)[:7], "has no work file"); return 1
+    got = hashlib.sha256(blob).hexdigest()[:16]
+    ok = got == h.group(1)
+    print(f"{'ok ' if ok else 'BAD'} stamp {c.group(1)[:7]}: work file {got}, stamp {h.group(1)}")
+    return 0 if ok else 1
+
+
 def cases():
     bad = 0
     for args, want in [((0, False), "wait (Zoya date = offer + 30)"),
@@ -37,8 +55,11 @@ def cases():
 def text_checks(page_dir):
     bad = 0
     slow = open(os.path.join(HERE, "prompts", "zoya-slow-work.txt"), encoding="utf-8").read()
-    for s in ["Zoya date the send date + 30 days", "reason \"free feature, no reply in 30 days\"",
-              "the wording page's toggle word for word"]:
+    slow += open(os.path.join(HERE, "prompts", "upkeep.txt"), encoding="utf-8").read()
+    for s in ["then FREE FEATURE's 30-day park from it", "the wording page's approved toggle, word for word",
+              "Claude note line without an Activity from their side after it",
+              "Zoya date the send date + 30 days", "reason \"free feature, no reply in 30 days\"",
+]:
         if s not in slow:
             print("BAD SLOW lacks:", s); bad += 1
     for s in ["PROPOSED", "wording awaiting Akshay", "never a chase end under PARKED", "never the Park proposals"]:
@@ -49,7 +70,9 @@ def text_checks(page_dir):
         fu, w, fu8, cad = f("follow-ups"), f("wording"), f("fu-8-revival"), f("cadences")
         for t, s in [(w, "Free feature offer: silent sponsored lead (FT)"), (w, "Free feature check-in (7 days)"),
                      (w, "Akshay. interested?"), (w, "<b>Status:</b> approved (decision 661, Akshay, 23 Nov)."),
-                     (fu, "the Saturday Park proposals and Akshay decides"), (cad, "no reply 30 days after it: Park proposals for you")]:
+                     (fu, "the Saturday Park proposals and Akshay decides"), (cad, "no reply 30 days after it: Park proposals for you"),
+                     (cad, "None 30 days after the check-in: Park proposals for you"),
+                     (fu, "no reply 30 days after the check-in: the Saturday Park proposals. | Not used |")]:
             if s not in t:
                 print("BAD page lacks:", s); bad += 1
         if w.count("approved (decision 661, Akshay, 23 Nov).") != 3:
@@ -64,4 +87,4 @@ def text_checks(page_dir):
 
 
 if __name__ == "__main__":
-    sys.exit(1 if cases() + text_checks(sys.argv[1] if len(sys.argv) > 1 else None) else 0)
+    sys.exit(1 if cases() + stamp_check() + text_checks(sys.argv[1] if len(sys.argv) > 1 else None) else 0)

@@ -106,7 +106,7 @@ def text_checks(page_dir):
         (slow, "a Founder Thesis row gets FREE FEATURE and a un# row Status Unresponsive"),
         (slow, "FREE FEATURE (decisions 660, 661; FT only)"),
         (up, "no \"free feature offered\" Claude note line"),
-        (slow, "A pending free feature (not money): one check-in 7 days after that mail instead."),
+        (slow, "A pending free feature (not money): one check-in 7 days after that mail instead"),
         (slow, "only FREE FEATURE's revival text"),
         (up, "STEP 7c. PEOPLE LINKEDIN ENRICHMENT (decisions 659, 662)"),
         (up, "get_account_quotas"),

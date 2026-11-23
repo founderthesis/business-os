@@ -612,5 +612,12 @@ UPKEEP_EDITS += [
 _F5 = 'F5-free-feature-approved'
 EDITS['zoya-slow-work.txt'] += [
     (_F5, "gets the free feature offer once, never the Park proposals: only the wording page's approved toggle; one still PROPOSED is never sent, the step waits as \"Zoya: free feature offer to <name> (wording awaiting Akshay)\". Once sent: Zoya date empty, Waiting on Guest or PR, note \"YYYY-MM-DD: free feature offered, no chase (661)\"; no reply is no chase and never a chase end under PARKED.",
-          "gets the free feature offer once, the wording page's toggle word for word. Once sent: Waiting on Guest or PR, Zoya date the send date + 30 days, note \"YYYY-MM-DD: free feature offered, no chase (661)\"; no chase. On that Zoya date with no reply from their side since the offer: the row goes on this week's Park proposals (PARKED), reason \"free feature, no reply in 30 days\"."),
+          "gets the free feature offer once, the wording page's approved toggle, word for word. Once sent: Waiting on Guest or PR, Zoya date the send date + 30 days, note \"YYYY-MM-DD: free feature offered, no chase (661)\"; no chase. That day, no reply from them since: this week's Park proposals (PARKED), reason \"free feature, no reply in 30 days\"."),
+]
+EDITS['zoya-slow-work.txt'] += [
+    (_F5, "A pending free feature (not money): one check-in 7 days after that mail instead.",
+          "A pending free feature (not money): one check-in 7 days after that mail instead, then FREE FEATURE's 30-day park from it."),
+]
+UPKEEP_EDITS += [
+    (_F5, "no \"free feature offered\" Claude note line (decision 661)", "no \"free feature offered\" Claude note line without an Activity from their side after it (decision 661)"),
 ]

@@ -30,6 +30,12 @@ EDITS = {
         ("replace", "G3-offer-row",
          "Sent once per lead, only in the wording page's approved text; a toggle still marked PROPOSED is never sent (the step waits as \"Zoya: free feature offer to \\<name> (wording awaiting Akshay)\"). A yes: \"Feature interest: book the call with Akshay\". No reply: no chase.",
          "Sent once per lead, only in the wording page's approved text (decision 661). A yes: \"Feature interest: book the call with Akshay\". No reply: no chase; 30 days after the offer with still no reply, the row goes on the Saturday Park proposals and Akshay decides."),
+        ("replace", "G3b-offer-checkin",
+         "They say they'll get back on it: one check-in 7 days after that mail. | Not used |",
+         "They say they'll get back on it: one check-in 7 days after that mail; no reply 30 days after the check-in: the Saturday Park proposals. | Not used |"),
+        ("replace", "G3c-pause-row",
+         "The free feature: one check-in 7 days after that mail, then nothing unless they write. |",
+         "The free feature: one check-in 7 days after that mail; no reply 30 days after the check-in: the Saturday Park proposals. |"),
     ],
     "fu-8-revival": [
         ("replace", "G4-no-wait",
@@ -39,6 +45,9 @@ EDITS = {
         ("replace", "G5-ft-row",
          "Silent 7 days after the offer, or after the fifth: the free feature offer once (decision 661).",
          "Silent 7 days after the offer, or after the fifth: the free feature offer once (decision 661); no reply 30 days after it: Park proposals for you."),
+        ("replace", "G5b-pending-row",
+         "| Free feature pending, they'll get back | Their mail | One check-in 7 days after it (decision 661) | Their reply |",
+         "| Free feature pending, they'll get back | Their mail | One check-in 7 days after it (decision 661) | Their reply. None 30 days after the check-in: Park proposals for you |"),
     ],
     "wording": [
         ("replace", "G6-title-1", "PROPOSED: Free feature offer: silent sponsored lead (FT)", "Free feature offer: silent sponsored lead (FT)"),
