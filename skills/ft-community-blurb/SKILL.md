@@ -47,7 +47,7 @@ His own edits to the 23 Nov drafts (the first section of examples.md, the newest
 - Short, plain sentences: "Despite the lower pricing, Leapswitch earns 50-60% margins."
 
 - **Length.** Let the examples set it. Most run 120 to 200 words.
-- **Name.** First mention is the full name followed by `(<LinkedIn URL> - @<first name>)`, e.g. `(https://www.linkedin.com/in/sakets - @Saket)`. Every member's WhatsApp handle starts with their first name, so Akshay's tag resolves from it.
+- **Name.** First mention is the full name followed by `(<LinkedIn URL> - @<first name>)`, e.g. `(https://www.linkedin.com/in/sakets - @Saket)`. Every member's WhatsApp handle starts with their first name, so Akshay's tag resolves from it. Call a founder simply "the founder of <company>", whatever their title (co-founder, CEO or both).
 - **Numbers.** Figures the guest gave on the call can go in as stated. They are self-reported, so say that in the notes, not in the blurb.
 - **No em dashes, ever.** Short varied sentences, contractions, specifics over generalities.
 
