@@ -59,7 +59,32 @@
       "mcp__Gmail__unlabel_message",
       "mcp__Gmail__label_message",
       "mcp__bluetick__chats_write",
-      "mcp__8c6368dd-abc2-4843-adc7-5224f8b6f399__chats_write"
+      "mcp__8c6368dd-abc2-4843-adc7-5224f8b6f399__chats_write",
+      "mcp__bluetick__chats_read",
+      "mcp__bluetick__utils",
+      "mcp__bluetick__groups",
+      "mcp__bluetick__contacts",
+      "mcp__MCPEmail__email_read",
+      "mcp__MCPEmail__email_compose",
+      "mcp__MCPEmail__draft",
+      "mcp__MCPEmail__draft_list",
+      "mcp__MCPEmail__draft_read",
+      "mcp__MCPEmail__inbox_list",
+      "mcp__MCPEmail__folder_list",
+      "mcp__Google_Calendar__create_event",
+      "mcp__Notion__notion-fetch",
+      "mcp__Notion__notion-search",
+      "mcp__Notion__notion-query-data-sources",
+      "mcp__Notion__notion-get-comments",
+      "mcp__Notion__notion-create-file-upload",
+      "mcp__Reach_MCP__list_accounts",
+      "mcp__Reach_MCP__get_account_quotas",
+      "mcp__Reach_MCP__scrape_profile",
+      "mcp__Reach_MCP__scrape_search",
+      "mcp__Reach_MCP__list_user_posts",
+      "mcp__Reach_MCP__list_page_posts",
+      "mcp__Reach_MCP__search_posts",
+      "mcp__Reach_MCP__scrape_post"
     ]
   }
 }
