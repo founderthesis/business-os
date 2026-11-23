@@ -15,6 +15,7 @@ Compose mode (decision 596). You compose; the day chat sends. So:
 - Don't make the AFTER SEND writes yourself: the day chat makes them when it sends.
 - Never write Engagement or People fields yourself (decision 609). For every change the prompt would make to a row without a send (a hold, block, nurture move, Park proposal line, Next action, Next date, Waiting on, Chase step, Claude note), create one Activity with Kind Note and Summary "Row change: <routine> <step> for <name>", with the Engagement linked. Its body holds "Read at: <the row's last edited time when you read it>" and the exact field writes. The day chat applies them. The run record is the only page you write directly.
 - Don't take the zoya-lock: you send nothing, and holding the lock would block the day chat's urgent replies.
+- Compose mode exempts nothing but sending. Every read-only and checking step still runs: the bounce scan (SLOW STEP 0c, each bounce tag a Row change Activity) and, on Mondays, STEP 0g's MONDAY NUMBERS in your run record (once a day: skip them if today's SLOW record already has them).
 - WhatsApp items: don't draft or send them. List them in the run record.
 - Capture only: where the prompt sends the ad@ loop-in (STEPS 6 to 6b), send nothing; put one line per loop-in in your report, "loop-in due: <row>, <name>, <the thread's latest Message-ID>". The day chat sends them.
 - Re-read a row before composing for it. Never access a team member's own computer. No em dashes.
