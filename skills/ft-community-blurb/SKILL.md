@@ -39,6 +39,13 @@ Akshay is the thought leader here, sharing his own take, not a reporter describi
 
 > When Ankur told me that Rio is a pharma quick comm business, I spent a lot of time pushing back: why wouldn't a Blinkit rule this market too, given they already have density and distribution? By the end of our conversation Ankur had changed my mind. You see, the consumer behaviour quick commerce runs on is totally different from how pharma retail works. For one, the consumer is not brand agnostic. They don't search for oat biscuits, they search for the specific brand their doctor prescribed. That means the basic quick commerce Pareto rule (20% of the assortment covers 80% of the demand) breaks. The business breaks if you don't stock the long tail.
 
+His own edits to the 23 Nov drafts (the first section of examples.md, the newest and the ones to weight most) show what he keeps:
+- One paragraph.
+- The hook or industry insight first, then the business, its model in plain words, and one or two numbers that show scale.
+- The founder's background only where it explains the business: Vishal looking for a gym, Sparsh's side project that hit PMF in three months. Earlier careers, schools and the platforms someone once worked on make way for the business.
+- What is true today. Plans, expansions and listing timelines stay out.
+- Short, plain sentences: "Despite the lower pricing, Leapswitch earns 50-60% margins."
+
 - **Length.** Let the examples set it. Most run 120 to 200 words.
 - **Name.** First mention is the full name followed by `(<LinkedIn URL> - @<first name>)`, e.g. `(https://www.linkedin.com/in/sakets - @Saket)`. Every member's WhatsApp handle starts with their first name, so Akshay's tag resolves from it.
 - **Numbers.** Figures the guest gave on the call can go in as stated. They are self-reported, so say that in the notes, not in the blurb.
