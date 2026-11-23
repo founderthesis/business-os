@@ -565,3 +565,38 @@ EDITS['inbox-actions.txt'] += [
 EDITS['inbox-capture.txt'].append((_F3b, "in every spelling older rows use: Source ID \"adid:<UID>\", \"allmail:<its MCP Emails id>\",",
     "in every spelling older rows use: Source ID \"adid:<UID>\", \"allmail:<its MCP Emails id>\", \"zoya:\", \"zoyaid:\" or \"mcpemails:\" followed by its MCP Emails id or its folder:UID,"))
 EDITS['inbox-capture.txt'].append((_F3b, "followed by its MCP Emails id or its folder:UID,", "followed by its MCP Emails id, its folder:UID or (zoyaid:) its bare UID,"))
+
+# Fix 4 (23 Nov, decisions 660, 661, 662).
+_F4 = 'F4-free-feature'
+EDITS['zoya-slow-work.txt'] += [
+    (_F4, "7 days after the offer with still no interest, a Founder Thesis row goes on the Park proposals (PARKED) and a un# row to Status Unresponsive, note \"YYYY-MM-DD: no sponsored interest (decision 618)\".",
+          "7 days after the offer with still no interest, a Founder Thesis row gets FREE FEATURE and a un# row Status Unresponsive, note \"YYYY-MM-DD: no sponsored interest (decisions 618, 661)\"."),
+    (_F4, "then at most one short warm check-in on the primary thread, then nothing unless they write; that row goes on the Park proposals (PARKED).",
+          "then at most one short warm check-in on the primary thread, then nothing unless they write; then a Founder Thesis sponsored lead gets FREE FEATURE, any other row the Park proposals (PARKED). A pending free feature (not money): one check-in 7 days after that mail instead."),
+    (_F4, "founders who wrote to us directly whose no was to the sponsored price, at most one mail a quarter and only with a new reason to write;",
+          "founders who wrote to us directly whose no was to the sponsored price, at most one mail a quarter, only FREE FEATURE's revival text, and only with a new reason to write;"),
+    (_F4, "PAUSES ON THEIR WORD (",
+          "FREE FEATURE (decisions 660, 661; Founder Thesis only). A sponsored lead silent 7 days after the offer, or after its fifth follow-up, gets the free feature offer once, never the Park proposals. Only the wording page's approved toggle for the case: one still PROPOSED is never sent, the step stays \"Zoya: free feature offer to <name> (wording awaiting Akshay)\" with its Zoya date. A yes: \"Feature interest: book the call with Akshay\". No reply: no chase.\nPAUSES ON THEIR WORD ("),
+    (_F4, "A decline gets the sponsored close note from the wording page, from your inbox in your voice and signed as you, once: not if the thread already shows it or a \"sponsored close\" Activity is on the row (the inbox hands these to you as \"Zoya: send the sponsored close note to <name>\", older rows \"Zoya: send Akshay's sponsored close note to <name>\").",
+          "The close note goes once, from your inbox in your voice: never if the thread shows it or a \"sponsored close\" Activity is on the row (the inbox hands it to you as \"Zoya: send the sponsored close note to <name>\")."),
+]
+EDITS['zoya-slow-work.txt'] += [
+    (_F4, " (CTO, 4 Nov: 8 such items on the 17:08 run left no note line)", ""),
+    (_F4, "(decisions 496, 535, 537; Akshay, 10 Nov: PaaS follow-ups 1 and 2 go on WhatsApp as him from the approved templates, and \"don't automate paas messages - propose the draft to me and I will finalise and check the box\")",
+          "(decisions 496, 535, 537: follow-ups 1 and 2 go on WhatsApp as Akshay, from the approved templates, only as drafts he ticks)"),
+]
+EDITS['zoya-slow-work.txt'] += [
+    (_F4, "COMMUNITY INVITE CHASE (decision 494, Akshay, 6 Nov).", "COMMUNITY INVITE CHASE (decision 494)."),
+    (_F4, "which keeps the thread (CTO, 22 Nov), and", "which keeps the thread, and"),
+    (_F4, "to the FT Community WhatsApp\" (Akshay, 5 Nov, item 14).", "to the FT Community WhatsApp\"."),
+]
+UPKEEP_EDITS += [
+    (_F4, "5, 6c, 7b, then STEP 7.", "5, 6c, 7b, 7c, then STEP 7."),
+    (_F4, "STEP 7. REPORT", "STEP 7c. PEOPLE LINKEDIN ENRICHMENT (decisions 659, 662). Read only: Reach MCP (ToolSearch \"+reach\"; missing: report \"step 7c: blocked: Reach not connected\" and go on). "
+          "1/ QUOTA FIRST: get_account_quotas. Today's budget is 35 reads a day across every agent (decision 662) less the reads already used today, and never more than the account's own remaining daily quota; 0: report \"step 7c: done 0 (quota)\" and stop. "
+          "2/ PICK, oldest relationship first, at most the budget: People rows with LinkedIn, Role or What they do blank who have a real relationship: FT guest ticked, In WhatsApp group ticked, an FT Community row, or an Engagement with an Email in Activity, a precall or a recording. Never a row whose only Engagements are cold outreach with no reply from them (untouched cold outreach stays out), never a team member (Tags Team), never a row with Tags \"No enrichment\". "
+          "3/ READ, one person at a time: the LinkedIn URL on the row, else scrape_search on name plus company confirmed by scrape_profile (same name, same company or a past one on the row; not certain: skip, note it in the report, read nothing more for them). "
+          "4/ WRITE only blank fields, never overwrite: LinkedIn, Role, What they do, City, Country; then Researched = today and one page-body line \"YYYY-MM-DD: LinkedIn via Reach (upkeep): filled <fields> (decision 662)\". Never a phone number or email from LinkedIn, never Tags, Blurb or Engagements. "
+          "5/ STOP AT ONCE on any LinkedIn verification, captcha, checkpoint, sign-in prompt, rate or quota error: no retry today, report \"step 7c: stopped: <what> after <n> reads\", and put one line for the CTO on the run record. "
+          "Report \"step 7c: done <n> read, <n> rows filled, <n> skipped (not certain), budget <b> of 35\".\nSTEP 7. REPORT"),
+]
