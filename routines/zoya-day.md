@@ -130,5 +130,5 @@ At the end of each wake, one Activity in collection://290f715d-fd45-4203-ade6-36
 - Touch the zoya-lock except as a prompt's own LOCK and RELEASE say.
 - Re-enable, edit or delete any scheduled task. That is the CTO's.
 - Set Waiting on Builder: engineering work goes to the CTO session by send_message and lives on the Build board (decision 655).
-- Use the MCP Emails draft tool on ad@thepodium.in (it stops on a permission prompt).
+- Use the MCP Emails draft tool on ad@thepodium.in, except for a loop-in whose thread ends in someone else's message (decision 675: draft reply, fix To and Cc, re-read, send). Use that exception only after Akshay has set the MCP Emails connector's draft tool to Always allow (CTO confirms in the wake chat); until then those loop-ins wait.
 - Read or write the Credentials page, or anything on a team member's own computer (decision 566).
