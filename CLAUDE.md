@@ -76,6 +76,10 @@ When Akshay asks what is pending on him, list his queue: Engagements rows with K
 
 Evals and dossiers are written by one engagement chat per guest, which the Zoya day chat starts and links in the Engagement's Claude chat field (decision 593, replacing the evals and dossier schedules); Akshay can open that chat for follow-ups. Every Eval link opens the show's Notion eval page inside the Engagement (decisions 160, 610 to 612; evals made before 18 Nov keep their claude.ai pages). Never render a page-body summary with routines/retired/make_eval.py; that tool is retired. Host dossiers are Notion pages under the Engagement in the layout of docs/dossier-notion-layout.md (decision 677, Akshay, 25 Nov); the Eval slots pool is retired and no new blank slot artifacts are published, because the claude.ai artifact cap (1,000) is full.
 
+## Skills (decision 680, Akshay, 26 Nov)
+
+GitHub is the one home of every skill: skills/<name>/SKILL.md. `.claude/skills` links to it, so any Claude Code session on this repo runs the latest version by name, with no upload. The claude.ai uploads are retired; never edit or rely on them. A skill changes only by a commit here. When Akshay corrects an output (a page comment, a feedback line, an edit to a draft), add the rule to that skill's "## Lessons" section (create it at the end if missing) as a dated line in his words with where he said it, and commit. Small wording or format rules go in directly; anything that changes a verdict, a price or who gets contacted goes to him first.
+
 ## Data and privacy
 
 - This repo is private, but still: no email addresses, phone numbers, WhatsApp or Telegram handles, or credentials in committed files. Real data lives in `data/`, which is git-ignored.
@@ -121,6 +125,6 @@ migration/           re-runnable Python: profile, clean, match, export
 routines/            prompts for each live scheduled agent (one file each)
   mac/               tasks that run on Akshay's Mac
   retired/           routines no longer running, kept for history
-skills/              versioned copies of the skills the content pack runs
+skills/              every skill, the only copy (decision 680); .claude/skills links here
 data/                raw and processed exports (git-ignored)
 ```

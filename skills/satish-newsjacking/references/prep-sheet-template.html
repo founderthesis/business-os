@@ -1,0 +1,238 @@
+<!--
+  PREP-SHEET TEMPLATE — Built to Share Newsjacking
+  ================================================
+  This is the canonical layout. Copy the <style> block VERBATIM. Follow the
+  structure element-for-element. The content below is a worked example (the
+  Zepto UDRHP prep sheet) so you can see each region filled correctly.
+
+  Regions to adapt per story:
+  - MASTHEAD: eyebrow stays "Built to Share · Newsjacking Prep". Headline =
+    the story in editorial voice. Standfirst = 2-3 sentences on what the filing
+    /event opens up and which beats it touches. Always end the standfirst with a
+    line that the angle is Satish's to write. Meta row = 3 quick facts.
+  - "What the news shows": one numbered .thread card per distinct thread in the
+    story (2-5 cards). Each has stat chips (the key numbers) + 1-2 short paras.
+  - Sensitive thread (regulator / investigation / allegation): use
+    class="thread flagged", add the <span class="flag-pill">Handle with care</span>,
+    and write the safe framing into the prose.
+  - "Scale" dark strip: OPTIONAL. Include only if there are good context numbers
+    (financials, valuation, scale metrics). Drop it if not relevant.
+  - "What to weigh before you write": a .lead line naming the non-obvious story,
+    one para drawing the herd-vs-operator contrast, an .callout (angle territory,
+    framed as a question, never answered), an amber .callout for factual flags,
+    and a dedup note line carried from Phase 2. NEVER write Satish's take here.
+  - "Sources": group the verified links by thread. Keep .pub / .ttl / .url.
+  - Footer: "Prep sheet for Satish Mugulavalli", compile date, the verify-before-
+    thumbnail reminder, and "podcast link goes in comments, not the post body".
+
+  No em-dashes in prose; use spaced hyphens. Mobile-first — test that it reads on
+  a narrow viewport.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Newsjacking Prep</title>
+<style>
+  :root{
+    --navy:#16243f;
+    --navy-soft:#2c3e5e;
+    --paper:#f6f2e9;
+    --card:#fffdf8;
+    --ink:#1c2230;
+    --ink-soft:#5b6276;
+    --accent:#cf4420;
+    --accent-wash:#f6e3da;
+    --flag:#a96a16;
+    --flag-bg:#fbf2dd;
+    --flag-rule:#e7c987;
+    --rule:#e4dcc9;
+    --display:"Iowan Old Style","Palatino Linotype","Palatino",Georgia,serif;
+    --body:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono:"SFMono-Regular","Roboto Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55;font-size:16px;}
+  .wrap{max-width:680px;margin:0 auto;padding:28px 20px 64px;}
+
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 14px;}
+  h1{font-family:var(--display);font-weight:700;font-size:30px;line-height:1.12;letter-spacing:-.01em;margin:0 0 12px;color:var(--navy);}
+  .standfirst{font-size:16.5px;color:var(--ink-soft);margin:0 0 18px;max-width:60ch;}
+  .meta-row{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);letter-spacing:.04em;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:10px 0;display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:30px;}
+  .meta-row b{color:var(--navy);font-weight:600;}
+
+  .sec-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin:34px 0 14px;display:flex;align-items:center;gap:10px;}
+  .sec-label::after{content:"";flex:1;height:1px;background:var(--rule);}
+
+  .thread{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--navy);border-radius:3px;padding:18px 18px 16px;margin-bottom:14px;}
+  .thread.flagged{border-left-color:var(--flag);background:var(--flag-bg);}
+  .thread-head{display:flex;align-items:baseline;gap:10px;margin-bottom:10px;}
+  .thread-no{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:600;flex:none;padding-top:2px;}
+  .thread h2{font-family:var(--display);font-size:20px;font-weight:700;line-height:1.2;margin:0;color:var(--navy);}
+  .thread.flagged h2{color:#6f4a12;}
+  .thread p{margin:0 0 10px;font-size:15.5px;}
+  .thread p:last-child{margin-bottom:0;}
+
+  .stats{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;}
+  .chip{background:var(--paper);border:1px solid var(--rule);border-radius:20px;padding:5px 12px;font-size:13px;white-space:nowrap;}
+  .chip b{font-family:var(--mono);color:var(--navy);font-weight:600;letter-spacing:-.01em;}
+  .flagged .chip{background:#fff;border-color:var(--flag-rule);}
+
+  .flag-pill{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--flag);padding:3px 9px;border-radius:3px;margin-bottom:10px;font-weight:600;}
+
+  .backdrop{background:var(--navy);color:#e9e3d4;border-radius:4px;padding:18px 18px 14px;margin-bottom:6px;}
+  .backdrop .sec-label{color:#9fb0cc;margin:0 0 12px;}
+  .backdrop .sec-label::after{background:#34466a;}
+  .backdrop .num-grid{display:flex;flex-wrap:wrap;gap:16px 22px;}
+  .num{flex:1 1 130px;min-width:120px;}
+  .num .v{font-family:var(--mono);font-size:18px;color:#fff;font-weight:600;line-height:1.1;}
+  .num .l{font-size:12.5px;color:#a9b6cd;margin-top:3px;}
+
+  .weigh p{font-size:15.5px;margin:0 0 12px;}
+  .weigh .lead{font-family:var(--display);font-size:18px;color:var(--navy);font-weight:600;line-height:1.3;margin-bottom:14px;}
+  .callout{border-left:3px solid var(--accent);background:var(--accent-wash);padding:14px 16px;border-radius:0 3px 3px 0;margin:0 0 14px;font-size:15px;}
+  .callout.amber{border-left-color:var(--flag);background:var(--flag-bg);}
+  .callout b{color:var(--navy);}
+  .callout.amber b{color:#6f4a12;}
+
+  .src-group{margin-bottom:16px;}
+  .src-group h3{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin:0 0 8px;}
+  .src{display:block;padding:11px 14px;background:var(--card);border:1px solid var(--rule);border-radius:3px;margin-bottom:7px;text-decoration:none;color:var(--ink);}
+  .src:active,.src:hover{border-color:var(--navy);}
+  .src .pub{font-size:12px;color:var(--accent);font-family:var(--mono);letter-spacing:.03em;display:block;margin-bottom:2px;}
+  .src .ttl{font-size:14.5px;color:var(--navy);font-weight:500;line-height:1.3;}
+  .src .url{font-size:11px;color:var(--ink-soft);word-break:break-all;margin-top:3px;font-family:var(--mono);}
+
+  .foot{margin-top:34px;padding-top:16px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink-soft);}
+  .foot b{color:var(--navy);}
+
+  @media (max-width:430px){
+    h1{font-size:25px;}
+    .wrap{padding:22px 16px 52px;}
+    .thread h2{font-size:18px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- MASTHEAD -->
+  <p class="eyebrow">Built to Share · Newsjacking Prep</p>
+  <h1>Zepto's IPO papers, and the ownership story inside them</h1>
+  <p class="standfirst">Zepto filed an updated DRHP on 8 June. Beyond the headline IPO size, the filing opens up four threads that sit squarely on your beat: a pre-IPO secondary, a founder cap table held mostly through trusts, large executive option grants, and an ED summons. Facts below are verified across Business Standard, Entrackr and ANI. Your view leads, this is only the ground.</p>
+  <div class="meta-row">
+    <span><b>Filed:</b> 8 Jun 2026 (public 9 Jun)</span>
+    <span><b>IPO:</b> ₹8,010 Cr fresh + OFS</span>
+    <span><b>Status:</b> Fresh — not previously posted</span>
+  </div>
+
+  <!-- WHAT THE NEWS SHOWS -->
+  <div class="sec-label">What the filing shows</div>
+
+  <div class="thread">
+    <div class="thread-head"><span class="thread-no">01</span><h2>A ₹577 Cr secondary, months before the IPO</h2></div>
+    <div class="stats">
+      <span class="chip"><b>₹577 Cr</b> total</span>
+      <span class="chip">Nexus VII <b>₹356 Cr</b></span>
+      <span class="chip">Kaiser <b>₹190 Cr</b></span>
+      <span class="chip">Razor <b>₹31 Cr</b></span>
+    </div>
+    <p>Motilal Oswal Financial Services bought roughly ₹577 crore of shares from existing investors in a secondary completed on 22 August 2025. Nexus Venture VII was the largest seller at about ₹356 crore, Kaiser Permanente Group Trust nearly ₹190 crore, and Razor Ventures around ₹31 crore.</p>
+    <p>Context worth holding: earlier in 2025, Zepto was already in talks for a ~$250 million secondary with the PE arms of Motilal Oswal and Edelweiss, framed openly as a way to lift Indian ownership before listing. This is a deliberate pre-IPO liquidity pattern, not a one-off.</p>
+  </div>
+
+  <div class="thread">
+    <div class="thread-head"><span class="thread-no">02</span><h2>Who actually owns Zepto</h2></div>
+    <div class="stats">
+      <span class="chip">Promoter group <b>19.56%</b></span>
+      <span class="chip">Palicha <b>1.07%</b></span>
+      <span class="chip">Vohra <b>0.89%</b></span>
+      <span class="chip">ESOP Trust <b>7.46%</b></span>
+    </div>
+    <p>On a fully diluted basis the promoter group holds 19.56%, but the two founders directly own only about 1.07% and 0.89%. The bulk sits in family trusts, Lazarus Trust at 9.03% and The Vohra Trust at 7.48%.</p>
+    <p>Among outside investors, Nexus leads at 13.12% combined, then Glade Brook 7.73%, the Zepto ESOP Trust 7.46%, StepStone 7.34%, LGF Scale's Mars funds 5.58%, and Y Combinator entities 5.03%.</p>
+  </div>
+
+  <div class="thread">
+    <div class="thread-head"><span class="thread-no">03</span><h2>Large option grants to the senior bench</h2></div>
+    <div class="stats">
+      <span class="chip">CFO Bafna <b>13.83 Cr</b></span>
+      <span class="chip">CBO Meel <b>5.19 Cr</b></span>
+      <span class="chip">CHRO Arora <b>2.13 Cr</b></span>
+      <span class="chip">Total pool <b>1.21 Bn</b></span>
+    </div>
+    <p>CFO Ramesh Bafna was allotted 13.83 crore options, one of the single largest grants in the plan. CBO Devendra Meel got 5.19 crore, CHRO Sneha Arora 2.13 crore, CPO Ankit Agrawal 1.32 crore, and CGO Divesh Sawhney 87.8 lakh.</p>
+    <p>Across the company there are more than 1.21 billion outstanding options, which makes the ESOP Trust one of Zepto's largest single shareholders.</p>
+  </div>
+
+  <!-- SENSITIVE THREAD: flagged treatment + safe framing written in -->
+  <div class="thread flagged">
+    <span class="flag-pill">Handle with care</span>
+    <div class="thread-head"><span class="thread-no">04</span><h2>An ED summons under FEMA</h2></div>
+    <p>The filing discloses that founders Aadit Palicha and Kaivalya Vohra received Enforcement Directorate summonses in April 2026 under FEMA. The agency sought information on foreign investments, overseas entities, shareholding structure, loans, guarantees and bank accounts.</p>
+    <p>Both founders appeared and submitted the requested documents. The prospectus records no finding of wrongdoing against the founders or the company. The safe framing is exactly that: summoned, complied, nothing alleged. Anything that reads as implying guilt is a real risk on a named, listing-bound company.</p>
+  </div>
+
+  <!-- OPTIONAL SCALE STRIP -->
+  <div class="backdrop">
+    <div class="sec-label">Scale, if you want to frame it</div>
+    <div class="num-grid">
+      <div class="num"><div class="v">₹5,905 Cr</div><div class="l">FY26 loss (up from ₹4,700 Cr)</div></div>
+      <div class="num"><div class="v">₹24,816 Cr</div><div class="l">FY26 Net Receivables Value</div></div>
+      <div class="num"><div class="v">210 Mn</div><div class="l">Q4 orders</div></div>
+      <div class="num"><div class="v">47.9 Mn</div><div class="l">Annual transacting users</div></div>
+      <div class="num"><div class="v">$7 Bn</div><div class="l">Oct 2025 valuation (CalPERS round)</div></div>
+      <div class="num"><div class="v">1,139</div><div class="l">Stores</div></div>
+    </div>
+  </div>
+
+  <!-- WHAT TO WEIGH — angle territory only, never the take -->
+  <div class="sec-label">What to weigh before you write</div>
+  <div class="weigh">
+    <p class="lead">The non-obvious story the herd is missing: who owns this company, and who gets liquidity, and when.</p>
+    <p>Most coverage is reading the secondary and the grants as a celebration, growth doubling, investors cashing in, the young-founder arc. The quieter read is the one only an operator makes. Founders holding around 2% directly with the rest in trusts. A CFO sitting on 13.83 crore options. A secondary that handed early investors cash well before the public ever got a look. That is a cap table and liquidity-sequencing story, which is your territory, not the growth-numbers story everyone else will run.</p>
+    <div class="callout">
+      <b>Angle territory (your call):</b> when a secondary clusters right before an IPO, is it reward for the journey, or the cap table getting tidied and de-risked ahead of public scrutiny? You can raise the question honestly without answering it for the reader.
+    </div>
+    <div class="callout amber">
+      <b>Two factual flags.</b> The ED line must stay on the "complied, no wrongdoing alleged" side. And the grant and ownership figures here come from the filing as reported by Business Standard and Entrackr, not yet read off the SEBI document itself, so confirm any number that lands on a thumbnail or in the post body.
+    </div>
+    <p><b>Dedup note:</b> Zepto appears in your 3 June post, but that was the Wonderchef quick-commerce story. The DRHP, the secondary, the grants and the ED angle are all untouched in your feed. This is clean.</p>
+  </div>
+
+  <!-- SOURCES — verified links, grouped by thread -->
+  <div class="sec-label">Sources</div>
+
+  <div class="src-group">
+    <h3>The filing</h3>
+    <a class="src" href="https://www.business-standard.com/markets/ipo/zepto-files-drhp-for-rs-10000-crore-ipo-first-qcom-only-listing-126060900099_1.html">
+      <span class="pub">Business Standard</span>
+      <span class="ttl">Zepto files DRHP for ~₹10,000 Cr IPO, first qcom-only listing</span>
+      <span class="url">business-standard.com/markets/ipo/zepto-files-drhp-...126060900099_1.html</span>
+    </a>
+    <a class="src" href="https://www.aninews.in/news/business/zepto-filed-updated-drhp-for-ipo-aiming-at-rs-8010-crore-fresh-equity-issue20260609081930/">
+      <span class="pub">ANI</span>
+      <span class="ttl">Updated DRHP: ₹8,010 Cr fresh issue, OFS detail, BRLM list</span>
+      <span class="url">aninews.in/news/business/zepto-filed-updated-drhp-...20260609081930</span>
+    </a>
+  </div>
+
+  <div class="src-group">
+    <h3>Ownership, ESOP grants and the ED summons</h3>
+    <a class="src" href="https://entrackr.com/news/zeptos-ipo-papers-reveal-rs-577-cr-secondary-deal-promoter-holdings-executive-esop-grants-and-ed-summons-12017019">
+      <span class="pub">Entrackr (fullest source)</span>
+      <span class="ttl">IPO papers reveal ₹577 Cr secondary, promoter holdings, executive ESOP grants and ED summons</span>
+      <span class="url">entrackr.com/news/zeptos-ipo-papers-reveal-rs-577-cr-secondary-deal-...-12017019</span>
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="foot">
+    <b>Prep sheet for Satish Mugulavalli.</b> Compiled 12 Jun 2026. Verify any figure used on a thumbnail or in the post body against the SEBI document before publishing. Podcast link goes in comments, not the post body.
+  </div>
+
+</div>
+</body>
+</html>
