@@ -29,6 +29,9 @@ Extract every name, URL, role, number and date before doing anything else. Pre-c
 
 ## Outputs
 
+> **Notion standard (decision 677, Akshay, 25 Nov 2026): this overrides the output format below.** The host dossier is a Notion page under the guest's Engagement, laid out exactly as docs/dossier-notion-layout.md says (model: the Akshay Bector FT dossier). Do not build or publish the dossier as HTML or an artifact. Everything below still governs research, content, voice, section substance and questions; only the format and delivery change. The guest prep note is unchanged.
+
+
 Two published pages and one markdown file. The two documents have different readers and different jobs, so they ship differently.
 
 1. **The host dossier, published as a page** with the Artifact tool. Dark theme, aarna teal on charcoal, jump links. The primary artefact.

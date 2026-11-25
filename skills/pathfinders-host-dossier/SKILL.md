@@ -34,6 +34,9 @@ A guest name alone is a complete input. Extract every name, role, company and da
 
 ## Outputs
 
+> **Notion standard (decision 677, Akshay, 25 Nov 2026): this overrides the output format below.** The host dossier is a Notion page under the guest's Engagement, laid out exactly as docs/dossier-notion-layout.md says (model: the Akshay Bector FT dossier). Do not build or publish the dossier as HTML or an artifact. Everything below still governs research, content, voice, section substance and questions; only the format and delivery change. The guest prep note is unchanged.
+
+
 **Two files**, generated at the end of the run, after the research is done:
 
 1. **Host Dossier (HTML)**: `<lastname>_pathfinders_dossier.html`. The five-section dossier Divir reads before recording.

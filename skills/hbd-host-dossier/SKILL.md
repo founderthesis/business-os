@@ -98,6 +98,9 @@ If a prior version of a brief exists, treat the newest as controlling and say ex
 
 ## Outputs
 
+> **Notion standard (decision 677, Akshay, 25 Nov 2026): this overrides the output format below.** The host dossier is a Notion page under the guest's Engagement, laid out exactly as docs/dossier-notion-layout.md says (model: the Akshay Bector FT dossier). Do not build or publish the dossier as HTML or an artifact. Everything below still governs research, content, voice, section substance and questions; only the format and delivery change. The guest prep note is unchanged.
+
+
 Generated in Phase 2 only, into `/mnt/user-data/outputs/`:
 
 1. **Host Rundown (HTML)**: `<Lastname>_HBD_Rundown.html`. The reading and recording surface. Spec in `references/rundown-spec.md`. White background, dark text, one accent colour, never a dark theme.

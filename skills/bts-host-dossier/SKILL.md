@@ -41,6 +41,9 @@ Extract every name, role, company, recent round, and concrete data point before 
 
 ## Outputs
 
+> **Notion standard (decision 677, Akshay, 25 Nov 2026): this overrides the output format below.** The host dossier is a Notion page under the guest's Engagement, laid out exactly as docs/dossier-notion-layout.md says (model: the Akshay Bector FT dossier). Do not build or publish the dossier as HTML or an artifact. Everything below still governs research, content, voice, section substance and questions; only the format and delivery change. The guest prep note is unchanged.
+
+
 **Two files**, generated at the end of the run, after the research is done:
 
 1. **Host Dossier (HTML)** — `/mnt/user-data/outputs/<lastname>_dossier.html` — The five-section dossier Satish reads before recording. Warm editorial aesthetic. The guest's **story leads** (chronological journey); industry data is the bridge; angles follow the journey; a clickable Sources section closes it.

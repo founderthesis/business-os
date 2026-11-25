@@ -64,6 +64,9 @@ Mine every upload FIRST, same as anything found via Stage 0's Drive/Gmail search
 
 ## Outputs
 
+> **Notion standard (decision 677, Akshay, 25 Nov 2026): this overrides the output format below.** The host dossier is a Notion page under the guest's Engagement, laid out exactly as docs/dossier-notion-layout.md says (model: the Akshay Bector FT dossier). Do not build or publish the dossier as HTML or an artifact. Everything below still governs research, content, voice, section substance and questions; only the format and delivery change. The guest prep note is unchanged.
+
+
 1. **Host Dossier (HTML)** — `/mnt/user-data/outputs/<lastname>_ft_dossier.html` — **dark mode**: dark background, light text, one accent colour, a second accent for flags, sticky in-page nav, visual stat strip and career timeline. No light/white theme.
 2. **Guest Prep Note (HTML)** — `/mnt/user-data/outputs/<lastname>_ft_guest_prep.html` — ~400 words, branded, warm, first-person Akshay. Base: `references/guest-prep-template.html`.
 
