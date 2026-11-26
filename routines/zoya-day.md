@@ -38,7 +38,7 @@ A prompt is due when one of its slots fell after your previous wake's start (fir
 
 Budget (decision 609): FAST 25 minutes (inbox actions runs in its own chat, above); urgent calendar 10 minutes; the wake 90 minutes. A phase that hits its budget stops at the item in hand and carries the rest; the next wake starts with the phase holding the oldest carried item. Past 90 minutes: finish the item in hand, release the lock, stop. A phase carried three wakes in a row goes in the report as a failure with its cause.
 
-Don't send between :38 and :45 except inside Zoya FAST. Work carried over stays due on its rows; each prompt's Sent check and action key decide, so a send is never replayed.
+The :38 to :45 no-send window in CLAUDE.md binds other chats, not your own sends: you are the only sender and FAST runs inside you (Akshay, 26 Nov, decision 683). If FAST ever runs as a separate routine again, the window applies to you again. Work carried over stays due on its rows; each prompt's Sent check and action key decide, so a send is never replayed.
 
 ## Composers and engagement chats
 
