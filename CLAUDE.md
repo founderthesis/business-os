@@ -78,7 +78,7 @@ Evals and dossiers are written by one engagement chat per guest, which the Zoya 
 
 ## Skills (decision 680, Akshay, 26 Nov)
 
-GitHub is the one home of every skill: skills/<name>/SKILL.md. `.claude/skills` links to it, so any Claude Code session on this repo runs the latest version by name, with no upload. The claude.ai uploads are retired; never edit or rely on them. A skill changes only by a commit here. When Akshay corrects an output (a page comment, a feedback line, an edit to a draft), add the rule to that skill's "## Lessons" section (create it at the end if missing) as a dated line in his words with where he said it, and commit. Small wording or format rules go in directly; anything that changes a verdict, a price or who gets contacted goes to him first.
+GitHub is the one home of every skill: skills/<name>/SKILL.md. `.claude/skills` links to it, so any Claude Code session on this repo runs the latest version by name, with no upload. The claude.ai uploads are retired; never edit or rely on them. A skill changes only by a commit here. When Akshay corrects an output (a page comment, a feedback line, an edit to a draft), add the rule to that skill's "## Lessons" section (create it at the end if missing) as a dated line in his words with where he said it, and commit. Small wording or format rules go in directly; anything that changes a verdict, a price or who gets contacted goes to him first. Ranjita's chats may propose skill edits too (decision 682): they send a diff to the CTO, a one-shot Cleanup chat checks it for clashes, and the CTO commits it if clear or tells her the clash (docs/skill-edit-review.md).
 
 ## Data and privacy
 
