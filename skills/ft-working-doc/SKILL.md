@@ -34,11 +34,19 @@ them; never inline or paraphrase their rules here.
    each copy tab can use. Tracxn figures are cited "Source: Tracxn" (decision 532).
 4. **Episode link**: use `[episode link]` until the episode is live.
 
-## No checkpoints
+## One checkpoint: the newsletter theme
 
-Run every tab in one pass. Where a skill asks for a pick (a theme, a voice), take
-the recommended option, say so in the Overview, and carry on. Ranjita reviews the
-finished doc with comments; nothing waits on an answer mid-run.
+Run every tab in one pass. Where a skill asks for a pick (a voice, a post option),
+take the recommended option, say so in the Overview, and carry on. Ranjita reviews
+the finished doc with comments.
+
+The one exception is the LI newsletter theme (Ranjita, 19 Nov; ft-newsletter v5).
+Write `ft-newsletter`'s 3 to 4 theme options, with a ★ pick, into tab 6 under
+"Pick a theme" (the long-form ideas from `ft-episode-themes` can feed them). Send
+the options to whoever started the run (the requesting chat, or Ranjita in chat)
+and wait for her pick. Never pick the newsletter theme yourself. While waiting,
+finish tabs 1 to 5 and 7 and fact-check them in tab 8. After her pick, run
+`ft-newsletter` in full into tab 6, then fact-check tab 6.
 
 ## The tabs, in this order
 
@@ -49,13 +57,13 @@ finished doc with comments; nothing waits on an answer mid-run.
 | 3 | AD release post | `ft-linkedin-post` (release post variant) | Three short options to go out with the trailer |
 | 4 | Guest posts | `ft-linkedin-post` (guest variant) | Type 1 repost captions A, B, C paired with release options 1 to 3, and D for any; Type 2 a standalone post with the trailer attached; instructions for the guest on each; alternates |
 | 5 | Guest company posts | `ft-linkedin-post` (company variant) | The same two types for the company page, with instructions for the page admin |
-| 6 | LI newsletter | `ft-episode-themes` for the ideas | A "Your deep dive" section left blank for Ranjita, then deep-dive ideas. When asked to draft, run `ft-newsletter` |
+| 6 | LI newsletter | `ft-newsletter` (v5) | "Your deep dive" left blank for Ranjita, then "Pick a theme" (3 to 4 options, ★ pick), then after her pick the draft, the number check, thumbnail lines and promo plugs |
 | 7 | Substack article | `ft-substack-article` | Ready to publish, with only the title left to pick |
 | 8 | Fact-check | `fact-check` | Every claim in tabs 2 to 7, its transcript timestamp or source, and the verdict |
 
 Run `ft-episode-themes` once and split its output: themes best suited to a
 LinkedIn post become the post ideas in tab 2; themes best suited to 1,000+ words
-become the deep-dive ideas in tab 6. There is **no Themes tab** and **no Decisions
+feed the newsletter theme options in tab 6. There is **no Themes tab** and **no Decisions
 log tab**: decisions go in the plan doc's log.
 
 ## Not in the copy doc
@@ -110,3 +118,7 @@ directly.
 - **Publish nothing, send nothing.** This produces copy. A human ships it.
 - If a stage's skill is unavailable, say which one and continue with the rest
   rather than substituting your own version of its rules.
+
+## Lessons
+
+- 2026-11-26: the newsletter theme is Ranjita's pick, never the run's; the doc stops only for that (Ranjita, 19 Nov decision, via the Episode copywriter chat, 26 Nov).
