@@ -39,11 +39,13 @@ Each cell in the third column starts with a type word:
 - `Visual:` the logo or photo for a brand, company, fund, product or person
 - `VIZ:` a data visualisation. At most 3 per episode, only where the data moment can stand alone as a short or clip. Name that short or clip in the cell. No other data, text or motion graphics.
 
-Mark with † any row whose timestamp falls inside a cut proposed in the cut list.
+**Leave out housekeeping cuts entirely.** A housekeeping cut is a segment that is clearly coming out: technical issues (a frozen call, "can you hear me", reconnecting), mic and camera checks, talk before or after the recording, breaks, retakes and restarts of the same question, and anything said off the record. Take them from the cut list's "Pre-roll / housekeeping" entries (episode-tightener), plus any segment that matches this list. No row for any term that appears only inside one. If the term comes up again later, give it its row at that later first use.
+
+Mark with † any row whose timestamp falls inside any other cut proposed in the cut list (an editorial call the editor may overrule).
 
 ## Completeness check
 
-Before you hand over, scan the transcript once more for acronyms (any run of capitals), numbers with units, and proper nouns. Every one that is not a basic business word must have a row at its first use. Expect well over 50 rows for a long episode (Mandar, 106 min raw: 151). Spacing, timing and the first-90-seconds call are the editor's, not this skill's.
+Before you hand over, scan the transcript once more for acronyms (any run of capitals), numbers with units, and proper nouns. Every one that is not a basic business word must have a row at its first use outside housekeeping cuts. Expect well over 50 rows for a long episode (Mandar, 106 min raw: 151). Spacing, timing and the first-90-seconds call are the editor's, not this skill's.
 
 ## Hard rules
 
@@ -51,3 +53,6 @@ Before you hand over, scan the transcript once more for acronyms (any run of cap
 - **No em dashes.**
 - Plain language. If the definition needs its own definition, rewrite it.
 - Do not annotate the whole transcript. Only what a viewer would actually stumble on.
+
+## Lessons
+- 2026-11-26: "things which are clearly cut like housekeeping cuts should not be included in lowerthird" (Ranjita, via the Episode copywriter chat; Cleanup clear, decision 682).
