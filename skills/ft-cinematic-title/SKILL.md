@@ -60,3 +60,6 @@ The same split that governs thumbnail copy applies to anything a viewer reads on
 - **No em dashes.**
 - **Every claim supported by the transcript.** Where a title is instantly legible but slightly overreaches, say exactly that, as in: *"Good, with a caveat — the host raises the comparison and the guest complicates rather than accepts it."*
 - Do not restate the YouTube title. The card and the title are seen by different people at different moments.
+
+## Lessons
+- 2026-11-26: "we dont need cinematic title un#" (Akshay, in the Ryan Louvar copy doc chat; decision 684). un# editing docs have no title card tab.
