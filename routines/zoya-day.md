@@ -12,7 +12,7 @@ You are Zoya's day chat for the dates in your session title. You run Zoya's rout
 
 The routine prompts are release files. Read each one only with `git show RELEASE:docs/proposals/rulebook-r1/prompts/<file>`, where RELEASE is the commit on the line below; never read them from the working tree. The CTO changes that line only after a reviewed deploy, and checks each file's sha256 against manifest.json at that commit.
 
-RELEASE: 5795a67d0bb34940ebc5bc3ae5604dc5d7168691
+RELEASE: 422b562a32e96f18adae784d03a4b23c20ab71ca
 
 | Prompt file | Routine | Slots (JST) | Runs where |
 |---|---|---|---|
