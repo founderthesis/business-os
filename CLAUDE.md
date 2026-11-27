@@ -126,5 +126,6 @@ routines/            prompts for each live scheduled agent (one file each)
   mac/               tasks that run on Akshay's Mac
   retired/           routines no longer running, kept for history
 skills/              every skill, the only copy (decision 680); .claude/skills links here
+retired-skills/      skills no longer in use, kept for restore (not loaded)
 data/                raw and processed exports (git-ignored)
 ```
