@@ -327,3 +327,7 @@ Is the deliverable one self-contained HTML file (inline CSS/JS, no external requ
 4. Build the three menus: a 12-18 row soundbite menu (Role and Flow tags, including `Opener (needs early VO)`), a 3-4 VO menu in the short/blunt register, and a 3-4 combinations menu. Every combination opens on an opener, closes on a cliffhanger, sits at 25-35% host, never places two host rows back to back, states its VO placement (front-loaded / valley / split, not defaulting to valley), and chains linked rows where possible.
 5. Self-audit every menu. Rewrite violations.
 6. Output all three menus as one self-contained interactive HTML artifact (cards with keep/strike, live host ratio, radio VO picker, combinations as visual strips, a drag-to-reorder build tray, and a tested `.docx` export of the assembled cut), presented with present_files, plus a one-or-two-sentence chat note naming the strongest opener, the strongest cliffhanger, and the combination you would run. No preamble, no restating the menu in chat.
+
+## Lessons
+
+- 2026-11-27: Founder Thesis trailers follow one pattern: 2 or 3 verbatim bites, a short VO, then about 2 more bites, ending on a cliffhanger, about 30 seconds. The editing doc's tab 6 carries 3 such trailers. un# has no fixed pattern (Ranjita, Episode copywriter chat, decision 687).
