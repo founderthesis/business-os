@@ -171,3 +171,7 @@ Tell the user, plainly:
 - That the last step — hitting **Publish** — is theirs.
 
 Then stop and let them review.
+
+## Lessons
+
+- 2026-11-27 (Akshay with Ranjita, call 27 Nov 20:10 JST): every title carries the founder's name and the company name (SEO). Add imagery: license-free images or an image prompt showing the product in real life (e.g. an EV auto with the Fyn Mobility logo), never a dry text-only post. The preview image must be the right size; to get one, give Claude a previous thumbnail as the example and ask for the prompt. Ranjita decides keep or cut on anything sensitive or off the record. No editing inputs from the guest before publishing (decision 645).

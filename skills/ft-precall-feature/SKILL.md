@@ -118,3 +118,7 @@ Go through this list and fix anything that fails. Report the result in one line 
 ## Output
 
 Return the Markdown (feature, then SOURCES, then GAPS) in chat or write it to the file path you were given. Do not publish it, upload it, post it, mail it, or write it to Notion; the person who ran the skill hands it to Ranjita, who publishes it on founderthesis.com after review. If the founder later asks for changes, Akshay decides; facts the founder adds by mail still need a source line saying where they came from, and new facts beyond corrections need a call.
+
+## Lessons
+
+- 2026-11-27 (Akshay with Ranjita, call 27 Nov 20:10 JST): every title carries the founder's name and the company name (SEO). Add imagery: license-free images or an image prompt showing the product in real life (e.g. an EV auto with the Fyn Mobility logo), never a dry text-only post. The preview image must be the right size; to get one, give Claude a previous thumbnail as the example and ask for the prompt. Ranjita decides keep or cut on anything sensitive or off the record. No editing inputs from the guest before publishing (decision 645).
