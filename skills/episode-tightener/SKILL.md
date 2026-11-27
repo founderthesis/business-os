@@ -19,6 +19,20 @@ description: >-
 
 # Episode Tightener
 
+**un# only (decision 688):** for un#, the editorial direction below overrides this skill's un# notes.
+
+## un# editorial direction (decision 688, Akshay for Sri, 27 Nov 2026). Read first: it overrides anything below.
+
+un# is a show about onchain finance: traditional finance embracing new rails. aarnâ is moving in a regulated direction and un# supports that journey, so nothing Sri puts out on un# should make a regulator uncomfortable.
+
+- **Words we never write** in anything published or read on air (titles, thumbnails, captions, posts, newsletters, show notes, trailers, intros, VO, dossier questions): "crypto", "DeFi", "Web3", "altcoin", "memecoin", "degen", "token launch". "DeFi" has a different vibe from where the show is going, so it goes too.
+- **Words we use:** onchain finance, tokenization, real-world assets (RWAs), stablecoins, digital assets, onchain capital markets, programmable finance, settlement infrastructure. A named asset or protocol (Bitcoin, a stablecoin, a tokenized fund) can be named as a fact when the episode is about it.
+- **The frame:** TradFi embracing onchain rails. Institutions, regulated products, market structure, compliance, capital formation. Not crypto insiders talking to crypto insiders.
+- **Nothing a regulator would flinch at:** no price predictions or targets, no token promotion, no yield claims, nothing that reads as investment advice, no hype for unregistered products. A guest's market view is reported as theirs, never endorsed.
+- **When a guest says "crypto" or "DeFi" on tape:** prefer bites and quotes that don't use the words; keep them only inside a verbatim quote whose point needs them; never carry them into a title, thumbnail, caption, overlay or summary line. Paraphrase in onchain terms.
+- **Test before anything ships:** would a SEBI, RBI or MAS officer reading or hearing this be comfortable? If not, rewrite it.
+
+
 Judge what to cut from a podcast episode so it plays tighter without losing what makes it worth hearing. This skill is a **thoughtful editor**, not a length-target optimizer. Its whole value is judgment: knowing the difference between fat and payload, and protecting the payload even when there is pressure to keep cutting.
 
 This skill is shared across the 4 podcasts in the network. The judgment principles are universal; the only per-podcast difference is what counts as "payload" (see Step 1).
@@ -48,7 +62,7 @@ Most length-editing fails in one of two ways: it cuts evenly (relentless, no rhy
 Identify which of the 4 shows this is (from the host name, the intro, or ask if unclear). The show determines what counts as **payload** — the material to protect:
 
 - **Founder Thesis (Akshay Datt)** — payload is the operator mechanics: how the business actually works, unit economics, the hard decisions, the numbers woven into story. Setup/compressible: childhood, early career throat-clearing, well-known company backstory.
-- **un# (Sri Misra)** — payload is the structural thesis: the institutional/DeFi argument, the contrarian take, the live market example, the "where this goes" vision. Setup/compressible: academic origin stories, biography the audience already knows, housekeeping.
+- **un# (Sri Misra)** — payload is the structural thesis: the institutional onchain-finance argument, the contrarian take, the live market example, the "where this goes" vision. Setup/compressible: academic origin stories, biography the audience already knows, housekeeping.
 - **Built to Share (Satish Mugulavalli)** — payload is the ownership/culture insight: the unraveling of how a leader thinks, the turning-point story. Setup/compressible: resume recitation, generic context-setting.
 - **Human by Design (Arjun Jain)** — payload is the research/AI substance: the technical argument, the implications, the distinctive claim. Setup/compressible: institutional affiliations, generic intros.
 

@@ -1,9 +1,21 @@
 ---
 name: "un-dossier"
-description: "Build the pre-interview prep pack for a guest going on un# (Unhashed), Sri Misra's crypto podcast. Trigger on \"un-dossier\" plus a guest name, LinkedIn URL, company or backgrounder. Two phases with a hard STOP for Grok research, then a dark host dossier published as a page with a markdown copy Sri can mark up, and a link-only guest prep note carrying a conversation outline. Ends by logging the Dossier link on the guest's Engagement in the Business OS (Notion)."
+description: "Build the pre-interview prep pack for a guest going on un# (Unhashed), Sri Misra's onchain finance podcast. Trigger on \"un-dossier\" plus a guest name, LinkedIn URL, company or backgrounder. Two phases with a hard STOP for Grok research, then a dark host dossier published as a page with a markdown copy Sri can mark up, and a link-only guest prep note carrying a conversation outline. Ends by logging the Dossier link on the guest's Engagement in the Business OS (Notion)."
 ---
 
 # un-dossier
+
+## un# editorial direction (decision 688, Akshay for Sri, 27 Nov 2026). Read first: it overrides anything below.
+
+un# is a show about onchain finance: traditional finance embracing new rails. aarnâ is moving in a regulated direction and un# supports that journey, so nothing Sri puts out on un# should make a regulator uncomfortable.
+
+- **Words we never write** in anything published or read on air (titles, thumbnails, captions, posts, newsletters, show notes, trailers, intros, VO, dossier questions): "crypto", "DeFi", "Web3", "altcoin", "memecoin", "degen", "token launch". "DeFi" has a different vibe from where the show is going, so it goes too.
+- **Words we use:** onchain finance, tokenization, real-world assets (RWAs), stablecoins, digital assets, onchain capital markets, programmable finance, settlement infrastructure. A named asset or protocol (Bitcoin, a stablecoin, a tokenized fund) can be named as a fact when the episode is about it.
+- **The frame:** TradFi embracing onchain rails. Institutions, regulated products, market structure, compliance, capital formation. Not crypto insiders talking to crypto insiders.
+- **Nothing a regulator would flinch at:** no price predictions or targets, no token promotion, no yield claims, nothing that reads as investment advice, no hype for unregistered products. A guest's market view is reported as theirs, never endorsed.
+- **When a guest says "crypto" or "DeFi" on tape:** prefer bites and quotes that don't use the words; keep them only inside a verbatim quote whose point needs them; never carry them into a title, thumbnail, caption, overlay or summary line. Paraphrase in onchain terms.
+- **Test before anything ships:** would a SEBI, RBI or MAS officer reading or hearing this be comfortable? If not, rewrite it.
+
 
 Pre-interview prep for Sri Misra, host of un#. Two jobs, and the skill fails if it does either badly.
 
@@ -164,6 +176,37 @@ Before any theme is written:
 - Anything you cannot verify either gets left out or gets hedged inside the sentence ("reported at", "he has put it as high as")
 - **A quote block contains verbatim text only.** If you are summarising, write it as prose. A paraphrase formatted as a quote is a fabrication, and it is worse here than usual because Sri will read it out
 - **A figure nobody can source gets dropped, not hedged.** If the Grok pass reports that a number cannot be found, it does not go in the dossier in any form, and no theme is built on it. This has already happened once: a Pathy dossier built a whole theme on a "$12B annualized volume" post that does not appear to exist, while the company's own comms had been repeating $5B unchanged for six months. The unchanged number was the better question. When a claimed figure evaporates, look at what the surviving numbers actually say
+
+## Sri's brief format (Sri, Arthur Hayes brief, 25 Nov 2026; supersedes "Dossier structure" below where they differ)
+
+Sri rewrote the Arthur Hayes dossier into his own "Host and production brief" and shared it on Slack as the model. After that recording he said our dossier "read as a good research piece but not as talking points" and missed out-of-the-box topics (agentic commerce, how agents actually work). So the dossier is now a brief Sri can run a 60-minute conversation from, not a research file. Research still happens (Phase 1); it shows up inside the questions, not as prose around them.
+
+**Page 1, editorial direction.**
+- A provocative title question as the episode's frame ("Has crypto failed?" was his; under decision 688 write it in onchain terms, e.g. "Is TradFi absorbing onchain finance?").
+- A one-line subtitle thesis ("From the casino to programmable finance") and a short paragraph on why the question is live now.
+- The objective in one line: a founder-to-founder conversation about incentives, financial infrastructure and where capital goes, "rather than another interview about price targets or a product tour".
+- Run of show: 5 or 6 acts with minute ranges adding to 60 (00 to 08, 08 to 18, ...), each a short title.
+- "In the chair": 2 or 3 lines of host craft for this guest (lead with a provocative premise, listen, press on the implication; treat follow-ups as options, not a checklist; protect the final act from a long detour).
+
+**Each act, one page.** Act number, minutes, a title and a three-to-five-word tagline. Then:
+- **Opening / Main question:** written out in full in Sri's spoken voice, long and conversational, with the current hook in it. This is the line he actually says.
+- **Named follow-up angles:** 3 to 5 short labelled blocks ("FOLLOW THE IDEA", "HIS OWN LEGACY", "INCENTIVE DESIGN", "VALUE ACCRUAL", "INSTITUTIONAL CAPTURE"), each one or two questions.
+- **"DO NOT SKIP"** on the one question the act exists for, when there is one.
+- **Host lens / Host note:** one or two lines on what to listen for, what to avoid, or how to use an example ("use the India example as an illustration, not a company pitch").
+- **Verify flags inline:** any number or event that must be checked before it is said goes in the act, in one line ("confirm the valuation and dilution basis before quoting a number").
+- **Read:** the guest's own essays, posts or papers that the act draws on, by title.
+
+**Sri's own thesis belongs in the brief.** He brings a point of view (tokenization makes assets programmable, agentic AI makes decisions programmable; Indian performing private credit that global capital can't reach). Build acts that let him put it to the guest and test it.
+
+**One forward-looking, out-of-the-box act, always,** placed last and protected: where the guest's world goes next, beyond the obvious (agentic commerce and agentic finance, how agents actually transact, machine-native capital markets, who controls autonomous capital). This is what Sri said was missing.
+
+**Reserve questions:** a page of 3 to 5 uncomfortable questions to use once the conversation has a rhythm (talking your book, financial extraction, the bear case on the guest's own thesis). Keep them regulator-safe under decision 688: hard on incentives, never a call on a price or a token.
+
+**Pre-recording checks:** a short list of every fact, date, quote and number to reverify the morning of the recording, plus any technical distinction Sri should not blur (e.g. unlocks raise tradable supply but don't dilute ownership).
+
+**Host card, last page:** ten questions to keep in front of him, one per line, each with a two-to-four-word label, ending on "What is the one thing about the next decade most intelligent people are getting wrong?" and the final follow-up "What is the biggest thing you yourself could be wrong about?"
+
+The theme spec, question grammar, crystallisation and press ladder below still apply inside each act: they are how the questions get written. The intro VO still ships at the end.
 
 ## Dossier structure
 
@@ -551,3 +594,8 @@ Sri's own fear about his show, stated 6 March 2026, is the standard the dossier 
 > "is it boring content? I might be finding it very exciting to talk to someone else who is in the same boat as me and going into stuff which we both enjoy talking about. So we are both happy but the audience is not. Those are all lost opportunities then."
 
 A dossier that only helps two insiders enjoy themselves has failed. Every theme should be something a smart outsider would want to hear the answer to.
+
+## Lessons
+
+- 2026-11-25: our Arthur Hayes dossier "read as a good research piece but not as talking points" and missed out-of-the-box topics like agentic commerce (Sri, after the recording; meeting notes 42319a301a7f802e94c2c9f494f0348c). Fixed by "Sri's brief format" above.
+- 2026-11-27: build every brief in Sri's format from his Arthur Hayes brief on Slack (#unhashed_podcast, 25 Nov), and in the decision 688 vocabulary (Akshay).

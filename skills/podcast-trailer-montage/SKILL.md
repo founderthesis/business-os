@@ -19,6 +19,20 @@ description: >-
 
 # Podcast Trailer Montage
 
+**un# only (decision 688):** for un#, the editorial direction below overrides this skill's un# notes.
+
+## un# editorial direction (decision 688, Akshay for Sri, 27 Nov 2026). Read first: it overrides anything below.
+
+un# is a show about onchain finance: traditional finance embracing new rails. aarnâ is moving in a regulated direction and un# supports that journey, so nothing Sri puts out on un# should make a regulator uncomfortable.
+
+- **Words we never write** in anything published or read on air (titles, thumbnails, captions, posts, newsletters, show notes, trailers, intros, VO, dossier questions): "crypto", "DeFi", "Web3", "altcoin", "memecoin", "degen", "token launch". "DeFi" has a different vibe from where the show is going, so it goes too.
+- **Words we use:** onchain finance, tokenization, real-world assets (RWAs), stablecoins, digital assets, onchain capital markets, programmable finance, settlement infrastructure. A named asset or protocol (Bitcoin, a stablecoin, a tokenized fund) can be named as a fact when the episode is about it.
+- **The frame:** TradFi embracing onchain rails. Institutions, regulated products, market structure, compliance, capital formation. Not crypto insiders talking to crypto insiders.
+- **Nothing a regulator would flinch at:** no price predictions or targets, no token promotion, no yield claims, nothing that reads as investment advice, no hype for unregistered products. A guest's market view is reported as theirs, never endorsed.
+- **When a guest says "crypto" or "DeFi" on tape:** prefer bites and quotes that don't use the words; keep them only inside a verbatim quote whose point needs them; never carry them into a title, thumbnail, caption, overlay or summary line. Paraphrase in onchain terms.
+- **Test before anything ships:** would a SEBI, RBI or MAS officer reading or hearing this be comfortable? If not, rewrite it.
+
+
 Assemble an episode trailer from **verbatim audio soundbites** plus **one host-voiced VO**. The trailer plays as a promo (LinkedIn, YouTube intro, social cut) and as the cold open before the episode proper. This skill is shared across the 4 podcasts in the network.
 
 ## What this skill is NOT
@@ -84,7 +98,7 @@ The 4 podcasts in the network:
 | Podcast | Host | Topic | Reference file |
 |---|---|---|---|
 | Founder Thesis | Akshay Datt | Indian startup founders | `references/founder-thesis.md` |
-| un# | Sri Misra | Crypto, DeFi, CeFi, Web3 | `references/unhashed.md` |
+| un# | Sri Misra | Onchain finance, tokenization, RWAs, stablecoins (never "crypto" or "DeFi" on air, decision 688) | `references/unhashed.md` |
 | Built to Share | Satish Mugulavalli | Talent wars, team building | `references/built-to-share.md` |
 | Human by Design | Arjun Jain | AI builders and production reality | `references/human-by-design.md` |
 
@@ -331,3 +345,4 @@ Is the deliverable one self-contained HTML file (inline CSS/JS, no external requ
 ## Lessons
 
 - 2026-11-27: Founder Thesis trailers follow one pattern: 2 or 3 verbatim bites, a short VO, then about 2 more bites, ending on a cliffhanger, about 30 seconds. The editing doc's tab 6 carries 3 such trailers. un# has no fixed pattern (Ranjita, Episode copywriter chat, decision 687).
+- 2026-11-27: un# trailers use the same approach as the Founder Thesis pattern (verbatim guest bites, about 30 seconds, ending on a cliffhanger) but we never write a VO: Sri records his own. Build the trailer from the guest bites plus pieces of Sri's recorded intro VO, split between the bites and not necessarily used in full; name each VO piece by its timestamp in his recording. No "crypto" or "DeFi" bites where another bite works (Akshay, decision 688).

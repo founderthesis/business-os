@@ -5,7 +5,7 @@ description: >-
   in the Editorial Navy quote-card format: cover with guest photo and stat
   hook, 4 big-quote cards each with a supporting message, and a CTA card
   with episode link. Theme routing per show: Built to Share carousels are
-  about talent, ESOPs, and org building; un# about DeFi and crypto;
+  about talent, ESOPs, and org building; un# about onchain finance, tokenization, RWAs and stablecoins (never "crypto" or "DeFi", decision 688);
   Founder Thesis about scaling up; Human by Design about AI. Trigger on
   "/carousel-light", "carousel light", "make a carousel from this episode",
   "quote carousel", "carousel PDF", "Editorial Navy carousel", or whenever
@@ -17,6 +17,20 @@ description: >-
 ---
 
 # Carousel Light
+
+**un# only (decision 688):** for un#, the editorial direction below overrides this skill's un# notes.
+
+## un# editorial direction (decision 688, Akshay for Sri, 27 Nov 2026). Read first: it overrides anything below.
+
+un# is a show about onchain finance: traditional finance embracing new rails. aarnâ is moving in a regulated direction and un# supports that journey, so nothing Sri puts out on un# should make a regulator uncomfortable.
+
+- **Words we never write** in anything published or read on air (titles, thumbnails, captions, posts, newsletters, show notes, trailers, intros, VO, dossier questions): "crypto", "DeFi", "Web3", "altcoin", "memecoin", "degen", "token launch". "DeFi" has a different vibe from where the show is going, so it goes too.
+- **Words we use:** onchain finance, tokenization, real-world assets (RWAs), stablecoins, digital assets, onchain capital markets, programmable finance, settlement infrastructure. A named asset or protocol (Bitcoin, a stablecoin, a tokenized fund) can be named as a fact when the episode is about it.
+- **The frame:** TradFi embracing onchain rails. Institutions, regulated products, market structure, compliance, capital formation. Not crypto insiders talking to crypto insiders.
+- **Nothing a regulator would flinch at:** no price predictions or targets, no token promotion, no yield claims, nothing that reads as investment advice, no hype for unregistered products. A guest's market view is reported as theirs, never endorsed.
+- **When a guest says "crypto" or "DeFi" on tape:** prefer bites and quotes that don't use the words; keep them only inside a verbatim quote whose point needs them; never carry them into a title, thumbnail, caption, overlay or summary line. Paraphrase in onchain terms.
+- **Test before anything ships:** would a SEBI, RBI or MAS officer reading or hearing this be comfortable? If not, rewrite it.
+
 
 Turn an episode transcript into a finished Editorial Navy PDF carousel. The reference standard is the Ravi Saxena deck: navy cards, orange accent, big cream quotes, grey supporting message, hissa/show chrome, SWIPE chevrons.
 
@@ -31,7 +45,7 @@ Turn an episode transcript into a finished Editorial Navy PDF carousel. The refe
 
 Read `references/show-profiles.md` and pick the matching show. The profile gives:
 
-- **Theme territory.** Extract quotes ONLY from this space. A great quote off-theme is still off-theme. Built to Share wants talent and ownership; un# wants DeFi; Founder Thesis wants scaling; Human by Design wants AI.
+- **Theme territory.** Extract quotes ONLY from this space. A great quote off-theme is still off-theme. Built to Share wants talent and ownership; un# wants onchain finance and tokenization; Founder Thesis wants scaling; Human by Design wants AI.
 - **Brand chrome JSON** (logo, wordmark, attribution, colors).
 - **CTA link pattern and label.** Never invent an episode URL; if the profile says ask, ask.
 

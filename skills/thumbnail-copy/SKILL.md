@@ -5,6 +5,20 @@ description: "Build the thumbnail brief for a podcast episode as a published HTM
 
 # Thumbnail Brief
 
+**un# only (decision 688):** for un#, the editorial direction below overrides this skill's un# notes.
+
+## un# editorial direction (decision 688, Akshay for Sri, 27 Nov 2026). Read first: it overrides anything below.
+
+un# is a show about onchain finance: traditional finance embracing new rails. aarnâ is moving in a regulated direction and un# supports that journey, so nothing Sri puts out on un# should make a regulator uncomfortable.
+
+- **Words we never write** in anything published or read on air (titles, thumbnails, captions, posts, newsletters, show notes, trailers, intros, VO, dossier questions): "crypto", "DeFi", "Web3", "altcoin", "memecoin", "degen", "token launch". "DeFi" has a different vibe from where the show is going, so it goes too.
+- **Words we use:** onchain finance, tokenization, real-world assets (RWAs), stablecoins, digital assets, onchain capital markets, programmable finance, settlement infrastructure. A named asset or protocol (Bitcoin, a stablecoin, a tokenized fund) can be named as a fact when the episode is about it.
+- **The frame:** TradFi embracing onchain rails. Institutions, regulated products, market structure, compliance, capital formation. Not crypto insiders talking to crypto insiders.
+- **Nothing a regulator would flinch at:** no price predictions or targets, no token promotion, no yield claims, nothing that reads as investment advice, no hype for unregistered products. A guest's market view is reported as theirs, never endorsed.
+- **When a guest says "crypto" or "DeFi" on tape:** prefer bites and quotes that don't use the words; keep them only inside a verbatim quote whose point needs them; never carry them into a title, thumbnail, caption, overlay or summary line. Paraphrase in onchain terms.
+- **Test before anything ships:** would a SEBI, RBI or MAS officer reading or hearing this be comfortable? If not, rewrite it.
+
+
 Build the brief a designer works from to make a thumbnail **without having watched the episode**. The designer is not the bottleneck; the missing context is. This skill manufactures that context from the transcript, then hands her a menu wide enough to have a real opinion about.
 
 **Every option is a combo: thumbnail copy plus the episode title it ships with.** The two are judged together because the viewer sees them together. The title carries the who and the search terms; the thumbnail carries the claim.
@@ -82,7 +96,7 @@ These come from Akshay reviewing menus line by line, not from YouTube tests. The
 6. **Correct English on a literal read.** "Money that moves like WhatsApp" failed because WhatsApp doesn't move; messages do.
 7. **A number must explain itself in one glance and give a reason to click.** "0.1% of $120T. For now." gave neither.
 
-What passed on that episode, as a model for grand-vision guests: **"Bigger than crypto exchanges?"** (a bet on scale, phrased as a question), the idea behind **"Crypto's next giant?"**, and **"The AWS of stablecoin banking"**.
+What passed on that episode, as a model for grand-vision guests: **"Bigger than crypto exchanges?"** (a bet on scale, phrased as a question), the idea behind **"Crypto's next giant?"**, and **"The AWS of stablecoin banking"**. Under decision 688 (27 Nov) un# copy never says "crypto": the same bets now read "Bigger than exchanges?" or "Onchain finance's next giant?".
 
 When the guest's pitch is a big vision, lead with the vision and put the product detail in the title.
 
