@@ -1,0 +1,343 @@
+{
+ "inputs": {
+  "date": "2026-11-03",
+  "round": "r15 replay (offline): r14b plus N1 to N7, decision 452 and decision 453; capture r12c vs r12b",
+  "decisions": "docs/decisions.md rows 452 and 453 (lines 401 and 402)",
+  "handoff": "docs/proposals/zoya-r15/handoff.md",
+  "previous_issues": "docs/proposals/zoya-r14/replay-b.json new_issues N1 to N7",
+  "files": {
+   "A zoya-one.txt": {
+    "bytes": 51601,
+    "characters": 51597,
+    "sha256_16": "64de3918c2b93eef",
+    "version_ref": "zoya-one fba98a927bae"
+   },
+   "B zoya-slow.txt": {
+    "bytes": 11280,
+    "characters": 11280,
+    "sha256_16": "087c09ae63e0b436",
+    "version_ref": "zoya-slow ccdff8253906"
+   },
+   "zoya-slow-work.txt": {
+    "bytes": 75803,
+    "characters": 75799,
+    "sha256_16": "9f35df2d95121d5d",
+    "pinned_at": "bfbadf9203bccad49b12b0b155d98574e793ba04"
+   },
+   "previous r14b": {
+    "A": "50,822 / 677aa3473026e9ef",
+    "B": "11,238 / 20cce0904095ec86",
+    "work file": "74,785 / 68ec0805f5393c2d at 2f607f0"
+   },
+   "capture r12c": {
+    "bytes": 46195,
+    "sha256_16": "44b14c3e0d3a7826"
+   },
+   "capture r12b (rebuilt from r11 with patch.py edits 1 to 3)": {
+    "bytes": 45719,
+    "sha256_16": "9800a28138445dd0"
+   }
+  },
+  "method": "Local reads only (Read, Bash, Grep). Rebuilt r15 from git archive f70901f routines/zoya plus build_one.patch in the scratchpad; rebuilt capture r12c from r11 with patch.py. No MCP, Notion, mail, commit or push. Sample addresses are written with -AT-."
+ },
+ "checks": {
+  "hashes": {
+   "pass": true,
+   "detail": "A 51,601 / 64de3918c2b93eef, B 11,280 / 087c09ae63e0b436, work file 75,803 / 9f35df2d95121d5d, all as the handoff states."
+  },
+  "rebuild": {
+   "pass": true,
+   "detail": "git archive f70901f routines/zoya + build_one.patch, then build_one.py <out> refs/heads/zoya-slow-pin bfbadf92...: all three outputs byte-identical to docs/proposals/zoya-r15."
+  },
+  "pin": {
+   "pass": true,
+   "detail": "git show bfbadf92:routines/zoya/release/zoya-slow-work.txt | sha256sum = 9f35df2d95121d5d8b6bd023bb6145d089743599a9a851fb36b9e2bd58c8fa58, equal to the local file; B names that commit and the prefix 9f35df2d95121d5d."
+  },
+  "pin_ref_state": {
+   "pass": true,
+   "detail": "origin/zoya-slow-pin is at 63fcf66 (r11b) and does not contain bfbadf9; 63fcf66 is an ancestor of bfbadf9, so the cutover move is a plain fast-forward. It must land before B's first run, or SLOW FILE fails closed ('slow work file unavailable')."
+  },
+  "B_character_total": {
+   "pass": true,
+   "detail": "B says total = 75,799 characters; python len(decoded file) = 75,799 (bytes 75,803, 4 multibyte characters)."
+  },
+  "version_refs": {
+   "pass": true,
+   "detail": "Recomputed: sha256 of A with its ref put back to @@VERSION@@ starts fba98a927bae; same for B, ccdff8253906."
+  },
+  "no_em_dash": {
+   "pass": true,
+   "detail": "0 in A, B, the work file and capture r12c."
+  },
+  "size_caps": {
+   "pass": true,
+   "detail": "A 51,601 and B 11,280 bytes, both under 65,336 (the build's cap less 200). Capture r12c 46,195."
+  },
+  "diff_scope_r14b_to_r15": {
+   "pass": true,
+   "detail": "A: SENDING (452 quote, 452 read-back), the decision 413 line (453), version ref. B: RUN RECORD status parenthetical (N4), version ref, SLOW FILE pin, sha prefix and total. Work file: SENDING (452 both edits), LIMITS line 72 (N1, N6), SLOW BATCH 3/ (N3) and 4/ (N2, N5, N7), STEP 2 hold line (N6). Nothing else. The 453 line exists only in A (the 413 line is FAST-only, as before)."
+  },
+  "capture_diff_scope": {
+   "pass": true,
+   "detail": "r12b rebuilt from r11 with edits 1 to 3 = 45,719 / 9800a28138445dd0, equal to commit e4a7b02's copy; r12c = r12b plus edit 4 (the loop-in html_body gmail_quote) only; patch.py reproduces 44b14c3e byte for byte."
+  },
+  "N1": {
+   "pass": true,
+   "detail": "Line 72 now reads 'the Diwali pause holds chases only, as SLOW BATCH 3/ says'. PR COORDINATION (line 121) still says 'never Diwali week', which agrees: PR coordination is in 3/'s chase list. The Cadences Diwali line is still open."
+  },
+  "N2": {
+   "pass": true,
+   "detail": "4/ now counts an 'unfinished (cap)' as no reason unless the python, from this run's sends and today's count, finds the per-run cap or the daily cap less the FAST reserve reached. The counts are still model-supplied inputs to the python, so this is a numeric check, not an independent one."
+  },
+  "N3": {
+   "pass": "partial",
+   "detail": "3/ writes 'stop: minute 22 at <date -u>' and the python checks it is 22 or more minutes after the start. It doesn't say that a minute-22 claim with no stop line is no reason, so the replay-b case f2 (stop at 21, claim minute 22, check runs after 22) still passes when the stop line is just left out. See D9."
+  },
+  "N4": {
+   "pass": true,
+   "detail": "B RUN RECORD: 'or a stop before SLOW BATCH selects other than RULES LOAD's, which is Partial'. Agrees with the work file's RULES LOAD and 4/."
+  },
+  "N5": {
+   "pass": true,
+   "detail": "4/ record layout: 'the chunk lines, a line \"diff:\" with the diff under it, and \"carryover:\"'."
+  },
+  "N6": {
+   "pass": true,
+   "detail": "'a hold stops that one item only' and 'a hold never changes nurture n'. The handoff's 'the last defer wording is gone' is slightly broad: ONE THREAD's 'the limits above defer the second' remains in A and the work file, in another sense (no hold). No change needed."
+  },
+  "N7": {
+   "pass": true,
+   "detail": "4/: 'a RULES LOAD failure is any \"<page>: <read> of <total>\" line in the body with read short of total, which the python reads too'."
+  },
+  "452_html_well_formed": {
+   "pass": true,
+   "detail": "div.gmail_quote > attribution 'On <date>, <name> &lt;<address>&gt; wrote:<br>' > blockquote with style 'margin:0 0 0 .8ex;border-left:1px solid #ccc;padding-left:1ex' > message > </blockquote></div>: tags balance, the angle brackets around the address are escaped, and the CSS is valid. It matches Gmail's own shape closely enough to show as a quote (Gmail itself also sets class gmail_quote on the blockquote and wraps the attribution in div.gmail_attr; not needed to display). Gmail will show a recognised quote behind its trimmed-content toggle, which is normal."
+  },
+  "452_source_of_html": {
+   "pass": false,
+   "detail": "A and the work file never say how to get the previous message's HTML, date, name and address. The only read they describe is email_read (In-Reply-To, References) and action original (MESSAGE IDENTITY: 'keep only that line'). Capture knows include_html but restricts it to Gemini notes. See D4 and D8."
+  },
+  "452_read_back": {
+   "pass": "unverified",
+   "detail": "The read-back requires draft_read's html to hold the blockquote. Nothing in the repo shows draft_read returns html, or that draft action reply and draft update keep html_body. The CTO's one-draft test isn't run. If draft_read has no html, every FAST and SLOW reply fails the read-back. See D2."
+  },
+  "452_no_quote_rule": {
+   "pass": true,
+   "detail": "'add no quote of your own to either body' is fully replaced: the plain-text body keeps MCP's quote (add none), html_body carries ours. No leftover 'both bodies' text in A, the work file or capture."
+  },
+  "453_property_name": {
+   "pass": true,
+   "detail": "'Prep note link' is a real Engagements property (routines/cowork-dossiers.md writes it, routines/calendar.md reads it: 'fetch the Notion page whose id is the last 32 hex characters of the Prep note link'). In A it appears only on the 453 line: it is missing from NOTION DATA's Engagements list and A never says how to open it. See D12."
+  }
+ },
+ "cases": {
+  "c1_fast_reply_452": {
+   "setup": "FT row, PR (pr-AT-agency.example) replies on Zoya's thread 'any update on the slot?'. Zoya's FAST run answers in STEP 1 b.",
+   "trace": "THREADING: draft action reply on the thread's latest message (the PR's), reply_all false, To PR, Cc Akshay. html_body: one <p> per paragraph, then the gmail_quote with the PR's message. The prompt doesn't say to read it with include_html, so the model either guesses the flag, uses its text (allowed fallback), or tries action original and has to decode MIME itself (MESSAGE IDENTITY tells it to keep only the Message-ID line). Plain-text body without a quote; MCP adds its own. Read-back: draft_read's html must hold the blockquote (unverified tool behaviour). PRE-SEND 1 to 6 unaffected. LEAK CHECK runs on the whole mail: if the PR's quoted message says 'great fit for the show', the literal word list bars 'fit' and the reply goes to Akshay's list unsent, or the model strips the quote and fails the read-back.",
+   "result": "works when the PR's mail has no barred word and draft_read returns html; else blocked. D2, D3, D4."
+  },
+  "c2_slow_followup_452": {
+   "setup": "SLOW routine 2 chase on the row; the thread's latest message is Zoya's own unanswered mail of 28 Oct.",
+   "trace": "Reply on our own message: attribution 'On <date>, Zoya &lt;zoya-AT-myunnati.example&gt; wrote:', blockquote holds our 28 Oct html, which (from r15 on) already ends with its own gmail_quote, so the chain nests the way Gmail's does. Our own earlier text passed LEAK CHECK when sent, so quoting it leaks nothing. Pre-r15 mails carry no html quote, so the chain shows one level for them, which is fine.",
+   "result": "pass, given D2's tool check."
+  },
+  "c3_latest_is_team_only": {
+   "setup": "Akshay replies to Zoya only on the guest thread: 'too long, cut the second para, and don't push sponsored, his fit is weak'. STEP 0 b logs it as feedback. Next run Zoya replies to the guest on that thread.",
+   "trace": "THREADING picks 'the thread's latest message' = Akshay's team-only mail (its References hold the original's Message-ID). The 452 quote is 'the message you reply to', so the guest's side sees Akshay's internal note in the Gmail view. LEAK CHECK would catch 'fit' and 'sponsored' here, but not 'too long, cut the second para' or any note without a barred word. MCP's own plain-text quote has the same exposure today, but Gmail showed the HTML, so it was hidden.",
+   "result": "fail: internal message quoted to outsiders. D1."
+  },
+  "c4_first_mail_no_previous": {
+   "setup": "A mail on a new thread (a new conversation, the owner mail or scorecard to the team, or release mail 2 when no thread exists).",
+   "trace": "The quote text sits under THREADING ('Every mail that continues a conversation...'), so the reading is: replies only. The sentence itself says 'html_body ends with', with no 'on a reply', and a model may invent an attribution or block. The read-back clause is only on the draft path, which new mails don't take.",
+   "result": "probably fine; one clause removes the doubt. D5."
+  },
+  "c5_loop_in_from_A": {
+   "setup": "FAST: a thread Zoya isn't on yet; she sends the loop-in from ad-AT- via email_compose action reply (the direct path, no draft).",
+   "trace": "A's loop-in paragraph says 'include_signature false, no link' and nothing about html_body or the quote, while capture r12c's loop-in now carries the gmail_quote. The SENDING rule may be read to cover it, but the direct path has no read-back, so a quote-less loop-in goes out unnoticed. Akshay's complaint was the chain he can't see, and the loop-in is on his own thread.",
+   "result": "inconsistent with capture. D5."
+  },
+  "c6_forward": {
+   "setup": "Zoya sends no forwards (the billing forward is the inbox routine's). Capture: a pitch that reached us only through Saurabh's forward gets a new mail (action send, 'Re: <original subject>') to the original sender.",
+   "trace": "Capture's quote is 'the pitch message', 'its date, name and address from that message's own headers'. The pitch message in our mailbox is Saurabh's forward: its headers name Saurabh, and its body holds his note to Akshay above the original. Decision 122 keeps Saurabh out of the guest conversation, and his note may say anything about the guest.",
+   "result": "fail in capture. D7."
+  },
+  "c7_capture_loop_in_direct": {
+   "setup": "PR pitch to ad-AT-, nobody from our side on it; capture STEP 6 loop-in 'sent, never drafted'.",
+   "trace": "email_compose action reply on the pitch, body one line, html_body <p>loop-in</p> + gmail_quote of the pitch. 'include_html only where a step needs HTML (Gemini notes)' in MAILBOX contradicts getting 'its HTML when it has one', and read_batch caps bodies at 2000 characters, so the text fallback may be cut. 'a draft or send whose html lacks the blockquote is fixed before it goes' can only be a self-check of the parameter, since nothing is drafted. Capture has no LEAK CHECK, so a 'fit' in the pitch doesn't block.",
+   "result": "works with the text fallback; HTML path contradicts MAILBOX. D8."
+  },
+  "c8_453_pr_asks_questions": {
+   "setup": "FT row, Status Booked, recording Thu, Prep note link set, Via the PR. PR writes to Zoya: 'can you share the questions?'. Row's Waiting on: Guest.",
+   "trace": "STEP 1: not a reply to Akshay's own mail, so b's 'Anything else' branch; the 413 line: 'no precall notes: a draft to Akshay first' comes before the 453 clause. A Tier 1 inbound row often goes straight to recording with no precall, so the model can stop at the first clause and hand Akshay a draft. If it reaches 453: it must open the Prep note link (not in NOTION DATA, no fetch recipe), take 'Themes we'll cover' (5 or 6 broad themes, never questions, per PREP NOTE RULES) and write a few lines. Recipients: SENDING's guest-facing rule lists 'prep note' as guest-facing (To the guest, PR in Cc), while 'To: whoever's move it is' and the reply shape point to the PR. A theme like 'finding product-market fit' trips LEAK CHECK's literal 'fit' and is dropped, which is fine. The Prep note link itself is internal (decision 143) and not on the approved list, so it can't be sent.",
+   "result": "works if the model reads 453 as winning over 'no precall notes'; D10, D12."
+  },
+  "c9_453_waiting_on_akshay": {
+   "setup": "Same ask, but the row is Waiting on Akshay for an unrelated segment ('Ask Akshay: sponsored upgrade?').",
+   "trace": "QUEUE: 'Rows waiting on Akshay are never yours to mail (STEP 0r's recording link and the holding reply, decision 390, aside)'. 453 says no Akshay ask and no holding reply. STEP 1 c says an unrelated step of his doesn't count. Two rules say answer, one says never.",
+   "result": "contradiction. D11."
+  },
+  "c10_453_client_show": {
+   "setup": "Built to Share row, booked, Prep note link set (cowork-dossiers builds prep notes on every show). PR asks for questions.",
+   "trace": "453 has no show limit, and 413 is in 'the show's angle'. SHOW CHECK holds for any show fact in the reply, and the host is Cc'd only if they wrote. Decision 313 makes client-show guest mail in Akshay's voice a draft when it has links (this has none), and 446 covers scheduling only. So Zoya would send BTS themes from the host's dossier pack with no Akshay or host look. Decision 453's example (Sameet Gupte) and 413 are Founder Thesis.",
+   "result": "scope question for Akshay. D12."
+  },
+  "c11_453_reply_to_akshays_mail": {
+   "setup": "The PR's ask answers a mail Akshay wrote himself.",
+   "trace": "The 453 clause sits under b's 'Anything else', after the 448 branch, and CLIENT-SHOW SCHEDULING / 448 are HARD RULES: 448 wins, the ask goes on his list.",
+   "result": "pass, no conflict."
+  },
+  "c12_slow_minute_22_without_stop_line": {
+   "setup": "SLOW run stops at minute 15, writes nothing for chunks 2 and 3 and no 'stop:' line, claims 'minute 22' in the report; the outcome check runs at minute 23.",
+   "trace": "4/: unfinished keys get 'the stop reason if one applied'; 'unfinished (minute 22)' is no reason only 'while the measured elapsed is under 22', which is 23 at check time. N3's stop line is checked when present, but its absence isn't ruled.",
+   "result": "can still read Partial. D9."
+  }
+ },
+ "defects": [
+  {
+   "id": "D1",
+   "severity": "high",
+   "files": "A and work file (part sending, SHARED in build_one.patch)",
+   "quote": "the thread's latest message is the latest whose References or In-Reply-To holds the original's Message-ID);",
+   "scenario": "c3: Akshay's team-only feedback or a team note on the guest thread is the latest message, so the reply quotes it to the guest's side, now visible in Gmail.",
+   "old": "the thread's latest message is the latest whose References or In-Reply-To holds the original's Message-ID);",
+   "new": "the thread's latest message is the latest whose References or In-Reply-To holds the original's Message-ID and that someone outside the team sent or received (From, To or Cc); a team-only message, such as Akshay's feedback to you or a team note, is never replied to or quoted);"
+  },
+  {
+   "id": "D2",
+   "severity": "high (deploy gate)",
+   "files": "A and work file, SENDING read-back",
+   "quote": "that draft_read's html holds that gmail_quote blockquote (decision 452),",
+   "scenario": "If draft_read returns no html field, or draft update drops html_body, every FAST and SLOW reply fails the read-back and nothing threads out. The handoff's one-draft test (create, draft_read, delete) is what settles it, and it hasn't run.",
+   "old": "that draft_read's html holds that gmail_quote blockquote (decision 452),",
+   "new": "No text change if the test shows draft_read returns the html and draft update keeps it. If it doesn't, replace with: that the html_body you passed ends with that gmail_quote blockquote (decision 452; draft_read shows no html),",
+   "where": "Cutover: run the one-draft test with Akshay's go-ahead before the trigger update; deploy only after it."
+  },
+  {
+   "id": "D3",
+   "severity": "medium",
+   "files": "A, B and work file (part hard)",
+   "quote": "- LEAK CHECK (decision 215) before every send: no \"eval\", \"verdict\", \"score\", \"fit\", ...",
+   "scenario": "c1: the quoted PR message says 'a great fit'; read literally, LEAK CHECK bars the whole mail, or the model strips the quote and fails the read-back. With D1 the quote is only mail its recipients already had, so it leaks nothing.",
+   "old": "- LEAK CHECK (decision 215) before every send: no ",
+   "new": "- LEAK CHECK (decision 215) before every send, on the text you write (the gmail_quote and MCP's plain-text quote are mail their recipients already had, decision 452, and aren't checked): no "
+  },
+  {
+   "id": "D4",
+   "severity": "medium",
+   "files": "A and work file, SENDING (decision 452 sentence)",
+   "quote": "<the message you reply to, as its HTML when it has one, else its text HTML-escaped with line breaks as <br></blockquote></div>, its date, name and address from that message's own headers.",
+   "scenario": "c1: no source named for the HTML (include_html isn't mentioned in A or SLOW), full inbound HTML documents (<html>, <head>, <style>) nested in a blockquote, cid: images that break with no attachments, a truncated body, and a name with & or < left unescaped. The placeholder also has no closing bracket of its own (it shares the > of <br>).",
+   "old": "<the message you reply to, as its HTML when it has one, else its text HTML-escaped with line breaks as <br></blockquote></div>, its date, name and address from that message's own headers.",
+   "new": "[the message you reply to: read it with email_read action read and include_html true, its full body, never a truncated read; its HTML body's inner content (no <html>, <head>, <body>, <style> or <script> tags, and no <img> whose src is cid:), else its text HTML-escaped with each line break as <br>]</blockquote></div>, its date, name and address from that message's own Date and From headers, the name HTML-escaped. That quote is the only <br> block in a mail: one <p> per paragraph holds for your own text above it. A new mail that continues no thread has no quote."
+  },
+  {
+   "id": "D5",
+   "severity": "low",
+   "files": "A, loop-in paragraph",
+   "quote": "Either way include_signature false, no link,",
+   "scenario": "c5: A's loop-in from ad-AT- has no quote rule while capture's now does; the direct email_compose path has no read-back.",
+   "old": "Either way include_signature false, no link,",
+   "new": "Either way include_signature false, no link, html_body the loop-in as one <p> and then the gmail_quote of the message it replies on (SENDING, decision 452),"
+  },
+  {
+   "id": "D6",
+   "severity": "low",
+   "files": "A and work file, SENDING",
+   "quote": "html_body with one <p> per paragraph",
+   "scenario": "The quote's escaped-text fallback is <br>-joined, which CLAUDE.md's 'never one block of lines joined with <br>' and SENDING's one <p> per paragraph could be read to forbid. Covered by D4's new sentence ('That quote is the only <br> block...'); no separate edit if D4 lands.",
+   "old": "(in D4)",
+   "new": "(in D4)"
+  },
+  {
+   "id": "D7",
+   "severity": "medium",
+   "files": "capture r12c (patch.py edit 4)",
+   "quote": "<the pitch message, as its HTML when it has one, else its text HTML-escaped with line breaks as <br></blockquote></div>, its date, name and address from that message's own headers;",
+   "scenario": "c6: a pitch that reached us only through Saurabh's forward (or Akshay's other address): the message in hand is the forward, so the quote names Saurabh and shows his note to Akshay to the pitcher, against decision 122.",
+   "old": "<the pitch message, as its HTML when it has one, else its text HTML-escaped with line breaks as <br></blockquote></div>, its date, name and address from that message's own headers;",
+   "new": "[the pitch message, read with action read and include_html true, its full body; for a pitch that reached us through a forward (Saurabh's, or Akshay's other address), only the original message inside the forward, never the forward's own note or headers; its HTML body's inner content (no <html>, <head>, <body>, <style> or <script>, no cid: images), else its text HTML-escaped with each line break as <br>]</blockquote></div>, its date, name and address from that message's own Date and From headers (for a forward, the Date and From inside it);"
+  },
+  {
+   "id": "D8",
+   "severity": "low",
+   "files": "capture r12c, MAILBOX",
+   "quote": "include_html only where a step needs HTML (Gemini notes)",
+   "scenario": "c7: MAILBOX forbids include_html outside Gemini notes, so 'its HTML when it has one' can't be read; read_batch's 2000-character bodies cut the text fallback.",
+   "old": "include_html only where a step needs HTML (Gemini notes)",
+   "new": "include_html only where a step needs HTML (Gemini notes, the loop-in's quote, decision 452)"
+  },
+  {
+   "id": "D9",
+   "severity": "low",
+   "files": "work file, SLOW BATCH 4/",
+   "quote": "an \"unfinished (minute 22)\" while the measured elapsed is under 22,",
+   "scenario": "c12: N3's stop line is checked only when written; leaving it out keeps the old gap.",
+   "old": "an \"unfinished (minute 22)\" while the measured elapsed is under 22,",
+   "new": "an \"unfinished (minute 22)\" with no \"stop: minute 22 at\" line, or with one under 22 minutes after the start, or while the measured elapsed is under 22,"
+  },
+  {
+   "id": "D10",
+   "severity": "medium",
+   "files": "A, STEP 1 b (decision 413 line)",
+   "quote": "no precall notes: a draft to Akshay first; a guest-side ask for themes or questions before a recording, on a row with a Prep note link (decision 453):",
+   "scenario": "c8: a booked row with a prep note but no precall (common for Tier 1 inbound) meets 'no precall notes: a draft to Akshay first' first, against 453's 'no Akshay ask'.",
+   "old": "no precall notes: a draft to Akshay first; a guest-side ask for themes or questions before a recording, on a row with a Prep note link (decision 453):",
+   "new": "no precall notes: a draft to Akshay first, except that a guest-side ask for themes or questions before a recording, on a row with a Prep note link (decision 453, with or without precall notes), is yours:"
+  },
+  {
+   "id": "D11",
+   "severity": "medium",
+   "files": "A, QUEUE",
+   "quote": "Rows waiting on Akshay are never yours to mail (STEP 0r's recording link and the holding reply, decision 390, aside).",
+   "scenario": "c9: a themes ask on a row waiting on Akshay for something unrelated.",
+   "old": "Rows waiting on Akshay are never yours to mail (STEP 0r's recording link and the holding reply, decision 390, aside).",
+   "new": "Rows waiting on Akshay are never yours to mail (STEP 0r's recording link, the themes reply in STEP 1 b (decision 453, when his open ask is about something else) and the holding reply, decision 390, aside)."
+  },
+  {
+   "id": "D12",
+   "severity": "medium (scope question) plus low (mechanics)",
+   "files": "A, STEP 1 b (453 clause) and NOTION DATA",
+   "quote": "reply on the thread with that prep note's themes, a few lines in your voice (never its questions word for word, nothing LEAK CHECK bars), no Akshay ask and no holding reply;",
+   "scenario": "c8 and c10: no fetch recipe for the Prep note link, unclear To (the guest-facing rule vs whoever asked), the link itself is internal (decision 143), and no show limit, so client shows get host-dossier themes with no Akshay or host look. The client-show part is a question for Akshay; the text below keeps 453 to Founder Thesis until he answers.",
+   "old": "reply on the thread with that prep note's themes, a few lines in your voice (never its questions word for word, nothing LEAK CHECK bars), no Akshay ask and no holding reply;",
+   "new": "on Founder Thesis (a client show: Akshay's list with the themes, until he says otherwise), open the Notion page whose id is the last 32 hex characters of that link, read it in full, and reply on the thread, To whoever asked and the guest's side as SENDING's guest-facing rule says, with its \"Themes we'll cover\", a few lines in your voice (never its questions word for word, never the link (decision 143), nothing LEAK CHECK bars), no Akshay ask and no holding reply;",
+   "also": "NOTION DATA Engagements list: old 'Eval verdict, Next date,' new 'Eval verdict, Prep note link, Next date,'"
+  },
+  {
+   "id": "D13",
+   "severity": "info",
+   "files": "handoff.md",
+   "quote": "N6. The last \"defer\" wording is gone.",
+   "scenario": "ONE THREAD's 'the limits above defer the second' remains (not a hold). Reword the handoff line only; no prompt change.",
+   "old": "N6. The last \"defer\" wording is gone.",
+   "new": "N6. Holds no longer say \"defer\"."
+  }
+ ],
+ "verdict": {
+  "ready": "not ready to deploy as built",
+  "summary": "Hashes, the bfbadf9 pin, the 75,799-character total, both version refs and a clean rebuild all check. The r14b to r15 diff holds only N1 to N7, 452 and 453 plus the forced pin, sha, total and version changes. Capture r12c is r12b plus the one 452 edit. N1, N2, N4, N5, N6 and N7 are fixed as written; N3 is half fixed (D9). The 452 quote is well formed. But it quotes whatever the thread's latest message is, team-only mail included (D1, high). Its read-back rests on draft_read behaviour nobody has tested (D2, the deploy gate). LEAK CHECK read literally bars quoted outside text (D3), and the prompt never says where the HTML comes from (D4). Capture's forwarded-pitch case quotes Saurabh's forward (D7). The 453 clause loses to 'no precall notes' (D10), clashes with 'rows waiting on Akshay are never yours' (D11), and has no show limit (D12, a question for Akshay).",
+  "must_fix_before_cutover": [
+   "D1",
+   "D2 (run the one-draft test)",
+   "D3",
+   "D4",
+   "D7",
+   "D10",
+   "D11"
+  ],
+  "should_fix": [
+   "D5",
+   "D8",
+   "D9",
+   "D12 mechanics"
+  ],
+  "question_for_akshay": "D12: should 453's themes reply run on un#, Built to Share and Human by Design too, or only Founder Thesis?",
+  "still_outside_the_build": [
+   "the FAST reserve number on Cadences",
+   "the Cadences Diwali line (pause starts Fri 6 Nov)",
+   "pin ref move 63fcf66 to bfbadf9 (fast-forward) at cutover",
+   "the 445 Notion edit and the r12d Notion edits",
+   "calendar 453 day-before and 454, left for tomorrow"
+  ]
+ }
+}

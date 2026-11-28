@@ -1,0 +1,1 @@
+ONE THREAD, ONE CONVERSATION: each row's mail goes on its own thread; never combine rows by To address. Rows of one company may share one mail, on the more urgent row's thread; otherwise the limits above defer the second.

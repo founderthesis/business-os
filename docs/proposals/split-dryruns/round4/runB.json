@@ -1,0 +1,669 @@
+{
+ "C": {
+  "canon": {
+   "lease_holder": "SLOW",
+   "sends": 1,
+   "drafts": 0,
+   "mails": [
+    {
+     "row": "3fa19a301a7f811da4a8d2ff78897041",
+     "mailbox": "zoya",
+     "kind": "reply",
+     "to": [
+      "Payal"
+     ],
+     "cc": [
+      "Akshay"
+     ],
+     "attachments": 0
+    }
+   ],
+   "rows": {
+    "3f019a301a7f812ea2a8d1e74b88113c": {
+     "status": "unchanged",
+     "waiting_on": "unchanged",
+     "next_date": "unchanged",
+     "akshay_segments": 0,
+     "zoya_segments": 1
+    },
+    "3fa19a301a7f811da4a8d2ff78897041": {
+     "status": "unchanged",
+     "waiting_on": [
+      "Guest or PR",
+      "Zoya"
+     ],
+     "next_date": "2026-11-03",
+     "akshay_segments": 0,
+     "zoya_segments": 1
+    },
+    "3f019a301a7f817fae25cc8414c31aa5": {
+     "status": "unchanged",
+     "waiting_on": "unchanged",
+     "next_date": "unchanged",
+     "akshay_segments": 0,
+     "zoya_segments": 1
+    },
+    "3f019a301a7f8126bd0ee7b39fd456b1": {
+     "status": "unchanged",
+     "waiting_on": [
+      "Zoya"
+     ],
+     "next_date": "2026-11-03",
+     "akshay_segments": 0,
+     "zoya_segments": 1
+    }
+   },
+   "run_records": {
+    "SLOW": "Completed"
+   },
+   "activities_for_presend": 0
+  },
+  "verdict": "PASS",
+  "findings": "1) Key date for a previously held unkeyed step: 'A seq origin's raised time is that step's due date (the date the previous step set, else the row's Next date when the step was written)' does not say whether Ronit's step 1 keys at its chain due date (25 Oct, day 7) or the Next date the holds moved it to (27 Oct). I1 uses 27 Oct; canon follows that. 2) Vijay's recheck segment 'Zoya [nurture seq-7-<n> <date>]: recheck <hold> on <D Mon>' does not say whether <date> is the due date (20 Oct, per the seq rule) or the recheck date (3 Nov), nor whether the existing 'On hold: cold outreach ...' segment is replaced or kept. 3) Payal Dash has two People rows (duplicate pair); ONE PERSON, ONE ASK read via Ronit's People row would not see the 26 Oct Devesh mail. Outcome unchanged here because PR people get 2 mails a week per Cadences.",
+  "notes": "Lease: no FAST record in scope, SLOW holds. RECONCILE: no open reply/decision action on these rows. STEP 0f owner mail: no Akshay ask on an in-scope row, nothing collected. STEP 2 ('Candidates are in-scope rows at Sponsored offered, Precall requested, Booking, Recorded or LT chase with Next date today or earlier'): Amit (Recorded, Next date 29 Oct) and Devesh (Sponsored offered, 9 Nov) not due, untouched; their migrated keyed segments stay. Ronit (Sponsored offered, Next date 27 Oct, Chase step 0) is due for routine 1 step 1. SLOW keys it ('SLOW keys it itself as \"<row>:followup:seq-1-1:<due date>T00:00:00+09:00\" ... in place of the row's waiting segment'). Holds checked: PR per guest thread ('for a PR or agency person the 7 days count per guest thread, within that person's weekly limit on Cadences': 2 a week); last mail to Payal on Ronit's thread 18 Oct; the 26 Oct Devesh mail is a different guest thread and is her 1st of 2 this week; Devesh not due today so no same-day pairing. No '## Next sponsored mail' section: 'plan it from the thread and podm.in/why-sponsor first'; wording per Rules for Zoya. Draft reply on Zoya's 17 Oct 23:40Z commercials message (Zoya is on the thread); latest inbound (Payal, To Akshay, Cc Zoya) -> To Payal, Cc Akshay; no Jaya/Sarika (no yes yet). AFTER SEND ordinary step: Chase step 1, Activity 'Zoya sent: sponsored step 1 to Payal', segment 'Zoya [followup seq-1-2 2026-11-03T00:00:00+09:00]: sponsored step 2 on 3 Nov': day 14 after the 18 Oct offer is Sun 1 Nov -> weekday Mon 2 Nov, but 'the next step never before the first day LIMITS' 7-day rule allows' -> Tue 3 Nov (not Diwali week). 'Zoya added to Waiting on (other owners stay)'; Guest or PR stays (open offer). Vijay (LT chase, Next date 20 Oct, Outbound cold lead, 'On hold: cold outreach, Akshay will revisit'): selected 'whoever Waiting on names (... or no one)'; it is a hold, not a skip ('a hold goes by the hold rule below, never a skip'); 'a hold with no first day, cold outreach or an Akshay hold with no date, rechecks in 7 days as its own segment \"Zoya [nurture seq-7-<n> <date>]: recheck <hold> on <D Mon>\" and keeps an owner, never empty (... else Zoya); never a new ask to Akshay' -> recheck 3 Nov, Waiting on Zoya, Next date 2026-11-03, no mail. Run: one send, one hold -> Completed ('a run whose due actions were all sent, held or blocked is Completed')."
+ },
+ "G": {
+  "canon": {
+   "lease_holder": "FAST",
+   "sends": 1,
+   "drafts": 0,
+   "mails": [
+    {
+     "row": "3f019a301a7f81ef81a4c4780c92fee2",
+     "mailbox": "zoya",
+     "kind": "reply",
+     "to": [
+      "Jheel"
+     ],
+     "cc": [
+      "Akshay",
+      "Jaya",
+      "Sarika"
+     ],
+     "attachments": 0
+    }
+   ],
+   "rows": {
+    "3f019a301a7f81ef81a4c4780c92fee2": {
+     "status": "unchanged",
+     "waiting_on": [
+      "Akshay",
+      "Guest or PR"
+     ],
+     "next_date": "2026-10-29",
+     "akshay_segments": 1,
+     "zoya_segments": 0
+    }
+   },
+   "run_records": {
+    "FAST": "Completed",
+    "SLOW": "No-op"
+   },
+   "activities_for_presend": 0
+  },
+  "verdict": "PASS",
+  "findings": "1) 'both start 10:08' gives no seconds; read as a same-second tie, which goes to FAST ('only an exact same-second tie goes to FAST'). If SLOW's record were a second earlier SLOW would hold, FAST would wait 10 minutes and end Partial with the reply left due for 11:38 (still no double send). 2) No Status named for a mailed sponsored yes (see notes). 3) Wording asks for a precall via podm.in/30min though the precall was held 22 Oct; only CONTEXT CHECK ('never ... repeat an answered ask') covers dropping it.",
+  "notes": "Lease: 'if both are Started, the earlier record holds it (its created time, to the second): the later writer backs off; only an exact same-second tie goes to FAST.' FAST holds, confirms after 'sleep 60'; SLOW 'only read, re-checking every 2 minutes ... for up to 25 minutes'. FAST STEP 1 finds Jheel's unanswered 09:55 inbound, keys 'reply msg-HYP-G-0955@impactkey.in 2026-10-27T09:55:00+09:00'; Akshay's travel step is 'an unrelated step of his on the row' so it does not make this an Akshay ask; Akshay's 25 Oct call 'sponsored only' settles the route. Mail: STEP 1b 'a yes at the standard price gets \"Sponsored yes: next steps\" (billing details for the 70% invoice, precall via podm.in/30min, recording after), Jaya and Sarika in Cc'; wording per Rules for Zoya. Draft action reply on HYP-G-0955 in Zoya's inbox, reply_all false; read-back: latest inbound From Jheel, To Zoya, Cc Akshay -> To Jheel, Cc Akshay + Jaya + Sarika (revenue mail). CONTEXT CHECK should adapt the precall line (precall already held 22 Oct). Row write (WRITE PATH): the inbound completes 'Waiting on Jheel (Impactkey PR): reply to the sponsored commercials (sent 26 Oct)' ('An inbound that answers our open asks completes each'); new waiting segment for billing details (Waiting on Jheel); Akshay's travel segment kept untouched ('every other segment, owner and line stays as you found it'); Next date recomputed because Next action changed: 'sets Next date to the earliest open segment date ... \"original due <YYYY-MM-DD>\" counts' -> 2026-10-29 (was 2026-11-02). Chase step 0. Activity 'Jheel to Zoya: ...' logged first (STEP 1a: 'if no Activity has its msgid: Source ID yet'), then 'Zoya sent: reply to Jheel: sponsored yes next steps' with Action key. The 25 Oct hand-off 'tell Akshay the answer once it comes' is news, so Claude note/report only ('Never for news ... that goes in the Claude note or the report'). Status: the FAST prompt names no Status for a mailed sponsored yes ('Move each row on: Status, Waiting on ...' gives no value; STEP 1b treats a yes row as 'Booking or Sponsored offered'), so canon keeps Sponsored offered; a run choosing Booking is equally supported. Finding. SLOW after FAST closes: RECONCILE sees the reply complete; Akshat at Sponsored offered with Next date 29 Oct is not due; STEP 1b 'a mailed yes is FAST's'. Nothing due -> No-op."
+ },
+ "H": {
+  "canon": {
+   "lease_holder": "SLOW",
+   "sends": 0,
+   "drafts": 0,
+   "mails": [],
+   "rows": {
+    "3f019a301a7f81ef81a4c4780c92fee2": {
+     "status": "unchanged",
+     "waiting_on": "unchanged",
+     "next_date": "unchanged",
+     "akshay_segments": 0,
+     "zoya_segments": 0
+    }
+   },
+   "run_records": {
+    "FAST": "Partial",
+    "SLOW": "No-op"
+   },
+   "activities_for_presend": 0
+  },
+  "verdict": "PASS",
+  "findings": "1) With no G inbound in H, FAST has nothing due on Akshat. LEASE is checked 'Before your first row write', so a run with nothing to write could skip the wait and end No-op; read in prompt order (RUN RECORD, LEASE, FAST ORDER) it checks up front, waits and ends Partial. The prompt does not say which; canon takes the up-front reading. 2) Ending Partial when nothing was due mislabels an empty run.",
+  "notes": "FAST 10:38 reads SLOW's record: Started 10:08, 30 minutes old, under 60 -> held. Wait: 're-checking every 2 minutes ... for up to 10 minutes, or until the holder's record turns 60 minutes old if that comes within 20 minutes of your start'; stale point 11:08 is 30 minutes after FAST's start, so the 10-minute limit applies (10:48). Still held -> 'end Partial \"lease held by SLOW <run id>\" with no row written'. Row untouched: Next action, Waiting on [Guest or PR, Akshay], Next date 2026-11-02 unchanged. SLOW (10:08) has nothing due on Akshat (Sponsored offered, Next date 2 Nov; the travel step is Akshay's), so it writes nothing to the row; its record shown as No-op for this scope."
+ },
+ "D": {
+  "canon": {
+   "lease_holder": "SLOW",
+   "sends": 40,
+   "drafts": 0,
+   "mails": [
+    {
+     "row": "HYP-D-01..40",
+     "mailbox": "zoya",
+     "kind": "reply",
+     "to": [
+      "(each row's lead)"
+     ],
+     "cc": [
+      "Akshay"
+     ],
+     "attachments": 0
+    }
+   ],
+   "rows": {
+    "HYP-D-01..40": {
+     "status": "unchanged",
+     "waiting_on": "unchanged",
+     "next_date": "2026-11-03",
+     "akshay_segments": 0,
+     "zoya_segments": 1
+    },
+    "HYP-D-41..45": {
+     "status": "unchanged",
+     "waiting_on": "unchanged",
+     "next_date": "unchanged",
+     "akshay_segments": 0,
+     "zoya_segments": 1
+    }
+   },
+   "run_records": {
+    "SLOW": "Partial"
+   },
+   "activities_for_presend": 0
+  },
+  "verdict": "PASS",
+  "findings": "1) Each send takes several reads and writes; 40 sends may not fit before 'Start no new row 40 minutes after you hold the lease or 45 minutes after your start' (10:53). If time runs out first, fewer than 40 go and the rest stay due the same way; the run is still Partial. 2) The rows' Waiting on is not given; Zoya stays its owner after the send ('Zoya added to Waiting on'), so canon says unchanged.",
+  "notes": "45 rows due routine 1 step 1, all keyed, no holds. Cadences: 'Per day: 150 sends in total, 40 per Zoya run'. SLOW ORDER: 'Within each, the oldest due first. A cap is never a hold: one you don't reach stays due as it is (Next date unchanged) and goes first next run, ahead of its group's order, and the run ends Partial.' LIMITS: 'Stop at the cap and say so.' HYP-D-01..40 (oldest raised first) each get a draft reply on their own thread from Zoya's inbox, Cc Akshay, idempotency_key = row key; Activity 'Zoya sent: sponsored step 1 to <name>'; Chase step 1; segment 'Zoya [followup seq-1-2 2026-11-03T00:00:00+09:00]: sponsored step 2 on 3 Nov' (day 14 from the 13 Oct offer is today, so the 7-day rule sets Tue 3 Nov). HYP-D-41..45: 'a cap moves nothing': segment, key, Chase step 0 and Next date 2026-10-27 unchanged; the report names their keys. Run record Partial ('a step ... was skipped'; 'A Partial report names every action left')."
+ },
+ "E": {
+  "canon": {
+   "lease_holder": "FAST",
+   "sends": 1,
+   "drafts": 0,
+   "mails": [
+    {
+     "row": "3f019a301a7f81ef81a4c4780c92fee2",
+     "mailbox": "zoya",
+     "kind": "reply",
+     "to": [
+      "Jheel"
+     ],
+     "cc": [
+      "Akshay",
+      "Jaya",
+      "Sarika"
+     ],
+     "attachments": 0
+    }
+   ],
+   "rows": {
+    "3f019a301a7f81ef81a4c4780c92fee2": {
+     "status": "unchanged",
+     "waiting_on": [
+      "Akshay",
+      "Guest or PR",
+      "Zoya"
+     ],
+     "next_date": "2026-10-27",
+     "akshay_segments": 2,
+     "zoya_segments": 1
+    }
+   },
+   "run_records": {
+    "FAST": "Completed"
+   },
+   "activities_for_presend": 0
+  },
+  "verdict": "PASS",
+  "findings": "1) The open reply segment for ask 2 dates by its key (27 Oct), so WRITE PATH sets Next date to today while the row waits on Akshay; the row shows as due now. 2) No Status named for a mailed sponsored yes (as G). 3) Akshay already told Jheel on WhatsApp the crew is theirs to hire and pay; the prompt still routes the cost question to Akshay as a price not on the wording or sales page. That's correct, but it repeats a question he has partly answered.",
+  "notes": "Two asks -> 'two reply actions raised by one inbound key as msg-<id>-1, msg-<id>-2'. Ask 1 (yes at INR 50,000 + GST): routine, 'Sponsored yes: next steps', Jaya and Sarika in Cc. Ask 2 (camera crew cost): a price not on the wording or sales page ('Never a price ... that isn't on the wording page or the sales page'; 'any other term, a custom package ... goes to Akshay (c)'): segment 'Ask Akshay: Jheel asks what a camera crew would cost for Akshat's January in-person shoot' and Akshay in Waiting on; 'an ask that goes to Akshay keeps that segment beside his \"Ask Akshay\" one' so 'Zoya [reply msg-HYP-E-1010@impactkey.in-2 2026-10-27T10:10:00+09:00]: ...' stays open (Zoya in Waiting on). Holding line goes inside the same mail: 'when your answer to another ask goes on that thread this run, the holding line goes inside that mail instead of a second one': 'hi Jheel, checking with akshay, will come back by friday.' (3 working days out: Fri 30 Oct). One mail, To Jheel, Cc Akshay, Jaya, Sarika (latest inbound From Jheel, To Zoya, Cc Akshay). Segment -1 and the 'Waiting on Jheel: reply to the sponsored commercials' segment complete; new waiting segment for billing details. Akshay segments: his existing travel step + the new Ask Akshay = 2. Next date: earliest dated open segment = the -2 reply segment's key date 27 Oct (before 'original due 2026-10-29'). FAST holds the lease (no SLOW record in this scenario); Completed."
+ },
+ "L1": {
+  "canon": {
+   "lease_holder": "FAST",
+   "sends": 1,
+   "drafts": 0,
+   "mails": [
+    {
+     "row": "3f019a301a7f81ef81a4c4780c92fee2",
+     "mailbox": "zoya",
+     "kind": "reply",
+     "to": [
+      "Jheel"
+     ],
+     "cc": [
+      "Akshay",
+      "Jaya",
+      "Sarika"
+     ],
+     "attachments": 0
+    }
+   ],
+   "rows": {
+    "3f019a301a7f81ef81a4c4780c92fee2": {
+     "status": "unchanged",
+     "waiting_on": [
+      "Akshay",
+      "Guest or PR"
+     ],
+     "next_date": "2026-10-29",
+     "akshay_segments": 1,
+     "zoya_segments": 0
+    }
+   },
+   "run_records": {
+    "FAST": "Completed",
+    "SLOW": "No-op"
+   },
+   "activities_for_presend": 0
+  },
+  "verdict": "PASS",
+  "findings": "None on the lease: 10:50:00.400 and 10:50:00.900 are the same second, and the tie rule is explicit. Status for a mailed yes not named (as G).",
+  "notes": "Answer: FAST holds the lease. Both prompts: 'if both are Started, the earlier record holds it (its created time, to the second): the later writer backs off; only an exact same-second tie goes to FAST.' Compared to the second both are 10:50:00, so FAST holds; FAST's 1-minute confirm read ('read again 1 minute later (Bash sleep 60)') sees the same and keeps it. SLOW backs off: 'only read, re-checking every 2 minutes ... for up to 25 minutes' (to 11:15). FAST does G's work (one 'Sponsored yes: next steps' reply, row as in G) and ends Completed within a few minutes. SLOW then sees FAST's record closed, holds the lease, confirms after 1 minute, runs RECONCILE (reply complete) and finds nothing due on Akshat (Next date 29 Oct): No-op. Had FAST still been Started at 11:15, SLOW would end Partial 'lease held by FAST <run id>' with no row written."
+ },
+ "L2": {
+  "canon": {
+   "lease_holder": "FAST",
+   "sends": 1,
+   "drafts": 0,
+   "mails": [
+    {
+     "row": "3f019a301a7f81ef81a4c4780c92fee2",
+     "mailbox": "zoya",
+     "kind": "reply",
+     "to": [
+      "Jheel"
+     ],
+     "cc": [
+      "Akshay",
+      "Jaya",
+      "Sarika"
+     ],
+     "attachments": 0
+    }
+   ],
+   "rows": {
+    "3f019a301a7f81ef81a4c4780c92fee2": {
+     "status": "unchanged",
+     "waiting_on": [
+      "Akshay",
+      "Guest or PR"
+     ],
+     "next_date": "2026-10-29",
+     "akshay_segments": 1,
+     "zoya_segments": 0
+    }
+   },
+   "run_records": {
+    "FAST": "Completed",
+    "SLOW": "Failed"
+   },
+   "activities_for_presend": 0
+  },
+  "verdict": "PASS",
+  "findings": "Both cases give the same canon. Limits: stale at 60 minutes ('Started 60 minutes ago or more is stale'); FAST waits up to 10 minutes, re-checking every 2 minutes (sleep 120), extended to the stale point when that falls within 20 minutes of its start; then a 1-minute confirm read (sleep 60).",
+  "notes": "Case 1 (SLOW Started 10:50, 48 minutes old at 11:38): held ('one still at Started, begun under 60 minutes ago, holds the lease'). FAST waits: 'for up to 10 minutes, or until the holder's record turns 60 minutes old if that comes within 20 minutes of your start'. 60 minutes falls at 11:50, 12 minutes after FAST's start (within 20), so FAST keeps waiting past 11:48 to 11:50. At 11:50 the record is stale: FAST sets it 'Failed, \"stale: no end written (closed by <FAST run id>)\"', holds the lease, re-reads at 11:51, then works the G reply: Sent/thread check finds nothing, sends 'Sponsored yes: next steps' (To Jheel, Cc Akshay, Jaya, Sarika), row as in G, Completed. FAST may start rows until 25 minutes after holding (about 12:15). Case 2 (Started 10:30, 68 minutes old): stale at once; FAST closes it Failed, confirms after 1 minute and does the same work with no wait."
+ },
+ "L3": {
+  "canon": {
+   "lease_holder": "FAST",
+   "sends": 1,
+   "drafts": 0,
+   "mails": [
+    {
+     "row": "3f019a301a7f81ef81a4c4780c92fee2",
+     "mailbox": "zoya",
+     "kind": "reply",
+     "to": [
+      "Jheel"
+     ],
+     "cc": [
+      "Akshay",
+      "Jaya",
+      "Sarika"
+     ],
+     "attachments": 0
+    }
+   ],
+   "rows": {
+    "3f019a301a7f81ef81a4c4780c92fee2": {
+     "status": "unchanged",
+     "waiting_on": [
+      "Akshay",
+      "Guest or PR"
+     ],
+     "next_date": "2026-10-29",
+     "akshay_segments": 1,
+     "zoya_segments": 0
+    }
+   },
+   "run_records": {
+    "FAST": "Completed",
+    "SLOW": "Failed"
+   },
+   "activities_for_presend": 0
+  },
+  "verdict": "FAIL",
+  "findings": "1) The scenario's premise (FAST waits its limit and gives up) does not happen. FAST's limit runs to SLOW's 60-minute point (11:50, 12 minutes after FAST's start, within 20). At 11:50 FAST finds SLOW's record Started and 60 minutes old, closes it Failed and takes the lease while SLOW is still running, so two runs can write at once. SLOW's closing write can also overwrite the Failed mark. 2) SLOW's only guard is 'Start no new row 40 minutes after you hold the lease or 45 minutes after your start ... (your record must close before it turns stale at 60)'. Nothing makes SLOW stop and close its record by a fixed time (say 55 minutes). A row started at 11:34 can run past 11:50. So 'a live run never reaches 60 minutes with its record open' is not guaranteed.",
+  "notes": "Literal path: FAST 11:38 reads SLOW (Started 10:50, 48 minutes old): held. Re-checks at 11:40 ... 11:48 and, because 'until the holder's record turns 60 minutes old if that comes within 20 minutes of your start' applies, also at 11:50. There 'one Started 60 minutes ago or more is stale: set it Failed ... and it holds nothing'. FAST holds, confirms at 11:51 and sends the G reply; the row ends as in G. To answer the question as framed: if FAST did give up (for example, if SLOW's record were under 60 minutes old at the end of FAST's wait), it would write only its own run record ('end Partial \"lease held by SLOW <run id>\" with no row written'). It would not log the inbound or write a reply segment ('While it does, only read'). The row would stay as found: Next date 2026-11-02, Waiting on [Guest or PR, Akshay], Next action unchanged. The reply action would stay due for the next FAST run (12:38) through STEP 1's unanswered-thread scan, with owner and Next date unchanged."
+ },
+ "L4": {
+  "canon": {
+   "lease_holder": "FAST",
+   "sends": 1,
+   "drafts": 0,
+   "mails": [
+    {
+     "row": "3f019a301a7f81ef81a4c4780c92fee2",
+     "mailbox": "zoya",
+     "kind": "reply",
+     "to": [
+      "Jheel"
+     ],
+     "cc": [
+      "Akshay",
+      "Jaya",
+      "Sarika"
+     ],
+     "attachments": 0
+    }
+   ],
+   "rows": {
+    "3f019a301a7f81ef81a4c4780c92fee2": {
+     "status": "unchanged",
+     "waiting_on": [
+      "Akshay",
+      "Guest or PR"
+     ],
+     "next_date": "2026-10-29",
+     "akshay_segments": 1,
+     "zoya_segments": 0
+    },
+    "3f019a301a7f812ea2a8d1e74b88113c": {
+     "status": "unchanged",
+     "waiting_on": "unchanged",
+     "next_date": "unchanged",
+     "akshay_segments": 0,
+     "zoya_segments": 1
+    }
+   },
+   "run_records": {
+    "FAST": "Completed",
+    "SLOW": "No-op"
+   },
+   "activities_for_presend": 0
+  },
+  "verdict": "PASS",
+  "findings": "SLOW's first check after FAST closes may land at 11:02 or 11:04, depending on the 2-minute cadence; either way rows start after the 1-minute confirm read (about 11:03 to 11:05).",
+  "notes": "SLOW 10:50 reads FAST's record: Started 10:38, 12 minutes old -> held. SLOW 'only read[s], re-checking every 2 minutes (Bash sleep 120) for up to 25 minutes' (to 11:15); FAST's stale point 11:38 is 48 minutes after SLOW's start, outside 20. FAST ends Completed at 11:02; SLOW sees it at its next check, holds, confirms 1 minute later ('read again 1 minute later (Bash sleep 60), still before any row write') and starts rows about 11:03 to 11:05. Stop starting rows: 'Start no new row 40 minutes after you hold the lease or 45 minutes after your start, whichever comes first' -> 45 after 10:50 = 11:35 comes before 40 after about 11:03 (about 11:43): last new row by 11:35. FAST (10:38 to 11:02) wrote Akshat (G reply, row as in G). SLOW: RECONCILE sees it complete; Akshat (Next date 29 Oct) and Amit (Next date 29 Oct) not due -> no row written; No-op. No row is written by both, and none in the same window."
+ },
+ "R1": {
+  "canon": {
+   "lease_holder": "SLOW",
+   "sends": 0,
+   "drafts": 1,
+   "mails": [
+    {
+     "row": "HYP-R1-GUEST",
+     "mailbox": "ad",
+     "kind": "draft-new",
+     "to": [
+      "Riya"
+     ],
+     "cc": [
+      "Kabir",
+      "Neha",
+      "Zoya"
+     ],
+     "attachments": 0
+    }
+   ],
+   "rows": {
+    "HYP-R1-GUEST": {
+     "status": "Recorded",
+     "waiting_on": [
+      "Akshay",
+      "Guest or PR"
+     ],
+     "next_date": "2026-10-27",
+     "akshay_segments": 1,
+     "zoya_segments": 0
+    },
+    "HYP-R1-TASK": {
+     "status": "Doing",
+     "waiting_on": "unchanged",
+     "next_date": "unchanged",
+     "akshay_segments": 0,
+     "zoya_segments": 0
+    }
+   },
+   "run_records": {
+    "SLOW": "Completed"
+   },
+   "activities_for_presend": 0
+  },
+  "verdict": "FAIL",
+  "findings": "1) No Episode for the recording is given, so c(2) applies: 'No Episode for that recording yet: leave the row at Doing, Claude note \"... transcript held: no Episode yet\" (once), and retry next run'. The prompt doesn't say whether (3) and (4) still run this run. Read strictly, the thank-you waits for the Episode, which breaks decision 412 ('it never waits for a transcript'). Read the other way, (3) and (4) run and only the attach and (5) wait. Two outcomes. 2) 'the house copies' on the thank-you Cc is not defined in the prompt: is it Zoya (CLAUDE.md decision 225), or Sarika and Ranjita (the Amit precedent)? The prompt only says never Mamatha. 3) The thank-you is drafted only from inside c, the transcript flow. Nothing in SLOW drafts it when no transcript arrives, though 412 says it never waits for one (the calendar routine may cover this; it isn't in these prompts).",
+  "notes": "c(1): save riya-sen-23oct.txt with MCP Emails (action attachment); it is already .txt, so no conversion. c(2): no Episode given ('Do not invent any ... row') -> Task row Task state Doing, Claude note '2026-10-27: transcript held: no Episode yet', retry next run; no attach, no '## Transcript' section. c(3) (taken as independent of the Episode): Founder Thesis, guest row still Booked; decision 374's test passes (both voices at length, 52 minutes >= 20) -> Status Recorded, Call type cleared, note '2026-10-27: recorded 23 Oct (transcript)'. c(4): no 'Zoya drafted: FT thank-you' Activity and no thank-you in Akshay's Sent -> 'create the draft in ad@thepodium.in as a standalone new mail, never a reply on the PR thread: approved \"FT thank-you after recording\" wording in Akshay's voice, subject \"Next Steps | <guests> @ <company> <> Founder Thesis\", To the guests, Cc the PR, every other Stakeholder and the house copies, no attachment'. So: mailbox ad@thepodium.in, new mail (draft), subject 'Next Steps | Riya Sen @ Hypo Foods <> Founder Thesis', To Riya Sen (her People row has an Email), Cc Kabir (PR), Neha (Hypo Foods comms) and the house copies (taken as Zoya), no attachment ('never attach the .txt to a thank-you draft'); wording per Rules for Zoya; read back; log 'Zoya drafted: FT thank-you for Riya Sen'. Guest row: Waiting on gets Akshay, Next action gets 'Akshay: send the thank-you draft to Riya (draft ready)', the existing 'Waiting on Kabir: nothing open' stays. Next date: no dated segment -> 'with none dated it is the day of the write' = 2026-10-27. c(5) not reached: the row stays at Doing until the Episode exists (then Done, Waiting on cleared, attach note). Ranjita's reply is team mail: no reply and no send; quiet hours don't apply. Run record Completed (the transcript wait counts as a hold)."
+ },
+ "R2": {
+  "canon": {
+   "lease_holder": "FAST",
+   "sends": 1,
+   "drafts": 0,
+   "mails": [
+    {
+     "row": "HYP-R2",
+     "mailbox": "zoya",
+     "kind": "reply",
+     "to": [
+      "Pallavi"
+     ],
+     "cc": [
+      "Akshay"
+     ],
+     "attachments": 0
+    }
+   ],
+   "rows": {
+    "HYP-R2": {
+     "status": "unchanged",
+     "waiting_on": [
+      "Akshay",
+      "Guest or PR",
+      "Zoya"
+     ],
+     "next_date": "unchanged",
+     "akshay_segments": 1,
+     "zoya_segments": 2
+    }
+   },
+   "run_records": {
+    "FAST": "Completed"
+   },
+   "activities_for_presend": 0
+  },
+  "verdict": "FAIL",
+  "findings": "1) Two lines conflict on Pallavi's second question ('when can we expect the episode?'). STEP 1c sends 'a release-date ask, any publishing ask' to Akshay as a new 'Ask Akshay' segment. RECORDING STATUS says 'A question from their side about it while that is open adds no second Akshay ask: it waits on his answer.' The prompt doesn't settle whether an episode-timing question during an unsettled recording counts as 'about it'. A literal reader can add a second Akshay ask. Canon takes the decision-411 reading (one Akshay ask). 2) WRITE PATH reads 'a segment's date: the date its text gives', so the recording question's '23 Oct' (the recording date) becomes the segment's due date and keeps Next date at 23 Oct, which looks overdue.",
+  "notes": "Recording not settled: the calendar event still exists, but there's no Zencastr audio, no transcript and nothing from Akshay. An uncancelled event doesn't show the recording happened ('settled from our side only: the calendar event, Zencastr, a transcript, Akshay's mail or WhatsApp'). 'Still unclear: once, Akshay in Waiting on and the segment \"Akshay: did the 23 Oct recording with Dev happen? Write yes or no in Your call\"'. 'Never ask the guest, PR or anyone outside the team, and never write \"Zoya: confirm with <PR>\"'; 'Every action due from Akshay goes here, on its Engagement, never on WhatsApp' (and 'No WhatsApp from this run'). Pallavi's two asks key as msg-HYP-R2-PR@hypopr.example-1 and -2. Both wait on Akshay's answer, so both stay open as Zoya reply segments beside his. FAST sends one holding reply from Zoya's inbox on her thread (it was sent To Zoya): 'hi Pallavi, checking with akshay, will come back by friday.' (Fri 30 Oct). To Pallavi, Cc Akshay (latest inbound From Pallavi, To Zoya, Cc Akshay). It doesn't ask whether the recording happened. Log 'Zoya sent: holding reply to Pallavi'. Status stays Booked. Waiting on: Akshay, Guest or PR, Zoya. Next date: earliest dated segment is the Akshay one dated by its text (23 Oct), which is the current value, so unchanged."
+ },
+ "R3": {
+  "canon": {
+   "lease_holder": "FAST",
+   "sends": 1,
+   "drafts": 0,
+   "mails": [
+    {
+     "row": "HYP-R3",
+     "mailbox": "zoya",
+     "kind": "reply",
+     "to": [
+      "Sreya"
+     ],
+     "cc": [
+      "Akshay",
+      "Mala",
+      "Rajmohan",
+      "Santhosh"
+     ],
+     "attachments": 0
+    }
+   ],
+   "rows": {
+    "HYP-R3": {
+     "status": "Booked",
+     "waiting_on": "unchanged",
+     "next_date": "2026-10-29",
+     "akshay_segments": 0,
+     "zoya_segments": 0
+    }
+   },
+   "run_records": {
+    "FAST": "Completed"
+   },
+   "activities_for_presend": 0
+  },
+  "verdict": "PASS",
+  "findings": "1) No calendar data is given, so the INVITES clash check (the slot 18:30 to 20:30 JST, plus 30 minutes before and after) is taken as clear. 2) INVITES doesn't name the Status after an invite; Booked is inferred from 'Move each row on: Status'.",
+  "notes": "Slot agreed in writing with a time zone (Thu 29 Oct 15:00 IST = 18:30 JST, outside quiet hours). INVITES: check Akshay's calendar, then 'create the invite, then confirm it on the thread in the same run (organiser ad@thepodium.in, Meet or studio link, everyone on their side from the thread, JST and IST, \"zoya-key:<row id>:<type>:<date>\" in the description ...), set Next date, Call type and Call link, log \"Zoya created: invite\"'. Attendees from their side: Sreya, Rajmohan, Santhosh, Mala; Mamatha is not added. Reply: draft action reply on HYP-R3-IN in Zoya's inbox, reply_all false. To Sreya (her move, sender); Cc Akshay, Rajmohan, Santhosh, Mala. Mamatha is dropped ('never Mamatha'). Read-back the prompt requires: 'read the draft back (that it is a reply on that thread, and that To and Cc together hold everyone on the latest inbound, its From, To and Cc, less your own address, bounced addresses, Akshay's other addresses, Mamatha and, on un#, Sri, plus Akshay), then send it; any edit is read back again'. Also drop any address tagged 'Email bounced' (BOUNCES). Then the LEAK and SHOW checks. Row: Status Booked, Next date 2026-10-29, Call type Recording, Call link, Waiting on Guest or PR (booked recording), Activities logged."
+ },
+ "I1": {
+  "canon": {
+   "lease_holder": "FAST",
+   "sends": 0,
+   "drafts": 0,
+   "mails": [],
+   "rows": {
+    "3fa19a301a7f811da4a8d2ff78897041": {
+     "status": "unchanged",
+     "waiting_on": [
+      "Guest or PR",
+      "Zoya"
+     ],
+     "next_date": "2026-11-03",
+     "akshay_segments": 0,
+     "zoya_segments": 1
+    }
+   },
+   "run_records": {
+    "SLOW 10:50": "Failed",
+    "FAST 11:38": "No-op",
+    "SLOW 16:50": "Completed"
+   },
+   "activities_for_presend": 1
+  },
+  "verdict": "PASS",
+  "findings": "1) This depends on FAST checking the lease even though it has nothing of its own to write. If it checked only 'Before your first row write' (as in H), it would never read SLOW's crashed record. SLOW reads only 'run:zoya:fast:' records, so the 10:50 record would stay Started for good. No rule makes a run close its own kind's crashed record. 2) The key is the same for both runs only because the step 1 key dates to 27 Oct (see C finding 1).",
+  "notes": "FAST 11:38: SLOW's record Started 10:50 is 48 minutes old -> held. Its 60-minute point (11:50) is within 20 minutes of FAST's start, so FAST waits to 11:50, then 'set it Failed, \"stale: no end written (closed by <run id>)\"' and holds the lease after the 1-minute confirm read. Ronit's row: the step is type followup, which is SLOW's ('followup ... are SLOW's'), and there's no inbound, so FAST takes no action on it. It doesn't resend or log it; RECONCILE-type recovery isn't FAST's. FAST ends No-op. SLOW 16:50: RECONCILE (FAST's latest record is 11:38) has nothing to recover. STEP 2 selects Ronit (Sponsored offered, Next date 27 Oct) and keys it to the same key (seq-1-1, 2026-10-27T00:00:00+09:00). The checks run before any send: 'look for the action key on an Activity, then read your Sent and the thread for a message from us after the action was raised that does what the action asks'; AFTER SEND: 'a run that finds one sends nothing and completes whatever below is missing for it (never a second Activity for one message)'. HYP-I1-SENT matches: one Activity, Source ID 'msgid:HYP-I1-SENT@mcpemails.example', with its Action key ('a send found by the thread check gets its Action key too'). Chase step 1. Segment 'Zoya [followup seq-1-2 2026-11-03T00:00:00+09:00]: sponsored step 2 on 3 Nov'; Next date 2026-11-03 (7-day rule after 27 Oct); Zoya added to Waiting on. Neither run resends it, and the same idempotency_key would dedupe a resend anyway. Final Activity count for HYP-I1-SENT: 1."
+ },
+ "I2a": {
+  "canon": {
+   "lease_holder": "FAST",
+   "sends": 1,
+   "drafts": 0,
+   "mails": [
+    {
+     "row": "3f019a301a7f81ef81a4c4780c92fee2",
+     "mailbox": "zoya",
+     "kind": "reply",
+     "to": [
+      "Jheel"
+     ],
+     "cc": [
+      "Akshay",
+      "Jaya",
+      "Sarika"
+     ],
+     "attachments": 0
+    }
+   ],
+   "rows": {
+    "3f019a301a7f81ef81a4c4780c92fee2": {
+     "status": "unchanged",
+     "waiting_on": [
+      "Akshay",
+      "Guest or PR"
+     ],
+     "next_date": "2026-10-29",
+     "akshay_segments": 1,
+     "zoya_segments": 0
+    }
+   },
+   "run_records": {
+    "FAST": "Completed",
+    "SLOW": "No-op"
+   },
+   "activities_for_presend": 0
+  },
+  "verdict": "PASS",
+  "findings": "The old segment 'Zoya: send next steps to Jheel' is keyed by FAST ('Any other old-format segment still unkeyed is FAST's to key by the fixed keying rules on the developer page'). Those rules aren't visible here. ACTIONS says to build the raised time from 'the Activity or message that created it, and its Claude note date'. That could be the inbound's 09:55 or the inbox's 10:20, while STEP 1 keys the same ask at the message time. Inside one FAST run the Sent check covers a mismatch, but the key isn't provably unique.",
+  "notes": "Case a: FAST's record is 0.5 s earlier. If both are in second 10:50:00 it's a tie and goes to FAST; if not, FAST is earlier. Either way FAST holds and SLOW backs off and waits. Only FAST acts: the step is type reply ('a mailed sponsored yes is yours'). It keys and writes the key onto the segment before acting, then sends one 'Sponsored yes: next steps' (To Jheel, Cc Akshay, Jaya, Sarika) with idempotency_key = the action key, logs it and completes the segment. SLOW later holds; its RECONCILE sees the action complete, and it never sends FAST's types ('never a send of FAST's types'). One mail. What prevents a second: the lease first, then the type split, then the Activity Action key and Sent/thread check, then idempotency_key."
+ },
+ "I2b": {
+  "canon": {
+   "lease_holder": "FAST",
+   "sends": 1,
+   "drafts": 0,
+   "mails": [
+    {
+     "row": "3f019a301a7f81ef81a4c4780c92fee2",
+     "mailbox": "zoya",
+     "kind": "reply",
+     "to": [
+      "Jheel"
+     ],
+     "cc": [
+      "Akshay",
+      "Jaya",
+      "Sarika"
+     ],
+     "attachments": 0
+    }
+   ],
+   "rows": {
+    "3f019a301a7f81ef81a4c4780c92fee2": {
+     "status": "unchanged",
+     "waiting_on": [
+      "Akshay",
+      "Guest or PR"
+     ],
+     "next_date": "2026-10-29",
+     "akshay_segments": 1,
+     "zoya_segments": 0
+    }
+   },
+   "run_records": {
+    "FAST 11:38:00": "Completed",
+    "FAST 11:38:20": "Completed"
+   },
+   "activities_for_presend": 0
+  },
+  "verdict": "FAIL",
+  "findings": "1) The lease doesn't stop a second FAST run. Each run reads only the other kind's records ('read the latest run record with Source ID starting \"run:zoya:slow:\"'). So the scheduled run and the manual re-fire both 'hold' and write the same row at once. That breaks 'exactly one run holds the lease at any time'. 2) Only idempotency_key prevents a duplicate send: both runs derive the same action key and pass it to email_compose or the draft send. That relies on (a) MCP Emails honouring the key across sessions and drafts, and (b) both runs keying the old-format segment the same way (see the I2a finding). The Activity and Sent/thread checks can race: run 2 can check before run 1's send lands. 3) Both runs can create a draft ('never a second draft' can't hold under a race), and both can try to log the Activity. MESSAGE IDENTITY's lookup-before-create also races. 4) Both WRITE PATH row writes can collide; the re-read repairs only a missing segment, not duplicates.",
+  "notes": "Case b: FAST 11:38:00 and FAST 11:38:20 each find no SLOW record holding, so each holds. Both see the same due reply. Run 1 sends with idempotency_key = the reply action key. Run 2's Activity check may run before run 1 logs, and its Sent check may run before run 1's send lands; its send carries the same key, so the provider should return the first send rather than send again. Canon assumes the provider dedupes: 1 mail, row as in G. Without provider dedupe, it would be 2 mails and 2 drafts."
+ },
+ "I3": {
+  "canon": {
+   "lease_holder": "FAST",
+   "sends": 0,
+   "drafts": 0,
+   "mails": [],
+   "rows": {
+    "3f019a301a7f81ef81a4c4780c92fee2": {
+     "status": "unchanged",
+     "waiting_on": "unchanged",
+     "next_date": "unchanged",
+     "akshay_segments": 0,
+     "zoya_segments": 0
+    }
+   },
+   "run_records": {
+    "SLOW 10:50": "Partial",
+    "FAST 11:38": "No-op"
+   },
+   "activities_for_presend": 0
+  },
+  "verdict": "FAIL",
+  "findings": "1) Nothing ever logs the unlogged send. Jheel's inbound is now answered by HYP-I3-SENT, so it isn't 'owed' ('a question ... that no message from us has answered'). STEP 1 takes only threads whose last outside message is unanswered, so FAST 11:38 has no action to run the 'A match: send nothing, log the Activity' check on. RECONCILE runs only when FAST has no record in 90 minutes or a reply action over 2 hours old is incomplete; neither is true here. The send, the inbound and the row move are never recorded. The row stays Sponsored offered, 'Waiting on Jheel: reply to the sponsored commercials', which risks a sponsored follow-up after a yes on 2 Nov. Final count is 0, not 1. 2) No one closes FAST's crashed 10:38 record. SLOW 10:50 sees it at 12 to 37 minutes old and gives up at 11:15, before it goes stale at 11:38 (48 minutes after SLOW's start is outside the 20-minute extension). FAST 11:38 reads only 'run:zoya:slow:' records. Later SLOW runs read only FAST's latest record, which is 11:38's. So the 10:38 record stays Started for good. 3) SLOW 10:50 waits 25 minutes and ends Partial with nothing due in scope. 4) Side note: the pre-existing send had only Akshay in Cc, without Jaya and Sarika, which revenue mail requires. Recovery can't repair that.",
+  "notes": "SLOW 10:50: FAST's record (Started 10:38, 12 minutes old) holds. SLOW waits, reading only, re-checking every 2 minutes for up to 25 minutes. The stale point 11:38 is 48 minutes after its start, outside the 20-minute extension. At 11:15 it ends Partial 'lease held by FAST <run id>' with no row written. RECONCILE couldn't write anyway, and the trigger doesn't fire: FAST has a record within 90 minutes, and the action raised at 09:55 is under 2 hours old. FAST 11:38: its lease check reads SLOW's latest record (10:50, closed Partial), so it holds. It doesn't read or close its own 10:38 record, which stays Started (left out of run_records because the enum has no 'Started'). The reply action: STEP 1 sees our 10:41 reply after Jheel's inbound, so no reply is owed. No Zoya segment was written before the crash, so FAST has no action. It sends nothing and logs nothing: No-op. Neither run resends; the same idempotency_key would dedupe a resend anyway. Final Activity count for HYP-I3-SENT: 0, and the row is unchanged."
+ }
+}

@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-01",
+  "builds": {"patch.py reproduces inbox/calendar/sweep/hostboards byte-identical": true, "build_one.py reproduces FAST 05927d11c1225f47 and SLOW 20bc0a0389291942": true, "6948d57 holds SLOW 20bc0a0389291942": true},
+  "diffs": {"zoya-one": "PASS: field list, KEYS, old-format heading, NEXT ACTION, run ref, pin only", "slow": "PASS: same four edits", "inbox": "PASS: short rule + 3 cuts, all repeats", "calendar": "PASS: rule line only", "sweep": "PASS: rule, PART A list, STEP 3t", "hostboards": "PASS: rule line only"},
+  "cases": {
+    "Z1": "PASS",
+    "Z2": "FAIL: old-format now means 'no Action keys line', so a bracketed segment is re-keyed by inference instead of using its own key",
+    "Z3": "PARTIAL: 4 literal templates covered; not covered: old-format 'write it back onto that segment', STEP 2 'writes that key onto the row as its segment', nurture 'the segment stays' (key line never advances)",
+    "Z4": "FAIL: names unique but prefix match ambiguous; no longest-match rule",
+    "I1": "PASS",
+    "S1": "PASS with defects: <short name> undefined in sweep; shortening can break short-name match",
+    "H1": "PASS",
+    "sizes": "PASS: inbox 65,336 = limit (0 headroom); others under"
+  },
+  "defects": [
+    "Old-format definition misclassifies bracketed segments (Z2)",
+    "Two 'onto that segment' sentences contradict KEYS (Z3)",
+    "Nurture segment stays: Action keys line stays seq-7-1, next nurture may match prior Activity's Action key and not send",
+    "WRITE PATH 'every other segment stays' conflicts with moving other segments' keys and dropping earlier-stage steps",
+    "Non-Zoya rules omit 'and its key': orphan Action keys lines when inbox/calendar/sweep/hostboards remove a Zoya step",
+    "Sweep 3t: short name undefined; shortening may change first words",
+    "Prefix-match ambiguity for short names (Z4)",
+    "Existing templates over 80 chars with past dates (inbox 153/179, '(since <D Mon YYYY>)', '(thank-you sent <D Mon>)') conflict with the rule, no precedence stated; 3t trims >120 ones daily"
+  ]
+}

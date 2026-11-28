@@ -1,0 +1,311 @@
+{
+ "scope": "Offline replay of decision 420 batch candidates vs live prompts; no MCP or network calls. Schemas checked: MCPEmail email_read, draft, email_compose.",
+ "build_check": "batch.py re-run on the live-*.txt inputs reproduces calendar, sweep, whatsapp, evals and dossiers byte for byte (out hashes bc12e5b1f9609d89, 1a8ba22997f96bb2, fadb884415fcf0a9, 13b586551517c465, 5291198700471462). zoya-slow.txt sha256 85ef8277b1cd51fe..., which equals git show c06b4c6:routines/zoya/release/zoya-slow-work.txt; live SLOW is dedea9f8eb7af561 = e20647b. zoya-one version stamp recomputed (sha256 with @@VERSION@@ placeholder): f17f715a7623 matches; live c00855906ab3 also reproduces.",
+ "prompts": {
+  "calendar": {
+   "diff_check": "PASS: only 420 edits. TOOLS drops Gmail and adds MAILBOX; MAIL FORMAT sends only from Zoya, drafts via MCP Emails; 'ad@ only read and drafted in'; FT thank-you and client thank-you drafts via MCP Emails. 121 -> 122 lines (MAILBOX).",
+   "cases": [
+    {
+     "case": "Residual Gmail call",
+     "verdict": "PASS with D3",
+     "lines": "Remaining 'Gmail' words (L50 search Gmail for the address, L54 Gmail threads, L112/118 in:sent, L119 host mailed guest) are all covered by MAILBOX's search, thread and in:sent mappings. 'Source Gmail' is an Activity option, not a call."
+    },
+    {
+     "case": "Mail from ad@ other than the loop-in",
+     "verdict": "PASS",
+     "lines": "L5 'you send only the double-booking check ... and the FT day-before note (from Zoya's inbox)'; L18 'every send ... from Zoya's inbox'; L31 'ad@ is otherwise only read and drafted in'."
+    },
+    {
+     "case": "FT thank-you draft",
+     "verdict": "PARTIAL (D6)",
+     "lines": "L113 'Draft it in ad@ with MCP Emails (draft: a reply on the latest thread ...)': the right tool, but a reply draft can't set To."
+    },
+    {
+     "case": "Client thank-you draft",
+     "verdict": "PASS",
+     "lines": "L119 'MCP Emails: draft create as a NEW mail'."
+    },
+    {
+     "case": "Akshay's sent check",
+     "verdict": "PASS (D3 caveat on the thread recipe)",
+     "lines": "L112/L118 'Gmail in:sent' + MAILBOX 'in:sent means folder sent'."
+    },
+    {
+     "case": "gmail: Source ID",
+     "verdict": "PASS with D7",
+     "lines": "MAILBOX gmail: mapping."
+    }
+   ],
+   "defects": [
+    "D3",
+    "D6",
+    "D7"
+   ]
+  },
+  "sweep": {
+   "diff_check": "PASS: only 420 edits. TOOLS, MAILBOX, the Gmail link-unlinking rule replaced by a real-link draft rule, 3d draft via MAILBOX, and 6c from forward to listing. The edits are incomplete, though; see D4.",
+   "cases": [
+    {
+     "case": "STEP 3 row reads",
+     "verdict": "PASS with D3",
+     "lines": "'HOW TO READ GMAIL FOR A ROW', 'read Gmail for the row' + MAILBOX search/thread mapping; 60-row cap unchanged."
+    },
+    {
+     "case": "3d pre-release draft",
+     "verdict": "PASS with ambiguity (D6)",
+     "lines": "L68 'Create a draft in ad@thepodium.in (MAILBOX)': draft via MCP Emails, but reply vs create is open."
+    },
+    {
+     "case": "6c forwards nothing, weekly row, dedupe by Message-ID",
+     "verdict": "PARTIAL (D4, D5)",
+     "lines": "L109 'forward nothing ... one row a week ... a Message-ID already on it is skipped'; HARD RULES L32 still permits 6c forwards; the dedupe is stale and breaks at the week boundary."
+    },
+    {
+     "case": "Residual Gmail call",
+     "verdict": "PASS",
+     "lines": "BEFORE ANY SEND 'get_thread' and 3b 'Gmail Activities' are mapped or are Notion reads."
+    }
+   ],
+   "defects": [
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7"
+   ]
+  },
+  "whatsapp": {
+   "diff_check": "PASS: 3 edits (TOOLS, 0d mail source, 'thank-you drafts waiting in Akshay's Drafts'). No MAILBOX block.",
+   "cases": [
+    {
+     "case": "0d thread read",
+     "verdict": "PASS",
+     "lines": "L50 'MCP Emails on ad@thepodium.in, inbox_id cd37e47e..., and on Zoya's inbox, read only; never the Gmail connector'."
+    },
+    {
+     "case": "gmail: Source ID row",
+     "verdict": "WEAK (D7)",
+     "lines": "No recipe: the model has to work out on its own that it should search by address."
+    }
+   ],
+   "defects": [
+    "D7"
+   ]
+  },
+  "evals": {
+   "diff_check": "PASS: TOOLS, MAILBOX, STEP 2a pitch thread via MAILBOX, Gemini notes via MAILBOX.",
+   "cases": [
+    {
+     "case": "Pitch thread read",
+     "verdict": "PARTIAL (D3c, D7)",
+     "lines": "L20 'MAILBOX: the thread of the latest Email Activity ..., by its msgid:, else by the guest's or PR's address'. There's no recipe for finding by Message-ID, and the address fallback has no way to tell threads apart."
+    },
+    {
+     "case": "Skill Gmail step",
+     "verdict": "FAIL (D2)",
+     "lines": "ft-guest-eval step 5 'Gmail on ad@thepodium.in'."
+    },
+    {
+     "case": "No sends",
+     "verdict": "PASS",
+     "lines": "L3 'never send, reply, draft, move or mark anything'."
+    }
+   ],
+   "defects": [
+    "D2",
+    "D3",
+    "D7"
+   ]
+  },
+  "dossiers": {
+   "diff_check": "PASS: opening line, TOOLS, MAILBOX, STEP 2a.",
+   "cases": [
+    {
+     "case": "Pitch thread read",
+     "verdict": "PASS with D3, D7",
+     "lines": "L18 'pitch thread in ad@thepodium.in (MAILBOX; Source ID \"gmail:<thread id>\" or msgid:)'."
+    },
+    {
+     "case": "Skill Gmail step",
+     "verdict": "FAIL (D2)",
+     "lines": "ft-host-dossier Stage 0 'Gmail - search for the guest's name ...'; the prompt only says what to do 'if a skill would ask'."
+    }
+   ],
+   "defects": [
+    "D2",
+    "D3",
+    "D7"
+   ]
+  },
+  "zoya-one": {
+   "diff_check": "PASS: only 420 edits, plus the version stamp c00855906ab3 -> f17f715a7623 (verified) and the SLOW pin e20647b/dedea9f8 -> c06b4c6/85ef8277b1cd51fe (verified). Edits: TOOLS, SENDING (the Gmail quote clause dropped; loop-in paragraph rewritten), MESSAGE IDENTITY (rfc822msgid dropped), STEP 1 (MCP Emails), HARD RULES.",
+   "cases": [
+    {
+     "case": "Not in her inbox, their side wrote last",
+     "verdict": "PASS",
+     "lines": "L50: email_compose reply on the latest (theirs), so To = their sender; reply_all false, Cc Zoya, include_signature false, key loopin:<Message-ID>, 'thanks <first name>, adding @Zoya to coordinate'; 'the step stays in Next action'."
+    },
+    {
+     "case": "Not in her inbox, we wrote last",
+     "verdict": "FAIL (D1)",
+     "lines": "L50: a reply on our own latest message goes To ad@ itself; email_compose reply can't take to; this breaks L96 'Akshay is never in To'. The old terse follow-up is correctly gone."
+    },
+    {
+     "case": "Row at Parked",
+     "verdict": "PASS",
+     "lines": "L50 'Never on a row at Parked, We declined, They declined or Unresponsive'."
+    },
+    {
+     "case": "Residual Gmail call",
+     "verdict": "PASS",
+     "lines": "No Gmail tool left; 'Gmail id' in MESSAGE IDENTITY only refers to old provider ids."
+    },
+    {
+     "case": "Other ad@ sends",
+     "verdict": "PASS",
+     "lines": "L102 'from ad@thepodium.in you send only the loop-in in SENDING (decision 420)'."
+    }
+   ],
+   "defects": [
+    "D1",
+    "D8"
+   ]
+  },
+  "zoya-slow": {
+   "diff_check": "PASS: TOOLS, loop-in paragraph (same text as FAST), MESSAGE IDENTITY, HARD RULES. sha256 85ef8277b1cd51fe matches the pin in zoya-one and commit c06b4c6.",
+   "cases": [
+    {
+     "case": "Loop-in (both directions), Parked",
+     "verdict": "as zoya-one: their-side PASS, we-wrote-last FAIL (D1), Parked PASS",
+     "lines": "L62"
+    },
+    {
+     "case": "Thank-you draft in ad@ (4)",
+     "verdict": "PASS for 420 (draft allowed; MCP Emails is the only mail tool); conflicts with calendar on reply vs new (D6, pre-existing)",
+     "lines": "L52"
+    }
+   ],
+   "defects": [
+    "D1",
+    "D6",
+    "D8"
+   ]
+  }
+ },
+ "defects": {
+  "D1": {
+   "severity": "high",
+   "prompts": [
+    "zoya-one",
+    "zoya-slow"
+   ],
+   "defect": "The loop-in where we wrote last can't be addressed to the current contact. The prompt says 'email_compose action reply on the thread's latest message ... To and Cc set explicitly', but MCP Emails email_compose schema: to is 'Send and forward only: a reply goes to the original sender'. When we wrote last, the latest message is Akshay's own (ad@ Sent), so the reply goes To ad@thepodium.in. That breaks OUTSIDE MAIL ('Akshay is never in To'), and the contact is reached only if the model puts them in Cc. The inbox replay found the same limit (replay1B: 'a reply cannot set to').",
+   "deciding_lines": [
+    "zoya-one L50 / zoya-slow L62: 'email_compose action reply on the thread's latest message in Akshay's inbox ..., reply_all false, To and Cc set explicitly'",
+    "zoya-one L96 HARD RULES OUTSIDE MAIL: 'To is whoever's move it is ... Akshay is never in To'",
+    "zoya-one L49 THREADING itself notes 'MCP Emails' reply puts the thread's last sender in To'"
+   ],
+   "fix": "For the loop-in use the same path as THREADING: MCP Emails draft action reply on ad@ (inbox cd37e47e), then draft update to=[contact], cc=[...] , read back, then draft send with idempotency_key loopin:<Message-ID>. Or limit email_compose reply to the case where their side wrote last (To = their sender is then right). SLOW changes too, so the pin moves again."
+  },
+  "D2": {
+   "severity": "high",
+   "prompts": [
+    "dossiers",
+    "evals"
+   ],
+   "defect": "The skills these routines run still tell the model to use Gmail. ft-host-dossier Stage 0: 'Gmail: search for the guest's name, company, ... PR agency'. Its checklist: 'Drive and Gmail searched'. ft-guest-eval step 5: 'Mail (Gmail on ad@thepodium.in ...)'. MAILBOX only remaps 'a step below', and a skill's steps aren't below. While the Gmail connector is still attached, which it is until the CTO detaches it, a skill run can call it.",
+   "deciding_lines": [
+    "dossiers/evals L4 MAILBOX: 'Where a step below says Gmail, use: ...'",
+    "skills/ft-host-dossier/SKILL.md L31, L78, L169",
+    "skills/ft-guest-eval/SKILL.md L48"
+   ],
+   "fix": "Add to MAILBOX in both prompts: 'This holds inside every skill you run: where a skill says Gmail, use MCP Emails on ad@ as above; never load or call the Gmail connector.' Better still, update the skills too."
+  },
+  "D3": {
+   "severity": "medium",
+   "prompts": [
+    "calendar",
+    "sweep",
+    "evals",
+    "dossiers"
+   ],
+   "defect": "The batch MAILBOX recipe is behind inbox round 2. (a) include_folders is ['inbox','sent'] with no 'archive'. The email_read schema says 'IMAP covers INBOX only unless you name archive or sent folders', so any thread the inbox routine archived (RSVPs) or Akshay archived can't be seen: booking threads, PR replies, Gemini notes. Sweep 6c is limited to 'inbox folder' as well. The inbox round 2 recipe uses ['inbox','sent','archive']. (b) The thread recipe searches by subject words, then reads each message to test References/In-Reply-To. Replay1A found that action read returns no headers, and round 2 switched to email_read search with text = the Message-ID. (c) 'a Message-ID: email_read original' covers reading a Message-ID but gives no way to find a message by its Message-ID, which evals STEP 2a ('by its msgid:') and dossiers ('or msgid:') need. Round 2 maps that as search text = Message-ID.",
+   "deciding_lines": [
+    "batch.py mailbox(): 'include_folders [\"inbox\", \"sent\"]'; '(found by email_read search on its subject words, each read with action read)'; 'a Message-ID: email_read original'",
+    "inbox.py L38-43 (round 2): archive folder; 'rfc822msgid: email_read search with text = the Message-ID'; THREAD by search text = Message-ID",
+    "sweep L109: 'Search ad@thepodium.in (MAILBOX, inbox folder)'"
+   ],
+   "fix": "Bring the batch MAILBOX in line with inbox round 2: archive added to the folders, THREAD by search text = Message-ID with original reads, and finding a message by Message-ID through search text. For sweep 6c, use the inbox and archive folders, not the inbox alone."
+  },
+  "D4": {
+   "severity": "medium",
+   "prompts": [
+    "sweep"
+   ],
+   "defect": "Stale forward wording around the new 6c contradicts it. HARD RULES still read 'Never send mail other than STEP 6c (billing forwards to Jaya)'. Inside 6c: 'Personal purchases ... are never forwarded', and 'Once per message, by Gmail message id ... before forwarding, skip the message if an Activity ... holds its message id ... also skip it if Sent has a forward to Jaya'. That gives a second dedupe key (a Gmail id, which no longer exists) beside the new Message-ID one. The REPORT still says 'billing docs forwarded to Jaya (vendor: what)'. A model can read HARD RULES as permission to forward, or report a forward that never happened.",
+   "deciding_lines": [
+    "sweep L32 HARD RULES",
+    "sweep L109 tail ('Once per message, by Gmail message id ...')",
+    "sweep L112 REPORT"
+   ],
+   "fix": "HARD RULES: 'Never send mail (decision 420); create drafts only in STEP 3d.' Reword the 6c tail as 'never listed', with the dedupe keyed by Message-ID only (older Activities holding a Gmail id are history). REPORT: 'billing docs listed for Jaya'."
+  },
+  "D5": {
+   "severity": "medium",
+   "prompts": [
+    "sweep"
+   ],
+   "defect": "The weekly billing row's dedupe breaks at the week boundary. The search looks back 4 days, but a Message-ID is only skipped if it is already on the current week's row ('billing:<YYYY-Www>'). Monday's run will list Thursday-to-Sunday mail a second time on the new week's row. It's also not said whether <YYYY-Www> is the run's week or the mail's week.",
+   "deciding_lines": [
+    "sweep L109: 'since 4 days ago' ... 'Source ID \"billing:<YYYY-Www>\": one row a week ... a Message-ID already on it is skipped'"
+   ],
+   "fix": "Key the week as the run's ISO week, and skip a Message-ID found on this week's or last week's billing: row."
+  },
+  "D6": {
+   "severity": "medium",
+   "prompts": [
+    "calendar",
+    "sweep"
+   ],
+   "defect": "Drafts made as replies can't take the To the prompt asks for. The calendar FT thank-you is 'draft: a reply on the latest thread with the guest or PR ... To: the guest and the main PR contact (Via)'. The MCP Emails draft schema says to is 'Not for reply: a reply draft goes to the original sender ... an update can change it afterwards'. MAILBOX offers 'action reply' and never mentions the follow-up update, so the draft lands addressed to the latest sender (possibly Zoya or Akshay) and Akshay may send it that way. Sweep 3d says only 'Create a draft in ad@ (MAILBOX)' and leaves reply vs create open. Separately, a pre-existing conflict (not from 420): SLOW (4) says the FT thank-you is 'a standalone new mail, never a reply on the PR thread', while calendar says reply first.",
+   "deciding_lines": [
+    "calendar L113",
+    "calendar L4 MAILBOX 'A draft: MCP Emails draft (action reply on a thread's latest message, or create for a new mail)'",
+    "sweep L68 3d b",
+    "zoya-slow L52 (4)"
+   ],
+   "fix": "MAILBOX: 'a reply draft: draft reply, then draft update with to and cc as the step says, then draft_read to check'. Sweep 3d: 'draft create, a new mail'. Settle the FT thank-you form in one place, ideally a new mail as in SLOW."
+  },
+  "D7": {
+   "severity": "low",
+   "prompts": [
+    "calendar",
+    "sweep",
+    "evals",
+    "dossiers",
+    "whatsapp"
+   ],
+   "defect": "A 'gmail:<thread id>' Source ID is resolved 'by the guest's or PR's address and the subject', but the id doesn't carry the subject. A PR address has many threads (one per pitched guest), and evals STEP 2a's fallback is 'by the guest's or PR's address' with nothing to tell them apart. WhatsApp 0d has no MAILBOX block, so it has no recipe for gmail: ids at all.",
+   "deciding_lines": [
+    "MAILBOX: 'a Gmail id or a \"gmail:<thread id>\" Source ID: find that thread by the guest's or PR's address and the subject instead'",
+    "evals L20 a",
+    "whatsapp L50 0d a"
+   ],
+   "fix": "'By the guest's address, else the PR's address plus the guest's name or company in subject or body; several matches: take the one whose dates fit the row's Activities, and say so in the report.' Add the same line to WhatsApp 0d."
+  },
+  "D8": {
+   "severity": "low",
+   "prompts": [
+    "zoya-one",
+    "zoya-slow"
+   ],
+   "defect": "This is a dependency, plus one soft spot. Zoya reads Rules for Zoya every run as the source for 'the loop-in'. Until the CTO updates that page, it still describes the terse follow-up from ad@. HARD RULES ('from ad@ you send only the loop-in') wins, but the we-wrote-last form '<first name>, adding @Zoya to coordinate <the ask in a few words>' can grow into the old follow-up (e.g. 'any update on the precall? adding @Zoya'). There is also no explicit 'a loop-in Activity already on this thread: send none' past the 24-hour idempotency window. Zoya being in Cc normally moves the thread into her inbox, which mitigates this.",
+   "deciding_lines": [
+    "zoya-one L6 Rules for Zoya '(... the loop-in)'",
+    "zoya-one L50",
+    "zoya-one L102"
+   ],
+   "fix": "Update Rules for Zoya before deploying. Cap <the ask in a few words> at about 6 words, with no question mark and no date. Add 'skip if a Zoya loop-in Activity exists on that thread'."
+  }
+ }
+}

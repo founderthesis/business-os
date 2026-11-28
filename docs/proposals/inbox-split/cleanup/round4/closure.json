@@ -1,0 +1,91 @@
+{
+  "reviewed": "849dc1d; capture.txt 35,848 B, actions-v2.txt 39,354 B; Zoya release zoya-one.txt, zoya-slow-work.txt",
+  "cases": {
+    "R1": {
+      "replay": "Zoya sends a holding reply 10:38 from zoya@ with Akshay Cc, logs 'Zoya sent: holding reply to Rhea' (Kind Email out, msgid:). Capture 11:02 finds the msgid held; actions 11:25.",
+      "quotes": [
+        "capture STEP 1: 'never a Kind Email out row whose Summary starts \"Zoya\"'",
+        "capture STEP 0: 'msgid: an Email out whose Summary starts \"Zoya\" is hers: add nothing'",
+        "actions STEP 1: 'Closed without work ... an Email out whose Summary starts \"Zoya\" (her row, her routine works it)'",
+        "zoya-slow-work: every send is logged 'Zoya sent: ...' (e.g. 'Log \"Zoya sent: Zoya loop-in to <name>\"')"
+      ],
+      "subcases": {
+        "zoya_sent_row": "CLOSED: never stamped, never worked.",
+        "capture_loop_in": "CLOSED: 'Akshay to <name>: Zoya loop-in' starts 'Akshay'; closed n/a by 'Summary ends \"Zoya loop-in\" or body \"actions: n/a\"'.",
+        "inbound_to_zoya": "By design: '<who> to Zoya: <what>' Kind Email in (zoya-one: 'Log it if Akshay isn't on To or Cc, or if no Activity has its msgid: Source ID yet') is stamped and worked. Round 3's own fix scoped the exception to Email in, so this is accepted. Residual: if Zoya logged and answered first (mail arriving about :02 to :38), actions re-runs STEP 3 on the row. 6e is safe only if Zoya counts as 'our side (Akshay, anyone tagged Team)'.",
+        "zoya_send_logged_by_capture": "PARTIAL: Zoya's slow work runs up to 40 min from :38, so it overlaps capture (:02 to :20). If capture reads her send before she logs it, or she crashed between send and log, capture creates the row. Capture's rule is 'Kind: \"Email out\" if the sender is Akshay or a person tagged Team, else \"Email in\"'. I couldn't confirm Zoya's People row is tagged Team (Notion search found no Zoya row). If it isn't, the row is 'Zoya to Rhea: ...' Kind Email in, which matches no Zoya rule, so actions works it and 6e treats her mail as 'from outside the team'."
+      },
+      "verdict": "CLOSED for the strict case (her logged sends); PARTIAL for capture-logged Zoya sends (should-fix D3)"
+    },
+    "R2": {
+      "replay": "First capture run 2 Nov 09:02 JST: no run:inbox-capture: record exists.",
+      "quotes": [
+        "CURSOR: 'from the newest record with Source ID run:inbox-capture: that has a \"read to\" (none yet: run:inbox:, the old inbox)'",
+        "STEP 1: 'the newest record with Source ID run:inbox-capture: that has one, else run:inbox: (the old inbox)'",
+        "STEP 1 exception: 'created since 2026-11-01 12:00 JST, without a \"capture:\" line'"
+      ],
+      "note": "split.py confirms the old record is 'run:inbox:<run id>' with 'read to', and the 'run:inbox:' prefix doesn't match 'run:inbox-capture:'. Old-inbox rows from before 12:00 are never stamped.",
+      "verdict": "CLOSED"
+    },
+    "R3": {
+      "replay": "(a) A row's THREAD read hangs the run. (b) The run crashes after Started and before any row (Controls page read, or one Your call row).",
+      "quotes": [
+        "actions STEP 1: 'Before starting a row, add the body line \"actions: try <n> <run id>\" ... a row that already has 3 gets \"actions: stuck <why>\" instead ... and no longer holds W'",
+        "OVERLAP: 'still says Started and is under 90 minutes old: write only this run's record as \"No-op, previous run still live\", change nothing else'"
+      ],
+      "a": "CLOSED: tries at runs 1, 3 and 5 (each crash costs one No-op hour), stuck at run 7, then W is freed.",
+      "b": "A crash before any row writes no try. If it is deterministic, for example one Your call row that crashes STEP 0 ('first and in full, before you take any mail'), the cycle is crash, No-op, crash, No-op, forever. No mail is ever worked and Your call is never cleared. There's no try or stuck mechanism for Your call rows. It's visible in the morning check as Started records, but nothing stops it.",
+      "verdict": "CLOSED for mail rows; new should-fix D4 for Your call rows"
+    },
+    "R4": {
+      "quotes": [
+        "capture TIME and actions TIME, identical: '\"Today\" and every date you write or compare (Captured too) are the JST date, Bash `TZ=Asia/Tokyo date +%F`.'"
+      ],
+      "replay": "Capture enabled 2 Nov 00:30 JST writes Captured 2026-11-02; its rows leave STEP 0.",
+      "residual": "Other writers aren't fixed. Zoya writes 'Captured today' with no timezone (zoya-one run record), so her rows from 2 Nov 00:00 to 08:59 JST can carry 2026-11-01. They then enter capture STEP 0's class 2 ('Captured before 2026-11-02 ... created since 2026-11-01 12:00 JST'), and STEP 0's stamps never go on 'stamped:' (see D2).",
+      "verdict": "CLOSED (residual folded into D2)"
+    },
+    "SF1_overlap": {"quotes": ["'under 90 minutes old'", "'start none after :35 past the hour (Your call still runs in full)'"], "verdict": "CLOSED", "residual": "Capture still running past :25 can expose a row with its capture: line before STEPS 3 to 7 link it (D5)."},
+    "SF2_whatsapp": {"quotes": ["'log section 7's Activity (one row) as \"Zoya sending: <topic> to Akshay's WhatsApp\" ... rename it to section 7's Summary after the send ... on a \"Zoya sending\" row: check Akshay's chat in Blueticks for it before any resend'"], "verdict": "CLOSED"},
+    "SF3_dead_allmail": {"quotes": ["'at its third such line, set its Source ID to \"allmail-unread:<the same id>\" so it is never taken again, and report it once'"], "verdict": "CLOSED"},
+    "SF4_captured_provenance": {"quotes": ["'Every row this step touches gets Captured today (first, if its body has no \"first captured\" line, add \"first captured <its old Captured>\")'"], "verdict": "CLOSED"},
+    "SF5_step0_slot": {"quotes": ["'Start no row after :10 past the hour.'"], "verdict": "CLOSED"},
+    "SF6_fetch_cost": {"quotes": ["'plus rows created before 2026-11-02 and Captured on or after the day before W's date'"], "verdict": "CLOSED"},
+    "SF7_folded_rows": {"quotes": ["'(the \"capture:\" line only if that row was created since 2026-11-01 12:00 JST)'"], "verdict": "CLOSED"},
+    "SF8_loopin_in_thread": {"quotes": ["'In a THREAD, a loop-in (\"adding @Zoya\") is never our side replying.'"], "verdict": "CLOSED"},
+    "B1": {"quotes": ["'the newest inbox actions run record other than this run's that has a \"worked to\"'"], "verdict": "CLOSED"},
+    "B3": {"quotes": ["'created at or after W minus 2 minutes'", "'Skip ... any whose body has \"actions: done\" or \"actions: stuck\"'", "'then the body line \"actions: done <run id>\"'"], "verdict": "CLOSED"},
+    "B4": {"quotes": ["'a run ending Failed on a quota, rate-limit or 5xx error, not one tied to a row, first removes its own try lines'"], "verdict": "CLOSED", "residual": "Deciding whether a 5xx is 'tied to a row' is left to the model."},
+    "B9": {"verdict": "CLOSED (via SF3)"},
+    "S2": {"verdict": "CLOSED (via SF1); capture has no own overlap guard, but its :20 and :10 stops bound it"},
+    "S4": {"verdict": "CLOSED (via SF2)"},
+    "A1_stamped_join": {
+      "quotes": [
+        "capture STEP 1: 'gets that line and any missing link, once, and you add its id to your record's body line \"stamped: <ids>\" as you stamp it'",
+        "capture RUN RECORD: 'Your last write updates that row: ... page body = a line \"pending: <Message-ID>, ...\" ..., the report, the end time, counts, each error ...'",
+        "actions STEP 1: 'Also take every id on the \"stamped:\" body line of each run:inbox-capture: record created since W minus 24 hours (read only that line): rows capture stamped late; they never move W.'"
+      ],
+      "case_crash_between": "Zoya logs 'Priya to Zoya: confirms 14 Nov recording' (Email in, in ad@ via Cc) at 10:40. Capture is capped or late, and actions moves W to 11:20 on capture's own newer rows (the unstamped row doesn't hold W). Capture at 12:02 stamps the row, then crashes before listing it. Next run: T is unchanged (no read to), the message is re-read, the msgid is held, and the row now HAS a capture: line, so the exception ('without a \"capture:\" line') skips it. Actions: created 10:40 < W-2min, not created before 2 Nov, not on any stamped: line. STEP 0 doesn't cover it after 2 Nov. LOST for good: Status never moves to Booked, and an Akshay ask answered by a chat-logged 'Akshay to ...' row stays on his list. Rare (needs a lag and a crash in a one-call window), but silent, and the fix is free.",
+      "case_final_write_clobber": "No crash needed. RUN RECORD defines the final 'page body =' as pending + report + counts and doesn't list 'stamped:'. A literal replace_content at the last write drops the line, so every late stamp of a run that completes normally is lost the same way. Replay4c S-J1 tested only the crash path.",
+      "case_long_body": "Low risk. Actions reads 'only that line' through one fetch per record. Make the line the record's first body line so a truncated fetch still has it.",
+      "case_listed_twice": "Harmless: 'actions: done' dedups.",
+      "case_actions_down_over_24h": "Safe. The window is anchored on W ('created since W minus 24 hours'), not on now. W doesn't move while actions is down, so records from the whole outage stay in the window.",
+      "case_step0_stamps": "STEP 0 stamps aren't listed on 'stamped:'. For rows created on or after 2 Nov (only reachable through a non-JST Captured, see R4), actions can't find them once W has passed.",
+      "verdict": "PARTIAL"
+    }
+  },
+  "defects": [
+    {"n": 1, "class": "blocking", "title": "stamped: line not in the record's final body",
+     "fix": "capture RUN RECORD: 'page body = the \"stamped:\" line as built (first line, kept), then a line \"pending: ...\"'"},
+    {"n": 2, "class": "blocking (one clause, closes a silent loss)", "title": "a crash between stamp and list loses the row for good",
+     "fix": "capture STEP 1: 'first add its id to your record's \"stamped:\" line, then give the row that line'. A listed but unstamped row is re-stamped next run (it has no capture: line), and 'actions: done' dedups. Also in STEP 0: 'and list its id on \"stamped:\" as STEP 1 does'."},
+    {"n": 3, "class": "should-fix", "title": "a Zoya send that capture logs may be Kind Email in",
+     "fix": "capture STEP 2: 'Kind: \"Email out\" if the sender is Akshay, Zoya or a person tagged Team'. Or actions: 'a row whose Summary starts \"Zoya\"' (any Kind; this saves bytes). Before cutover, check that Zoya's People row is tagged Team; 6e's 'our side (Akshay, anyone tagged Team)' depends on it."},
+    {"n": 4, "class": "should-fix", "title": "a Your call row that crashes the run freezes actions",
+     "fix": "actions STEP 0: 'before handling a row, add \"yourcall: try <n> <run id>\" to its Claude note; at 3, leave it and put it in the report for Akshay'"},
+    {"n": 5, "class": "should-fix (low)", "title": "actions can take a row capture is still linking",
+     "fix": "capture: 'write the \"capture:\" line as the row's last write, after STEPS 3 to 7'. Or actions: 'skip a row whose capture run record still says Started and is under 30 minutes old'."},
+    {"n": 6, "class": "note", "title": "Zoya-first inbound rows are re-worked by actions",
+     "fix": "Accepted by round 3's design. Watch at cutover: actions' STEP 3 slot or Waiting on moves after Zoya has already replied."}
+  ]
+}

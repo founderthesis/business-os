@@ -1,0 +1,101 @@
+[
+ {
+  "file": "calendar.txt",
+  "source": "83e8fb0:docs/proposals/zoya-day/prompts/calendar.txt",
+  "source_sha256": "c613af00ddf02c8c6f128590867d1ac7bef157a46602878fc08a194f3b7be16c",
+  "bytes_before": 62916,
+  "bytes_after": 64212,
+  "sha256": "5e7be8ce4538d2aa7dce3a3bc0e68307d115334890106b312642e9d8a86bbbec",
+  "edits": 15
+ },
+ {
+  "file": "inbox-actions.txt",
+  "source": "83e8fb0:docs/proposals/zoya-day/prompts/inbox-actions.txt",
+  "source_sha256": "2b894385566ff415cd406ad1920b6c7369859c34accc1619f43d0a38f979b49f",
+  "bytes_before": 48515,
+  "bytes_after": 49572,
+  "sha256": "ef1a75d64be7bcdd4f52947550c73b412ce4a20a10b44a5e7b9d920de4e2c01f",
+  "edits": 21
+ },
+ {
+  "file": "inbox-capture.txt",
+  "source": "83e8fb0:docs/proposals/zoya-day/prompts/inbox-capture.txt",
+  "source_sha256": "41e188c51713d841523102214cab72045907748abae663c17b5205885bb47b0c",
+  "bytes_before": 50812,
+  "bytes_after": 42901,
+  "sha256": "eeb496baf7245b853a5a9af210e1fc5527882d20b755e18e7292524629773ebe",
+  "edits": 20
+ },
+ {
+  "file": "whatsapp.txt",
+  "source": "83e8fb0:docs/proposals/zoya-day/prompts/whatsapp.txt",
+  "source_sha256": "c0ac14891bb14218739c72e5f620f82f5429ccd1ad12d0ad4aa52c4f89f72ead",
+  "bytes_before": 39817,
+  "bytes_after": 44234,
+  "sha256": "feea17adfe3d6159e33979358a441017c40084848c64e87d8c3ad430327dde50",
+  "edits": 15
+ },
+ {
+  "file": "zoya-fast.txt",
+  "source": "83e8fb0:docs/proposals/zoya-day/prompts/zoya-fast.txt",
+  "source_sha256": "b1b0b0acf5a1f9945a1db9099ac81cb3e3ab8e20222b4f650b0b097ebf810b23",
+  "bytes_before": 62996,
+  "bytes_after": 59630,
+  "sha256": "474014b0bf5d9d96c99a3a8e72c90a377742f7170210f64760033aba0c1242ee",
+  "edits": 50
+ },
+ {
+  "file": "zoya-slow.txt",
+  "source": "83e8fb0:docs/proposals/zoya-day/prompts/zoya-slow.txt",
+  "source_sha256": "4da2f1466a600967652e9336849fa11c2187962ed0d6816f2e6467bd2c4dd576",
+  "bytes_before": 15646,
+  "bytes_after": 15229,
+  "sha256": "9b9c2b69a688420ab6979189a8f2a41ddfd8bc324e6ba14d9bbe9e3cbf384c68",
+  "edits": 7
+ },
+ {
+  "file": "zoya-slow-work.txt",
+  "source": "63d63ec:routines/zoya/release/zoya-slow-work.txt",
+  "source_sha256": "78332307d8ba3cfda5c02905c6718f6ce7ad4b00b23ff7f01165bfb0c787644b",
+  "bytes_before": 94833,
+  "bytes_after": 94809,
+  "sha256": "63a6870663a0082e29de26fb7a9f0c6824f73e9765ed97a9d7e4e10e57436c79",
+  "edits": 95
+ },
+ {
+  "file": "upkeep.txt",
+  "source": "83e8fb0:docs/proposals/zoya-day/prompts/daily-sweep.txt (lines kept: 102)",
+  "source_sha256": "2203cc3f38c60836337bed57b3c863787143d9e98a4f0827bc18150470cac687",
+  "bytes_before": 0,
+  "bytes_after": 41084,
+  "sha256": "9e74ad4f5a695d061d0228dd7141f599d2523c1a3ee37c970ef9e811f6487036",
+  "edits": 36
+ },
+ {
+  "file": "stored/host-boards.prompt.txt",
+  "source": "routines/ (staged)",
+  "source_sha256": "",
+  "bytes_before": 0,
+  "bytes_after": 8585,
+  "sha256": "8ace96f5e9031c1a4c73b5bcb97352ade4fba31cba75053a543ceb6a7ac4ae16",
+  "edits": 0
+ },
+ {
+  "file": "stored/editing-checks.prompt.txt",
+  "source": "routines/ (staged)",
+  "source_sha256": "",
+  "bytes_before": 0,
+  "bytes_after": 9067,
+  "sha256": "216d73acc272c4f18bd2494586ff4f9885424ea20e782c3aecdd7fc6e9629afd",
+  "edits": 0
+ },
+ {
+  "file": "stored/cto-round.prompt.txt",
+  "source": "routines/ (staged)",
+  "source_sha256": "",
+  "bytes_before": 0,
+  "bytes_after": 7101,
+  "sha256": "366fbeaee7d17fb383f023ffba57bfd77a49e9f55a61acfa928e1c73c83449b0",
+  "edits": 0
+ }
+]

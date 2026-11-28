@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-28",
+  "mode": "offline replay, no MCP/network",
+  "A_diff": {
+    "zoya-slow-work.txt (c339665 -> working tree, sha256 62dacb959437628c, matches 7f1a55c)": "only line 61 SENDING changed: handover clause in read-back + new line 'MCP Emails quotes the thread below your reply itself, in both bodies: add no quote of your own to either body.' (slow file had no QUOTE block before, so this is an addition)",
+    "zoya-one.txt (87a7cff -> working tree, sha256 3d50757f920dc8e5, 41,031 B)": "line 49 SENDING: QUOTE WHAT YOU ANSWER removed, replaced by the one line; handover clause; line 66 deployment reference 488a8656d24c -> 968987b28bd5; line 93 SLOW pin 75daab48.../4294a5fa -> 7f1a55c7.../62dacb95 (verified against git)",
+    "unexpected_changes": "none beyond the deployment reference string, which goes with the re-pin"
+  },
+  "A_cases": {
+    "T1_TCI": "PASS: no 'wrote:'/'blockquote'/QUOTE anywhere in either file; read-back checks thread and recipients only, adds no quote",
+    "T2_Candour": "PASS: Saloni 'handed over anywhere on the thread', George on thread since -> excluded; To George (his move), Cc Priyamvada + Akshay; 'the read-back fails if any of those excluded is still on it'; 'a handover that names the new contact also sets Via to them'",
+    "T3_no_handover": "PASS: everyone on latest inbound From/To/Cc kept less standard exclusions",
+    "T4_Rahul_not_on_thread": "PASS: handover defined as '(a message saying a new contact takes over, the new contact on the thread since)'; Rahul never on thread -> no handover, nobody dropped, no Via change",
+    "Gmail": "PASS: no Gmail reply/send clause in either file (old pinned files already had none); remaining 'Gmail' = never-read-via-Gmail-connector, 'Gmail id' lookup, Activity 'Source Gmail' enum"
+  },
+  "B_build": "d-wa-zoya-anywhere.py rc 0, 28,265 B, sha256 051764ff6b21b716",
+  "B_cases": {
+    "W1": "PASS: 0a1 reads 'that chat's 20 messages before his ... only to work out the ask'; handled as 0a a-f; reply 'only in the group Zoya', never in the chat where he wrote",
+    "W2": "PASS: Task row via 0a b; 'in a chat that is not work, the quoted message and the context below only tell you who and what he means: nothing of theirs is logged, quoted or named'; reply says 'another chat'",
+    "W3": "PASS: 'one search across all chats: list_messages with no chat_id, query @zoya, sender = Akshay', paged up to 5 times over 48h",
+    "W4": "PASS: 2b 'except his @zoya messages, which 0a1 owns'; 0a1 skips keys already a Source ID 'wa:<key>'; Zoya-group messages left to 0a"
+  },
+  "defects": [
+    "qh-wa.txt PRIVACY line 7 still says of 0a1's chats 'nothing else in it is read', which contradicts 0a1's new 20-message context read in every chat (incl. non-work). Fix: replace with e.g. '...such a chat is still never named; 0a1 reads its 20 messages before his only to work out the ask, and nothing of them is logged, quoted or named.' (in d-wa-zoya-anywhere.py replacement string, line ~28)"
+  ]
+}

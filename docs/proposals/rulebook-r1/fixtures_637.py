@@ -1,0 +1,192 @@
+#!/usr/bin/env python3
+"""Offline fixtures for decision 637 date ownership (fix 1, 23 Nov).
+
+Two parts, both must pass:
+1. A row model of the five SLOW outcomes as the built prompt and Rules for Zoya:
+   follow-ups now state them. Each keeps the person's Next date intact and writes
+   Zoya date (or, for a cap, nothing).
+2. Text checks on the built prompts (and, when given, the staged page text): no
+   Zoya-step write of Next date is left, and each outcome's Zoya date wording is there.
+
+Usage: python3 fixtures_637.py [<dir with the staged follow-ups.md>]
+"""
+import datetime as dt, os, sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+D = dt.date
+
+
+def outcome(row, kind, today, nxt=None, interval=None, first_ok=None):
+    """Apply one SLOW outcome to a row dict, per SLOW work AFTER SEND and follow-ups 5a."""
+    r = dict(row)
+    if kind == "ordinary":      # step n sent: Zoya date = next step's due date
+        r["chase_step"] += 1
+        r["zoya_date"] = nxt
+    elif kind == "nurture":     # nurture n sent: Zoya date = send date + interval for n
+        r["chase_step"] = 0
+        r["zoya_date"] = today + dt.timedelta(days=interval)
+    elif kind == "deferral":    # a hold: segment date and Zoya date to the first allowed day
+        r["zoya_date"] = first_ok
+    elif kind == "failed":      # a failed send: only Zoya date moves
+        r["zoya_date"] = nxt
+    elif kind == "cap":         # a cap moves nothing
+        pass
+    return r
+
+
+def model():
+    today = D(2026, 11, 23)
+    base = {"next_date": D(2026, 11, 27), "zoya_date": today, "chase_step": 2}  # 27 Nov: Akshay's precall
+    cases = [
+        ("ordinary send", outcome(base, "ordinary", today, nxt=D(2026, 12, 3)), D(2026, 12, 3)),
+        ("nurture send", outcome(base, "nurture", today, interval=60), today + dt.timedelta(days=60)),
+        ("deferral", outcome(base, "deferral", today, first_ok=D(2026, 11, 30)), D(2026, 11, 30)),
+        ("failed send", outcome(base, "failed", today, nxt=D(2026, 11, 24)), D(2026, 11, 24)),
+        ("cap", outcome(base, "cap", today), today),
+    ]
+    bad = 0
+    for name, r, want_zoya in cases:
+        ok = r["next_date"] == base["next_date"] and r["zoya_date"] == want_zoya
+        bad += not ok
+        print(f"{'ok ' if ok else 'BAD'} {name}: Next date {r['next_date']} (kept), Zoya date {r['zoya_date']}")
+    return bad
+
+
+FORBIDDEN_SLOW = [
+    "Next date = the earliest of the next step's due date",
+    "Next date = this send's date plus the NURTURE interval",
+    "and Next date; a failed send moves only Next date",
+    "moves its segment's date and Next date",
+    "moves Next date 7 days on",
+    "Chase step 0, Next date 30 days after",
+    "Every hold writes Next date",
+    "Sponsored offered whose Next date is today",
+    "LT chase with Next date today or earlier",
+    "stays due (Next date unchanged)",
+    "set Next date 2 working days on",
+]
+REQUIRED_SLOW = [
+    "Zoya date = the earliest of the next step's due date",            # ordinary
+    "Zoya date = this send's date plus the NURTURE interval",          # nurture
+    "moves its segment's date and Zoya date to the first day it may go",  # deferral
+    "a failed send moves only Zoya date",                               # failed send
+    "a cap moves nothing",                                              # cap
+    "none of these ever moves Next date",
+]
+FORBIDDEN_PAGE = ["Next date = the next contact", "governs instead", "changes only Next date",
+                  "Next date the next step's date", "Next date the send date", "moves only Next date",
+                  "recheck Next date", "set Next date 3 months"]
+
+
+def text_checks(page_dir):
+    bad = 0
+    slow = open(os.path.join(HERE, "prompts", "zoya-slow-work.txt"), encoding="utf-8").read()
+    fast = open(os.path.join(HERE, "prompts", "zoya-fast.txt"), encoding="utf-8").read()
+    for s in FORBIDDEN_SLOW:
+        if s in slow:
+            print("BAD SLOW still has:", s); bad += 1
+    for s in REQUIRED_SLOW:
+        if s not in slow:
+            print("BAD SLOW lacks:", s); bad += 1
+    if "selects by Status and Next date" in fast + slow:
+        print("BAD keying text still selects by Next date"); bad += 1
+    if page_dir:
+        page = open(os.path.join(page_dir, "follow-ups.md"), encoding="utf-8").read()
+        for s in FORBIDDEN_PAGE:
+            if s in page:
+                print("BAD page still has:", s); bad += 1
+        if "Zoya date = the next contact" not in page:
+            print("BAD page lacks the Zoya date row shape"); bad += 1
+    print("text checks:", "clean" if not bad else f"{bad} failures")
+    return bad
+
+
+# Fix 2: Zoya's own steps outside SLOW (form chasers, LT-chase revisit, nurture start,
+# the calendar transcript Task row) write Zoya date; upkeep's overdue flags read both.
+FIX2 = {
+    "inbox-actions.txt": {
+        "forbidden": ["Next date = the date they give, else 90 days", "Next date = the earliest open segment date",
+                      "Next date our last mail + 30 days", "a chase Next date said", "exactly five cases"],
+        "required": ["Zoya date = the date they give, else 90 days", "Zoya date = the earliest open Zoya segment date",
+                     "Zoya date our last mail + 30 days", "You set Next date in three cases"],
+    },
+    "upkeep.txt": {
+        "forbidden": ["set Next date to the date they give", "Next date = the earliest open segment date",
+                      "with Next date before today and no linked Activity"],
+        "required": ["set Zoya date to the date they give", "Zoya date = the earliest open Zoya segment date",
+                     "The due date is Zoya date for Zoya's own step and Next date for a people's step"],
+    },
+    "calendar.txt": {
+        "forbidden": ["ask Ranjita for the transcript\", Next date today"],
+        "required": ["ask Ranjita for the transcript\", Zoya date today"],
+    },
+}
+
+
+def fix2_checks():
+    bad = 0
+    for f, c in FIX2.items():
+        t = open(os.path.join(HERE, "prompts", f), encoding="utf-8").read()
+        bad += sum(1 for s in c["forbidden"] if s in t and not print("BAD", f, "still has:", s))
+        bad += sum(1 for s in c["required"] if s not in t and not print("BAD", f, "lacks:", s))
+    print("fix 2 checks:", "clean" if not bad else f"{bad} failures")
+    return bad
+
+
+ELIGIBLE_PREFIXES = ("msgid:", "adid:", "mcpemails:", "zoya:", "zoyaid:")
+
+
+ZOYA_INBOX = ("mcpemails:", "zoya:", "zoyaid:")
+
+
+def eligible(kind, source_id, source="", body="capture: x"):
+    """Inbox actions STEP 1 (fix 3): the key test, then "Yours only": a capture: line,
+    which a row with a Zoya-inbox key does not need."""
+    if kind in ("Email in", "Email out"):
+        if not source_id.startswith(ELIGIBLE_PREFIXES) or source_id.startswith("msgid:gmail:"):
+            return False
+    elif not (kind == "Meeting" and source == "Gemini notes"):
+        return False
+    return "capture:" in body or source_id.startswith(ZOYA_INBOX)
+
+
+def fix3_checks():
+    bad = 0
+    cases = [  # (kind, Source ID, source, expected)
+        ("Email in", "msgid:CAF1x", "", True),
+        ("Email in", "adid:48213", "", True),
+        ("Email in", "mcpemails:9f2c1a", "", True),      # Zoya-inbox key
+        ("Email in", "zoya:7d41", "", True),
+        ("Email out", "zoyaid:5521", "", True),
+        ("Email in", "gmail:18c2f", "", False),          # old Gmail thread key: not a mail row key
+        ("Note", "zoya:7d41", "", False),                # a key alone never makes a Note eligible
+        ("Meeting", "", "Gemini notes", True),
+    ]
+    no_capture = [  # real key shapes from Activities (23 Nov), body without a capture: line
+        ("Email in", "mcpemails:[Gmail]/All Mail:110947", True),
+        ("Email in", "zoya:[Gmail]/All Mail:3096", True),
+        ("Email in", "zoyaid:4155", True),
+        ("Email in", "msgid:CAF1x", False),              # an ad@ row still needs capture:
+    ]
+    for kind, sid, want in no_capture:
+        if eligible(kind, sid, body="summary only") != want:
+            print("BAD no-capture eligible", sid); bad += 1
+    for kind, sid, src, want in cases:
+        got = eligible(kind, sid, src)
+        if got != want:
+            print("BAD eligible", kind, sid, got); bad += 1
+    t = open(os.path.join(HERE, "prompts", "inbox-actions.txt"), encoding="utf-8").read()
+    for s in ["a Zoya-inbox key mcpemails:, zoya: or zoyaid: (a provider id, not a Message-ID",
+              "a row with a Zoya-inbox key needs none",
+              "Zoya date = today when Zoya owns the reply owed now (decision 637); when it goes to Akshay",
+              "Next date and Zoya date as NEXT DATE's scheduling-request case",
+              "Zoya date in three (a hold, a routine 5 start, a scheduling request's reply owed now)"]:
+        if s not in t:
+            print("BAD inbox-actions lacks:", s); bad += 1
+    print("fix 3 checks:", "clean" if not bad else f"{bad} failures")
+    return bad
+
+
+if __name__ == "__main__":
+    n = model() + text_checks(sys.argv[1] if len(sys.argv) > 1 else None) + fix2_checks() + fix3_checks()
+    sys.exit(1 if n else 0)

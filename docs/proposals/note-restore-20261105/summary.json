@@ -1,0 +1,289 @@
+{
+  "run_record": "40e19a301a7f8150b94bfe12437b00ce",
+  "run": "zoya-slow 2026-11-05 08:09 JST (cse_019pwcV1mPYraYtHvzVyCTHG)",
+  "method": "BEFORE = notion-view-version at 2026-11-04T23:09:00Z (run start 23:09:13Z). AFTER = current value via SQL on Engagements, read ~2026-11-04T23:55Z. View-version returns no version ids, so the timestamps are the version references.",
+  "versions_used": {
+    "before_time": "2026-11-04T23:09:00Z",
+    "after": "current (read 2026-11-04 ~23:55Z)"
+  },
+  "counts": {
+    "checked": 30,
+    "truncated": 0,
+    "ok": 20,
+    "no_note_change": 10,
+    "history_unavailable": 0
+  },
+  "rows": [
+    {
+      "slot": "S01",
+      "row": "40b19a301a7f81e9b3ebe90b5ec2b944",
+      "name": "Transcript: Saket Saurabh @ Nexla (Founder Thesis, 30 Oct recording)",
+      "class": "ok",
+      "before_lines": 1,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S02",
+      "row": "3f019a301a7f81aba7e9e79fd5b7dd8a",
+      "name": "Arun Poddar @ Choice International, Founder Thesis",
+      "class": "ok",
+      "before_lines": 6,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S03",
+      "row": "3f019a301a7f81afb875e1fcf11f366a",
+      "name": "Ujwal Sutaria @ Trillion Dollar Venture (TDV), Founder Thesis",
+      "class": "ok",
+      "before_lines": 2,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S04",
+      "row": "3f019a301a7f81b0b751cb90cf585011",
+      "name": "Dhruv Atreja @ Fastino Labs, Founder Thesis",
+      "class": "ok",
+      "before_lines": 2,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S05",
+      "row": "3f019a301a7f81b29089e20c8aab1b3e",
+      "name": "Raghav Mahajan @ BECOME TANK READY, Founder Thesis",
+      "class": "ok",
+      "before_lines": 4,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S06",
+      "row": "3f019a301a7f81d88f11e41f19abe30a",
+      "name": "Narendra Sen @ RackBank and NeevCloud, Founder Thesis",
+      "class": "ok",
+      "before_lines": 4,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S07",
+      "row": "3f019a301a7f81f4a8caebe78460100d",
+      "name": "Saket Saurabh @ Nexla, Founder Thesis",
+      "class": "ok",
+      "before_lines": 13,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S08",
+      "row": "3f119a301a7f81a697ddc3ae930bc422",
+      "name": "George Kikvadze @ Bitfury, un#",
+      "class": "ok",
+      "before_lines": 3,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S09",
+      "row": "3f119a301a7f81cd9ca1ca1d4a159e78",
+      "name": "Kuberns founders (names not given) @ Kuberns, Founder Thesis",
+      "class": "ok",
+      "before_lines": 7,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S10",
+      "row": "3f619a301a7f810196b8c39a3525ff42",
+      "name": "Alykhan Jetha @ Daylite (Marketcircle), Founder Thesis",
+      "class": "ok",
+      "before_lines": 2,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S11",
+      "row": "3f719a301a7f814cbb41dabe6b033ea4",
+      "name": "Mukesh Gupta @ MaxVolt Energy Industries, Founder Thesis",
+      "class": "ok",
+      "before_lines": 6,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S12",
+      "row": "3f919a301a7f811faafde4207e938960",
+      "name": "Carson Cook @ Membrane Labs, un#",
+      "class": "ok",
+      "before_lines": 1,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S13",
+      "row": "3f919a301a7f815dad18ec15a1dd87b5",
+      "name": "Mokksh Sani @ Living Liquidz, Founder Thesis",
+      "class": "ok",
+      "before_lines": 4,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S14",
+      "row": "3f919a301a7f817e87f8ec7f57324ac6",
+      "name": "Mauricio Zolliker @ XMAQUINA, un#",
+      "class": "ok",
+      "before_lines": 1,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S15",
+      "row": "3fa19a301a7f814a8bb4cb52070733a4",
+      "name": "Gagandeep Singh @ TIC, Founder Thesis",
+      "class": "ok",
+      "before_lines": 5,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S16",
+      "row": "3ff19a301a7f81a98224ee27aa4a5a7d",
+      "name": "Matt Walker @ Lull, Founder Thesis",
+      "class": "ok",
+      "before_lines": 5,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S17",
+      "row": "3f119a301a7f81018735ed9be408e9e1",
+      "name": "Robert Mitchnick @ BlackRock, un#",
+      "class": "ok",
+      "before_lines": 8,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S18",
+      "row": "3f719a301a7f81d39851fd4793ecd50f",
+      "name": "Vishal Gupta @ MaxVolt Energy Industries, Founder Thesis",
+      "class": "ok",
+      "before_lines": 6,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S19",
+      "row": "3fa19a301a7f8186899bce5d39e72676",
+      "name": "Sushil Patil @ Eximple, Founder Thesis",
+      "class": "ok",
+      "before_lines": 4,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S20",
+      "row": "3fa19a301a7f81a3879cc25adf4ade47",
+      "name": "Vishesh Jain @ Eximple, Founder Thesis",
+      "class": "ok",
+      "before_lines": 3,
+      "lines_added_by_run": 1,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S21",
+      "row": "40519a301a7f819085c9d6c191904ade",
+      "name": "Kartik Johari @ Nobel Hygiene, Founder Thesis",
+      "class": "no note change",
+      "before_lines": 5,
+      "lines_added_by_run": 0,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S22",
+      "row": "3fb19a301a7f817bab3df7c45662370b",
+      "name": "Akshit Bansal @ Statiq, Founder Thesis",
+      "class": "no note change",
+      "before_lines": 4,
+      "lines_added_by_run": 0,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S23",
+      "row": "3f019a301a7f8123b098f6522d5f6080",
+      "name": "Vishal Devanath @ SMERGERS, Founder Thesis",
+      "class": "no note change",
+      "before_lines": 4,
+      "lines_added_by_run": 0,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S24",
+      "row": "3f019a301a7f81b5b005fc80a5053174",
+      "name": "Yatnesh Pandey @ Shri Vin Business Services Pvt. Ltd. ( Shopical ), Founder Thesis",
+      "class": "no note change",
+      "before_lines": 5,
+      "lines_added_by_run": 0,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S25",
+      "row": "3f019a301a7f81c0b633c027df4b0c78",
+      "name": "Amit Goel @ KNAM Group, Founder Thesis",
+      "class": "no note change",
+      "before_lines": 3,
+      "lines_added_by_run": 0,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S26",
+      "row": "40219a301a7f81cf9331c31d14f879c0",
+      "name": "Pritika Singh @ MOHH, Founder Thesis",
+      "class": "no note change",
+      "before_lines": 3,
+      "lines_added_by_run": 0,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S27",
+      "row": "3f019a301a7f810989d7e64802788b69",
+      "name": "Shruthi Cauvery Iyer @ Vaia, Founder Thesis",
+      "class": "no note change",
+      "before_lines": 6,
+      "lines_added_by_run": 0,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S28",
+      "row": "3f019a301a7f812d8f24e8b4b7dbec9a",
+      "name": "Ankush Tiwari @ pi-labs.ai, Founder Thesis",
+      "class": "no note change",
+      "before_lines": 8,
+      "lines_added_by_run": 0,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S29",
+      "row": "3f019a301a7f8166bed5e8a0c985c035",
+      "name": "Srinivas Choudhary @ Alligator Automations, Founder Thesis",
+      "class": "no note change",
+      "before_lines": 9,
+      "lines_added_by_run": 0,
+      "missing_lines": 0
+    },
+    {
+      "slot": "S30",
+      "row": "3f019a301a7f81688a10fb6d95f13243",
+      "name": "Ishank Joshi @ Mobavenue, Founder Thesis",
+      "class": "no note change",
+      "before_lines": 2,
+      "lines_added_by_run": 0,
+      "missing_lines": 0
+    }
+  ],
+  "activities_cross_check": "13 Activities created 23:09-00:00Z with Summary 'Zoya ...' link to S02, S03, S04, S06, S09, S10, S11, S12, S13, S14, S15, S16, S18: all inside the S01-S20 set."
+}

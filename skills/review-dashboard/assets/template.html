@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>__TITLE__</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#F5F5F7; --card:#FFFFFF; --ink:#1D1D1F; --muted:#6E6E73; --line:#E5E5EA;
+    --accent:#FF5D2E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; letter-spacing:-0.011em; padding:0 20px 80px;
+  }
+  .wrap{max-width:960px;margin:0 auto}
+  .num{font-variant-numeric:tabular-nums}
+
+  header{padding:52px 0 6px}
+  .eyebrow{font-size:12px;letter-spacing:.02em;text-transform:uppercase;color:var(--accent);font-weight:600}
+  h1{font-size:clamp(32px,5.5vw,52px);font-weight:700;letter-spacing:-0.03em;line-height:1.02;margin-top:10px}
+  h1 .at{color:var(--accent)}
+
+  .seg{display:inline-flex;background:#E9E9EC;border-radius:12px;padding:3px;margin-top:26px}
+  .seg button{border:none;background:transparent;cursor:pointer;font-family:inherit;font-size:15px;font-weight:600;color:var(--ink);padding:9px 22px;border-radius:9px;transition:background .18s ease,box-shadow .18s ease}
+  .seg button.on{background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,.10)}
+  .seg button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:26px}
+  .card{background:var(--card);border-radius:18px;padding:20px}
+  .card.hero{background:var(--accent);color:#fff}
+  .card .k{font-size:12px;letter-spacing:.02em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .card.hero .k{color:#FFD9CB}
+  .card .v{font-size:clamp(24px,3.2vw,34px);font-weight:700;margin-top:8px;letter-spacing:-0.02em}
+
+  section{margin-top:44px}
+  .h2{font-size:22px;font-weight:700;letter-spacing:-0.02em}
+
+  .avg-panel{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:16px;overflow:hidden}
+  .avg-left{flex:0 0 auto}
+  .avg-k{font-size:12px;letter-spacing:.02em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .avg-num{font-size:clamp(38px,6vw,56px);font-weight:700;letter-spacing:-0.03em;line-height:1;margin-top:6px}
+
+  .tiles{display:flex;align-items:flex-end;gap:16px;perspective:900px;height:74px;padding-right:6px}
+  .tile{position:relative;width:30px;transform-style:preserve-3d;animation:spin 3.4s cubic-bezier(.6,.05,.2,1) infinite;transform:rotateX(-14deg)}
+  .face{position:absolute;inset:0;border-radius:7px;backface-visibility:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.35), 0 6px 14px rgba(255,93,46,.22)}
+  .face.front{background:linear-gradient(160deg,#FF7A54,var(--accent))}
+  .face.back{background:linear-gradient(160deg,#FFB59E,#FF8A66);transform:rotateY(180deg)}
+  @keyframes spin{0%{transform:rotateX(-14deg) rotateY(0deg)}45%{transform:rotateX(-14deg) rotateY(180deg)}55%{transform:rotateX(-14deg) rotateY(180deg)}100%{transform:rotateX(-14deg) rotateY(360deg)}}
+
+  .toggle{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .toggle button{font-family:inherit;font-size:14px;font-weight:600;padding:9px 16px;border-radius:999px;cursor:pointer;background:var(--card);border:1px solid var(--line);color:var(--ink);transition:transform .08s ease,background .15s ease,color .15s ease,border-color .15s ease}
+  .toggle button:hover{transform:translateY(-1px)}
+  .toggle button.active{color:#fff}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+  .panel{background:var(--card);border-radius:22px;padding:22px;margin-top:16px}
+  .chart-box{position:relative;height:360px}
+
+  .twrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:15px;min-width:520px}
+  thead th{text-align:right;font-weight:600;color:var(--muted);font-size:12px;letter-spacing:.02em;text-transform:uppercase;padding:12px 16px;border-bottom:1px solid var(--line)}
+  thead th:first-child{text-align:left}
+  tbody td{padding:14px 16px;text-align:right;border-bottom:1px solid var(--line)}
+  tbody td:first-child{text-align:left;font-weight:600}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#FAFAFC}
+  .total-row td{border-top:2px solid var(--ink);font-weight:700}
+  .total-row td:first-child{color:var(--accent)}
+
+  .stars{display:flex;flex-direction:column}
+  .star{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+  .star:last-child{border-bottom:none}
+  .rank{font-size:15px;font-weight:700;color:var(--accent);min-width:22px}
+  .star a{color:#0A84FF;text-decoration:none;font-size:14px;word-break:break-all;flex:1}
+  .star a:hover,.star a:focus{text-decoration:underline}
+  .star .figs{font-size:14px;white-space:nowrap;color:var(--muted);font-variant-numeric:tabular-nums}
+  .star .figs b{color:var(--ink);font-weight:700}
+
+  .srcnote{margin-top:22px;color:var(--muted);font-size:13px}
+
+  @media(max-width:720px){
+    .cards{grid-template-columns:repeat(2,1fr)}
+    .avg-panel{gap:16px}.tiles{gap:10px;height:60px}.tile{width:22px}
+    .chart-box{height:300px}.star a{font-size:13px}
+  }
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.tile{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow" id="eyebrow"></div>
+    <h1 id="title"></h1>
+    <div class="seg" id="seg" role="tablist" aria-label="Dataset"></div>
+  </header>
+
+  <div class="cards" id="cards"></div>
+
+  <section>
+    <div class="h2">Average per <span id="unitWord"></span></div>
+    <div class="panel avg-panel">
+      <div class="avg-left">
+        <div class="avg-k">Mean</div>
+        <div class="avg-num num" id="avgNum">0</div>
+      </div>
+      <div class="tiles" id="tiles" role="img" aria-label="Weekly trend"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="h2">Weekly performance</div>
+    <div class="toggle" id="toggle" role="group" aria-label="Choose metric"></div>
+    <div class="panel"><div class="chart-box"><canvas id="chart" role="img" aria-label="Weekly metric chart"></canvas></div></div>
+  </section>
+
+  <section>
+    <div class="h2">Weekly breakdown</div>
+    <div class="panel" style="padding:8px 6px"><div class="twrap"><table>
+      <thead><tr id="thead"></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table></div></div>
+  </section>
+
+  <section>
+    <div class="h2">Star <span id="starWord"></span></div>
+    <div class="panel"><div class="stars" id="stars"></div></div>
+  </section>
+
+  <p class="srcnote" id="srcnote"></p>
+</div>
+
+<script>
+const DASH = /*__DASH__*/;
+
+const ACCENT="#FF5D2E";
+const fmt=n=>Number(n).toLocaleString("en-US");
+const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const headKey=DASH.headline;
+const metricColor=k=> k===headKey ? ACCENT : (DASH.metrics.find(m=>m.key===k)||{}).color || "#0A84FF";
+const metricName=k=> (DASH.metrics.find(m=>m.key===k)||{}).name || k;
+function hexRgba(hex,a){const n=parseInt(hex.slice(1),16);return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;}
+
+let curSet=DASH.datasets[0].id;
+let curMetric=headKey;
+let chart;
+
+/* header */
+document.getElementById("eyebrow").textContent=DASH.eyebrow || (DASH.platform+" engagement");
+document.getElementById("title").innerHTML=DASH.client.replace(/^@/,'<span class="at">@</span>');
+document.getElementById("srcnote").textContent=DASH.source || "";
+
+/* segmented control */
+const seg=document.getElementById("seg");
+if(DASH.datasets.length>1){
+  DASH.datasets.forEach((d,i)=>{
+    const b=document.createElement("button");
+    b.textContent=d.label; b.dataset.id=d.id; b.role="tab";
+    if(i===0)b.classList.add("on");
+    b.addEventListener("click",()=>{curSet=d.id;seg.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));renderAll();});
+    seg.appendChild(b);
+  });
+}else{ seg.style.display="none"; }
+
+/* metric chips */
+const toggle=document.getElementById("toggle");
+DASH.metrics.forEach(m=>{
+  const b=document.createElement("button");
+  b.textContent=m.name; b.dataset.k=m.key;
+  b.addEventListener("click",()=>setMetric(m.key));
+  toggle.appendChild(b);
+});
+function paintChips(){
+  toggle.querySelectorAll("button").forEach(b=>{
+    const on=b.dataset.k===curMetric;
+    b.classList.toggle("active",on);
+    b.style.background=on?metricColor(curMetric):"";
+    b.style.borderColor=on?metricColor(curMetric):"";
+  });
+}
+
+const ds=()=>DASH.datasets.find(d=>d.id===curSet);
+
+function renderCards(){
+  const d=ds();
+  const others=DASH.metrics.filter(m=>m.key!==headKey).slice(0,3);
+  const cards=[{k:metricName(headKey),v:d.totals[headKey],hero:true},
+    ...others.map(m=>({k:m.name,v:d.totals[m.key]||0}))];
+  document.getElementById("cards").innerHTML=cards.map(c=>
+    `<div class="card${c.hero?' hero':''}"><div class="k">${c.k}</div><div class="v num">${fmt(c.v)}</div></div>`).join("");
+}
+
+function renderAverage(){
+  const d=ds();
+  document.getElementById("unitWord").textContent=d.unit;
+  document.getElementById("avgNum").textContent=fmt(d.mean);
+  drawTiles(d.weeks);
+}
+function drawTiles(weeks){
+  const box=document.getElementById("tiles");
+  const vals=weeks.map(w=>w.values[headKey]||0);
+  const max=Math.max(...vals),min=Math.min(...vals),span=(max-min)||1;
+  const MINH=22,MAXH=64;
+  box.innerHTML=weeks.map((w,i)=>{
+    const v=w.values[headKey]||0;
+    const h=Math.round(MINH+((v-min)/span)*(MAXH-MINH));
+    return `<div class="tile" style="height:${h}px;animation-delay:${(i*0.28).toFixed(2)}s" title="${w.label}: ${fmt(v)}"><div class="face front"></div><div class="face back"></div></div>`;
+  }).join("");
+}
+
+function renderTable(){
+  const d=ds();
+  const cols=DASH.metrics.map(m=>m.name);
+  document.getElementById("thead").innerHTML=
+    `<th>Week</th><th>${d.unitPlural}</th>`+cols.map(c=>`<th>${c}</th>`).join("");
+  const body=document.getElementById("tbody");
+  body.innerHTML=d.weeks.map(w=>
+    `<tr><td>${w.label}</td><td class="num">${fmt(w.count)}</td>`+
+    DASH.metrics.map(m=>`<td class="num">${fmt(w.values[m.key]||0)}</td>`).join("")+`</tr>`).join("")+
+    `<tr class="total-row"><td>Total</td><td class="num">${fmt(d.totals.count)}</td>`+
+    DASH.metrics.map(m=>`<td class="num">${fmt(d.totals[m.key]||0)}</td>`).join("")+`</tr>`;
+}
+
+function renderStars(){
+  const d=ds();
+  document.getElementById("starWord").textContent=d.unitPlural.toLowerCase();
+  const extra=DASH.metrics.filter(m=>m.key!==headKey).slice(0,2);
+  document.getElementById("stars").innerHTML=d.stars.map((s,i)=>{
+    const figs=`<b>${fmt(s.values[headKey])}</b> ${metricName(headKey).toLowerCase()}`+
+      extra.map(m=>` · ${fmt(s.values[m.key]||0)} ${m.name.toLowerCase()}`).join("");
+    const label=s.link?s.link.replace(/^https?:\/\//,''):(s.date||"");
+    const a=s.link?`<a href="${s.link}" target="_blank" rel="noopener">${label}</a>`:`<span style="flex:1">${label}</span>`;
+    return `<div class="star"><span class="rank">${i+1}</span>${a}<span class="figs">${figs}</span></div>`;
+  }).join("");
+}
+
+function buildChartData(){
+  const d=ds(), col=metricColor(curMetric);
+  const vals=d.weeks.map(w=>w.values[curMetric]||0);
+  return {labels:d.weeks.map(w=>w.label),datasets:[
+    {type:"bar",label:metricName(curMetric),data:vals,backgroundColor:hexRgba(col,0.20),borderColor:col,borderWidth:1.5,borderRadius:10,maxBarThickness:80,order:2},
+    {type:"line",label:metricName(curMetric)+" curve",data:vals,borderColor:col,backgroundColor:col,borderWidth:3,pointRadius:5,pointBackgroundColor:"#fff",pointBorderColor:col,pointBorderWidth:2,tension:0.4,order:1,fill:false}
+  ]};
+}
+function makeChart(){
+  chart=new Chart(document.getElementById("chart"),{data:buildChartData(),options:{
+    responsive:true,maintainAspectRatio:false,animation:reduced?false:{duration:600},
+    interaction:{mode:"index",intersect:false},
+    plugins:{legend:{display:false},tooltip:{filter:i=>!i.dataset.label.includes("curve"),backgroundColor:"#1D1D1F",padding:12,cornerRadius:10,titleColor:"#fff",bodyColor:"#fff",callbacks:{label:c=>` ${metricName(curMetric)}: ${c.parsed.y.toLocaleString("en-US")}`}}},
+    scales:{x:{grid:{display:false},ticks:{color:"#6E6E73",font:{size:13,weight:"600"}}},y:{beginAtZero:true,grid:{color:"#E5E5EA"},ticks:{color:"#6E6E73",font:{size:12},callback:v=>v.toLocaleString("en-US")}}}
+  }});
+}
+function setMetric(k){curMetric=k;paintChips();if(chart){chart.data=buildChartData();chart.update();}}
+
+function renderAll(){renderCards();renderAverage();renderTable();renderStars();if(chart){chart.data=buildChartData();chart.update();}}
+
+paintChips();renderCards();renderAverage();renderTable();renderStars();
+if(window.Chart){makeChart();}else{document.querySelector(".chart-box").innerHTML='<p style="color:#6E6E73;padding:20px">Chart needs an internet connection to load. The table below has every number.</p>';}
+setMetric(headKey);
+</script>
+</body>
+</html>

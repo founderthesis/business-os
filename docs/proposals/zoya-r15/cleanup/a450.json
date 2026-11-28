@@ -1,0 +1,47 @@
+{
+ "review": "Zoya r15b / decision 450, read-only adversarial review at f0a7255",
+ "verdict": "accept (no blocker); deploy still gated on D2 one-draft test, Akshay's go-ahead, and the Cadences FAST reserve and Diwali lines",
+ "rebuild": {
+  "runs": 2, "identical": true,
+  "zoya-one.txt": "52925 / 532e8ddbc1f2a002 = repo",
+  "zoya-slow.txt": "11420 / 253d91207c6bb071 = repo",
+  "zoya-slow-work.txt": "76760 / e9c6dcb4e5583662 = repo = git show 251388d:routines/zoya/release/zoya-slow-work.txt",
+  "em_dashes": 0, "en_dashes": 0,
+  "pin_remote": "63fcf669014fe5c4eeff64c7fedbe6d1c85d926c (not moved)",
+  "251388d_descends_from_pin": true,
+  "worktrees_removed": true
+ },
+ "lock": "FAST and SLOW LOCK blocks identical except Summary 'Run zoya-slow'; no + refspec, --force-with-lease=refs/heads/zoya-lock:$F, never expire/force. OK.",
+ "defects": [
+  {"id":"S1","severity":"should-fix","area":"cutover order",
+   "issue":"r14 handoff (which r15 reuses) fires B by hand (step 3) before A is pasted (step 4). The live hourly still does SLOW at 10:38/16:38 with the 63fcf66 file, which has no payment keys ('seq-pay') or ownermail/feedback/vendor keys. A manual B run plus an old 10:38/16:38 SLOW pass work the same items under different keys; only the Sent check and 'Zoya sent: owner mail' Activity stop a double. WhatsApps to Jaya are not covered by the Sent check.",
+   "fix":"Paste A first (SLOW pauses, nothing doubles), then fire B by hand, then enable B. Or fire B only after the day's 16:38 run."},
+  {"id":"S2","severity":"should-fix","area":"code reconciliation",
+   "issue":"Status comes from python only by instruction. RUN RECORD says the status 'is the one SLOW BATCH 4/'s OUTCOME CHECK IN CODE prints' but names no status for a run where python never printed one; the model pastes the body into the heredoc itself, and cap inputs ('this run's own sends and today's count') are model-supplied. A model that skips 4/ and writes Completed by hand breaks no explicit rule.",
+   "fix":"Add: 'no OUTCOME CHECK output in this run: Failed, outcome check not run'; have python print a marker line (e.g. 'checked: <sha16 of body>') that the last write must carry; feed python the raw Activities query output for the count."},
+  {"id":"S3","severity":"should-fix","area":"lock / FAST skip",
+   "issue":"Minute 22 only stops a NEW chunk. A chunk of 10 Opus items begun at minute 21 has no bound, so SLOW can hold the lock past :38 and the hourly FAST (replies owed) skips that hour. FAST has no time limit either, so a 30-minute FAST overrun at :08 makes SLOW skip its whole slot (Fri 17:08 skip waits until Mon 08:08).",
+   "fix":"Check date -u before each item, not only each chunk: after minute 22, no new item (unfinished (minute 22)); keep python's minute check. Optionally FAST stops new work at minute 25."},
+  {"id":"S4","severity":"should-fix","area":"more sends than before",
+   "issue":"The new 08:08 JST run is 04:38 IST. TEAM WHATSAPP and INTERNAL TASKS say quiet hours 'don't apply' and 'mail to the team and WhatsApp to Akshay are never held', so Jaya, Sarika and Ranjita get WhatsApps at 04:38 IST. The old SLOW ran no earlier than 10:38 JST.",
+   "fix":"Hold team WhatsApp (and team mail) from the 08:08 run until a team hour on Cadences (e.g. after 09:00 IST, 12:30 JST); carry them to 11:08."},
+  {"id":"S5","severity":"should-fix (dependency)","area":"Diwali / reserve",
+   "issue":"The Diwali pause and the FAST reserve are both Cadences-only, with no decision row and no fallback for Diwali. If the Cadences Diwali line is not there by Fri 6 Nov, chases go out through Diwali. The reserve has a fallback ('SLOW stops 30 short').",
+   "fix":"Gate enabling B on the Cadences Diwali line being written and read back, or add 'no Diwali line on Cadences: hold chases, report it' during 6 Nov to the date Akshay set."},
+  {"id":"L1","severity":"low","area":"selection order",
+   "issue":"STEP 0 feedback (Akshay's mail fixes), vendor forms and edit notes fall in class (4) 'then any other item' after the oldest follow-ups, so a follow-up backlog over 30 can starve them.",
+   "fix":"Put feedback:, editnotes: and vendor: in class (3), or reserve slots."},
+  {"id":"L2","severity":"low","area":"owner mail at 08:08",
+   "issue":"STEP 0f is 'the first run at or after 09:00 JST', but 2/ class (3) selects 'today's owner mail' at 08:08 with no outcome stated.",
+   "fix":"Owner mail is eligible only from 09:00 JST."},
+  {"id":"L3","severity":"low","area":"FAST cost",
+   "issue":"FAST's THE RULES ARE IN NOTION still lists the SLOW-only follow-ups page (zoya-one line 10), so it is fetched every hour for nothing.",
+   "fix":"Drop it from FAST's list."}
+ ],
+ "checked_ok": [
+  "select-first: selected S-lines are written before any send; chunks of 10 with progress after each",
+  "unfinished with no reason, a missing outcome or a claimed cap/minute 22 without proof -> Failed, never Completed (N2, N3, D9); carryover from newest record with selected:, Started records included",
+  "FAST r15 line 1: 'No run of yours does SLOW work'",
+  "SLOW keeps PRE-SEND CHECKS, RULES LOAD (short -> Partial, nothing written for governed actions), LEAK and SHOW checks; caps read from Cadences; 'more runs never mean more mails'"
+ ]
+}

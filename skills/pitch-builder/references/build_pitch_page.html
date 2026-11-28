@@ -1,0 +1,1171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pitch note</title>
+</head>
+<body>
+<!--
+  HOUSE PITCH PAGE TEMPLATE  (rebuilt October 2026 from the Drizz review)
+  =========================
+
+  The canonical HTML build. The PITCH object below carries the Drizz pitch as a
+  worked example. Replace every value in it for a new client.
+
+  To use it for a new client:
+
+    1. Copy this file to /home/claude.
+    2. Fill the PITCH object. It is the whole document. Do not hand-edit the
+       markup: every section renders from PITCH, so the page and the Word export
+       can never disagree.
+    3. Check the RATES rows against the Phase 3 pricing gate and
+       references/pricing-defaults.md.
+    4. Bump STORE_VERSION whenever any list or the estimator changes shape.
+    5. Publish with the Artifact tool and declare {"downloads": true}. Call the
+       Artifact tool with action "capabilities" first. This file is a complete
+       HTML document with a doctype: publish rejects anything less.
+
+  WHAT THE CLIENT CHOOSES, all one component (choiceList): the working show names,
+  the Phase 1 guests, the Phase 2 guest profiles and the dream list. Each card has
+  a tick and a cross and each list ends with an add-your-own box. Unmarked exports
+  as kept, a cross removes it, and once anything in a list is ticked only the
+  ticked ones export.
+
+  THE INVESTMENT SECTION IS ONE TABLE. Every line has an opt-in tick, its rate,
+  what it covers and a live Estimate column showing the working
+  (e.g. "Rs 60,000 x 12 episodes"). Each group ends in a subtotal row. The 6 and
+  12 month presets sit above the table. The "guests the client introduces"
+  counter sits in its own row directly under Guest sourcing, and the in-person
+  episode counter under Offline recording, shown only when that line is ticked.
+  There is no separate "Build your estimate" section.
+
+  NO THEMES SECTION, NO COVER STRIP, NO PREAMBLE ABOVE THE ROADMAP, NO INTRO
+  PARAGRAPH IN "HOW WE MEASURE IT". Each was cut in review; see SKILL.md.
+
+  The rest of the rules this file implements are in references/editorial-rules.md.
+-->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root{
+  color-scheme: light;
+  --ground:#F7F0E4; --panel:#FFFDF8; --band:#F1E7D5; --sunk:#FBF6EC;
+  --ink:#17161A; --muted:#6E6860; --faint:#928B80;
+  --red:#DE0A26; --softred:#FCE9EB; --rule:#E3D9C7; --soft:#EDE4D5;
+  --keep:#0E7A5F; --keep-bg:#E7F3EE;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:16px; line-height:1.62; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:750px; margin:0 auto; padding:0 16px 140px}
+.kicker{font-size:11px; font-weight:700; letter-spacing:.16em; color:var(--muted); text-transform:uppercase; margin:40px 0 10px}
+h1{font-size:34px; line-height:1.18; font-weight:800; margin:0 0 12px; letter-spacing:-.025em}
+.subtitle{font-size:17px; color:var(--muted); font-style:italic; margin:0 0 18px; line-height:1.5}
+.accent{height:3px; background:var(--red); width:64px; border-radius:2px; margin:0 0 34px}
+h2{font-size:21px; font-weight:800; margin:42px 0 4px; letter-spacing:-.015em}
+h2 + .hrule{height:1px; background:var(--rule); margin:0 0 18px}
+h3{font-size:16px; font-weight:700; margin:26px 0 8px}
+p{margin:0 0 14px}
+.lead{font-size:18px; line-height:1.55}
+.strip{font-size:13px; letter-spacing:.04em; color:var(--mute); margin:0 0 22px}
+.srow b a{color:inherit; text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px}
+.srow b a:hover{color:var(--red)}
+.muted{color:var(--muted)}
+.label{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:22px 0 8px}
+ul{margin:0 0 14px; padding-left:20px}
+li{margin:0 0 8px}
+li b{font-weight:700}
+.panel{background:var(--panel); border:1px solid var(--rule); border-radius:12px; padding:20px 22px; margin:0 0 16px}
+.tint{background:var(--sunk); border:1px solid var(--rule); border-radius:12px; padding:20px 22px; margin:0 0 16px}
+.tint h3, .panel h3{
+  font-size:16px; font-weight:800; color:var(--ink); margin:0 0 12px;
+  padding-bottom:7px; border-bottom:2px solid var(--red); display:inline-block;
+}
+.rowline{display:flex; gap:14px; padding:12px 0; border-top:1px solid var(--rule)}
+.rowline:first-of-type{border-top:none}
+.rowline .n{flex:0 0 26px; font-weight:800; color:var(--faint); font-size:17px}
+.rowline .k{flex:0 0 132px; font-weight:700; font-size:14px}
+.rowline .v{flex:1}
+.grid{display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin:6px 0 16px}
+.grid div{background:var(--band); border-radius:8px; padding:13px 12px; font-size:14px; text-align:center; line-height:1.35}
+
+/* ==== choiceList: themes, names and guests all render through this ==== */
+.clist{margin:0 0 6px}
+
+/* rows variant: hairline-divided rows inside one card. Used for guests. */
+.clist.rows{border:1px solid var(--rule); border-radius:10px; overflow:hidden; background:var(--panel)}
+.clist.rows .crow{border-top:1px solid var(--soft); border-left:3px solid transparent; padding:12px 14px}
+.clist.rows .crow:first-child{border-top:0}
+
+/* boxes variant: each item is its own bordered card. Used for themes. */
+.clist.boxes{display:grid; gap:8px}
+.clist.boxes .crow{border:1px solid var(--rule); border-left:3px solid var(--band); border-radius:10px; background:var(--panel); padding:14px 16px}
+.clist.boxes .crow.keep{border-left-color:var(--keep)}
+
+/* grid2 variant: compact two-up boxes. Used for the working names. */
+.clist.grid2{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+.clist.grid2 .crow{border:1px solid var(--rule); border-left:3px solid var(--band); border-radius:10px; background:var(--panel); padding:13px 15px}
+.clist.grid2 .crow.keep{border-left-color:var(--keep)}
+.clist.grid2 .cadd{grid-column:1 / -1}
+
+.crow{display:flex; align-items:flex-start; gap:12px}
+.crow.keep{background:var(--keep-bg)}
+.clist.rows .crow.keep{border-left-color:var(--keep)}
+.crow.skip{opacity:.45}
+.cmain{flex:1; min-width:0}
+.ctitle{font-weight:800; font-size:15px; line-height:1.25; letter-spacing:-.01em}
+.ctitle.tbc{font-weight:700}
+.csub{color:var(--muted); font-size:13.5px; line-height:1.35; margin-top:1px}
+.cbody{color:var(--faint); font-size:12.5px; line-height:1.45; margin-top:5px}
+.clist.boxes .ctitle{font-size:16px}
+.clist.boxes .cbody{color:var(--muted); font-size:13.5px; margin-top:4px}
+.clist.grid2 .cbody{color:var(--muted); font-size:12.5px}
+.cbody a{color:var(--red); text-decoration:none; border-bottom:1px solid var(--softred)}
+.pill{
+  font-size:9.5px; letter-spacing:.09em; text-transform:uppercase; font-weight:800;
+  border-radius:3px; padding:2px 6px; background:var(--band); color:var(--muted);
+  margin-left:7px; vertical-align:2px; white-space:nowrap;
+}
+.cks{display:flex; gap:5px; flex:none; padding-top:1px}
+.cks button{
+  width:31px; height:31px; font:inherit; font-size:14px; line-height:1; border-radius:7px;
+  border:1px solid var(--rule); background:var(--panel); color:var(--faint); cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+}
+.cks button:hover{border-color:var(--muted); color:var(--ink)}
+.cks button[data-act="keep"][aria-pressed="true"]{border-color:transparent; background:var(--keep); color:#fff}
+.cks button[data-act="skip"][aria-pressed="true"]{border-color:transparent; background:var(--muted); color:#fff}
+.cadd{display:block; background:var(--sunk)}
+.clist.rows .cadd{padding:12px 14px; border-top:1px solid var(--soft)}
+.clist.boxes .cadd, .clist.grid2 .cadd{border:1px dashed var(--rule); border-radius:10px; padding:13px 15px}
+.cadd .clbl{display:block; font-size:11px; letter-spacing:.09em; text-transform:uppercase; font-weight:800; color:var(--faint); margin-bottom:6px}
+.cadd textarea{
+  width:100%; font:inherit; font-size:13.5px; line-height:1.5; color:var(--ink);
+  background:var(--panel); border:1px dashed var(--rule); border-radius:8px;
+  padding:9px 11px; resize:vertical; min-height:58px;
+}
+.cadd textarea:focus{outline:0; border-style:solid; border-color:var(--red)}
+.cadd textarea::placeholder{color:var(--faint)}
+
+/* audience boxes: demarcated, never selectable */
+.aud{display:grid; gap:8px; margin:0 0 16px}
+.aud .abox{border:1px solid var(--rule); border-left:3px solid var(--band); border-radius:10px;
+  background:var(--panel); padding:14px 16px}
+.aud .abox b{display:block; font-size:15px; font-weight:800; letter-spacing:-.01em; margin-bottom:2px}
+.aud .abox span{color:var(--muted); font-size:13.5px; line-height:1.45}
+.aud .abox.lead{border-left-color:var(--red)}
+
+/* why us: show cards, then one stats band */
+.shows{display:grid; gap:8px; margin:0 0 18px}
+.shows .srow{border:1px solid var(--rule); border-left:3px solid var(--red); border-radius:10px;
+  background:var(--panel); padding:14px 16px}
+.shows .srow b{display:block; font-size:15px; font-weight:800; letter-spacing:-.01em}
+.shows .srow .host{color:var(--faint); font-size:12.5px; font-weight:700; letter-spacing:.02em; margin-bottom:5px}
+.shows .srow span.out{color:var(--muted); font-size:13.5px; line-height:1.45}
+.band{display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:10px; overflow:hidden; margin:0 0 14px}
+.band div{background:var(--sunk); padding:16px 10px; text-align:center}
+.band .fig{font-size:24px; font-weight:800; letter-spacing:-.03em; font-variant-numeric:tabular-nums; line-height:1}
+.band .cap{font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-top:6px}
+@media (max-width:560px){ .band{grid-template-columns:1fr 1fr} }
+
+/* tables */
+table{width:100%; border-collapse:collapse; margin:6px 0 14px; font-size:14.5px}
+tr.off td{opacity:.45}
+tr.off .rate{text-decoration:line-through}
+table{table-layout:fixed}
+th:nth-child(1),td:nth-child(1){width:27%}
+th:nth-child(2),td:nth-child(2){width:18%}
+table.inv th.amt,table.inv td.amt{width:17%; text-align:right}
+table.inv td.amt .v{display:block; font-weight:700; font-variant-numeric:tabular-nums; white-space:nowrap}
+table.inv td.amt small{display:block; color:var(--muted); font-size:11.5px; line-height:1.35; margin-top:3px}
+tr.sum td{background:var(--band); font-weight:800; border-bottom:2px solid var(--ink)}
+tr.sum td.amt{color:var(--ink)}
+tr.off td.amt .v{opacity:.6}
+.band{margin-bottom:18px}
+.shows .srow .feat{color:var(--muted); font-weight:600}
+tr.ctlrow td{padding:0 10px 12px; border-bottom:1px solid var(--rule)}
+tr.ctlrow .stepper{margin:0; border-top:none; padding:2px 0 0 25px}
+.shows .srow span.out{color:var(--ink); font-weight:600}
+td .tick{display:flex; gap:9px; align-items:flex-start}
+td .tick input{width:16px; height:16px; margin:2px 0 0; accent-color:var(--red); cursor:pointer; flex:none}
+td .tick input:disabled{accent-color:var(--keep); cursor:default}
+td .tick label{cursor:pointer}
+tr.locked .tick label{cursor:default}
+th{
+  text-align:left; font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--muted); font-weight:800; padding:10px 10px; background:var(--band);
+  border-bottom:1px solid var(--rule);
+}
+td{padding:12px 10px; border-bottom:1px solid var(--rule); vertical-align:top}
+tr.group td{background:var(--band); font-weight:800; font-size:13px; letter-spacing:.02em}
+.item{font-weight:700}
+.tag{display:block; font-size:10px; font-weight:800; letter-spacing:.12em; margin-top:3px}
+.tag.rec{color:var(--red)}
+.tag.opt{color:var(--faint)}
+.rate{white-space:normal; overflow-wrap:anywhere; font-variant-numeric:tabular-nums}
+
+/* estimator */
+.presets{display:flex; gap:8px; margin:0 0 16px}
+.presets button{
+  font:inherit; font-size:14px; font-weight:600; cursor:pointer; flex:1;
+  border:1px solid var(--rule); background:var(--panel); color:var(--ink);
+  border-radius:10px; padding:11px 12px;
+}
+.presets button[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:#fff}
+.est-row{display:flex; align-items:center; gap:12px; padding:11px 0; border-top:1px solid var(--rule)}
+.est-row:first-of-type{border-top:none}
+.est-row .nm{flex:1; min-width:0}
+.est-row .nm small{display:block; color:var(--muted); font-size:12.5px; line-height:1.4}
+.est-row .amt{font-variant-numeric:tabular-nums; font-weight:600; white-space:nowrap}
+.est-row.off .nm, .est-row.off .amt{opacity:.4}
+.sw{position:relative; flex:0 0 40px; height:23px}
+.sw input{position:absolute; opacity:0; width:100%; height:100%; margin:0; cursor:pointer}
+.sw span{position:absolute; inset:0; background:var(--rule); border-radius:999px; transition:.15s; pointer-events:none}
+.sw span::after{content:""; position:absolute; top:3px; left:3px; width:17px; height:17px; background:#fff; border-radius:50%; transition:.15s}
+.sw input:checked + span{background:var(--ink)}
+.sw input:checked + span::after{transform:translateX(17px)}
+.fixedtag{flex:0 0 40px; font-size:10px; font-weight:800; letter-spacing:.06em; color:var(--keep); text-align:center}
+.stepper{display:flex; align-items:center; gap:10px; padding:12px 0; border-top:1px solid var(--rule)}
+.stepper .nm{flex:1}
+.stepper .nm small{display:block; color:var(--muted); font-size:12.5px; line-height:1.4}
+.stepper button{
+  font:inherit; font-size:16px; font-weight:700; cursor:pointer; width:30px; height:30px;
+  border:1px solid var(--rule); background:var(--panel); border-radius:8px; color:var(--ink);
+}
+.stepper output{min-width:26px; text-align:center; font-weight:700; font-variant-numeric:tabular-nums}
+.total{display:flex; justify-content:space-between; align-items:baseline; margin-top:16px; padding-top:14px; border-top:2px solid var(--ink)}
+.total .t{font-weight:700; font-size:16px}
+.total .v{font-weight:800; font-size:24px; font-variant-numeric:tabular-nums}
+.subtot{display:flex; justify-content:space-between; font-size:13.5px; color:var(--muted); margin-top:8px}
+
+/* sticky bar */
+.bar{
+  position:fixed; left:0; right:0; bottom:0; z-index:50;
+  background:var(--panel); border-top:1px solid var(--rule);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+}
+.bar .in{max-width:750px; margin:0 auto; display:flex; align-items:center; gap:12px}
+.bar .tally{flex:1; font-size:13.5px; color:var(--muted); line-height:1.35}
+.bar .tally b{color:var(--ink); font-weight:700}
+.bar button{
+  font:inherit; font-size:14px; font-weight:700; cursor:pointer;
+  background:var(--red); color:#fff; border:none; border-radius:10px; padding:11px 18px;
+}
+.bar button:disabled{opacity:.55; cursor:default}
+.closing{font-style:italic; color:var(--muted); border-top:1px solid var(--rule); padding-top:18px; margin-top:34px}
+
+@media (max-width:560px){
+  h1{font-size:27px}
+  .grid{grid-template-columns:1fr 1fr}
+  .clist.grid2{grid-template-columns:1fr}
+  .rowline{flex-wrap:wrap}
+  .rowline .k{flex:0 0 100%}
+  .crow{flex-wrap:wrap}
+  .cks{width:100%; padding-top:2px}
+  .cks button{flex:1; width:auto}
+  td,th{padding:10px 7px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}}
+</style>
+
+<div class="wrap" id="doc"></div>
+
+<div class="bar">
+  <div class="in">
+    <div class="tally" id="tally"></div>
+    <button id="export">Export as Word</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+<script>
+/* =========================================================================
+   1. THE PITCH. This object is the whole document. REPLACE all of it.
+   ========================================================================= */
+const PITCH = {
+  route: "B",
+  client: "Drizz",
+  show: "Drizz",
+  host: "a Drizz co-founder",
+  subtitle: "",
+
+  strip: "",
+
+  onramp: [
+    "A podcast for Drizz, hosted by co-founders Yash Varyani or Asad Abrar. Each episode is an hour with an engineering leader at a US app company Drizz wants to work with.",
+    "It opens doors. A VP of engineering who ignores a cold email will usually say yes to an hour talking about their own work.",
+    "It builds Drizz’s name. Guests share their episode with their own networks, so every recording puts Drizz in front of the engineering community as the company hosting these conversations.",
+    "The channel, the recordings and everything published belong to Drizz."
+  ],
+
+  opener: [],
+
+  overview: [],
+
+  audience: {
+    lead: "Built for one listener: the engineering leader who owns the release at a consumer app company, now that AI writes a large share of the code. Three more groups come with them.",
+    items: [
+      ["Engineering leaders who own the release", "VPs of engineering, heads of mobile and platform leads. These are the buyers, and the show is built for them."],
+      ["Quality and release leaders", "They decide what is good enough to ship, and they carry the incident when it is not."],
+      ["CTOs at regulated apps", "In fintech and health a release carries compliance weight, and they sign off on how it gets checked."],
+      ["Mobile engineers and the wider community", "They try new tools first, and they are the hires every one of these teams is chasing."]
+    ],
+    note: "Drizz approves every guest before an invitation goes out."
+  },
+
+  themes: {
+    namesIntro: "Three names that promise a listener something rather than describe Drizz. Working titles, settled together in the first fortnight.",
+    names: [
+      { t:"The Ship Room", sub:"The Ship Room: engineering leaders on how apps ship now", b:"Promises a seat in the room where the release call gets made." },
+      { t:"Shipping in the Age of AI", sub:"", b:"Puts the show exactly where engineering leaders are arguing right now." },
+      { t:"The Next Release", sub:"The Next Release: the people behind the apps you use", b:"Promises what comes next from the teams shipping the apps everyone uses." }
+    ],
+    episode: {
+      intro: "A long, open conversation with the guest about their own work. No product pitch, theirs or Drizz’s. Ground it usually covers:",
+      items: [
+        "The career path that got them here",
+        "What worked, and what they learnt from the calls that went wrong",
+        "Their take on AI writing code, and how they keep quality up as their team ships faster",
+        "How their thinking has changed over the last year"
+      ]
+    },
+    prep: "The host gets a prep document before every recording: who the guest is, where the interesting tension in their work sits, and the three or four places worth pushing."
+  },
+
+  roadmap: {
+    cred: "",
+    intro: "",
+    phase0: {
+      title: "Phase 0. Setup. The first fortnight.",
+      rows: [
+        ["The theme", "First fortnight", "Positioning, name and tagline, and the visual identity. Settled with the host, not handed to them."],
+        ["The set and format", "First fortnight", "Remote recording spec, an hour-long format, audio-first for the US feed with video for YouTube and LinkedIn, and a mock run before a guest is in the chair."],
+        ["Episode zero", "Before launch", "Akshay interviews the host about how Drizz itself was built, so the feed launches with an episode in it and every invitation has a format demo attached."],
+        ["The outreach engine", "From week two, then ongoing", "Target list research, the invitation, the follow-up sequence, and the tracking behind it."],
+        ["The first bookings", "From week two", "The first six guests come from Drizz’s customers and the founders’ own networks. On every booking, whoever sourced it, we research the guest and write the prep dossier."]
+      ]
+    },
+    phases: [
+      {
+        title: "Phase 1. Episodes 1 to 6. People who already know Drizz.",
+        blurb: "Engineering heads at companies on Drizz’s own customer wall, plus one from Asad’s time at Meesho. These are the fastest bookings, and six published episodes are what make the cold list possible.",
+        buckets: [{ label: null, guests: [
+          { t:"Madhusudhan Rao", sub:"CTO, Swiggy", pill:"India", b:"Running one release process across food, Instamart and payments while a growing share of the code comes from agents.", s:"https://blog.swiggy.com/life-at-swiggy/know-swiggys-leaders-featuring-madhusudhan-rao-cto/" },
+          { t:"Nikhil Mittal", sub:"CTO, Zepto", pill:"India", b:"Zepto’s first employee, now running a stack that serves a billion ML inferences a day. What weekly shipping looks like when ten minutes is the product.", s:"https://inc42.com/buzz/zepto-drhp-a-look-at-shareholding-pattern-key-executives/" },
+          { t:"Gaurav Agarwal", sub:"Co-founder and CTO, Tata 1mg", pill:"India", b:"From running FarmVille at Zynga to a health app. How release discipline changes when a wrong screen reaches a patient.", s:"https://en.wikipedia.org/wiki/Tata_1mg" },
+          { t:"Shruti Ranjan Satpathy", sub:"Chief Product and Technology Officer, Porter", pill:"India", b:"Keeping the customer, driver and enterprise apps shipping in step across India, the UAE and Turkey.", s:"https://inc42.com/company/porter/people/" },
+          { t:"Sanjeev Barnwal", sub:"Co-founder and CTO, Meesho", pill:"India", b:"Building for entry-level phones on patchy networks, and what AI-written code does to that discipline.", s:"https://www.meesho.io/blog/debdoot-mukherjee-as-chief-data-scientist" },
+          { t:null, sub:"One from NikahForever, DriveU or Dashverse, named with the founders before launch", pill:"To confirm", b:"Held for the engineering lead who championed Drizz inside their team.", s:"" }
+        ]}]
+      },
+      {
+        title: "Phase 2. Episodes 7 to 14. The people Drizz wants to work with.",
+        blurb: "Guest profiles rather than names at this stage: engineering leaders at mid-market companies and startups, weighted toward the US. Names get drawn up with you once the first six episodes are out.",
+        buckets: [
+          { label: "Own the release", guests: [
+            { t:"Heads of mobile and VPs of engineering at growth-stage consumer apps", sub:"Series B to D, shipping weekly to millions of users", pill:"US", b:"The people living the gap between how fast AI writes code and how fast a team can ship it.", s:"" },
+            { t:"Engineering leaders at fintech and digital banking startups", sub:"Apps where a bad release becomes a compliance problem", pill:"US", b:"Shipping under a regulator’s eye while the rest of the industry speeds up.", s:"" },
+            { t:"Mobile platform leads at mid-market health and commerce apps", sub:"They own the pipeline every other team ships through", pill:"US", b:"What breaks first when the number of pull requests doubles.", s:"" },
+            { t:"Heads of mobile at regulated fintechs", sub:"Weekly releases to tens of millions on mid-range phones", pill:"India", b:"Release discipline at Indian scale, on patchy networks.", s:"" },
+            { t:"Mobile engineering heads at fintech and mobility scale-ups, including Berlin automotive software teams", sub:"From Yash’s Berlin conversations", pill:"Europe", b:"Software that ships into cars and payments terminals on someone else’s schedule.", s:"" }
+          ]},
+          { label: "Hold the quality gate", guests: [
+            { t:"Quality and release leads at mid-market digital banking and health apps", sub:"The people who decide what is good enough to ship", pill:"US", b:"What a quality team does when it stops executing tests and starts setting the bar.", s:"" },
+            { t:"Heads of quality at fintech and commerce startups", sub:"Teams moving QA from manual to automated", pill:"India", b:"Where human judgement still sits in a release that agents mostly checked.", s:"" }
+          ]},
+          { label: "Outside voices", guests: [
+            { t:"Developer-productivity writers and researchers", sub:"The people who measure how engineering teams actually work", pill:"US", b:"What the data says about AI and delivery speed, beyond the vendor claims.", s:"" },
+            { t:"Mobile community organisers and conference programme leads", sub:"Droidcon and its peers", pill:"US and Europe", b:"What a thousand mobile engineers are arguing about this year.", s:"" },
+            { t:"Founders of non-competing developer-tools companies", sub:"Builders selling to the same engineering leaders", pill:"US", b:"What they hear from buyers that Drizz does not.", s:"" }
+          ]}
+        ]
+      },
+      {
+        title: "Phase 3. Episode 15 onward. The dream list.",
+        blurb: "The bigger names the first fourteen episodes earn. By this point guests are introducing the next guests, and the last beat of every episode is the guest naming the next one. The review gate sits behind this decision.",
+        buckets: [{ label: null, guests: [
+          { t:"Ty Smith", sub:"Principal Engineer, Uber, and co-chair of the Mobile Native Foundation", pill:"US", b:"Led an AI-assisted migration of millions of lines of Java to Kotlin at Uber. What change at that scale does to a mobile release train.", s:"https://2025.kotlinconf.com/speakers/6a3de662-ef86-4c62-bb68-2f7ebe607f76/" },
+          { t:"Madona Wambua", sub:"Engineering leader, Capital One", pill:"US", b:"Bringing generative AI into a regulated bank’s mobile stack.", s:"https://leaddev.com/community/madona-wambua" },
+          { t:"Rafa Moreno", sub:"Senior Software Engineer, Airbnb", pill:"US", b:"Making AI-assisted Android work reliable on a codebase the size of Airbnb’s, from his Droidcon talk this July.", s:"https://touchlab.co/droidcon-us-2026" },
+          { t:"Stacy Devino", sub:"Principal Engineer, Fanatics", pill:"US", b:"Shipping a sports commerce app that has to hold on game day.", s:"https://usa.droidcon.com/" },
+          { t:"Angie Jones", sub:"VP of Developer Experience, Agentic AI Foundation", pill:"US", b:"Founded Test Automation University, then ran the coding-agent rollout at Block. Why getting nearly every engineer onto agents produced no velocity until she funded a small group of champions.", s:"https://agntconmcpconjapan26.sched.com/2026-09-10/list/descriptions/venue/Hall+C" },
+          { t:"Annjana Ramesh", sub:"Engineering leader, Monzo", pill:"Europe", b:"Led the teams that took Monzo into Ireland. Shipping a regulated app into a new country.", s:"https://leaddev.com/contributor/annjana-ramesh/" },
+          { t:"Kaivalya Vohra", sub:"Co-founder and President, Technology and Product, Zepto", pill:"India", b:"Zepto’s technology from the first app through to a listing.", s:"https://inc42.com/buzz/zepto-drhp-a-look-at-shareholding-pattern-key-executives/" }
+        ]}]
+      }
+    ],
+    measureIntro: "",
+    measure: [
+      "Guests who turn into a commercial conversation within ninety days of the recording.",
+      "How people respond to the cold invitations: the accept rate, and who accepts.",
+      "How many further introductions the guests make.",
+      "Engagement on LinkedIn across the posts, the newsletter and the short videos, read as who is responding rather than as reach."
+    ],
+    measureNote: "Views, retention and subscribers are tracked from the first episode and reported separately, alongside these four rather than in place of them."
+  },
+
+  engine: {
+    intro: "The host records for about an hour. That single conversation is turned into everything below, ready to publish.",
+    grid: [
+      "Full episode on YouTube", "Spotify and Apple", "LinkedIn video",
+      "4 vertical shorts", "2 horizontal clips", "Trailer and thumbnails",
+      "Posts in your voice", "Company page posts", "A share kit for the guest",
+      "Carousel or quote cards", "An SEO blog article", "A deep-dive newsletter"
+    ],
+    note: "One recording, close to twenty finished assets. Nothing here asks for more of your time."
+  },
+
+  sales: {
+    intro: "The episodes do a second job that has nothing to do with the audience, because every conversation arms the people already selling. All of it comes out of what post-production and amplification already deliver, so it adds no scope and no cost.",
+    items: [
+      ["Names to drop, from what aired.", "“When I was talking to the head of mobile at [peer company] about this” opens a conversation that a cold email does not. Off-mic stays off-mic."],
+      ["Objections in a buyer’s own words.", "Guests say out loud why they hesitated on a tool, and why their engineers wanted to build it themselves. The team hears the counter-argument from a peer rather than from marketing."],
+      ["Proof without a case study.", "A clip of an engineering leader describing the problem lands harder than a vendor describing the solution."],
+      ["A reason to reach out.", "Sending a prospect the episode featuring their direct peer is a warm touch that asks for nothing. Follow-up goes through the account owner, a clear month after release, and is never framed as podcast follow-up."]
+    ]
+  },
+
+  needs: {
+    host: [
+      "Three to six hours a month for prep and recording.",
+      "Introductions to the first six guests. A personal note is what gets a yes.",
+      "Sign-off on positioning and on every guest. Anyone with product overlap is your call.",
+      "Drizz’s product stays off the air. It is what lets a guest’s communications team approve the booking.",
+      "A short fortnightly review to keep guest targeting sharp."
+    ],
+    team: [
+      "A quiet room and a decent camera on the host’s side of each recording, to a spec we provide.",
+      "Warm introductions wherever a customer or investor relationship already exists.",
+      "Cross-posting each episode on Drizz’s own channels."
+    ]
+  },
+
+  whyus: {
+    intro: "Founder Thesis started as a passion project. No business plan behind it, no funnel. It snowballed, the guests got bigger, and at some point the show became how we get our own clients. Unnati exists because of that. We’re selling you the thing we use ourselves.",
+    shows: [
+      { t:"Founder Thesis", url:"https://www.youtube.com/@founderthesis", host:"Akshay Datt, Unnati", feat:"Featuring founders of:",
+        out:"Info Edge ⬩ TeamLease ⬩ Zeta ⬩ IndiaMART ⬩ Stellaris" },
+      { t:"un# (Unhashed)", url:"https://www.youtube.com/@unhashedpodcast", host:"Sri Misra, aarna protocol", feat:"Featuring senior leaders of:",
+        out:"Citi ⬩ Franklin Templeton ⬩ Circle ⬩ Bitwise ⬩ Zodia Custody" },
+      { t:"Human by Design", url:"https://www.youtube.com/@HumanByDesignPodcast", host:"Dr. Arjun Jain", feat:"Featuring:",
+        out:"Schneider Electric’s Chief AI Officer ⬩ Jürgen Schmidhuber, whose work underpins modern AI" },
+      { t:"Built to Share", url:"https://www.youtube.com/@built2share", host:"Satish Mugulavalli, Hissa Fund", feat:"Featuring founders of:",
+        out:"CarDekho ⬩ ideaForge ⬩ Scripbox ⬩ Cashify ⬩ IDfy" }
+    ],
+    band: [
+      ["4", "Shows"],
+      ["2M+", "YouTube views"],
+      ["150K+", "Subscribers"],
+      ["270K", "LinkedIn followers"],
+      ["1,000+", "Hours recorded"]
+    ],
+    guests: "Your total commitment is three to six hours a month. The rest is ours. More at myunnati.com."
+  },
+
+  closing: "The aim through the first batch of episodes is simple: a handful of conversations that engineering leaders want to be part of, published consistently."
+};
+
+/* =========================================================================
+   2. THE RATE CARD. Confirmed in the Phase 3 gate. Check against
+      references/pricing-defaults.md. `fixed:true` means never a toggle.
+   ========================================================================= */
+const RATES = {
+  ours: [
+    { id:"setup", item:"Setup", rate:"₹75,000 one-time", amount:75000, kind:"once", fixed:true,
+      covers:"Branding: the name, logo, cover art and the look of the show. Distribution set up across YouTube, Spotify and the audio apps. The show's social handles created. Host prep, including a mock run." },
+    { id:"post", item:"Post-production", rate:"₹60,000 / episode", amount:60000, kind:"perEpisode", fixed:true,
+      covers:"Multi-cam edit, on-screen jargon explainers, 4 vertical shorts, 2 horizontal clips, 1 trailer, up to 5 thumbnails." },
+    { id:"sourcing", item:"Guest sourcing", rate:"₹15,000 / guest sourced", amount:15000, kind:"perSourced", tag:"OPTIONAL", on:true,
+      covers:"Target list research, outreach, follow-ups, scheduling, guest prep and guest promotion at release. Charged only on guests we source. No fee on anyone you introduce. Guest research, the prep dossier and the engagement either side of the recording are included on every booking, whoever sourced it." },
+    { id:"akshay", item:"Akshay on the recording", rate:"₹10,000 / episode", amount:10000, kind:"perEpisodeAfterFree", free:3, tag:"OPTIONAL", on:false,
+      covers:"Sitting in on the session to keep it running smoothly. Remote recordings only. The first three recordings are free." },
+    { id:"amp", item:"Content amplification", rate:"₹20,000 / episode", amount:20000, kind:"perEpisode", tag:"RECOMMENDED", on:true,
+      covers:"LinkedIn posts for host and company, guest kit, clip copy, a carousel or quote cards, an SEO blog and a deep-dive newsletter." },
+    { id:"offline", item:"Offline recording", rate:"₹10,000 / episode recorded in person", amount:10000, kind:"perOffline", tag:"OPTIONAL", on:false,
+      covers:"Post-production for an episode recorded in person, on top of the standard edit. Charged only on the episodes recorded in person, which you set here. Crew, equipment and studio rental are not included: they sit under third party services." },
+    { id:"ops", item:"Content ops", rate:"₹15,000 / month", amount:15000, kind:"perMonth", tag:"OPTIONAL", on:false,
+      covers:"We log into your handles, publish the posts, and respond to comments." }
+  ],
+  third: [
+    { id:"studio", item:"Studio setup consult", rate:"₹50,000 one-time", amount:50000, kind:"once", tag:"RECOMMENDED", on:true,
+      covers:"A proper recording setup for the host, in the office or at home for remote recordings. A consultant specs the space and the kit: acoustic treatment, lighting, cameras, audio chain and desk layout, sized to the space and the budget. We introduce the consultant, and you pay them and the hardware directly." },
+    { id:"crew", item:"Crew, equipment and studio rental", rate:"At actuals, quoted per session", amount:0, kind:"actuals", tag:"OPTIONAL", on:false,
+      covers:"For in-person recordings only. A camera crew, kit and a studio, booked through partners we introduce and paid directly." },
+    { id:"adagency", item:"Ad management agency", rate:"₹75,000 one-time", amount:75000, kind:"once", tag:"OPTIONAL", on:false,
+      covers:"Only if you do not have an in-house team or an agency already." },
+    { id:"ads", item:"Google Ads", rate:"₹80,000 media spend over 3 to 4 months", amount:80000, kind:"once", tag:"RECOMMENDED", on:true,
+      covers:"A targeted test to put episodes in front of the named cohort. Promotional credit from Google comes on top. Paid results are reported separately from organic, and are not a success metric." }
+  ],
+  note:"Anything outside this scope is charged at our standard rate card. Turnaround times, revision rounds, approval windows and cancellation terms are settled in the SOW."
+};
+
+// The shorter preset is first and is the default.
+const PRESETS = [
+  { id:"m6",  label:"6 months",  months:6,  episodes:12 },
+  { id:"m12", label:"12 months", months:12, episodes:24 }
+];
+
+/* Bump this whenever any list or the estimator changes shape. */
+const STORE_VERSION = 9;
+const STORE_KEY = "unnati-pitch-v" + STORE_VERSION + "-" + PITCH.client.toLowerCase().replace(/[^a-z0-9]+/g,"-");
+
+/* =========================================================================
+   3. State. localStorage is a per-viewer convenience only: the page renders
+      correctly when it comes back empty, and every access is guarded.
+      marks[key] is "keep", "skip" or absent. Absent is the default and
+      exports as kept.
+   ========================================================================= */
+const state = {
+  preset: PRESETS[0].id,
+  intros: 3,
+  offline: 0,          // episodes recorded in person. Starts at 0 on purpose:
+                       // offline recording is never ticked out of optimism.
+
+  on: {},
+  marks: {},
+  own: {}              // list key -> what the client typed
+};
+[...RATES.ours, ...RATES.third].forEach(r => { state.on[r.id] = r.fixed ? true : !!r.on; });
+
+function load(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(!raw) return;
+    const s = JSON.parse(raw);
+    if(!s || typeof s !== "object") return;
+    if(PRESETS.some(p => p.id === s.preset)) state.preset = s.preset;
+    if(Number.isFinite(s.intros)) state.intros = Math.max(0, Math.min(40, s.intros));
+    if(Number.isFinite(s.offline)) state.offline = Math.max(0, Math.min(40, s.offline));
+    if(s.on && typeof s.on === "object"){
+      Object.keys(state.on).forEach(k => {
+        const r = [...RATES.ours, ...RATES.third].find(x => x.id === k);
+        if(r && !r.fixed && typeof s.on[k] === "boolean") state.on[k] = s.on[k];
+      });
+    }
+    if(s.marks && typeof s.marks === "object") state.marks = s.marks;
+    if(s.own && typeof s.own === "object") state.own = s.own;
+  }catch(e){ /* private window, blocked storage, bad JSON: defaults stand */ }
+}
+function save(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+}
+
+/* =========================================================================
+   4. Render. Every section comes from PITCH, so there is one copy of the text.
+   ========================================================================= */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+const inr = n => "₹" + n.toLocaleString("en-IN");
+
+function section(title){
+  return `<h2 data-x="h">${esc(title)}</h2><div class="hrule" data-noexport></div>`;
+}
+
+/* ---- choiceList: the one component behind themes, names and guests ------ */
+function choiceRow(key, it){
+  const mark = state.marks[key] || "";
+  const pill = it.pill ? `<span class="pill">${esc(it.pill)}</span>` : "";
+  const title = it.t
+    ? `<span class="ctitle">${esc(it.t)}${pill}</span>`
+    : `<span class="ctitle tbc">${esc(it.sub)}${pill}</span>`;
+  const sub = (it.t && it.sub) ? `<div class="csub">${esc(it.sub)}</div>` : "";
+  const src = it.s ? ` <a href="${esc(it.s)}" target="_blank" rel="noopener noreferrer">Source</a>` : "";
+  const body = it.b ? `<div class="cbody">${esc(it.b)}${src}</div>` : "";
+  return `<div class="crow ${mark}" data-x="choice" data-key="${key}" data-mark="${mark}"
+       data-title="${esc(it.t || it.sub)}" data-sub="${esc(it.t ? (it.sub||"") : "")}" data-pill="${esc(it.pill||"")}">
+    <div class="cmain">${title}${sub}${body}</div>
+    <div class="cks" data-noexport>
+      <button type="button" data-act="keep" data-key="${key}" aria-pressed="${mark==="keep"}" aria-label="Keep" title="Keep">&#10003;</button>
+      <button type="button" data-act="skip" data-key="${key}" aria-pressed="${mark==="skip"}" aria-label="Skip" title="Skip">&#10005;</button>
+    </div>
+  </div>`;
+}
+
+function choiceList(key, items, opts){
+  const o = opts || {};
+  const variant = o.variant || "rows";
+  let out = `<div class="clist ${variant}" data-x="clist" data-list="${key}">`;
+  items.forEach((it, i) => out += choiceRow(`${key}i${i}`, it));
+  out += `<div class="cadd">
+      <label class="clbl" for="own-${key}">${esc(o.addLabel || "Add your own")}</label>
+      <textarea id="own-${key}" data-own="${key}" rows="2"
+        placeholder="${esc(o.addPlaceholder || "One per line.")}">${esc(state.own[key] || "")}</textarea>
+    </div></div>`;
+  return out;
+}
+
+function renderDoc(){
+  const P = PITCH, R = P.roadmap, T = P.themes;
+  let out = "";
+
+  out += `<div class="kicker" data-x="kicker">${P.route === "A" ? "CONCEPT NOTE" : "PITCH NOTE"}</div>`;
+  out += `<h1 data-x="title">${esc(P.route === "A" ? `${P.show} by ${P.client}` : `A podcast for ${P.client}`)}</h1>`;
+  if(P.route === "A" && P.subtitle) out += `<p class="subtitle" data-x="sub">${esc(P.subtitle)}</p>`;
+  out += `<div class="accent" data-noexport></div>`;
+  if(P.strip) out += `<p class="strip" data-x="p">${esc(P.strip)}</p>`;
+
+  /* The on-ramp runs before everything. Route B gets all three beats, Route A gets
+     the single line. No .lead class on any of it: an 18px first paragraph against
+     16px for the rest reads as a font mismatch, not as emphasis. */
+  const ramp = P.onramp || [];
+  if(P.route === "B"){
+    ramp.forEach(t => out += `<p data-x="p">${esc(t)}</p>`);
+    P.opener.forEach(t => out += `<p data-x="p">${esc(t)}</p>`);
+  }else{
+    if(ramp.length) out += `<p data-x="p">${esc(ramp[0])}</p>`;
+    out += section("Overview");
+    P.overview.forEach(t => out += `<p data-x="p">${esc(t)}</p>`);
+  }
+
+  out += section("Who it is for");
+  out += `<p data-x="p">${esc(P.audience.lead)}</p>`;
+  out += `<div class="aud" data-x="aud">` + P.audience.items.map(([b,r],i) =>
+    `<div class="abox${i===0?" lead":""}"><b>${esc(b)}</b><span>${esc(r)}</span></div>`
+  ).join("") + `</div>`;
+  out += `<p data-x="p">${esc(P.audience.note)}</p>`;
+
+  out += section("Working names");
+  out += `<p data-x="p">${esc(T.namesIntro)}</p>`;
+  out += choiceList("name", T.names, {
+    variant: "boxes",
+    addLabel: "Add your own name",
+    addPlaceholder: "One per line."
+  });
+
+  out += section("What an episode is");
+  out += `<p data-x="p">${esc(T.episode.intro)}</p><ul data-x="ul">` + T.episode.items.map(x=>`<li>${esc(x)}</li>`).join("") + `</ul>`;
+  out += `<p data-x="p">${esc(T.prep)}</p>`;
+
+  out += section("The roadmap");
+  if(R.cred) out += `<p data-x="p">${esc(R.cred)}</p>`;
+  if(R.intro) out += `<p data-x="p">${esc(R.intro)}</p>`;
+  out += `<div class="tint"><h3 data-x="h3">${esc(R.phase0.title)}</h3>`;
+  R.phase0.rows.forEach(([k,w,v]) => {
+    out += `<div class="rowline" data-x="row"><div class="k">${esc(k)}</div><div class="v">${esc(v)} <span class="muted">${esc(w)}.</span></div></div>`;
+  });
+  out += `</div>`;
+
+  R.phases.forEach((ph, pi) => {
+    out += `<div class="tint"><h3 data-x="h3">${esc(ph.title)}</h3><p data-x="p">${esc(ph.blurb)}</p>`;
+    ph.buckets.forEach((b, bi) => {
+      if(b.label) out += `<h3 data-x="h3">${esc(b.label)}</h3>`;
+      out += choiceList(`guest-p${pi}b${bi}`, b.guests, {
+        variant: "rows",
+        addLabel: "Add your own names",
+        addPlaceholder: "One per line. Name, role, company."
+      });
+    });
+    out += `</div>`;
+  });
+
+  out += `<div class="panel"><h3 data-x="h3">How we measure it</h3>${R.measureIntro ? `<p data-x="p">${esc(R.measureIntro)}</p>` : ""}`;
+  R.measure.forEach((m,i) => out += `<div class="rowline" data-x="row"><div class="n">${i+1}</div><div class="v">${esc(m)}</div></div>`);
+  out += `</div><p data-x="p">${esc(R.measureNote)}</p>`;
+
+  out += section("What one recording becomes");
+  out += `<p data-x="p">${esc(P.engine.intro)}</p>`;
+  out += `<div class="grid" data-x="grid">` + P.engine.grid.map(g => `<div>${esc(g)}</div>`).join("") + `</div>`;
+  out += `<p data-x="p">${esc(P.engine.note)}</p>`;
+
+  out += section("What the sales team can use");
+  out += `<p data-x="p">${esc(P.sales.intro)}</p><ul data-x="ul">`;
+  P.sales.items.forEach(([b,r]) => out += `<li><b>${esc(b)}</b> ${esc(r)}</li>`);
+  out += `</ul>`;
+
+  out += section("Investment");
+  out += `<p data-x="p">Tick a line in or out and pick a run length. The estimate updates as you go.</p>`;
+  out += `<div class="panel" id="estctl" data-noexport></div>`;
+  out += `<table data-x="table" class="inv"><thead><tr><th>Item</th><th>Rate</th><th>What it covers</th><th class="amt">Estimate</th></tr></thead><tbody>`;
+  const grp = (label, rows, sumId, sumLabel) => {
+    out += `<tr class="group"><td colspan="4">${esc(label)}</td></tr>`;
+    rows.forEach(r => {
+      const tag = r.tag ? `<span class="tag ${r.tag === "RECOMMENDED" ? "rec" : "opt"}">${r.tag}</span>` : "";
+      const on = state.on[r.id];
+      const box = `<input type="checkbox" data-line="${r.id}" ${on?"checked":""} ${r.fixed?"disabled":""}
+        id="card-${r.id}" aria-label="${esc(r.item)}">`;
+      out += `<tr class="${on?"":"off"}${r.fixed?" locked":""}" data-x="rate" data-on="${on?1:0}">
+        <td class="item"><span class="tick">${box}<label for="card-${r.id}">${esc(r.item)}${tag}</label></span></td>
+        <td class="rate">${r.rate}</td><td>${esc(r.covers)}</td>
+        <td class="amt"><span class="v" id="amt-${r.id}"></span><small id="qty-${r.id}"></small></td></tr>`;
+      if(r.id === "sourcing" || r.id === "offline")
+        out += `<tr class="ctlrow" data-noexport id="ctlrow-${r.id}"><td colspan="4"><div id="ctl-${r.id}"></div></td></tr>`;
+    });
+    out += `<tr class="sum" data-x="sum"><td colspan="3" class="sl" id="${sumId}-l">${esc(sumLabel)}</td><td class="amt"><span class="v" id="${sumId}"></span></td></tr>`;
+  };
+  grp("Run by us (Unnati)", RATES.ours, "sum-ours", "Total, run by us");
+  grp("Third party services, paid directly", RATES.third, "sum-third", "Third party services, paid directly, not to us");
+  out += `</tbody></table><p data-x="p">${esc(RATES.note)} Taxes and recording travel sit outside these figures.</p>`;
+
+  out += section(`What we need from ${PITCH.client}`);
+  out += `<div class="label" data-x="label">From the host</div><ul data-x="ul">` + PITCH.needs.host.map(x=>`<li>${esc(x)}</li>`).join("") + `</ul>`;
+  out += `<div class="label" data-x="label">From the team</div><ul data-x="ul">` + PITCH.needs.team.map(x=>`<li>${esc(x)}</li>`).join("") + `</ul>`;
+
+  const W = P.whyus;
+  out += section("Why us");
+  out += `<div class="band" data-x="band">` + W.band.map(([f,c]) =>
+    `<div><div class="fig">${esc(f)}</div><div class="cap">${esc(c)}</div></div>`
+  ).join("") + `</div>`;
+  out += `<p data-x="p">${esc(W.intro)}</p>`;
+  out += `<div class="shows" data-x="shows">` + W.shows.map(sh =>
+    `<div class="srow"><div class="host">${esc(sh.host)}</div><b>${sh.url
+        ? `<a href="${esc(sh.url)}" target="_blank" rel="noopener noreferrer">${esc(sh.t)}</a>`
+        : esc(sh.t)}</b><span class="out">${sh.feat ? `<span class="feat">${esc(sh.feat)}</span> ` : ""}${esc(sh.out)}</span></div>`
+  ).join("") + `</div>`;
+  out += `<p data-x="p">${esc(W.guests)}</p>`;
+
+  out += `<p class="closing" data-x="p">${esc(PITCH.closing)}</p>`;
+
+  document.getElementById("doc").innerHTML = out;
+}
+
+/* ---- choice helpers ----------------------------------------------------- */
+
+function ownLines(key){
+  return String(state.own[key] || "")
+    .split(/[\r\n]+/).map(s => s.trim()).filter(s => s.length > 1);
+}
+
+function setMark(key, act){
+  state.marks[key] = state.marks[key] === act ? "" : act;
+  if(!state.marks[key]) delete state.marks[key];
+  const row = document.querySelector(`.crow[data-key="${key}"]`);
+  if(row){
+    const m = state.marks[key] || "";
+    row.className = "crow " + m;
+    row.dataset.mark = m;
+    row.querySelectorAll(".cks button").forEach(b =>
+      b.setAttribute("aria-pressed", b.dataset.act === m ? "true" : "false"));
+  }
+  save(); renderTally();
+}
+
+/* ---- estimator ---------------------------------------------------------- */
+
+function preset(){ return PRESETS.find(p => p.id === state.preset) || PRESETS[0]; }
+
+function lineAmount(r){
+  const pr = preset(), eps = pr.episodes;
+  switch(r.kind){
+    case "once": return r.amount;
+    case "perEpisode": return r.amount * eps;
+    case "perMonth": return r.amount * pr.months;
+    case "perSourced": return r.amount * Math.max(0, eps - state.intros);
+    case "perEpisodeAfterFree": return r.amount * Math.max(0, eps - (r.free || 0));
+    case "perOffline": return r.amount * Math.min(eps, state.offline);
+    default: return 0;
+  }
+}
+function qtyNote(r){
+  const pr = preset(), eps = pr.episodes;
+  switch(r.kind){
+    case "once": return "one-time";
+    case "perEpisode": return `${inr(r.amount)} × ${eps} episodes`;
+    case "perMonth": return `${inr(r.amount)} × ${pr.months} months`;
+    case "perSourced": return `${inr(r.amount)} × ${Math.max(0, eps - state.intros)} guests we source (${eps} episodes less ${state.intros} you introduce)`;
+    case "perEpisodeAfterFree": return `${inr(r.amount)} × ${Math.max(0, eps - (r.free||0))} episodes (first ${r.free} free)`;
+    case "perOffline": return `${inr(r.amount)} × ${Math.min(eps, state.offline)} recorded in person`;
+    case "actuals": return "quoted per session";
+    default: return "";
+  }
+}
+
+function renderEst(){
+  const pr = preset();
+  let out = "";
+  out += `<div class="presets">` + PRESETS.map(p =>
+    `<button type="button" data-preset="${p.id}" aria-pressed="${p.id===state.preset}">${p.label}<br><span style="font-weight:400;font-size:12.5px;opacity:.75">${p.episodes} episodes</span></button>`
+  ).join("") + `</div>`;
+  const intro = `<div class="stepper"><div class="nm">Guests ${esc(PITCH.client)} introduces<small>Sourcing is charged only on guests we source.</small></div>
+    <button type="button" data-intro="-1" aria-label="fewer">−</button><output id="introOut">${state.intros}</output><button type="button" data-intro="1" aria-label="more">+</button></div>`;
+  const off = `<div class="stepper"><div class="nm">Episodes recorded in person<small>Charged on these only, never on the whole batch.</small></div>
+    <button type="button" data-offline="-1" aria-label="fewer">−</button><output id="offlineOut">${state.offline}</output><button type="button" data-offline="1" aria-label="more">+</button></div>`;
+  const cs = document.getElementById("ctl-sourcing"), rs = document.getElementById("ctlrow-sourcing");
+  if(cs){ cs.innerHTML = state.on.sourcing ? intro : ""; rs.style.display = state.on.sourcing ? "" : "none"; }
+  const co = document.getElementById("ctl-offline"), ro = document.getElementById("ctlrow-offline");
+  if(co){ co.innerHTML = state.on.offline ? off : ""; ro.style.display = state.on.offline ? "" : "none"; }
+  const ctl = document.getElementById("estctl");
+  if(ctl) ctl.innerHTML = out;
+
+  const fill = (r) => {
+    const on = !!state.on[r.id];
+    const v = document.getElementById("amt-" + r.id), q = document.getElementById("qty-" + r.id);
+    if(v) v.textContent = on ? (r.kind === "actuals" ? "At actuals" : inr(lineAmount(r))) : "–";
+    if(q) q.textContent = on ? qtyNote(r) : "";
+  };
+  RATES.ours.forEach(fill); RATES.third.forEach(fill);
+  const oursTotal = RATES.ours.filter(r => state.on[r.id]).reduce((s,r) => s + lineAmount(r), 0);
+  const thirdTotal = RATES.third.filter(r => state.on[r.id]).reduce((s,r) => s + lineAmount(r), 0);
+  const so = document.getElementById("sum-ours"), st = document.getElementById("sum-third");
+  const sol = document.getElementById("sum-ours-l");
+  if(so) so.textContent = inr(oursTotal);
+  if(sol) sol.textContent = `Total, run by us, over ${pr.label}, ${pr.episodes} episodes`;
+  if(st) st.textContent = inr(thirdTotal);
+}
+
+function renderTally(){
+  const count = (prefix) => {
+    let ticked = 0, added = 0;
+    document.querySelectorAll(`.clist[data-list^="${prefix}"]`).forEach(l => {
+      l.querySelectorAll(".crow[data-key]").forEach(r => { if(r.dataset.mark === "keep") ticked++; });
+      added += ownLines(l.dataset.list).length;
+    });
+    return ticked + added;
+  };
+  const themes = count("theme"), names = count("name"), guests = count("guest");
+  const total = inr(RATES.ours.filter(r=>state.on[r.id]).reduce((s,r)=>s+lineAmount(r),0));
+  const bits = [];
+  if(themes) bits.push(`<b>${themes}</b> themes`);
+  if(names) bits.push(`<b>${names}</b> names`);
+  if(guests) bits.push(`<b>${guests}</b> guests`);
+  const left = bits.length ? bits.join(" · ") + " picked" : "Nothing picked yet, so everything exports";
+  document.getElementById("tally").innerHTML = `${left} · <b>${total}</b> over ${preset().label}`;
+}
+
+function renderAll(){ renderDoc(); renderEst(); renderTally(); }
+
+/* ---- events ------------------------------------------------------------- */
+document.addEventListener("click", (e) => {
+  const g = e.target.closest("[data-act]");
+  if(g){ setMark(g.dataset.key, g.dataset.act); return; }
+  const p = e.target.closest("[data-preset]");
+  if(p){ state.preset = p.dataset.preset; save(); renderEst(); renderTally(); return; }
+  const i = e.target.closest("[data-intro]");
+  if(i){
+    state.intros = Math.max(0, Math.min(40, state.intros + Number(i.dataset.intro)));
+    save(); renderEst(); renderTally(); return;
+  }
+  const o = e.target.closest("[data-offline]");
+  if(o){
+    state.offline = Math.max(0, Math.min(40, state.offline + Number(o.dataset.offline)));
+    save(); renderEst(); renderTally(); return;
+  }
+});
+document.addEventListener("change", (e) => {
+  const c = e.target.closest("[data-line]");
+  if(c){
+    state.on[c.dataset.line] = c.checked;
+    save();
+    // Both the rate card and the estimator read the same state, so repaint both.
+    syncCard(); renderEst(); renderTally();
+  }
+});
+
+/* The rate card is inside the document, which only renders once. Repaint its rows
+   in place rather than re-rendering the whole page and losing scroll position. */
+function syncCard(){
+  document.querySelectorAll('tr[data-x="rate"]').forEach(tr => {
+    const box = tr.querySelector("[data-line]");
+    if(!box) return;
+    const on = !!state.on[box.dataset.line];
+    box.checked = on;
+    tr.dataset.on = on ? "1" : "0";
+    tr.classList.toggle("off", !on);
+  });
+}
+document.addEventListener("input", (e) => {
+  const t = e.target.closest("[data-own]");
+  if(t){ state.own[t.dataset.own] = t.value; save(); renderTally(); }
+});
+
+/* =========================================================================
+   5. The Word export. It WALKS THE DOM. It holds no second copy of the text,
+      so a section added to the page needs no change here.
+
+      Choice rule, the same for themes, names and guests: a list with anything
+      ticked exports only the ticked ones. A list with nothing ticked exports
+      everything that was not crossed out. Whatever the client typed into the
+      add box exports after them, flagged as theirs.
+   ========================================================================= */
+async function exportDocx(){
+  const btn = document.getElementById("export");
+  btn.disabled = true; btn.textContent = "Building…";
+  try{
+    const D = window.docx;
+    const INK="20242B", HEAD="17365D", MUTE="5A5F68", RULE="C9CED5", BAND="EDF1F6";
+    const F="Calibri", SZ=22;
+
+    const run = (text, o={}) => new D.TextRun({ text, bold:!!o.b, italics:!!o.i,
+      underline:o.u ? {} : undefined,
+      size:o.size||SZ, color:o.color||INK, font:F });
+    const para = (children, o={}) => new D.Paragraph({ children,
+      spacing:{ after:o.after===undefined?130:o.after, line:252 } });
+    const heading = (text) => new D.Paragraph({
+      children:[new D.TextRun({ text, bold:true, size:30, color:HEAD, font:F })],
+      spacing:{ before:300, after:100 },
+      border:{ bottom:{ style:D.BorderStyle.SINGLE, size:4, color:RULE, space:5 } } });
+    const cell = (children, w, shade, span) => new D.TableCell({
+      width:{ size:w, type:D.WidthType.DXA },
+      margins:{ top:100, bottom:100, left:140, right:140 },
+      shading: shade ? { type:D.ShadingType.CLEAR, fill:shade } : undefined,
+      columnSpan: span, verticalAlign:D.VerticalAlign.TOP, children });
+    // columnWidths at Table level, DXA on every cell, FIXED layout. Without all
+    // three, Word collapses the columns into slivers of vertical letters.
+    const tbl = (widths, rows) => new D.Table({
+      width:{ size:100, type:D.WidthType.PERCENTAGE },
+      layout:D.TableLayoutType.FIXED,
+      columnWidths:widths,
+      borders:{
+        top:{style:D.BorderStyle.SINGLE,size:3,color:RULE},
+        bottom:{style:D.BorderStyle.SINGLE,size:3,color:RULE},
+        left:{style:D.BorderStyle.NONE}, right:{style:D.BorderStyle.NONE},
+        insideHorizontal:{style:D.BorderStyle.SINGLE,size:3,color:RULE},
+        insideVertical:{style:D.BorderStyle.NONE} },
+      rows });
+
+    const kids = [];
+
+    const exportChoices = (clist) => {
+      const rows = [...clist.querySelectorAll(".crow[data-key]")];
+      const ticked = rows.filter(r => r.dataset.mark === "keep");
+      const live = rows.filter(r => r.dataset.mark !== "skip");
+      const use = ticked.length ? ticked : live;
+      use.forEach(r => {
+        const title = r.dataset.title, sub = r.dataset.sub, pill = r.dataset.pill;
+        const bodyEl = r.querySelector(".cbody");
+        const body = bodyEl ? bodyEl.textContent.replace(/\s*Source\s*$/,"").trim() : "";
+        kids.push(new D.Paragraph({
+          children: sub
+            ? [run(title,{b:true}), run(", " + sub + (pill ? " (" + pill + ")" : ""), {color:MUTE})]
+            : [run(title + (pill ? " (" + pill + ")" : ""), {b:!r.classList.contains("tbc"), color: sub?INK:INK})],
+          spacing:{ before:90, after:20, line:252 } }));
+        if(body) kids.push(para([run(body)], { after:60 }));
+      });
+      const box = clist.querySelector("[data-own]");
+      if(box){
+        ownLines(box.dataset.own).forEach(line => {
+          kids.push(new D.Paragraph({
+            children:[run(line,{b:true}), run("  added by " + PITCH.client, {i:true,color:MUTE})],
+            spacing:{ before:90, after:60, line:252 } }));
+        });
+      }
+    };
+
+    const walk = (node) => {
+      for(const el of node.children){
+        if(el.hasAttribute("data-noexport")) continue;
+        const x = el.dataset.x;
+        const text = el.textContent.trim();
+        if(!x){ walk(el); continue; }
+
+        switch(x){
+          case "kicker":
+            kids.push(new D.Paragraph({ children:[new D.TextRun({ text, bold:true, size:19, color:MUTE, font:F, characterSpacing:50 })], spacing:{ after:90 } }));
+            break;
+          case "title":
+            kids.push(new D.Paragraph({ children:[new D.TextRun({ text, bold:true, size:40, color:HEAD, font:F })], spacing:{ after:70 } }));
+            break;
+          case "sub":
+            kids.push(new D.Paragraph({ children:[new D.TextRun({ text, italics:true, size:23, color:MUTE, font:F })],
+              spacing:{ after:60, line:252 },
+              border:{ bottom:{ style:D.BorderStyle.SINGLE, size:6, color:HEAD, space:10 } } }));
+            break;
+          case "h": kids.push(heading(text)); break;
+          case "h3": kids.push(new D.Paragraph({ children:[run(text,{b:true,i:true,size:23})], spacing:{ before:180, after:70 } })); break;
+          case "label": kids.push(new D.Paragraph({ children:[run(text,{b:true,size:20,color:MUTE})], spacing:{ before:110, after:55 } })); break;
+          case "p": kids.push(para([run(text)])); break;
+          case "note": kids.push(para([run(text,{color:MUTE})])); break;
+          case "ul":
+            for(const li of el.children){
+              const b = li.querySelector("b");
+              kids.push(new D.Paragraph({
+                children: b ? [run(b.textContent+" ",{b:true}), run(li.textContent.replace(b.textContent,"").trim())] : [run(li.textContent.trim())],
+                bullet:{ level:0 }, spacing:{ after:70, line:252 } }));
+            }
+            break;
+          case "clist": exportChoices(el); break;
+          case "shows":
+            /* The show name carries its YouTube link into the Word file too, so the
+               page and the export say the same thing. A show with no link falls back
+               to plain bold text rather than breaking the export. */
+            for(const sh of el.children){
+              const a = sh.querySelector("b a");
+              const title = sh.querySelector("b").textContent.trim();
+              const nameRun = a && a.href
+                ? new D.ExternalHyperlink({ link:a.href,
+                    children:[run(title,{b:true,color:"17365D",u:true})] })
+                : run(title,{b:true});
+              kids.push(new D.Paragraph({
+                children:[nameRun,
+                          run("  " + sh.querySelector(".host").textContent.trim(),{i:true,color:MUTE})],
+                spacing:{ before:90, after:20, line:252 } }));
+              kids.push(para([run(sh.querySelector(".out").textContent.trim())], { after:60 }));
+            }
+            break;
+          case "band": {
+            const cells = [...el.children].map(d =>
+              [d.querySelector(".fig").textContent.trim(), d.querySelector(".cap").textContent.trim()]);
+            kids.push(new D.Table({ width:{size:100,type:D.WidthType.PERCENTAGE},
+              layout:D.TableLayoutType.FIXED, columnWidths:cells.map(()=>Math.floor(9840/cells.length)),
+              borders:{ top:{style:D.BorderStyle.NONE}, bottom:{style:D.BorderStyle.NONE},
+                left:{style:D.BorderStyle.NONE}, right:{style:D.BorderStyle.NONE},
+                insideHorizontal:{style:D.BorderStyle.SINGLE,size:10,color:"FFFFFF"},
+                insideVertical:{style:D.BorderStyle.SINGLE,size:10,color:"FFFFFF"} },
+              rows:[ new D.TableRow({ children: cells.map(([f,c]) =>
+                new D.TableCell({ width:{ size:Math.floor(9840/cells.length), type:D.WidthType.DXA },
+                  margins:{ top:130, bottom:130, left:100, right:100 },
+                  shading:{ type:D.ShadingType.CLEAR, fill:BAND },
+                  verticalAlign:D.VerticalAlign.CENTER,
+                  children:[
+                    new D.Paragraph({ alignment:D.AlignmentType.CENTER, children:[run(f,{b:true,size:30,color:HEAD})], spacing:{after:20} }),
+                    new D.Paragraph({ alignment:D.AlignmentType.CENTER, children:[run(c,{size:18,color:MUTE})], spacing:{after:0} })
+                  ] })) }) ] }));
+            kids.push(new D.Paragraph({ children:[], spacing:{after:70} }));
+            break;
+          }
+          case "aud":
+            for(const box of el.children){
+              const b = box.querySelector("b"), sp = box.querySelector("span");
+              kids.push(new D.Paragraph({
+                children:[run(b.textContent.trim()+" ",{b:true}), run(sp.textContent.trim())],
+                bullet:{ level:0 }, spacing:{ after:70, line:252 } }));
+            }
+            break;
+          case "row": {
+            const k = el.querySelector(".k") || el.querySelector(".n");
+            const v = el.querySelector(".v");
+            kids.push(new D.Paragraph({
+              children:[run((k?k.textContent.trim()+". ":""),{b:true}), run(v?v.textContent.trim():text)],
+              spacing:{ after:70, line:252 } }));
+            break;
+          }
+          case "grid": {
+            const cells = [...el.children].map(c => c.textContent.trim());
+            const rows = [];
+            for(let i=0;i<cells.length;i+=3){
+              rows.push(new D.TableRow({ children: cells.slice(i,i+3).map(c =>
+                new D.TableCell({ width:{ size:3280, type:D.WidthType.DXA },
+                  margins:{ top:130, bottom:130, left:140, right:140 },
+                  shading:{ type:D.ShadingType.CLEAR, fill:BAND },
+                  verticalAlign:D.VerticalAlign.CENTER,
+                  children:[new D.Paragraph({ alignment:D.AlignmentType.CENTER, children:[run(c,{color:HEAD})], spacing:{after:0} })] })) }));
+            }
+            kids.push(new D.Table({ width:{size:100,type:D.WidthType.PERCENTAGE},
+              layout:D.TableLayoutType.FIXED, columnWidths:[3280,3280,3280],
+              borders:{ top:{style:D.BorderStyle.NONE}, bottom:{style:D.BorderStyle.NONE},
+                left:{style:D.BorderStyle.NONE}, right:{style:D.BorderStyle.NONE},
+                insideHorizontal:{style:D.BorderStyle.SINGLE,size:10,color:"FFFFFF"},
+                insideVertical:{style:D.BorderStyle.SINGLE,size:10,color:"FFFFFF"} },
+              rows }));
+            kids.push(new D.Paragraph({ children:[], spacing:{after:70} }));
+            break;
+          }
+          case "table": {
+            const W4 = [2200,1500,4340,1800];
+            const rows = [];
+            el.querySelectorAll("thead tr").forEach(tr => {
+              rows.push(new D.TableRow({ tableHeader:true, children:[...tr.children].map((td,i) =>
+                cell([para([run(td.textContent.trim(),{b:true})],{after:0})], W4[i], BAND)) }));
+            });
+            el.querySelectorAll("tbody tr").forEach(tr => {
+              if(tr.hasAttribute("data-noexport")) return;
+              if(tr.dataset.x === "rate" && tr.dataset.on !== "1") return;
+              if(tr.classList.contains("group")){
+                rows.push(new D.TableRow({ children:[
+                  cell([para([run(tr.textContent.trim(),{b:true,color:HEAD})],{after:0})], 9840, BAND, 4) ] }));
+              }else if(tr.classList.contains("sum")){
+                const tds = [...tr.children];
+                rows.push(new D.TableRow({ children:[
+                  cell([para([run(tds[0].textContent.trim(),{b:true})],{after:0})], 8040, BAND, 3),
+                  cell([para([run(tds[1].textContent.trim(),{b:true})],{after:0})], 1800, BAND) ] }));
+              }else{
+                const tds = [...tr.children];
+                const itemEl = tds[0].querySelector("label") || tds[0];
+                const tagEl = itemEl.querySelector(".tag");
+                const itemText = tagEl ? itemEl.textContent.replace(tagEl.textContent,"").trim() : itemEl.textContent.trim();
+                const first = [para([run(itemText,{b:true})],{after:0})];
+                if(tagEl) first.push(new D.Paragraph({ children:[new D.TextRun({ text:tagEl.textContent.trim(), bold:true, size:16, color: tagEl.classList.contains("rec")?HEAD:"6E747C", font:F, characterSpacing:25 })], spacing:{before:30,after:0} }));
+                const vEl = tds[3] ? tds[3].querySelector(".v") : null, qEl = tds[3] ? tds[3].querySelector("small") : null;
+                const amtKids = [para([run(vEl ? vEl.textContent.trim() : "")],{after:0})];
+                if(qEl && qEl.textContent.trim()) amtKids.push(para([run(qEl.textContent.trim(),{size:17,color:MUTE})],{after:0}));
+                rows.push(new D.TableRow({ children:[
+                  cell(first, W4[0]),
+                  cell([para([run(tds[1].textContent.trim())],{after:0})], W4[1]),
+                  cell([para([run(tds[2].textContent.trim())],{after:0})], W4[2]),
+                  cell(amtKids, W4[3]) ] }));
+              }
+            });
+            kids.push(para([run("Estimate figures reflect the configuration chosen on the pitch page.",{i:true,color:MUTE})]));
+            kids.push(tbl(W4, rows));
+            kids.push(new D.Paragraph({ children:[], spacing:{after:70} }));
+            break;
+          }
+          case "est": {
+            // Walked in DOM order, so the total sits under the lines it totals
+            // and the third party block stays below it.
+            kids.push(para([run("The figures below are the configuration chosen on the pitch page.",{i:true,color:MUTE})]));
+            const rows = [], notes = [];
+            const twoCol = (left, right, shade, bold) => new D.TableRow({ children:[
+              cell([para([run(left,{b:!!bold})],{after:0})], 6000, shade),
+              cell([para([run(right,{b:!!bold})],{after:0})], 3840, shade) ] });
+            for(const n of el.children){
+              if(n.hasAttribute("data-noexport")) continue;
+              if(n.classList.contains("label")){
+                rows.push(new D.TableRow({ children:[
+                  cell([para([run(n.textContent.trim(),{b:true,color:HEAD})],{after:0})], 9840, BAND, 2) ] }));
+              }else if(n.classList.contains("est-row")){
+                if(n.dataset.on !== "1") continue;
+                const nmEl = n.querySelector(".nm");
+                rows.push(new D.TableRow({ children:[
+                  cell([para([run(nmEl.childNodes[0].textContent.trim(),{b:true})],{after:0}),
+                        para([run(nmEl.querySelector("small").textContent.trim(),{color:MUTE})],{after:0})], 6000),
+                  cell([para([run(n.querySelector(".amt").textContent.trim())],{after:0})], 3840) ] }));
+              }else if(n.classList.contains("total")){
+                rows.push(twoCol(n.querySelector(".t").textContent.trim(), n.querySelector(".v").textContent.trim(), BAND, true));
+              }else if(n.classList.contains("subtot")){
+                const sp = n.querySelectorAll("span");
+                const left = sp[0] ? sp[0].textContent.trim() : "";
+                const right = sp[1] ? sp[1].textContent.trim() : "";
+                if(right) rows.push(twoCol(left, right));
+                else if(left) notes.push(left);
+              }
+            }
+            kids.push(tbl([6000,3840], rows));
+            notes.forEach(n => kids.push(para([run(n,{color:MUTE})])));
+            break;
+          }
+          default: walk(el);
+        }
+      }
+    };
+    walk(document.getElementById("doc"));
+
+    const doc = new D.Document({
+      styles:{ default:{ document:{ run:{ font:F, size:SZ, color:INK } } } },
+      sections:[{ properties:{ page:{ size:{ width:12240, height:15840 },
+        margin:{ top:1080, bottom:1000, left:1200, right:1200 } } }, children:kids }]
+    });
+
+    const blob = await D.Packer.toBlob(doc);
+    const buf = await blob.arrayBuffer();
+    const name = `${PITCH.show.replace(/ /g,"-")}-${PITCH.route==="A"?"Concept":"Pitch"}-Note.docx`;
+    let downloads = null;
+    try{ downloads = window.claude && window.claude.use ? await window.claude.use("downloads") : null; }catch(e){ downloads = null; }
+    if(downloads){
+      await downloads.save({ filename:name, data:new Uint8Array(buf) });
+    }else{
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
+    }
+    btn.textContent = "Saved";
+    setTimeout(() => { btn.textContent = "Export as Word"; btn.disabled = false; }, 1800);
+  }catch(err){
+    console.error(err);
+    btn.textContent = "Export failed";
+    setTimeout(() => { btn.textContent = "Export as Word"; btn.disabled = false; }, 2200);
+  }
+}
+document.getElementById("export").addEventListener("click", exportDocx);
+
+/* ---- go ----------------------------------------------------------------- */
+load();
+renderAll();
+</script>
+
+</body>
+</html>
