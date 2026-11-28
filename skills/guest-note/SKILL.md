@@ -185,3 +185,6 @@ actually for.
 - Also deliver markdown when the note is going to be published as a web page.
   Three of the four live at a short URL: fscd.ai/note, unhashed.co/note,
   built2share.in/note.
+
+## Lessons
+- 2026-11-28: the Built to Share recording link is always built2share.in/studio, never a raw riverside.fm link (Akshay in the CTO chat: "this is the studio link for b2s - always use this - fix in templates"; decision 692).

@@ -240,3 +240,6 @@ Read each one immediately before the matching task:
 - `references/dossier-structure.md` — section-by-section spec (read before generating the dossier)
 - `references/dossier-template.html` — visual styling base for the host dossier (v3 structure: at-a-glance, journey, stations, sources)
 - `references/guest-prep-template.html` — visual styling base for the guest prep note
+
+## Lessons
+- 2026-11-28: the Built to Share recording link is always built2share.in/studio, never a raw riverside.fm link (Akshay in the CTO chat: "this is the studio link for b2s - always use this - fix in templates"; decision 692).
